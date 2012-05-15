@@ -1,0 +1,21 @@
+<openerp>
+    <data>
+        <record id="view_order_form_transaction" model="ir.ui.view">
+            <field name="name">sale.order.form.transaction</field>
+            <field name="model">sale.order</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <field name="payment_term" position="after">
+                    <field name="transaction_id" select="2"/>
+                </field>
+            </field>
+        </record>
+         <act_window
+            domain="[('origin', '=', name)]" 
+            id="prm_act" 
+            name="Packing" 
+            res_model="stock.picking" 
+            src_model="sale.order"/>
+    </data>
+</openerp>
