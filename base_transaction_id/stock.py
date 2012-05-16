@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 ##############################################################################
 #
-#    Author: Yannick Vaucher (Camptocamp)
-#    Copyright 2012 Camptocamp SA
+#    Author: Nicolas Bessi
+#    Copyright 2011-2012 Camptocamp SA
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -19,6 +19,20 @@
 #
 ##############################################################################
 
-from . import invoice
-from . import sale
-from . import stock
+from osv import osv
+
+class StockPicking(osv.osv):
+    _inherit = "stock.picking"
+
+    def action_invoice_create(self, cursor, uid, ids, journal_id=False,
+            group=False, type='out_invoice', context=None):
+        res = super(StockPicking, self).action_invoice_create(cursor, uid, ids,
+            journal_id,group, type, context)
+        for pick_id in res:
+            pick =  self.browse(cursor, uid, pick_id)
+            if pick.sale_id and pick.sale_id.transaction_id:
+                self.pool.get('account.invoice').write(cursor,
+                               uid,
+                               res[pick_id],
+                               {'transaction_id': pick.sale_id.transaction_id})
+        return res

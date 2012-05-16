@@ -25,7 +25,7 @@
  'maintainer': 'Camptocamp',
  'category': 'Hidden/Dependency',
  'complexity': 'easy', #easy, normal, expert
- 'depends': ['account', 'sale'],
+ 'depends': ['account', 'sale','stock'],
  'description': """Adds transaction id to invoice and sale models and views""",
  'website': 'http://www.openerp.com',
  'init_xml': [],
