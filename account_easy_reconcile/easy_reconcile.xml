@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<openerp>
+	<data>
+
+<!-- account.easy.reconcile view -->
+
+ 		<record id="account_easy_reconcile_form" model="ir.ui.view">
+			<field name="name">account.easy.reconcile.form</field>
+			<field name="priority">20</field>
+			<field name="model">account.easy.reconcile</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="easy reconcile">
+                        <separator colspan="4" string="Task Information" />
+				        <field name="name" select="1"/>
+				        <field name="account"/>
+                        <field name="unreconcile_entry_number"/>
+				        <field name="scheduler"/>
+                        <separator colspan="4" string="Reconcile Method" />
+                        <field name="reconcile_method" colspan = "4" nolabel="1"/>
+			        	<button icon="gtk-ok" name="action_rec_auto" colspan = "4" string="Start Auto Reconcilation" type="object"/>
+                        <separator colspan="4" string="Log" />
+                        <field name="rec_log" colspan = "4" nolabel="1"/>
+				</form>
+			</field>
+		</record>
+		
+		<record id="account_easy_reconcile_tree" model="ir.ui.view">
+			<field name="name">account.easy.reconcile.tree</field>
+			<field name="priority">20</field>
+			<field name="model">account.easy.reconcile</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="easy reconcile">
+			        <field name="name"/>
+			        <field name="account"/> 
+			        <field name="reconcile_method"/>
+			        <field name="scheduler"/>
+                    <field name="unreconcile_entry_number"/>
+				</tree>
+			</field>
+		</record>
+		
+		<record id="action_account_easy_reconcile" model="ir.actions.act_window">
+			<field name="name">account easy reconcile</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">account.easy.reconcile</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="context">{'wizard_object' : 'account.easy.reconcile', 'function' : 'action_rec_auto', 'object_link' : 'account.easy.reconcile' }</field>
+		</record>
+
+
+<!-- account.easy.reconcile.method view -->
+
+ 		<record id="account_easy_reconcile_method_form" model="ir.ui.view">
+			<field name="name">account.easy.reconcile.method.form</field>
+			<field name="priority">20</field>
+			<field name="model">account.easy.reconcile.method</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="easy reconcile method">
+				        <field name="sequence"/>
+				        <field name="name" on_change="onchange_name(name, write_off)"/>
+                        <field name="write_off" attrs="{'required':[('require_write_off','=',True)]}"/>
+				        <field name="account_lost_id" attrs="{'required':[('require_account_id','=',True)]}"/>
+				        <field name="account_profit_id" attrs="{'required':[('require_account_id','=',True)]}"/>
+                        <field name="journal_id" attrs="{'required':[('require_journal_id','=',True)]}"/>
+                        <field name="date_base_on"/>
+                        <field name="filter"/>
+                        <field name="require_write_off" invisible="1"/>
+                        <field name="require_account_id" invisible="1"/>
+                        <field name="require_journal_id" invisible="1"/>
+				</form>
+			</field>
+		</record>
+		
+ 		<record id="account_easy_reconcile_method_tree" model="ir.ui.view">
+			<field name="name">account.easy.reconcile.method.tree</field>
+			<field name="priority">20</field>
+			<field name="model">account.easy.reconcile.method</field>
+			<field name="type">tree</field>
+			<field  name="arch" type="xml">
+				<tree editable="top" string="easy reconcile method">
+				        <field name="sequence"/>
+				        <field name="name" on_change="onchange_name(name, write_off)"/>
+                        <field name="write_off" attrs="{'required':[('require_write_off','=',True)]}" on_change="onchange_write_off(name, write_off)"/>
+				        <field name="account_lost_id" attrs="{'required':[('require_account_id','=',True)]}"/>
+				        <field name="account_profit_id" attrs="{'required':[('require_account_id','=',True)]}"/>
+                        <field name="journal_id" attrs="{'required':[('require_journal_id','=',True)]}"/>
+                        <field name="date_base_on"/>
+                        <field name="filter"/>
+                        <field name="require_write_off" invisible="1"/>
+                        <field name="require_account_id" invisible="1"/>
+                        <field name="require_journal_id" invisible="1"/>
+
+				</tree>
+			</field>
+		</record>
+
+<!-- menu item -->
+
+		<menuitem action="action_account_easy_reconcile" id="menu_easy_reconcile" parent="account.periodical_processing_reconciliation"/>
+
+
+<!-- button on the left -->
+
+		<record id="ir_action_create_scheduler_in_easy_reconcile" model="ir.values">
+			<field name="key2">client_action_multi</field>
+			<field name="model">account.easy.reconcile</field>
+			<field name="name">Create a Scheduler</field>
+			<field eval="'ir.actions.act_window,%d'%ref('base_scheduler_creator.action_scheduler_creator_wizard')" name="value"/>
+			<field eval="True" name="object"/>
+		</record>
+
+
+
+		
+    </data>
+</openerp>
