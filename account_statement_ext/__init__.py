@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 ##############################################################################
 #
-#    Author: Yannick Vaucher (Camptocamp)
-#    Copyright 2012 Camptocamp SA
+#    Author: Joel Grand-Guillaume
+#    Copyright 2011-2012 Camptocamp SA
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -19,24 +19,4 @@
 #
 ##############################################################################
 
-{'name': 'Base transaction id for financial institutes',
- 'version': '1.0',
- 'author': 'Camptocamp',
- 'maintainer': 'Camptocamp',
- 'category': 'Hidden/Dependency',
- 'complexity': 'easy', #easy, normal, expert
- 'depends': ['account', 'sale','stock'],
- 'description': """Adds transaction id to invoice and sale models and views. This is mostely used for E-commerce handling. You
- can then add a mapping on that SO field to save the E-Commerce financial Transaction ID into the OpenERP SO field. The main
- purpose is to ease the reconciliation process.""",
- 'website': 'http://www.openerp.com',
- 'init_xml': [],
- 'update_xml': ['invoice_view.xml', 'sale_view.xml'],
- 'demo_xml': [],
- 'test': [],
- 'installable': True,
- 'images': [],
- 'auto_install': False,
- 'license': 'AGPL-3',
- 'active': False,
-}
+import statement

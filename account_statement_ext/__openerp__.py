@@ -1,8 +1,10 @@
 # -*- coding: utf-8 -*-
 ##############################################################################
 #
-#    Author: Yannick Vaucher (Camptocamp)
-#    Copyright 2012 Camptocamp SA
+#    Author: Joel Grand-Guillaume
+#    Copyright 2011-2012 Camptocamp SA
+#    Thanks to EduSense BV (<http://www.edusense.nl>) for some part and idea 
+#    taken from the account_banking module
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -19,19 +21,22 @@
 #
 ##############################################################################
 
-{'name': 'Base transaction id for financial institutes',
+{'name': "Account Bank Statement without Period",
  'version': '1.0',
  'author': 'Camptocamp',
  'maintainer': 'Camptocamp',
- 'category': 'Hidden/Dependency',
- 'complexity': 'easy', #easy, normal, expert
- 'depends': ['account', 'sale','stock'],
- 'description': """Adds transaction id to invoice and sale models and views. This is mostely used for E-commerce handling. You
- can then add a mapping on that SO field to save the E-Commerce financial Transaction ID into the OpenERP SO field. The main
- purpose is to ease the reconciliation process.""",
- 'website': 'http://www.openerp.com',
+ 'category': 'Finance',
+ 'complexity': 'normal', #easy, normal, expert
+ 'depends': ['account'],
+ 'description': """
+ Remove the period on the bank statement, and compute it for each line based on their date instead. 
+ If errors occurs, it will summarize them all in one popup instead of blocking all the process at every error.
+ """,
+ 'website': 'http://www.camptocamp.com',
  'init_xml': [],
- 'update_xml': ['invoice_view.xml', 'sale_view.xml'],
+ 'update_xml': [
+     'statement_view.xml',
+ ],
  'demo_xml': [],
  'test': [],
  'installable': True,
