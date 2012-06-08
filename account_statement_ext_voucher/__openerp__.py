@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 ##############################################################################
 #
-#    Author: Yannick Vaucher (Camptocamp)
-#    Copyright 2012 Camptocamp SA
+#    Author: Joel Grand-Guillaume
+#    Copyright 2011-2012 Camptocamp SA
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -19,28 +19,25 @@
 #
 ##############################################################################
 
-{'name': 'Base transaction id for financial institutes',
+{'name': "Bank statement extension with voucher",
  'version': '1.0',
  'author': 'Camptocamp',
  'maintainer': 'Camptocamp',
- 'category': 'Hidden/Dependency',
- 'complexity': 'easy', #easy, normal, expert
- 'depends': ['account', 'sale','stock'],
+ 'category': 'Finance',
+ 'complexity': 'normal', #easy, normal, expert
+ 'depends': ['account_statement_ext','account_voucher'],
  'description': """
- Adds transaction id to invoice and sale models and views. On Sales order, you can specify the transaction ID
- used for the payment and it will be propagated to the invoice (even if made from packing).
- This is mostely used for E-commerce handling. You can then add a mapping on that SO field to save the E-Commerce
- financial Transaction ID into the OpenERP SO field. The main purpose is to ease the reconciliation process and
- be able to find the partner when importing the bank statement.
+ This module is only needed when using account_bank_statement_ext with voucher in order to compute the period
+ correctly. This is mainly because with account_bank_statement_ext, the period is computed for each line.
  """,
- 'website': 'http://www.openerp.com',
+ 'website': 'http://www.camptocamp.com',
  'init_xml': [],
- 'update_xml': ['invoice_view.xml', 'sale_view.xml'],
+ 'update_xml': [],
  'demo_xml': [],
  'test': [],
  'installable': True,
  'images': [],
- 'auto_install': False,
+ 'auto_install': True,
  'license': 'AGPL-3',
  'active': False,
 }

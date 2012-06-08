@@ -1,10 +1,8 @@
 # -*- coding: utf-8 -*-
 ##############################################################################
 #
-#    Author: Joel Grand-Guillaume
+#    Author: Nicolas Bessi, Joel Grand-Guillaume
 #    Copyright 2011-2012 Camptocamp SA
-#    Thanks to EduSense BV (<http://www.edusense.nl>) for some part and idea 
-#    taken from the account_banking module
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -21,21 +19,49 @@
 #
 ##############################################################################
 
-{'name': "Account Bank Statement without Period",
+{'name': "Bank statement extension and profiles",
  'version': '1.0',
  'author': 'Camptocamp',
  'maintainer': 'Camptocamp',
  'category': 'Finance',
  'complexity': 'normal', #easy, normal, expert
- 'depends': ['account'],
+ 'depends': ['base_transaction_id'],
  'description': """
- Remove the period on the bank statement, and compute it for each line based on their date instead. 
- If errors occurs, it will summarize them all in one popup instead of blocking all the process at every error.
+ The goal of this module is to help dealing with huge volume of reconciliation through
+ payment offices like Paypal, Lazer, Visa, Amazon and so on. It's mostly used for
+ E-commerce but can be usefule for other use cases as it introduce a notion of profil
+ on the bank statement to have more control on the generated entries.
+ 
+ Features:
+ 
+ 1) This module improves the bank statement that allow and you to import your bank transactions with
+ a standard .csv or .xls file (you'll find it in the 'data' folder). You can now define profile for each
+ Office or Bank that will generate the entries based on some criteria. You can setup:
+ 
+  - Account commission and partner relation
+  - Can force an account for the reconciliation
+  - Choose to use balance check or not
+  - Analytic account for commission
+  - Force Partner on the counter-part move (e.g. 100.- debit, Partner: M.Martin; 100.- credit, Partner: HSBC)
+ 
+ 2) Adds a report on bank statement that can be used for Checks
+ 
+ 3) When an error occurs in a bank statement confirmation, it will go through all line anyway and summarize 
+ all the erronous line in a same popup instead of raising and crashing on every step.
+ 
+ 4) Remove the period on the bank statement, and compute it for each line based on their date instead. 
+ 
+ 5) Provide a standard import format to create and fullfill a bank statement from a .csv or .xls file. For
+ 
+
  """,
  'website': 'http://www.camptocamp.com',
  'init_xml': [],
  'update_xml': [
      'statement_view.xml',
+     'wizard/import_statement_view.xml',
+     'report/bank_statement_webkit_header.xml',
+     'report.xml',
  ],
  'demo_xml': [],
  'test': [],
