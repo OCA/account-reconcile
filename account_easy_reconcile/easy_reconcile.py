@@ -17,10 +17,11 @@
 #along with this program.  If not, see <http://www.gnu.org/licenses/>.  #
 #########################################################################
 
-from osv import fields,osv
-from tools.translate import _
 import time
 import string
+from osv import fields,osv
+from tools.translate import _
+from tools import DEFAULT_SERVER_DATETIME_FORMAT
 
 
 class account_easy_reconcile_method(osv.osv):
@@ -182,23 +183,33 @@ class account_easy_reconcile(osv.osv):
         return self.rec_auto_lines_simple(cr, uid, lines, context)
 
     def action_rec_auto(self, cr, uid, ids, context=None):
-        if not context:
-            context={}
-        for id in ids:
-            easy_rec = self.browse(cr, uid, id, context)
-            total_rec=0
+        if context is None:
+            context = {}
+        for rec_id in ids:
+            rec = self.browse(cr, uid, rec_id, context=context)
+            total_rec = 0
             details = ''
             count = 0
-            for method in easy_rec.reconcile_method:
+            for method in rec.reconcile_method:
                 count += 1
-                context.update({'date_base_on' : method.date_base_on, 'filter' : eval(method.filter or '[]'), 'write_off': (method.write_off>0 and method.write_off) or 0, 'account_lost_id':method.account_lost_id.id, 'account_profit_id':method.account_profit_id.id, 'journal_id':method.journal_id.id})
-                res = eval('self.'+ str(method.name) +'(cr, uid, ' + str(easy_rec.account.id) +', context)')
-                details += _(' method ') + str(count) + ' : ' + str(res) + _(' lines') +' |'
-            log = self.read(cr, uid, id, ['rec_log'], context=context)['rec_log']
-            log_line = log and log.split("\n") or []
-            log_line[0:0] = [time.strftime('%Y-%m-%d %H:%M:%S') + ' : ' + str(total_rec) + _(' lines have been reconciled ('+ details[0:-2] + ')')]
+                ctx = dict(
+                    context,
+                    date_base_on=method.date_base_on,
+                    filter=eval(method.filter or '[]'),
+                    write_off=(method.write_off > 0 and method.write_off) or 0,
+                    account_lost_id=method.account_lost_id.id,
+                    account_profit_id=method.account_profit_id.id,
+                    journal_id=method.journal_id.id)
+
+                py_meth = getattr(self, method.name)
+                res = py_meth(cr, uid, rec.account.id, context=context)
+                details += _(' method %d : %d lines |') % (count, res)
+            log = self.read(cr, uid, rec_id, ['rec_log'], context=context)['rec_log']
+            log_lines = log and log.splitlines or []
+            log_lines[0:0] = [_('%s : %d lines have been reconciled (%s)') %
+                (time.strftime(DEFAULT_SERVER_DATETIME_FORMAT), total_rec, details[0:-2])]
             log = "\n".join(log_line)
-            self.write(cr, uid, id, {'rec_log' : log}, context=context)
+            self.write(cr, uid, rec_id, {'rec_log' : log}, context=context)
         return True
 
 account_easy_reconcile()
