@@ -98,12 +98,14 @@ class account_easy_reconcile(osv.osv):
     def rec_auto_lines_simple(self, cr, uid, lines, context=None):
         if not context:
             context={}
-        count=0
-        res=0
-        max_diff = context.get('write_off', 0) + 0.001
+        count = 0
+        res = 0
+        precision = self.pool.get('decimal.precision').precision_get(
+            cr, uid, 'Account')
+        max_diff = context.get('write_off', 0)
         while (count < len(lines)):
             for i in range(count+1, len(lines)):
-                writeoff_account_id=False
+                writeoff_account_id = False
                 if lines[count][0] != lines[i][0]:
                     break
 
@@ -111,27 +113,30 @@ class account_easy_reconcile(osv.osv):
                 if lines[count][1] > 0 and lines[i][2] > 0:
                     credit_line = lines[count]
                     debit_line = lines[i]
-                    check =True
+                    check = True
                 elif lines[i][1] > 0  and lines[count][2] > 0:
                     credit_line = lines[i]
                     debit_line = lines[count]
-                    check=True
+                    check = True
+                if not check:
+                    continue
 
-                if check and abs(credit_line[1] - debit_line[2]) <= max_diff:
-                    if context.get('write_off', 0) > 0 and abs(credit_line[1] - debit_line[2]) > 0.001:
+                diff = round(abs(credit_line[1] - debit_line[2]), precision)
+                if diff <= max_diff:
+                    if context.get('write_off', 0) > 0 and diff:
                         if credit_line[1] < debit_line[2]:
                             writeoff_account_id = context.get('account_profit_id', False)
                         else:
                             writeoff_account_id = context.get('account_lost_id', False)
 
                     #context['date_base_on'] = 'credit_line'
-                    context['comment'] = _('Write-Off %s')%credit_line[0]
+                    context['comment'] = _('Write-Off %s') % credit_line[0]
 
-                    if context.get('date_base_on', False) == 'credit_line':
+                    if context.get('date_base_on') == 'credit_line':
                         date = credit_line[4]
-                    elif context.get('date_base_on', False) == 'debit_line':
+                    elif context.get('date_base_on') == 'debit_line':
                         date = debit_line[4]
-                    elif context.get('date_base_on', False) == 'newest':
+                    elif context.get('date_base_on') == 'newest':
                         date = (credit_line[4] > debit_line[4]) and credit_line[4] or debit_line[4]
                     else:
                         date = None
