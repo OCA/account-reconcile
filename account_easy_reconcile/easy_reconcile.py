@@ -153,7 +153,6 @@ class account_easy_reconcile(osv.osv):
                 where_clause = " AND %s"%where_clause
             where_clause_params = (account_id,) + tuple(where_clause_params)
         else:
-            print 'id', account_id
             where_clause = ''
             where_clause_params = (account_id,)
         return where_clause, where_clause_params
