@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ##############################################################################
 #
-#    Author: Nicolas Bessi, Joel Grand-Guillaume
+#    Author: Joel Grand-Guillaume
 #    Copyright 2011-2012 Camptocamp SA
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -19,8 +19,29 @@
 #
 ##############################################################################
 
-import file_parser
-import wizard
-import statement
-import report
-import account
+{'name': "Bank statement completion from transaction ID",
+ 'version': '1.0',
+ 'author': 'Camptocamp',
+ 'maintainer': 'Camptocamp',
+ 'category': 'Finance',
+ 'complexity': 'normal', #easy, normal, expert
+ 'depends': ['base_transaction_id','account_statement_base_completion'],
+ 'description': """
+  Add a completion method based on transaction ID providen by the bank/office. This
+  transaction ID has been recorded on the SO (by a mapping through the e-commerce connector,
+  or manually). Completion will look in the SO with that transaction ID to match the partner.
+  
+ """,
+ 'website': 'http://www.camptocamp.com',
+ 'init_xml': [],
+ 'update_xml': [
+    "statement_view.xml",
+ ],
+ 'demo_xml': [],
+ 'test': [],
+ 'installable': True,
+ 'images': [],
+ 'auto_install': False,
+ 'license': 'AGPL-3',
+ 'active': False,
+}

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ##############################################################################
 #
-#    Author: Nicolas Bessi, Joel Grand-Guillaume
+#    Author: Joel Grand-Guillaume
 #    Copyright 2011-2012 Camptocamp SA
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -19,8 +19,33 @@
 #
 ##############################################################################
 
-import file_parser
-import wizard
-import statement
-import report
-import account
+from tools.translate import _
+import datetime
+import netsvc
+logger = netsvc.Logger()
+from openerp.osv.orm import Model, fields
+
+
+class AccountStatementProfil(Model):
+    _inherit = "account.statement.profil"
+    
+    
+class AccountBankSatement(Model):
+
+    _inherit = "account.bank.statement"
+ 
+class AccountStatementLine(Model):
+    _inherit = "account.bank.statement.line"
+
+    _columns={
+        # 'additionnal_bank_fields' : fields.serialized('Additionnal infos from bank', help="Used by completion and import system."),
+        'transaction_id': fields.sparse(type='char', string='Transaction ID', 
+            size=128,
+            serialization_field='additionnal_bank_fields',
+            help="Transction id from the financial institute"),
+    }
+
+
+
+
+

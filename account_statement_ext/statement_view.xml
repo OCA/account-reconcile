@@ -40,6 +40,7 @@
                 <field name="receivable_account_id" />
                 <field name="force_partner_on_bank"/>
                 <field name="balance_check"/>
+                <field name="bank_statement_prefix"/>
             </form>
         </field>
     </record>
@@ -90,7 +91,7 @@
         <field name="type">search</field>
         <field name="arch" type="xml">
              <xpath expr="/search/group/field[@name='name']" position="before">
-                    <field name="import_config_id"/>
+                    <field name="profile_id"/>
                     <field name="credit_partner_id"/>
                     <separator orientation="vertical"/>
             </xpath>
@@ -109,7 +110,7 @@
         <field name="type">tree</field>
         <field name="arch" type="xml">
             <xpath expr="/tree/field[@name='name']" position="after">
-                <field name="import_config_id"/>
+                <field name="profile_id"/>
             </xpath>
             <xpath expr="/tree/field[@name='period_id']" position="replace">
                 <field name="credit_partner_id"/>
@@ -133,7 +134,7 @@
             <xpath expr="/form/group[@col='7']" position="before">
                 <group col="6" colspan="4">
                     <field name="name" select="1"/>
-                    <field name="import_config_id" select="1" required="1" on_change="onchange_imp_config_id(import_config_id)" widget="selection"/>
+                    <field name="profile_id" select="1" required="1" on_change="onchange_imp_config_id(profile_id)" widget="selection"/>
                     <field name="date" select="1" on_change="onchange_date(date, company_id)"/>
                 </group>
                 <separator string="Details" colspan="4"/>
@@ -166,23 +167,23 @@
                  <field name="id"/>
             </xpath>
             <xpath expr="/form/notebook/page/field/tree/field[@name='partner_id']" position="replace">
-                 <field name="partner_id" on_change="onchange_partner_id(partner_id,parent.import_config_id)"/>
+                 <field name="partner_id" on_change="onchange_partner_id(partner_id,parent.profile_id)"/>
             </xpath>
             <xpath expr="/form/notebook/page/field/form/field[@name='date']" position="before">
                  <field name="id"/>
             </xpath>
             <!-- Adapt onchange signature -->
             <xpath expr="/form/notebook/page/field/tree/field[@name='partner_id']" position="replace">
-                 <field name="partner_id" on_change="onchange_partner_id(partner_id,parent.import_config_id)"/>
+                 <field name="partner_id" on_change="onchange_partner_id(partner_id,parent.profile_id)"/>
             </xpath>
             <xpath expr="/form/notebook/page/field/form/field[@name='partner_id']" position="replace">
-                 <field name="partner_id" on_change="onchange_partner_id(partner_id,parent.import_config_id)"/>
+                 <field name="partner_id" on_change="onchange_partner_id(partner_id,parent.profile_id)"/>
             </xpath>
             <xpath expr="/form/notebook/page/field/form/field[@name='type']" position="replace">
-                 <field name="type" on_change="onchange_type(partner_id, type, parent.import_config_id)"/>
+                 <field name="type" on_change="onchange_type(partner_id, type, parent.profile_id)"/>
             </xpath>
             <xpath expr="/form/notebook/page/field/tree/field[@name='type']" position="replace">
-                 <field name="type" on_change="onchange_type(partner_id, type, parent.import_config_id)"/>
+                 <field name="type" on_change="onchange_type(partner_id, type, parent.profile_id)"/>
             </xpath>
             
         </field>

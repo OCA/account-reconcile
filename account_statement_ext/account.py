@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ##############################################################################
 #
-#    Author: Nicolas Bessi
+#    Author: Joel Grand-Guillaume
 #    Copyright 2011-2012 Camptocamp SA
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -18,5 +18,21 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
+import netsvc
+logger = netsvc.Logger()
+from openerp.osv.orm import Model, fields
 
-import parser
+class account_move(osv.osv):
+    _inherit='account.move'
+    
+    def unlink(self, cr, uid, ids, context=None):
+        """Delete the reconciliation when we delete the moves. This
+        allow an easier way of cancelling the bank statement."""
+        for move in self.browse(cr, uid, ids, context=context):
+            for move_line in move.line_id:
+                if move_line.reconcile_id:
+                    move_line.reconcile_id.unlink(context=context)
+        return super(account_move, self).unlink(cr, uid, ids, context=context)
+account_move()
+
+

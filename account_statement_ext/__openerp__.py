@@ -27,15 +27,16 @@
  'complexity': 'normal', #easy, normal, expert
  'depends': ['base_transaction_id'],
  'description': """
- The goal of this module is to help dealing with huge volume of reconciliation through
- payment offices like Paypal, Lazer, Visa, Amazon and so on. It's mostly used for
- E-commerce but can be usefule for other use cases as it introduce a notion of profil
- on the bank statement to have more control on the generated entries.
+ The goal of this module is to improve the basic bank statement, help dealing with huge volume of
+ reconciliation through payment offices like Paypal, Lazer, Visa, Amazon and so on. 
+ 
+ It will be mostly used for E-commerce but can be usefule for other use cases as it introduce a 
+ notion of profil on the bank statement to have more control on the generated entries. It will
+ be the base for all new features developped to improve the reconciliation process. 
  
  Features:
  
- 1) This module improves the bank statement that allow and you to import your bank transactions with
- a standard .csv or .xls file (you'll find it in the 'data' folder). You can now define profile for each
+ 1) This module improves the bank statement that allow and you to define profile for each
  Office or Bank that will generate the entries based on some criteria. You can setup:
  
   - Account commission and partner relation
@@ -51,15 +52,19 @@
  
  4) Remove the period on the bank statement, and compute it for each line based on their date instead. 
  
- 5) Provide a standard import format to create and fullfill a bank statement from a .csv or .xls file. For
+ 5) Cancelling a bank statement is much more easy and will cancel all related entries, unreconcile them,
+    and finally delete it. 
  
-
+ 6) Add the ID in entries view so that you can easily filter on a statement ID to reconcile all related 
+    entries at once (e.g. one statement (ID 100) for paypal on an intermediate account, and then another for
+    the bank on the bank account. You can then manually reconcile all the line from the first one with
+    one line of the second by finding them through the statement ID.)
+ 
  """,
  'website': 'http://www.camptocamp.com',
  'init_xml': [],
  'update_xml': [
      'statement_view.xml',
-     'wizard/import_statement_view.xml',
      'report/bank_statement_webkit_header.xml',
      'report.xml',
  ],

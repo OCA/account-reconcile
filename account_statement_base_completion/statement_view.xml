@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+<data>
+
+    <record id="bank_statement_view_form" model="ir.ui.view">
+         <field name="name">account_bank_statement_import_base.bank_statement.view_form</field>
+         <field name="model">account.bank.statement</field>
+         <field name="inherit_id" ref="account.view_bank_statement_form" />
+         <field eval="16" name="priority"/>
+         <field name="type">form</field>
+         <field name="arch" type="xml">
+             <data>
+                 <xpath expr="/form/notebook/page/field[@name='line_ids']/form/field[@name='ref']" position="after">
+                     <!-- <field name="partner_name" />
+                                         <field name="order_ref" />
+                                         <field name="email_address" /> -->
+                     <field name="label" />
+                 </xpath>
+
+                 <xpath expr="/form/group[2]" position="attributes">
+                     <attribute name="col">10</attribute>
+                 </xpath>
+
+                 <xpath expr="/form/group/field[@name='balance_end']" position="after">
+                     <button name="button_auto_completion" string="Auto Completion" type="object" colspan="1"/>
+                 </xpath>
+
+             </data>
+         </field>
+     </record>
+
+    
+</data>
+</openerp>
