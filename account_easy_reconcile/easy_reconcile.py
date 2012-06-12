@@ -100,8 +100,8 @@ class account_easy_reconcile(osv.osv):
             context={}
         count=0
         res=0
-        max = context.get('write_off', 0) + 0.001
-        while (count<len(lines)):
+        max_diff = context.get('write_off', 0) + 0.001
+        while (count < len(lines)):
             for i in range(count+1, len(lines)):
                 writeoff_account_id=False
                 if lines[count][0] != lines[i][0]:
@@ -117,7 +117,7 @@ class account_easy_reconcile(osv.osv):
                     debit_line = lines[count]
                     check=True
 
-                if check and abs(credit_line[1] - debit_line[2]) <= max:
+                if check and abs(credit_line[1] - debit_line[2]) <= max_diff:
                     if context.get('write_off', 0) > 0 and abs(credit_line[1] - debit_line[2]) > 0.001:
                         if credit_line[1] < debit_line[2]:
                             writeoff_account_id = context.get('account_profit_id', False)
