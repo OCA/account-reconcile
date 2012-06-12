@@ -27,6 +27,8 @@ import pooler
 from operator import add, itemgetter
 from itertools import groupby
 from datetime import datetime
+
+#from common_report_header_webkit import CommonReportHeaderWebkit
 from report_webkit import webkit_report
 
 class BankStatementWebkit(report_sxw.rml_parse):
@@ -64,7 +66,7 @@ class BankStatementWebkit(report_sxw.rml_parse):
         statement_lines = statement_obj.browse(self.cr,self.uid,statement_line_ids)
         return statement_lines
 
-webkit_report.WebKitParser('report.bank_statement_webkit',
+webkit_report.WebKitParser('report.report_bank_statement_webkit',
                            'account.bank.statement',
-                           'addons/account_statement_ext/report/bank_statement_report.mako',
+                           'addons/account_statement_import/report/bank_statement_report.mako',
                            parser=BankStatementWebkit)

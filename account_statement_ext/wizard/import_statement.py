@@ -28,25 +28,15 @@ from tools.translate import _
 import os
 
 class CreditPartnerStatementImporter(osv.osv_memory):
+    """Import Credit statement"""
+
     _name = "credit.statement.import"
-    
-    def default_get(self, cr, uid, fields, context=None):
-        if context is None: context = {}
-        res = {}
-        if (context.get('active_model', False) == 'account.statement.profil' and
-            context.get('active_ids', False)):
-            ids = context['active_ids']
-            assert len(ids) == 1, 'You cannot use this on more than one profile !'
-            res['profile_id'] = ids[0]
-            other_vals = self.onchange_profile_id(cr, uid, [], res['profile_id'], context=context)
-            res.update(other_vals.get('value',{}))
-        return res
-    
+    _description = __doc__
     _columns = {
-        'profile_id': fields.many2one('account.statement.profil',
+        
+        'import_config_id': fields.many2one('account.statement.profil',
                                       'Import configuration parameter',
                                       required=True),
-        'input_statement': fields.binary('Statement file', required=True),
         'partner_id': fields.many2one('res.partner',
                                       'Credit insitute partner',
                                       ),
@@ -71,12 +61,13 @@ class CreditPartnerStatementImporter(osv.osv_memory):
                                                     help="Tic that box if you want OpenERP to control the start/end balance\
                                                     before confirming a bank statement. If don't ticked, no balance control will be done."
                                                     ),
+                                                    
     }   
-    
-    def onchange_profile_id(self, cr, uid, ids, profile_id, context=None):
+
+    def onchange_import_config_id(self, cr, uid, ids, import_config_id, context=None):
         res={}
-        if profile_id:
-            c = self.pool.get("account.statement.profil").browse(cr,uid,profile_id)
+        if import_config_id:
+            c = self.pool.get("account.statement.profil").browse(cr,uid,import_config_id)
             res = {'value': {'partner_id': c.partner_id and c.partner_id.id or False,
                     'journal_id': c.journal_id and c.journal_id.id or False, 'commission_account_id': \
                     c.commission_account_id and c.commission_account_id.id or False, 
@@ -86,35 +77,31 @@ class CreditPartnerStatementImporter(osv.osv_memory):
                     'balance_check':c.balance_check,}}
         return res
 
-    def _check_extension(self, filename):
-        (shortname, ftype) = os.path.splitext(filename)
-        if not ftype:
-            #We do not use osv exception we do not want to have it logged
-            raise Exception(_('Please use a file with an extention'))
-        return ftype
-
     def import_statement(self, cursor, uid, req_id, context=None):
         """This Function import credit card agency statement"""
         context = context or {}
         if isinstance(req_id, list):
             req_id = req_id[0]
         importer = self.browse(cursor, uid, req_id, context)
-        ftype = self._check_extension(importer.file_name)
+        (shortname, ftype) = os.path.splitext(importer.file_name)
+        if not ftype:
+            #We do not use osv exception we do not want to have it logged
+            raise Exception(_('Please use a file with an extention'))
         sid = self.pool.get(
-                'account.statement.profil').statement_import(
+                'account.bank.statement').credit_statement_import(
                                             cursor,
                                             uid,
                                             False,
-                                            importer.profile_id.id,
+                                            importer.import_config_id.id,
                                             importer.input_statement,
                                             ftype.replace('.',''),
                                             context=context
-                                        )
-        return {
-            'domain': "[('id','in', ["+','.join(map(str,[sid]))+"])]",
-            'name': 'Imported Bank Statement',
-            'view_type': 'form',
-            'view_mode': 'tree,form',
-            'res_model': 'account.bank.statement',
-            'type': 'ir.actions.act_window',
-        }
+        )
+        obj_data = self.pool.get('ir.model.data')
+        act_obj = self.pool.get('ir.actions.act_window')
+        result = obj_data.get_object_reference(cursor, uid, 'account_statement_import', 'action_treasury_statement_tree')
+        
+        id = result and result[1] or False
+        result = act_obj.read(cursor, uid, [id], context=context)[0]
+        result['domain'] = str([('id','in',[sid])])
+        return result

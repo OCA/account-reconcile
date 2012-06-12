@@ -1,8 +1,7 @@
-# -*- coding: utf-8 -*-
-##############################################################################
+# -*- coding: utf-8 -*- ##############################################################################
 #
-#    Author: Guewen Baconnier
-#    Copyright 2012 Camptocamp SA
+#    Author: Nicolas Bessi, Joel Grand-Guillaume
+#    Copyright 2011-2012 Camptocamp SA
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -25,66 +24,26 @@
  'maintainer': 'Camptocamp',
  'category': 'Finance',
  'complexity': 'normal',
- 'depends': ['account_easy_reconcile'],
+ 'depends': ['base_transaction_id', 'account_easy_reconcile'],
  'description': """
-Advanced reconciliation methods for the module account_easy_reconcile.
+This module allows you auto reconcile entries with payment.
+It is mostly used in E-Commerce, but could also be useful in other cases.
 
-account_easy_reconcile, which is a dependency, is available in the branch:
-lp:~openerp-community-committers/+junk/account-extra-addons
-This branch is temporary and will soon be merged with the Akretion master
-branch, but the master branch does not already exist. Sorry for the
-inconvenience.
+The automatic reconciliation matches a transaction ID, if available, propagated from the Sale Order.
+It can also search for the sale order name in the origin or description of the move line.
 
-In addition to the features implemented in account_easy_reconcile, which are:
- - reconciliation facilities for big volume of transactions
- - setup different profiles of reconciliation by account
- - each profile can use many methods of reconciliation
- - this module is also a base to create others reconciliation methods
-    which can plug in the profiles
- - a profile a reconciliation can be run manually or by a cron
- - monitoring of reconcilation runs with a few logs
-
-It implements a basis to created advanced reconciliation methods in a few lines
-of code.
-
-Typically, such a method can be:
- - Reconcile entries if the partner and the ref are equal
- - Reconcile entries if the partner is equal and the ref is the same than ref
-   or name
- - Reconcile entries if the partner is equal and the ref match with a pattern
-
-And they allows:
- - Reconciliations with multiple credit / multiple debit lines
- - Partial reconciliations
- - Write-off amount as well
-
-A method is already implemented in this module, it matches on entries:
- * Partner
- * Ref on credit move lines should be case insensitive equals to the ref or
-   the name of the debit move line
-
-The base class to find the reconciliations is built to be as efficient as
-possible.
-
-
-So basically, if you have an invoice with 3 payments (one per month), the first
-month, it will partial reconcile the debit move line with the first payment, the second
-month, it will partial reconcile the debit move line with 2 first payments,
-the third month, it will make the full reconciliation.
-
-This module is perfectly adapted for E-Commerce business where a big volume of
-move lines and so, reconciliations, are involved and payments often come from
-many offices.
-
+Basically, this module will match account move line with a matching reference on a same account.
+It will make a partial reconciliation if more than one move has the same reference (like 3x payments)
+Once all payment will be there, it will make a full reconciliation.
+You can choose a write-off amount as well.
  """,
  'website': 'http://www.camptocamp.com',
  'init_xml': [],
- 'update_xml': ['easy_reconcile_view.xml'],
+ 'update_xml': [],
  'demo_xml': [],
  'test': [],
  'images': [],
  'installable': True,
  'auto_install': False,
  'license': 'AGPL-3',
- 'application': True,
 }

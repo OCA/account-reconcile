@@ -15,14 +15,12 @@
             </field>
         </record>
         <record id="view_account_move_line_filter" model="ir.ui.view">
-            <field name="name">account.move.line.search.add_field</field>
             <field name="model">account.move.line</field>
             <field name="type">search</field>
             <field name="inherit_id" ref="account.view_account_move_line_filter"/>
             <field name="arch" type="xml">
                 <field name="period_id" context="{'period_id':self}" position="after">
                     <field name="statement_id"/>
-                    <field name="ref"/>
                 </field>
             </field>
         </record>
@@ -42,7 +40,6 @@
                 <field name="receivable_account_id" />
                 <field name="force_partner_on_bank"/>
                 <field name="balance_check"/>
-                <field name="bank_statement_prefix"/>
             </form>
         </field>
     </record>
@@ -93,8 +90,7 @@
         <field name="type">search</field>
         <field name="arch" type="xml">
              <xpath expr="/search/group/field[@name='name']" position="before">
-                    <field name="id"/>
-                    <field name="profile_id"/>
+                    <field name="import_config_id"/>
                     <field name="credit_partner_id"/>
                     <separator orientation="vertical"/>
             </xpath>
@@ -112,11 +108,8 @@
         <field name="inherit_id" ref="account.view_bank_statement_tree"/>
         <field name="type">tree</field>
         <field name="arch" type="xml">
-            <xpath expr="/tree/field[@name='name']" position="before">
-                 <field name="id"/>
-            </xpath>
             <xpath expr="/tree/field[@name='name']" position="after">
-                <field name="profile_id"/>
+                <field name="import_config_id"/>
             </xpath>
             <xpath expr="/tree/field[@name='period_id']" position="replace">
                 <field name="credit_partner_id"/>
@@ -138,12 +131,12 @@
             </xpath>
             <!-- Add a new group before the first one with name, profil and date -->
             <xpath expr="/form/group[@col='7']" position="before">
-                <group col="8" colspan="4">
-                    <field name="profile_id" select="1" required="1" on_change="onchange_imp_config_id(profile_id)" widget="selection"/>
-                    <field name="date" select="1" on_change="onchange_date(date, company_id)"/>
+                <group col="6" colspan="4">
                     <field name="name" select="1"/>
+                    <field name="import_config_id" select="1" required="1" on_change="onchange_imp_config_id(import_config_id)" widget="selection"/>
+                    <field name="date" select="1" on_change="onchange_date(date, company_id)"/>
                 </group>
-                <separator string="Profile Details" colspan="4"/>
+                <separator string="Details" colspan="4"/>
             </xpath>
             <!-- Make balance visible or not depending on profil -->
             <xpath expr="/form/group/field[@name='balance_start']" position="replace">
@@ -158,7 +151,7 @@
                 </group>
             </xpath>
             <xpath expr="/form/group/field[@name='balance_end']" position="replace">
-                 <field name="balance_end"/>
+                 <field name="balance_end" attrs="{'invisible':[('balance_check','=',False)]}"/>
             </xpath>
             
             <xpath expr="/form/group/field[@name='journal_id']" position="attributes">
@@ -173,36 +166,53 @@
                  <field name="id"/>
             </xpath>
             <xpath expr="/form/notebook/page/field/tree/field[@name='partner_id']" position="replace">
-                 <field name="partner_id" on_change="onchange_partner_id(partner_id,parent.profile_id)"/>
+                 <field name="partner_id" on_change="onchange_partner_id(partner_id,parent.import_config_id)"/>
             </xpath>
             <xpath expr="/form/notebook/page/field/form/field[@name='date']" position="before">
                  <field name="id"/>
             </xpath>
             <!-- Adapt onchange signature -->
             <xpath expr="/form/notebook/page/field/tree/field[@name='partner_id']" position="replace">
-                 <field name="partner_id" on_change="onchange_partner_id(partner_id,parent.profile_id)"/>
+                 <field name="partner_id" on_change="onchange_partner_id(partner_id,parent.import_config_id)"/>
             </xpath>
             <xpath expr="/form/notebook/page/field/form/field[@name='partner_id']" position="replace">
-                 <field name="partner_id" on_change="onchange_partner_id(partner_id,parent.profile_id)"/>
+                 <field name="partner_id" on_change="onchange_partner_id(partner_id,parent.import_config_id)"/>
             </xpath>
             <xpath expr="/form/notebook/page/field/form/field[@name='type']" position="replace">
-                 <field name="type" on_change="onchange_type(partner_id, type, parent.profile_id)"/>
+                 <field name="type" on_change="onchange_type(partner_id, type, parent.import_config_id)"/>
             </xpath>
             <xpath expr="/form/notebook/page/field/tree/field[@name='type']" position="replace">
-                 <field name="type" on_change="onchange_type(partner_id, type, parent.profile_id)"/>
+                 <field name="type" on_change="onchange_type(partner_id, type, parent.import_config_id)"/>
             </xpath>
             
         </field>
     </record>
-
     
-        <act_window id="act_bank_statement_from_profile"
-            name="Open Statements" 
-            res_model="account.bank.statement" 
-            src_model="account.statement.profil" 
-            domain="[('profile_id','=',active_id),]"
-            view_type="form"/>
+    <!--     <record id="action_treasury_statement_tree" model="ir.actions.act_window">
+            <field name="name">Intermediate Statements</field>
+            <field name="res_model">account.bank.statement</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form,graph</field>
+            <field name="domain">[('journal_id.type', '=', 'bank')]</field>
+            <field name="context">{'journal_type':'bank'}</field>
+            <field name="search_view_id" ref="view_treasury_statement_search"/>
+            <field name="help">A treasury statement is a summary of all financial transactions occurring a credit card or any other type of intermediate financial account.</field>
+        </record>
+        <record model="ir.actions.act_window.view" id="action_treasury_statement_tree_bank">
+            <field name="sequence" eval="1"/>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="view_treasury_statement_tree"/>
+            <field name="act_window_id" ref="action_treasury_statement_tree"/>
+        </record>
+        <record model="ir.actions.act_window.view" id="action_treasury_statement_form_bank">
+            <field name="sequence" eval="1"/>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="view_treasury_statement_form"/>
+            <field name="act_window_id" ref="action_treasury_statement_tree"/>
+        </record>
         
+        
+        <menuitem string="Treasury Statements" action="action_treasury_statement_tree" id="menu_treasury_statement_tree" parent="account.menu_finance_bank_and_cash" sequence="9"/>     -->
 
 </data>
 </openerp>

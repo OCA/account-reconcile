@@ -32,9 +32,7 @@
  """,
  'website': 'http://www.camptocamp.com',
  'init_xml': [],
- 'update_xml': [
-        "statement_voucher_view.xml",
- ],
+ 'update_xml': [],
  'demo_xml': [],
  'test': [],
  'installable': True,
