@@ -19,7 +19,7 @@
 
 import time
 import string
-from osv import fields,osv
+from osv import fields, osv
 from tools.translate import _
 from tools import DEFAULT_SERVER_DATETIME_FORMAT
 
@@ -31,16 +31,16 @@ class account_easy_reconcile_method(osv.osv):
     def onchange_name(self, cr, uid, id, name, write_off, context=None):
         if name in ['action_rec_auto_name', 'action_rec_auto_partner']:
             if write_off>0:
-                return {'value' : {'require_write_off' : True, 'require_account_id' : True, 'require_journal_id' : True}}
-            return {'value' : {'require_write_off' : True}}
+                return {'value': {'require_write_off': True, 'require_account_id': True, 'require_journal_id': True}}
+            return {'value': {'require_write_off': True}}
         return {}
 
     def onchange_write_off(self, cr, uid, id, name, write_off, context=None):
         if name in ['action_rec_auto_name', 'action_rec_auto_partner']:
             if write_off>0:
-                return {'value' : {'require_account_id' : True, 'require_journal_id' : True}}
+                return {'value': {'require_account_id': True, 'require_journal_id': True}}
             else:
-                return {'value' : {'require_account_id' : False, 'require_journal_id' : False}}
+                return {'value': {'require_account_id': False, 'require_journal_id': False}}
         return {}
 
     def _get_all_rec_method(self, cr, uid, context=None):
@@ -59,11 +59,11 @@ class account_easy_reconcile_method(osv.osv):
             'account_lost_id': fields.many2one('account.account', 'Account Lost'),
             'account_profit_id': fields.many2one('account.account', 'Account Profit'),
             'journal_id': fields.many2one('account.journal', 'Journal'),
-            'require_write_off' : fields.boolean('Require Write-off'),
-            'require_account_id' : fields.boolean('Require Account'),
-            'require_journal_id' : fields.boolean('Require Journal'),
+            'require_write_off': fields.boolean('Require Write-off'),
+            'require_account_id': fields.boolean('Require Account'),
+            'require_journal_id': fields.boolean('Require Journal'),
             'date_base_on': fields.selection([('newest', 'the most recent'), ('actual', 'today'), ('credit_line', 'credit line date'), ('debit_line', 'debit line date')], 'Date Base On'),
-            'filter' : fields.char('Filter', size=128),
+            'filter': fields.char('Filter', size=128),
     }
 
     _defaults = {
@@ -120,9 +120,9 @@ class account_easy_reconcile(osv.osv):
                 if check and abs(credit_line[1] - debit_line[2]) <= max:
                     if context.get('write_off', 0) > 0 and abs(credit_line[1] - debit_line[2]) > 0.001:
                         if credit_line[1] < debit_line[2]:
-                            writeoff_account_id = context.get('account_profit_id',False)
+                            writeoff_account_id = context.get('account_profit_id', False)
                         else:
-                            writeoff_account_id = context.get('account_lost_id',False)
+                            writeoff_account_id = context.get('account_lost_id', False)
 
                     #context['date_base_on'] = 'credit_line'
                     context['comment'] = _('Write-Off %s')%credit_line[0]
@@ -208,7 +208,7 @@ class account_easy_reconcile(osv.osv):
             log_lines[0:0] = [_('%s : %d lines have been reconciled (%s)') %
                 (time.strftime(DEFAULT_SERVER_DATETIME_FORMAT), total_rec, details[0:-2])]
             log = "\n".join(log_line)
-            self.write(cr, uid, rec_id, {'rec_log' : log}, context=context)
+            self.write(cr, uid, rec_id, {'rec_log': log}, context=context)
         return True
 
 account_easy_reconcile()
@@ -219,7 +219,7 @@ class account_easy_reconcile_method(osv.osv):
     _inherit = 'account.easy.reconcile.method'
 
     _columns = {
-            'task_id' : fields.many2one('account.easy.reconcile', 'Task', required=True, ondelete='cascade'),
+            'task_id': fields.many2one('account.easy.reconcile', 'Task', required=True, ondelete='cascade'),
     }
 
 account_easy_reconcile_method()
