@@ -22,6 +22,7 @@ from tools.translate import _
 import time
 import string
 
+
 class account_easy_reconcile_method(osv.osv):
     _name = 'account.easy.reconcile.method'
     _description = 'reconcile method for account_easy_reconcile'
@@ -62,29 +63,28 @@ class account_easy_reconcile_method(osv.osv):
             'require_journal_id' : fields.boolean('Require Journal'),
             'date_base_on': fields.selection([('newest', 'the most recent'), ('actual', 'today'), ('credit_line', 'credit line date'), ('debit_line', 'debit line date')], 'Date Base On'),
             'filter' : fields.char('Filter', size=128),
-            }
-        
+    }
 
     _defaults = {
         'write_off': lambda *a: 0,
-                }
+    }
 
     _order = 'sequence'
 
-
 account_easy_reconcile_method()
+
 
 class account_easy_reconcile(osv.osv):
     _name = 'account.easy.reconcile'
     _description = 'account easy reconcile'
-    
+
     def _get_unrec_number(self, cr, uid, ids, name, arg, context=None):
         obj_move_line = self.pool.get('account.move.line')
         res={}
         for task in self.read(cr, uid, ids, ['account'], context=context):
             res[task['id']] = len(obj_move_line.search(cr, uid, [('account_id', '=', task['account'][0]), ('reconcile_id', '=', False)], context=context))
         return res
-    
+
     _columns = {
         'name': fields.char('Name', size=64, required=True),
         'account': fields.many2one('account.account', 'Account', required=True),
@@ -93,7 +93,7 @@ class account_easy_reconcile(osv.osv):
         'rec_log': fields.text('log', readonly=True),
         'unreconcile_entry_number': fields.function(_get_unrec_number, method=True, type='integer', string='Unreconcile Entries'),
     }
-    
+
     def rec_auto_lines_simple(self, cr, uid, lines, context=None):
         if not context:
             context={}
@@ -144,7 +144,6 @@ class account_easy_reconcile(osv.osv):
                     break
             count+=1
         return res
-     
 
     def get_params(self, cr, uid, account_id, context):
         if context.get('filter'):
@@ -158,7 +157,6 @@ class account_easy_reconcile(osv.osv):
             where_clause_params = (account_id,)
         return where_clause, where_clause_params
 
-
     def action_rec_auto_name(self, cr, uid, account_id, context):
         (qu1, qu2) = self.get_params(cr, uid, account_id, context)
         cr.execute("""
@@ -170,7 +168,6 @@ class account_easy_reconcile(osv.osv):
             qu2)
         lines = cr.fetchall()
         return self.rec_auto_lines_simple(cr, uid, lines, context)
-  
 
     def action_rec_auto_partner(self, cr, uid, account_id, context):
         (qu1, qu2) = self.get_params(cr, uid, account_id, context)
@@ -183,7 +180,7 @@ class account_easy_reconcile(osv.osv):
             qu2)
         lines = cr.fetchall()
         return self.rec_auto_lines_simple(cr, uid, lines, context)
-    
+
     def action_rec_auto(self, cr, uid, ids, context=None):
         if not context:
             context={}
@@ -203,14 +200,17 @@ class account_easy_reconcile(osv.osv):
             log = "\n".join(log_line)
             self.write(cr, uid, id, {'rec_log' : log}, context=context)
         return True
-    
+
 account_easy_reconcile()
 
 
 class account_easy_reconcile_method(osv.osv):
+
     _inherit = 'account.easy.reconcile.method'
 
     _columns = {
             'task_id' : fields.many2one('account.easy.reconcile', 'Task', required=True, ondelete='cascade'),
-        }
+    }
+
 account_easy_reconcile_method()
+
