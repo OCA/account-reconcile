@@ -98,92 +98,92 @@ class account_easy_reconcile(osv.osv):
     def rec_auto_lines_simple(self, cr, uid, lines, context=None):
         if not context:
             context={}
+
         count = 0
         res = 0
         precision = self.pool.get('decimal.precision').precision_get(
             cr, uid, 'Account')
-        max_diff = context.get('write_off', 0)
+        max_diff = context.get('write_off', 0.)
         while (count < len(lines)):
             for i in range(count+1, len(lines)):
                 writeoff_account_id = False
-                if lines[count][0] != lines[i][0]:
+                if lines[count]['key'] != lines[i]['key']:
                     break
 
                 check = False
-                if lines[count][1] > 0 and lines[i][2] > 0:
+                if lines[count]['credit'] > 0 and lines[i]['debit'] > 0:
                     credit_line = lines[count]
                     debit_line = lines[i]
                     check = True
-                elif lines[i][1] > 0  and lines[count][2] > 0:
+                elif lines[i]['credit'] > 0  and lines[count]['debit'] > 0:
                     credit_line = lines[i]
                     debit_line = lines[count]
                     check = True
                 if not check:
                     continue
 
-                diff = round(abs(credit_line[1] - debit_line[2]), precision)
+                diff = round(abs(credit_line['credit'] - debit_line['debit']), precision)
                 if diff <= max_diff:
                     if context.get('write_off', 0) > 0 and diff:
-                        if credit_line[1] < debit_line[2]:
+                        if credit_line['credit'] < debit_line['debit']:
                             writeoff_account_id = context.get('account_profit_id', False)
                         else:
                             writeoff_account_id = context.get('account_lost_id', False)
 
-                    #context['date_base_on'] = 'credit_line'
-                    context['comment'] = _('Write-Off %s') % credit_line[0]
+                    context['comment'] = _('Write-Off %s') % credit_line['key']
 
                     if context.get('date_base_on') == 'credit_line':
-                        date = credit_line[4]
+                        date = credit_line['date']
                     elif context.get('date_base_on') == 'debit_line':
-                        date = debit_line[4]
+                        date = debit_line['date']
                     elif context.get('date_base_on') == 'newest':
-                        date = (credit_line[4] > debit_line[4]) and credit_line[4] or debit_line[4]
+                        date = (credit_line['date'] > debit_line['date']) and credit_line['date'] or debit_line['date']
                     else:
                         date = None
 
                     context['date_p'] = date
                     period_id = self.pool.get('account.period').find(cr, uid, dt=date, context=context)[0]
 
-                    self.pool.get('account.move.line').reconcile(cr, uid, [lines[count][3], lines[i][3]], writeoff_acc_id=writeoff_account_id, writeoff_period_id=period_id, writeoff_journal_id=context.get('journal_id'), context=context)
+                    self.pool.get('account.move.line').reconcile(cr, uid, [lines[count]['id'], lines[i]['id']], writeoff_acc_id=writeoff_account_id, writeoff_period_id=period_id, writeoff_journal_id=context.get('journal_id'), context=context)
                     del lines[i]
-                    res+=2
+                    res += 2
                     break
-            count+=1
+            count += 1
         return res
 
     def get_params(self, cr, uid, account_id, context):
         if context.get('filter'):
             (from_clause, where_clause, where_clause_params) = self.pool.get('account.move.line')._where_calc(cr, uid, context['filter'], context=context).get_sql()
             if where_clause:
-                where_clause = " AND %s"%where_clause
-            where_clause_params = (account_id,) + tuple(where_clause_params)
+                where_clause = " AND %s" % where_clause
+            where_clause_params = account_id, + tuple(where_clause_params)
         else:
             where_clause = ''
-            where_clause_params = (account_id,)
+            where_clause_params = account_id,
         return where_clause, where_clause_params
 
     def action_rec_auto_name(self, cr, uid, account_id, context):
         (qu1, qu2) = self.get_params(cr, uid, account_id, context)
         cr.execute("""
-            SELECT name, credit, debit, id, date
+            SELECT name as key, credit, debit, id, date
             FROM account_move_line
             WHERE account_id=%s
             AND reconcile_id IS NULL
             AND name IS NOT NULL""" + qu1 + " ORDER BY name",
             qu2)
-        lines = cr.fetchall()
+        lines = cr.dictfetchall()
         return self.rec_auto_lines_simple(cr, uid, lines, context)
 
     def action_rec_auto_partner(self, cr, uid, account_id, context):
         (qu1, qu2) = self.get_params(cr, uid, account_id, context)
         cr.execute("""
-            SELECT partner_id, credit, debit, id, date
+            SELECT partner_id as key, credit, debit, id, date
             FROM account_move_line
             WHERE account_id=%s
             AND reconcile_id IS NULL
             AND partner_id IS NOT NULL""" + qu1 + " ORDER BY partner_id",
             qu2)
-        lines = cr.fetchall()
+        lines = cr.dictfetchall()
         return self.rec_auto_lines_simple(cr, uid, lines, context)
 
     def action_rec_auto(self, cr, uid, ids, context=None):
@@ -212,7 +212,7 @@ class account_easy_reconcile(osv.osv):
             log_lines = log and log.splitlines or []
             log_lines[0:0] = [_('%s : %d lines have been reconciled (%s)') %
                 (time.strftime(DEFAULT_SERVER_DATETIME_FORMAT), total_rec, details[0:-2])]
-            log = "\n".join(log_line)
+            log = "\n".join(log_lines)
             self.write(cr, uid, rec_id, {'rec_log': log}, context=context)
         return True
 
