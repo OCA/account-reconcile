@@ -9,7 +9,7 @@
         <field name="model">account.easy.reconcile</field>
         <field name="type">form</field>
         <field name="arch" type="xml">
-            <form string="easy reconcile">
+            <form string="Automatic Easy Reconcile">
                 <separator colspan="4" string="Task Information" />
                 <field name="name" select="1"/>
                 <field name="account"/>
@@ -30,7 +30,7 @@
         <field name="model">account.easy.reconcile</field>
         <field name="type">tree</field>
         <field name="arch" type="xml">
-            <tree string="easy reconcile">
+            <tree string="Automatic Easy Reconcile">
                 <field name="name"/>
                 <field name="account"/> 
                 <field name="reconcile_method"/>
@@ -41,7 +41,7 @@
     </record>
 
     <record id="action_account_easy_reconcile" model="ir.actions.act_window">
-        <field name="name">account easy reconcile</field>
+        <field name="name">Easy Automatic Reconcile</field>
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">account.easy.reconcile</field>
         <field name="view_type">form</field>
@@ -58,18 +58,15 @@
         <field name="model">account.easy.reconcile.method</field>
         <field name="type">form</field>
         <field name="arch" type="xml">
-            <form string="easy reconcile method">
+            <form string="Automatic Easy Reconcile Method">
                 <field name="sequence"/>
-                <field name="name" on_change="onchange_name(name, write_off)"/>
-                <field name="write_off" attrs="{'required':[('require_write_off','=',True)]}"/>
-                <field name="account_lost_id" attrs="{'required':[('require_account_id','=',True)]}"/>
-                <field name="account_profit_id" attrs="{'required':[('require_account_id','=',True)]}"/>
-                <field name="journal_id" attrs="{'required':[('require_journal_id','=',True)]}"/>
+                <field name="name"/>
+                <field name="write_off"/>
+                <field name="account_lost_id" attrs="{'required':[('write_off','>',0)]}"/>
+                <field name="account_profit_id" attrs="{'required':[('write_off','>',0)]}"/>
+                <field name="journal_id" attrs="{'required':[('write_off','>',0)]}"/>
                 <field name="date_base_on"/>
                 <field name="filter"/>
-                <field name="require_write_off" invisible="1"/>
-                <field name="require_account_id" invisible="1"/>
-                <field name="require_journal_id" invisible="1"/>
             </form>
         </field>
     </record>
@@ -80,19 +77,15 @@
         <field name="model">account.easy.reconcile.method</field>
         <field name="type">tree</field>
         <field  name="arch" type="xml">
-            <tree editable="top" string="easy reconcile method">
+            <tree editable="top" string="Automatic Easy Reconcile Method">
                 <field name="sequence"/>
-                <field name="name" on_change="onchange_name(name, write_off)"/>
-                <field name="write_off" attrs="{'required':[('require_write_off','=',True)]}" on_change="onchange_write_off(name, write_off)"/>
-                <field name="account_lost_id" attrs="{'required':[('require_account_id','=',True)]}"/>
-                <field name="account_profit_id" attrs="{'required':[('require_account_id','=',True)]}"/>
-                <field name="journal_id" attrs="{'required':[('require_journal_id','=',True)]}"/>
+                <field name="name"/>
+                <field name="write_off"/>
+                <field name="account_lost_id" attrs="{'required':[('write_off','>',0)]}"/>
+                <field name="account_profit_id" attrs="{'required':[('write_off','>',0)]}"/>
+                <field name="journal_id" attrs="{'required':[('write_off','>',0)]}"/>
                 <field name="date_base_on"/>
                 <field name="filter"/>
-                <field name="require_write_off" invisible="1"/>
-                <field name="require_account_id" invisible="1"/>
-                <field name="require_journal_id" invisible="1"/>
-
             </tree>
         </field>
     </record>

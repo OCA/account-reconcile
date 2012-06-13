@@ -31,23 +31,6 @@ class account_easy_reconcile_method(Model):
     _name = 'account.easy.reconcile.method'
     _description = 'reconcile method for account_easy_reconcile'
 
-    def onchange_name(self, cr, uid, id, name, write_off, context=None):
-        if name in ['easy.reconcile.simple.name',
-                'easy.reconcile.simple.partner']:
-            if write_off>0:
-                return {'value': {'require_write_off': True, 'require_account_id': True, 'require_journal_id': True}}
-            return {'value': {'require_write_off': True}}
-        return {}
-
-    def onchange_write_off(self, cr, uid, id, name, write_off, context=None):
-        if name in ['easy.reconcile.simple.name',
-                'easy.reconcile.simple.partner']:
-            if write_off>0:
-                return {'value': {'require_account_id': True, 'require_journal_id': True}}
-            else:
-                return {'value': {'require_account_id': False, 'require_journal_id': False}}
-        return {}
-
     def _get_all_rec_method(self, cr, uid, context=None):
         return [
             ('easy.reconcile.simple.name', 'Simple method based on amount and name'),
@@ -64,9 +47,6 @@ class account_easy_reconcile_method(Model):
             'account_lost_id': fields.many2one('account.account', 'Account Lost'),
             'account_profit_id': fields.many2one('account.account', 'Account Profit'),
             'journal_id': fields.many2one('account.journal', 'Journal'),
-            'require_write_off': fields.boolean('Require Write-off'),
-            'require_account_id': fields.boolean('Require Account'),
-            'require_journal_id': fields.boolean('Require Journal'),
             'date_base_on': fields.selection(
                 [('newest', 'Most recent move line'),
                  ('actual', 'Today'),
