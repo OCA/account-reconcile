@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
 ##############################################################################
 #
-#    Author: Guewen Baconnier
-#    Copyright 2012 Camptocamp SA
+#    Copyright 2012 Camptocamp SA (Guewen Baconnier)
 #    Copyright (C) 2010   Sébastien Beau
 #
 #    This program is free software: you can redistribute it and/or modify
