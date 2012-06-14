@@ -35,6 +35,13 @@ class easy_reconcile_base(AbstractModel):
     }
 
     def automatic_reconcile(self, cr, uid, ids, context=None):
+        if isinstance(ids, (int, long)):
+            ids = [ids]
+        assert len(ids) == 1, "Has to be called on one id"
+        rec = self.browse(cr, uid, ids[0], context=context)
+        return self._action_rec(cr, uid, rec, context=context)
+
+    def _action_rec(self, cr, uid, rec, context=None):
         """Must be inherited to implement the reconciliation"""
         raise NotImplementedError
 

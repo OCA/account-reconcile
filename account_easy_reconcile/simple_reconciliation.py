@@ -87,13 +87,6 @@ class easy_reconcile_simple(AbstractModel):
         lines = cr.dictfetchall()
         return self.rec_auto_lines_simple(cr, uid, lines, context)
 
-    def automatic_reconcile(self, cr, uid, ids, context=None):
-        if isinstance(ids, (int, long)):
-            ids = [ids]
-        assert len(ids) == 1, "Has to be called on one id"
-        rec = self.browse(cr, uid, ids[0], context=context)
-        return self._action_rec_simple(cr, uid, rec, context=context)
-
 
 class easy_reconcile_simple_name(TransientModel):
 
