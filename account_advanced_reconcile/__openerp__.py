@@ -24,18 +24,39 @@
  'maintainer': 'Camptocamp',
  'category': 'Finance',
  'complexity': 'normal',
- 'depends': ['base_transaction_id', 'account_easy_reconcile'],
+ 'depends': ['account_easy_reconcile'],
  'description': """
-This module allows you auto reconcile entries with payment.
-It is mostly used in E-Commerce, but could also be useful in other cases.
+Advanced reconciliation methods for the module account_easy_reconcile.
 
-The automatic reconciliation matches a transaction ID, if available, propagated from the Sale Order.
-It can also search for the sale order name in the origin or description of the move line.
+It implements a basis to created advanced reconciliation methods in a few lines
+of code.
 
-Basically, this module will match account move line with a matching reference on a same account.
-It will make a partial reconciliation if more than one move has the same reference (like 3x payments)
-Once all payment will be there, it will make a full reconciliation.
+Typically, such a method can be:
+ - Reconcile entries if the partner and the ref are equal
+ - Reconcile entries if the partner is equal and the ref is the same than ref
+   or name
+ - Reconcile entries if the partner is equal and the ref match with a pattern
+
+A method is already implemented in this module, it matches on entries:
+ * Partner
+ * Ref on credit move lines should be case insensitive equals to the ref or
+   the name of the debit move line
+
+The base class to find the reconciliations is built to be as efficient as
+possible.
+
+Reconciliations with multiple credit / debit lines is possible.
+Partial reconciliation are generated.
 You can choose a write-off amount as well.
+
+So basically, if you have an invoice with 3 payments (one per month), the first
+month, it will partial reconcile the debit move line with the first payment, the second
+month, it will partial reconcile the debit move line with 2 first payments,
+the third month, it will make the full reconciliation.
+
+This module is perfectly adapted for E-Commerce business where a big volume of
+move lines and so, reconciliations, is involved and payments often come from
+many offices.
  """,
  'website': 'http://www.camptocamp.com',
  'init_xml': [],
