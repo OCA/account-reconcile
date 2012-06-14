@@ -25,7 +25,7 @@
  'maintainer': 'Camptocamp',
  'category': 'Finance',
  'complexity': 'normal', #easy, normal, expert
- 'depends': ['base_transaction_id'],
+ 'depends': ['account'],
  'description': """
  The goal of this module is to improve the basic bank statement, help dealing with huge volume of
  reconciliation through payment offices like Paypal, Lazer, Visa, Amazon and so on. 

@@ -189,31 +189,13 @@
         </field>
     </record>
     
-    <!--     <record id="action_treasury_statement_tree" model="ir.actions.act_window">
-            <field name="name">Intermediate Statements</field>
-            <field name="res_model">account.bank.statement</field>
-            <field name="view_type">form</field>
-            <field name="view_mode">tree,form,graph</field>
-            <field name="domain">[('journal_id.type', '=', 'bank')]</field>
-            <field name="context">{'journal_type':'bank'}</field>
-            <field name="search_view_id" ref="view_treasury_statement_search"/>
-            <field name="help">A treasury statement is a summary of all financial transactions occurring a credit card or any other type of intermediate financial account.</field>
-        </record>
-        <record model="ir.actions.act_window.view" id="action_treasury_statement_tree_bank">
-            <field name="sequence" eval="1"/>
-            <field name="view_mode">tree</field>
-            <field name="view_id" ref="view_treasury_statement_tree"/>
-            <field name="act_window_id" ref="action_treasury_statement_tree"/>
-        </record>
-        <record model="ir.actions.act_window.view" id="action_treasury_statement_form_bank">
-            <field name="sequence" eval="1"/>
-            <field name="view_mode">form</field>
-            <field name="view_id" ref="view_treasury_statement_form"/>
-            <field name="act_window_id" ref="action_treasury_statement_tree"/>
-        </record>
+        <act_window id="act_bank_statement_from_profile"
+            name="Open Statements" 
+            res_model="account.bank.statement" 
+            src_model="account.statement.profil" 
+            context="{'search_default_profile_id': [active_id]}"
+            view_type="tree"/>
         
-        
-        <menuitem string="Treasury Statements" action="action_treasury_statement_tree" id="menu_treasury_statement_tree" parent="account.menu_finance_bank_and_cash" sequence="9"/>     -->
 
 </data>
 </openerp>

@@ -29,13 +29,19 @@
  'description': """
  The goal of this module is to improve the basic bank statement, help dealing with huge volume of
  reconciliation by providing basic rules to identify the partner of a bank statement line.
- 
  It will also take care of the chosen profile to make his work.
+ 
+ His goal is to provide an easy way to fullfill the info of a bank statement line based on rules.
+ The reference of the line is always used by the reconciliation process. We're supposed to copy 
+ there (or write manually) the matching string. That can be : the order Number or an invoice number, 
+ or anything that will be found in the invoice entry part to make the match.
+ 
  """,
  'website': 'http://www.camptocamp.com',
  'init_xml': [],
  'update_xml': [
      'statement_view.xml',
+     'data.xml',
  ],
  'demo_xml': [],
  'test': [],

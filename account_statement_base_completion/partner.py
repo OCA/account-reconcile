@@ -51,32 +51,32 @@ class res_partner(osv.osv):
     #         return partner_id and partner_id[0]
     #     return False
 
-    def get_partner_from_label_based_on_bank_statement_label(self, cr, uid, label, context=None):
-        ids = self.search(cr, uid, [['bank_statement_label', '!=', False]], context=context)
-        for partner in self.browse(cr, uid, ids, context=context):
-            for partner_label in partner.bank_statement_label.split(';'):
-                if partner_label in label:
-                    return partner.id
-        return False
-
-    def get_supplier_partner_from_label_based_on_name(self, cr, uid, label, context=None):
-        supplier_ids = self.search(cr, uid, [['supplier', '=', True]], context=context)
-        for partner in self.browse(cr, uid, supplier_ids, context=context):
-            if partner.name in label:
-                return partner.id
-        return False
-
-    def get_partner_account(self, cr, uid, id, amount, context=None):
-        partner = self.browse(cr, uid, id, context=context)
-        if partner.supplier and not partner.customer:
-            return partner.property_account_payable.id
-        if partner.customer and not partner.supplier:
-            return partner.property_account_receivable.id
-        
-        if amount >0:
-            return partner.property_account_receivable.id
-        else:
-            return partner.property_account_payable.id
+    # def get_partner_from_label_based_on_bank_statement_label(self, cr, uid, label, context=None):
+    #       ids = self.search(cr, uid, [['bank_statement_label', '!=', False]], context=context)
+    #       for partner in self.browse(cr, uid, ids, context=context):
+    #           for partner_label in partner.bank_statement_label.split(';'):
+    #               if partner_label in label:
+    #                   return partner.id
+    #       return False
+    # 
+    #   def get_supplier_partner_from_label_based_on_name(self, cr, uid, label, context=None):
+    #       supplier_ids = self.search(cr, uid, [['supplier', '=', True]], context=context)
+    #       for partner in self.browse(cr, uid, supplier_ids, context=context):
+    #           if partner.name in label:
+    #               return partner.id
+    #       return False
+    # 
+    #   def get_partner_account(self, cr, uid, id, amount, context=None):
+    #       partner = self.browse(cr, uid, id, context=context)
+    #       if partner.supplier and not partner.customer:
+    #           return partner.property_account_payable.id
+    #       if partner.customer and not partner.supplier:
+    #           return partner.property_account_receivable.id
+    #       
+    #       if amount >0:
+    #           return partner.property_account_receivable.id
+    #       else:
+    #           return partner.property_account_payable.id
 
 
 

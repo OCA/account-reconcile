@@ -13,35 +13,31 @@
                 <separator colspan="4" String="Import related infos"/>
                 <field name="launch_import_completion"/>
                 <field name="last_import_date"/>
-                <button icon="gtk-ok" name="launch_import_bank_statement" colspan = "2" string="Import Bank Statement" type="object"/>
+                <button name="%(account_statement_base_import.statement_importer_action)d"
+                        string="Import Bank Statement"
+                        type="action" icon="gtk-ok" 
+                        colspan = "2"/>
+                <!-- <button icon="gtk-ok" name="launch_import_bank_statement"  string="Import Bank Statement" type="object"/> -->
                 <separator colspan="4" String="Import Logs"/>
                 <field name="rec_log" colspan="4" nolabel="1"/>
             </field>
         </field>
     </record>
 
-<!-- To port -->
+    <record id="bank_statement_view_form" model="ir.ui.view">
+         <field name="name">account_bank_statement_import_base.bank_statement.view_form</field>
+         <field name="model">account.bank.statement</field>
+         <field name="inherit_id" ref="account.view_bank_statement_form" />
+         <field name="type">form</field>
+         <field name="arch" type="xml">
+             <data>
+                 <xpath expr="/form/notebook/page/field[@name='line_ids']/form/field[@name='ref']" position="after">
+                     <field name="commission_amount" />
+                 </xpath>
+             </data>
+         </field>
+     </record>
 
-<!--             <record id="action_bank_statement_import" model="ir.actions.act_window">
-                <field name="name">account bank statement import</field>
-                <field name="type">ir.actions.act_window</field>
-                <field name="res_model">account.bank.statement.import</field>
-                <field name="view_type">form</field>
-                <field name="view_mode">tree,form</field>
-                <field name="context">{'wizard_object' : 'account.bank.statement.import', 'function' : 'action_import_bank_statement', 'object_link' : 'account.bank.statement.import' }</field>
-            </record>
-
-
-            <menuitem action="action_bank_statement_import" id="menu_account_bank_import" parent="account.menu_finance"/>
-
-
-            <record id="ir_action_create_scheduler_in_easy_reconcile" model="ir.values">
-                <field name="key2">client_action_multi</field>
-                <field name="model">account.bank.statement.import</field>
-                <field name="name">Create a Scheduler</field>
-                <field eval="'ir.actions.act_window,%d'%ref('base_scheduler_creator.action_scheduler_creator_wizard')" name="value"/>
-                <field eval="True" name="object"/>
-            </record> -->
     
 </data>
 </openerp>
