@@ -188,13 +188,14 @@
             
         </field>
     </record>
+
     
         <act_window id="act_bank_statement_from_profile"
             name="Open Statements" 
             res_model="account.bank.statement" 
             src_model="account.statement.profil" 
-            context="{'search_default_profile_id': [active_id]}"
-            view_type="tree"/>
+            domain="[('profile_id','=',active_id),]"
+            view_type="form"/>
         
 
 </data>

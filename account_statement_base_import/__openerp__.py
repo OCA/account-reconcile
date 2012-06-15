@@ -56,6 +56,8 @@
  'website': 'http://www.camptocamp.com',
  'init_xml': [],
  'update_xml': [
+        "wizard/import_statement_view.xml",
+        "statement_view.xml",
  ],
  'demo_xml': [],
  'test': [],

@@ -24,6 +24,7 @@ import datetime
 import netsvc
 logger = netsvc.Logger()
 from openerp.osv.orm import Model, fields
+from openerp.osv import fields, osv
 
 class AccountStatementProfil(Model):
     """A Profile will contain all infos related to the type of
@@ -493,7 +494,7 @@ class AccountBankSatementLine(Model):
         res = {}
         obj_partner = self.pool.get('res.partner')
         obj_stat = self.pool.get('account.bank.statement')
-        receiv_account, pay_account, account_id = False
+        receiv_account = pay_account = account_id = False
         # If profil has a receivable_account_id, we return it in any case
         if profile_id:
             profile = self.pool.get("account.statement.profil").browse(cr,uid,profile_id)

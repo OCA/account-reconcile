@@ -40,7 +40,8 @@ class CreditPartnerStatementImporter(osv.osv_memory):
             res = context['active_ids']
             if len(res) > 1:
                 raise Exception (_('You cannot use this on more than one profile !'))
-        return res[0]
+            return res[0]
+        return res
     
     _columns = {
         
@@ -93,7 +94,7 @@ class CreditPartnerStatementImporter(osv.osv_memory):
         return res
 
     def _check_extension(self, filename):
-        (shortname, ftype) = os.path.splitext(file_name)
+        (shortname, ftype) = os.path.splitext(filename)
         if not ftype:
             #We do not use osv exception we do not want to have it logged
             raise Exception(_('Please use a file with an extention'))
@@ -107,7 +108,7 @@ class CreditPartnerStatementImporter(osv.osv_memory):
         importer = self.browse(cursor, uid, req_id, context)
         ftype = self._check_extension(importer.file_name)
         sid = self.pool.get(
-                'account.bank.statement').statement_import(
+                'account.statement.profil').statement_import(
                                             cursor,
                                             uid,
                                             False,
@@ -115,7 +116,7 @@ class CreditPartnerStatementImporter(osv.osv_memory):
                                             importer.input_statement,
                                             ftype.replace('.',''),
                                             context=context
-        )
+                                        )
         # obj_data = self.pool.get('ir.model.data')
         #         act_obj = self.pool.get('ir.actions.act_window')
         #         result = obj_data.get_object_reference(cursor, uid, 'account_statement_import', 'action_treasury_statement_tree')

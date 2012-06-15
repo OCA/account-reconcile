@@ -29,9 +29,18 @@
  'description': """
  The goal of this module is to improve the basic bank statement, help dealing with huge volume of
  reconciliation by providing basic rules to identify the partner of a bank statement line.
- It will also take care of the chosen profile to make his work.
+ Each bank statement profile can have his own rules to apply respecting a sequence order.
  
- His goal is to provide an easy way to fullfill the info of a bank statement line based on rules.
+ Some basic rules are provided in this module:
+ 
+ 1) Match from statement line label (based on partner field 'Bank Statement Label')
+ 2) Match from statement line label (based on partner name)
+ 3) Match from statement line reference (based on SO number)
+ 
+ It add as well a label on the bank statement line (on which the pre-define rules can match) and
+ a char field on the partner called 'Bank Statement Label'. Using the pre-define rules, you'll be
+ able to match various label for a partner.  
+ 
  The reference of the line is always used by the reconciliation process. We're supposed to copy 
  there (or write manually) the matching string. That can be : the order Number or an invoice number, 
  or anything that will be found in the invoice entry part to make the match.
@@ -41,6 +50,7 @@
  'init_xml': [],
  'update_xml': [
      'statement_view.xml',
+     'partner_view.xml',
      'data.xml',
  ],
  'demo_xml': [],

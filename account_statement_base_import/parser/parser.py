@@ -19,6 +19,7 @@
 #
 ##############################################################################
 import base64
+import csv
 
 
 def UnicodeDictReader(utf8_data, **kwargs):
@@ -31,7 +32,7 @@ class BankStatementImportParser(object):
     format to import in a bank statement"""
     
     
-    def __init__(self, parser_name = None, *args, **kwargs):
+    def __init__(self, parser_name, *args, **kwargs):
         # The name of the parser as it will be called
         self.parser_name = parser_name
         # The result as a list of row
@@ -97,12 +98,12 @@ class BankStatementImportParser(object):
             self.filebuffer = filebuffer
         else:
             raise Exception(_('No buffer file given.'))
-        self._format(args, kwargs)
-        self._pre(args, kwargs)
-        self._parse(args, kwargs)
-        self._validate(args, kwargs)
-        self._post(args, kwargs)
-        return self.result_row_list,
+        self._format(*args, **kwargs)
+        self._pre(*args, **kwargs)
+        self._parse(*args, **kwargs)
+        self._validate(*args, **kwargs)
+        self._post(*args, **kwargs)
+        return self.result_row_list
                
 def itersubclasses(cls, _seen=None):
     """

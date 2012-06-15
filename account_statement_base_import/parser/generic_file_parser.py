@@ -23,7 +23,8 @@ import base64
 import csv
 import tempfile
 import datetime
-from . import file_parser
+# from . import file_parser
+from file_parser import FileParser
 try:
     import xlrd
 except:
@@ -36,7 +37,7 @@ class GenericFileParser(FileParser):
     
     
     
-    def __init__(self, parse_name = None, ftype='csv'):
+    def __init__(self, parse_name, ftype='csv'):
         convertion_dict = {
                             'ref': unicode,
                             'label': unicode,
@@ -48,7 +49,7 @@ class GenericFileParser(FileParser):
         keys_to_validate = ['ref', 'label', 'date', 'amount', 'commission_amount']
         
         
-        super(self,GenericFileParser).__init__(parser_for = parse_name, keys_to_validate={}, ftype='csv', convertion_dict=None ):
+        super(GenericFileParser,self).__init__(parse_name, keys_to_validate=keys_to_validate, ftype=ftype, convertion_dict=convertion_dict)
 
     @classmethod
     def parser_for(cls, parser_name):

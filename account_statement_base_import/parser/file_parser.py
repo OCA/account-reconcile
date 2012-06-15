@@ -23,7 +23,9 @@ import base64
 import csv
 import tempfile
 import datetime
-from . import parser
+# from . import parser 
+from parser import BankStatementImportParser
+from parser import UnicodeDictReader
 try:
     import xlrd
 except:
@@ -33,7 +35,7 @@ class FileParser(BankStatementImportParser):
     """Abstract clall for that help to build a specific parser for all
     .csv and .xls files"""
     
-    def __init__(self, parse_name=None, keys_to_validate={}, ftype='csv', convertion_dict=None, *args, **kwargs):
+    def __init__(self, parse_name, keys_to_validate={}, ftype='csv', convertion_dict=None, *args, **kwargs):
         """
             :param: convertion_dict : keys and type to convert of every column in the file like 
                 {
@@ -46,7 +48,7 @@ class FileParser(BankStatementImportParser):
                 
             """
         
-        super(self,FileParser).__init__(parse_name, *args, **kwargs)
+        super(FileParser, self).__init__(parse_name, *args, **kwargs)
         if ftype in ('csv', 'xls'):
             self.ftype = ftype
         else:
@@ -69,7 +71,7 @@ class FileParser(BankStatementImportParser):
 
     def _post(self, *args, **kwargs):
         """Cast row type depending on the file format .csv or .xls"""
-        self.result_row_list = self._cast_rows(kwargs)
+        self.result_row_list = self._cast_rows(*args, **kwargs)
         return True
 
     def _parse(self, *args, **kwargs):
@@ -135,7 +137,7 @@ class FileParser(BankStatementImportParser):
                     line[rule] = conversion_rules[rule](line[rule])
         return result_set
 
-    def _cast_rows(self):
+    def _cast_rows(self, *args, **kwargs):
         func =  getattr(self, '_from_%s'%(self.ftype))
         res = func(self.result_row_list, self.convertion_dict)
         return res
