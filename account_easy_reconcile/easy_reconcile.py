@@ -73,8 +73,8 @@ class account_easy_reconcile_method(Model):
 
     def _get_all_rec_method(self, cr, uid, context=None):
         return [
-            ('easy.reconcile.simple.name', 'Simple method based on amount and name'),
-            ('easy.reconcile.simple.partner', 'Simple method based on amount and partner'),
+            ('easy.reconcile.simple.name', 'Simple. Amount and Name'),
+            ('easy.reconcile.simple.partner', 'Simple. Amount and Partner'),
             ]
 
     def _get_rec_method(self, cr, uid, context=None):

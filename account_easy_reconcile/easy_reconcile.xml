@@ -17,7 +17,21 @@
                 <field name="reconciled_partial_count"/>
                 <field name="scheduler"/>
                 <separator colspan="4" string="Reconcile Method" />
-                <field name="reconcile_method" colspan = "4" nolabel="1"/>
+                <notebook colspan="4">
+                    <page name="methods" string="Configuration">
+                        <field name="reconcile_method" colspan = "4" nolabel="1"/>
+                    </page>
+                    <page name="information" string="Information">
+                      <separator colspan="4" string="Simple. Amount and Name"/>
+                      <label string="Match one debit line vs one credit line. Do not allow partial reconcilation.
+The lines should have the same amount (with the write-off) and the same name to be reconciled." colspan="4"/>
+
+                      <separator colspan="4" string="Simple. Amount and Name"/>
+                      <label string="Match one debit line vs one credit line. Do not allow partial reconcilation.
+The lines should have the same amount (with the write-off) and the same partner to be reconciled." colspan="4"/>
+
+                    </page>
+                </notebook>
                 <button icon="gtk-ok" name="run_reconcile" colspan = "4" string="Start Auto Reconcilation" type="object"/>
                 <separator colspan="4" string="Log" />
                 <field name="rec_log" colspan = "4" nolabel="1"/>
