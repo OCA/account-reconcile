@@ -24,11 +24,28 @@
     "version" : "1.0",
     "depends" : ["account", "base_scheduler_creator"
                 ],
-    "author" : "Sébastien Beau",
-    "description": """A new view to reconcile easily your account
+    "author" : "Akretion,Camptocamp",
+    "description": """
+This is a shared work between Akretion and Camptocamp in order to provide:
+ - reconciliation facilities for big volume of transactions
+ - setup different profiles of reconciliation by account
+ - each profile can use many methods of reconciliation
+ - this module is also a base to create others reconciliation methods
+    which can plug in the profiles
+ - a profile a reconciliation can be run manually or by a cron
+ - monitoring of reconcilation runs with a few logs
+
+2 simple reconciliation methods are integrated in this module, the simple
+reconciliations works on 2 lines (1 debit / 1 credit) and do not allows
+partial reconcilation, they also match on 1 key, partner or entry name.
+
+You may be interested to install also the account_advanced_reconciliation
+module available at: https://code.launchpad.net/c2c-financial-addons
+This latter add more complex reconciliations, allows multiple lines and partial.
+
 """,
     "website" : "http://www.akretion.com/",
-    "category" : "Customer Modules",
+    "category" : "Finance",
     "init_xml" : [],
     "demo_xml" : [],
     "update_xml" : ["easy_reconcile.xml"],
