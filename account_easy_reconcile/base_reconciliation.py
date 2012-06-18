@@ -176,7 +176,6 @@ class easy_reconcile_base(AbstractModel):
         date = self._get_rec_date(
             cr, uid, rec, lines, rec.date_base_on, context=context)
 
-        import pdb; pdb.set_trace()
         rec_ctx = dict(context, date_p=date)
         if below_writeoff:
             if sum_credit < sum_debit:

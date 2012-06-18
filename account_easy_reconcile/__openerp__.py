@@ -33,7 +33,7 @@
     "demo_xml" : [],
     "update_xml" : ["easy_reconcile.xml"],
     'license': 'AGPL-3',
-    "active": False,
+    "auto_install": False,
     "installable": True,
 
 }
