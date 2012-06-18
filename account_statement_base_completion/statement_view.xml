@@ -13,7 +13,8 @@
                  <xpath expr="/form/notebook/page/field[@name='line_ids']/tree/field[@name='sequence']" position="before">
                     <field name="already_completed" />
                  </xpath>
-                 <xpath expr="/form/notebook/page/field[@name='line_ids']/form/field[@name='ref']" position="after">
+                 <xpath expr="/form/notebook/page/field[@name='line_ids']/form/field[@name='sequence']" position="after">
+                     <separator colspan="4" string="Importation related infos"/>
                     <field name="label" />
                     <field name="already_completed" />
                  </xpath>
@@ -23,7 +24,7 @@
                  </xpath>
 
                  <xpath expr="/form/group/field[@name='balance_end']" position="after">
-                     <button name="button_auto_completion" string="Auto Completion" type="object" colspan="1"/>
+                     <button name="button_auto_completion" string="Auto Completion" states='draft,open' type="object" colspan="1"/>
                  </xpath>
 
              </data>

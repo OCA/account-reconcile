@@ -36,6 +36,7 @@
  1) Match from statement line label (based on partner field 'Bank Statement Label')
  2) Match from statement line label (based on partner name)
  3) Match from statement line reference (based on SO number)
+ 3) Match from statement line reference (based on Invoice number)
  
  It add as well a label on the bank statement line (on which the pre-define rules can match) and
  a char field on the partner called 'Bank Statement Label'. Using the pre-define rules, you'll be

@@ -35,7 +35,8 @@ class BankStatementImportParser(object):
     def __init__(self, parser_name, *args, **kwargs):
         # The name of the parser as it will be called
         self.parser_name = parser_name
-        # The result as a list of row
+        # The result as a list of row. One row per line of data in the file, but
+        # not the commission one !
         self.result_row_list = None
         # The file buffer on which to work on
         self.filebuffer = None
@@ -84,6 +85,32 @@ class BankStatementImportParser(object):
         amount in the self.commission_global_amount one."""
         return NotImplementedError
         
+    def get_st_line_vals(self, line, *args, **kwargs):
+        """This method must return a dict of vals that can be passed to create
+        method of statement line in order to record it. It is the responsibility 
+        of every parser to give this dict of vals, so each one can implement his
+        own way of recording the lines.
+            :param:  line: a dict of vals that represent a line of result_row_list
+            :return: dict of values to give to the create method of statement line,
+                     it MUST contain at least:
+                {
+                    'name':value,
+                    'date':value,
+                    'amount':value,
+                    'ref':value,
+                }
+        """
+        return NotImplementedError
+    
+    def get_st_line_commision(self, *args, **kwargs):
+        """This is called by the importation method to create the commission line in
+        the bank statement. We will always create one line for the commission in the
+        bank statement, but it could be computated from a value of each line, or given 
+        in a single line for the whole file.
+            return: float of the whole commission
+        """
+        return self.commission_global_amount
+    
     def parse(self, filebuffer, *args, **kwargs):
         """This will be the method that will be called by wizard, button and so
         to parse a filebuffer by calling successively all the private method

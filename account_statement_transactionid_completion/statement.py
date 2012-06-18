@@ -47,7 +47,7 @@ class AccountStatementCompletionRule(Model):
         In that case, we always fullfill the reference of the line with the SO name.
         Return:
             A dict of value that can be passed directly to the write method of
-            the statement line.
+            the statement line or {}
            {'partner_id': value,
             'account_id' : value,
             ...}
@@ -64,9 +64,10 @@ class AccountStatementCompletionRule(Model):
                 res['ref'] = so.name
             elif so_id and len(so_id) > 1:
                 raise Exception(_('Line named "%s" was matched by more than one partner.')%(st_line.name,st_line.id))
-            st_vals = st_obj.get_values_for_line(cr, uid, profile_id = st_line.statement_id.profile_id.id,
-                partner_id = res.get('partner_id',False), line_type = st_line.type, st_line.amount, context)
-            res.update(st_vals)
+            if so_id:
+                st_vals = st_obj.get_values_for_line(cr, uid, profile_id = st_line.statement_id.profile_id.id,
+                    partner_id = res.get('partner_id',False), line_type = st_line.type, st_line.amount, context)
+                res.update(st_vals)
         return res
 
  

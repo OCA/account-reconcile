@@ -58,7 +58,6 @@ class AccountStatementProfil(Model):
                        ...
                      }
         """
-        
         if not context:
             context={}
         res = {}
@@ -111,7 +110,7 @@ class AccountStatementCompletionRule(Model):
         If more than one partner matched, raise an error.
         Return:
             A dict of value that can be passed directly to the write method of
-            the statement line.
+            the statement line or {}
            {'partner_id': value,
             'account_id' : value,
             ...}
@@ -122,14 +121,15 @@ class AccountStatementCompletionRule(Model):
         if st_line:
             inv_obj = self.pool.get('account.invoice')
             inv_id = inv_obj.search(cursor, uid, [('number', '=', st_line.ref)])
-            if inv_id and len(inv_id) == 1:
-                inv = inv_obj.browse(cursor, uid, inv_id[0])
-                res['partner_id'] = inv.partner_id.id
-            elif inv_id and len(inv_id) > 1:
-                raise ErrorTooManyPartner(_('Line named "%s" was matched by more than one partner.')%(st_line.name,st_line.id))
-            st_vals = st_obj.get_values_for_line(cursor, uid, profile_id = st_line.statement_id.profile_id.id,
-                partner_id = res.get('partner_id',False), line_type = st_line.type, amount = st_line.amount, context = context)
-            res.update(st_vals)
+            if inv_id:
+                if inv_id and len(inv_id) == 1:
+                    inv = inv_obj.browse(cursor, uid, inv_id[0])
+                    res['partner_id'] = inv.partner_id.id
+                elif inv_id and len(inv_id) > 1:
+                    raise ErrorTooManyPartner(_('Line named "%s" was matched by more than one partner.')%(st_line.name,st_line.id))
+                st_vals = st_obj.get_values_for_line(cursor, uid, profile_id = st_line.statement_id.profile_id.id,
+                    partner_id = res.get('partner_id',False), line_type = st_line.type, amount = st_line.amount, context = context)
+                res.update(st_vals)
         return res
 
     def get_from_ref_and_so(self, cursor, uid, line_id, context=None):
@@ -138,7 +138,7 @@ class AccountStatementCompletionRule(Model):
         If more than one partner matched, raise an error.
         Return:
             A dict of value that can be passed directly to the write method of
-            the statement line.
+            the statement line or {}
            {'partner_id': value,
             'account_id' : value,
             ...}
@@ -149,14 +149,15 @@ class AccountStatementCompletionRule(Model):
         if st_line:
             so_obj = self.pool.get('sale.order')
             so_id = so_obj.search(cursor, uid, [('name', '=', st_line.ref)])
-            if so_id and len(so_id) == 1:
-                so = so_obj.browse(cursor, uid, so_id[0])
-                res['partner_id'] = so.partner_id.id
-            elif so_id and len(so_id) > 1:
-                raise ErrorTooManyPartner(_('Line named "%s" was matched by more than one partner.')%(st_line.name,st_line.id))
-            st_vals = st_obj.get_values_for_line(cursor, uid, profile_id = st_line.statement_id.profile_id.id,
-                partner_id = res.get('partner_id',False), line_type = st_line.type, amount = st_line.amount, context = context)
-            res.update(st_vals)
+            if so_id:
+                if so_id and len(so_id) == 1:
+                    so = so_obj.browse(cursor, uid, so_id[0])
+                    res['partner_id'] = so.partner_id.id
+                elif so_id and len(so_id) > 1:
+                    raise ErrorTooManyPartner(_('Line named "%s" was matched by more than one partner.')%(st_line.name,st_line.id))
+                st_vals = st_obj.get_values_for_line(cursor, uid, profile_id = st_line.statement_id.profile_id.id,
+                    partner_id = res.get('partner_id',False), line_type = st_line.type, amount = st_line.amount, context = context)
+                res.update(st_vals)
         return res
     
 
@@ -168,7 +169,7 @@ class AccountStatementCompletionRule(Model):
         If more than one partner matched, raise an error.
         Return:
             A dict of value that can be passed directly to the write method of
-            the statement line.
+            the statement line or {}
            {'partner_id': value,
             'account_id' : value,
             ...}
@@ -187,9 +188,10 @@ class AccountStatementCompletionRule(Model):
                         res['partner_id'] = partner.id
                         if compt > 1:
                             raise ErrorTooManyPartner(_('Line named "%s" was matched by more than one partner.')%(st_line.name,st_line.id))
-            st_vals = st_obj.get_values_for_line(cursor, uid, profile_id = st_line.statement_id.profile_id.id,
-                partner_id = res.get('partner_id',False), line_type = st_line.type, amount = st_line.amount, context = context)
-            res.update(st_vals)
+            if res:
+                st_vals = st_obj.get_values_for_line(cursor, uid, profile_id = st_line.statement_id.profile_id.id,
+                    partner_id = res.get('partner_id',False), line_type = st_line.type, amount = st_line.amount, context = context)
+                res.update(st_vals)
         return res
 
     def get_from_label_and_partner_name(self, cursor, uid, line_id, context=None):
@@ -198,7 +200,7 @@ class AccountStatementCompletionRule(Model):
         Then, call the generic st_line method to complete other values.
         Return:
             A dict of value that can be passed directly to the write method of
-            the statement line.
+            the statement line or {}
            {'partner_id': value,
             'account_id' : value,
             
@@ -215,9 +217,10 @@ class AccountStatementCompletionRule(Model):
                 raise ErrorTooManyPartner(_('Line named "%s" was matched by more than one partner.')%(st_line.name,st_line.id))
             for id in result:
                 res['partner_id'] = id
-            st_vals = st_obj.get_values_for_line(cursor, uid, profile_id = st_line.statement_id.profile_id.id,
-                partner_id = res.get('partner_id',False), line_type = st_line.type, amount = st_line.amount, context = context)
-            res.update(st_vals)
+            if res:
+                st_vals = st_obj.get_values_for_line(cursor, uid, profile_id = st_line.statement_id.profile_id.id,
+                    partner_id = res.get('partner_id',False), line_type = st_line.type, amount = st_line.amount, context = context)
+                res.update(st_vals)
         return res
        
     
@@ -252,13 +255,19 @@ class AccountStatementLine(Model):
         We ignore line for which already_completed is ticked!
         """
         profile_obj = self.pool.get('account.statement.profil')
+        st_obj = self.pool.get('account.bank.statement.line')
         res={}
         errors_stack = []
         for line in self.browse(cr,uid, ids, context):
             if not line.already_completed:
                 try:
+                    # Take the default values
+                    res[line.id] = st_obj.get_values_for_line(cr, uid, profile_id = line.statement_id.profile_id.id,
+                        line_type = line.type, amount = line.amount, context = context)
+                    # Ask the rule
                     vals = profile_obj.find_values_from_rules(cr, uid, line.statement_id.profile_id.id, line.id, context)
-                    res[line.id]=vals
+                    # Merge the result
+                    res[line.id].update(vals)
                 except ErrorTooManyPartner, exc:
                     msg = "Line ID %s had following error: %s" % (line.id, str(exc))
                     errors_stack.append(msg)

@@ -67,23 +67,22 @@ class AccountStatementProfil(Model):
                 "Bank Statement ID %s have been imported with %s lines "%(statement_id, num_lines))
         return True
     
-    def create_global_commission_line(self, cr, uid, commission_global_amount, 
+    def prepare_global_commission_line_vals(self, cr, uid, parser, 
             result_row_list, profile, statement_id, context):
-        """Create the global commission line if there is one. The global commission is computed by
+        """Prepare the global commission line if there is one. The global commission is computed by
         summing the commission column of each row. Feel free to override the methode to compute
         your own commission line from the result_row_list.
-            :params:    cr: The DB Cursor
-            :params:    uid: int/long ID of the current user in the system
-            :params:    commission_global_amount: float
-            :params:    result_row_list: [{'key':value}]
-            :params:    profile: browserecord of account.statement.profile
-            :params:    statement_id : int/long of the current importing statement ID
-            :params:    context: global context
-            return:     an ID of the statement line that represent the global commission
-                        for the statement.
+            :param:    cr: The DB Cursor
+            :param:    uid: int/long ID of the current user in the system
+            :param:    browse_record of the current parser
+            :param:    result_row_list: [{'key':value}]
+            :param:    profile: browserecord of account.statement.profile
+            :param:    statement_id : int/long of the current importing statement ID
+            :param:    context: global context
+            return:    dict of vals that will be passed to create method of statement line.
             """
-        res = False
-        if commission_global_amount:
+        comm_values = False
+        if parser.get_st_line_commision():
             partner_id = profile.partner_id and profile.partner_id.id or False
             commission_account_id = profile.commission_account_id and profile.commission_account_id.id or False
             commission_analytic_id = profile.commission_analytic_id and profile.commission_analytic_id.id or False
@@ -91,7 +90,7 @@ class AccountStatementProfil(Model):
             comm_values = {
                 'name': 'IN '+ _('Commission line'),
                 'date': datetime.datetime.now().date(),
-                'amount': commission_global_amount,
+                'amount': parser.get_st_line_commision(),
                 'partner_id': partner_id,
                 'type': 'general',
                 'statement_id': statement_id,
@@ -101,30 +100,20 @@ class AccountStatementProfil(Model):
                 # !! We set the already_completed so auto-completion will not update those values !
                 'already_completed': True,
             }
-            res = statement_line_obj.create(cr, uid,
-                    comm_values, 
-                    context=context)
-        return res
+        return comm_values
         
-    def prepare_statetement_lines_vals(self, cursor, uid, parser_line, 
+    def prepare_statetement_lines_vals(self, cursor, uid, parser_vals, 
             account_payable, account_receivable, statement_id, context):
-        """Hook to change the values of a line. Overide it to compute or change
-        the account or any other values (e.g. if a line is the global commission)"""
-        values = {
-            'name': parser_line.get('label', parser_line.get('ref','/')),
-            'date': parser_line.get('date', datetime.datetime.now().date()),
-            'amount': parser_line['amount'],
-            'ref': parser_line['ref'],
-            'type': 'customer',
-            'statement_id': statement_id,
-            'label': parser_line.get('label',''),
-            'commission_amount': parser_line.get('commission_amount', 0.0),
-            #'account_id': journal.default_debit_account_id
-        }
+        """Hook to build the values of a line from the parser returned values. At
+        least it fullfill the statement_id and account_id. Overide it to add your
+        own completion if needed. """
+        statement_obj = self.pool.get('account.bank.statement')
+        values = parser_vals
+        values['statement_id']= statement_id
         values['account_id'] = statement_obj.get_account_for_counterpart(
                 cursor,
                 uid,
-                parser_line['amount'],
+                parser_vals['amount'],
                 account_receivable,
                 account_payable
         )
@@ -134,6 +123,7 @@ class AccountStatementProfil(Model):
         """Create a bank statement with the given profile and parser. It will fullfill the bank statement
            with the values of the file providen, but will not complete data (like finding the partner, or
            the right account). This will be done in a second step with the completion rules.
+           It will also create the commission line if it apply.
         """
         context = context or {}
         statement_obj = self.pool.get('account.bank.statement')
@@ -158,21 +148,20 @@ class AccountStatementProfil(Model):
         
         statement_id = statement_obj.create(cursor,uid,{'profile_id':prof.id,},context)        
         account_receivable, account_payable = statement_obj.get_default_pay_receiv_accounts(cursor, uid, context)
-        commission_global_amount = 0.0
         try:
             # Record every line in the bank statement and compute the global commission
             # based on the commission_amount column
             for line in result_row_list:
-                commission_global_amount += line.get('commission_amount', 0.0)
-                values = self.prepare_statetement_lines_vals(cursor, uid, line, account_payable, 
+                parser_vals = parser.get_st_line_vals(line)
+                values = self.prepare_statetement_lines_vals(cursor, uid, parser_vals, account_payable, 
                     account_receivable, statement_id, context)
                 # we finally create the line in system
                 statement_line_obj.create(cursor, uid, values, context=context)
-
-            # we create commission line
-            self.create_global_commission_line(cursor, uid, commission_global_amount, 
-                result_row_list, prof, statement_id, context)
-
+            # Build and create the global commission line for the whole statement
+            comm_vals = self.prepare_global_commission_line_vals(cursor, uid, parser, result_row_list, prof, statement_id, context)
+            if comm_vals:
+                res = statement_line_obj.create(cursor, uid, comm_vals,context=context)
+                
             attachment_obj.create(
                     cursor,
                     uid,

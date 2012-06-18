@@ -33,7 +33,7 @@ except:
 
 class FileParser(BankStatementImportParser):
     """Abstract clall for that help to build a specific parser for all
-    .csv and .xls files"""
+    .csv and .xls files."""
     
     def __init__(self, parse_name, keys_to_validate={}, ftype='csv', convertion_dict=None, *args, **kwargs):
         """

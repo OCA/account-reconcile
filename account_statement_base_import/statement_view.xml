@@ -31,7 +31,7 @@
          <field name="type">form</field>
          <field name="arch" type="xml">
              <data>
-                 <xpath expr="/form/notebook/page/field[@name='line_ids']/form/field[@name='ref']" position="after">
+                 <xpath expr="/form/notebook/page/field[@name='line_ids']/form/field[@name='label']" position="after">
                      <field name="commission_amount" />
                  </xpath>
              </data>

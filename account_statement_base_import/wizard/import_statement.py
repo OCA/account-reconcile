@@ -32,19 +32,19 @@ class CreditPartnerStatementImporter(osv.osv_memory):
 
     _name = "credit.statement.import"
     
-    def _get_profile(self, cr, uid, context=None):
+    def default_get(self, cr, uid, fields, context=None):
         if context is None: context = {}
-        res = False
+        res = {}
         if (context.get('active_model', False) == 'account.statement.profil' and
             context.get('active_ids', False)):
-            res = context['active_ids']
-            if len(res) > 1:
-                raise Exception (_('You cannot use this on more than one profile !'))
-            return res[0]
+            ids = context['active_ids']
+            assert len(ids) == 1, 'You cannot use this on more than one profile !'
+            res['profile_id'] = ids[0]
+            other_vals = self.onchange_profile_id(cr, uid, [], res['profile_id'], context=context)
+            res.update(other_vals.get('value',{}))
         return res
     
     _columns = {
-        
         'profile_id': fields.many2one('account.statement.profil',
                                       'Import configuration parameter',
                                       required=True),
@@ -73,12 +73,14 @@ class CreditPartnerStatementImporter(osv.osv_memory):
                                                     help="Tic that box if you want OpenERP to control the start/end balance\
                                                     before confirming a bank statement. If don't ticked, no balance control will be done."
                                                     ),
-
     }   
     
-    _defaults = {
-        'profile_id': _get_profile,
-    }
+    
+    
+    # _defaults = _get_default_values
+    # {
+    #     'profile_id': _get_profile,
+    # }
 
     def onchange_profile_id(self, cr, uid, ids, profile_id, context=None):
         res={}
@@ -117,13 +119,6 @@ class CreditPartnerStatementImporter(osv.osv_memory):
                                             ftype.replace('.',''),
                                             context=context
                                         )
-        # obj_data = self.pool.get('ir.model.data')
-        #         act_obj = self.pool.get('ir.actions.act_window')
-        #         result = obj_data.get_object_reference(cursor, uid, 'account_statement_import', 'action_treasury_statement_tree')
-        #         
-        #         id = result and result[1] or False
-        #         result = act_obj.read(cursor, uid, [id], context=context)[0]
-        #         result['domain'] = str([('id','in',[sid])])
-        
+     
         # We should return here the profile for which we executed the import
         return {'type': 'ir.actions.act_window_close'}

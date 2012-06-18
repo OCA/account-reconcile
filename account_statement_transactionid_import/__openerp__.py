@@ -19,35 +19,42 @@
 #
 ##############################################################################
 
-{'name': "Bank statement completion from transaction ID",
+{'name': "Bank statement transactionID import",
  'version': '1.0',
  'author': 'Camptocamp',
  'maintainer': 'Camptocamp',
  'category': 'Finance',
  'complexity': 'normal', #easy, normal, expert
- 'depends': ['account_statement_base_completion', 'base_transaction_id'],
+ 'depends': ['account_statement_base_import','account_statement_transactionid_completion'],
  'description': """
-  Add a completion method based on transaction ID providen by the bank/office. This
-  transaction ID has been recorded on the SO (by a mapping through the e-commerce connector,
-  or manually). Completion will look in the SO with that transaction ID to match the partner,
-  then it will complete the bank statement line with him the fullfill as well the reference
-  with the found SO name to ease the reconciliation.
-  
-  So this way, the reconciliation always happend on the SO name stored in ref.
-  
-    
+ This module brings generic methods and fields on bank statement to deal with 
+ the importation of different bank and offices that uses transactionID.
+ 
+ This module allow you to import your bank transactions with a standard .csv or .xls file
+ (you'll find it in the 'datas' folder). It'll respect the profil
+ you'll choose (providen by the accouhnt_statement_ext module) to generate the entries. 
+ 
+ This module can handle a commission taken by the payment office and has the following format:
+ 
+ * transactionID :     the transaction ID given by the bank/office. It'll be used as reference
+                       in the generated entries and will be useful for reconciliation process
+ * date :              date of the payment
+ * amount :            amount paid in the currency of the journal used in the importation profil
+ * commission_amount : amount of the comission for each line
+ * label :             the comunication given by the payment office, used as communication in the 
+                       generated entries.
+ 
+ 
  """,
  'website': 'http://www.camptocamp.com',
  'init_xml': [],
  'update_xml': [
-    "statement_view.xml",
-    "data.xml",
  ],
  'demo_xml': [],
  'test': [],
  'installable': True,
  'images': [],
- 'auto_install': True,
+ 'auto_install': False,
  'license': 'AGPL-3',
  'active': False,
 }

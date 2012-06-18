@@ -23,37 +23,36 @@ import base64
 import csv
 import tempfile
 import datetime
-# from . import file_parser
-from file_parser import FileParser
+from account_statement_base_import.parser.file_parser import FileParser
+
 try:
     import xlrd
 except:
     raise Exception(_('Please install python lib xlrd'))
 
-class GenericFileParser(FileParser):
-    """Generic parser that use a define format in csv or xls to import
-    bank statement. This is mostely an example of how to proceed to create a new 
-    parser, but will also be useful as it allow to import a basic flat file."""
+class TransactionIDFileParser(FileParser):
+    """TransactionID parser that use a define format in csv or xls to import
+    bank statement."""
     
     
     
     def __init__(self, parse_name, ftype='csv'):
         convertion_dict = {
-                            'ref': unicode,
+                            'transaction_id': unicode,
                             'label': unicode,
                             'date': datetime.datetime,
                             'amount': float,
                             'commission_amount': float
                           }
         # Order of cols does not matter but first row of the file has to be header
-        keys_to_validate = ['ref', 'label', 'date', 'amount', 'commission_amount']
+        keys_to_validate = ['transaction_id', 'label', 'date', 'amount', 'commission_amount']
         
         
-        super(GenericFileParser,self).__init__(parse_name, keys_to_validate=keys_to_validate, ftype=ftype, convertion_dict=convertion_dict)
+        super(TransactionIDFileParser,self).__init__(parse_name, keys_to_validate=keys_to_validate, ftype=ftype, convertion_dict=convertion_dict)
 
     @classmethod
     def parser_for(cls, parser_name):
-        return parser_name == 'generic_csvxls_so'
+        return parser_name == 'generic_csvxls_transaction'
 
     def get_st_line_vals(self, line, *args, **kwargs):
         """This method must return a dict of vals that can be passed to create
@@ -78,8 +77,9 @@ class GenericFileParser(FileParser):
             'name': line.get('label', line.get('ref','/')),
             'date': line.get('date', datetime.datetime.now().date()),
             'amount': line.get('amount', 0.0),
-            'ref': line.get('ref','/'),
+            'ref': line.get('transaction_id','/'),
             'label': line.get('label',''),
+            'transaction_id': line.get('transaction_id','/'),
             'commission_amount': line.get('commission_amount', 0.0),
         }
 
