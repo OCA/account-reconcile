@@ -73,10 +73,6 @@ class easy_reconcile_advanced(AbstractModel):
 
         where2, params2 = self._get_filter(cr, uid, rec, context=context)
 
-        if context.get('partner_ids'):
-            where += " AND account_move_line.partner_id IN %s "
-            params += tuple(context['partner_ids'])
-
         query = ' '.join((select, sql_from, where, where2))
 
         cr.execute(query, params + params2)
