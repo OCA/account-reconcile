@@ -31,7 +31,7 @@ class account_easy_reconcile_method(Model):
             _get_all_rec_method(cr, uid, context=context)
         methods += [
             ('easy.reconcile.advanced.ref',
-            'Advanced method, payment ref matches with ref or name'),
+            'Advanced method. Match partner and ref -> ref/name'),
         ]
         return methods
 

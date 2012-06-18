@@ -28,6 +28,16 @@
  'depends': ['account_easy_reconcile'],
  'description': """
 Advanced reconciliation methods for the module account_easy_reconcile.
+The latter is available on: lp:~akretion-team/+junk/account-extra-addons
+
+In addition to the features implemented in account_easy_reconcile, which are:
+ - reconciliation facilities for big volume of transactions
+ - setup different profiles of reconciliation by account
+ - each profile can use many methods of reconciliation
+ - this module is also a base to create others reconciliation methods
+    which can plug in the profiles
+ - a profile a reconciliation can be run manually or by a cron
+ - monitoring of reconcilation runs with a few logs
 
 It implements a basis to created advanced reconciliation methods in a few lines
 of code.
