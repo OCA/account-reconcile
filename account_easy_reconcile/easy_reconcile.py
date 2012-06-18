@@ -20,25 +20,21 @@
 ##############################################################################
 
 import time
-from openerp.osv.orm import Model
+from openerp.osv.orm import Model, AbstractModel
 from openerp.osv import fields
 from openerp.tools.translate import _
 from openerp.tools import DEFAULT_SERVER_DATETIME_FORMAT
 
 
-class account_easy_reconcile_method(Model):
+class easy_reconcile_options(AbstractModel):
+    """Options of a reconciliation profile, columns
+    shared by the configuration of methods and by the
+    reconciliation wizards. This allows decoupling
+    of the methods with the wizards and allows to
+    launch the wizards alone
+    """
 
-    _name = 'account.easy.reconcile.method'
-    _description = 'reconcile method for account_easy_reconcile'
-
-    def _get_all_rec_method(self, cr, uid, context=None):
-        return [
-            ('easy.reconcile.simple.name', 'Simple method based on amount and name'),
-            ('easy.reconcile.simple.partner', 'Simple method based on amount and partner'),
-            ]
-
-    def _get_rec_method(self, cr, uid, context=None):
-        return self._get_all_rec_method(cr, uid, context=None)
+    _name = 'easy.reconcile.options'
 
     def _get_rec_base_date(self, cr, uid, context=None):
         return [('end_period_last_credit', 'End of period of most recent credit'),
@@ -49,9 +45,7 @@ class account_easy_reconcile_method(Model):
                 ('newest_debit', 'Date of most recent debit')]
 
     _columns = {
-            'name': fields.selection(_get_rec_method, 'Type', size=128, required=True),
-            'sequence': fields.integer('Sequence', required=True, help="The sequence field is used to order the reconcile method"),
-            'write_off': fields.float('Write off Value'),
+            'write_off': fields.float('Write off allowed'),
             'account_lost_id': fields.many2one('account.account', 'Account Lost'),
             'account_profit_id': fields.many2one('account.account', 'Account Profit'),
             'journal_id': fields.many2one('account.journal', 'Journal'),
@@ -59,16 +53,44 @@ class account_easy_reconcile_method(Model):
                 required=True,
                 string='Date of reconcilation'),
             'filter': fields.char('Filter', size=128),
-            'task_id': fields.many2one('account.easy.reconcile', 'Task', required=True, ondelete='cascade'),
     }
 
     _defaults = {
-        'write_off': 0,
-        'sequence': 0,
+        'write_off': 0.,
         'date_base_on': 'end_period_last_credit',
     }
 
+
+class account_easy_reconcile_method(Model):
+
+    _name = 'account.easy.reconcile.method'
+    _description = 'reconcile method for account_easy_reconcile'
+
+    _inherit = 'easy.reconcile.options'
+    _auto = True  # restore property set to False by AbstractModel
+
     _order = 'sequence'
+
+    def _get_all_rec_method(self, cr, uid, context=None):
+        return [
+            ('easy.reconcile.simple.name', 'Simple method based on amount and name'),
+            ('easy.reconcile.simple.partner', 'Simple method based on amount and partner'),
+            ]
+
+    def _get_rec_method(self, cr, uid, context=None):
+        return self._get_all_rec_method(cr, uid, context=None)
+
+    _columns = {
+            'name': fields.selection(_get_rec_method, 'Type', size=128, required=True),
+            'sequence': fields.integer('Sequence', required=True,
+                help="The sequence field is used to order the reconcile method"),
+            'task_id': fields.many2one('account.easy.reconcile', 'Task',
+                required=True, ondelete='cascade'),
+    }
+
+    _defaults = {
+        'sequence': 1,
+    }
 
     def init(self, cr):
         """ Migration stuff, name is not anymore methods names
@@ -126,6 +148,17 @@ class account_easy_reconcile(Model):
             type='integer', string='Partially Reconciled Entries'),
     }
 
+    def _prepare_run_transient(self, cr, uid, rec_method, context=None):
+        return {'account_id': rec_method.task_id.account.id,
+                'write_off': rec_method.write_off,
+                'account_lost_id': rec_method.account_lost_id and \
+                        rec_method.account_lost_id.id,
+                'account_profit_id': rec_method.account_profit_id and \
+                        rec_method.account_profit_id.id,
+                'journal_id': rec_method.journal_id and rec_method.journal_id.id,
+                'date_base_on': rec_method.date_base_on,
+                'filter': rec_method.filter}
+
     def run_reconcile(self, cr, uid, ids, context=None):
         if context is None:
             context = {}
@@ -138,20 +171,15 @@ class account_easy_reconcile(Model):
 
             for method in rec.reconcile_method:
                 count += 1
-                ctx = dict(
-                    context,
-                    date_base_on=method.date_base_on,
-                    filter=eval(method.filter or '[]'),
-                    write_off=(method.write_off > 0 and method.write_off) or 0,
-                    account_lost_id=method.account_lost_id.id,
-                    account_profit_id=method.account_profit_id.id,
-                    journal_id=method.journal_id.id)
 
                 rec_model = self.pool.get(method.name)
                 auto_rec_id = rec_model.create(
-                    cr, uid, {'easy_reconcile_id': rec_id}, context=ctx)
+                    cr, uid,
+                    self._prepare_run_transient(cr, uid, method, context=context),
+                    context=context)
+
                 rec_ids, partial_ids = rec_model.automatic_reconcile(
-                    cr, uid, auto_rec_id, context=ctx)
+                    cr, uid, auto_rec_id, context=context)
 
                 details.append(_('method %d : full: %d lines, partial: %d lines') % \
                     (count, len(rec_ids), len(partial_ids)))

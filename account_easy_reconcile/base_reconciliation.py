@@ -29,9 +29,14 @@ class easy_reconcile_base(AbstractModel):
 
     _name = 'easy.reconcile.base'
 
+    _inherit = 'easy.reconcile.options'
+    _auto = True  # restore property set to False by AbstractModel
+
     _columns = {
-        'easy_reconcile_id': fields.many2one('account.easy.reconcile',
-            string='Easy Reconcile')
+        'account_id': fields.many2one('account.account', 'Account', required=True),
+        'partner_ids': fields.many2many('res.partner',
+            string="Restrict on partners"),
+        # other columns are inherited from easy.reconcile.options
     }
 
     def automatic_reconcile(self, cr, uid, ids, context=None):
@@ -80,16 +85,20 @@ class easy_reconcile_base(AbstractModel):
         # but as we use _where_calc in _get_filter
         # which returns a list, we have to
         # accomodate with that
-        params = [rec.easy_reconcile_id.account.id]
+        params = [rec.account_id.id]
+
+        if rec.partner_ids:
+            where += " AND account_move_line.partner_id IN %s"
+            params.append(tuple([l.id for l in rec.partner_ids]))
         return where, params
 
     def _get_filter(self, cr, uid, rec, context):
         ml_obj = self.pool.get('account.move.line')
         where = ''
         params = []
-        if context.get('filter'):
+        if rec.filter:
             dummy, where, params = ml_obj._where_calc(
-                cr, uid, context['filter'], context=context).get_sql()
+                cr, uid, rec.filter, context=context).get_sql()
             if where:
                 where = " AND %s" % where
         return where, params
@@ -157,7 +166,7 @@ class easy_reconcile_base(AbstractModel):
             context = {}
 
         ml_obj = self.pool.get('account.move.line')
-        writeoff = context.get('write_off', 0.)
+        writeoff = rec.write_off
 
         keys = ('debit', 'credit')
 
@@ -165,14 +174,15 @@ class easy_reconcile_base(AbstractModel):
         below_writeoff, sum_debit, sum_credit = self._below_writeoff_limit(
             cr, uid, rec, lines, writeoff, context=context)
         date = self._get_rec_date(
-            cr, uid, rec, lines, context.get('date_base_on'), context=context)
+            cr, uid, rec, lines, rec.date_base_on, context=context)
 
+        import pdb; pdb.set_trace()
         rec_ctx = dict(context, date_p=date)
         if below_writeoff:
             if sum_credit < sum_debit:
-                writeoff_account_id = context.get('account_profit_id', False)
+                writeoff_account_id = rec.account_profit_id.id
             else:
-                writeoff_account_id = context.get('account_lost_id', False)
+                writeoff_account_id = rec.account_lost_id.id
 
             period_id = self.pool.get('account.period').find(
                 cr, uid, dt=date, context=context)[0]
@@ -183,7 +193,7 @@ class easy_reconcile_base(AbstractModel):
                 type='auto',
                 writeoff_acc_id=writeoff_account_id,
                 writeoff_period_id=period_id,
-                writeoff_journal_id=context.get('journal_id'),
+                writeoff_journal_id=rec.journal_id.id,
                 context=rec_ctx)
             return True, True
         elif allow_partial:
