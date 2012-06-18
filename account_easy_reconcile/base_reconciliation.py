@@ -35,6 +35,9 @@ class easy_reconcile_base(AbstractModel):
     }
 
     def automatic_reconcile(self, cr, uid, ids, context=None):
+        """
+        :return: list of reconciled ids, list of partially reconciled entries
+        """
         if isinstance(ids, (int, long)):
             ids = [ids]
         assert len(ids) == 1, "Has to be called on one id"
@@ -42,7 +45,9 @@ class easy_reconcile_base(AbstractModel):
         return self._action_rec(cr, uid, rec, context=context)
 
     def _action_rec(self, cr, uid, rec, context=None):
-        """Must be inherited to implement the reconciliation"""
+        """Must be inherited to implement the reconciliation
+        :return: list of reconciled ids
+        """
         raise NotImplementedError
 
     def _base_columns(self, rec):
@@ -89,7 +94,7 @@ class easy_reconcile_base(AbstractModel):
                 where = " AND %s" % where
         return where, params
 
-    def _below_writeoff_limit(self, cr, uid, lines,
+    def _below_writeoff_limit(self, cr, uid, rec, lines,
                                writeoff_limit, context=None):
         precision = self.pool.get('decimal.precision').precision_get(
             cr, uid, 'Account')
@@ -105,7 +110,7 @@ class easy_reconcile_base(AbstractModel):
         writeoff_amount = round(debit - credit, precision)
         return bool(writeoff_limit >= abs(writeoff_amount)), debit, credit
 
-    def _get_rec_date(self, cr, uid, lines, based_on='end_period_last_credit', context=None):
+    def _get_rec_date(self, cr, uid, rec, lines, based_on='end_period_last_credit', context=None):
         period_obj = self.pool.get('account.period')
 
         def last_period(mlines):
@@ -137,7 +142,17 @@ class easy_reconcile_base(AbstractModel):
         # when date is None
         return None
 
-    def _reconcile_lines(self, cr, uid, lines, allow_partial=False, context=None):
+    def _reconcile_lines(self, cr, uid, rec, lines, allow_partial=False, context=None):
+        """ Try to reconcile given lines
+
+        :param list lines: list of dict of move lines, they must at least
+        contain values for : id, debit, credit
+        :param boolean allow_partial: if True, partial reconciliation will be
+        created, otherwise only Full reconciliation will be created
+        :return: tuple of boolean values, first item is wether the the entries
+        have been reconciled or not, the second is wether the reconciliation
+        is full (True) or partial (False)
+        """
         if context is None:
             context = {}
 
@@ -148,9 +163,9 @@ class easy_reconcile_base(AbstractModel):
 
         line_ids = [l['id'] for l in lines]
         below_writeoff, sum_debit, sum_credit = self._below_writeoff_limit(
-            cr, uid, lines, writeoff, context=context)
+            cr, uid, rec, lines, writeoff, context=context)
         date = self._get_rec_date(
-            cr, uid, lines, context.get('date_base_on'), context=context)
+            cr, uid, rec, lines, context.get('date_base_on'), context=context)
 
         rec_ctx = dict(context, date_p=date)
         if below_writeoff:
@@ -170,14 +185,14 @@ class easy_reconcile_base(AbstractModel):
                 writeoff_period_id=period_id,
                 writeoff_journal_id=context.get('journal_id'),
                 context=rec_ctx)
-            return True
+            return True, True
         elif allow_partial:
             ml_obj.reconcile_partial(
                 cr, uid,
                 line_ids,
                 type='manual',
                 context=rec_ctx)
-            return True
+            return True, False
 
-        return False
+        return False, False
 

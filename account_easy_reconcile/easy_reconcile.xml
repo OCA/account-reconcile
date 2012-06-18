@@ -13,7 +13,8 @@
                 <separator colspan="4" string="Task Information" />
                 <field name="name" select="1"/>
                 <field name="account"/>
-                <field name="unreconcile_entry_number"/>
+                <field name="unreconciled_count"/>
+                <field name="reconciled_partial_count"/>
                 <field name="scheduler"/>
                 <separator colspan="4" string="Reconcile Method" />
                 <field name="reconcile_method" colspan = "4" nolabel="1"/>
@@ -32,10 +33,11 @@
         <field name="arch" type="xml">
             <tree string="Automatic Easy Reconcile">
                 <field name="name"/>
-                <field name="account"/> 
+                <field name="account"/>
                 <field name="reconcile_method"/>
                 <field name="scheduler"/>
-                <field name="unreconcile_entry_number"/>
+                <field name="unreconciled_count"/>
+                <field name="reconciled_partial_count"/>
             </tree>
         </field>
     </record>
@@ -66,7 +68,7 @@
                 <field name="account_profit_id" attrs="{'required':[('write_off','>',0)]}"/>
                 <field name="journal_id" attrs="{'required':[('write_off','>',0)]}"/>
                 <field name="date_base_on"/>
-                <field name="filter"/>
+                <field name="filter" groups="base.group_extended"/>
             </form>
         </field>
     </record>

@@ -31,7 +31,7 @@ class easy_reconcile_simple(AbstractModel):
     # field name used as key for matching the move lines
     _key_field = None
 
-    def rec_auto_lines_simple(self, cr, uid, lines, context=None):
+    def rec_auto_lines_simple(self, cr, uid, rec, lines, context=None):
         if context is None:
             context = {}
 
@@ -39,7 +39,7 @@ class easy_reconcile_simple(AbstractModel):
             raise ValueError("_key_field has to be defined")
 
         count = 0
-        res = 0
+        res = []
         while (count < len(lines)):
             for i in range(count+1, len(lines)):
                 writeoff_account_id = False
@@ -58,18 +58,20 @@ class easy_reconcile_simple(AbstractModel):
                 if not check:
                     continue
 
-                if self._reconcile_lines(cr, uid, [credit_line, debit_line],
-                        allow_partial=False, context=context):
-                    res += 2
+                reconciled, dummy = self._reconcile_lines(
+                    cr, uid, rec, [credit_line, debit_line],
+                    allow_partial=False, context=context)
+                if reconciled:
+                    res += [credit_line['id'], debit_line['id']]
                     del lines[i]
                     break
             count += 1
-        return res
+        return res, []  # empty list for partial, only full rec in "simple" rec
 
     def _simple_order(self, rec, *args, **kwargs):
         return "ORDER BY account_move_line.%s" % self._key_field
 
-    def _action_rec_simple(self, cr, uid, rec, context=None):
+    def _action_rec(self, cr, uid, rec, context=None):
         """Match only 2 move lines, do not allow partial reconcile"""
         select = self._select(rec)
         select += ", account_move_line.%s " % self._key_field
@@ -85,7 +87,7 @@ class easy_reconcile_simple(AbstractModel):
 
         cr.execute(query, params + params2)
         lines = cr.dictfetchall()
-        return self.rec_auto_lines_simple(cr, uid, lines, context)
+        return self.rec_auto_lines_simple(cr, uid, rec, lines, context)
 
 
 class easy_reconcile_simple_name(TransientModel):
@@ -107,5 +109,5 @@ class easy_reconcile_simple_partner(TransientModel):
 
     # has to be subclassed
     # field name used as key for matching the move lines
-    _key_field = 'partner'
+    _key_field = 'partner_id'
 
