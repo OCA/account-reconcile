@@ -32,7 +32,6 @@ class account_easy_reconcile_method(Model):
         methods += [
             ('easy.reconcile.advanced.ref',
             'Advanced method, payment ref matches with ref or name'),
-            ('easy.reconcile.advanced.tid',
-            'Advanced method, payment Transaction ID matches with ref or name')
         ]
         return methods
+

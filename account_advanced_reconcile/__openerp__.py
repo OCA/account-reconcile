@@ -1,7 +1,8 @@
-# -*- coding: utf-8 -*- ##############################################################################
+# -*- coding: utf-8 -*-
+##############################################################################
 #
-#    Author: Nicolas Bessi, Joel Grand-Guillaume
-#    Copyright 2011-2012 Camptocamp SA
+#    Author: Guewen Baconnier
+#    Copyright 2012 Camptocamp SA
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -67,4 +68,5 @@ many offices.
  'installable': True,
  'auto_install': False,
  'license': 'AGPL-3',
+ 'application': True,
 }
