@@ -19,6 +19,20 @@
 #
 ##############################################################################
 
-import easy_reconcile
-import base_advanced_reconciliation
-import advanced_reconciliation
+from openerp.osv.orm import Model
+
+
+class account_easy_reconcile_method(Model):
+
+    _inherit = 'account.easy.reconcile.method'
+
+    def _get_all_rec_method(self, cr, uid, context=None):
+        methods = super(account_easy_reconcile_method, self).\
+            _get_all_rec_method(cr, uid, context=context)
+        methods += [
+            ('easy.reconcile.advanced.ref',
+            'Advanced method, payment ref matches with ref or name'),
+            ('easy.reconcile.advanced.tid',
+            'Advanced method, payment Transaction ID matches with ref or name')
+        ]
+        return methods
