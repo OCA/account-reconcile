@@ -46,7 +46,7 @@ class easy_reconcile_advanced(AbstractModel):
     _name = 'easy.reconcile.advanced'
     _inherit = 'easy.reconcile.base'
 
-    def _query_moves(self, cr, uid, rec, context=None):
+    def _query_debit(self, cr, uid, rec, context=None):
         """Select all move (debit>0) as candidate. Optional choice on invoice
         will filter with an inner join on the related moves.
         """
@@ -57,26 +57,12 @@ class easy_reconcile_advanced(AbstractModel):
 
         where2, params2 = self._get_filter(cr, uid, rec, context=context)
 
-        if context.get('invoice_ids'):
-            # select only move lines with an invoice
-            sql_from += (
-                " INNER JOIN account_move "
-                " ON account_move.id = account_move_line.move_id "
-                " INNER JOIN account_invoice "
-                " ON account_invoice.move_id = account_move.id ")
-            where += " account_invoice.id in (%s) "
-            params += tuple(context['invoice_ids'])
-
-        if context.get('partner_ids'):
-            where += " AND account_move_line.partner_id IN %s "
-            params += tuple(context['partner_ids'])
-
         query = ' '.join((select, sql_from, where, where2))
 
         cr.execute(query, params + params2)
         return cr.dictfetchall()
 
-    def _query_payments(self, cr, uid, rec, context=None):
+    def _query_credit(self, cr, uid, rec, context=None):
         """Select all move (credit>0) as candidate. Optional choice on invoice
         will filter with an inner join on the related moves.
         """
@@ -179,7 +165,7 @@ class easy_reconcile_advanced(AbstractModel):
     def _compare_values(key, value, opposite_value):
         """Can be inherited to modify the equality condition
         specifically according to the matcher key (maybe using
-        a like on 'ref' as instance)
+        a like operator instead of equality on 'ref' as instance)
         """
         # consider that empty vals are not valid matchers
         # it can still be inherited for some special cases
@@ -237,6 +223,7 @@ class easy_reconcile_advanced(AbstractModel):
                 # directly returns so the next yield of _opposite_matchers
                 # are not evaluated
                 return False
+
         return True
 
     def _search_opposites(self, cr, uid, rec, move_line, opposite_move_lines, context=None):
@@ -253,10 +240,10 @@ class easy_reconcile_advanced(AbstractModel):
             self._compare_opposite(cr, uid, rec, move_line, op, matchers, context=context)]
 
     def _action_rec(self, cr, uid, rec, context=None):
-        move_lines = self._query_moves(cr, uid, rec, context=context)
-        payment_lines = self._query_payments(cr, uid, rec, context=context)
+        credit_lines = self._query_credit(cr, uid, rec, context=context)
+        debit_lines = self._query_debit(cr, uid, rec, context=context)
         return self._rec_auto_lines_advanced(
-            cr, uid, rec, move_lines, payment_lines, context=context)
+            cr, uid, rec, credit_lines, debit_lines, context=context)
 
     def _skip_line(self, cr, uid, rec, move_line, context=None):
         """
@@ -266,21 +253,22 @@ class easy_reconcile_advanced(AbstractModel):
         """
         return False
 
-    def _rec_auto_lines_advanced(self, cr, uid, rec, debit_lines, credit_lines, context=None):
+    def _rec_auto_lines_advanced(self, cr, uid, rec, credit_lines, debit_lines, context=None):
         if context is None:
             context = {}
 
-        reconciled = []
+        reconciled_ids = []
+        partial_reconciled_ids = []
         reconcile_groups = []
 
         for credit_line in credit_lines:
+            if self._skip_line(cr, uid, rec, credit_line, context=context):
+                continue
+
             opposite_lines = self._search_opposites(
                 cr, uid, rec, credit_line, debit_lines, context=context)
 
             if not opposite_lines:
-                continue
-
-            if self._skip_line(cr, uid, rec, credit_line, context=context):
                 continue
 
             opposite_ids = [l['id'] for l in opposite_lines]
@@ -292,12 +280,17 @@ class easy_reconcile_advanced(AbstractModel):
             else:
                 reconcile_groups.append(set(line_ids))
 
+        lines_by_id = dict([(l['id'], l) for l in credit_lines + debit_lines])
         for reconcile_group_ids in reconcile_groups:
-            if self._reconcile_lines(cr, uid, reconcile_group_ids,
-                    allow_partial=True, context=context):
-                reconciled += reconcile_group_ids
+            group_lines = [lines_by_id[lid] for lid in reconcile_group_ids]
+            reconciled, partial = self._reconcile_lines(
+                cr, uid, rec, group_lines, allow_partial=True, context=context)
+            if reconciled and partial:
+                reconciled_ids += reconcile_group_ids
+            elif partial:
+                partial_reconciled_ids += reconcile_group_ids
 
-        return reconciled
+        return reconciled_ids, partial_reconciled_ids
 
 
 class easy_reconcile_advanced_ref(TransientModel):
