@@ -148,6 +148,13 @@ class account_easy_reconcile(Model):
             type='integer', string='Partially Reconciled Entries'),
     }
 
+    def copy_data(self, cr, uid, id, default=None, context=None):
+        if default is None:
+            default = {}
+        default = dict(default, rec_log=False, scheduler=False)
+        return super(account_easy_reconcile, self).copy_data(
+            cr, uid, id, default=default, context=context)
+
     def _prepare_run_transient(self, cr, uid, rec_method, context=None):
         return {'account_id': rec_method.task_id.account.id,
                 'write_off': rec_method.write_off,
