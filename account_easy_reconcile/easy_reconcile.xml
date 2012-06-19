@@ -48,7 +48,6 @@ The lines should have the same amount (with the write-off) and the same partner 
             <tree string="Automatic Easy Reconcile">
                 <field name="name"/>
                 <field name="account"/>
-                <field name="reconcile_method"/>
                 <field name="scheduler"/>
                 <field name="unreconciled_count"/>
                 <field name="reconciled_partial_count"/>
