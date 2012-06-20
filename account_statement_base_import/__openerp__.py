@@ -28,18 +28,13 @@
  'depends': ['account_statement_ext','account_statement_base_completion'],
  'description': """
  This module bring basic methods and fields on bank statement to deal with 
- the importation of different bank and offices.
- 
- A generic abstract method is defined and an example that provide a basic way of importing
- bank statement through a standard .csv or .xml file is providen.
- 
- The goal is here to populate the statement lines of a bank statement with the infos that the
- bank or offic give you. Then, if you need to complete data from there, add your own
- statement_*_completion module and implement the needed rules.
+ the importation of different bank and offices. A generic abstract method is defined and an 
+ example that gives you a basic way of importing bank statement through a standard file is providen.
  
  This module improves the bank statement and allow you to import your bank transactions with
  a standard .csv or .xls file (you'll find it in the 'datas' folder). It'll respect the profil
- you'll choose (providen by the accouhnt_statement_ext module) to pass the entries. 
+ you'll choose (providen by the accouhnt_statement_ext module) to pass the entries. That means,
+ you'll have to choose a file format for each profile.
  
  This module can handle a commission taken by the payment office and has the following format:
  
@@ -50,7 +45,11 @@
  * commission_amount : amount of the comission for each line
  * label :             the comunication given by the payment office, used as communication in the 
                        generated entries.
- 
+
+ The goal is here to populate the statement lines of a bank statement with the infos that the
+ bank or office give you. Fell free to inherit from this module to add your own format.Then, 
+ if you need to complete data from there, add your own account_statement_*_completion module and implement 
+ the needed rules.
  
  """,
  'website': 'http://www.camptocamp.com',

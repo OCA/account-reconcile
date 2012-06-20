@@ -31,11 +31,11 @@ except:
     raise Exception(_('Please install python lib xlrd'))
 
 class GenericFileParser(FileParser):
-    """Generic parser that use a define format in csv or xls to import
+    """
+    Standard parser that use a define format in csv or xls to import into a
     bank statement. This is mostely an example of how to proceed to create a new 
-    parser, but will also be useful as it allow to import a basic flat file."""
-    
-    
+    parser, but will also be useful as it allow to import a basic flat file.
+    """
     
     def __init__(self, parse_name, ftype='csv'):
         convertion_dict = {
@@ -47,16 +47,19 @@ class GenericFileParser(FileParser):
                           }
         # Order of cols does not matter but first row of the file has to be header
         keys_to_validate = ['ref', 'label', 'date', 'amount', 'commission_amount']
-        
-        
         super(GenericFileParser,self).__init__(parse_name, keys_to_validate=keys_to_validate, ftype=ftype, convertion_dict=convertion_dict)
 
     @classmethod
     def parser_for(cls, parser_name):
+        """
+        Used by the new_bank_statement_parser class factory. Return true if
+        the providen name is generic_csvxls_so
+        """
         return parser_name == 'generic_csvxls_so'
 
     def get_st_line_vals(self, line, *args, **kwargs):
-        """This method must return a dict of vals that can be passed to create
+        """
+        This method must return a dict of vals that can be passed to create
         method of statement line in order to record it. It is the responsibility 
         of every parser to give this dict of vals, so each one can implement his
         own way of recording the lines.
@@ -84,7 +87,9 @@ class GenericFileParser(FileParser):
         }
 
     def _post(self, *args, **kwargs):
-        """Compute the commission from value of each line"""
+        """
+        Compute the commission from value of each line
+        """
         res = super(GenericFileParser, self)._post(*args, **kwargs)
         val = 0.0
         for row in self.result_row_list:

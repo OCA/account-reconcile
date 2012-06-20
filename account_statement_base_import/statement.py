@@ -53,6 +53,14 @@ class AccountStatementProfil(Model):
     }
     
     def write_logs_after_import(self, cr, uid, ids, statement_id, num_lines, context):
+        """
+        Write the log in the logger + in the log field of the profile to report the user about 
+        what has been done.
+        
+        :param int/long statement_id: ID of the concerned account.bank.statement
+        :param int/long num_lines: Number of line that have been parsed
+        :return: True
+        """
         if type(ids) is int:
             ids = [ids]
         for id in ids:
@@ -69,18 +77,17 @@ class AccountStatementProfil(Model):
     
     def prepare_global_commission_line_vals(self, cr, uid, parser, 
             result_row_list, profile, statement_id, context):
-        """Prepare the global commission line if there is one. The global commission is computed by
-        summing the commission column of each row. Feel free to override the methode to compute
+        """
+        Prepare the global commission line if there is one. The global commission is computed by
+        by calling the get_st_line_commision of the parser. Feel free to override the methode to compute
         your own commission line from the result_row_list.
-            :param:    cr: The DB Cursor
-            :param:    uid: int/long ID of the current user in the system
             :param:    browse_record of the current parser
             :param:    result_row_list: [{'key':value}]
             :param:    profile: browserecord of account.statement.profile
             :param:    statement_id : int/long of the current importing statement ID
             :param:    context: global context
             return:    dict of vals that will be passed to create method of statement line.
-            """
+        """
         comm_values = False
         if parser.get_st_line_commision():
             partner_id = profile.partner_id and profile.partner_id.id or False
@@ -104,9 +111,18 @@ class AccountStatementProfil(Model):
         
     def prepare_statetement_lines_vals(self, cursor, uid, parser_vals, 
             account_payable, account_receivable, statement_id, context):
-        """Hook to build the values of a line from the parser returned values. At
+        """
+        Hook to build the values of a line from the parser returned values. At
         least it fullfill the statement_id and account_id. Overide it to add your
-        own completion if needed. """
+        own completion if needed. 
+        
+        :param dict of vals from parser for account.bank.statement.line (called by 
+                parser.get_st_line_vals)
+        :param int/long account_payable: ID of the receivable account to use
+        :param int/long account_receivable: ID of the payable account to use
+        :param int/long statement_id: ID of the concerned account.bank.statement
+        :return : dict of vals that will be passed to create method of statement line.
+        """
         statement_obj = self.pool.get('account.bank.statement')
         values = parser_vals
         values['statement_id']= statement_id
@@ -120,10 +136,17 @@ class AccountStatementProfil(Model):
         return values
     
     def statement_import(self, cursor, uid, ids, profile_id, file_stream, ftype="csv", context=None):
-        """Create a bank statement with the given profile and parser. It will fullfill the bank statement
-           with the values of the file providen, but will not complete data (like finding the partner, or
-           the right account). This will be done in a second step with the completion rules.
-           It will also create the commission line if it apply.
+        """
+        Create a bank statement with the given profile and parser. It will fullfill the bank statement
+        with the values of the file providen, but will not complete data (like finding the partner, or
+        the right account). This will be done in a second step with the completion rules.
+        It will also create the commission line if it apply and record the providen file as
+        an attachement of the bank statement.
+        
+        :param int/long profile_id: ID of the profile used to import the file
+        :param filebuffer file_stream: binary of the providen file
+        :param char: ftype represent the file exstension (csv by default)
+        :return: ID of the created account.bank.statemênt
         """
         context = context or {}
         statement_obj = self.pool.get('account.bank.statement')
@@ -196,8 +219,11 @@ class AccountStatementProfil(Model):
 
 
 class AccountStatementLine(Model):
-    """Add sparse field on the statement line to allow to store all the
-    bank infos that are given by an office."""
+    """
+    Add sparse field on the statement line to allow to store all the
+    bank infos that are given by an office. In this basic sample case
+    it concern only commission_amount.
+    """
     _inherit = "account.bank.statement.line"
 
     _columns={

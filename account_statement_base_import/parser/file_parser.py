@@ -23,7 +23,6 @@ import base64
 import csv
 import tempfile
 import datetime
-# from . import parser 
 from parser import BankStatementImportParser
 from parser import UnicodeDictReader
 try:
@@ -32,11 +31,15 @@ except:
     raise Exception(_('Please install python lib xlrd'))
 
 class FileParser(BankStatementImportParser):
-    """Abstract clall for that help to build a specific parser for all
-    .csv and .xls files."""
+    """
+    Generic abstract class for defining parser for .csv or .xls file format.
+    """
     
-    def __init__(self, parse_name, keys_to_validate={}, ftype='csv', convertion_dict=None, *args, **kwargs):
+    def __init__(self, parse_name, keys_to_validate=[], ftype='csv', convertion_dict=None, *args, **kwargs):
         """
+            :param char: parse_name : The name of the parser
+            :param list: keys_to_validate : contain the key that need to be present in the file
+            :param char ftype: extension of the file (could be csv or xls)
             :param: convertion_dict : keys and type to convert of every column in the file like 
                 {
                     'ref': unicode,
@@ -45,7 +48,6 @@ class FileParser(BankStatementImportParser):
                     'amount': float,
                     'commission_amount': float
                 }
-                
             """
         
         super(FileParser, self).__init__(parse_name, *args, **kwargs)
@@ -57,26 +59,22 @@ class FileParser(BankStatementImportParser):
         self.convertion_dict = convertion_dict
 
     def _custom_format(self, *args, **kwargs):
+        """
+        No other work on data are needed in this parser.
+        """
         return True
 
     def _pre(self, *args, **kwargs):
-        return True
-
-    def _validate(self, *args, **kwargs):
-        parsed_cols = self.result_row_list[0].keys()
-        for col in self.keys_to_validate:
-            if col not in parsed_cols:
-                raise Exception(_('Column %s not present in file') % (col))
-        return True
-
-    def _post(self, *args, **kwargs):
-        """Cast row type depending on the file format .csv or .xls"""
-        self.result_row_list = self._cast_rows(*args, **kwargs)
+        """
+        No pre-treatment needed for this parser.
+        """
         return True
 
     def _parse(self, *args, **kwargs):
-        """Launch the parsing through .csv or .xls depending on the
-        given ftype"""
+        """
+        Launch the parsing through .csv or .xls depending on the
+        given ftype
+        """
         
         res = None
         if self.ftype == 'csv':
@@ -86,8 +84,29 @@ class FileParser(BankStatementImportParser):
         self.result_row_list = res
         return True
 
+    def _validate(self, *args, **kwargs):
+        """
+        We check that all the key of the given file (means header) are present
+        in the validation key providen. Otherwise, we raise an Exception.
+        """
+        parsed_cols = self.result_row_list[0].keys()
+        for col in self.keys_to_validate:
+            if col not in parsed_cols:
+                raise Exception(_('Column %s not present in file') % (col))
+        return True
+
+    def _post(self, *args, **kwargs):
+        """
+        Cast row type depending on the file format .csv or .xls after parsing the file.
+        """
+        self.result_row_list = self._cast_rows(*args, **kwargs)
+        return True
+
+
     def _parse_csv(self, delimiter=';'):
-        "return an array of dict from csv file"
+        """
+        :return: dict of dict from csv file (line/rows)
+        """
         csv_file = tempfile.NamedTemporaryFile()
         csv_file.write(self.filebuffer)
         # We ensure that cursor is at beginig of file
@@ -99,7 +118,9 @@ class FileParser(BankStatementImportParser):
         return [x for x in reader]
 
     def _parse_xls(self):
-        "return an array of dict from xls file"
+        """
+        :return: dict of dict from xls file (line/rows)
+        """
         wb_file = tempfile.NamedTemporaryFile()
         wb_file.write(self.filebuffer)
         # We ensure that cursor is at beginig of file
@@ -117,6 +138,10 @@ class FileParser(BankStatementImportParser):
         return res
 
     def _from_csv(self, result_set, conversion_rules):
+        """
+        Handle the converstion from the dict and handle date format from
+        an .csv file.
+        """
         for line in result_set:
             for rule in conversion_rules:
                 if conversion_rules[rule] == datetime.datetime:
@@ -128,6 +153,10 @@ class FileParser(BankStatementImportParser):
         return result_set
 
     def _from_xls(self, result_set, conversion_rules):
+        """
+        Handle the converstion from the dict and handle date format from
+        an .xls file.
+        """
         for line in result_set:
             for rule in conversion_rules:
                 if conversion_rules[rule] == datetime.datetime:
@@ -138,6 +167,10 @@ class FileParser(BankStatementImportParser):
         return result_set
 
     def _cast_rows(self, *args, **kwargs):
+        """
+        Convert the self.result_row_list using the self.convertion_dict providen.
+        We call here _from_xls or _from_csv depending on the self.ftype variable.
+        """
         func =  getattr(self, '_from_%s'%(self.ftype))
         res = func(self.result_row_list, self.convertion_dict)
         return res

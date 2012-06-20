@@ -40,12 +40,13 @@ class AccountStatementCompletionRule(Model):
         'function_to_call': fields.selection(_get_functions, 'Method'),
     }
     
-    #TODO : Ensure we match only one partner => Otherwise raise an error !!!
     def get_from_transaction_id_and_so(self, cr, uid, line_id, context=None):
-        """Match the partner based on the transaction ID field of the SO.
+        """
+        Match the partner based on the transaction ID field of the SO.
         Then, call the generic st_line method to complete other values.
         In that case, we always fullfill the reference of the line with the SO name.
-        Return:
+        :param int/long line_id: ID of the concerned account.bank.statement.line
+        :return:
             A dict of value that can be passed directly to the write method of
             the statement line or {}
            {'partner_id': value,
@@ -63,7 +64,7 @@ class AccountStatementCompletionRule(Model):
                 res['partner_id'] = so.partner_id.id
                 res['ref'] = so.name
             elif so_id and len(so_id) > 1:
-                raise Exception(_('Line named "%s" was matched by more than one partner.')%(st_line.name,st_line.id))
+                raise ErrorTooManyPartner(_('Line named "%s" was matched by more than one partner.')%(st_line.name,st_line.id))
             if so_id:
                 st_vals = st_obj.get_values_for_line(cr, uid, profile_id = st_line.statement_id.profile_id.id,
                     partner_id = res.get('partner_id',False), line_type = st_line.type, st_line.amount, context)

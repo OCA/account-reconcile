@@ -5,10 +5,11 @@
         <report auto="False"
             id="report_bank_statement_webkit"
             model="account.bank.statement"
-            name="account_statement_import.report_bank_statement_webkit"
-            file="account_statement_import/report/bank_statement_report.mako"
+            name="bank_statement_webkit"
+            file="account_statement_ext/report/bank_statement_report.mako"
             string="Bank Statement"
             report_type="webkit"
+            webkit_header="account_statement_ext.bank_statement_landscape_header"
             header="1"/>
 
         <record id="action_print_bank_statement_webkit" model="ir.values">

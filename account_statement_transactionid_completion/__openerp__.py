@@ -35,7 +35,6 @@
   
   So this way, the reconciliation always happend on the SO name stored in ref.
   
-    
  """,
  'website': 'http://www.camptocamp.com',
  'init_xml': [],

@@ -80,8 +80,9 @@
              <field name="view_mode">tree,form</field>
          </record>
 
-         <menuitem string="Statement Completion Rule" action="action_st_completion_rule_tree" id="menu_action_st_completion_rule_tree_menu" parent="account.menu_configuration_misc" sequence="30"/>    
-    
+         <menuitem string="Statement Completion Rule" action="action_st_completion_rule_tree"
+             id="menu_action_st_completion_rule_tree_menu" parent="account.menu_configuration_misc" 
+             sequence="30"/>
     
 </data>
 </openerp>

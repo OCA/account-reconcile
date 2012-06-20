@@ -26,8 +26,10 @@ class account_move(Model):
     _inherit='account.move'
     
     def unlink(self, cr, uid, ids, context=None):
-        """Delete the reconciliation when we delete the moves. This
-        allow an easier way of cancelling the bank statement."""
+        """
+        Delete the reconciliation when we delete the moves. This
+        allow an easier way of cancelling the bank statement.
+        """
         for move in self.browse(cr, uid, ids, context=context):
             for move_line in move.line_id:
                 if move_line.reconcile_id:

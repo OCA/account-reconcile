@@ -28,8 +28,6 @@ from tools.translate import _
 import os
 
 class CreditPartnerStatementImporter(osv.osv_memory):
-    """Import Credit statement"""
-
     _name = "credit.statement.import"
     
     def default_get(self, cr, uid, fields, context=None):
@@ -75,13 +73,6 @@ class CreditPartnerStatementImporter(osv.osv_memory):
                                                     ),
     }   
     
-    
-    
-    # _defaults = _get_default_values
-    # {
-    #     'profile_id': _get_profile,
-    # }
-
     def onchange_profile_id(self, cr, uid, ids, profile_id, context=None):
         res={}
         if profile_id:

@@ -32,11 +32,11 @@
  
  This module allow you to import your bank transactions with a standard .csv or .xls file
  (you'll find it in the 'datas' folder). It'll respect the profil
- you'll choose (providen by the accouhnt_statement_ext module) to generate the entries. 
+ you'll choose (providen by the account_statement_ext module) to generate the entries. 
  
  This module can handle a commission taken by the payment office and has the following format:
  
- * transactionID :     the transaction ID given by the bank/office. It'll be used as reference
+ * transaction_id :    the transaction ID given by the bank/office. It'll be used as reference
                        in the generated entries and will be useful for reconciliation process
  * date :              date of the payment
  * amount :            amount paid in the currency of the journal used in the importation profil

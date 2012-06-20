@@ -38,13 +38,19 @@
  3) Match from statement line reference (based on SO number)
  3) Match from statement line reference (based on Invoice number)
  
+ You can easily override this module and add your own rules in your own one. The basic rules only
+ fullfill the partner, but you can use them to complete all values of the line (in the future, we'll
+ add rule to automatically match and reconcile the line).
+ 
  It add as well a label on the bank statement line (on which the pre-define rules can match) and
  a char field on the partner called 'Bank Statement Label'. Using the pre-define rules, you'll be
  able to match various label for a partner.  
  
  The reference of the line is always used by the reconciliation process. We're supposed to copy 
  there (or write manually) the matching string. That can be : the order Number or an invoice number, 
- or anything that will be found in the invoice entry part to make the match.
+ or anything that will be found in the invoice accounting entry part to make the match.
+ 
+ You can use it with  our account_advanced_reconcile module to automatize the reconciliation process.
  
  """,
  'website': 'http://www.camptocamp.com',

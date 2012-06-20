@@ -27,9 +27,11 @@ from openerp.osv.orm import Model, fields
 from openerp.osv import fields, osv
 
 class AccountStatementProfil(Model):
-    """A Profile will contain all infos related to the type of
-    bank statement, and related generated entries. It define the
-    journal to use, the partner and commision account and so on."""
+    """
+    A Profile will contain all infos related to the type of
+    bank statement, and related generated entries. It defines the
+    journal to use, the partner and commision account and so on.
+    """
     _name = "account.statement.profil"
     _description = "Statement Profil"
     
@@ -37,8 +39,9 @@ class AccountStatementProfil(Model):
         'name': fields.char('Name', size=128, required=True),
         'partner_id': fields.many2one('res.partner',
                                       'Bank/Payment Office partner',
-                                      help="Put a partner if you want to have it on the commission move (and optionaly\
-                                      on the counterpart of the intermediate/banking move if you tic the corresponding checkbox)."),
+                                      help="Put a partner if you want to have it on the commission move \
+                                      (and optionaly on the counterpart of the intermediate/banking move \
+                                      if you tic the corresponding checkbox)."),
         'journal_id': fields.many2one('account.journal',
                                       'Financial journal to use for transaction',
                                       required=True),
@@ -57,17 +60,16 @@ class AccountStatementProfil(Model):
                                                     in the counterpart of the intermediat/banking move."
                                                     ),
         'balance_check': fields.boolean('Balance check', 
-                                                    help="Tic that box if you want OpenERP to control the start/end balance\
-                                                    before confirming a bank statement. If don't ticked, no balance control will be done."
+                                                    help="Tic that box if you want OpenERP to control the start/end \
+                                                    balance before confirming a bank statement. If don't ticked, no \
+                                                    balance control will be done."
                                                     ),
         'bank_statement_prefix': fields.char('Bank Statement Prefix', size=32),
         'bank_statement_ids': fields.one2many('account.bank.statement', 'profile_id', 'Bank Statement Imported'),
         
         
     }
-
-    _defaults = {}
-
+    
     def _check_partner(self, cr, uid, ids, context=None):
         obj = self.browse(cr, uid, ids[0], context=context)
         if obj.partner_id == False and obj.force_partner_on_bank:
@@ -80,14 +82,16 @@ class AccountStatementProfil(Model):
 
 
 class AccountBankSatement(Model):
-    """We improve the bank statement class mostly for : 
+    """
+    We improve the bank statement class mostly for : 
     - Removing the period and compute it from the date of each line. 
     - Allow to remove the balance check depending on the chosen profil
     - Report errors on confirmation all at once instead of crashing onr by one
     - Add a profil notion that can change the generated entries on statement 
-     confirmation.
-     For this, we'll had to override quite some long method and we'll need to maintain
-     them up to date. Changes are point up by '#Chg' comment."""
+      confirmation.
+     For this, we had to override quite some long method and we'll need to maintain
+     them up to date. Changes are point up by '#Chg' comment.
+     """
 
     _inherit = "account.bank.statement"
     
@@ -123,7 +127,7 @@ class AccountBankSatement(Model):
     
     def create(self, cr, uid, vals, context=None):
         """Need to pass the journal_id in vals anytime because of account.cash.statement
-        that need it."""
+        need it."""
         if 'profile_id' in vals:
             profil_obj = self.pool.get('account.statement.profil')
             profile = profil_obj.browse(cr,uid,vals['profile_id'],context)
@@ -131,9 +135,9 @@ class AccountBankSatement(Model):
         return super(AccountBankSatement, self).create(cr, uid, vals, context=context)
     
     def _get_period(self, cursor, uid, date, context=None):
-        '''
+        """
         Find matching period for date, used in the statement line creation.
-        '''
+        """
         period_obj = self.pool.get('account.period')
         periods = period_obj.find(cursor, uid, dt=date, context=context)
         return periods and periods[0] or False
@@ -153,14 +157,16 @@ class AccountBankSatement(Model):
                     return False
         return True
 
-    # Redefine the constraint, or it still refer to the original method
     _constraints = [
         (_check_company_id, 'The journal and period chosen have to belong to the same company.', ['journal_id','period_id']),
     ]
 
     def button_cancel(self, cr, uid, ids, context={}):
-        """We cancel the related move, delete them and finally put the
-        statement in draft state."""
+        """
+        We cancel the related move, delete them and finally put the
+        statement in draft state. So no need to unreconcile all entries,
+        then unpost them, then finaly cancel the bank statement.
+        """
         done = []
         for st in self.browse(cr, uid, ids, context=context):
             if st.state=='draft':
@@ -175,18 +181,22 @@ class AccountBankSatement(Model):
         return True
 
     def create_move_from_st_line(self, cr, uid, st_line_id, company_currency_id, st_line_number, context=None):
-        """Override a large portion of the code to compute the periode for each line instead of
+        """
+        Override a large portion of the code to compute the periode for each line instead of
         taking the period of the whole statement.
         Remove the entry posting on generated account moves.
-        Point to account.bank.statement.line instead of account.bank.statement.line.
-        In Treasury Statement, unlike the Bank statement, we will change the move line generated from the 
-        lines depending on the profil (config import):
+        We change the move line generated from the lines depending on the profil:
           - If receivable_account_id is set, we'll use it instead of the "partner" one
           - If partner_id is set, we'll us it for the commission (when imported throufh the wizard)
           - If partner_id is set and force_partner_on_bank is ticked, we'll let the partner of each line
             for the debit line, but we'll change it on the credit move line for the choosen partner_id
             => This will ease the reconciliation process with the bank as the partner will match the bank
             statement line
+        
+        :param int/long: st_line_id: account.bank.statement.line ID
+        :param int/long: company_currency_id: res.currency ID
+        :param char: st_line_number: that will be used as the name of the generated account move
+        :return: int/long: ID of the created account.move
         """
         if context is None:
             context = {}
@@ -300,13 +310,22 @@ class AccountBankSatement(Model):
         account_move_obj.post(cr, uid, [move_id], context=context)
         return move_id
 
-    def _get_st_number_period_profil(self, cr, uid, date, profile_id, journal_sequence_id):
-        """Retrieve the name of bank statement from sequence, according to the period 
-        corresponding to the date passed in args. Add a prefix if set in the profil."""
+    def _get_st_number_period_profil(self, cr, uid, date, profile_id):
+        """
+        Retrieve the name of bank statement from sequence, according to the period 
+        corresponding to the date passed in args. Add a prefix if set in the profil.
+        
+        :param: date: date of the statement used to compute the right period
+        :param: int/long: profile_id: the account.statement.profil ID from which to take the
+                          bank_statement_prefix for the name
+        :return: char: name of the bank statement (st_number)
+        
+        """
         year = self.pool.get('account.period').browse(cr, uid, self._get_period(cr, uid, date)).fiscalyear_id.id
         profile = self.pool.get('account.statement.profil').browse(cr,uid, profile_id)
         c = {'fiscalyear_id': year}
         obj_seq = self.pool.get('ir.sequence')
+        journal_sequence_id = profile.journal_id.sequence_id and profile.journal_id.sequence_id.id or False
         if journal_sequence_id:
             st_number = obj_seq.next_by_id(cr, uid, journal_sequence_id, context=c)
         else:
@@ -316,11 +335,15 @@ class AccountBankSatement(Model):
         return st_number
 
     def button_confirm_bank(self, cr, uid, ids, context=None):
-        """Completely override the method in order to have
-           an error message which displays all the messages
-           instead of having them pop one by one.
-           We have to copy paste a big block of code, changing the error
-           stack + managing period from date."""
+        """
+        Completely override the method in order to have
+        an error message which displays all the messages
+        instead of having them pop one by one.
+        We have to copy paste a big block of code, changing the error
+        stack + managing period from date.
+        
+        TODO: Log the error in a bank statement field instead of using a popup !
+        """
         # obj_seq = self.pool.get('irerrors_stack.sequence')
         if context is None:
             context = {}
@@ -341,8 +364,7 @@ class AccountBankSatement(Model):
                 st_number = st.name
             else:
 # Begin Changes                
-                seq_id = st.journal_id.sequence_id and st.journal_id.sequence_id.id or False
-                st_number = self._get_st_number_period_profil(cr, uid, st.date, st.profile_id.id, seq_id)
+                st_number = self._get_st_number_period_profil(cr, uid, st.date, st.profile_id.id)
 # End Changes 
             for line in st.move_line_ids:
                 if line.state <> 'valid':
@@ -379,10 +401,17 @@ class AccountBankSatement(Model):
 
     def get_account_for_counterpart(self, cursor, uid,
             amount, account_receivable, account_payable):
-        """Give the amount, payable and receivable account (that can be found using
-        get_default_pay_receiv_accounts).
-        Return the default account to be used by statement line as the counterpart
-        of the journal account depending on the amount"""
+        """
+        Give the amount, payable and receivable account (that can be found using
+        get_default_pay_receiv_accounts method) and receive the one to use. This method
+        should be use when there is no other way to know which one to take.
+        
+        :param float: amount of the line
+        :param int/long: account_receivable the  receivable account 
+        :param int/long: account_payable the payable account 
+        :return: int/long :the default account to be used by statement line as the counterpart
+                 of the journal account depending on the amount.
+        """
         account_id = False
         if amount >= 0:
             account_id = account_receivable
@@ -396,8 +425,14 @@ class AccountBankSatement(Model):
         return account_id
 
     def get_default_pay_receiv_accounts(self, cursor, uid, context=None):
-        """We try to determine default payable/receivable accounts to be used as counterpart
-        from the company default propoerty.
+        """
+        We try to determine default payable/receivable accounts to be used as counterpart
+        from the company default propoerty. This is to be used if there is no otherway to 
+        find the good one, or to find a default value that will be overriden by a completion 
+        method (rules of account_statement_base_completion) afterwards.
+        
+        :return: tuple of int/long ID that give account_receivable, account_payable based on
+                 company default.
         """
         account_receivable = False
         account_payable = False
@@ -430,8 +465,14 @@ class AccountBankSatement(Model):
         return account_receivable, account_payable
 
     def balance_check(self, cr, uid, st_id, journal_type='bank', context=None):
-        """Balance check depends on the profil. If no check for this profil is required,
-        return True"""
+        """
+        Balance check depends on the profil. If no check for this profil is required,
+        return True and do nothing, otherwise call super.
+        
+        :param int/long st_id: ID of the concerned account.bank.statement 
+        :param char: journal_type that concern the bank statement
+        :return: True
+        """
         st = self.browse(cr, uid, st_id, context=context)
         if st.balance_check:
             return super(AccountBankSatement,self).balance_check(cr, uid, st_id, journal_type, context)
@@ -439,6 +480,12 @@ class AccountBankSatement(Model):
             return True
 
     def onchange_imp_config_id(self, cr, uid, ids, profile_id, context=None):
+        """
+        Compute values on the change of the profile.
+        
+        :param: int/long: profile_id that changed
+        :return dict of dict with key = name of the field
+        """
         if not profile_id:
             return {}
         import_config = self.pool.get("account.statement.profil").browse(cr,uid,profile_id)
@@ -452,9 +499,18 @@ class AccountBankSatement(Model):
 
 
 class AccountBankSatementLine(Model):
+    """
+    Override to compute the period from the date of the line, add a method to retrieve
+    the values for a line from the profile. Override the on_change method to take care of 
+    the profile when fullfilling the bank statement manually. Set the reference to 64 
+    Char long instead 32.
+    """
     _inherit = "account.bank.statement.line"
 
     def _get_period(self, cursor, user, context=None):
+        """
+        Return a period from a given date in the context.
+        """
         date = context.get('date', None)
         periods = self.pool.get('account.period').find(cursor, user, dt=date)
         return periods and periods[0] or False
@@ -469,25 +525,28 @@ class AccountBankSatementLine(Model):
     }
     
     def get_values_for_line(self, cr, uid, profile_id = False, partner_id = False, line_type = False, amount = False, context = None):
-        """Return the account_id to be used in the line of a bank statement. It'll base the result as follow:
+        """
+        Return the account_id to be used in the line of a bank statement. It'll base the result as follow:
             - If a receivable_account_id is set in the profil, return this value and type = general
             - Elif line_type is given, take the partner receivable/payable property (payable if type= supplier, receivable
-            otherwise)
+              otherwise)
             - Elif amount is given, take the partner receivable/payable property (receivable if amount >= 0.0,
-            payable otherwise). In that case, we also fullfill the type (receivable = customer, payable = supplier)
-            so it is easier for the accountant to know why the receivable/payable has been chosen
+              payable otherwise). In that case, we also fullfill the type (receivable = customer, payable = supplier)
+              so it is easier for the accountant to know why the receivable/payable has been chosen
             - Then, if no partner are given we look and take the property from the company so we always give a value
-            for account_id. Note that in that case, we return the receivable one.
-            :params: profile_id: int/long
-            :params: line_type: String value like 'general', 'supplier', 'customer'
-            :params: amount: float
-            :return A dict of value that can be passed directly to the write method of
-                     the statement line:
-                         {'partner_id': value,
-                          'account_id' : value,
-                          'type' : value,
-                           ...
-                         }
+              for account_id. Note that in that case, we return the receivable one.
+        
+        :param int/long profile_id of the related bank statement
+        :param int/long partner_id of the line
+        :param char line_type: a value from: 'general', 'supplier', 'customer'
+        :param float: amount of the line
+        :return: A dict of value that can be passed directly to the write method of
+                 the statement line:
+                     {'partner_id': value,
+                      'account_id' : value,
+                      'type' : value,
+                       ...
+                     }
         """
         if context is None:
             context = {}
@@ -530,8 +589,10 @@ class AccountBankSatementLine(Model):
         
     
     def onchange_partner_id(self, cr, uid, ids, partner_id, profile_id, context=None):
-        """Override of the basic method as we need to pass the profile_id in the on_change_type
-        call."""
+        """
+        Override of the basic method as we need to pass the profile_id in the on_change_type
+        call.
+        """
         obj_partner = self.pool.get('res.partner')
         if context is None:
             context = {}
@@ -553,8 +614,10 @@ class AccountBankSatementLine(Model):
         return {'value': {'type': type}}
         
     def onchange_type(self, cr, uid, line_id, partner_id, type, profile_id, context=None):
-        """Keep the same features as in standard and call super. If an account is returned,
-        call the method to compute line values."""
+        """
+        Keep the same features as in standard and call super. If an account is returned,
+        call the method to compute line values.
+        """
         if context is None:
             context = {}
         res = super(AccountBankSatementLine,self).onchange_type(cr, uid, line_id, partner_id, type, context)
