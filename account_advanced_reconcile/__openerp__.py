@@ -30,7 +30,7 @@
 Advanced reconciliation methods for the module account_easy_reconcile.
 
 account_easy_reconcile, which is a dependency, is available in the branch:
-lp:~c2c/+junk/account-extra-addons
+lp:~openerp-community-committers/+junk/account-extra-addons
 This branch is temporary and will soon be merged with the Akretion master
 branch, but the master branch does not already exist. Sorry for the
 inconvenience.
