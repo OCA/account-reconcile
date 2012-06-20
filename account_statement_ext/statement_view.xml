@@ -1,51 +1,76 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
 <data>
-   
-    <record id="view_bank_statement_form" model="ir.ui.view">
-        <field name="name">account.bank.statement.form</field>
-        <field name="model">account.bank.statement</field>
-        <field name="inherit_id" ref="account.view_bank_statement_form"/>
+
+    <!-- Account Move Line : add statement_treasury_id -->
+     <record id="view_move_line_tree" model="ir.ui.view">
+            <field name="name">account.move.line.tree</field>
+            <field name="model">account.move.line</field>
+            <field name="type">tree</field>
+            <field name="inherit_id" ref="account.view_move_line_tree"/>
+            <field name="arch" type="xml">
+                <field name="ref" position="after">
+                    <field name="statement_id"/>
+                </field>
+            </field>
+        </record>
+        <record id="view_account_move_line_filter" model="ir.ui.view">
+            <field name="model">account.move.line</field>
+            <field name="type">search</field>
+            <field name="inherit_id" ref="account.view_account_move_line_filter"/>
+            <field name="arch" type="xml">
+                <field name="period_id" context="{'period_id':self}" position="after">
+                    <field name="statement_id"/>
+                </field>
+            </field>
+        </record>
+        
+    <record id="statement_importer_view_form" model="ir.ui.view">
+        <field name="name">account.statement.profil.view</field>
+        <field name="model">account.statement.profil</field>
         <field name="type">form</field>
         <field name="arch" type="xml">
-            <field name="period_id" position="replace"/>
-        </field>
-    </record>
-    <record id="view_banking_bank_statement_tree" model="ir.ui.view">
-        <field name="name">account.bank.statement.tree.banking</field>
-        <field name="inherit_id" ref="account.view_bank_statement_tree" />
-        <field name="model">account.bank.statement</field>
-        <field name="type">tree</field>
-        <field name="arch" type="xml">
-            <field name="period_id" position="replace"/>
+            <form string="Import statement">
+                <separator string="" colspan="4"/>
+                <field name="name" select="1" />
+                <field name="partner_id" select="1"/>
+                <field name="journal_id" select="1"/>
+                <field name="commission_account_id" />
+                <field name="commission_analytic_id" />
+                <field name="receivable_account_id" />
+                <field name="force_partner_on_bank"/>
+                <field name="balance_check"/>
+                <field name="bank_statement_prefix"/>
+            </form>
         </field>
     </record>
 
-    <record id="view_banking_bank_statement_form_add_period" model="ir.ui.view">
-        <field name="name">account.bank.statement.form.add_period</field>
-        <field name="inherit_id" ref="account.view_bank_statement_form" />
-        <field name="model">account.bank.statement</field>
-        <field name="type">form</field>
+    <record id="statement_importer_view_tree" model="ir.ui.view">
+        <field name="name">account.statement.profil.view</field>
+        <field name="model">account.statement.profil</field>
+        <field name="type">tree</field>
         <field name="arch" type="xml">
-            <xpath expr="/form/notebook/page[@string='Transaction']/field/tree/field[@name='ref']" position="after">
-                <field name="period_id"/>
-            </xpath>
+            <tree string="Import statement">
+                <field name="name" />
+                <field name="partner_id" />
+                <field name="journal_id" />
+                <field name="commission_account_id" />
+                <field name="commission_analytic_id" />
+                <field name="receivable_account_id" />
+                <field name="force_partner_on_bank"/>
+                <field name="balance_check"/>
+            </tree>
         </field>
     </record>
-    <record id="view_banking_bank_statement_add_period_2" model="ir.ui.view">
-        <field name="name">account.bank.statement.form.add_period2</field>
-        <field name="inherit_id" ref="account.view_bank_statement_form" />
-        <field name="model">account.bank.statement</field>
-        <field name="type">form</field>
-        <field name="arch" type="xml">
-            <data>
-                <xpath expr="/form/notebook/page[@string='Transaction']/field/form/field[@name='ref']" position="after">
-                    <field name="period_id"/>
-                </xpath>
-            </data>
-        </field>
+    <record id="action_treasury_statement_profil_tree" model="ir.actions.act_window">
+        <field name="name">Bank Statements Profile</field>
+        <field name="res_model">account.statement.profil</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
     </record>
-    
+
+    <menuitem string="Bank Statements Profile" action="action_treasury_statement_profil_tree" id="menu_treasury_statement_profil_tree" parent="account.menu_configuration_misc" sequence="30"/>    
+
     <record model="ir.ui.view" id="id_in_statement_line">
         <field name="name">account.bank.statement.line.inherit</field>
         <field name="model">account.bank.statement</field>
@@ -58,6 +83,120 @@
         </field>
     </record>
     
+    
+    <record id="view_treasury_statement_search" model="ir.ui.view">
+        <field name="name">account.bank.statement.search</field>
+        <field name="model">account.bank.statement</field>
+        <field name="inherit_id" ref="account.view_bank_statement_search"/>
+        <field name="type">search</field>
+        <field name="arch" type="xml">
+             <xpath expr="/search/group/field[@name='name']" position="before">
+                    <field name="profile_id"/>
+                    <field name="credit_partner_id"/>
+                    <separator orientation="vertical"/>
+            </xpath>
+            <xpath expr="/search/group/field[@name='period_id']" position="replace">
+            </xpath>
+            <xpath expr="/search/group/filter[@string='Period']" position="replace">
+                <filter string="Financial Partner" context="{'group_by': 'credit_partner_id'}" icon="terp-partner"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_treasury_statement_tree" model="ir.ui.view">
+        <field name="name">account.bank.statement.tree</field>
+        <field name="model">account.bank.statement</field>
+        <field name="inherit_id" ref="account.view_bank_statement_tree"/>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <xpath expr="/tree/field[@name='name']" position="after">
+                <field name="profile_id"/>
+            </xpath>
+            <xpath expr="/tree/field[@name='period_id']" position="replace">
+                <field name="credit_partner_id"/>
+            </xpath>
+        </field>
+    </record>
+
+    
+    <record id="view_treasury_statement_form" model="ir.ui.view">
+        <field name="name">account.bank.statement.form</field>
+        <field name="model">account.bank.statement</field>
+        <field name="inherit_id" ref="account.view_bank_statement_form"/>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <!-- Remove name and date from group tag -->
+            <xpath expr="/form/group/field[@name='name']" position="replace">
+            </xpath>
+            <xpath expr="/form/group/field[@name='date']" position="replace">
+            </xpath>
+            <!-- Add a new group before the first one with name, profil and date -->
+            <xpath expr="/form/group[@col='7']" position="before">
+                <group col="6" colspan="4">
+                    <field name="name" select="1"/>
+                    <field name="profile_id" select="1" required="1" on_change="onchange_imp_config_id(profile_id)" widget="selection"/>
+                    <field name="date" select="1" on_change="onchange_date(date, company_id)"/>
+                </group>
+                <separator string="Details" colspan="4"/>
+            </xpath>
+            <!-- Make balance visible or not depending on profil -->
+            <xpath expr="/form/group/field[@name='balance_start']" position="replace">
+            </xpath>
+            <xpath expr="/form/group/field[@name='balance_end_real']" position="replace">
+            </xpath>
+            <xpath expr="/form/group[@col='7']" position="after">
+                <separator string="Balance Check" colspan="4" attrs="{'invisible':[('balance_check','=',False)]}"/>
+                <group col="6" colspan="4" attrs="{'invisible':[('balance_check','=',False)]}">
+                    <field name="balance_start" />
+                    <field name="balance_end_real" />
+                </group>
+            </xpath>
+            <xpath expr="/form/group/field[@name='balance_end']" position="replace">
+                 <field name="balance_end" attrs="{'invisible':[('balance_check','=',False)]}"/>
+            </xpath>
+            
+            <xpath expr="/form/group/field[@name='journal_id']" position="attributes">
+                 <attribute name="widget"></attribute>
+            </xpath>
+            <xpath expr="/form/group/field[@name='period_id']" position="replace">
+                 <field name="credit_partner_id"/>
+                 <field name="account_id" invisible="1"/>
+                 <field name="balance_check" invisible="1"/>
+            </xpath>
+            <xpath expr="/form/notebook/page/field/tree/field[@name='sequence']" position="after">
+                 <field name="id"/>
+            </xpath>
+            <xpath expr="/form/notebook/page/field/tree/field[@name='partner_id']" position="replace">
+                 <field name="partner_id" on_change="onchange_partner_id(partner_id,parent.profile_id)"/>
+            </xpath>
+            <xpath expr="/form/notebook/page/field/form/field[@name='date']" position="before">
+                 <field name="id"/>
+            </xpath>
+            <!-- Adapt onchange signature -->
+            <xpath expr="/form/notebook/page/field/tree/field[@name='partner_id']" position="replace">
+                 <field name="partner_id" on_change="onchange_partner_id(partner_id,parent.profile_id)"/>
+            </xpath>
+            <xpath expr="/form/notebook/page/field/form/field[@name='partner_id']" position="replace">
+                 <field name="partner_id" on_change="onchange_partner_id(partner_id,parent.profile_id)"/>
+            </xpath>
+            <xpath expr="/form/notebook/page/field/form/field[@name='type']" position="replace">
+                 <field name="type" on_change="onchange_type(partner_id, type, parent.profile_id)"/>
+            </xpath>
+            <xpath expr="/form/notebook/page/field/tree/field[@name='type']" position="replace">
+                 <field name="type" on_change="onchange_type(partner_id, type, parent.profile_id)"/>
+            </xpath>
+            
+        </field>
+    </record>
+
+    
+        <act_window id="act_bank_statement_from_profile"
+            name="Open Statements" 
+            res_model="account.bank.statement" 
+            src_model="account.statement.profil" 
+            domain="[('profile_id','=',active_id),]"
+            view_type="form"/>
+        
 
 </data>
 </openerp>

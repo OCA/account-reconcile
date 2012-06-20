@@ -1,0 +1,25 @@
+<?xml version="1.0" ?>
+<openerp>
+    <data>
+
+        <report auto="False"
+            id="report_bank_statement_webkit"
+            model="account.bank.statement"
+            name="bank_statement_webkit"
+            file="account_statement_ext/report/bank_statement_report.mako"
+            string="Bank Statement"
+            report_type="webkit"
+            webkit_header="account_statement_ext.bank_statement_landscape_header"
+            header="1"/>
+
+        <record id="action_print_bank_statement_webkit" model="ir.values">
+            <field name="name">Bank Statement</field>
+            <field name="key2">client_print_multi</field>
+            <field name="value_unpickle"
+                eval="'ir.actions.report.xml,' +str(ref('report_bank_statement_webkit'))"/>
+            <field name="key">action</field>
+            <field name="model">account.bank.statement</field>
+        </record>
+
+    </data>
+</openerp>

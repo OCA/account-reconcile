@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ##############################################################################
 #
-#    Author: Nicolas Bessi, Joel Grand-Guillaume
+#    Author: Joel Grand-Guillaume
 #    Copyright 2011-2012 Camptocamp SA
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -20,5 +20,3 @@
 ##############################################################################
 
 import statement
-import report
-import account

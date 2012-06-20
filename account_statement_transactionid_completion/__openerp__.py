@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 ##############################################################################
 #
-#    Author: Yannick Vaucher (Camptocamp)
-#    Copyright 2012 Camptocamp SA
+#    Author: Joel Grand-Guillaume
+#    Copyright 2011-2012 Camptocamp SA
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -19,28 +19,34 @@
 #
 ##############################################################################
 
-{'name': 'Base transaction id for financial institutes',
+{'name': "Bank statement completion from transaction ID",
  'version': '1.0',
  'author': 'Camptocamp',
  'maintainer': 'Camptocamp',
- 'category': 'Hidden/Dependency',
- 'complexity': 'easy', #easy, normal, expert
- 'depends': ['account', 'sale','stock'],
+ 'category': 'Finance',
+ 'complexity': 'normal', #easy, normal, expert
+ 'depends': ['account_statement_base_completion', 'base_transaction_id'],
  'description': """
- Adds transaction id to invoice and sale models and views. On Sales order, you can specify the transaction ID
- used for the payment and it will be propagated to the invoice (even if made from packing).
- This is mostely used for E-commerce handling. You can then add a mapping on that SO field to save the E-Commerce
- financial Transaction ID into the OpenERP SO field. The main purpose is to ease the reconciliation process and
- be able to find the partner when importing the bank statement.
+  Add a completion method based on transaction ID providen by the bank/office. This
+  transaction ID has been recorded on the SO (by a mapping through the e-commerce connector,
+  or manually). Completion will look in the SO with that transaction ID to match the partner,
+  then it will complete the bank statement line with him the fullfill as well the reference
+  with the found SO name to ease the reconciliation.
+  
+  So this way, the reconciliation always happend on the SO name stored in ref.
+  
  """,
- 'website': 'http://www.openerp.com',
+ 'website': 'http://www.camptocamp.com',
  'init_xml': [],
- 'update_xml': ['invoice_view.xml', 'sale_view.xml'],
+ 'update_xml': [
+    "statement_view.xml",
+    "data.xml",
+ ],
  'demo_xml': [],
  'test': [],
  'installable': True,
  'images': [],
- 'auto_install': False,
+ 'auto_install': True,
  'license': 'AGPL-3',
  'active': False,
 }
