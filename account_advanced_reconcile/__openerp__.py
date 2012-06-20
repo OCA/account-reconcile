@@ -28,7 +28,12 @@
  'depends': ['account_easy_reconcile'],
  'description': """
 Advanced reconciliation methods for the module account_easy_reconcile.
-The latter is available on: lp:~akretion-team/+junk/account-extra-addons
+
+account_easy_reconcile, which is a dependency, is available in the branch:
+lp:~openerp-community-committers/+junk/account-extra-addons
+This branch is temporary and will soon be merged with the Akretion master
+branch, but the master branch does not already exist. Sorry for the
+inconvenience.
 
 In addition to the features implemented in account_easy_reconcile, which are:
  - reconciliation facilities for big volume of transactions
@@ -48,6 +53,11 @@ Typically, such a method can be:
    or name
  - Reconcile entries if the partner is equal and the ref match with a pattern
 
+And they allows:
+ - Reconciliations with multiple credit / multiple debit lines
+ - Partial reconciliations
+ - Write-off amount as well
+
 A method is already implemented in this module, it matches on entries:
  * Partner
  * Ref on credit move lines should be case insensitive equals to the ref or
@@ -56,9 +66,6 @@ A method is already implemented in this module, it matches on entries:
 The base class to find the reconciliations is built to be as efficient as
 possible.
 
-Reconciliations with multiple credit / debit lines is possible.
-Partial reconciliation are generated.
-You can choose a write-off amount as well.
 
 So basically, if you have an invoice with 3 payments (one per month), the first
 month, it will partial reconcile the debit move line with the first payment, the second
@@ -66,8 +73,9 @@ month, it will partial reconcile the debit move line with 2 first payments,
 the third month, it will make the full reconciliation.
 
 This module is perfectly adapted for E-Commerce business where a big volume of
-move lines and so, reconciliations, is involved and payments often come from
+move lines and so, reconciliations, are involved and payments often come from
 many offices.
+
  """,
  'website': 'http://www.camptocamp.com',
  'init_xml': [],
