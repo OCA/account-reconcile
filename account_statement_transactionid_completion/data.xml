@@ -6,7 +6,6 @@
          <field name="name">Match from line reference (based on transaction ID)</field>
          <field name="sequence">40</field>
          <field name="function_to_call">get_from_transaction_id_and_so</field>
-         </field>
      </record>
     
 </data>
