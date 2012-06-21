@@ -67,7 +67,7 @@ class AccountStatementCompletionRule(Model):
                 raise ErrorTooManyPartner(_('Line named "%s" was matched by more than one partner.')%(st_line.name,st_line.id))
             if so_id:
                 st_vals = st_obj.get_values_for_line(cr, uid, profile_id = st_line.statement_id.profile_id.id,
-                    partner_id = res.get('partner_id',False), line_type = st_line.type, st_line.amount, context)
+                    partner_id = res.get('partner_id',False), line_type = st_line.type, amount = st_line.amount, context=context)
                 res.update(st_vals)
         return res
 
