@@ -59,9 +59,9 @@ class AccountStatementCompletionRule(Model):
         res = {}
         if st_line:
             so_obj = self.pool.get('sale.order')
-            so_id = so_obj.search(cursor, uid, [('transaction_id', '=', st_line.transaction_id)])
+            so_id = so_obj.search(cr, uid, [('transaction_id', '=', st_line.transaction_id)])
             if so_id and len(so_id) == 1:
-                so = so_obj.browse(cursor, uid, so_id[0])
+                so = so_obj.browse(cr, uid, so_id[0])
                 res['partner_id'] = so.partner_id.id
                 res['ref'] = so.name
             elif so_id and len(so_id) > 1:

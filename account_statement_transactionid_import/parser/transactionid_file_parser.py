@@ -90,7 +90,7 @@ class TransactionIDFileParser(FileParser):
         """
         Compute the commission from value of each line
         """
-        res = super(GenericFileParser, self)._post(*args, **kwargs)
+        res = super(TransactionIDFileParser, self)._post(*args, **kwargs)
         val = 0.0
         for row in self.result_row_list:
             val += row.get('commission_amount',0.0)
