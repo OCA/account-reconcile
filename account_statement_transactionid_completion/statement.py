@@ -31,8 +31,9 @@ class AccountStatementCompletionRule(Model):
     
     _inherit = "account.statement.completion.rule"
     
-    def _get_functions(self):
-        res = super (self,AccountStatementCompletionRule)._get_functions()
+    def _get_functions(self, cr, uid, context=None):
+        res = super (AccountStatementCompletionRule, self)._get_functions(
+                cr, uid, context=context)
         res.append(('get_from_transaction_id_and_so', 'From line reference (based on SO transaction ID'))
         return res
 
@@ -58,16 +59,16 @@ class AccountStatementCompletionRule(Model):
         res = {}
         if st_line:
             so_obj = self.pool.get('sale.order')
-            so_id = so_obj.search(cursor, uid, [('transaction_id', '=', st_line.transaction_id)])
+            so_id = so_obj.search(cr, uid, [('transaction_id', '=', st_line.transaction_id)])
             if so_id and len(so_id) == 1:
-                so = so_obj.browse(cursor, uid, so_id[0])
+                so = so_obj.browse(cr, uid, so_id[0])
                 res['partner_id'] = so.partner_id.id
                 res['ref'] = so.name
             elif so_id and len(so_id) > 1:
-                raise ErrorTooManyPartner(_('Line named "%s" was matched by more than one partner.')%(st_line.name,st_line.id))
+                raise ErrorTooManyPartner(_('Line named "%s" (Ref:%s) was matched by more than one partner.')%(st_line.name,st_line.ref))
             if so_id:
                 st_vals = st_obj.get_values_for_line(cr, uid, profile_id = st_line.statement_id.profile_id.id,
-                    partner_id = res.get('partner_id',False), line_type = st_line.type, st_line.amount, context)
+                    partner_id = res.get('partner_id',False), line_type = st_line.type, amount = st_line.amount, context=context)
                 res.update(st_vals)
         return res
 

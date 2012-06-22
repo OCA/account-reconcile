@@ -26,6 +26,12 @@
                  <xpath expr="/form/group/field[@name='balance_end']" position="after">
                      <button name="button_auto_completion" string="Auto Completion" states='draft,open' type="object" colspan="1"/>
                  </xpath>
+                 
+                 <xpath expr="/form/notebook/page[@string='Journal Entries']" position="after">
+                      <page string="Completion Logs" attrs="{'invisible':[('completion_logs','=',False)]}">
+                          <field name="completion_logs" colspan="4" nolabel="1" attrs="{'invisible':[('completion_logs','=',False)]}"/>
+                      </page>
+                 </xpath>
 
              </data>
          </field>

@@ -110,6 +110,11 @@ class CreditPartnerStatementImporter(osv.osv_memory):
                                             ftype.replace('.',''),
                                             context=context
                                         )
-     
-        # We should return here the profile for which we executed the import
-        return {'type': 'ir.actions.act_window_close'}
+        return {
+            'domain': "[('id','in', ["+','.join(map(str,[sid]))+"])]",
+            'name': 'Imported Bank Statement',
+            'view_type': 'form',
+            'view_mode': 'tree,form',
+            'res_model': 'account.bank.statement',
+            'type': 'ir.actions.act_window',
+        }

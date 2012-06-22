@@ -24,6 +24,7 @@ logger = netsvc.Logger()
 from openerp.osv.orm import Model, fields
 from openerp.osv import fields, osv
 from operator import itemgetter, attrgetter
+import datetime
 
 class ErrorTooManyPartner(Exception):
     """
@@ -146,7 +147,7 @@ class AccountStatementCompletionRule(Model):
                     inv = inv_obj.browse(cursor, uid, inv_id[0])
                     res['partner_id'] = inv.partner_id.id
                 elif inv_id and len(inv_id) > 1:
-                    raise ErrorTooManyPartner(_('Line named "%s" was matched by more than one partner.')%(st_line.name,st_line.id))
+                    raise ErrorTooManyPartner(_('Line named "%s" (Ref:%s) was matched by more than one partner.')%(st_line.name,st_line.ref))
                 st_vals = st_obj.get_values_for_line(cursor, uid, profile_id = st_line.statement_id.profile_id.id,
                     partner_id = res.get('partner_id',False), line_type = st_line.type, amount = st_line.amount, context = context)
                 res.update(st_vals)
@@ -178,7 +179,7 @@ class AccountStatementCompletionRule(Model):
                     so = so_obj.browse(cursor, uid, so_id[0])
                     res['partner_id'] = so.partner_id.id
                 elif so_id and len(so_id) > 1:
-                    raise ErrorTooManyPartner(_('Line named "%s" was matched by more than one partner.')%(st_line.name,st_line.id))
+                    raise ErrorTooManyPartner(_('Line named "%s" (Ref:%s) was matched by more than one partner.')%(st_line.name,st_line.ref))
                 st_vals = st_obj.get_values_for_line(cursor, uid, profile_id = st_line.statement_id.profile_id.id,
                     partner_id = res.get('partner_id',False), line_type = st_line.type, amount = st_line.amount, context = context)
                 res.update(st_vals)
@@ -209,13 +210,13 @@ class AccountStatementCompletionRule(Model):
         compt = 0
         if st_line:
             ids = partner_obj.search(cursor, uid, [['bank_statement_label', '!=', False]], context=context)
-            for partner in self.browse(cursor, uid, ids, context=context):
+            for partner in partner_obj.browse(cursor, uid, ids, context=context):
                 for partner_label in partner.bank_statement_label.split(';'):
                     if partner_label in st_line.label:
                         compt += 1
                         res['partner_id'] = partner.id
                         if compt > 1:
-                            raise ErrorTooManyPartner(_('Line named "%s" was matched by more than one partner.')%(st_line.name,st_line.id))
+                            raise ErrorTooManyPartner(_('Line named "%s" (Ref:%s) was matched by more than one partner.')%(st_line.name,st_line.ref))
             if res:
                 st_vals = st_obj.get_values_for_line(cursor, uid, profile_id = st_line.statement_id.profile_id.id,
                     partner_id = res.get('partner_id',False), line_type = st_line.type, amount = st_line.amount, context = context)
@@ -243,12 +244,13 @@ class AccountStatementCompletionRule(Model):
         st_obj = self.pool.get('account.bank.statement.line')
         st_line = st_obj.browse(cursor,uid,line_id)
         if st_line:
-            sql = "SELECT id FROM res_partner WHERE name ~* '.*%s.*'"
-            cursor.execute(sql, (st_line.label,))
+            sql = "SELECT id FROM res_partner WHERE name ~* %s"
+            pattern = ".*%s.*" % st_line.label
+            cursor.execute(sql, (pattern,))
             result = cursor.fetchall()
             if len(result) > 1:
-                raise ErrorTooManyPartner(_('Line named "%s" was matched by more than one partner.')%(st_line.name,st_line.id))
-            for id in result:
+                raise ErrorTooManyPartner(_('Line named "%s" (Ref:%s) was matched by more than one partner.')%(st_line.name,st_line.ref))
+            for id in result[0]:
                 res['partner_id'] = id
             if res:
                 st_vals = st_obj.get_values_for_line(cursor, uid, profile_id = st_line.statement_id.profile_id.id,
@@ -290,12 +292,9 @@ class AccountStatementLine(Model):
         the profile.. We will ignore line for which already_completed is ticked.
 
         :return:
-            A dict of value that can be passed directly to the write method of
-            the statement line or {}
-           {'partner_id': value,
-            'account_id' : value,
-            
-            ...}
+            A dict of dict value that can be passed directly to the write method of
+            the statement line or {}. The first dict has statement line ID as a key:
+            {117009: {'partner_id': 100997, 'account_id': 489L}}        
         """
         profile_obj = self.pool.get('account.statement.profil')
         st_obj = self.pool.get('account.bank.statement.line')
@@ -312,7 +311,7 @@ class AccountStatementLine(Model):
                     # Merge the result
                     res[line.id].update(vals)
                 except ErrorTooManyPartner, exc:
-                    msg = "Line ID %s had following error: %s" % (line.id, str(exc))
+                    msg = "Line ID %s had following error: %s" % (line.id, exc.value)
                     errors_stack.append(msg)
         if errors_stack:
             msg = u"\n".join(errors_stack)
@@ -326,36 +325,64 @@ class AccountBankSatement(Model):
     """
     _inherit = "account.bank.statement"
 
+    _columns = {
+        'completion_logs': fields.text('Completion Log', readonly=True),
+    }
+    
+    def write_completion_log(self, cr, uid, stat_id, error_msg, number_imported, context=None):
+        """
+        Write the log in the completion_logs field of the bank statement to let the user
+        know what have been done. This is an append mode, so we don't overwrite what
+        already recoded.
+    
+        :param int/long stat_id: ID of the account.bank.statement
+        :param char error_msg: Message to add
+        :number_imported int/long: Number of lines that have been completed
+        :return : True
+    
+        """
+        error_log = ""
+        user_name = self.pool.get('res.users').read(cr, uid, uid, ['name'])['name']
+        log = self.read(cr, uid, stat_id, ['completion_logs'], context=context)['completion_logs']
+        log_line = log and log.split("\n") or []
+        completion_date = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        if error_msg:
+            error_log = error_msg
+        log_line[0:0] = [completion_date + ' : '
+            + _("Bank Statement ID %s has %s lines completed by %s") %(stat_id, number_imported, user_name)
+            + "\n" + error_log + "-------------" + "\n"]
+        log = "\n".join(log_line)
+        self.write(cr, uid, [stat_id], {'completion_logs' : log}, context=context)
+        logger.notifyChannel('Bank Statement Completion', netsvc.LOG_INFO, 
+            "Bank Statement ID %s has %s lines completed"%(stat_id, number_imported))
+        return True
+    
     def button_auto_completion(self, cr, uid, ids, context=None):
         """
         Complete line with values given by rules and tic the already_completed
         checkbox so we won't compute them again unless the user untick them !
         """
-        # TODO: Test the errors system, we should be able to complete all line that
-        # passed, and raise an error for all other at once..
         if not context:
             context={}
         stat_line_obj = self.pool.get('account.bank.statement.line')
-        errors_msg=False
+        msg = ""
+        compl_lines = 0
         for stat in self.browse(cr, uid, ids, context=context):
             ctx = context.copy()
-            line_ids = map(lambda x:x.id, stat.line_ids)
-            try:
-                res = stat_line_obj.get_line_values_from_rules(cr, uid, line_ids, context=ctx)
-            except ErrorTooManyPartner, exc:
-                errors_msg = str(exc)
-            for id in line_ids:
-                vals = res.get(id, False)
-                if vals:
+            for line in stat.line_ids:
+                res = {}
+                try:
+                    res = stat_line_obj.get_line_values_from_rules(cr, uid, [line.id], context=ctx)
+                    if res:
+                        compl_lines += 1
+                except ErrorTooManyPartner, exc:
+                    msg += exc.value + "\n"
+                except Exception, exc:
+                    msg += exc.value + "\n"
+                # vals = res and res.keys() or False
+                if res:
+                    vals = res[line.id]
                     vals['already_completed'] = True
-                    stat_line_obj.write(cr, uid, id, vals, context=ctx)
-            # cr.commit()
-            # TOTEST: I don't know if this is working...
-            if errors_msg:
-                # raise osv.except_osv(_('Error'), errors_msg)
-                warning = {
-                    'title': _('Error!'),
-                    'message' : errors_msg,
-                }
-                return {'warning': warning}
+                    stat_line_obj.write(cr, uid, line.id, vals, context=ctx)
+            self.write_completion_log(cr, uid, stat.id, msg, compl_lines, context=context)
         return True

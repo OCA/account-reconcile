@@ -50,15 +50,15 @@ class TransactionIDFileParser(FileParser):
 
     @classmethod
     def parser_for(cls, parser_name):
-    """
-    Used by the new_bank_statement_parser class factory. Return true if
-    the providen name is generic_csvxls_transaction
-    """
+        """
+        Used by the new_bank_statement_parser class factory. Return true if
+        the providen name is generic_csvxls_transaction
+        """
         return parser_name == 'generic_csvxls_transaction'
 
     def get_st_line_vals(self, line, *args, **kwargs):
-        """T
-        his method must return a dict of vals that can be passed to create
+        """
+        This method must return a dict of vals that can be passed to create
         method of statement line in order to record it. It is the responsibility 
         of every parser to give this dict of vals, so each one can implement his
         own way of recording the lines.
@@ -90,13 +90,10 @@ class TransactionIDFileParser(FileParser):
         """
         Compute the commission from value of each line
         """
-        res = super(GenericFileParser, self)._post(*args, **kwargs)
+        res = super(TransactionIDFileParser, self)._post(*args, **kwargs)
         val = 0.0
         for row in self.result_row_list:
             val += row.get('commission_amount',0.0)
         self.commission_global_amount = val
         return res
-
-
-
 

@@ -91,6 +91,7 @@
         <field name="type">search</field>
         <field name="arch" type="xml">
              <xpath expr="/search/group/field[@name='name']" position="before">
+                    <field name="id"/>
                     <field name="profile_id"/>
                     <field name="credit_partner_id"/>
                     <separator orientation="vertical"/>
@@ -109,6 +110,9 @@
         <field name="inherit_id" ref="account.view_bank_statement_tree"/>
         <field name="type">tree</field>
         <field name="arch" type="xml">
+            <xpath expr="/tree/field[@name='name']" position="before">
+                 <field name="id"/>
+            </xpath>
             <xpath expr="/tree/field[@name='name']" position="after">
                 <field name="profile_id"/>
             </xpath>
@@ -132,7 +136,8 @@
             </xpath>
             <!-- Add a new group before the first one with name, profil and date -->
             <xpath expr="/form/group[@col='7']" position="before">
-                <group col="6" colspan="4">
+                <group col="8" colspan="4">
+                    <field name="id" select="1" readonly="1"/>
                     <field name="name" select="1"/>
                     <field name="profile_id" select="1" required="1" on_change="onchange_imp_config_id(profile_id)" widget="selection"/>
                     <field name="date" select="1" on_change="onchange_date(date, company_id)"/>
