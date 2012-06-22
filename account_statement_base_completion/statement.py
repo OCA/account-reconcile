@@ -209,7 +209,7 @@ class AccountStatementCompletionRule(Model):
         compt = 0
         if st_line:
             ids = partner_obj.search(cursor, uid, [['bank_statement_label', '!=', False]], context=context)
-            for partner in self.browse(cursor, uid, ids, context=context):
+            for partner in partner_obj.browse(cursor, uid, ids, context=context):
                 for partner_label in partner.bank_statement_label.split(';'):
                     if partner_label in st_line.label:
                         compt += 1
