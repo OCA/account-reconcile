@@ -29,6 +29,7 @@
          <field name="model">account.bank.statement</field>
          <field name="inherit_id" ref="account.view_bank_statement_form" />
          <field name="type">form</field>
+         <field eval="20" name="priority"/>
          <field name="arch" type="xml">
              <data>
                  <xpath expr="/form/notebook/page/field[@name='line_ids']/form/field[@name='label']" position="after">
