@@ -59,6 +59,7 @@
      'statement_view.xml',
      'partner_view.xml',
      'data.xml',
+     'security/ir.model.access.csv',
  ],
  'demo_xml': [],
  'test': [],

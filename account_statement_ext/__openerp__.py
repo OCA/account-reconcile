@@ -72,6 +72,7 @@
      'statement_view.xml',
      'report/bank_statement_webkit_header.xml',
      'report.xml',
+     'security/ir.model.access.csv',
  ],
  'demo_xml': [],
  'test': [],
