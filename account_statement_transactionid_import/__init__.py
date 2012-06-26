@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 ##############################################################################
 #
-#    Author: Guewen Baconnier
-#    Copyright 2012 Camptocamp SA
+#    Author: Joel Grand-Guillaume
+#    Copyright 2011-2012 Camptocamp SA
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -18,20 +18,4 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-
-from openerp.osv.orm import Model
-
-
-class account_easy_reconcile_method(Model):
-
-    _inherit = 'account.easy.reconcile.method'
-
-    def _get_all_rec_method(self, cr, uid, context=None):
-        methods = super(account_easy_reconcile_method, self).\
-            _get_all_rec_method(cr, uid, context=context)
-        methods += [
-            ('easy.reconcile.advanced.ref',
-            'Advanced. Partner and Ref.'),
-        ]
-        return methods
-
+import parser

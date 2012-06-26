@@ -2,7 +2,7 @@
 ##############################################################################
 #
 #    Copyright Camptocamp SA
-#    Author Nicolas Bessi
+#    Author Nicolas Bessi, Joel Grand-Guillaume
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
 #    the Free Software Foundation, either version 3 of the License, or
@@ -18,65 +18,95 @@
 #
 ##############################################################################
 
-"""
-Parser for csv or xml for file containing credit transfert data from
-financial institure as VISA
-"""
-
-from tools.translate import _
+from openerp.tools.translate import _
 import base64
 import csv
 import tempfile
 import datetime
+from parser import BankStatementImportParser
+from parser import UnicodeDictReader
 try:
     import xlrd
 except:
     raise Exception(_('Please install python lib xlrd'))
 
-def UnicodeDictReader(utf8_data, **kwargs):
-    csv_reader = csv.DictReader(utf8_data, **kwargs)
-    for row in csv_reader:
-        yield dict([(key, unicode(value, 'utf-8')) for key, value in row.iteritems()])
-
-# TODO extract into a lib helper module
-class FileParser(object):
-    def __init__(self, filebuffer, keys_to_validate=None, decode_base_64=True, ftype='csv'):
+class FileParser(BankStatementImportParser):
+    """
+    Generic abstract class for defining parser for .csv or .xls file format.
+    """
+    
+    def __init__(self, parse_name, keys_to_validate=[], ftype='csv', convertion_dict=None, *args, **kwargs):
+        """
+            :param char: parse_name : The name of the parser
+            :param list: keys_to_validate : contain the key that need to be present in the file
+            :param char ftype: extension of the file (could be csv or xls)
+            :param: convertion_dict : keys and type to convert of every column in the file like 
+                {
+                    'ref': unicode,
+                    'label': unicode,
+                    'date': datetime.datetime,
+                    'amount': float,
+                    'commission_amount': float
+                }
+            """
+        
+        super(FileParser, self).__init__(parse_name, *args, **kwargs)
         if ftype in ('csv', 'xls'):
             self.ftype = ftype
         else:
             raise Exception(_('Invalide file type %s. please use csv or xls') % (ftype))
         self.keys_to_validate = keys_to_validate
-        self.decode_base_64 = decode_base_64
-        if filebuffer:
-            self.filebuffer = filebuffer
-        else:
-            raise Exception(_('No buffer file'))
+        self.convertion_dict = convertion_dict
 
-    def parse(self):
-        "launch parsing of csv or xls"
-        if self.decode_base_64:
-            self._decode_64b_stream()
+    def _custom_format(self, *args, **kwargs):
+        """
+        No other work on data are needed in this parser.
+        """
+        return True
+
+    def _pre(self, *args, **kwargs):
+        """
+        No pre-treatment needed for this parser.
+        """
+        return True
+
+    def _parse(self, *args, **kwargs):
+        """
+        Launch the parsing through .csv or .xls depending on the
+        given ftype
+        """
+        
         res = None
         if self.ftype == 'csv':
-            res = self.parse_csv()
+            res = self._parse_csv()
         else:
-            res = self.parse_xls()
-        if self.keys_to_validate:
-            self._validate_column(res, self.keys_to_validate)
-        return res
+            res = self._parse_xls()
+        self.result_row_list = res
+        return True
 
-    def _decode_64b_stream(self):
-        self.filebuffer = base64.b64decode(self.filebuffer)
-        return self.filebuffer
-
-    def _validate_column(self, array_of_dict, cols):
-        parsed_cols = array_of_dict[0].keys()
-        for col in cols:
+    def _validate(self, *args, **kwargs):
+        """
+        We check that all the key of the given file (means header) are present
+        in the validation key providen. Otherwise, we raise an Exception.
+        """
+        parsed_cols = self.result_row_list[0].keys()
+        for col in self.keys_to_validate:
             if col not in parsed_cols:
-                raise Exception(_('col %s not present in file') % (col))
+                raise Exception(_('Column %s not present in file') % (col))
+        return True
 
-    def parse_csv(self, delimiter=';'):
-        "return an array of dict from csv file"
+    def _post(self, *args, **kwargs):
+        """
+        Cast row type depending on the file format .csv or .xls after parsing the file.
+        """
+        self.result_row_list = self._cast_rows(*args, **kwargs)
+        return True
+
+
+    def _parse_csv(self, delimiter=';'):
+        """
+        :return: dict of dict from csv file (line/rows)
+        """
         csv_file = tempfile.NamedTemporaryFile()
         csv_file.write(self.filebuffer)
         # We ensure that cursor is at beginig of file
@@ -87,8 +117,10 @@ class FileParser(object):
         )
         return [x for x in reader]
 
-    def parse_xls(self):
-        "return an array of dict from csv file"
+    def _parse_xls(self):
+        """
+        :return: dict of dict from xls file (line/rows)
+        """
         wb_file = tempfile.NamedTemporaryFile()
         wb_file.write(self.filebuffer)
         # We ensure that cursor is at beginig of file
@@ -106,6 +138,10 @@ class FileParser(object):
         return res
 
     def _from_csv(self, result_set, conversion_rules):
+        """
+        Handle the converstion from the dict and handle date format from
+        an .csv file.
+        """
         for line in result_set:
             for rule in conversion_rules:
                 if conversion_rules[rule] == datetime.datetime:
@@ -117,6 +153,10 @@ class FileParser(object):
         return result_set
 
     def _from_xls(self, result_set, conversion_rules):
+        """
+        Handle the converstion from the dict and handle date format from
+        an .xls file.
+        """
         for line in result_set:
             for rule in conversion_rules:
                 if conversion_rules[rule] == datetime.datetime:
@@ -126,6 +166,11 @@ class FileParser(object):
                     line[rule] = conversion_rules[rule](line[rule])
         return result_set
 
-    def cast_rows(self, result_set, conversion_rules):
+    def _cast_rows(self, *args, **kwargs):
+        """
+        Convert the self.result_row_list using the self.convertion_dict providen.
+        We call here _from_xls or _from_csv depending on the self.ftype variable.
+        """
         func =  getattr(self, '_from_%s'%(self.ftype))
-        return func(result_set, conversion_rules)
+        res = func(self.result_row_list, self.convertion_dict)
+        return res

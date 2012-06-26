@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 ##############################################################################
 #
-#    Author: Guewen Baconnier
-#    Copyright 2012 Camptocamp SA
+#    Author: Joel Grand-Guillaume
+#    Copyright 2011-2012 Camptocamp SA
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -18,20 +18,23 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
+import netsvc
+logger = netsvc.Logger()
+from openerp.osv.orm import Model, fields
 
-from openerp.osv.orm import Model
+class account_move(Model):
+    _inherit='account.move'
+    
+    def unlink(self, cr, uid, ids, context=None):
+        """
+        Delete the reconciliation when we delete the moves. This
+        allow an easier way of cancelling the bank statement.
+        """
+        for move in self.browse(cr, uid, ids, context=context):
+            for move_line in move.line_id:
+                if move_line.reconcile_id:
+                    move_line.reconcile_id.unlink(context=context)
+        return super(account_move, self).unlink(cr, uid, ids, context=context)
+        
 
-
-class account_easy_reconcile_method(Model):
-
-    _inherit = 'account.easy.reconcile.method'
-
-    def _get_all_rec_method(self, cr, uid, context=None):
-        methods = super(account_easy_reconcile_method, self).\
-            _get_all_rec_method(cr, uid, context=context)
-        methods += [
-            ('easy.reconcile.advanced.ref',
-            'Advanced. Partner and Ref.'),
-        ]
-        return methods
 
