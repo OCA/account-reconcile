@@ -34,7 +34,7 @@ class AccountStatementCompletionRule(Model):
     def _get_functions(self, cr, uid, context=None):
         res = super (AccountStatementCompletionRule, self)._get_functions(
                 cr, uid, context=context)
-        res.append(('get_from_transaction_id_and_so', 'From line reference (based on SO transaction ID'))
+        res.append(('get_from_transaction_id_and_so', 'From line reference (based on SO transaction ID)'))
         return res
 
     _columns={
