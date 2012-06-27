@@ -515,6 +515,9 @@ class AccountBankSatementLine(Model):
         periods = self.pool.get('account.period').find(cursor, user, dt=date)
         return periods and periods[0] or False
 
+    def _get_default_account(self, cursor, user, context=None):
+        return self.get_values_for_line(cursor, user, context = context)['account_id']
+        
     _columns = {
         # Set them as required + 64 char instead of 32
         'ref': fields.char('Reference', size=64, required=True),
@@ -522,6 +525,7 @@ class AccountBankSatementLine(Model):
     }
     _defaults = {
         'period_id': _get_period,
+        'account_id': _get_default_account,
     }
     
     def get_values_for_line(self, cr, uid, profile_id = False, partner_id = False, line_type = False, amount = False, context = None):

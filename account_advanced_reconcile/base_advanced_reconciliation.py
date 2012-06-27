@@ -263,11 +263,11 @@ class easy_reconcile_advanced(AbstractModel):
         lines_by_id = dict([(l['id'], l) for l in credit_lines + debit_lines])
         for reconcile_group_ids in reconcile_groups:
             group_lines = [lines_by_id[lid] for lid in reconcile_group_ids]
-            reconciled, partial = self._reconcile_lines(
+            reconciled, full = self._reconcile_lines(
                 cr, uid, rec, group_lines, allow_partial=True, context=context)
-            if reconciled and partial:
+            if reconciled and full:
                 reconciled_ids += reconcile_group_ids
-            elif partial:
+            elif reconciled:
                 partial_reconciled_ids += reconcile_group_ids
 
         return reconciled_ids, partial_reconciled_ids

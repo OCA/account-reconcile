@@ -200,7 +200,7 @@ class AccountStatementProfil(Model):
                 )   
             # If user ask to launch completion at end of import, do it !
             if prof.launch_import_completion:
-                self.button_auto_completion(cursor, uid, statement_id, context)
+                statement_obj.button_auto_completion(cursor, uid, [statement_id], context)
             
             # Write the needed log infos on profile
             self.write_logs_after_import(cursor, uid, prof.id, statement_id,

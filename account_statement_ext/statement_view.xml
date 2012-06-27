@@ -139,12 +139,11 @@
             <!-- Add a new group before the first one with name, profil and date -->
             <xpath expr="/form/group[@col='7']" position="before">
                 <group col="8" colspan="4">
-                    <field name="id" select="1" readonly="1"/>
-                    <field name="name" select="1"/>
                     <field name="profile_id" select="1" required="1" on_change="onchange_imp_config_id(profile_id)" widget="selection"/>
                     <field name="date" select="1" on_change="onchange_date(date, company_id)"/>
+                    <field name="name" select="1"/>
                 </group>
-                <separator string="Details" colspan="4"/>
+                <separator string="Profile Details" colspan="4"/>
             </xpath>
             <!-- Make balance visible or not depending on profil -->
             <xpath expr="/form/group/field[@name='balance_start']" position="replace">

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+<data>
+
+    <!-- Override what we have in account_statement_base_completion to replace the one in the voucher -->
+    <record id="account_statement_base_completion.bank_statement_view_form2" model="ir.ui.view">
+         <field name="name">account_bank_statement_import_base.bank_statement.auto_cmpl</field>
+         <field name="model">account.bank.statement</field>
+         <field name="inherit_id" ref="account_voucher.view_bank_statement_tree_voucher" />
+         <field name="type">form</field>
+         <field name="arch" type="xml">
+             <data>
+                 <xpath expr="/form/notebook/page/field[@name='line_ids']/tree/field[@name='voucher_id']" position="after">
+                    <field name="already_completed" />
+                 </xpath>
+             </data>
+         </field>
+     </record>
+    
+</data>
+</openerp>
