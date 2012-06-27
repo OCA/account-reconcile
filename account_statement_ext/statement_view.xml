@@ -15,12 +15,14 @@
             </field>
         </record>
         <record id="view_account_move_line_filter" model="ir.ui.view">
+            <field name="name">account.move.line.search.add_field</field>
             <field name="model">account.move.line</field>
             <field name="type">search</field>
             <field name="inherit_id" ref="account.view_account_move_line_filter"/>
             <field name="arch" type="xml">
                 <field name="period_id" context="{'period_id':self}" position="after">
                     <field name="statement_id"/>
+                    <field name="ref"/>
                 </field>
             </field>
         </record>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
-<data>
+<data noupdate="1">
 
      <record id="bank_statement_completion_rule_2" model="account.statement.completion.rule">
           <field name="name">Match from line label (based on partner field 'Bank Statement Label')</field>

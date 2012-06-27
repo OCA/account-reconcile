@@ -97,7 +97,7 @@ class AccountBankSatement(Model):
     
     _columns = {
         'profile_id': fields.many2one('account.statement.profil',
-                                  'Profil', required=True, states={'draft': [('readonly', False)]}),
+                                  'Profil', required=True, readonly=True, states={'draft': [('readonly', False)]}),
         'credit_partner_id': fields.related(
                         'profile_id', 
                         'partner_id', 
