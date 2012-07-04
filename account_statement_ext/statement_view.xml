@@ -158,7 +158,7 @@
                 </group>
             </xpath>
             <xpath expr="/form/group/field[@name='balance_end']" position="replace">
-                 <field name="balance_end" attrs="{'invisible':[('balance_check','=',False)]}"/>
+                 <field name="balance_end"/>
             </xpath>
             
             <xpath expr="/form/group/field[@name='journal_id']" position="attributes">
