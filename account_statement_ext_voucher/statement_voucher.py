@@ -22,20 +22,29 @@ from openerp.osv.orm import Model, fields
 
 
 class AccountVoucher(Model):
-    
+
     _inherit = 'account.voucher'
 
     def _get_period(self, cr, uid, context=None):
-        """If perdiod not in context, take it from the move lines"""
-        if context is None: context = {}
+        """If period not in context, take it from the move lines"""
+        if context is None:
+            context = {}
         if not context.get('period_id') and context.get('move_line_ids'):
             res = self.pool.get('account.move.line').browse(cr, uid , context.get('move_line_ids'))[0].period_id.id
             context['period_id'] = res
+        elif context.get('date'):
+            periods = self.pool.get('account.period').find(
+                    cr, uid, dt=context['date'], context=context)
+            if periods:
+                context['period_id'] = periods[0]
         return super(AccountVoucher, self)._get_period(cr, uid, context)
 
     def create(self, cr, uid, values, context=None):
         """If no period defined in values, ask it from moves."""
-        if values.get('period_id') == False and context.get('move_line_ids'):
-            values['period_id'] = self._get_period(cr, uid, context)
+        if context is None:
+            context = {}
+        if not values.get('period_id'):
+            ctx = dict(context, date=values.get('date'))
+            values['period_id'] = self._get_period(cr, uid, ctx)
         return super(AccountVoucher, self).create(cr, uid, values, context)
 
