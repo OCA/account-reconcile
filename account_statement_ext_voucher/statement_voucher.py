@@ -34,6 +34,8 @@ class AccountVoucher(Model):
         return super(AccountVoucher, self)._get_period(cr, uid, context)
 
     def create(self, cr, uid, values, context=None):
+        import pdb
+        pdb.set_trace()
         """If no period defined in values, ask it from moves."""
         if values.get('period_id') == False and context.get('move_line_ids'):
             values['period_id'] = self._get_period(cr, uid, context)
