@@ -27,14 +27,16 @@
  'complexity': 'normal', #easy, normal, expert
  'depends': ['account_statement_base_completion', 'base_transaction_id'],
  'description': """
-  Add a completion method based on transaction ID providen by the bank/office. This
-  transaction ID has been recorded on the SO (by a mapping through the e-commerce connector,
-  or manually). Completion will look in the SO with that transaction ID to match the partner,
-  then it will complete the bank statement line with him the fullfill as well the reference
-  with the found SO name to ease the reconciliation.
-  
-  So this way, the reconciliation always happend on the SO name stored in ref.
-  
+  Add a completion method based on transaction ID providen by the bank/office.
+
+  This transaction ID has been recorded on the SO (by a mapping
+  through the e-commerce connector, or manually). Completion will look
+  in the SO with that transaction ID to match the partner, then it
+  will fill in the bank statement line with it,  as well as
+  the reference with the found SO name to ease the reconciliation.
+
+  This way, the reconciliation always happen on the SO name stored in ref.
+
  """,
  'website': 'http://www.camptocamp.com',
  'init_xml': [],

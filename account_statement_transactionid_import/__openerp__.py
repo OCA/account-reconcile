@@ -27,24 +27,22 @@
  'complexity': 'normal', #easy, normal, expert
  'depends': ['account_statement_base_import','account_statement_transactionid_completion'],
  'description': """
- This module brings generic methods and fields on bank statement to deal with 
+ This module brings generic methods and fields on bank statement to deal with
  the importation of different bank and offices that uses transactionID.
- 
- This module allow you to import your bank transactions with a standard .csv or .xls file
- (you'll find it in the 'datas' folder). It'll respect the profil
- you'll choose (providen by the account_statement_ext module) to generate the entries. 
- 
+
+ This module allows you to import your bank transactions with a standard .csv or .xls file
+ (you'll find samples in the 'data' folder). It respects the chosen profile
+ (model provided by the account_statement_ext module) to generate the entries.
+
  This module can handle a commission taken by the payment office and has the following format:
- 
- * transaction_id :    the transaction ID given by the bank/office. It'll be used as reference
-                       in the generated entries and will be useful for reconciliation process
+
+ * transaction_id :    the transaction ID given by the bank/office. It is used as reference
+                       in the generated entries and is useful for reconciliation process
  * date :              date of the payment
- * amount :            amount paid in the currency of the journal used in the importation profil
+ * amount :            amount paid in the currency of the journal used in the importation profile
  * commission_amount : amount of the comission for each line
- * label :             the comunication given by the payment office, used as communication in the 
+ * label :             the comunication given by the payment office, used as communication in the
                        generated entries.
- 
- 
  """,
  'website': 'http://www.camptocamp.com',
  'init_xml': [],

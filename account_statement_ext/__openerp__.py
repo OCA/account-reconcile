@@ -27,44 +27,47 @@
  'complexity': 'normal', #easy, normal, expert
  'depends': ['account'],
  'description': """
- The goal of this module is to improve the basic bank statement, by adding various new features, 
- and help dealing with huge volume of reconciliation through payment offices (like Paypal, Lazer, 
- Visa, Amazon,...). 
- 
- It will be mostly used for E-commerce but can be usefule for other use cases as it introduce a 
- notion of profil on the bank statement to have more control on the generated entries. It will
- be the base for all new features developped to improve the reconciliation process (see our other 
- set of modules, like : account_statement_base_completion, account_statement_base_import, 
- account_advanced_reconcile).
- 
+ Improve the basic bank statement, by adding various new features,
+ and help dealing with huge volume of reconciliation through payment offices such as Paypal, Lazer,
+ Visa, Amazon...
+
+ It is mostly used for E-commerce but can be useful for other use cases as it introduces a
+ notion of profile on the bank statement to have more control on the generated entries. It serves as
+ a base for all new features developped to improve the reconciliation process (see our other
+ set of modules:
+
+ * account_statement_base_completion
+ * account_statement_base_import
+ * account_advanced_reconcile
+
  Features:
- 
- 1) This module improves the bank statement in the way it allows you to define profiles (for each
+
+ 1) Improve the bank statement: allows to  define profiles (for each
  Office or Bank). The bank statement will then generate the entries based on some criteria chosen
  in the selected profile. You can setup on the profile:
- 
-  - The journal to use
-  - Choose to use balance check or not
-  - Account commission and Analytic account for commission
-  - Partner concerned by the profile (used in commission and optionaly on generated credit move)
-  - Can force a to use a specifi credit account (instead of the receivalble/payable default one)
-  - Force Partner on the counter-part move (e.g. 100.- debit, Partner: M.Martin; 100.- credit, Partner: HSBC)
- 
- 2) Adds a report on bank statement that can be used for checks remittance
- 
- 3) When an error occurs in a bank statement confirmation, it will go through all line anyway and summarize 
+
+  - the journal to use
+  - use balance check or not
+  - account commission and Analytic account for commission
+  - partner concerned by the profile (used in commission and optionaly on generated credit move)
+  - use a specific credit account (instead of the receivalble/payable default one)
+  - force Partner on the counter-part move (e.g. 100.- debit, Partner: M.Martin; 100.- credit, Partner: HSBC)
+
+ 2) Add a report on bank statement that can be used for checks remittance
+
+ 3) When an error occurs in a bank statement confirmation, go through all line anyway and summarize
     all the erronous line in a same popup instead of raising and crashing on every step.
- 
- 4) Remove the period on the bank statement, and compute it for each line based on their date instead. 
- 
+
+ 4) Remove the period on the bank statement, and compute it for each line based on their date instead.
+
  5) Cancelling a bank statement is much more easy and will cancel all related entries, unreconcile them,
-    and finally delete them. 
- 
- 6) Add the ID in entries view so that you can easily filter on a statement ID to reconcile all related 
+    and finally delete them.
+
+ 6) Add the ID in entries view so that you can easily filter on a statement ID to reconcile all related
     entries at once (e.g. one statement (ID 100) for paypal on an intermediate account, and then another for
     the bank on the bank account. You can then manually reconcile all the line from the first one with
     one line of the second by finding them through the statement ID.)
- 
+
  """,
  'website': 'http://www.camptocamp.com',
  'init_xml': [],
