@@ -39,11 +39,11 @@ class ErrorTooManyPartner(Exception):
 
 class AccountStatementProfil(Model):
     """
-    Extend the class to add rules per profil that will match at least the partner,
+    Extend the class to add rules per profile that will match at least the partner,
     but it could also be used to match other values as well.
     """
     
-    _inherit = "account.statement.profil"
+    _inherit = "account.statement.profile"
     
     _columns={
         # @Akretion : For now, we don't implement this features, but this would probably be there:
@@ -115,7 +115,7 @@ class AccountStatementCompletionRule(Model):
     _columns={
         'sequence': fields.integer('Sequence', help="Lower means paresed first."),
         'name': fields.char('Name', size=128),
-        'profile_ids': fields.many2many('account.statement.profil', 
+        'profile_ids': fields.many2many('account.statement.profile', 
             rel='as_rul_st_prof_rel', 
             string='Related statement profiles'),
         'function_to_call': fields.selection(_get_functions, 'Method'),
@@ -296,7 +296,7 @@ class AccountStatementLine(Model):
             the statement line or {}. The first dict has statement line ID as a key:
             {117009: {'partner_id': 100997, 'account_id': 489L}}        
         """
-        profile_obj = self.pool.get('account.statement.profil')
+        profile_obj = self.pool.get('account.statement.profile')
         st_obj = self.pool.get('account.bank.statement.line')
         res={}
         errors_stack = []

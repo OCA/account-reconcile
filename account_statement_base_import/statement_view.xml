@@ -4,8 +4,8 @@
 
 
     <record id="statement_importer_view_form" model="ir.ui.view">
-        <field name="name">account.statement.profil.view</field>
-        <field name="model">account.statement.profil</field>
+        <field name="name">account.statement.profile.view</field>
+        <field name="model">account.statement.profile</field>
         <field name="inherit_id" ref="account_statement_ext.statement_importer_view_form"/>
         <field name="type">form</field>
         <field name="arch" type="xml">

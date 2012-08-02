@@ -33,7 +33,7 @@ class CreditPartnerStatementImporter(osv.osv_memory):
     def default_get(self, cr, uid, fields, context=None):
         if context is None: context = {}
         res = {}
-        if (context.get('active_model', False) == 'account.statement.profil' and
+        if (context.get('active_model', False) == 'account.statement.profile' and
             context.get('active_ids', False)):
             ids = context['active_ids']
             assert len(ids) == 1, 'You cannot use this on more than one profile !'
@@ -43,7 +43,7 @@ class CreditPartnerStatementImporter(osv.osv_memory):
         return res
     
     _columns = {
-        'profile_id': fields.many2one('account.statement.profil',
+        'profile_id': fields.many2one('account.statement.profile',
                                       'Import configuration parameter',
                                       required=True),
         'input_statement': fields.binary('Statement file', required=True),
@@ -76,7 +76,7 @@ class CreditPartnerStatementImporter(osv.osv_memory):
     def onchange_profile_id(self, cr, uid, ids, profile_id, context=None):
         res={}
         if profile_id:
-            c = self.pool.get("account.statement.profil").browse(cr,uid,profile_id)
+            c = self.pool.get("account.statement.profile").browse(cr,uid,profile_id)
             res = {'value': {'partner_id': c.partner_id and c.partner_id.id or False,
                     'journal_id': c.journal_id and c.journal_id.id or False, 'commission_account_id': \
                     c.commission_account_id and c.commission_account_id.id or False, 
@@ -101,7 +101,7 @@ class CreditPartnerStatementImporter(osv.osv_memory):
         importer = self.browse(cursor, uid, req_id, context)
         ftype = self._check_extension(importer.file_name)
         sid = self.pool.get(
-                'account.statement.profil').statement_import(
+                'account.statement.profile').statement_import(
                                             cursor,
                                             uid,
                                             False,

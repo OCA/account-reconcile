@@ -31,7 +31,7 @@ import sys
 import traceback
 
 class AccountStatementProfil(Model):
-    _inherit = "account.statement.profil"
+    _inherit = "account.statement.profile"
     
     
     def get_import_type_selection(self, cr, uid, context=None):
@@ -48,7 +48,7 @@ class AccountStatementProfil(Model):
         'last_import_date': fields.datetime("Last Import Date"),
         'rec_log': fields.text('log', readonly=True),
         'import_type': fields.selection(get_import_type_selection, 'Type of import', required=True, 
-                help = "Choose here the method by which you want to import bank statement for this profil."),
+                help = "Choose here the method by which you want to import bank statement for this profile."),
         
     }
     
@@ -152,7 +152,7 @@ class AccountStatementProfil(Model):
         statement_obj = self.pool.get('account.bank.statement')
         statement_line_obj = self.pool.get('account.bank.statement.line')
         attachment_obj = self.pool.get('ir.attachment')
-        prof_obj = self.pool.get("account.statement.profil")
+        prof_obj = self.pool.get("account.statement.profile")
         if not profile_id:
             raise osv.except_osv(
                     _("No Profile !"),

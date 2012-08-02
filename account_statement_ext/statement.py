@@ -32,7 +32,7 @@ class AccountStatementProfil(Model):
     bank statement, and related generated entries. It defines the
     journal to use, the partner and commision account and so on.
     """
-    _name = "account.statement.profil"
+    _name = "account.statement.profile"
     _description = "Statement Profil"
     
     _columns = {
@@ -85,9 +85,9 @@ class AccountBankSatement(Model):
     """
     We improve the bank statement class mostly for : 
     - Removing the period and compute it from the date of each line. 
-    - Allow to remove the balance check depending on the chosen profil
+    - Allow to remove the balance check depending on the chosen profile
     - Report errors on confirmation all at once instead of crashing onr by one
-    - Add a profil notion that can change the generated entries on statement 
+    - Add a profile notion that can change the generated entries on statement 
       confirmation.
      For this, we had to override quite some long method and we'll need to maintain
      them up to date. Changes are point up by '#Chg' comment.
@@ -96,7 +96,7 @@ class AccountBankSatement(Model):
     _inherit = "account.bank.statement"
     
     _columns = {
-        'profile_id': fields.many2one('account.statement.profil',
+        'profile_id': fields.many2one('account.statement.profile',
                                   'Profil', required=True, readonly=True, states={'draft': [('readonly', False)]}),
         'credit_partner_id': fields.related(
                         'profile_id', 
@@ -129,8 +129,8 @@ class AccountBankSatement(Model):
         """Need to pass the journal_id in vals anytime because of account.cash.statement
         need it."""
         if 'profile_id' in vals:
-            profil_obj = self.pool.get('account.statement.profil')
-            profile = profil_obj.browse(cr,uid,vals['profile_id'],context)
+            profile_obj = self.pool.get('account.statement.profile')
+            profile = profile_obj.browse(cr,uid,vals['profile_id'],context)
             vals['journal_id'] = profile.journal_id.id
         return super(AccountBankSatement, self).create(cr, uid, vals, context=context)
     
@@ -185,7 +185,7 @@ class AccountBankSatement(Model):
         Override a large portion of the code to compute the periode for each line instead of
         taking the period of the whole statement.
         Remove the entry posting on generated account moves.
-        We change the move line generated from the lines depending on the profil:
+        We change the move line generated from the lines depending on the profile:
           - If receivable_account_id is set, we'll use it instead of the "partner" one
           - If partner_id is set, we'll us it for the commission (when imported throufh the wizard)
           - If partner_id is set and force_partner_on_bank is ticked, we'll let the partner of each line
@@ -310,19 +310,19 @@ class AccountBankSatement(Model):
         account_move_obj.post(cr, uid, [move_id], context=context)
         return move_id
 
-    def _get_st_number_period_profil(self, cr, uid, date, profile_id):
+    def _get_st_number_period_profile(self, cr, uid, date, profile_id):
         """
         Retrieve the name of bank statement from sequence, according to the period 
-        corresponding to the date passed in args. Add a prefix if set in the profil.
+        corresponding to the date passed in args. Add a prefix if set in the profile.
         
         :param: date: date of the statement used to compute the right period
-        :param: int/long: profile_id: the account.statement.profil ID from which to take the
+        :param: int/long: profile_id: the account.statement.profile ID from which to take the
                           bank_statement_prefix for the name
         :return: char: name of the bank statement (st_number)
         
         """
         year = self.pool.get('account.period').browse(cr, uid, self._get_period(cr, uid, date)).fiscalyear_id.id
-        profile = self.pool.get('account.statement.profil').browse(cr,uid, profile_id)
+        profile = self.pool.get('account.statement.profile').browse(cr,uid, profile_id)
         c = {'fiscalyear_id': year}
         obj_seq = self.pool.get('ir.sequence')
         journal_sequence_id = profile.journal_id.sequence_id and profile.journal_id.sequence_id.id or False
@@ -364,7 +364,7 @@ class AccountBankSatement(Model):
                 st_number = st.name
             else:
 # Begin Changes                
-                st_number = self._get_st_number_period_profil(cr, uid, st.date, st.profile_id.id)
+                st_number = self._get_st_number_period_profile(cr, uid, st.date, st.profile_id.id)
 # End Changes 
             for line in st.move_line_ids:
                 if line.state <> 'valid':
@@ -466,7 +466,7 @@ class AccountBankSatement(Model):
 
     def balance_check(self, cr, uid, st_id, journal_type='bank', context=None):
         """
-        Balance check depends on the profil. If no check for this profil is required,
+        Balance check depends on the profile. If no check for this profile is required,
         return True and do nothing, otherwise call super.
         
         :param int/long st_id: ID of the concerned account.bank.statement 
@@ -488,7 +488,7 @@ class AccountBankSatement(Model):
         """
         if not profile_id:
             return {}
-        import_config = self.pool.get("account.statement.profil").browse(cr,uid,profile_id)
+        import_config = self.pool.get("account.statement.profile").browse(cr,uid,profile_id)
         journal_id = import_config.journal_id.id
         account_id = import_config.journal_id.default_debit_account_id.id
         credit_partner_id = import_config.partner_id and import_config.partner_id.id or False
@@ -531,7 +531,7 @@ class AccountBankSatementLine(Model):
     def get_values_for_line(self, cr, uid, profile_id = False, partner_id = False, line_type = False, amount = False, context = None):
         """
         Return the account_id to be used in the line of a bank statement. It'll base the result as follow:
-            - If a receivable_account_id is set in the profil, return this value and type = general
+            - If a receivable_account_id is set in the profile, return this value and type = general
             - Elif line_type is given, take the partner receivable/payable property (payable if type= supplier, receivable
               otherwise)
             - Elif amount is given, take the partner receivable/payable property (receivable if amount >= 0.0,
@@ -558,9 +558,9 @@ class AccountBankSatementLine(Model):
         obj_partner = self.pool.get('res.partner')
         obj_stat = self.pool.get('account.bank.statement')
         receiv_account = pay_account = account_id = False
-        # If profil has a receivable_account_id, we return it in any case
+        # If profile has a receivable_account_id, we return it in any case
         if profile_id:
-            profile = self.pool.get("account.statement.profil").browse(cr,uid,profile_id)
+            profile = self.pool.get("account.statement.profile").browse(cr,uid,profile_id)
             if profile.receivable_account_id:
                 res['account_id'] = profile.receivable_account_id.id 
                 res['type'] = 'general'

@@ -41,7 +41,7 @@
  * ref :               the SO number, INV number or any matching ref found. It'll be used as reference
                        in the generated entries and will be useful for reconciliation process
  * date :              date of the payment
- * amount :            amount paid in the currency of the journal used in the importation profil
+ * amount :            amount paid in the currency of the journal used in the importation profile
  * commission_amount : amount of the comission for each line
  * label :             the comunication given by the payment office, used as communication in the
                        generated entries.

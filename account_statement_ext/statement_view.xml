@@ -28,8 +28,8 @@
         </record>
         
     <record id="statement_importer_view_form" model="ir.ui.view">
-        <field name="name">account.statement.profil.view</field>
-        <field name="model">account.statement.profil</field>
+        <field name="name">account.statement.profile.view</field>
+        <field name="model">account.statement.profile</field>
         <field name="type">form</field>
         <field name="arch" type="xml">
             <form string="Import statement">
@@ -48,8 +48,8 @@
     </record>
 
     <record id="statement_importer_view_tree" model="ir.ui.view">
-        <field name="name">account.statement.profil.view</field>
-        <field name="model">account.statement.profil</field>
+        <field name="name">account.statement.profile.view</field>
+        <field name="model">account.statement.profile</field>
         <field name="type">tree</field>
         <field name="arch" type="xml">
             <tree string="Import statement">
@@ -64,14 +64,14 @@
             </tree>
         </field>
     </record>
-    <record id="action_treasury_statement_profil_tree" model="ir.actions.act_window">
+    <record id="action_treasury_statement_profile_tree" model="ir.actions.act_window">
         <field name="name">Bank Statements Profile</field>
-        <field name="res_model">account.statement.profil</field>
+        <field name="res_model">account.statement.profile</field>
         <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
     </record>
 
-    <menuitem string="Bank Statements Profile" action="action_treasury_statement_profil_tree" id="menu_treasury_statement_profil_tree" parent="account.menu_configuration_misc" sequence="30"/>    
+    <menuitem string="Bank Statements Profile" action="action_treasury_statement_profile_tree" id="menu_treasury_statement_profile_tree" parent="account.menu_configuration_misc" sequence="30"/>    
 
     <record model="ir.ui.view" id="id_in_statement_line">
         <field name="name">account.bank.statement.line.inherit</field>
@@ -136,7 +136,7 @@
             </xpath>
             <xpath expr="/form/group/field[@name='date']" position="replace">
             </xpath>
-            <!-- Add a new group before the first one with name, profil and date -->
+            <!-- Add a new group before the first one with name, profile and date -->
             <xpath expr="/form/group[@col='7']" position="before">
                 <group col="8" colspan="4">
                     <field name="profile_id" select="1" required="1" on_change="onchange_imp_config_id(profile_id)" widget="selection"/>
@@ -145,7 +145,7 @@
                 </group>
                 <separator string="Profile Details" colspan="4"/>
             </xpath>
-            <!-- Make balance visible or not depending on profil -->
+            <!-- Make balance visible or not depending on profile -->
             <xpath expr="/form/group/field[@name='balance_start']" position="replace">
             </xpath>
             <xpath expr="/form/group/field[@name='balance_end_real']" position="replace">
@@ -199,7 +199,7 @@
         <act_window id="act_bank_statement_from_profile"
             name="Open Statements" 
             res_model="account.bank.statement" 
-            src_model="account.statement.profil" 
+            src_model="account.statement.profile" 
             domain="[('profile_id','=',active_id),]"
             view_type="form"/>
         
