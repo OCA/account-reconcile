@@ -64,7 +64,7 @@ class easy_reconcile_advanced(AbstractModel):
 
     def _matchers(self, cr, uid, rec, move_line, context=None):
         """
-        Return the values used as matchers to found the opposite lines
+        Return the values used as matchers to find the opposite lines
 
         All the matcher keys in the dict must have their equivalent in
         the `_opposite_matchers`.
@@ -74,7 +74,7 @@ class easy_reconcile_advanced(AbstractModel):
 
         Must be inherited to implement the matchers for one method
 
-        As instance, it can returns:
+        As instance, it can return:
         return ('ref', move_line['rec'])
 
         or
@@ -84,7 +84,7 @@ class easy_reconcile_advanced(AbstractModel):
         All the matchers have to be found in the opposite lines
         to consider them as "opposite"
 
-        The matchers will be evaluated in the same order than declared
+        The matchers will be evaluated in the same order as declared
         vs the the opposite matchers, so you can gain performance by
         declaring first the partners with the less computation.
 
@@ -112,7 +112,7 @@ class easy_reconcile_advanced(AbstractModel):
 
         This method is the counterpart of the `_matchers()` method.
 
-        Each matcher have to yield its value respecting the orders
+        Each matcher has to yield its value respecting the order
         of the `_matchers()`.
 
         When a matcher does not correspond, the next matchers won't

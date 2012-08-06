@@ -78,9 +78,11 @@ class AccountStatementProfil(Model):
     def prepare_global_commission_line_vals(self, cr, uid, parser, 
             result_row_list, profile, statement_id, context):
         """
-        Prepare the global commission line if there is one. The global commission is computed by
-        by calling the get_st_line_commision of the parser. Feel free to override the methode to compute
+        Prepare the global commission line if there is one. The global
+        commission is computed by by calling the get_st_line_commision
+        of the parser. Feel free to override the method to compute
         your own commission line from the result_row_list.
+
             :param:    browse_record of the current parser
             :param:    result_row_list: [{'key':value}]
             :param:    profile: browserecord of account.statement.profile
