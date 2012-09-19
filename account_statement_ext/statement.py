@@ -174,7 +174,8 @@ class AccountBankSatement(Model):
             ids = []
             for line in st.line_ids:
                 for move in line.move_ids:
-                    move.button_cancel(context=context)
+                    if move.state <> 'draft':
+                        move.button_cancel(context=context)
                     move.unlink(context=context)
             done.append(st.id)
         self.write(cr, uid, done, {'state':'draft'}, context=context)
