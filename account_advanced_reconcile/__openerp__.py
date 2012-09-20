@@ -25,16 +25,12 @@
  'maintainer': 'Camptocamp',
  'category': 'Finance',
  'complexity': 'normal',
- 'depends': ['account_easy_reconcile', # this comes from  lp:~c2c/+junk/account-extra-addons
+ 'depends': ['account_easy_reconcile', # this comes from  lp:account-extra-addons
              ],
  'description': """
 Advanced reconciliation methods for the module account_easy_reconcile.
 
-account_easy_reconcile, which is a dependency, is available in the branch:
-lp:~openerp-community-committers/+junk/account-extra-addons
-This branch is temporary and will soon be merged with the Akretion master
-branch, but the master branch does not already exist. Sorry for the
-inconvenience.
+account_easy_reconcile, which is a dependency, is available in the branch: lp:account-extra-addons
 
 In addition to the features implemented in account_easy_reconcile, which are:
  - reconciliation facilities for big volume of transactions
