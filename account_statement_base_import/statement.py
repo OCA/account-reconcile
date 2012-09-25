@@ -164,7 +164,7 @@ class AccountStatementProfil(Model):
         parser = new_bank_statement_parser(prof.import_type, ftype=ftype)
         result_row_list = parser.parse(file_stream)
         # Check all key are present in account.bank.statement.line !!
-        parsed_cols = result_row_list[0].keys()
+        parsed_cols = parser.get_st_line_vals(result_row_list[0]).keys()
         for col in parsed_cols:
             if col not in statement_line_obj._columns:
                 raise osv.except_osv(

@@ -35,7 +35,7 @@ class FileParser(BankStatementImportParser):
     Generic abstract class for defining parser for .csv or .xls file format.
     """
     
-    def __init__(self, parse_name, keys_to_validate=[], ftype='csv', convertion_dict=None, *args, **kwargs):
+    def __init__(self, parse_name, keys_to_validate=[], ftype='csv', convertion_dict=None, header=None, *args, **kwargs):
         """
             :param char: parse_name : The name of the parser
             :param list: keys_to_validate : contain the key that need to be present in the file
@@ -48,6 +48,7 @@ class FileParser(BankStatementImportParser):
                     'amount': float,
                     'commission_amount': float
                 }
+            :param list: header : specify header fields if the csv file has no header
             """
         
         super(FileParser, self).__init__(parse_name, *args, **kwargs)
@@ -57,6 +58,7 @@ class FileParser(BankStatementImportParser):
             raise Exception(_('Invalide file type %s. please use csv or xls') % (ftype))
         self.keys_to_validate = keys_to_validate
         self.convertion_dict = convertion_dict
+        self.fieldnames = header
 
     def _custom_format(self, *args, **kwargs):
         """
@@ -88,11 +90,16 @@ class FileParser(BankStatementImportParser):
         """
         We check that all the key of the given file (means header) are present
         in the validation key providen. Otherwise, we raise an Exception.
+        We skip the validation step if the file header is providen separately
+        (in the field: fieldnames).
         """
-        parsed_cols = self.result_row_list[0].keys()
-        for col in self.keys_to_validate:
-            if col not in parsed_cols:
-                raise Exception(_('Column %s not present in file') % (col))
+        if hasattr(self, 'fieldnames') and self.fieldnames is not None:
+            return True
+        else:
+            parsed_cols = self.result_row_list[0].keys()
+            for col in self.keys_to_validate:
+                if col not in parsed_cols:
+                    raise Exception(_('Column %s not present in file') % (col))
         return True
 
     def _post(self, *args, **kwargs):
@@ -113,7 +120,8 @@ class FileParser(BankStatementImportParser):
         csv_file.seek(0)
         reader = UnicodeDictReader(
                     open(csv_file.name).readlines(),
-                    delimiter=delimiter
+                    delimiter=delimiter,
+                    fieldnames=self.fieldnames
         )
         return [x for x in reader]
 
