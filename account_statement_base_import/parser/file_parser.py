@@ -89,13 +89,11 @@ class FileParser(BankStatementImportParser):
     def _validate(self, *args, **kwargs):
         """
         We check that all the key of the given file (means header) are present
-        in the validation key providen. Otherwise, we raise an Exception.
-        We skip the validation step if the file header is providen separately
+        in the validation key provided. Otherwise, we raise an Exception.
+        We skip the validation step if the file header is provided separately
         (in the field: fieldnames).
         """
-        if hasattr(self, 'fieldnames') and self.fieldnames is not None:
-            return True
-        else:
+        if self.fieldnames is None:
             parsed_cols = self.result_row_list[0].keys()
             for col in self.keys_to_validate:
                 if col not in parsed_cols:
