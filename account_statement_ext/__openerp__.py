@@ -20,7 +20,7 @@
 ##############################################################################
 
 {'name': "Bank statement extension and profiles",
- 'version': '1.0',
+ 'version': '1.1',
  'author': 'Camptocamp',
  'maintainer': 'Camptocamp',
  'category': 'Finance',

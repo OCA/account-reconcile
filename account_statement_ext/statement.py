@@ -47,7 +47,7 @@ class AccountStatementProfil(Model):
                                       required=True),
         'commission_account_id': fields.many2one('account.account',
                                                          'Commission account',
-                                                         required=True),
+                                                         required=False),
         'commission_analytic_id': fields.many2one('account.analytic.account',
                                                          'Commission analytic account'),
         'receivable_account_id': fields.many2one('account.account',
