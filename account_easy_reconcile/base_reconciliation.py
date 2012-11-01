@@ -98,7 +98,7 @@ class easy_reconcile_base(AbstractModel):
         params = []
         if rec.filter:
             dummy, where, params = ml_obj._where_calc(
-                cr, uid, rec.filter, context=context).get_sql()
+                cr, uid, eval(rec.filter), context=context).get_sql()
             if where:
                 where = " AND %s" % where
         return where, params

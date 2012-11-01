@@ -111,3 +111,12 @@ class easy_reconcile_simple_partner(TransientModel):
     # field name used as key for matching the move lines
     _key_field = 'partner_id'
 
+class easy_reconcile_simple_reference(TransientModel):
+
+    _name = 'easy.reconcile.simple.reference'
+    _inherit = 'easy.reconcile.simple'
+    _auto = True  # False when inherited from AbstractModel
+
+    # has to be subclassed
+    # field name used as key for matching the move lines
+    _key_field = 'ref'

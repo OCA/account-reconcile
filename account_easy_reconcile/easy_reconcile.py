@@ -75,6 +75,7 @@ class account_easy_reconcile_method(Model):
         return [
             ('easy.reconcile.simple.name', 'Simple. Amount and Name'),
             ('easy.reconcile.simple.partner', 'Simple. Amount and Partner'),
+            ('easy.reconcile.simple.reference', 'Simple. Amount and Reference'),
             ]
 
     def _get_rec_method(self, cr, uid, context=None):
@@ -175,7 +176,6 @@ class account_easy_reconcile(Model):
             total_partial_rec = 0
             details = []
             count = 0
-
             for method in rec.reconcile_method:
                 count += 1
 
