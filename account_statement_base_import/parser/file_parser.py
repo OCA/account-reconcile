@@ -19,8 +19,6 @@
 ##############################################################################
 
 from openerp.tools.translate import _
-import base64
-import csv
 import tempfile
 import datetime
 from parser import BankStatementImportParser
@@ -110,18 +108,14 @@ class FileParser(BankStatementImportParser):
 
     def _parse_csv(self, delimiter=';'):
         """
-        :return: dict of dict from csv file (line/rows)
+        :return: list of dict from csv file (line/rows)
         """
         csv_file = tempfile.NamedTemporaryFile()
         csv_file.write(self.filebuffer)
-        # We ensure that cursor is at beginig of file
-        csv_file.seek(0)
-        reader = UnicodeDictReader(
-                    open(csv_file.name).readlines(),
-                    delimiter=delimiter,
-                    fieldnames=self.fieldnames
-        )
-        return [x for x in reader]
+        csv_file.flush()
+        with open(csv_file.name, 'rU') as fobj: 
+            reader = UnicodeDictReader(fobj, delimiter=delimiter, fieldnames=self.fieldnames)
+            return list(reader)
 
     def _parse_xls(self):
         """
