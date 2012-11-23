@@ -22,7 +22,12 @@ import base64
 import csv
 
 def UnicodeDictReader(utf8_data, **kwargs):
-    csv_reader = csv.DictReader(utf8_data, **kwargs)
+    sniffer = csv.Sniffer()
+    pos = utf8_data.tell()
+    sample_data = utf8_data.read(1024)
+    utf8_data.seek(pos)
+    dialect = sniffer.sniff(sample_data, delimiters=',;\t')
+    csv_reader = csv.DictReader(utf8_data, dialect=dialect, **kwargs)
     for row in csv_reader:
         yield dict([(key, unicode(value, 'utf-8')) for key, value in row.iteritems()])
 

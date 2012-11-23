@@ -106,7 +106,7 @@ class FileParser(BankStatementImportParser):
         return True
 
 
-    def _parse_csv(self, delimiter=';'):
+    def _parse_csv(self):
         """
         :return: list of dict from csv file (line/rows)
         """
@@ -114,7 +114,7 @@ class FileParser(BankStatementImportParser):
         csv_file.write(self.filebuffer)
         csv_file.flush()
         with open(csv_file.name, 'rU') as fobj: 
-            reader = UnicodeDictReader(fobj, delimiter=delimiter, fieldnames=self.fieldnames)
+            reader = UnicodeDictReader(fobj, fieldnames=self.fieldnames)
             return list(reader)
 
     def _parse_xls(self):
