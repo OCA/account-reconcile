@@ -59,6 +59,9 @@ class FileParser(BankStatementImportParser):
         self.keys_to_validate = keys_to_validate
         self.convertion_dict = convertion_dict
         self.fieldnames = header
+        self._datemode = 0 # used only for xls documents,
+                           # 0 means Windows mode (1900 based dates).
+                           # Set in _parse_xls, from the contents of the file
 
     def _custom_format(self, *args, **kwargs):
         """
@@ -132,6 +135,7 @@ class FileParser(BankStatementImportParser):
         # We ensure that cursor is at beginig of file
         wb_file.seek(0)
         wb = xlrd.open_workbook(wb_file.name)
+        self._datemode = wb.datemode
         sheet = wb.sheet_by_index(0)
         header = sheet.row_values(0)
         res = []
@@ -166,7 +170,7 @@ class FileParser(BankStatementImportParser):
         for line in result_set:
             for rule in conversion_rules:
                 if conversion_rules[rule] == datetime.datetime:
-                    t_tuple = xlrd.xldate_as_tuple(line[rule], 1)
+                    t_tuple = xlrd.xldate_as_tuple(line[rule], self._datemode)
                     line[rule] = datetime.datetime(*t_tuple)
                 else:
                     line[rule] = conversion_rules[rule](line[rule])
