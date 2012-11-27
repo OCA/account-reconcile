@@ -110,11 +110,9 @@ class CreditPartnerStatementImporter(osv.osv_memory):
                                             ftype.replace('.',''),
                                             context=context
                                         )
-        return {
-            'domain': "[('id','in', ["+','.join(map(str,[sid]))+"])]",
-            'name': 'Imported Bank Statement',
-            'view_type': 'form',
-            'view_mode': 'tree,form',
-            'res_model': 'account.bank.statement',
-            'type': 'ir.actions.act_window',
-        }
+        model_obj = self.pool.get('ir.model.data')
+        action_obj = self.pool.get('ir.actions.act_window')
+        action_id = model_obj.get_object_reference(cursor, uid, 'account', 'action_bank_statement_tree')[1]
+        res = action_obj.read(cursor, uid, action_id)
+        res['domain'] = res['domain'][:-1] + ",('id', '=', %d)]" % sid
+        return res
