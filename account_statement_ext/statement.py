@@ -160,7 +160,7 @@ class AccountBankSatement(Model):
     _constraints = [
         (_check_company_id, 'The journal and period chosen have to belong to the same company.', ['journal_id','period_id']),
     ]
-
+    
     def button_cancel(self, cr, uid, ids, context={}):
         """
         We cancel the related move, delete them and finally put the
@@ -176,140 +176,72 @@ class AccountBankSatement(Model):
                 for move in line.move_ids:
                     if move.state <> 'draft':
                         move.button_cancel(context=context)
-                    move.unlink(context=context)
-            done.append(st.id)
-        self.write(cr, uid, done, {'state':'draft'}, context=context)
-        return True
+        return super(AccountBankSatement, self).button_cancel(cr, uid, vals, context=context)
 
-    def create_move_from_st_line(self, cr, uid, st_line_id, company_currency_id, st_line_number, context=None):
+    def _prepare_move(self, cr, uid, st_line, st_line_number, context=None):
+        """Add the period_id from the statement line date to the move preparation.
+           Originaly, it was taken from the statement period_id
+           :param browse_record st_line: account.bank.statement.line record to
+                  create the move from.
+           :param char st_line_number: will be used as the name of the generated account move
+           :return: dict of value to create() the account.move
         """
-        Override a large portion of the code to compute the periode for each line instead of
-        taking the period of the whole statement.
-        Remove the entry posting on generated account moves.
+        if context is None:
+            context = {}
+        res = super(AccountBankSatement, self)._prepare_move(cr, uid, st_line, st_line_number, context=context)
+        ctx = context.copy()
+        ctx['company_id'] = st_line.company_id.id
+        period_id = self._get_period(cr, uid, st_line.date, context=ctx)
+        res.update({'period_id': period_id})
+        return res
+
+    def _prepare_move_line_vals(self, cr, uid, st_line, move_id, debit, credit, currency_id = False,
+                amount_currency= False, account_id = False, analytic_id = False,
+                partner_id = False, context=None):
+        """Add the period_id from the statement line date to the move preparation.
+           Originaly, it was taken from the statement period_id
+           
+           :param browse_record st_line: account.bank.statement.line record to
+                  create the move from.
+           :param int/long move_id: ID of the account.move to link the move line
+           :param float debit: debit amount of the move line
+           :param float credit: credit amount of the move line
+           :param int/long currency_id: ID of currency of the move line to create
+           :param float amount_currency: amount of the debit/credit expressed in the currency_id
+           :param int/long account_id: ID of the account to use in the move line if different
+                  from the statement line account ID
+           :param int/long analytic_id: ID of analytic account to put on the move line
+           :param int/long partner_id: ID of the partner to put on the move line
+           :return: dict of value to create() the account.move.line
+        """
+        if context is None:
+            context = {}
+        res = super(AccountBankSatement, self)._prepare_move_line_vals(self, cr, uid, st_line, move_id, debit, 
+                credit, currency_id = currency_id, amount_currency = amount_currency, account_id = account_id,
+                analytic_id = analytic_id, partner_id = partner_id, context = context)
+        ctx = context.copy()
+        ctx['company_id'] = st_line.company_id.id
+        period_id = self._get_period(cr, uid, st_line.date, context=ctx)
+        res.update({'period_id': period_id})
+        return res
+
+    def _get_counter_part_partner(sefl, cr, uid, st_line, context=None):
+        """
         We change the move line generated from the lines depending on the profile:
-          - If receivable_account_id is set, we'll use it instead of the "partner" one
-          - If partner_id is set, we'll us it for the commission (when imported throufh the wizard)
           - If partner_id is set and force_partner_on_bank is ticked, we'll let the partner of each line
             for the debit line, but we'll change it on the credit move line for the choosen partner_id
             => This will ease the reconciliation process with the bank as the partner will match the bank
             statement line
-        
-        :param int/long: st_line_id: account.bank.statement.line ID
-        :param int/long: company_currency_id: res.currency ID
-        :param char: st_line_number: that will be used as the name of the generated account move
-        :return: int/long: ID of the created account.move
+           :param browse_record st_line: account.bank.statement.line record to
+                  create the move from.
+           :return: int/long of the res.partner to use as counterpart
         """
-        if context is None:
-            context = {}
-        res_currency_obj = self.pool.get('res.currency')
-        account_move_obj = self.pool.get('account.move')
-        account_move_line_obj = self.pool.get('account.move.line')
-        account_bank_statement_line_obj = self.pool.get('account.bank.statement.line')     # Chg
-        st_line = account_bank_statement_line_obj.browse(cr, uid, st_line_id, context=context) # Chg
-        st = st_line.statement_id
-
-        context.update({'date': st_line.date})
-        ctx = context.copy()                        # Chg
-        ctx['company_id'] = st_line.company_id.id   # Chg
-        period_id = self._get_period(               # Chg
-            cr, uid, st_line.date, context=ctx)  
-            
-        move_id = account_move_obj.create(cr, uid, {
-            'journal_id': st.journal_id.id,
-            'period_id': period_id,                 # Chg
-            'date': st_line.date,
-            'name': st_line_number,
-            'ref': st_line.ref,
-        }, context=context)
-        account_bank_statement_line_obj.write(cr, uid, [st_line.id], {  # Chg
-            'move_ids': [(4, move_id, False)]
-        })
-
-        torec = []
-        if st_line.amount >= 0:
-            account_id = st.journal_id.default_credit_account_id.id
+        # GET THE RIGHT PARTNER ACCORDING TO THE CHOSEN PROFIL
+        if st_line.statement_id.profile_id.force_partner_on_bank:
+            bank_partner_id = st_line.statement_id.profile_id.partner_id.id
         else:
-            account_id = st.journal_id.default_debit_account_id.id
-
-        acc_cur = ((st_line.amount<=0) and st.journal_id.default_debit_account_id) or st_line.account_id
-        context.update({
-                'res.currency.compute.account': acc_cur,
-            })
-        amount = res_currency_obj.compute(cr, uid, st.currency.id,
-                company_currency_id, st_line.amount, context=context)
-
-        val = {
-            'name': st_line.name,
-            'date': st_line.date,
-            'ref': st_line.ref,
-            'move_id': move_id,
-            'partner_id': ((st_line.partner_id) and st_line.partner_id.id) or False,
-            'account_id': (st_line.account_id) and st_line.account_id.id,
-            'credit': ((amount>0) and amount) or 0.0,
-            'debit': ((amount<0) and -amount) or 0.0,
-            # Replace with the treasury one instead of bank  #Chg
-            'statement_id': st.id,        
-            'journal_id': st.journal_id.id,
-            'period_id': period_id,                 #Chg
-            'currency_id': st.currency.id,
-            'analytic_account_id': st_line.analytic_account_id and st_line.analytic_account_id.id or False
-        }
-
-        if st.currency.id <> company_currency_id:
-            amount_cur = res_currency_obj.compute(cr, uid, company_currency_id,
-                        st.currency.id, amount, context=context)
-            val['amount_currency'] = -amount_cur
-
-        if st_line.account_id and st_line.account_id.currency_id and st_line.account_id.currency_id.id <> company_currency_id:
-            val['currency_id'] = st_line.account_id.currency_id.id
-            amount_cur = res_currency_obj.compute(cr, uid, company_currency_id,
-                    st_line.account_id.currency_id.id, amount, context=context)
-            val['amount_currency'] = -amount_cur
-
-        move_line_id = account_move_line_obj.create(cr, uid, val, context=context)
-        torec.append(move_line_id)
-
-        # Fill the secondary amount/currency
-        # if currency is not the same than the company
-        amount_currency = False
-        currency_id = False
-        if st.currency.id <> company_currency_id:
-            amount_currency = st_line.amount
-            currency_id = st.currency.id
-        # GET THE RIGHT PARTNER ACCORDING TO THE CHOSEN PROFIL                              # Chg
-        if st.profile_id.force_partner_on_bank:                                       # Chg
-            bank_parrtner_id = st.profile_id.partner_id.id                            # Chg
-        else:                                                                               # Chg
-            bank_parrtner_id = ((st_line.partner_id) and st_line.partner_id.id) or False    # Chg
-        
-        account_move_line_obj.create(cr, uid, {
-            'name': st_line.name,
-            'date': st_line.date,
-            'ref': st_line.ref,
-            'move_id': move_id,
-            'partner_id': bank_parrtner_id,                                                 # Chg
-            'account_id': account_id,
-            'credit': ((amount < 0) and -amount) or 0.0,
-            'debit': ((amount > 0) and amount) or 0.0,
-            # Replace with the treasury one instead of bank  #Chg
-            'statement_id': st.id,       
-            'journal_id': st.journal_id.id,
-            'period_id': period_id,                 #Chg
-            'amount_currency': amount_currency,
-            'currency_id': currency_id,
-            }, context=context)
-
-        for line in account_move_line_obj.browse(cr, uid, [x.id for x in
-                account_move_obj.browse(cr, uid, move_id,
-                    context=context).line_id],
-                context=context):
-            if line.state <> 'valid':
-                raise osv.except_osv(_('Error !'),
-                        _('Journal item "%s" is not valid.') % line.name)
-
-        # Bank statements will not consider boolean on journal entry_posted
-        account_move_obj.post(cr, uid, [move_id], context=context)
-        return move_id
+            bank_partner_id = ((st_line.partner_id) and st_line.partner_id.id) or False
+        return bank_partner_id
 
     def _get_st_number_period_profile(self, cr, uid, date, profile_id):
         """
