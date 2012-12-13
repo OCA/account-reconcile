@@ -1,0 +1,253 @@
+#. module: account_statement_base_import
+#: view:credit.statement.import:0
+#: model:ir.actions.act_window,name:account_statement_base_import.statement_importer_action
+msgid "Import statement"
+msgstr "Import de relevé"
+
+#. module: account_statement_base_import
+#: model:ir.model,name:account_statement_base_import.model_credit_statement_import
+msgid "credit.statement.import"
+msgstr "credit.statement.import"
+
+#. module: account_statement_base_import
+#: code:addons/account_statement_base_import/statement.py:218
+#, python-format
+msgid "The statement cannot be created : %s"
+msgstr "Le relevé ne peut être créé : %s"
+
+#. module: account_statement_base_import
+#: field:credit.statement.import,input_statement:0
+msgid "Statement file"
+msgstr "Fichier à importer"
+
+#. module: account_statement_base_import
+#: view:account.statement.profile:0
+msgid "Import Logs"
+msgstr "Logs d'import"
+
+#. module: account_statement_base_import
+#: field:credit.statement.import,journal_id:0
+msgid "Financial journal to use transaction"
+msgstr "Journal"
+
+#. module: account_statement_base_import
+#: code:addons/account_statement_base_import/parser/file_parser.py:100
+#, python-format
+msgid "Column %s not present in file"
+msgstr "Colonne %s non présente dans le fichier"
+
+#. module: account_statement_base_import
+#: view:account.statement.profile:0
+#: model:ir.ui.menu,name:account_statement_base_import.statement_importer_menu
+msgid "Import Bank Statement"
+msgstr "Importation de Relevé"
+
+#. module: account_statement_base_import
+#: model:ir.model,name:account_statement_base_import.model_account_statement_profile
+msgid "Statement Profil"
+msgstr "Profil du relevé"
+
+#. module: account_statement_base_import
+#: code:addons/account_statement_base_import/statement.py:100
+#, python-format
+msgid "Commission line"
+msgstr "Ligne de commission"
+
+#. module: account_statement_base_import
+#: field:credit.statement.import,commission_account_id:0
+msgid "Commission account"
+msgstr "Compte de commission"
+
+#. module: account_statement_base_import
+#: code:addons/account_statement_base_import/statement.py:172
+#, python-format
+msgid "Column %s you try to import is not present in the bank statement line !"
+msgstr ""
+"La colonne %s que vous essayer d'importer n'est pas présente dans la ligne de relevé !"
+
+#. module: account_statement_base_import
+#: code:addons/account_statement_base_import/statement.py:71
+#, python-format
+msgid "Bank Statement ID %s have been imported with %s lines "
+msgstr "Le relevé avec l'ID %s a été importé avec %s lignes "
+
+#. module: account_statement_base_import
+#: field:account.statement.profile,launch_import_completion:0
+msgid "Launch completion after import"
+msgstr "Lancer l'auto-completion après import"
+
+#. module: account_statement_base_import
+#: field:credit.statement.import,partner_id:0
+msgid "Credit insitute partner"
+msgstr "Organisme bancaire"
+
+#. module: account_statement_base_import
+#: code:addons/account_statement_base_import/statement.py:160
+#, python-format
+msgid "No Profile !"
+msgstr "Aucun Profil !"
+
+#. module: account_statement_base_import
+#: view:account.statement.profile:0
+msgid "Import related infos"
+msgstr "Importation des informations liées"
+
+#. module: account_statement_base_import
+#: help:credit.statement.import,force_partner_on_bank:0
+msgid ""
+"Tic that box if you want to use the credit insitute "
+"partner                                                    in the "
+"counterpart of the treasury/banking move."
+msgstr ""
+"Cochez cette case si vous voulez utiliser comme partenaire"
+"l'organisme bancaire au niveau de la ligne de banque"
+
+#. module: account_statement_base_import
+#: code:addons/account_statement_base_import/wizard/import_statement.py:93
+#, python-format
+msgid "Please use a file with an extention"
+msgstr "Veuillez sélectionner un fichier avec une extension"
+
+#. module: account_statement_base_import
+#: code:addons/account_statement_base_import/statement.py:161
+#, python-format
+msgid "You must provide a valid profile to import a bank statement !"
+msgstr "Vous devez fournir un profil valide pour importer un relevé !"
+
+#. module: account_statement_base_import
+#: help:credit.statement.import,balance_check:0
+msgid ""
+"Tic that box if you want OpenERP to control the start/end "
+"balance                                                    before confirming "
+"a bank statement. If don't ticked, no balance control will be done."
+msgstr ""
+"Cochez cette case si vous souhaitez un contrôle du solde final"
+"avant la validation du relevé."
+
+#. module: account_statement_base_import
+#: code:addons/account_statement_base_import/parser/file_parser.py:31
+#: code:addons/account_statement_base_import/parser/generic_file_parser.py:31
+#, python-format
+msgid "Please install python lib xlrd"
+msgstr "Veuillez installer la librairie python lib xlrd"
+
+#. module: account_statement_base_import
+#: code:addons/account_statement_base_import/parser/file_parser.py:58
+#, python-format
+msgid "Invalide file type %s. please use csv or xls"
+msgstr "Type de fichier invalide : %s. Veuillez utiliser un csv ou un xls"
+
+#. module: account_statement_base_import
+#: field:account.statement.profile,last_import_date:0
+msgid "Last Import Date"
+msgstr "Date de dernier import"
+
+#. module: account_statement_base_import
+#: field:credit.statement.import,commission_analytic_id:0
+msgid "Commission analytic account"
+msgstr "Compte analytique de la commission"
+
+#. module: account_statement_base_import
+#: constraint:account.statement.profile:0
+msgid "You need to put a partner if you tic the 'Force partner on bank move' !"
+msgstr ""
+"Vous devez spécifier un partenaire si vous avez coché 'Forcer un partenaire sur la ligne de la banque' !"
+
+#. module: account_statement_base_import
+#: code:addons/account_statement_base_import/statement.py:217
+#, python-format
+msgid "Statement import error"
+msgstr "Erreur d'import de relevé"
+
+#. module: account_statement_base_import
+#: field:account.bank.statement.line,commission_amount:0
+msgid "Line Commission Amount"
+msgstr "Montant de la commission de la ligne"
+
+#. module: account_statement_base_import
+#: code:addons/account_statement_base_import/statement.py:171
+#, python-format
+msgid "Missing column !"
+msgstr "Colonne manquante !"
+
+#. module: account_statement_base_import
+#: field:account.statement.profile,rec_log:0
+msgid "log"
+msgstr "log"
+
+#. module: account_statement_base_import
+#: field:account.statement.profile,import_type:0
+msgid "Type of import"
+msgstr "Type d'import"
+
+#. module: account_statement_base_import
+#: constraint:account.bank.statement.line:0
+msgid ""
+"The amount of the voucher must be the same amount as the one on the "
+"statement line"
+msgstr ""
+"Le montant du justificatif doit tre identique à celui de la ligne le "
+"concernant sur le relevé"
+
+#. module: account_statement_base_import
+#: help:account.statement.profile,launch_import_completion:0
+msgid ""
+"Tic that box to automatically launch the completion on each "
+"imported                file using this profile."
+msgstr ""
+"Cocher cette case pour lancer automatiquement l'auto-complétion sur"
+"chaque fichier importé avec ce profil."
+
+#. module: account_statement_base_import
+#: field:credit.statement.import,profile_id:0
+msgid "Import configuration parameter"
+msgstr "Parametres de configuration d'import"
+
+#. module: account_statement_base_import
+#: code:addons/account_statement_base_import/parser/parser.py:156
+#, python-format
+msgid "No buffer file given."
+msgstr "Pas de fichier tampon donné."
+
+#. module: account_statement_base_import
+#: view:credit.statement.import:0
+msgid "Import Parameters Summary"
+msgstr "Résumé des paramètres d'import"
+
+#. module: account_statement_base_import
+#: field:credit.statement.import,balance_check:0
+msgid "Balance check"
+msgstr "Vérification des soldes"
+
+#. module: account_statement_base_import
+#: model:ir.model,name:account_statement_base_import.model_account_bank_statement_line
+msgid "Bank Statement Line"
+msgstr "Ligne de relevé bancaire"
+
+#. module: account_statement_base_import
+#: field:credit.statement.import,force_partner_on_bank:0
+msgid "Force partner on bank move"
+msgstr "Forcer un partenaire sur la ligne du compte de banque"
+
+#. module: account_statement_base_import
+#: field:credit.statement.import,file_name:0
+msgid "File Name"
+msgstr "Nom du fichier"
+
+#. module: account_statement_base_import
+#: field:credit.statement.import,receivable_account_id:0
+msgid "Force Receivable/Payable Account"
+msgstr "Forcer le compte Client/Fournisseur"
+
+#. module: account_statement_base_import
+#: help:account.statement.profile,import_type:0
+msgid ""
+"Choose here the method by which you want to import bank statement for this "
+"profile."
+msgstr ""
+"Choisissez la méthode d'import de relevé pour ce profil."
+
+#. module: account_statement_base_import
+#: view:credit.statement.import:0
+msgid "Cancel"
+msgstr "Annulation"
