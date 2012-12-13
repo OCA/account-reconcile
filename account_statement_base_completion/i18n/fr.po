@@ -1,12 +1,12 @@
 #. module: account_statement_base_completion
 #: view:account.statement.completion.rule:0
 msgid "Related Profiles"
-msgstr "Profiles liés"
+msgstr "Profils liés"
 
 #. module: account_statement_base_completion
 #: help:account.statement.completion.rule,sequence:0
-msgid "Lower means paresed first."
-msgstr "Lower means paresed first."
+msgid "Lower means parsed first."
+msgstr "Plus petite séquence analysée en premier."
 
 #. module: account_statement_base_completion
 #: code:addons/account_statement_base_completion/statement.py:150
@@ -15,12 +15,12 @@ msgstr "Lower means paresed first."
 #: code:addons/account_statement_base_completion/statement.py:252
 #, python-format
 msgid "Line named \"%s\" (Ref:%s) was matched by more than one partner."
-msgstr "Line named \"%s\" (Ref:%s) was matched by more than one partner."
+msgstr "La ligne nommée \"%s\" (Ref:%s) correspond à plusieurs partenaires."
 
 #. module: account_statement_base_completion
 #: field:account.bank.statement,completion_logs:0
 msgid "Completion Log"
-msgstr "Log des complétions"
+msgstr "Journal des complétions"
 
 #. module: account_statement_base_completion
 #: field:account.bank.statement.line,label:0
@@ -34,7 +34,7 @@ msgid ""
 "can             base the default/standard providen rule."
 msgstr ""
 "Ce champs permet de stocker une description complémentaire fournie par la banque."
-"Le léttrage avancé pourra être effectué sur ce critère."
+"Le lettrage avancé pourra être effectué sur ce critère."
 
 #. module: account_statement_base_completion
 #: model:ir.model,name:account_statement_base_completion.model_account_bank_statement
@@ -44,7 +44,7 @@ msgstr "Relevé bancaire"
 #. module: account_statement_base_completion
 #: field:account.statement.completion.rule,function_to_call:0
 msgid "Method"
-msgstr "Methode"
+msgstr "Méthode"
 
 #. module: account_statement_base_completion
 #: code:addons/account_statement_base_completion/statement.py:352
@@ -60,7 +60,7 @@ msgstr "Informations additionnelles de la banque"
 #. module: account_statement_base_completion
 #: view:account.statement.profile:0
 msgid "Auto-Completion Rules"
-msgstr "Règles d'auto-completion"
+msgstr "Règles d'auto-complétion"
 
 #. module: account_statement_base_completion
 #: help:account.bank.statement.line,additionnal_bank_fields:0
@@ -68,7 +68,7 @@ msgid ""
 "Used by completion and import system. Adds every field that is present in "
 "your bank/office             statement file"
 msgstr ""
-"Utilisé au niveau de l'auto-complétion et de l'import. Permet l'ajout de n'importe quel" 
+"Utilisé au niveau de l'auto-complétion et de l'import. Permet l'ajout de n'importe quel "
 "champs additionnel communiqué par la banque"
 
 #. module: account_statement_base_completion
@@ -142,7 +142,7 @@ msgstr "Séquence"
 #. module: account_statement_base_completion
 #: constraint:account.bank.statement:0
 msgid "The journal and period chosen have to belong to the same company."
-msgstr "Le journal et la période doivent appartenir  la même socité."
+msgstr "Le journal et la période doivent appartenir à la même société."
 
 #. module: account_statement_base_completion
 #: field:res.partner,bank_statement_label:0
@@ -155,8 +155,7 @@ msgid ""
 "When this checkbox is ticked, the auto-completion process/button will ignore "
 "this line."
 msgstr ""
-"Les lignes cochées seront ignorées si vous cliquez sur le bouton auto-complétion"
-"this line."
+"Les lignes cochées seront ignorées lorsque vous cliquez sur le bouton auto-complétion"
 
 #. module: account_statement_base_completion
 #: help:res.partner,bank_statement_label:0
@@ -166,9 +165,9 @@ msgid ""
 "the partner will be automatically                  filled (as long as you "
 "use this method/rules in your statement profile)."
 msgstr ""
-"Entrez les différentes descriptions/informations sur votre relevé bancaire séparé par un ; "
+"Entrez les différentes descriptions/informations sur votre relevé bancaire séparées par un ';' "
 "Si l'une d'entre elles figure dans la ligne du relevé, le partenaire correspondant pourra"
-"être automatiquement retrouvé (à condition d'utiliser un règle de léttrage dans le profil)."
+"être automatiquement retrouvé (à condition d'utiliser un règle de lettrage dans le profil)."
 
 #. module: account_statement_base_completion
 #: model:ir.model,name:account_statement_base_completion.model_res_partner
@@ -178,4 +177,4 @@ msgstr "Partenaire"
 #. module: account_statement_base_completion
 #: view:account.bank.statement:0
 msgid "Completion Logs"
-msgstr "Logs d'auto-complétion"
+msgstr "Journaux d'auto-complétion"

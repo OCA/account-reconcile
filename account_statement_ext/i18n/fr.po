@@ -14,7 +14,7 @@ msgstr "Impossible de trouver le compte"
 #: constraint:account.move:0
 msgid "You can not create more than one move per period on centralized journal"
 msgstr ""
-"Vous ne pouvez pas crer plus d'un mouvement par période dans un journal "
+"Vous ne pouvez pas créer plus d'un mouvement par période dans un journal "
 "centralisateur"
 
 #. module: account_statement_ext
@@ -25,12 +25,12 @@ msgstr "Importation du relevé"
 #. module: account_statement_ext
 #: field:account.statement.profile,bank_statement_prefix:0
 msgid "Bank Statement Prefix"
-msgstr "Préfix du No de Relevé"
+msgstr "Préfixe du N° de Relevé"
 
 #. module: account_statement_ext
 #: field:account.bank.statement,profile_id:0
 msgid "Profil"
-msgstr "Profile"
+msgstr "Profil"
 
 #. module: account_statement_ext
 #: code:addons/account_statement_ext/statement.py:362
@@ -47,7 +47,7 @@ msgstr "Erreur de configuration !"
 #. module: account_statement_ext
 #: field:account.statement.profile,receivable_account_id:0
 msgid "Force Receivable/Payable Account"
-msgstr "Remplacer le compte client/fournisseur par defaut par "
+msgstr "Remplacer le compte client/fournisseur par défaut par "
 
 #. module: account_statement_ext
 #: field:account.statement.profile,commission_account_id:0
@@ -82,7 +82,7 @@ msgstr "Les écritures comptables ne sont pas équilibrées."
 #: constraint:account.statement.profile:0
 msgid "You need to put a partner if you tic the 'Force partner on bank move' !"
 msgstr ""
-"Vous devez choisir un pertenaire si vous cochez 'Remplacer le compte client/fournisseur' !"
+"Vous devez choisir un partenaire si vous cochez 'Remplacer le compte client/fournisseur' !"
 
 #. module: account_statement_ext
 #: help:account.statement.profile,force_partner_on_bank:0
@@ -91,7 +91,7 @@ msgid ""
 "partner                                                    in the "
 "counterpart of the intermediat/banking move."
 msgstr ""
-"Cochez cette case si vous voulez utiliser le partenaire fiancier dans" 
+"Cochez cette case si vous voulez utiliser le partenaire financier dans "
 "la contrepartie de l'écriture."
 
 #. module: account_statement_ext
@@ -109,22 +109,22 @@ msgstr "L'écriture \"%s\" n'est pas équilibrée."
 #: code:addons/account_statement_ext/statement.py:424
 #, python-format
 msgid "Please ensure that minimal properties are set"
-msgstr "Veuillez vérifiez que les propriétés miminales sont bien paramétrées"
+msgstr "Veuillez vérifiez que les propriétés minimales sont bien paramétrées"
 
 #. module: account_statement_ext
 #: view:account.bank.statement:0
 msgid "Balance Check"
-msgstr "Controle sur Solde final"
+msgstr "Contrôle sur solde final"
 
 #. module: account_statement_ext
 #: view:account.bank.statement:0
 msgid "Profile Details"
-msgstr "Détails du profile"
+msgstr "Détails du profil"
 
 #. module: account_statement_ext
 #: model:ir.model,name:account_statement_ext.model_account_statement_profile
 msgid "Statement Profil"
-msgstr "Profile du relevé"
+msgstr "Profil du relevé"
 
 #. module: account_statement_ext
 #: field:account.statement.profile,name:0
@@ -134,7 +134,7 @@ msgstr "Nom"
 #. module: account_statement_ext
 #: field:account.statement.profile,commission_analytic_id:0
 msgid "Commission analytic account"
-msgstr "Compte analytique affecter la Commission"
+msgstr "Compte analytique où affecter la commission"
 
 #. module: account_statement_ext
 #: constraint:account.move:0
@@ -164,7 +164,7 @@ msgstr "BORDEREAU DE REMISE DE CHEQUES"
 #: code:addons/account_statement_ext/statement.py:400
 #, python-format
 msgid "Statement %s is confirmed, journal items are created."
-msgstr "Le releve %s est confirmé, les écritires comptables ont été générées."
+msgstr "Le relevé %s est confirmé, les écritures comptables ont été générées."
 
 #. module: account_statement_ext
 #: report:addons/account_statement_ext/report/bank_statement_report.mako:37
@@ -185,8 +185,8 @@ msgid ""
 "of the intermediate/banking move                                       if "
 "you tic the corresponding checkbox)."
 msgstr ""
-"Selectionnez un partenaire si vous voulez l'avoir dans l'écriture comptable"
-"au niveau de la commision (et du compte de trésorerie selon les cas si vous cochez"
+"Sélectionnez un partenaire si vous voulez l'avoir dans l'écriture comptable "
+"au niveau de la commision (et du compte de trésorerie selon les cas si vous cochez "
 "la case 'Indiquer un partenaire sur la ligne d'écriture de la banque ou organisme')."
 
 #. module: account_statement_ext
@@ -195,7 +195,7 @@ msgid ""
 "The amount of the voucher must be the same amount as the one on the "
 "statement line"
 msgstr ""
-"Le montant du justificatif doit tre identique  celui de la ligne le "
+"Le montant du justificatif doit être identique à celui de la ligne le "
 "concernant sur le relevé"
 
 #. module: account_statement_ext
@@ -208,7 +208,7 @@ msgstr "Page"
 #: field:account.bank.statement,balance_check:0
 #: field:account.statement.profile,balance_check:0
 msgid "Balance check"
-msgstr "Activation controle du solde final"
+msgstr "Activation contrôle du solde final"
 
 #. module: account_statement_ext
 #: model:ir.model,name:account_statement_ext.model_account_bank_statement_line
@@ -218,7 +218,7 @@ msgstr "Ligne de relevé bancaire"
 #. module: account_statement_ext
 #: model:ir.model,name:account_statement_ext.model_account_move
 msgid "Account Entry"
-msgstr "Ecriture comptable"
+msgstr "Écriture comptable"
 
 #. module: account_statement_ext
 #: field:account.statement.profile,force_partner_on_bank:0
@@ -228,7 +228,7 @@ msgstr "Indiquer un partenaire sur la ligne d'écriture de la banque"
 #. module: account_statement_ext
 #: report:addons/account_statement_ext/report/bank_statement_report.mako:33
 msgid "Reference"
-msgstr "Réference"
+msgstr "Référence"
 
 #. module: account_statement_ext
 #: code:addons/account_statement_ext/statement.py:380
@@ -250,12 +250,12 @@ msgstr "Relevé importé"
 #. module: account_statement_ext
 #: field:account.bank.statement.line,period_id:0
 msgid "Period"
-msgstr "Periode"
+msgstr "Période"
 
 #. module: account_statement_ext
 #: constraint:account.bank.statement:0
 msgid "The journal and period chosen have to belong to the same company."
-msgstr "Le journal et la période doivent appartenir la même société."
+msgstr "Le journal et la période doivent appartenir à la même société."
 
 #. module: account_statement_ext
 #: model:ir.actions.report.xml,name:account_statement_ext.report_bank_statement_webkit
@@ -276,8 +276,8 @@ msgid ""
 "account (eg. an intermediat bank account instead "
 "of                                                        default debitors)."
 msgstr ""
-"Selectionnez un compte de type client ou fournisseur afin de remplacer "
-"le compte client ou fournisseur par default"
+"Sélectionnez un compte de type client ou fournisseur afin de remplacer "
+"le compte client ou fournisseur par défaut"
 
 #. module: account_statement_ext
 #: code:addons/account_statement_ext/statement.py:381

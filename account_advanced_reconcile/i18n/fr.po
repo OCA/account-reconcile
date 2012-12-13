@@ -30,13 +30,13 @@ msgstr "Compte"
 #. module: account_advanced_reconcile
 #: model:ir.model,name:account_advanced_reconcile.model_account_easy_reconcile_method
 msgid "reconcile method for account_easy_reconcile"
-msgstr "Méthode de Lettrage pour le module account_easy_reconcile"
+msgstr "Méthode de lettrage pour le module account_easy_reconcile"
 
 #. module: account_advanced_reconcile
 #: field:easy.reconcile.advanced,date_base_on:0
 #: field:easy.reconcile.advanced.ref,date_base_on:0
 msgid "Date of reconcilation"
-msgstr "Date de Lettrage"
+msgstr "Date de lettrage"
 
 #. module: account_advanced_reconcile
 #: field:easy.reconcile.advanced,journal_id:0
@@ -64,7 +64,7 @@ msgstr "Avancé. Partenaire et Réf."
 #. module: account_advanced_reconcile
 #: view:account.easy.reconcile:0
 msgid "Match multiple debit vs multiple credit entries. Allow partial reconcilation. The lines should have the partner, the credit entry ref. is matched vs the debit entry ref. or name."
-msgstr "Le Lettrage peut s'éffectuer sur plusieurs écritures de débit et crédit. Le Lettrage partiel est autorisé. Les écritures doivent avoir le même partenaire et la référence sur les écritures de crédit doit se retrouver dans la référence ou la description sur les écritures de débit."
+msgstr "Le Lettrage peut s'effectuer sur plusieurs écritures de débit et crédit. Le Lettrage partiel est autorisé. Les écritures doivent avoir le même partenaire et la référence sur les écritures de crédit doit se retrouver dans la référence ou la description sur les écritures de débit."
 
 #. module: account_advanced_reconcile
 #: model:ir.model,name:account_advanced_reconcile.model_easy_reconcile_advanced
@@ -86,5 +86,5 @@ msgstr "easy.reconcile.advanced.ref"
 #: field:easy.reconcile.advanced,write_off:0
 #: field:easy.reconcile.advanced.ref,write_off:0
 msgid "Write off allowed"
-msgstr "Ecart autorisé"
+msgstr "Écart autorisé"
 

@@ -23,7 +23,7 @@ msgstr "Fichier à importer"
 #. module: account_statement_base_import
 #: view:account.statement.profile:0
 msgid "Import Logs"
-msgstr "Logs d'import"
+msgstr "Journaux d'import"
 
 #. module: account_statement_base_import
 #: field:credit.statement.import,journal_id:0
@@ -40,7 +40,7 @@ msgstr "Colonne %s non présente dans le fichier"
 #: view:account.statement.profile:0
 #: model:ir.ui.menu,name:account_statement_base_import.statement_importer_menu
 msgid "Import Bank Statement"
-msgstr "Importation de Relevé"
+msgstr "Importation de relevé"
 
 #. module: account_statement_base_import
 #: model:ir.model,name:account_statement_base_import.model_account_statement_profile
@@ -63,7 +63,7 @@ msgstr "Compte de commission"
 #, python-format
 msgid "Column %s you try to import is not present in the bank statement line !"
 msgstr ""
-"La colonne %s que vous essayer d'importer n'est pas présente dans la ligne de relevé !"
+"La colonne %s que vous essayez d'importer n'est pas présente dans la ligne de relevé !"
 
 #. module: account_statement_base_import
 #: code:addons/account_statement_base_import/statement.py:71
@@ -74,7 +74,7 @@ msgstr "Le relevé avec l'ID %s a été importé avec %s lignes "
 #. module: account_statement_base_import
 #: field:account.statement.profile,launch_import_completion:0
 msgid "Launch completion after import"
-msgstr "Lancer l'auto-completion après import"
+msgstr "Lancer l'auto-complétion après import"
 
 #. module: account_statement_base_import
 #: field:credit.statement.import,partner_id:0
@@ -99,7 +99,7 @@ msgid ""
 "partner                                                    in the "
 "counterpart of the treasury/banking move."
 msgstr ""
-"Cochez cette case si vous voulez utiliser comme partenaire"
+"Cochez cette case si vous voulez utiliser comme partenaire "
 "l'organisme bancaire au niveau de la ligne de banque"
 
 #. module: account_statement_base_import
@@ -121,7 +121,7 @@ msgid ""
 "balance                                                    before confirming "
 "a bank statement. If don't ticked, no balance control will be done."
 msgstr ""
-"Cochez cette case si vous souhaitez un contrôle du solde final"
+"Cochez cette case si vous souhaitez un contrôle du solde final "
 "avant la validation du relevé."
 
 #. module: account_statement_base_import
@@ -129,7 +129,7 @@ msgstr ""
 #: code:addons/account_statement_base_import/parser/generic_file_parser.py:31
 #, python-format
 msgid "Please install python lib xlrd"
-msgstr "Veuillez installer la librairie python lib xlrd"
+msgstr "Veuillez installer la bibliothèque python xlrd"
 
 #. module: account_statement_base_import
 #: code:addons/account_statement_base_import/parser/file_parser.py:58
@@ -173,7 +173,7 @@ msgstr "Colonne manquante !"
 #. module: account_statement_base_import
 #: field:account.statement.profile,rec_log:0
 msgid "log"
-msgstr "log"
+msgstr "journal"
 
 #. module: account_statement_base_import
 #: field:account.statement.profile,import_type:0
@@ -186,7 +186,7 @@ msgid ""
 "The amount of the voucher must be the same amount as the one on the "
 "statement line"
 msgstr ""
-"Le montant du justificatif doit tre identique à celui de la ligne le "
+"Le montant du justificatif doit être identique à celui de la ligne le "
 "concernant sur le relevé"
 
 #. module: account_statement_base_import
@@ -201,7 +201,7 @@ msgstr ""
 #. module: account_statement_base_import
 #: field:credit.statement.import,profile_id:0
 msgid "Import configuration parameter"
-msgstr "Parametres de configuration d'import"
+msgstr "Paramètres de configuration d'import"
 
 #. module: account_statement_base_import
 #: code:addons/account_statement_base_import/parser/parser.py:156
