@@ -1,0 +1,118 @@
+# Translation of OpenERP Server.
+# This file contains the translation of the following modules:
+#	* account_easy_reconcile
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: OpenERP Server 6.1\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2012-11-07 12:59+0000\n"
+"PO-Revision-Date: 2012-11-07 12:59+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: account_easy_reconcile
+#: view:account.easy.reconcile:0
+msgid "Information"
+msgstr "Information"
+
+#. module: account_easy_reconcile
+#: view:account.easy.reconcile.method:0
+msgid "Automatic Easy Reconcile Method"
+msgstr "Méthode de léttrage automatisé"
+
+#. module: account_easy_reconcile
+#: view:account.easy.reconcile:0
+msgid "Match one debit line vs one credit line. Do not allow partial reconcilation. The lines should have the same amount (with the write-off) and the same partner to be reconciled."
+msgstr "Lettre un débit avec un crédit ayant le même montant et le même partenaire. Le lettrage ne peut être partiel (écriture d'ajustement en cas d'écart)."
+
+#. module: account_easy_reconcile
+#: view:account.easy.reconcile:0
+msgid "Log"
+msgstr "Historique"
+
+#. module: account_easy_reconcile
+#: view:account.easy.reconcile:0
+msgid "Match one debit line vs one credit line. Do not allow partial reconcilation. The lines should have the same amount (with the write-off) and the same name to be reconciled."
+msgstr "Lettre un débit avec un crédit ayant le même montant et la même description. Le lettrage ne peut être partiel (écriture d'ajustement en cas d'écart)."
+
+#. module: account_easy_reconcile
+#: view:account.easy.reconcile:0
+msgid "Automatic Easy Reconcile"
+msgstr "Léttrage automatisé"
+
+#. module: account_easy_reconcile
+#: model:ir.model,name:account_easy_reconcile.model_account_easy_reconcile_method
+msgid "reconcile method for account_easy_reconcile"
+msgstr "Méthode de léttrage"
+
+#. module: account_easy_reconcile
+#: view:account.easy.reconcile:0
+msgid "Start Auto Reconcilation"
+msgstr "Lancer le léttrage automatisé"
+
+#. module: account_easy_reconcile
+#: model:ir.model,name:account_easy_reconcile.model_easy_reconcile_simple_name
+msgid "easy.reconcile.simple.name"
+msgstr "Léttrage automatisé.simple.Description"
+
+#. module: account_easy_reconcile
+#: model:ir.model,name:account_easy_reconcile.model_easy_reconcile_options
+msgid "easy.reconcile.options"
+msgstr "Léttrage automatisé.options"
+
+#. module: account_easy_reconcile
+#: view:account.easy.reconcile:0
+msgid "Simple. Amount and Name"
+msgstr "Simple. Montant et description"
+
+#. module: account_easy_reconcile
+#: model:ir.model,name:account_easy_reconcile.model_easy_reconcile_simple
+msgid "easy.reconcile.simple"
+msgstr "Léttrage automatisé.simple"
+
+#. module: account_easy_reconcile
+#: model:ir.actions.act_window,name:account_easy_reconcile.action_account_easy_reconcile
+#: model:ir.ui.menu,name:account_easy_reconcile.menu_easy_reconcile
+msgid "Easy Automatic Reconcile"
+msgstr "Léttrage automatisé"
+
+#. module: account_easy_reconcile
+#: model:ir.model,name:account_easy_reconcile.model_easy_reconcile_simple_reference
+msgid "easy.reconcile.simple.reference"
+msgstr "Léttrage automatisé.simple.réference"
+
+#. module: account_easy_reconcile
+#: view:account.easy.reconcile:0
+msgid "Reconcile Method"
+msgstr "Méthode de léttrage"
+
+#. module: account_easy_reconcile
+#: model:ir.model,name:account_easy_reconcile.model_easy_reconcile_base
+msgid "easy.reconcile.base"
+msgstr "Léttrage automatisé.base"
+
+#. module: account_easy_reconcile
+#: view:account.easy.reconcile:0
+msgid "Configuration"
+msgstr "Configuration"
+
+#. module: account_easy_reconcile
+#: model:ir.model,name:account_easy_reconcile.model_easy_reconcile_simple_partner
+msgid "easy.reconcile.simple.partner"
+msgstr "Léttrage automatisé.simple.partenaire"
+
+#. module: account_easy_reconcile
+#: view:account.easy.reconcile:0
+msgid "Task Information"
+msgstr "Information sur la tâche"
+
+#. module: account_easy_reconcile
+#: model:ir.model,name:account_easy_reconcile.model_account_easy_reconcile
+msgid "account easy reconcile"
+msgstr "Léttrage automatisé"
+
