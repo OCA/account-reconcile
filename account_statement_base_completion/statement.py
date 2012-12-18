@@ -382,6 +382,6 @@ class AccountBankSatement(Model):
                 if res:
                     vals = res[line.id]
                     vals['already_completed'] = True
-                    stat_line_obj.write(cr, uid, line.id, vals, context=ctx)
+                    stat_line_obj.write(cr, uid, [line.id], vals, context=ctx)
             self.write_completion_log(cr, uid, stat.id, msg, compl_lines, context=context)
         return True
