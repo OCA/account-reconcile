@@ -147,11 +147,11 @@
           </xpath>
           
           <xpath expr="/form/sheet/notebook/page/field/tree/field[@name='sequence']" position="after">
-              <field name="id"/>
+              <field name="id" readonly="1" />
           </xpath>
                     
           <xpath expr="/form/sheet/notebook/page/field/form/group/field[@name='date']" position="before">
-              <field name="id"/>
+              <field name="id" readonly="1" />
           </xpath>
                     # Adapt onchange signature
           <xpath expr="/form/sheet/notebook/page/field/tree/field[@name='partner_id']" position="replace">
