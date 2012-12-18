@@ -353,8 +353,7 @@ class AccountBankSatement(Model):
             + "\n" + error_log + "-------------" + "\n"]
         log = "\n".join(log_line)
         self.write(cr, uid, [stat_id], {'completion_logs' : log}, context=context)
-        logger.notifyChannel('Bank Statement Completion', netsvc.LOG_INFO, 
-            "Bank Statement ID %s has %s lines completed"%(stat_id, number_imported))
+        self.message_post(cr, uid, [stat_id], body=_('Statement %s auto-completed for %s lines completed') % (st_number,number_imported), context=context)
         return True
     
     def button_auto_completion(self, cr, uid, ids, context=None):
