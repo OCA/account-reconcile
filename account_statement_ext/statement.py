@@ -19,12 +19,11 @@
 #
 ##############################################################################
 
-from tools.translate import _
-import datetime
-import netsvc
-logger = netsvc.Logger()
+import time
+
 from openerp.osv.orm import Model, fields
-from openerp.osv import fields, osv
+from openerp.tools.translate import _
+import openerp.addons.decimal_precision as dp
 
 class AccountStatementProfil(Model):
     """
@@ -216,7 +215,7 @@ class AccountBankSatement(Model):
         """
         if context is None:
             context = {}
-        res = super(AccountBankSatement, self)._prepare_move_line_vals(self, cr, uid, st_line, move_id, debit, 
+        res = super(AccountBankSatement, self)._prepare_move_line_vals(cr, uid, st_line, move_id, debit, 
                 credit, currency_id = currency_id, amount_currency = amount_currency, account_id = account_id,
                 analytic_id = analytic_id, partner_id = partner_id, context = context)
         ctx = context.copy()
@@ -225,7 +224,7 @@ class AccountBankSatement(Model):
         res.update({'period_id': period_id})
         return res
 
-    def _get_counter_part_partner(sefl, cr, uid, st_line, context=None):
+    def _get_counter_part_partner(self, cr, uid, st_line, context=None):
         """
         We change the move line generated from the lines depending on the profile:
           - If partner_id is set and force_partner_on_bank is ticked, we'll let the partner of each line
@@ -236,11 +235,10 @@ class AccountBankSatement(Model):
                   create the move from.
            :return: int/long of the res.partner to use as counterpart
         """
+        bank_partner_id = super(AccountBankSatement, self)._get_counter_part_partner(cr, uid, st_line, context=context)
         # GET THE RIGHT PARTNER ACCORDING TO THE CHOSEN PROFIL
         if st_line.statement_id.profile_id.force_partner_on_bank:
             bank_partner_id = st_line.statement_id.profile_id.partner_id.id
-        else:
-            bank_partner_id = ((st_line.partner_id) and st_line.partner_id.id) or False
         return bank_partner_id
 
     def _get_st_number_period_profile(self, cr, uid, date, profile_id):
@@ -329,7 +327,7 @@ class AccountBankSatement(Model):
                     'name': st_number,
                     'balance_end_real': st.balance_end
             }, context=context)
-            self.log(cr, uid, st.id, _('Statement %s is confirmed, journal items are created.') % (st_number,))
+            self.message_post(cr, uid, [st.id], body=_('Statement %s confirmed, journal items were created.') % (st_number,), context=context)
         return self.write(cr, uid, ids, {'state':'confirm'}, context=context)
 
     def get_account_for_counterpart(self, cursor, uid,
