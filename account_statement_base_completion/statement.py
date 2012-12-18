@@ -113,7 +113,7 @@ class AccountStatementCompletionRule(Model):
             ]
     
     _columns={
-        'sequence': fields.integer('Sequence', help="Lower means paresed first."),
+        'sequence': fields.integer('Sequence', help="Lower means parsed first."),
         'name': fields.char('Name', size=128),
         'profile_ids': fields.many2many('account.statement.profile', 
             rel='as_rul_st_prof_rel', 

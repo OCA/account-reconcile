@@ -25,7 +25,7 @@
  'maintainer': 'Camptocamp',
  'category': 'Finance',
  'complexity': 'normal',
- 'depends': ['account_easy_reconcile', # this comes from  lp:account-extra-addons
+ 'depends': ['account_easy_reconcile',
              ],
  'description': """
 Advanced reconciliation methods for the module account_easy_reconcile.
