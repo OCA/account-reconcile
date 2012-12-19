@@ -206,7 +206,7 @@ class account_easy_reconcile(Model):
             partial_ids = find_reconcile_ids(
                     'reconcile_partial_id', all_ml_partial_ids)
 
-            history_id = self.pool.get('easy.reconcile.history').create(
+            self.pool.get('easy.reconcile.history').create(
                 cr,
                 uid,
                 {'easy_reconcile_id': rec.id,
@@ -214,15 +214,30 @@ class account_easy_reconcile(Model):
                  'reconcile_ids': [(4, rid) for rid in reconcile_ids],
                  'reconcile_partial_ids': [(4, rid) for rid in partial_ids]},
                 context=context)
+        return True
 
-        return {
-            'name':_("Reconciliations"),
-            'view_mode': 'tree,form',  # FIXME: In OpenERP 6.1 we can't display
-            'view_id': False,          # only the form, check in version 7.0
-            'view_type': 'form',
-            'res_model': 'easy.reconcile.history',
-            'type': 'ir.actions.act_window',
-            'nodestroy': True,
-            'target': 'current',
-            'domain': unicode([('id', '=', history_id)]),
-            }
+    def last_history_reconcile(self, cr, uid, rec_id, context=None):
+        """ Get the last history record for this reconciliation profile
+        and return the action which opens move lines reconciled
+        """
+        if isinstance(rec_id, (tuple, list)):
+            assert len(rec_id) == 1, \
+                    "Only 1 id expected"
+            rec_id = rec_id[0]
+        rec = self.browse(cr, uid, rec_id, context=context)
+        # the history is ordered by date desc
+        last_history = rec.history_ids[0]
+        return last_history.open_reconcile()
+
+    def last_history_partial(self, cr, uid, rec_id, context=None):
+        """ Get the last history record for this reconciliation profile
+        and return the action which opens move lines reconciled
+        """
+        if isinstance(rec_id, (tuple, list)):
+            assert len(rec_id) == 1, \
+                    "Only 1 id expected"
+            rec_id = rec_id[0]
+        rec = self.browse(cr, uid, rec_id, context=context)
+        # the history is ordered by date desc
+        last_history = rec.history_ids[0]
+        return last_history.open_partial()
