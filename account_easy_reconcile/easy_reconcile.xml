@@ -35,7 +35,8 @@ The lines should have the same amount (with the write-off) and the same partner 
 
                     </page>
                 </notebook>
-                <button icon="gtk-ok" name="run_reconcile" colspan = "4" string="Start Auto Reconcilation" type="object"/>
+                <button icon="gtk-ok" name="run_reconcile" colspan="4"
+                    string="Start Auto Reconcilation" type="object"/>
             </form>
         </field>
     </record>
@@ -52,6 +53,8 @@ The lines should have the same amount (with the write-off) and the same partner 
                 <field name="scheduler"/>
                 <field name="unreconciled_count"/>
                 <field name="reconciled_partial_count"/>
+                <button icon="gtk-ok" name="run_reconcile" colspan="4"
+                    string="Start Auto Reconcilation" type="object"/>
             </tree>
         </field>
     </record>
