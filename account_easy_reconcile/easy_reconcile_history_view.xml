@@ -20,6 +20,7 @@
                 <field name="easy_reconcile_id"/>
                 <field name="date"/>
 
+                <newline/>
                 <group expand="0" string="Group By...">
                     <filter string="Reconciliation Profile"
                         icon="terp-stock_effects-object-colorize"
@@ -31,7 +32,7 @@
         </field>
     </record>
 
-    <record id="easy_easy_reconcile_history_form" model="ir.ui.view">
+    <record id="easy_reconcile_history_form" model="ir.ui.view">
         <field name="name">easy.reconcile.history.form</field>
         <field name="priority">16</field>
         <field name="model">easy.reconcile.history</field>
@@ -46,7 +47,7 @@
         </field>
     </record>
 
-    <record id="easy_easy_reconcile_history_tree" model="ir.ui.view">
+    <record id="easy_reconcile_history_tree" model="ir.ui.view">
         <field name="name">easy.reconcile.history.tree</field>
         <field name="priority">16</field>
         <field name="model">easy.reconcile.history</field>

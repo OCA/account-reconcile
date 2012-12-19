@@ -144,7 +144,7 @@ class account_easy_reconcile(Model):
         'scheduler': fields.many2one('ir.cron', 'scheduler', readonly=True),
         'rec_log': fields.text('log', readonly=True),
         'unreconciled_count': fields.function(_get_total_unrec,
-            type='integer', string='Fully Unreconciled Entries'),
+            type='integer', string='Unreconciled Entries'),
         'reconciled_partial_count': fields.function(_get_partial_rec,
             type='integer', string='Partially Reconciled Entries'),
     }
@@ -168,39 +168,58 @@ class account_easy_reconcile(Model):
                 'filter': rec_method.filter}
 
     def run_reconcile(self, cr, uid, ids, context=None):
+        def find_reconcile_ids(fieldname, move_line_ids):
+            if not move_line_ids:
+                return []
+            sql = ("SELECT DISTINCT " + fieldname +
+                   " FROM account_move_line "
+                   " WHERE id in %s "
+                   " AND " + fieldname + " IS NOT NULL")
+            cr.execute(sql, (tuple(move_line_ids),))
+            res = cr.fetchall()
+            return [row[0] for row in res]
+
         if context is None:
             context = {}
-        for rec_id in ids:
-            rec = self.browse(cr, uid, rec_id, context=context)
-            total_rec = 0
-            total_partial_rec = 0
-            details = []
-            count = 0
-            for method in rec.reconcile_method:
-                count += 1
+        for rec in self.browse(cr, uid, ids, context=context):
+            all_ml_rec_ids = []
+            all_ml_partial_ids = []
 
+            for method in rec.reconcile_method:
                 rec_model = self.pool.get(method.name)
                 auto_rec_id = rec_model.create(
                     cr, uid,
                     self._prepare_run_transient(cr, uid, method, context=context),
                     context=context)
 
-                rec_ids, partial_ids = rec_model.automatic_reconcile(
+                ml_rec_ids, ml_partial_ids = rec_model.automatic_reconcile(
                     cr, uid, auto_rec_id, context=context)
 
-                details.append(_('method %d : full: %d lines, partial: %d lines') % \
-                    (count, len(rec_ids), len(partial_ids)))
+                all_ml_rec_ids += ml_rec_ids
+                all_ml_partial_ids += ml_partial_ids
 
-                total_rec += len(rec_ids)
-                total_partial_rec += len(partial_ids)
+            reconcile_ids = find_reconcile_ids(
+                    'reconcile_id', all_ml_rec_ids)
+            partial_ids = find_reconcile_ids(
+                    'reconcile_partial_id', all_ml_partial_ids)
 
-            log = self.read(cr, uid, rec_id, ['rec_log'], context=context)['rec_log']
-            log_lines = log and log.splitlines() or []
-            log_lines[0:0] = [_("%s : %d lines have been fully reconciled" \
-                " and %d lines have been partially reconciled (%s)") % \
-                (time.strftime(DEFAULT_SERVER_DATETIME_FORMAT), total_rec,
-                    total_partial_rec, ' | '.join(details))]
-            log = "\n".join(log_lines)
-            self.write(cr, uid, rec_id, {'rec_log': log}, context=context)
-        return True
+            history_id = self.pool.get('easy.reconcile.history').create(
+                cr,
+                uid,
+                {'easy_reconcile_id': rec.id,
+                 'date': fields.datetime.now(),
+                 'reconcile_ids': [(4, rid) for rid in reconcile_ids],
+                 'reconcile_partial_ids': [(4, rid) for rid in partial_ids]},
+                context=context)
 
+        return {
+            'name':_("Reconciliations"),
+            'view_mode': 'tree,form',  # FIXME: In OpenERP 6.1 we can't display
+            'view_id': False,          # only the form, check in version 7.0
+            'view_type': 'form',
+            'res_model': 'easy.reconcile.history',
+            'type': 'ir.actions.act_window',
+            'nodestroy': True,
+            'target': 'current',
+            'domain': unicode([('id', '=', history_id)]),
+            }

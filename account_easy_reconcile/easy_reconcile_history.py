@@ -27,13 +27,19 @@ class easy_reconcile_history(orm.Model):
     Each history stores the list of reconciliations done"""
 
     _name = 'easy.reconcile.history'
+    _rec_name = 'easy_reconcile_id'
+    _order = 'date DESC'
 
     _columns = {
             'easy_reconcile_id': fields.many2one(
                 'account.easy.reconcile', 'Reconcile Profile', readonly=True),
             'date': fields.datetime('Run date', readonly=True),
             'reconcile_ids': fields.many2many(
-                'account.move.reconcile', string='Reconciliations', readonly=True),
+                'account.move.reconcile',
+                'account_move_reconcile_history_rel',
+                string='Reconciliations', readonly=True),
             'reconcile_partial_ids': fields.many2many(
-                'account.move.reconcile', string='Partial Reconciliations', readonly=True),
+                'account.move.reconcile',
+                'account_move_reconcile_history_partial_rel',
+                string='Partial Reconciliations', readonly=True),
         }
