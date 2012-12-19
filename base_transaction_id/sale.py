@@ -19,9 +19,10 @@
 #
 ##############################################################################
 
-from osv import fields, osv
+from openerp.osv.orm import Model
+from openerp.osv import fields
 
-class SaleOrder(osv.osv):
+class SaleOrder(Model):
     _inherit = 'sale.order'
     _columns = {
         'transaction_id':fields.char('Transaction id', size=128,required=False,
