@@ -19,8 +19,8 @@
 #
 ##############################################################################
 
-from openerp.osv.orm import Model, fields
-from openerp.osv import fields, osv
+from openerp.osv.orm import Model
+from openerp.osv import fields
 
 class AccountStatementProfil(Model):
     _inherit = "account.statement.profile"

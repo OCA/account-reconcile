@@ -19,9 +19,11 @@
 #                                                                               #
 #################################################################################
 
-from osv import fields, osv
+from openerp.osv.orm import Model
+from openerp.osv import fields
 
-class res_partner(osv.osv):
+
+class res_partner(Model):
     """
     Add a bank label on the partner so that we can use it to match
     this partner when we found this in a statement line.

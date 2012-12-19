@@ -19,9 +19,10 @@
 #
 ##############################################################################
 
-from osv import osv
+from openerp.osv.orm import Model
+from openerp.osv import fields
 
-class StockPicking(osv.osv):
+class StockPicking(Model):
     _inherit = "stock.picking"
 
     def action_invoice_create(self, cursor, uid, ids, journal_id=False,

@@ -19,13 +19,12 @@
 #
 ##############################################################################
 
-from tools.translate import _
+from openerp.tools.translate import _
 import datetime
 import netsvc
 logger = netsvc.Logger()
-from openerp.osv.orm import Model, fields
-from openerp.osv import fields, osv
-# from account_statement_base_import.parser.file_parser import FileParser
+from openerp.osv.orm import Model
+from openerp.osv import fields
 from parser import new_bank_statement_parser
 import sys
 import traceback
@@ -71,8 +70,8 @@ class AccountStatementProfil(Model):
                 + _("Bank Statement ID %s have been imported with %s lines ") %(statement_id, num_lines)]
             log = "\n".join(log_line)
             self.write(cr, uid, id, {'rec_log' : log, 'last_import_date':import_date}, context=context)
-            logger.notifyChannel('Bank Statement Import', netsvc.LOG_INFO, 
-                "Bank Statement ID %s have been imported with %s lines "%(statement_id, num_lines))
+            self.message_post(cr, uid, [statement_id], body=_('Statement ID %s have been imported with %s lines.') 
+                % (statement_id,num_lines), context=context)
         return True
     
     def prepare_global_commission_line_vals(self, cr, uid, parser, 

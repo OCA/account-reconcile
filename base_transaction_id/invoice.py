@@ -19,10 +19,11 @@
 #
 ##############################################################################
 
-from osv import fields, osv
-from tools.translate import _
+from openerp.osv.orm import Model
+from openerp.osv import fields
+from openerp.tools.translate import _
 
-class AccountInvoice(osv.osv):
+class AccountInvoice(Model):
     _inherit = 'account.invoice'
     _columns = {
         'transaction_id':fields.char(

@@ -21,8 +21,7 @@
 import time
 
 from report import report_sxw
-from osv import osv
-from tools.translate import _
+from openerp.tools.translate import _
 import pooler
 from operator import add, itemgetter
 from itertools import groupby

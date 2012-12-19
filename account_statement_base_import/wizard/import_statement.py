@@ -23,11 +23,13 @@
 Wizard to import financial institute date in bank statement
 """
 
-from osv import fields, osv
-from tools.translate import _
+from openerp.osv import osv, orm
+from openerp.osv import fields
+
+from openerp.tools.translate import _
 import os
 
-class CreditPartnerStatementImporter(osv.osv_memory):
+class CreditPartnerStatementImporter(orm.TransientModel):
     _name = "credit.statement.import"
     
     def default_get(self, cr, uid, fields, context=None):

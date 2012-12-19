@@ -18,8 +18,9 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-from openerp.osv.orm import Model, fields
 
+from openerp.osv.orm import Model
+from openerp.osv import fields
 
 class AccountVoucher(Model):
 

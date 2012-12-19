@@ -19,11 +19,11 @@
 #
 ##############################################################################
 
-from tools.translate import _
+from openerp.tools.translate import _
 import datetime
 import netsvc
-logger = netsvc.Logger()
-from openerp.osv.orm import Model, fields
+from openerp.osv.orm import Model
+from openerp.osv import fields
 from openerp.addons.account_statement_base_completion.statement import ErrorTooManyPartner
 
 class AccountStatementCompletionRule(Model):

@@ -19,8 +19,6 @@
 #
 ##############################################################################
 from tools.translate import _
-import netsvc
-logger = netsvc.Logger()
 from openerp.osv.orm import Model, fields
 from openerp.osv import fields, osv
 from operator import itemgetter, attrgetter
