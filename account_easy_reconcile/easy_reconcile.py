@@ -146,6 +146,10 @@ class account_easy_reconcile(Model):
             type='integer', string='Unreconciled Entries'),
         'reconciled_partial_count': fields.function(_get_partial_rec,
             type='integer', string='Partially Reconciled Entries'),
+        'history_ids': fields.one2many(
+            'easy.reconcile.history',
+            'easy_reconcile_id',
+            string='History'),
     }
 
     def copy_data(self, cr, uid, id, default=None, context=None):
