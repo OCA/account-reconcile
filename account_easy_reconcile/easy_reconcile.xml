@@ -33,8 +33,6 @@ The lines should have the same amount (with the write-off) and the same partner 
                     </page>
                 </notebook>
                 <button icon="gtk-ok" name="run_reconcile" colspan = "4" string="Start Auto Reconcilation" type="object"/>
-                <separator colspan="4" string="Log" />
-                <field name="rec_log" colspan = "4" nolabel="1"/>
             </form>
         </field>
     </record>
