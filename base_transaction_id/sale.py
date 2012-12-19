@@ -19,21 +19,25 @@
 #
 ##############################################################################
 
-from osv import fields, osv
+from openerp.osv.orm import Model
+from openerp.osv import fields
 
-class SaleOrder(osv.osv):
+
+class SaleOrder(Model):
     _inherit = 'sale.order'
+
     _columns = {
-        'transaction_id':fields.char('Transaction id', size=128,required=False,
-                                     help="Transction id from the financial institute"),
+        'transaction_id': fields.char(
+            'Transaction id',
+            size=128,
+            required=False,
+            help="Transaction id from the financial institute"),
     }
 
-
-    def _prepare_invoice(self, cursor, uid, order, lines, context=None):
+    def _prepare_invoice(self, cr, uid, order, lines, context=None):
         #we put the transaction id in the generated invoices
-        if context is None:
-            context = {}
-        invoice_vals = super(SaleOrder, self)._prepare_invoice(cursor, uid, order, lines, context)
+        invoice_vals = super(SaleOrder, self)._prepare_invoice(
+                cr, uid, order, lines, context=context)
         invoice_vals.update({
             'transaction_id': order.transaction_id})
         return invoice_vals
