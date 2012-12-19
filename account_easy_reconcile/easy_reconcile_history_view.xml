@@ -78,9 +78,13 @@
         <field name="view_mode">tree,form</field>
     </record>
 
-    <menuitem action="action_easy_reconcile_history"
-        id="menu_easy_reconcile_history"
-        parent="account.periodical_processing_reconciliation"/>
+    <act_window
+      context="{'search_default_easy_reconcile_id': [active_id], 'default_easy_reconcile_id': active_id}"
+      id="act_easy_reconcile_to_history"
+      name="History Details"
+      groups=""
+      res_model="easy.reconcile.history"
+      src_model="account.easy.reconcile"/>
 
     </data>
 </openerp>
