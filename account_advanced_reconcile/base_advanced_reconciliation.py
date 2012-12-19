@@ -22,7 +22,7 @@
 from itertools import groupby, product
 from operator import itemgetter
 from openerp.osv.orm import Model, AbstractModel, TransientModel
-from openerp.osv import fields
+from openerp.osv import fields, osv
 
 
 class easy_reconcile_advanced(AbstractModel):
