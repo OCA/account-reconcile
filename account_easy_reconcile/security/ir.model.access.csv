@@ -11,3 +11,5 @@ access_account_easy_reconcile_acc_mgr,account.easy.reconcile,model_account_easy_
 access_easy_reconcile_simple_name_acc_mgr,easy.reconcile.simple.name,model_easy_reconcile_simple_name,account.group_account_user,1,0,0,0
 access_easy_reconcile_simple_partner_acc_mgr,easy.reconcile.simple.partner,model_easy_reconcile_simple_partner,account.group_account_user,1,0,0,0
 access_easy_reconcile_simple_reference_acc_mgr,easy.reconcile.simple.reference,model_easy_reconcile_simple_reference,account.group_account_user,1,0,0,0
+access_easy_reconcile_history_acc_user,easy.reconcile.history,model_easy_reconcile_history,account.group_account_user,1,1,1,0
+access_easy_reconcile_history_acc_mgr,easy.reconcile.history,model_easy_reconcile_history,account.group_account_manager,1,1,1,1

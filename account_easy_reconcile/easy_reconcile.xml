@@ -21,6 +21,9 @@
                     <page name="methods" string="Configuration">
                         <field name="reconcile_method" colspan = "4" nolabel="1"/>
                     </page>
+                    <page name="history" string="History">
+                        <field name="history_ids" nolabel="1"/>
+                    </page>
                     <page name="information" string="Information">
                       <separator colspan="4" string="Simple. Amount and Name"/>
                       <label string="Match one debit line vs one credit line. Do not allow partial reconcilation.
