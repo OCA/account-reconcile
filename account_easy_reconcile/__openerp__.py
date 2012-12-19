@@ -48,7 +48,10 @@ This latter add more complex reconciliations, allows multiple lines and partial.
     "category" : "Finance",
     "init_xml" : [],
     "demo_xml" : [],
-    "update_xml" : ["easy_reconcile.xml"],
+    "update_xml" : [
+        "easy_reconcile.xml",
+        "easy_reconcile_history_view.xml",
+        ],
     'license': 'AGPL-3',
     "auto_install": False,
     "installable": True,

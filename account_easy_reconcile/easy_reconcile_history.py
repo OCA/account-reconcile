@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 ##############################################################################
 #
-#    Copyright 2012 Camptocamp SA (Guewen Baconnier)
-#    Copyright (C) 2010   Sébastien Beau
+#    Author: Guewen Baconnier
+#    Copyright 2012 Camptocamp SA
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -19,7 +19,21 @@
 #
 ##############################################################################
 
-import easy_reconcile
-import base_reconciliation
-import simple_reconciliation
-import easy_reconcile_history
+from openerp.osv import orm, fields
+
+
+class easy_reconcile_history(orm.Model):
+    """ Store an history of the runs per profile
+    Each history stores the list of reconciliations done"""
+
+    _name = 'easy.reconcile.history'
+
+    _columns = {
+            'easy_reconcile_id': fields.many2one(
+                'account.easy.reconcile', 'Reconcile Profile', readonly=True),
+            'date': fields.datetime('Run date', readonly=True),
+            'reconcile_ids': fields.many2many(
+                'account.move.reconcile', string='Reconciliations', readonly=True),
+            'reconcile_partial_ids': fields.many2many(
+                'account.move.reconcile', string='Partial Reconciliations', readonly=True),
+        }
