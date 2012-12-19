@@ -41,8 +41,18 @@
             <form string="Automatic Easy Reconcile History">
                 <field name="easy_reconcile_id"/>
                 <field name="date"/>
-                <field name="reconcile_ids"/>
-                <field name="reconcile_partial_ids"/>
+                <group colspan="2" col="2">
+                    <separator colspan="2" string="Reconcilations"/>
+                    <field name="reconcile_ids" nolabel="1"/>
+                </group>
+                <group colspan="2" col="2">
+                    <separator colspan="2" string="Partial Reconcilations"/>
+                    <field name="reconcile_partial_ids" nolabel="1"/>
+                </group>
+                <group col="2" colspan="4">
+                    <button icon="gtk-ok" name="open_reconcile" string="Go to reconciled entries" type="object"/>
+                    <button icon="gtk-ok" name="open_partial" string="Go to partially reconciled entries" type="object"/>
+                </group>
             </form>
         </field>
     </record>
