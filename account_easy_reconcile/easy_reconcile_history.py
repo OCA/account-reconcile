@@ -31,6 +31,30 @@ class easy_reconcile_history(orm.Model):
     _rec_name = 'easy_reconcile_id'
     _order = 'date DESC'
 
+    def _reconcile_line_ids(self, cr, uid, ids, name, args, context=None):
+        result = {}
+
+        for history in self.browse(cr, uid, ids, context=context):
+            result[history.id] = {}
+
+            move_line_ids = []
+            for reconcile in history.reconcile_ids:
+                move_line_ids.extend(
+                        [line.id
+                            for line
+                            in reconcile.line_id])
+            result[history.id]['reconcile_line_ids'] = move_line_ids
+
+            move_line_ids = []
+            for reconcile in history.reconcile_partial_ids:
+                move_line_ids.extend(
+                        [line.id
+                            for line
+                            in reconcile.line_partial_ids])
+            result[history.id]['partial_line_ids'] = move_line_ids
+
+        return result
+
     _columns = {
             'easy_reconcile_id': fields.many2one(
                 'account.easy.reconcile', 'Reconcile Profile', readonly=True),
@@ -43,6 +67,22 @@ class easy_reconcile_history(orm.Model):
                 'account.move.reconcile',
                 'account_move_reconcile_history_partial_rel',
                 string='Partial Reconciliations', readonly=True),
+            'reconcile_line_ids':
+                fields.function(
+                    _reconcile_line_ids,
+                    string='Reconciled Items',
+                    type='many2many',
+                    relation='account.move.line',
+                    readonly=True,
+                    multi='lines'),
+            'partial_line_ids':
+                fields.function(
+                    _reconcile_line_ids,
+                    string='Partially Reconciled Items',
+                    type='many2many',
+                    relation='account.move.line',
+                    readonly=True,
+                    multi='lines'),
         }
 
     def _open_move_lines(self, cr, uid, history_id, rec_type='full', context=None):
@@ -59,19 +99,14 @@ class easy_reconcile_history(orm.Model):
         history = self.browse(cr, uid, history_id, context=context)
 
         if rec_type == 'full':
-            field = 'reconcile_ids'
-            rec_field = 'line_id'
+            field = 'reconcile_line_ids'
             name = _('Reconciliations')
         else:
-            field = 'reconcile_partial_ids'
-            rec_field = 'line_partial_ids'
+            field = 'partial_line_ids'
             name = _('Partial Reconciliations')
 
-        move_line_ids = []
-        for reconcile in getattr(history, field):
-            move_line_ids.extend(
-                    [line.id for line
-                        in getattr(reconcile, rec_field)])
+        move_line_ids = [line.id for line in getattr(history, field)]
+
         return {
             'name': name,
             'view_mode': 'tree,form',
@@ -81,7 +116,7 @@ class easy_reconcile_history(orm.Model):
             'type': 'ir.actions.act_window',
             'nodestroy': True,
             'target': 'current',
-            'domain': unicode([('id', '=', move_line_ids)]),
+            'domain': unicode([('id', 'in', move_line_ids)]),
             }
 
     def open_reconcile(self, cr, uid, history_ids, context=None):

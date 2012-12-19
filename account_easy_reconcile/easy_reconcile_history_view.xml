@@ -50,8 +50,8 @@
                     <field name="reconcile_partial_ids" nolabel="1"/>
                 </group>
                 <group col="2" colspan="4">
-                    <button icon="gtk-ok" name="open_reconcile" string="Go to reconciled entries" type="object"/>
-                    <button icon="gtk-ok" name="open_partial" string="Go to partially reconciled entries" type="object"/>
+                    <button icon="STOCK_JUMP_TO" name="open_reconcile" string="Go to reconciled items" type="object"/>
+                    <button icon="STOCK_JUMP_TO" name="open_partial" string="Go to partially reconciled items" type="object"/>
                 </group>
             </form>
         </field>
@@ -66,6 +66,14 @@
             <tree string="Automatic Easy Reconcile History">
                 <field name="easy_reconcile_id"/>
                 <field name="date"/>
+                <!-- display the count of lines -->
+                <field name="reconcile_line_ids"/>
+                <button icon="STOCK_JUMP_TO" name="open_reconcile"
+                    string="Go to reconciled items" type="object"/>
+                <!-- display the count of lines -->
+                <field name="partial_line_ids"/>
+                <button icon="STOCK_JUMP_TO" name="open_partial"
+                    string="Go to partially reconciled items" type="object"/>
             </tree>
         </field>
     </record>
