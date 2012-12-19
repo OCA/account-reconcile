@@ -24,7 +24,7 @@ import datetime
 import netsvc
 logger = netsvc.Logger()
 from openerp.osv.orm import Model
-from openerp.osv import fields
+from openerp.osv import fields, osv
 from parser import new_bank_statement_parser
 import sys
 import traceback

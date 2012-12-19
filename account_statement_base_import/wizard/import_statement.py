@@ -24,7 +24,7 @@ Wizard to import financial institute date in bank statement
 """
 
 from openerp.osv import osv, orm
-from openerp.osv import fields
+from openerp.osv import fields, osv
 
 from openerp.tools.translate import _
 import os

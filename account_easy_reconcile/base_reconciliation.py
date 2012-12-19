@@ -20,7 +20,7 @@
 ##############################################################################
 
 from openerp.osv.orm import AbstractModel
-from openerp.osv import fields
+from openerp.osv import fields, osv
 from operator import itemgetter, attrgetter
 
 

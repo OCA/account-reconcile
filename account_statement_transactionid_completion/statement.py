@@ -23,7 +23,7 @@ from openerp.tools.translate import _
 import datetime
 import netsvc
 from openerp.osv.orm import Model
-from openerp.osv import fields
+from openerp.osv import fields, osv
 from openerp.addons.account_statement_base_completion.statement import ErrorTooManyPartner
 
 class AccountStatementCompletionRule(Model):

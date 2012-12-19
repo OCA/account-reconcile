@@ -20,7 +20,7 @@
 ##############################################################################
 from tools.translate import _
 from openerp.osv.orm import Model, fields
-from openerp.osv import fields, osv
+from openerp.osv import fields, osv, osv
 from operator import itemgetter, attrgetter
 import datetime
 
