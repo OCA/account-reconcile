@@ -39,18 +39,16 @@ class easy_reconcile_history(orm.Model):
 
             move_line_ids = []
             for reconcile in history.reconcile_ids:
-                move_line_ids.extend(
-                        [line.id
-                            for line
-                            in reconcile.line_id])
+                move_line_ids += [line.id
+                                    for line
+                                    in reconcile.line_id]
             result[history.id]['reconcile_line_ids'] = move_line_ids
 
             move_line_ids = []
             for reconcile in history.reconcile_partial_ids:
-                move_line_ids.extend(
-                        [line.id
-                            for line
-                            in reconcile.line_partial_ids])
+                move_line_ids += [line.id
+                                    for line
+                                    in reconcile.line_partial_ids]
             result[history.id]['partial_line_ids'] = move_line_ids
 
         return result
