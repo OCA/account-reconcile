@@ -15,11 +15,32 @@
                 <field name="account"/>
                 <field name="unreconciled_count"/>
                 <field name="reconciled_partial_count"/>
-                <field name="scheduler"/>
                 <separator colspan="4" string="Reconcile Method" />
                 <notebook colspan="4">
                     <page name="methods" string="Configuration">
                         <field name="reconcile_method" colspan = "4" nolabel="1"/>
+                        <button icon="gtk-ok" name="run_reconcile" colspan="4"
+                            string="Start Auto Reconcilation" type="object"/>
+                        <button icon="STOCK_JUMP_TO" name="last_history_reconcile" colspan="2"
+                            string="Display items reconciled on the last run" type="object"/>
+                        <button icon="STOCK_JUMP_TO" name="last_history_partial" colspan="2"
+                            string="Display items partially reconciled on the last run"
+                            type="object"/>
+                    </page>
+                    <page name="history" string="History">
+                        <field name="history_ids" nolabel="1">
+                            <tree string="Automatic Easy Reconcile History">
+                                <field name="date"/>
+                                <!-- display the count of lines -->
+                                <field name="reconcile_line_ids"/>
+                                <button icon="STOCK_JUMP_TO" name="open_reconcile"
+                                    string="Go to reconciled items" type="object"/>
+                                <!-- display the count of lines -->
+                                <field name="partial_line_ids"/>
+                                <button icon="STOCK_JUMP_TO" name="open_partial"
+                                    string="Go to partially reconciled items" type="object"/>
+                            </tree>
+                        </field>
                     </page>
                     <page name="information" string="Information">
                       <separator colspan="4" string="Simple. Amount and Name"/>
@@ -32,9 +53,6 @@ The lines should have the same amount (with the write-off) and the same partner 
 
                     </page>
                 </notebook>
-                <button icon="gtk-ok" name="run_reconcile" colspan = "4" string="Start Auto Reconcilation" type="object"/>
-                <separator colspan="4" string="Log" />
-                <field name="rec_log" colspan = "4" nolabel="1"/>
             </form>
         </field>
     </record>
@@ -48,9 +66,15 @@ The lines should have the same amount (with the write-off) and the same partner 
             <tree string="Automatic Easy Reconcile">
                 <field name="name"/>
                 <field name="account"/>
-                <field name="scheduler"/>
                 <field name="unreconciled_count"/>
                 <field name="reconciled_partial_count"/>
+                <button icon="gtk-ok" name="run_reconcile" colspan="4"
+                    string="Start Auto Reconcilation" type="object"/>
+                <button icon="STOCK_JUMP_TO" name="last_history_reconcile" colspan="2"
+                    string="Display items reconciled on the last run" type="object"/>
+                <button icon="STOCK_JUMP_TO" name="last_history_partial" colspan="2"
+                    string="Display items partially reconciled on the last run"
+                    type="object"/>
             </tree>
         </field>
     </record>
@@ -61,7 +85,6 @@ The lines should have the same amount (with the write-off) and the same partner 
         <field name="res_model">account.easy.reconcile</field>
         <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
-        <field name="context">{'wizard_object' : 'account.easy.reconcile', 'function' : 'action_rec_auto', 'object_link' : 'account.easy.reconcile' }</field>
     </record>
 
 
@@ -108,17 +131,6 @@ The lines should have the same amount (with the write-off) and the same partner 
 <!-- menu item -->
 
     <menuitem action="action_account_easy_reconcile" id="menu_easy_reconcile" parent="account.periodical_processing_reconciliation"/>
-
-
-<!-- button on the left -->
-
-    <record id="ir_action_create_scheduler_in_easy_reconcile" model="ir.values">
-        <field name="key2">client_action_multi</field>
-        <field name="model">account.easy.reconcile</field>
-        <field name="name">Create a Scheduler</field>
-        <field eval="'ir.actions.act_window,%d'%ref('base_scheduler_creator.action_scheduler_creator_wizard')" name="value"/>
-        <field eval="True" name="object"/>
-    </record>
 
 </data>
 </openerp>
