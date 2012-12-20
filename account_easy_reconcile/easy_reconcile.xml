@@ -15,7 +15,6 @@
                 <field name="account"/>
                 <field name="unreconciled_count"/>
                 <field name="reconciled_partial_count"/>
-                <field name="scheduler"/>
                 <separator colspan="4" string="Reconcile Method" />
                 <notebook colspan="4">
                     <page name="methods" string="Configuration">
@@ -67,7 +66,6 @@ The lines should have the same amount (with the write-off) and the same partner 
             <tree string="Automatic Easy Reconcile">
                 <field name="name"/>
                 <field name="account"/>
-                <field name="scheduler"/>
                 <field name="unreconciled_count"/>
                 <field name="reconciled_partial_count"/>
                 <button icon="gtk-ok" name="run_reconcile" colspan="4"
@@ -87,7 +85,6 @@ The lines should have the same amount (with the write-off) and the same partner 
         <field name="res_model">account.easy.reconcile</field>
         <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
-        <field name="context">{'wizard_object' : 'account.easy.reconcile', 'function' : 'action_rec_auto', 'object_link' : 'account.easy.reconcile' }</field>
     </record>
 
 
@@ -134,17 +131,6 @@ The lines should have the same amount (with the write-off) and the same partner 
 <!-- menu item -->
 
     <menuitem action="action_account_easy_reconcile" id="menu_easy_reconcile" parent="account.periodical_processing_reconciliation"/>
-
-
-<!-- button on the left -->
-
-    <record id="ir_action_create_scheduler_in_easy_reconcile" model="ir.values">
-        <field name="key2">client_action_multi</field>
-        <field name="model">account.easy.reconcile</field>
-        <field name="name">Create a Scheduler</field>
-        <field eval="'ir.actions.act_window,%d'%ref('base_scheduler_creator.action_scheduler_creator_wizard')" name="value"/>
-        <field eval="True" name="object"/>
-    </record>
 
 </data>
 </openerp>

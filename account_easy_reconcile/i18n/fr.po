@@ -49,7 +49,7 @@ msgstr "easy.reconcile.simple.name"
 #. module: account_easy_reconcile
 #: model:ir.model,name:account_easy_reconcile.model_easy_reconcile_options
 msgid "easy.reconcile.options"
-msgstr "lettrage automatisé.options"
+msgstr "easy.reconcile.options"
 
 #. module: account_easy_reconcile
 #: view:easy.reconcile.history:0
