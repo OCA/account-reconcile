@@ -23,7 +23,7 @@ msgstr "Information"
 #. module: account_easy_reconcile
 #: view:account.easy.reconcile.method:0
 msgid "Automatic Easy Reconcile Method"
-msgstr "Méthode de léttrage automatisé"
+msgstr "Méthode de lettrage automatisé"
 
 #. module: account_easy_reconcile
 #: view:account.easy.reconcile:0
@@ -43,27 +43,27 @@ msgstr "Lettre un débit avec un crédit ayant le même montant et la même desc
 #. module: account_easy_reconcile
 #: view:account.easy.reconcile:0
 msgid "Automatic Easy Reconcile"
-msgstr "Léttrage automatisé"
+msgstr "Lettrage automatisé"
 
 #. module: account_easy_reconcile
 #: model:ir.model,name:account_easy_reconcile.model_account_easy_reconcile_method
 msgid "reconcile method for account_easy_reconcile"
-msgstr "Méthode de léttrage"
+msgstr "Méthode de lettrage"
 
 #. module: account_easy_reconcile
 #: view:account.easy.reconcile:0
 msgid "Start Auto Reconcilation"
-msgstr "Lancer le léttrage automatisé"
+msgstr "Lancer le lettrage automatisé"
 
 #. module: account_easy_reconcile
 #: model:ir.model,name:account_easy_reconcile.model_easy_reconcile_simple_name
 msgid "easy.reconcile.simple.name"
-msgstr "Léttrage automatisé.simple.Description"
+msgstr "easy.reconcile.simple.name"
 
 #. module: account_easy_reconcile
 #: model:ir.model,name:account_easy_reconcile.model_easy_reconcile_options
 msgid "easy.reconcile.options"
-msgstr "Léttrage automatisé.options"
+msgstr "easy.reconcile.options"
 
 #. module: account_easy_reconcile
 #: view:account.easy.reconcile:0
@@ -73,28 +73,28 @@ msgstr "Simple. Montant et description"
 #. module: account_easy_reconcile
 #: model:ir.model,name:account_easy_reconcile.model_easy_reconcile_simple
 msgid "easy.reconcile.simple"
-msgstr "Léttrage automatisé.simple"
+msgstr "easy.reconcile.simple"
 
 #. module: account_easy_reconcile
 #: model:ir.actions.act_window,name:account_easy_reconcile.action_account_easy_reconcile
 #: model:ir.ui.menu,name:account_easy_reconcile.menu_easy_reconcile
 msgid "Easy Automatic Reconcile"
-msgstr "Léttrage automatisé"
+msgstr "Lettrage automatisé"
 
 #. module: account_easy_reconcile
 #: model:ir.model,name:account_easy_reconcile.model_easy_reconcile_simple_reference
 msgid "easy.reconcile.simple.reference"
-msgstr "Léttrage automatisé.simple.réference"
+msgstr "easy.reconcile.simple.reference"
 
 #. module: account_easy_reconcile
 #: view:account.easy.reconcile:0
 msgid "Reconcile Method"
-msgstr "Méthode de léttrage"
+msgstr "Méthode de lettrage"
 
 #. module: account_easy_reconcile
 #: model:ir.model,name:account_easy_reconcile.model_easy_reconcile_base
 msgid "easy.reconcile.base"
-msgstr "Léttrage automatisé.base"
+msgstr "easy.reconcile.base"
 
 #. module: account_easy_reconcile
 #: view:account.easy.reconcile:0
@@ -104,7 +104,7 @@ msgstr "Configuration"
 #. module: account_easy_reconcile
 #: model:ir.model,name:account_easy_reconcile.model_easy_reconcile_simple_partner
 msgid "easy.reconcile.simple.partner"
-msgstr "Léttrage automatisé.simple.partenaire"
+msgstr "easy.reconcile.simple.partner"
 
 #. module: account_easy_reconcile
 #: view:account.easy.reconcile:0
@@ -114,5 +114,5 @@ msgstr "Information sur la tâche"
 #. module: account_easy_reconcile
 #: model:ir.model,name:account_easy_reconcile.model_account_easy_reconcile
 msgid "account easy reconcile"
-msgstr "Léttrage automatisé"
+msgstr "Lettrage automatisé"
 
