@@ -137,22 +137,39 @@ class account_easy_reconcile(Model):
                 context=context))
         return res
 
+    def _last_history(self, cr, uid, ids, name, args, context=None):
+        result = {}
+        for history in self.browse(cr, uid, ids, context=context):
+            # history is sorted by date desc
+            result[history.id] = history.history_ids[0].id
+        return result
+
     _columns = {
         'name': fields.char('Name', size=64, required=True),
         'account': fields.many2one('account.account', 'Account', required=True),
         'reconcile_method': fields.one2many('account.easy.reconcile.method', 'task_id', 'Method'),
         'scheduler': fields.many2one('ir.cron', 'scheduler', readonly=True),
-        'rec_log': fields.text('log', readonly=True),
         'unreconciled_count': fields.function(_get_total_unrec,
-            type='integer', string='Fully Unreconciled Entries'),
+            type='integer', string='Unreconciled Entries'),
         'reconciled_partial_count': fields.function(_get_partial_rec,
             type='integer', string='Partially Reconciled Entries'),
+        'history_ids': fields.one2many(
+            'easy.reconcile.history',
+            'easy_reconcile_id',
+            string='History'),
+        'last_history':
+            fields.function(
+                _last_history,
+                string='Last History',
+                type='many2one',
+                relation='easy.reconcile.history',
+                readonly=True),
     }
 
     def copy_data(self, cr, uid, id, default=None, context=None):
         if default is None:
             default = {}
-        default = dict(default, rec_log=False, scheduler=False)
+        default = dict(default, scheduler=False)
         return super(account_easy_reconcile, self).copy_data(
             cr, uid, id, default=default, context=context)
 
@@ -168,39 +185,69 @@ class account_easy_reconcile(Model):
                 'filter': rec_method.filter}
 
     def run_reconcile(self, cr, uid, ids, context=None):
+        def find_reconcile_ids(fieldname, move_line_ids):
+            if not move_line_ids:
+                return []
+            sql = ("SELECT DISTINCT " + fieldname +
+                   " FROM account_move_line "
+                   " WHERE id in %s "
+                   " AND " + fieldname + " IS NOT NULL")
+            cr.execute(sql, (tuple(move_line_ids),))
+            res = cr.fetchall()
+            return [row[0] for row in res]
+
         if context is None:
             context = {}
-        for rec_id in ids:
-            rec = self.browse(cr, uid, rec_id, context=context)
-            total_rec = 0
-            total_partial_rec = 0
-            details = []
-            count = 0
-            for method in rec.reconcile_method:
-                count += 1
+        for rec in self.browse(cr, uid, ids, context=context):
+            all_ml_rec_ids = []
+            all_ml_partial_ids = []
 
+            for method in rec.reconcile_method:
                 rec_model = self.pool.get(method.name)
                 auto_rec_id = rec_model.create(
                     cr, uid,
                     self._prepare_run_transient(cr, uid, method, context=context),
                     context=context)
 
-                rec_ids, partial_ids = rec_model.automatic_reconcile(
+                ml_rec_ids, ml_partial_ids = rec_model.automatic_reconcile(
                     cr, uid, auto_rec_id, context=context)
 
-                details.append(_('method %d : full: %d lines, partial: %d lines') % \
-                    (count, len(rec_ids), len(partial_ids)))
+                all_ml_rec_ids += ml_rec_ids
+                all_ml_partial_ids += ml_partial_ids
 
-                total_rec += len(rec_ids)
-                total_partial_rec += len(partial_ids)
+            reconcile_ids = find_reconcile_ids(
+                    'reconcile_id', all_ml_rec_ids)
+            partial_ids = find_reconcile_ids(
+                    'reconcile_partial_id', all_ml_partial_ids)
 
-            log = self.read(cr, uid, rec_id, ['rec_log'], context=context)['rec_log']
-            log_lines = log and log.splitlines() or []
-            log_lines[0:0] = [_("%s : %d lines have been fully reconciled" \
-                " and %d lines have been partially reconciled (%s)") % \
-                (time.strftime(DEFAULT_SERVER_DATETIME_FORMAT), total_rec,
-                    total_partial_rec, ' | '.join(details))]
-            log = "\n".join(log_lines)
-            self.write(cr, uid, rec_id, {'rec_log': log}, context=context)
+            self.pool.get('easy.reconcile.history').create(
+                cr,
+                uid,
+                {'easy_reconcile_id': rec.id,
+                 'date': fields.datetime.now(),
+                 'reconcile_ids': [(4, rid) for rid in reconcile_ids],
+                 'reconcile_partial_ids': [(4, rid) for rid in partial_ids]},
+                context=context)
         return True
 
+    def last_history_reconcile(self, cr, uid, rec_id, context=None):
+        """ Get the last history record for this reconciliation profile
+        and return the action which opens move lines reconciled
+        """
+        if isinstance(rec_id, (tuple, list)):
+            assert len(rec_id) == 1, \
+                    "Only 1 id expected"
+            rec_id = rec_id[0]
+        rec = self.browse(cr, uid, rec_id, context=context)
+        return rec.last_history.open_reconcile()
+
+    def last_history_partial(self, cr, uid, rec_id, context=None):
+        """ Get the last history record for this reconciliation profile
+        and return the action which opens move lines reconciled
+        """
+        if isinstance(rec_id, (tuple, list)):
+            assert len(rec_id) == 1, \
+                    "Only 1 id expected"
+            rec_id = rec_id[0]
+        rec = self.browse(cr, uid, rec_id, context=context)
+        return rec.last_history.open_partial()

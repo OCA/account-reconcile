@@ -33,7 +33,8 @@ This is a shared work between Akretion and Camptocamp in order to provide:
  - this module is also a base to create others reconciliation methods
     which can plug in the profiles
  - a profile a reconciliation can be run manually or by a cron
- - monitoring of reconcilation runs with a few logs
+ - monitoring of reconciliation runs with an history which keep track
+   of the reconciled entries
 
 2 simple reconciliation methods are integrated in this module, the simple
 reconciliations works on 2 lines (1 debit / 1 credit) and do not allows
@@ -48,7 +49,10 @@ This latter add more complex reconciliations, allows multiple lines and partial.
     "category" : "Finance",
     "init_xml" : [],
     "demo_xml" : [],
-    "update_xml" : ["easy_reconcile.xml"],
+    "update_xml" : [
+        "easy_reconcile.xml",
+        "easy_reconcile_history_view.xml",
+        ],
     'license': 'AGPL-3',
     "auto_install": False,
     "installable": True,
