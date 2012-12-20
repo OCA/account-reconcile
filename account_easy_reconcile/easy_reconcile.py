@@ -137,6 +137,13 @@ class account_easy_reconcile(Model):
                 context=context))
         return res
 
+    def _last_history(self, cr, uid, ids, name, args, context=None):
+        result = {}
+        for history in self.browse(cr, uid, ids, context=context):
+            # history is sorted by date desc
+            result[history.id] = history.history_ids[0].id
+        return result
+
     _columns = {
         'name': fields.char('Name', size=64, required=True),
         'account': fields.many2one('account.account', 'Account', required=True),
@@ -150,6 +157,13 @@ class account_easy_reconcile(Model):
             'easy.reconcile.history',
             'easy_reconcile_id',
             string='History'),
+        'last_history':
+            fields.function(
+                _last_history,
+                string='Last History',
+                type='many2one',
+                relation='easy.reconcile.history',
+                readonly=True),
     }
 
     def copy_data(self, cr, uid, id, default=None, context=None):
@@ -225,9 +239,7 @@ class account_easy_reconcile(Model):
                     "Only 1 id expected"
             rec_id = rec_id[0]
         rec = self.browse(cr, uid, rec_id, context=context)
-        # the history is ordered by date desc
-        last_history = rec.history_ids[0]
-        return last_history.open_reconcile()
+        return rec.last_history.open_reconcile()
 
     def last_history_partial(self, cr, uid, rec_id, context=None):
         """ Get the last history record for this reconciliation profile
@@ -238,6 +250,4 @@ class account_easy_reconcile(Model):
                     "Only 1 id expected"
             rec_id = rec_id[0]
         rec = self.browse(cr, uid, rec_id, context=context)
-        # the history is ordered by date desc
-        last_history = rec.history_ids[0]
-        return last_history.open_partial()
+        return rec.last_history.open_partial()
