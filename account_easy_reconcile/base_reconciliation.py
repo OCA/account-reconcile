@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ##############################################################################
 #
-#    Copyright 2012 Camptocamp SA (Guewen Baconnier)
+#    Copyright 2012-2013 Camptocamp SA (Guewen Baconnier)
 #    Copyright (C) 2010   Sébastien Beau
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -19,28 +19,28 @@
 #
 ##############################################################################
 
-from openerp.osv.orm import AbstractModel
-from openerp.osv import fields, osv
+from openerp.osv import fields, orm
 from operator import itemgetter, attrgetter
 
 
-class easy_reconcile_base(AbstractModel):
+class easy_reconcile_base(orm.AbstractModel):
     """Abstract Model for reconciliation methods"""
 
     _name = 'easy.reconcile.base'
 
     _inherit = 'easy.reconcile.options'
-    _auto = True  # restore property set to False by AbstractModel
 
     _columns = {
-        'account_id': fields.many2one('account.account', 'Account', required=True),
-        'partner_ids': fields.many2many('res.partner',
-            string="Restrict on partners"),
+        'account_id': fields.many2one(
+            'account.account', 'Account', required=True),
+        'partner_ids': fields.many2many(
+            'res.partner', string="Restrict on partners"),
         # other columns are inherited from easy.reconcile.options
     }
 
     def automatic_reconcile(self, cr, uid, ids, context=None):
-        """
+        """ Reconciliation method called from the view.
+
         :return: list of reconciled ids, list of partially reconciled entries
         """
         if isinstance(ids, (int, long)):
@@ -50,14 +50,15 @@ class easy_reconcile_base(AbstractModel):
         return self._action_rec(cr, uid, rec, context=context)
 
     def _action_rec(self, cr, uid, rec, context=None):
-        """Must be inherited to implement the reconciliation
+        """ Must be inherited to implement the reconciliation
+
         :return: list of reconciled ids
         """
         raise NotImplementedError
 
     def _base_columns(self, rec):
-        """Mandatory columns for move lines queries
-        An extra column aliased as `key` should be defined
+        """ Mandatory columns for move lines queries
+        An extra column aliased as ``key`` should be defined
         in each query."""
         aml_cols = (
             'id',
@@ -104,7 +105,7 @@ class easy_reconcile_base(AbstractModel):
         return where, params
 
     def _below_writeoff_limit(self, cr, uid, rec, lines,
-                               writeoff_limit, context=None):
+                              writeoff_limit, context=None):
         precision = self.pool.get('decimal.precision').precision_get(
             cr, uid, 'Account')
         keys = ('debit', 'credit')
@@ -119,7 +120,8 @@ class easy_reconcile_base(AbstractModel):
         writeoff_amount = round(debit - credit, precision)
         return bool(writeoff_limit >= abs(writeoff_amount)), debit, credit
 
-    def _get_rec_date(self, cr, uid, rec, lines, based_on='end_period_last_credit', context=None):
+    def _get_rec_date(self, cr, uid, rec, lines,
+                      based_on='end_period_last_credit', context=None):
         period_obj = self.pool.get('account.period')
 
         def last_period(mlines):
@@ -155,20 +157,20 @@ class easy_reconcile_base(AbstractModel):
         """ Try to reconcile given lines
 
         :param list lines: list of dict of move lines, they must at least
-        contain values for : id, debit, credit
+                           contain values for : id, debit, credit
         :param boolean allow_partial: if True, partial reconciliation will be
-        created, otherwise only Full reconciliation will be created
+                                      created, otherwise only Full
+                                      reconciliation will be created
         :return: tuple of boolean values, first item is wether the the entries
-        have been reconciled or not, the second is wether the reconciliation
-        is full (True) or partial (False)
+                 have been reconciled or not,
+                 the second is wether the reconciliation is full (True)
+                 or partial (False)
         """
         if context is None:
             context = {}
 
         ml_obj = self.pool.get('account.move.line')
         writeoff = rec.write_off
-
-        keys = ('debit', 'credit')
 
         line_ids = [l['id'] for l in lines]
         below_writeoff, sum_debit, sum_credit = self._below_writeoff_limit(
@@ -204,4 +206,3 @@ class easy_reconcile_base(AbstractModel):
             return True, False
 
         return False, False
-

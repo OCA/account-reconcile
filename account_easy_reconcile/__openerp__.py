@@ -20,11 +20,11 @@
 ##############################################################################
 
 {
-    "name" : "Easy Reconcile",
-    "version" : "1.1",
-    "depends" : ["account",
+    "name": "Easy Reconcile",
+    "version": "1.1",
+    "depends": ["account",
                 ],
-    "author" : "Akretion,Camptocamp",
+    "author": "Akretion,Camptocamp",
     "description": """
 Easy Reconcile
 ==============
@@ -34,11 +34,11 @@ in order to provide:
  - reconciliation facilities for big volume of transactions
  - setup different profiles of reconciliation by account
  - each profile can use many methods of reconciliation
- - this module is also a base to create others
-   reconciliation methods which can plug in the profiles
- - a profile a reconciliation can be run manually
-   or by a cron
- - monitoring of reconcilation runs with a few logs
+ - this module is also a base to create others reconciliation methods
+    which can plug in the profiles
+ - a profile a reconciliation can be run manually or by a cron
+ - monitoring of reconciliation runs with an history which keep track
+   of the reconciled entries
 
 2 simple reconciliation methods are integrated
 in this module, the simple reconciliations works
@@ -52,11 +52,11 @@ This latter add more complex reconciliations,
 allows multiple lines and partial.
 
 """,
-    "website" : "http://www.akretion.com/",
-    "category" : "Finance",
-    "init_xml" : [],
-    "demo_xml" : [],
-    "update_xml" : [
+    "website": "http://www.akretion.com/",
+    "category": "Finance",
+    "init_xml": [],
+    "demo_xml": [],
+    "update_xml": [
         "easy_reconcile.xml",
         "easy_reconcile_history_view.xml",
         ],
