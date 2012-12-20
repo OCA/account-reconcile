@@ -122,7 +122,7 @@ class AccountStatementCompletionRule(Model):
         'function_to_call': fields.selection(_get_functions, 'Method'),
     }
 
-    def get_from_ref_and_invoice(self, cursor, uid, line_id, context=None):
+    def get_from_ref_and_invoice(self, cr, uid, line_id, context=None):
         """
         Match the partner based on the invoice number and the reference of the statement
         line. Then, call the generic get_values_for_line method to complete other values.
@@ -138,25 +138,25 @@ class AccountStatementCompletionRule(Model):
             ...}
         """
         st_obj = self.pool.get('account.bank.statement.line')
-        st_line = st_obj.browse(cursor, uid, line_id, context=context)
+        st_line = st_obj.browse(cr, uid, line_id, context=context)
         res = {}
         if st_line:
             inv_obj = self.pool.get('account.invoice')
             inv_id = inv_obj.search(
-                    cursor,
+                    cr,
                     uid,
                     [('number', '=', st_line.ref)],
                     context=context)
             if inv_id:
                 if inv_id and len(inv_id) == 1:
-                    inv = inv_obj.browse(cursor, uid, inv_id[0], context=context)
+                    inv = inv_obj.browse(cr, uid, inv_id[0], context=context)
                     res['partner_id'] = inv.partner_id.id
                 elif inv_id and len(inv_id) > 1:
                     raise ErrorTooManyPartner(
                             _('Line named "%s" (Ref:%s) was matched by more '
                               'than one partner.') % (st_line.name, st_line.ref))
                 st_vals = st_obj.get_values_for_line(
-                        cursor,
+                        cr,
                         uid,
                         profile_id=st_line.statement_id.profile_id.id,
                         partner_id=res.get('partner_id', False),
@@ -166,7 +166,7 @@ class AccountStatementCompletionRule(Model):
                 res.update(st_vals)
         return res
 
-    def get_from_ref_and_so(self, cursor, uid, line_id, context=None):
+    def get_from_ref_and_so(self, cr, uid, line_id, context=None):
         """
         Match the partner based on the SO number and the reference of the statement
         line. Then, call the generic get_values_for_line method to complete other values.
@@ -182,18 +182,18 @@ class AccountStatementCompletionRule(Model):
             ...}
         """
         st_obj = self.pool.get('account.bank.statement.line')
-        st_line = st_obj.browse(cursor, uid, line_id, context=context)
+        st_line = st_obj.browse(cr, uid, line_id, context=context)
         res = {}
         if st_line:
             so_obj = self.pool.get('sale.order')
             so_id = so_obj.search(
-                    cursor,
+                    cr,
                     uid,
                     [('name', '=', st_line.ref)],
                     context=context)
             if so_id:
                 if so_id and len(so_id) == 1:
-                    so = so_obj.browse(cursor, uid, so_id[0], context=context)
+                    so = so_obj.browse(cr, uid, so_id[0], context=context)
                     res['partner_id'] = so.partner_id.id
                 elif so_id and len(so_id) > 1:
                     raise ErrorTooManyPartner(
@@ -201,7 +201,7 @@ class AccountStatementCompletionRule(Model):
                               'than one partner.') %
                             (st_line.name, st_line.ref))
                 st_vals = st_obj.get_values_for_line(
-                        cursor,
+                        cr,
                         uid,
                         profile_id=st_line.statement_id.profile_id.id,
                         partner_id=res.get('partner_id', False),
@@ -211,7 +211,7 @@ class AccountStatementCompletionRule(Model):
                 res.update(st_vals)
         return res
 
-    def get_from_label_and_partner_field(self, cursor, uid, line_id, context=None):
+    def get_from_label_and_partner_field(self, cr, uid, line_id, context=None):
         """
         Match the partner based on the label field of the statement line
         and the text defined in the 'bank_statement_label' field of the partner.
@@ -230,16 +230,16 @@ class AccountStatementCompletionRule(Model):
             """
         partner_obj = self.pool.get('res.partner')
         st_obj = self.pool.get('account.bank.statement.line')
-        st_line = st_obj.browse(cursor, uid, line_id, context=context)
+        st_line = st_obj.browse(cr, uid, line_id, context=context)
         res = {}
         compt = 0
         if st_line:
             ids = partner_obj.search(
-                    cursor,
+                    cr,
                     uid,
                     [('bank_statement_label', '!=', False)],
                     context=context)
-            for partner in partner_obj.browse(cursor, uid, ids, context=context):
+            for partner in partner_obj.browse(cr, uid, ids, context=context):
                 for partner_label in partner.bank_statement_label.split(';'):
                     if partner_label in st_line.label:
                         compt += 1
@@ -251,7 +251,7 @@ class AccountStatementCompletionRule(Model):
                                     (st_line.name, st_line.ref))
             if res:
                 st_vals = st_obj.get_values_for_line(
-                        cursor,
+                        cr,
                         uid,
                         profile_id=st_line.statement_id.profile_id.id,
                         partner_id=res.get('partner_id', False),
@@ -261,7 +261,7 @@ class AccountStatementCompletionRule(Model):
                 res.update(st_vals)
         return res
 
-    def get_from_label_and_partner_name(self, cursor, uid, line_id, context=None):
+    def get_from_label_and_partner_name(self, cr, uid, line_id, context=None):
         """
         Match the partner based on the label field of the statement line
         and the name of the partner.
@@ -280,12 +280,12 @@ class AccountStatementCompletionRule(Model):
         # This Method has not been tested yet !
         res = {}
         st_obj = self.pool.get('account.bank.statement.line')
-        st_line = st_obj.browse(cursor, uid, line_id, context=context)
+        st_line = st_obj.browse(cr, uid, line_id, context=context)
         if st_line:
             sql = "SELECT id FROM res_partner WHERE name ~* %s"
             pattern = ".*%s.*" % st_line.label
-            cursor.execute(sql, (pattern,))
-            result = cursor.fetchall()
+            cr.execute(sql, (pattern,))
+            result = cr.fetchall()
             if len(result) > 1:
                 raise ErrorTooManyPartner(
                         _('Line named "%s" (Ref:%s) was matched by more '
@@ -295,7 +295,7 @@ class AccountStatementCompletionRule(Model):
                 res['partner_id'] = id
             if res:
                 st_vals = st_obj.get_values_for_line(
-                        cursor,
+                        cr,
                         uid,
                         profile_id=st_line.statement_id.profile_id.id,
                         partner_id=res.get('partner_id', False),

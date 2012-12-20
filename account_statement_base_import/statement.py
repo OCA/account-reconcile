@@ -116,7 +116,7 @@ class AccountStatementProfil(Model):
         return comm_values
 
     def prepare_statetement_lines_vals(
-            self, cursor, uid, parser_vals, account_payable, account_receivable,
+            self, cr, uid, parser_vals, account_payable, account_receivable,
             statement_id, context):
         """
         Hook to build the values of a line from the parser returned values. At
@@ -134,7 +134,7 @@ class AccountStatementProfil(Model):
         values = parser_vals
         values['statement_id'] = statement_id
         values['account_id'] = statement_obj.get_account_for_counterpart(
-                cursor,
+                cr,
                 uid,
                 parser_vals['amount'],
                 account_receivable,
@@ -142,7 +142,7 @@ class AccountStatementProfil(Model):
         )
         return values
 
-    def statement_import(self, cursor, uid, ids, profile_id, file_stream, ftype="csv", context=None):
+    def statement_import(self, cr, uid, ids, profile_id, file_stream, ftype="csv", context=None):
         """
         Create a bank statement with the given profile and parser. It will fullfill the bank statement
         with the values of the file providen, but will not complete data (like finding the partner, or
@@ -163,7 +163,7 @@ class AccountStatementProfil(Model):
             raise osv.except_osv(
                     _("No Profile !"),
                     _("You must provide a valid profile to import a bank statement !"))
-        prof = prof_obj.browse(cursor, uid, profile_id, context=context)
+        prof = prof_obj.browse(cr, uid, profile_id, context=context)
 
         parser = new_bank_statement_parser(prof.import_type, ftype=ftype)
         result_row_list = parser.parse(file_stream)
@@ -177,27 +177,27 @@ class AccountStatementProfil(Model):
                           "present in the bank statement line !") % col)
 
         statement_id = statement_obj.create(
-                cursor, uid, {'profile_id': prof.id}, context=context)
+                cr, uid, {'profile_id': prof.id}, context=context)
         account_receivable, account_payable = statement_obj.get_default_pay_receiv_accounts(
-                cursor, uid, context)
+                cr, uid, context)
         try:
             # Record every line in the bank statement and compute the global commission
             # based on the commission_amount column
             for line in result_row_list:
                 parser_vals = parser.get_st_line_vals(line)
                 values = self.prepare_statetement_lines_vals(
-                        cursor, uid, parser_vals, account_payable,
+                        cr, uid, parser_vals, account_payable,
                         account_receivable, statement_id, context)
                 # we finally create the line in system
-                statement_line_obj.create(cursor, uid, values, context=context)
+                statement_line_obj.create(cr, uid, values, context=context)
             # Build and create the global commission line for the whole statement
             comm_vals = self.prepare_global_commission_line_vals(
-                    cursor, uid, parser, result_row_list, prof, statement_id, context)
+                    cr, uid, parser, result_row_list, prof, statement_id, context)
             if comm_vals:
-                statement_line_obj.create(cursor, uid, comm_vals, context=context)
+                statement_line_obj.create(cr, uid, comm_vals, context=context)
 
             attachment_obj.create(
-                    cursor,
+                    cr,
                     uid,
                     {
                         'name': 'statement file',
@@ -212,14 +212,14 @@ class AccountStatementProfil(Model):
                 )
             # If user ask to launch completion at end of import, do it !
             if prof.launch_import_completion:
-                statement_obj.button_auto_completion(cursor, uid, [statement_id], context)
+                statement_obj.button_auto_completion(cr, uid, [statement_id], context)
 
             # Write the needed log infos on profile
             self.write_logs_after_import(
-                    cursor, uid, prof.id, statement_id, len(result_row_list), context)
+                    cr, uid, prof.id, statement_id, len(result_row_list), context)
 
         except Exception:
-            statement_obj.unlink(cursor, uid, [statement_id], context=context)
+            statement_obj.unlink(cr, uid, [statement_id], context=context)
             error_type, error_value, trbk = sys.exc_info()
             st = "Error: %s\nDescription: %s\nTraceback:" % (error_type.__name__, error_value)
             st += ''.join(traceback.format_tb(trbk, 30))

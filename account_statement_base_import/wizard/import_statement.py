@@ -97,16 +97,16 @@ class CreditPartnerStatementImporter(orm.TransientModel):
             raise Exception(_('Please use a file with an extention'))
         return ftype
 
-    def import_statement(self, cursor, uid, req_id, context=None):
+    def import_statement(self, cr, uid, req_id, context=None):
         """This Function import credit card agency statement"""
         context = context or {}
         if isinstance(req_id, list):
             req_id = req_id[0]
-        importer = self.browse(cursor, uid, req_id, context)
+        importer = self.browse(cr, uid, req_id, context)
         ftype = self._check_extension(importer.file_name)
         sid = self.pool.get(
                 'account.statement.profile').statement_import(
-                                            cursor,
+                                            cr,
                                             uid,
                                             False,
                                             importer.profile_id.id,
@@ -116,7 +116,7 @@ class CreditPartnerStatementImporter(orm.TransientModel):
                                         )
         model_obj = self.pool.get('ir.model.data')
         action_obj = self.pool.get('ir.actions.act_window')
-        action_id = model_obj.get_object_reference(cursor, uid, 'account', 'action_bank_statement_tree')[1]
-        res = action_obj.read(cursor, uid, action_id)
+        action_id = model_obj.get_object_reference(cr, uid, 'account', 'action_bank_statement_tree')[1]
+        res = action_obj.read(cr, uid, action_id)
         res['domain'] = res['domain'][:-1] + ",('id', '=', %d)]" % sid
         return res

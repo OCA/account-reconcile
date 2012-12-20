@@ -148,12 +148,12 @@ class AccountBankSatement(Model):
             vals['journal_id'] = profile.journal_id.id
         return super(AccountBankSatement, self).create(cr, uid, vals, context=context)
 
-    def _get_period(self, cursor, uid, date, context=None):
+    def _get_period(self, cr, uid, date, context=None):
         """
         Find matching period for date, used in the statement line creation.
         """
         period_obj = self.pool.get('account.period')
-        periods = period_obj.find(cursor, uid, dt=date, context=context)
+        periods = period_obj.find(cr, uid, dt=date, context=context)
         return periods and periods[0] or False
 
     def _check_company_id(self, cr, uid, ids, context=None):
@@ -354,7 +354,7 @@ class AccountBankSatement(Model):
         return self.write(cr, uid, ids, {'state': 'confirm'}, context=context)
 
     def get_account_for_counterpart(
-            self, cursor, uid, amount, account_receivable, account_payable):
+            self, cr, uid, amount, account_receivable, account_payable):
         """
         Give the amount, payable and receivable account (that can be found using
         get_default_pay_receiv_accounts method) and receive the one to use. This method
@@ -378,7 +378,7 @@ class AccountBankSatement(Model):
             )
         return account_id
 
-    def get_default_pay_receiv_accounts(self, cursor, uid, context=None):
+    def get_default_pay_receiv_accounts(self, cr, uid, context=None):
         """
         We try to determine default payable/receivable accounts to be used as counterpart
         from the company default propoerty. This is to be used if there is no otherway to
@@ -393,7 +393,7 @@ class AccountBankSatement(Model):
         property_obj = self.pool.get('ir.property')
         model_fields_obj = self.pool.get('ir.model.fields')
         model_fields_ids = model_fields_obj.search(
-            cursor,
+            cr,
             uid,
             [('name', 'in', ['property_account_receivable',
                              'property_account_payable']),
@@ -401,7 +401,7 @@ class AccountBankSatement(Model):
             context=context
         )
         property_ids = property_obj.search(
-                    cursor,
+                    cr,
                     uid,
                     [('fields_id', 'in', model_fields_ids),
                      ('res_id', '=', False),
@@ -410,7 +410,7 @@ class AccountBankSatement(Model):
         )
 
         for erp_property in property_obj.browse(
-                cursor, uid, property_ids, context=context):
+                cr, uid, property_ids, context=context):
             if erp_property.fields_id.name == 'property_account_receivable':
                 account_receivable = erp_property.value_reference.id
             elif erp_property.fields_id.name == 'property_account_payable':
@@ -465,16 +465,16 @@ class AccountBankSatementLine(Model):
     """
     _inherit = "account.bank.statement.line"
 
-    def _get_period(self, cursor, user, context=None):
+    def _get_period(self, cr, user, context=None):
         """
         Return a period from a given date in the context.
         """
         date = context.get('date', None)
-        periods = self.pool.get('account.period').find(cursor, user, dt=date)
+        periods = self.pool.get('account.period').find(cr, user, dt=date)
         return periods and periods[0] or False
 
-    def _get_default_account(self, cursor, user, context=None):
-        return self.get_values_for_line(cursor, user, context=context)['account_id']
+    def _get_default_account(self, cr, user, context=None):
+        return self.get_values_for_line(cr, user, context=context)['account_id']
 
     _columns = {
         # Set them as required + 64 char instead of 32

@@ -27,8 +27,8 @@ from report_webkit import webkit_report
 
 class BankStatementWebkit(report_sxw.rml_parse):
 
-    def __init__(self, cursor, uid, name, context):
-        super(BankStatementWebkit, self).__init__(cursor, uid, name, context=context)
+    def __init__(self, cr, uid, name, context):
+        super(BankStatementWebkit, self).__init__(cr, uid, name, context=context)
         self.pool = pooler.get_pool(self.cr.dbname)
         self.cursor = self.cr
 
@@ -38,7 +38,7 @@ class BankStatementWebkit(report_sxw.rml_parse):
                                          company.name, company.currency_id.name))
         footer_date_time = self.formatLang(str(datetime.today())[:19], date_time=True)
         self.localcontext.update({
-            'cr': cursor,
+            'cr': cr,
             'uid': uid,
             'get_bank_statement': self._get_bank_statement_data,
             'report_name': _('BORDEREAU DE REMISE DE CHEQUES'),
