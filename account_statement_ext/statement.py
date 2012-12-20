@@ -465,16 +465,16 @@ class AccountBankSatementLine(Model):
     """
     _inherit = "account.bank.statement.line"
 
-    def _get_period(self, cr, user, context=None):
+    def _get_period(self, cr, uid, context=None):
         """
         Return a period from a given date in the context.
         """
         date = context.get('date', None)
-        periods = self.pool.get('account.period').find(cr, user, dt=date)
+        periods = self.pool.get('account.period').find(cr, uid, dt=date)
         return periods and periods[0] or False
 
-    def _get_default_account(self, cr, user, context=None):
-        return self.get_values_for_line(cr, user, context=context)['account_id']
+    def _get_default_account(self, cr, uid, context=None):
+        return self.get_values_for_line(cr, uid, context=context)['account_id']
 
     _columns = {
         # Set them as required + 64 char instead of 32
