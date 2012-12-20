@@ -271,4 +271,3 @@ class easy_reconcile_advanced(AbstractModel):
                 partial_reconciled_ids += reconcile_group_ids
 
         return reconciled_ids, partial_reconciled_ids
-

@@ -20,20 +20,23 @@
 ##############################################################################
 
 from openerp.osv.orm import Model
-from openerp.osv import fields, osv
+
 
 class StockPicking(Model):
     _inherit = "stock.picking"
 
-    def action_invoice_create(self, cursor, uid, ids, journal_id=False,
-            group=False, type='out_invoice', context=None):
-        res = super(StockPicking, self).action_invoice_create(cursor, uid, ids,
-            journal_id,group, type, context)
+    def action_invoice_create(
+            self, cursor, uid, ids, journal_id=False, group=False,
+            type='out_invoice', context=None):
+        res = super(StockPicking, self).action_invoice_create(
+                cursor, uid, ids, journal_id, group, type, context)
         for pick_id in res:
-            pick =  self.browse(cursor, uid, pick_id)
+            pick = self.browse(cursor, uid, pick_id, context=context)
             if pick.sale_id and pick.sale_id.transaction_id:
-                self.pool.get('account.invoice').write(cursor,
-                               uid,
-                               res[pick_id],
-                               {'transaction_id': pick.sale_id.transaction_id})
+                self.pool.get('account.invoice').write(
+                        cursor,
+                        uid,
+                        res[pick_id],
+                        {'transaction_id': pick.sale_id.transaction_id},
+                        context=context)
         return res

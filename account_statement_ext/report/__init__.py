@@ -1,9 +1,4 @@
-# -*- encoding: utf-8 -*-
-#
-#  __init__.py
-#
-#  Copyright (c) 2009 CamptoCamp. All rights reserved.
-##############################################################################
+# -*- coding: utf-8 -*-
 #
 # WARNING: This program as such is intended to be used by professional
 # programmers who take the whole responsability of assessing all potential

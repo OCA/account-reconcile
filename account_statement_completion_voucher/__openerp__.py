@@ -24,8 +24,11 @@
  'author': 'Camptocamp',
  'maintainer': 'Camptocamp',
  'category': 'Finance',
- 'complexity': 'normal', #easy, normal, expert
- 'depends': ['account_statement_base_completion','account_voucher'],
+ 'complexity': 'normal',
+ 'depends': [
+     'account_statement_base_completion',
+     'account_voucher'
+     ],
  'description': """
  This module is only needed when using account_statement_base_completion with voucher in order adapt the view correctly.
  """,

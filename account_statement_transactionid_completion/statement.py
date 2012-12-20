@@ -20,27 +20,27 @@
 ##############################################################################
 
 from openerp.tools.translate import _
-import datetime
-import netsvc
 from openerp.osv.orm import Model
-from openerp.osv import fields, osv
+from openerp.osv import fields
 from openerp.addons.account_statement_base_completion.statement import ErrorTooManyPartner
+
 
 class AccountStatementCompletionRule(Model):
     """Add a rule based on transaction ID"""
-    
+
     _inherit = "account.statement.completion.rule"
-    
+
     def _get_functions(self, cr, uid, context=None):
-        res = super (AccountStatementCompletionRule, self)._get_functions(
+        res = super(AccountStatementCompletionRule, self)._get_functions(
                 cr, uid, context=context)
-        res.append(('get_from_transaction_id_and_so', 'From line reference (based on SO transaction ID)'))
+        res.append(('get_from_transaction_id_and_so',
+                    'From line reference (based on SO transaction ID)'))
         return res
 
-    _columns={
+    _columns = {
         'function_to_call': fields.selection(_get_functions, 'Method'),
     }
-    
+
     def get_from_transaction_id_and_so(self, cr, uid, line_id, context=None):
         """
         Match the partner based on the transaction ID field of the SO.
@@ -55,36 +55,45 @@ class AccountStatementCompletionRule(Model):
             ...}
             """
         st_obj = self.pool.get('account.bank.statement.line')
-        st_line = st_obj.browse(cr,uid,line_id)
+        st_line = st_obj.browse(cr, uid, line_id, context=context)
         res = {}
         if st_line:
             so_obj = self.pool.get('sale.order')
-            so_id = so_obj.search(cr, uid, [('transaction_id', '=', st_line.transaction_id)])
+            so_id = so_obj.search(
+                    cr,
+                    uid,
+                    [('transaction_id', '=', st_line.transaction_id)],
+                    context=context)
             if so_id and len(so_id) == 1:
-                so = so_obj.browse(cr, uid, so_id[0])
+                so = so_obj.browse(cr, uid, so_id[0], context=context)
                 res['partner_id'] = so.partner_id.id
                 res['ref'] = so.name
             elif so_id and len(so_id) > 1:
-                raise ErrorTooManyPartner(_('Line named "%s" (Ref:%s) was matched by more than one partner.')%(st_line.name,st_line.ref))
+                raise ErrorTooManyPartner(
+                        _('Line named "%s" (Ref:%s) was matched by more than '
+                          'one partner.') % (st_line.name, st_line.ref))
             if so_id:
-                st_vals = st_obj.get_values_for_line(cr, uid, profile_id = st_line.statement_id.profile_id.id,
-                    partner_id = res.get('partner_id',False), line_type = st_line.type, amount = st_line.amount, context=context)
+                st_vals = st_obj.get_values_for_line(
+                        cr,
+                        uid,
+                        profile_id=st_line.statement_id.profile_id.id,
+                        partner_id=res.get('partner_id', False),
+                        line_type=st_line.type,
+                        amount=st_line.amount,
+                        context=context)
                 res.update(st_vals)
         return res
 
- 
+
 class AccountStatementLine(Model):
     _inherit = "account.bank.statement.line"
 
-    _columns={
+    _columns = {
         # 'additionnal_bank_fields' : fields.serialized('Additionnal infos from bank', help="Used by completion and import system."),
-        'transaction_id': fields.sparse(type='char', string='Transaction ID', 
+        'transaction_id': fields.sparse(
+            type='char',
+            string='Transaction ID',
             size=128,
             serialization_field='additionnal_bank_fields',
             help="Transction id from the financial institute"),
     }
-
-
-
-
-

@@ -19,6 +19,4 @@
 #
 ##############################################################################
 
-# from parser import new_bank_statement_parser
-# from parser import BankStatementImportParser
 import transactionid_file_parser

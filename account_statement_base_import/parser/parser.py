@@ -21,6 +21,7 @@
 import base64
 import csv
 
+
 def UnicodeDictReader(utf8_data, **kwargs):
     sniffer = csv.Sniffer()
     pos = utf8_data.tell()
@@ -31,6 +32,7 @@ def UnicodeDictReader(utf8_data, **kwargs):
     for row in csv_reader:
         yield dict([(key, unicode(value, 'utf-8')) for key, value in row.iteritems()])
 
+
 class BankStatementImportParser(object):
     """
     Generic abstract class for defining parser for different files and
@@ -38,7 +40,7 @@ class BankStatementImportParser(object):
     own. If your file is a .csv or .xls format, you should consider inheirt
     from the FileParser instead.
     """
-    
+
     def __init__(self, parser_name, *args, **kwargs):
         # The name of the parser as it will be called
         self.parser_name = parser_name
@@ -50,7 +52,7 @@ class BankStatementImportParser(object):
         # Concatenate here the global commission taken by the bank/office
         # for this statement.
         self.commission_global_amount = None
-           
+
     @classmethod
     def parser_for(cls, parser_name):
         """
@@ -58,17 +60,17 @@ class BankStatementImportParser(object):
         return the good class from his name.
         """
         return False
-            
+
     def _decode_64b_stream(self):
         """
         Decode self.filebuffer in base 64 and override it
         """
         self.filebuffer = base64.b64decode(self.filebuffer)
         return True
-    
+
     def _format(self, decode_base_64=True, **kwargs):
         """
-        Decode into base 64 if asked and Format the given filebuffer by calling 
+        Decode into base 64 if asked and Format the given filebuffer by calling
         _custom_format method.
         """
         if decode_base_64:
@@ -83,43 +85,40 @@ class BankStatementImportParser(object):
         """
         return NotImplementedError
 
-    
     def _pre(self, *args, **kwargs):
         """
-        Implement a method in your parser to make a pre-treatment on datas before parsing 
+        Implement a method in your parser to make a pre-treatment on datas before parsing
         them, like concatenate stuff, and so... Work on self.filebuffer
         """
         return NotImplementedError
 
     def _parse(self, *args, **kwargs):
         """
-        Implement a method in your parser to save the result of parsing self.filebuffer 
+        Implement a method in your parser to save the result of parsing self.filebuffer
         in self.result_row_list instance property.
         """
         return NotImplementedError
-            
+
     def _validate(self, *args, **kwargs):
         """
         Implement a method in your parser  to validate the self.result_row_list instance
         property and raise an error if not valid.
         """
         return NotImplementedError
-        
+
     def _post(self, *args, **kwargs):
         """
         Implement a method in your parser to make some last changes on the result of parsing
-        the datas, like converting dates, computing commission, ...  
+        the datas, like converting dates, computing commission, ...
         Work on self.result_row_list and put the commission global amount if any
         in the self.commission_global_amount one.
         """
         return NotImplementedError
-        
 
-        
     def get_st_line_vals(self, line, *args, **kwargs):
         """
-        Implement a method in your parser that must return a dict of vals that can be 
-        passed to create method of statement line in order to record it. It is the responsibility 
+        Implement a method in your parser that must return a dict of vals that can be
+        passed to create method of statement line in order to record it. It is the responsibility
         of every parser to give this dict of vals, so each one can implement his
         own way of recording the lines.
             :param:  line: a dict of vals that represent a line of result_row_list
@@ -133,17 +132,17 @@ class BankStatementImportParser(object):
                 }
         """
         return NotImplementedError
-    
+
     def get_st_line_commision(self, *args, **kwargs):
         """
         This is called by the importation method to create the commission line in
         the bank statement. We will always create one line for the commission in the
-        bank statement, but it could be computated from a value of each line, or given 
+        bank statement, but it could be computated from a value of each line, or given
         in a single line for the whole file.
             return: float of the whole commission (self.commission_global_amount)
         """
         return self.commission_global_amount
-    
+
     def parse(self, filebuffer, *args, **kwargs):
         """
         This will be the method that will be called by wizard, button and so
@@ -151,7 +150,7 @@ class BankStatementImportParser(object):
         that need to be define for each parser.
         Return:
              [] of rows as {'key':value}
-             
+
         Note: The row_list must contain only value that are present in the account.
         bank.statement.line object !!!
         """
@@ -165,7 +164,8 @@ class BankStatementImportParser(object):
         self._validate(*args, **kwargs)
         self._post(*args, **kwargs)
         return self.result_row_list
-               
+
+
 def itersubclasses(cls, _seen=None):
     """
     itersubclasses(cls)
@@ -179,7 +179,7 @@ def itersubclasses(cls, _seen=None):
     >>> class C(A): pass
     >>> class D(B,C): pass
     >>> class E(D): pass
-    >>> 
+    >>>
     >>> for cls in itersubclasses(A):
     ...     print(cls.__name__)
     B
@@ -193,10 +193,11 @@ def itersubclasses(cls, _seen=None):
     if not isinstance(cls, type):
         raise TypeError('itersubclasses must be called with '
                         'new-style classes, not %.100r' % cls)
-    if _seen is None: _seen = set()
+    if _seen is None:
+        _seen = set()
     try:
         subs = cls.__subclasses__()
-    except TypeError: # fails only when cls is type
+    except TypeError:  # fails only when cls is type
         subs = cls.__subclasses__(cls)
     for sub in subs:
         if sub not in _seen:
@@ -204,7 +205,8 @@ def itersubclasses(cls, _seen=None):
             yield sub
             for sub in itersubclasses(sub, _seen):
                 yield sub
-                        
+
+
 def new_bank_statement_parser(parser_name, *args, **kwargs):
     """
     Return an instance of the good parser class base on the providen name
@@ -215,4 +217,3 @@ def new_bank_statement_parser(parser_name, *args, **kwargs):
         if cls.parser_for(parser_name):
             return cls(parser_name, *args, **kwargs)
     raise ValueError
-            

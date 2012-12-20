@@ -23,17 +23,18 @@
 Wizard to import financial institute date in bank statement
 """
 
-from openerp.osv import osv, orm
-from openerp.osv import fields, osv
+from openerp.osv import orm, fields
 
 from openerp.tools.translate import _
 import os
 
+
 class CreditPartnerStatementImporter(orm.TransientModel):
     _name = "credit.statement.import"
-    
+
     def default_get(self, cr, uid, fields, context=None):
-        if context is None: context = {}
+        if context is None:
+            context = {}
         res = {}
         if (context.get('active_model', False) == 'account.statement.profile' and
             context.get('active_ids', False)):
@@ -41,55 +42,56 @@ class CreditPartnerStatementImporter(orm.TransientModel):
             assert len(ids) == 1, 'You cannot use this on more than one profile !'
             res['profile_id'] = ids[0]
             other_vals = self.onchange_profile_id(cr, uid, [], res['profile_id'], context=context)
-            res.update(other_vals.get('value',{}))
+            res.update(other_vals.get('value', {}))
         return res
-    
+
     _columns = {
         'profile_id': fields.many2one('account.statement.profile',
                                       'Import configuration parameter',
                                       required=True),
         'input_statement': fields.binary('Statement file', required=True),
         'partner_id': fields.many2one('res.partner',
-                                      'Credit insitute partner',
-                                      ),
+                                      'Credit insitute partner'),
         'journal_id': fields.many2one('account.journal',
-                                      'Financial journal to use transaction',
-                                      ),
-        'input_statement': fields.binary('Statement file', required=True),
+                                      'Financial journal to use transaction'),
         'file_name': fields.char('File Name', size=128),
         'commission_account_id': fields.many2one('account.account',
-                                                         'Commission account',
-                                                         ),
+                                                 'Commission account'),
         'commission_analytic_id': fields.many2one('account.analytic.account',
-                                                     'Commission analytic account',
-                                                 ),
+                                                 'Commission analytic account'),
         'receivable_account_id': fields.many2one('account.account',
                                                  'Force Receivable/Payable Account'),
-        'force_partner_on_bank': fields.boolean('Force partner on bank move', 
-                                                    help="Tic that box if you want to use the credit insitute partner\
-                                                    in the counterpart of the treasury/banking move."
-                                                    ),
-        'balance_check': fields.boolean('Balance check', 
-                                                    help="Tic that box if you want OpenERP to control the start/end balance\
-                                                    before confirming a bank statement. If don't ticked, no balance control will be done."
-                                                    ),
-    }   
-    
+        'force_partner_on_bank': fields.boolean(
+            'Force partner on bank move',
+            help="Tic that box if you want to use the credit insitute partner "
+            "in the counterpart of the treasury/banking move."),
+        'balance_check': fields.boolean(
+            'Balance check',
+            help="Tic that box if you want OpenERP to control the "
+            "start/end balance before confirming a bank statement. "
+            "If don't ticked, no balance control will be done."),
+    }
+
     def onchange_profile_id(self, cr, uid, ids, profile_id, context=None):
-        res={}
+        res = {}
         if profile_id:
-            c = self.pool.get("account.statement.profile").browse(cr,uid,profile_id)
-            res = {'value': {'partner_id': c.partner_id and c.partner_id.id or False,
-                    'journal_id': c.journal_id and c.journal_id.id or False, 'commission_account_id': \
-                    c.commission_account_id and c.commission_account_id.id or False, 
-                    'receivable_account_id': c.receivable_account_id and c.receivable_account_id.id or False,
-                    'commission_a':c.commission_analytic_id and c.commission_analytic_id.id or False,
-                    'force_partner_on_bank':c.force_partner_on_bank,
-                    'balance_check':c.balance_check,}}
+            c = self.pool.get("account.statement.profile").browse(
+                    cr, uid, profile_id, context=context)
+            res = {'value':
+                    {'partner_id': c.partner_id and c.partner_id.id or False,
+                     'journal_id': c.journal_id and c.journal_id.id or False,
+                     'commission_account_id':
+                        c.commission_account_id and c.commission_account_id.id or False,
+                     'receivable_account_id': c.receivable_account_id and c.receivable_account_id.id or False,
+                     'commission_a': c.commission_analytic_id and c.commission_analytic_id.id or False,
+                     'force_partner_on_bank': c.force_partner_on_bank,
+                     'balance_check': c.balance_check,
+                     }
+                }
         return res
 
     def _check_extension(self, filename):
-        (shortname, ftype) = os.path.splitext(filename)
+        (__, ftype) = os.path.splitext(filename)
         if not ftype:
             #We do not use osv exception we do not want to have it logged
             raise Exception(_('Please use a file with an extention'))
@@ -109,7 +111,7 @@ class CreditPartnerStatementImporter(orm.TransientModel):
                                             False,
                                             importer.profile_id.id,
                                             importer.input_statement,
-                                            ftype.replace('.',''),
+                                            ftype.replace('.', ''),
                                             context=context
                                         )
         model_obj = self.pool.get('ir.model.data')

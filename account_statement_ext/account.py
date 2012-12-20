@@ -20,12 +20,12 @@
 ##############################################################################
 
 from openerp.osv.orm import Model
-from openerp.osv import fields, osv
+from openerp.osv import fields
 
 
 class account_move(Model):
-    _inherit='account.move'
-    
+    _inherit = 'account.move'
+
     def unlink(self, cr, uid, ids, context=None):
         """
         Delete the reconciliation when we delete the moves. This
@@ -36,6 +36,3 @@ class account_move(Model):
                 if move_line.reconcile_id:
                     move_line.reconcile_id.unlink(context=context)
         return super(account_move, self).unlink(cr, uid, ids, context=context)
-        
-
-

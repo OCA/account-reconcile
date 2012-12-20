@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# -*- coding utf-8 -*-
 ##############################################################################
 #
 #    Author: Nicolas Bessi. Copyright Camptocamp SA
@@ -18,15 +18,12 @@
 #
 ##############################################################################
 
-import time
-
-from report import report_sxw
+from openerp.report import report_sxw
 from openerp.tools.translate import _
-import pooler
-from operator import add, itemgetter
-from itertools import groupby
+from openerp import pooler
 from datetime import datetime
 from report_webkit import webkit_report
+
 
 class BankStatementWebkit(report_sxw.rml_parse):
 
@@ -35,15 +32,15 @@ class BankStatementWebkit(report_sxw.rml_parse):
         self.pool = pooler.get_pool(self.cr.dbname)
         self.cursor = self.cr
 
-        company = self.pool.get('res.users').browse(self.cr, uid, uid, context=context).company_id
+        company = self.pool.get('res.users').browse(
+                self.cr, uid, uid, context=context).company_id
         header_report_name = ' - '.join((_('BORDEREAU DE REMISE DE CHEQUES'),
                                          company.name, company.currency_id.name))
-        statement = self.pool.get('account.bank.statement').browse(cursor,uid,context['active_id']);
         footer_date_time = self.formatLang(str(datetime.today())[:19], date_time=True)
         self.localcontext.update({
             'cr': cursor,
             'uid': uid,
-            'get_bank_statement' : self._get_bank_statement_data,
+            'get_bank_statement': self._get_bank_statement_data,
             'report_name': _('BORDEREAU DE REMISE DE CHEQUES'),
             'additional_args': [
                 ('--header-font-name', 'Helvetica'),
@@ -57,10 +54,15 @@ class BankStatementWebkit(report_sxw.rml_parse):
                 ('--footer-line',),
             ],
         })
-    def _get_bank_statement_data(self,statement):
+
+    def _get_bank_statement_data(self, statement):
         statement_obj = self.pool.get('account.bank.statement.line')
-        statement_line_ids = statement_obj.search(self.cr,self.uid,[['statement_id','=',statement.id]])
-        statement_lines = statement_obj.browse(self.cr,self.uid,statement_line_ids)
+        statement_line_ids = statement_obj.search(
+                self.cr,
+                self.uid,
+                [('statement_id', '=', statement.id)])
+        statement_lines = statement_obj.browse(
+                self.cr, self.uid, statement_line_ids)
         return statement_lines
 
 webkit_report.WebKitParser('report.bank_statement_webkit',

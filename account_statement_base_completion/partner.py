@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# -*- coding: utf-8 -*-
 #################################################################################
 #                                                                               #
 #    Copyright (C) 2011 Akretion & Camptocamp
@@ -31,10 +31,8 @@ class res_partner(Model):
     _inherit = 'res.partner'
 
     _columns = {
-        'bank_statement_label':fields.char('Bank Statement Label', size=100,
+        'bank_statement_label': fields.char('Bank Statement Label', size=100,
                 help="Enter the various label found on your bank statement separated by a ; If \
                  one of this label is include in the bank statement line, the partner will be automatically \
                  filled (as long as you use this method/rules in your statement profile)."),
             }
-
-res_partner()

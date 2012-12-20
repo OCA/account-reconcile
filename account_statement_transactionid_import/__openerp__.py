@@ -24,8 +24,11 @@
  'author': 'Camptocamp',
  'maintainer': 'Camptocamp',
  'category': 'Finance',
- 'complexity': 'normal', #easy, normal, expert
- 'depends': ['account_statement_base_import','account_statement_transactionid_completion'],
+ 'complexity': 'normal',
+ 'depends': [
+     'account_statement_base_import',
+     'account_statement_transactionid_completion'
+     ],
  'description': """
  This module brings generic methods and fields on bank statement to deal with
  the importation of different bank and offices that uses transactionID.
@@ -36,12 +39,12 @@
 
  This module can handle a commission taken by the payment office and has the following format:
 
- * transaction_id :    the transaction ID given by the bank/office. It is used as reference
+ * transaction_id:    the transaction ID given by the bank/office. It is used as reference
                        in the generated entries and is useful for reconciliation process
- * date :              date of the payment
- * amount :            amount paid in the currency of the journal used in the importation profile
- * commission_amount : amount of the comission for each line
- * label :             the comunication given by the payment office, used as communication in the
+ * date:              date of the payment
+ * amount:            amount paid in the currency of the journal used in the importation profile
+ * commission_amount: amount of the comission for each line
+ * label:             the comunication given by the payment office, used as communication in the
                        generated entries.
  """,
  'website': 'http://www.camptocamp.com',

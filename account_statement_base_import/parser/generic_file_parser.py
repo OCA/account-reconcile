@@ -23,20 +23,20 @@ import base64
 import csv
 import tempfile
 import datetime
-# from . import file_parser
 from file_parser import FileParser
 try:
     import xlrd
 except:
     raise Exception(_('Please install python lib xlrd'))
 
+
 class GenericFileParser(FileParser):
     """
     Standard parser that use a define format in csv or xls to import into a
-    bank statement. This is mostely an example of how to proceed to create a new 
+    bank statement. This is mostely an example of how to proceed to create a new
     parser, but will also be useful as it allow to import a basic flat file.
     """
-    
+
     def __init__(self, parse_name, ftype='csv'):
         convertion_dict = {
                             'ref': unicode,
@@ -47,7 +47,7 @@ class GenericFileParser(FileParser):
                           }
         # Order of cols does not matter but first row of the file has to be header
         keys_to_validate = ['ref', 'label', 'date', 'amount', 'commission_amount']
-        super(GenericFileParser,self).__init__(parse_name, keys_to_validate=keys_to_validate, ftype=ftype, convertion_dict=convertion_dict)
+        super(GenericFileParser, self).__init__(parse_name, keys_to_validate=keys_to_validate, ftype=ftype, convertion_dict=convertion_dict)
 
     @classmethod
     def parser_for(cls, parser_name):
@@ -60,7 +60,7 @@ class GenericFileParser(FileParser):
     def get_st_line_vals(self, line, *args, **kwargs):
         """
         This method must return a dict of vals that can be passed to create
-        method of statement line in order to record it. It is the responsibility 
+        method of statement line in order to record it. It is the responsibility
         of every parser to give this dict of vals, so each one can implement his
         own way of recording the lines.
             :param:  line: a dict of vals that represent a line of result_row_list
@@ -78,11 +78,11 @@ class GenericFileParser(FileParser):
         for each one.
         """
         return {
-            'name': line.get('label', line.get('ref','/')),
+            'name': line.get('label', line.get('ref', '/')),
             'date': line.get('date', datetime.datetime.now().date()),
             'amount': line.get('amount', 0.0),
-            'ref': line.get('ref','/'),
-            'label': line.get('label',''),
+            'ref': line.get('ref', '/'),
+            'label': line.get('label', ''),
             'commission_amount': line.get('commission_amount', 0.0),
         }
 
@@ -93,10 +93,6 @@ class GenericFileParser(FileParser):
         res = super(GenericFileParser, self)._post(*args, **kwargs)
         val = 0.0
         for row in self.result_row_list:
-            val += row.get('commission_amount',0.0)
+            val += row.get('commission_amount', 0.0)
         self.commission_global_amount = val
         return res
-
-
-
-

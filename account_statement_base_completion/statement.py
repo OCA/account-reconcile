@@ -20,9 +20,10 @@
 ##############################################################################
 from tools.translate import _
 from openerp.osv.orm import Model, fields
-from openerp.osv import fields, osv, osv
-from operator import itemgetter, attrgetter
+from openerp.tools import DEFAULT_SERVER_DATETIME_FORMAT
+from operator import attrgetter
 import datetime
+
 
 class ErrorTooManyPartner(Exception):
     """
@@ -31,6 +32,7 @@ class ErrorTooManyPartner(Exception):
     """
     def __init__(self, value):
         self.value = value
+
     def __str__(self):
         return repr(self.value)
 
@@ -40,38 +42,38 @@ class AccountStatementProfil(Model):
     Extend the class to add rules per profile that will match at least the partner,
     but it could also be used to match other values as well.
     """
-    
+
     _inherit = "account.statement.profile"
-    
-    _columns={
+
+    _columns = {
         # @Akretion : For now, we don't implement this features, but this would probably be there:
         # 'auto_completion': fields.text('Auto Completion'),
         # 'transferts_account_id':fields.many2one('account.account', 'Transferts Account'),
-        # => You can implement it in a module easily, we design it with your needs in mind 
+        # => You can implement it in a module easily, we design it with your needs in mind
         # as well !
-        
-        'rule_ids':fields.many2many('account.statement.completion.rule', 
+
+        'rule_ids': fields.many2many(
+            'account.statement.completion.rule',
             string='Related statement profiles',
-            rel='as_rul_st_prof_rel', 
-            ),
+            rel='as_rul_st_prof_rel'),
     }
-    
+
     def find_values_from_rules(self, cr, uid, id, line_id, context=None):
         """
-        This method will execute all related rules, in their sequence order, 
+        This method will execute all related rules, in their sequence order,
         to retrieve all the values returned by the first rules that will match.
-        
+
         :param int/long line_id: id of the concerned account.bank.statement.line
         :return:
             A dict of value that can be passed directly to the write method of
             the statement line or {}
            {'partner_id': value,
             'account_id' : value,
-            
+
             ...}
         """
-        if not context:
-            context={}
+        if context is None:
+            context = {}
         res = {}
         rule_obj = self.pool.get('account.statement.completion.rule')
         profile = self.browse(cr, uid, id, context=context)
@@ -79,11 +81,11 @@ class AccountStatementProfil(Model):
         sorted_array = sorted(profile.rule_ids, key=attrgetter('sequence'))
         for rule in sorted_array:
             method_to_call = getattr(rule_obj, rule.function_to_call)
-            result = method_to_call(cr,uid,line_id,context)
+            result = method_to_call(cr, uid, line_id, context)
             if result:
                 return result
         return res
-        
+
 
 class AccountStatementCompletionRule(Model):
     """
@@ -91,14 +93,14 @@ class AccountStatementCompletionRule(Model):
     fullfill the bank statement lines. You'll be able to extend them in you own module
     and choose those to apply for every statement profile.
     The goal of a rule is to fullfill at least the partner of the line, but
-    if possible also the reference because we'll use it in the reconciliation 
+    if possible also the reference because we'll use it in the reconciliation
     process. The reference should contain the invoice number or the SO number
     or any reference that will be matched by the invoice accounting move.
     """
-    
+
     _name = "account.statement.completion.rule"
     _order = "sequence asc"
-    
+
     def _get_functions(self, cr, uid, context=None):
         """
         List of available methods for rules. Override this to add you own.
@@ -109,19 +111,20 @@ class AccountStatementCompletionRule(Model):
             ('get_from_label_and_partner_field', 'From line label (based on partner field)'),
             ('get_from_label_and_partner_name', 'From line label (based on partner name)'),
             ]
-    
-    _columns={
+
+    _columns = {
         'sequence': fields.integer('Sequence', help="Lower means parsed first."),
         'name': fields.char('Name', size=128),
-        'profile_ids': fields.many2many('account.statement.profile', 
-            rel='as_rul_st_prof_rel', 
+        'profile_ids': fields.many2many(
+            'account.statement.profile',
+            rel='as_rul_st_prof_rel',
             string='Related statement profiles'),
         'function_to_call': fields.selection(_get_functions, 'Method'),
     }
-    
+
     def get_from_ref_and_invoice(self, cursor, uid, line_id, context=None):
         """
-        Match the partner based on the invoice number and the reference of the statement 
+        Match the partner based on the invoice number and the reference of the statement
         line. Then, call the generic get_values_for_line method to complete other values.
         If more than one partner matched, raise the ErrorTooManyPartner error.
 
@@ -131,30 +134,42 @@ class AccountStatementCompletionRule(Model):
             the statement line or {}
            {'partner_id': value,
             'account_id' : value,
-            
+
             ...}
         """
         st_obj = self.pool.get('account.bank.statement.line')
-        st_line = st_obj.browse(cursor,uid,line_id)
+        st_line = st_obj.browse(cursor, uid, line_id, context=context)
         res = {}
         if st_line:
             inv_obj = self.pool.get('account.invoice')
-            inv_id = inv_obj.search(cursor, uid, [('number', '=', st_line.ref)])
+            inv_id = inv_obj.search(
+                    cursor,
+                    uid,
+                    [('number', '=', st_line.ref)],
+                    context=context)
             if inv_id:
                 if inv_id and len(inv_id) == 1:
-                    inv = inv_obj.browse(cursor, uid, inv_id[0])
+                    inv = inv_obj.browse(cursor, uid, inv_id[0], context=context)
                     res['partner_id'] = inv.partner_id.id
                 elif inv_id and len(inv_id) > 1:
-                    raise ErrorTooManyPartner(_('Line named "%s" (Ref:%s) was matched by more than one partner.')%(st_line.name,st_line.ref))
-                st_vals = st_obj.get_values_for_line(cursor, uid, profile_id = st_line.statement_id.profile_id.id,
-                    partner_id = res.get('partner_id',False), line_type = st_line.type, amount = st_line.amount, context = context)
+                    raise ErrorTooManyPartner(
+                            _('Line named "%s" (Ref:%s) was matched by more '
+                              'than one partner.') % (st_line.name, st_line.ref))
+                st_vals = st_obj.get_values_for_line(
+                        cursor,
+                        uid,
+                        profile_id=st_line.statement_id.profile_id.id,
+                        partner_id=res.get('partner_id', False),
+                        line_type=st_line.type,
+                        amount=st_line.amount,
+                        context=context)
                 res.update(st_vals)
         return res
 
     def get_from_ref_and_so(self, cursor, uid, line_id, context=None):
         """
-        Match the partner based on the SO number and the reference of the statement 
-        line. Then, call the generic get_values_for_line method to complete other values. 
+        Match the partner based on the SO number and the reference of the statement
+        line. Then, call the generic get_values_for_line method to complete other values.
         If more than one partner matched, raise the ErrorTooManyPartner error.
 
         :param int/long line_id: id of the concerned account.bank.statement.line
@@ -163,32 +178,44 @@ class AccountStatementCompletionRule(Model):
             the statement line or {}
            {'partner_id': value,
             'account_id' : value,
-            
+
             ...}
         """
         st_obj = self.pool.get('account.bank.statement.line')
-        st_line = st_obj.browse(cursor,uid,line_id)
+        st_line = st_obj.browse(cursor, uid, line_id, context=context)
         res = {}
         if st_line:
             so_obj = self.pool.get('sale.order')
-            so_id = so_obj.search(cursor, uid, [('name', '=', st_line.ref)])
+            so_id = so_obj.search(
+                    cursor,
+                    uid,
+                    [('name', '=', st_line.ref)],
+                    context=context)
             if so_id:
                 if so_id and len(so_id) == 1:
-                    so = so_obj.browse(cursor, uid, so_id[0])
+                    so = so_obj.browse(cursor, uid, so_id[0], context=context)
                     res['partner_id'] = so.partner_id.id
                 elif so_id and len(so_id) > 1:
-                    raise ErrorTooManyPartner(_('Line named "%s" (Ref:%s) was matched by more than one partner.')%(st_line.name,st_line.ref))
-                st_vals = st_obj.get_values_for_line(cursor, uid, profile_id = st_line.statement_id.profile_id.id,
-                    partner_id = res.get('partner_id',False), line_type = st_line.type, amount = st_line.amount, context = context)
+                    raise ErrorTooManyPartner(
+                            _('Line named "%s" (Ref:%s) was matched by more '
+                              'than one partner.') %
+                            (st_line.name, st_line.ref))
+                st_vals = st_obj.get_values_for_line(
+                        cursor,
+                        uid,
+                        profile_id=st_line.statement_id.profile_id.id,
+                        partner_id=res.get('partner_id', False),
+                        line_type=st_line.type,
+                        amount=st_line.amount,
+                        context=context)
                 res.update(st_vals)
         return res
-    
 
     def get_from_label_and_partner_field(self, cursor, uid, line_id, context=None):
         """
         Match the partner based on the label field of the statement line
         and the text defined in the 'bank_statement_label' field of the partner.
-        Remember that we can have values separated with ; Then, call the generic 
+        Remember that we can have values separated with ; Then, call the generic
         get_values_for_line method to complete other values.
         If more than one partner matched, raise the ErrorTooManyPartner error.
 
@@ -198,26 +225,39 @@ class AccountStatementCompletionRule(Model):
             the statement line or {}
            {'partner_id': value,
             'account_id' : value,
-            
+
             ...}
             """
         partner_obj = self.pool.get('res.partner')
         st_obj = self.pool.get('account.bank.statement.line')
-        st_line = st_obj.browse(cursor,uid,line_id)
+        st_line = st_obj.browse(cursor, uid, line_id, context=context)
         res = {}
         compt = 0
         if st_line:
-            ids = partner_obj.search(cursor, uid, [['bank_statement_label', '!=', False]], context=context)
+            ids = partner_obj.search(
+                    cursor,
+                    uid,
+                    [('bank_statement_label', '!=', False)],
+                    context=context)
             for partner in partner_obj.browse(cursor, uid, ids, context=context):
                 for partner_label in partner.bank_statement_label.split(';'):
                     if partner_label in st_line.label:
                         compt += 1
                         res['partner_id'] = partner.id
                         if compt > 1:
-                            raise ErrorTooManyPartner(_('Line named "%s" (Ref:%s) was matched by more than one partner.')%(st_line.name,st_line.ref))
+                            raise ErrorTooManyPartner(
+                                    _('Line named "%s" (Ref:%s) was matched by '
+                                      'more than one partner.') %
+                                    (st_line.name, st_line.ref))
             if res:
-                st_vals = st_obj.get_values_for_line(cursor, uid, profile_id = st_line.statement_id.profile_id.id,
-                    partner_id = res.get('partner_id',False), line_type = st_line.type, amount = st_line.amount, context = context)
+                st_vals = st_obj.get_values_for_line(
+                        cursor,
+                        uid,
+                        profile_id=st_line.statement_id.profile_id.id,
+                        partner_id=res.get('partner_id', False),
+                        line_type=st_line.type,
+                        amount=st_line.amount,
+                        context=context)
                 res.update(st_vals)
         return res
 
@@ -234,29 +274,38 @@ class AccountStatementCompletionRule(Model):
             the statement line or {}
            {'partner_id': value,
             'account_id' : value,
-            
+
             ...}
             """
         # This Method has not been tested yet !
         res = {}
         st_obj = self.pool.get('account.bank.statement.line')
-        st_line = st_obj.browse(cursor,uid,line_id)
+        st_line = st_obj.browse(cursor, uid, line_id, context=context)
         if st_line:
             sql = "SELECT id FROM res_partner WHERE name ~* %s"
             pattern = ".*%s.*" % st_line.label
             cursor.execute(sql, (pattern,))
             result = cursor.fetchall()
             if len(result) > 1:
-                raise ErrorTooManyPartner(_('Line named "%s" (Ref:%s) was matched by more than one partner.')%(st_line.name,st_line.ref))
+                raise ErrorTooManyPartner(
+                        _('Line named "%s" (Ref:%s) was matched by more '
+                          'than one partner.') %
+                        (st_line.name, st_line.ref))
             for id in result[0]:
                 res['partner_id'] = id
             if res:
-                st_vals = st_obj.get_values_for_line(cursor, uid, profile_id = st_line.statement_id.profile_id.id,
-                    partner_id = res.get('partner_id',False), line_type = st_line.type, amount = st_line.amount, context = context)
+                st_vals = st_obj.get_values_for_line(
+                        cursor,
+                        uid,
+                        profile_id=st_line.statement_id.profile_id.id,
+                        partner_id=res.get('partner_id', False),
+                        line_type=st_line.type,
+                        amount=st_line.amount,
+                        context=context)
                 res.update(st_vals)
         return res
-       
-    
+
+
 class AccountStatementLine(Model):
     """
     Add sparse field on the statement line to allow to store all the
@@ -268,22 +317,28 @@ class AccountStatementLine(Model):
     """
     _inherit = "account.bank.statement.line"
 
-    _columns={
-        'additionnal_bank_fields' : fields.serialized('Additionnal infos from bank', 
-            help="Used by completion and import system. Adds every field that is present in your bank/office \
-            statement file"),
-        'label': fields.sparse(type='char', string='Label', 
-            serialization_field='additionnal_bank_fields', 
-            help="Generiy field to store a label given from the bank/office on which we can \
-            base the default/standard providen rule."),
-        'already_completed': fields.boolean("Auto-Completed",
-            help="When this checkbox is ticked, the auto-completion process/button will ignore this line."),
+    _columns = {
+        'additionnal_bank_fields': fields.serialized(
+            'Additionnal infos from bank',
+            help="Used by completion and import system. Adds every field that "
+                 "is present in your bank/office statement file"),
+        'label': fields.sparse(
+            type='char',
+            string='Label',
+            serialization_field='additionnal_bank_fields',
+            help="Generic field to store a label given from the "
+                 "bank/office on which we can base the default/standard "
+                 "providen rule."),
+        'already_completed': fields.boolean(
+            "Auto-Completed",
+            help="When this checkbox is ticked, the auto-completion "
+                 "process/button will ignore this line."),
     }
+
     _defaults = {
         'already_completed': False,
     }
-    
-    
+
     def get_line_values_from_rules(self, cr, uid, ids, context=None):
         """
         We'll try to find out the values related to the line based on rules setted on
@@ -292,30 +347,38 @@ class AccountStatementLine(Model):
         :return:
             A dict of dict value that can be passed directly to the write method of
             the statement line or {}. The first dict has statement line ID as a key:
-            {117009: {'partner_id': 100997, 'account_id': 489L}}        
+            {117009: {'partner_id': 100997, 'account_id': 489L}}
         """
         profile_obj = self.pool.get('account.statement.profile')
         st_obj = self.pool.get('account.bank.statement.line')
-        res={}
+        res = {}
         errors_stack = []
-        for line in self.browse(cr,uid, ids, context):
-            if not line.already_completed:
-                try:
-                    # Take the default values
-                    res[line.id] = st_obj.get_values_for_line(cr, uid, profile_id = line.statement_id.profile_id.id,
-                        line_type = line.type, amount = line.amount, context = context)
-                    # Ask the rule
-                    vals = profile_obj.find_values_from_rules(cr, uid, line.statement_id.profile_id.id, line.id, context)
-                    # Merge the result
-                    res[line.id].update(vals)
-                except ErrorTooManyPartner, exc:
-                    msg = "Line ID %s had following error: %s" % (line.id, exc.value)
-                    errors_stack.append(msg)
+        for line in self.browse(cr, uid, ids, context=context):
+            if line.already_completed:
+                continue
+            try:
+                # Take the default values
+                res[line.id] = st_obj.get_values_for_line(
+                        cr,
+                        uid,
+                        profile_id=line.statement_id.profile_id.id,
+                        line_type=line.type,
+                        amount=line.amount,
+                        context=context)
+                # Ask the rule
+                vals = profile_obj.find_values_from_rules(
+                        cr, uid, line.statement_id.profile_id.id, line.id, context)
+                # Merge the result
+                res[line.id].update(vals)
+            except ErrorTooManyPartner, exc:
+                msg = "Line ID %s had following error: %s" % (line.id, exc.value)
+                errors_stack.append(msg)
         if errors_stack:
             msg = u"\n".join(errors_stack)
             raise ErrorTooManyPartner(msg)
         return res
-        
+
+
 class AccountBankSatement(Model):
     """
     We add a basic button and stuff to support the auto-completion
@@ -326,41 +389,46 @@ class AccountBankSatement(Model):
     _columns = {
         'completion_logs': fields.text('Completion Log', readonly=True),
     }
-    
+
     def write_completion_log(self, cr, uid, stat_id, error_msg, number_imported, context=None):
         """
         Write the log in the completion_logs field of the bank statement to let the user
         know what have been done. This is an append mode, so we don't overwrite what
         already recoded.
-    
+
         :param int/long stat_id: ID of the account.bank.statement
         :param char error_msg: Message to add
         :number_imported int/long: Number of lines that have been completed
         :return : True
-    
         """
         error_log = ""
-        user_name = self.pool.get('res.users').read(cr, uid, uid, ['name'])['name']
-        log = self.read(cr, uid, stat_id, ['completion_logs'], context=context)['completion_logs']
+        user_name = self.pool.get('res.users').read(
+                cr, uid, uid, ['name'], context=context)['name']
+        log = self.read(
+                cr, uid, stat_id, ['completion_logs'], context=context)['completion_logs']
         log_line = log and log.split("\n") or []
-        completion_date = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        completion_date = datetime.datetime.now().strftime(DEFAULT_SERVER_DATETIME_FORMAT)
         if error_msg:
             error_log = error_msg
         log_line[0:0] = [completion_date + ' : '
-            + _("Bank Statement ID %s has %s lines completed by %s") %(stat_id, number_imported, user_name)
+            + _("Bank Statement ID %s has %s lines completed by %s") % (stat_id, number_imported, user_name)
             + "\n" + error_log + "-------------" + "\n"]
         log = "\n".join(log_line)
-        self.write(cr, uid, [stat_id], {'completion_logs' : log}, context=context)
-        self.message_post(cr, uid, [stat_id], body=_('Statement ID %s auto-completed for %s lines completed') % (stat_id,number_imported), context=context)
+        self.write(cr, uid, [stat_id], {'completion_logs': log}, context=context)
+        self.message_post(
+                cr, uid,
+                [stat_id],
+                body=_('Statement ID %s auto-completed for %s lines completed') % (stat_id, number_imported),
+                context=context)
         return True
-    
+
     def button_auto_completion(self, cr, uid, ids, context=None):
         """
         Complete line with values given by rules and tic the already_completed
         checkbox so we won't compute them again unless the user untick them !
         """
-        if not context:
-            context={}
+        if context is None:
+            context = {}
         stat_line_obj = self.pool.get('account.bank.statement.line')
         msg = ""
         compl_lines = 0
@@ -369,7 +437,8 @@ class AccountBankSatement(Model):
             for line in stat.line_ids:
                 res = {}
                 try:
-                    res = stat_line_obj.get_line_values_from_rules(cr, uid, [line.id], context=ctx)
+                    res = stat_line_obj.get_line_values_from_rules(
+                            cr, uid, [line.id], context=ctx)
                     if res:
                         compl_lines += 1
                 except ErrorTooManyPartner, exc:
@@ -381,5 +450,6 @@ class AccountBankSatement(Model):
                     vals = res[line.id]
                     vals['already_completed'] = True
                     stat_line_obj.write(cr, uid, [line.id], vals, context=ctx)
-            self.write_completion_log(cr, uid, stat.id, msg, compl_lines, context=context)
+            self.write_completion_log(
+                    cr, uid, stat.id, msg, compl_lines, context=context)
         return True

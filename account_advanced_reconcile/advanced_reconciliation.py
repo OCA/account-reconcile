@@ -117,4 +117,3 @@ class easy_reconcile_advanced_ref(TransientModel):
         yield ('partner_id', move_line['partner_id'])
         yield ('ref', (move_line['ref'].lower().strip(),
                        move_line['name'].lower().strip()))
-

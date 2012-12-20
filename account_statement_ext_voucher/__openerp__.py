@@ -24,8 +24,11 @@
  'author': 'Camptocamp',
  'maintainer': 'Camptocamp',
  'category': 'Finance',
- 'complexity': 'normal', #easy, normal, expert
- 'depends': ['account_statement_ext','account_voucher'],
+ 'complexity': 'normal',
+ 'depends': [
+     'account_statement_ext',
+     'account_voucher'
+     ],
  'description': """
  This module is only needed when using account_bank_statement_ext with voucher in order to compute the period
  correctly. This is mainly because with account_bank_statement_ext, the period is computed for each line.
