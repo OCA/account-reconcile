@@ -73,32 +73,20 @@
 
     <menuitem string="Bank Statements Profile" action="action_treasury_statement_profile_tree" id="menu_treasury_statement_profile_tree" parent="account.menu_configuration_misc" sequence="30"/>    
 
-    <record model="ir.ui.view" id="id_in_statement_line">
-        <field name="name">account.bank.statement.line.inherit</field>
-        <field name="model">account.bank.statement</field>
-        <field name="inherit_id" ref="account.view_bank_statement_periodic_form"/>
-        <field name="priority" eval="30"/>
-        <field name="arch" type="xml">
-                <xpath expr="/form/notebook/page[@string='Journal Entries']/field/tree/field[@name='ref']" position="before">
-                    <field name="id" />
-                </xpath>
-        </field>
-    </record>
     
     
     <record id="view_treasury_statement_search" model="ir.ui.view">
         <field name="name">account.bank.statement.search</field>
         <field name="model">account.bank.statement</field>
         <field name="inherit_id" ref="account.view_bank_statement_search"/>
-        <field name="type">search</field>
         <field name="arch" type="xml">
-             <xpath expr="/search/group/field[@name='name']" position="before">
+             <xpath expr="/search/field[@name='name']" position="before">
                     <field name="id"/>
                     <field name="profile_id"/>
                     <field name="credit_partner_id"/>
                     <separator orientation="vertical"/>
             </xpath>
-            <xpath expr="/search/group/field[@name='period_id']" position="replace">
+            <xpath expr="/search/field[@name='period_id']" position="replace">
             </xpath>
             <xpath expr="/search/group/filter[@string='Period']" position="replace">
                 <filter string="Financial Partner" context="{'group_by': 'credit_partner_id'}" icon="terp-partner"/>
@@ -124,76 +112,64 @@
         </field>
     </record>
 
-    
-    <record id="view_treasury_statement_form" model="ir.ui.view">
-        <field name="name">account.bank.statement.form</field>
-        <field name="model">account.bank.statement</field>
-        <field name="inherit_id" ref="account.view_bank_statement_form"/>
-        <field name="type">form</field>
-        <field name="arch" type="xml">
-            <!-- Remove name and date from group tag -->
-            <xpath expr="/form/group/field[@name='name']" position="replace">
-            </xpath>
-            <xpath expr="/form/group/field[@name='date']" position="replace">
-            </xpath>
-            <!-- Add a new group before the first one with name, profile and date -->
-            <xpath expr="/form/group[@col='7']" position="before">
-                <group col="8" colspan="4">
-                    <field name="profile_id" select="1" required="1" on_change="onchange_imp_config_id(profile_id)" widget="selection"/>
-                    <field name="date" select="1" on_change="onchange_date(date, company_id)"/>
-                    <field name="name" select="1"/>
-                </group>
-                <separator string="Profile Details" colspan="4"/>
-            </xpath>
-            <!-- Make balance visible or not depending on profile -->
-            <xpath expr="/form/group/field[@name='balance_start']" position="replace">
-            </xpath>
-            <xpath expr="/form/group/field[@name='balance_end_real']" position="replace">
-            </xpath>
-            <xpath expr="/form/group[@col='7']" position="after">
-                <separator string="Balance Check" colspan="4" attrs="{'invisible':[('balance_check','=',False)]}"/>
-                <group col="6" colspan="4" attrs="{'invisible':[('balance_check','=',False)]}">
-                    <field name="balance_start" />
-                    <field name="balance_end_real" />
-                </group>
-            </xpath>
-            <xpath expr="/form/group/field[@name='balance_end']" position="replace">
-                 <field name="balance_end"/>
-            </xpath>
-            
-            <xpath expr="/form/group/field[@name='journal_id']" position="attributes">
-                 <attribute name="widget"></attribute>
-            </xpath>
-            <xpath expr="/form/group/field[@name='period_id']" position="replace">
-                 <field name="credit_partner_id"/>
-                 <field name="account_id" invisible="1"/>
-                 <field name="balance_check" invisible="1"/>
-            </xpath>
-            <xpath expr="/form/notebook/page/field/tree/field[@name='sequence']" position="after">
-                 <field name="id"/>
-            </xpath>
-            <xpath expr="/form/notebook/page/field/tree/field[@name='partner_id']" position="replace">
-                 <field name="partner_id" on_change="onchange_partner_id(partner_id,parent.profile_id)"/>
-            </xpath>
-            <xpath expr="/form/notebook/page/field/form/field[@name='date']" position="before">
-                 <field name="id"/>
-            </xpath>
-            <!-- Adapt onchange signature -->
-            <xpath expr="/form/notebook/page/field/tree/field[@name='partner_id']" position="replace">
-                 <field name="partner_id" on_change="onchange_partner_id(partner_id,parent.profile_id)"/>
-            </xpath>
-            <xpath expr="/form/notebook/page/field/form/field[@name='partner_id']" position="replace">
-                 <field name="partner_id" on_change="onchange_partner_id(partner_id,parent.profile_id)"/>
-            </xpath>
-            <xpath expr="/form/notebook/page/field/form/field[@name='type']" position="replace">
-                 <field name="type" on_change="onchange_type(partner_id, type, parent.profile_id)"/>
-            </xpath>
-            <xpath expr="/form/notebook/page/field/tree/field[@name='type']" position="replace">
-                 <field name="type" on_change="onchange_type(partner_id, type, parent.profile_id)"/>
-            </xpath>
-            
-        </field>
-    </record>
+  
+  <record id="view_treasury_statement_form" model="ir.ui.view">
+      <field name="name">account.bank.statement.form</field>
+      <field name="model">account.bank.statement</field>
+      <field name="inherit_id" ref="account.view_bank_statement_form"/>
+      <field name="type">form</field>
+      <field name="arch" type="xml">
+
+          <!-- Add before the group : profile and related infos -->
+          <xpath expr="/form/sheet/group/group/field[@name='journal_id']" position="replace">
+          </xpath>
+          
+          <xpath expr="/form/sheet/group" position="after">
+              <group>
+                  <field name="profile_id" select="1" required="1" on_change="onchange_imp_config_id(profile_id)" widget="selection"/>
+                  <separator string="Profile Details" colspan="4"/>
+                  <field name="journal_id" domain="[('type', '=', 'bank')]" on_change="onchange_journal_id(journal_id)" widget="selection"/>
+                   <field name="credit_partner_id"/>
+                   <field name="account_id" invisible="1"/>
+                   <field name="balance_check" invisible="1"/>
+              </group>
+          </xpath>
+          
+          # Make balance visible or not depending on profile
+          <xpath expr="/form/sheet/group/group/field[@name='balance_start']" position="attributes">
+              <attribute name="attrs">{'invisible':[('balance_check','=',False)]}</attribute>
+          </xpath>
+          <xpath expr="/form/sheet/group/group/field[@name='balance_end_real']" position="attributes">
+              <attribute name="attrs">{'invisible':[('balance_check','=',False)]}</attribute>
+          </xpath>
+          <xpath expr="/form/sheet/group/group/field[@name='balance_end_real']" position="after">
+               <field name="balance_end" widget="monetary" options='{"currency_field" : "currency"}'/>
+          </xpath>
+          
+          <xpath expr="/form/sheet/notebook/page/field/tree/field[@name='sequence']" position="after">
+              <field name="id" readonly="1" />
+          </xpath>
+                    
+          <xpath expr="/form/sheet/notebook/page/field/form/group/field[@name='date']" position="before">
+              <field name="id" readonly="1" />
+          </xpath>
+                    # Adapt onchange signature
+          <xpath expr="/form/sheet/notebook/page/field/tree/field[@name='partner_id']" position="replace">
+              <field name="partner_id" on_change="onchange_partner_id(partner_id,parent.profile_id)" domain="['|',('parent_id','=',False),('is_company','=',True)]"/>
+          </xpath>
+          
+          <xpath expr="/form/sheet/notebook/page/field/form/group/field[@name='partner_id']" position="replace">
+             <field name="partner_id" on_change="onchange_partner_id(partner_id,parent.profile_id)" domain="['|',('parent_id','=',False),('is_company','=',True)]"/>
+          </xpath>
+          <xpath expr="/form/sheet/notebook/page/field/form/group/field[@name='type']" position="replace">
+               <field name="type" on_change="onchange_type(partner_id, type, parent.profile_id)"/>
+          </xpath>
+          <xpath expr="/form/sheet/notebook/page/field/tree/field[@name='type']" position="replace">
+               <field name="type" on_change="onchange_type(partner_id, type, parent.profile_id)"/>
+          </xpath>
+          
+      </field>
+  </record>
 
     
         <act_window id="act_bank_statement_from_profile"

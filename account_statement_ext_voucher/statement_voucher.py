@@ -18,7 +18,8 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-from openerp.osv.orm import Model, fields
+
+from openerp.osv.orm import Model
 
 
 class AccountVoucher(Model):
@@ -30,7 +31,8 @@ class AccountVoucher(Model):
         if context is None:
             context = {}
         if not context.get('period_id') and context.get('move_line_ids'):
-            res = self.pool.get('account.move.line').browse(cr, uid , context.get('move_line_ids'))[0].period_id.id
+            res = self.pool.get('account.move.line').browse(
+                    cr, uid, context.get('move_line_ids'), context=context)[0].period_id.id
             context['period_id'] = res
         elif context.get('date'):
             periods = self.pool.get('account.period').find(
@@ -47,4 +49,3 @@ class AccountVoucher(Model):
             ctx = dict(context, date=values.get('date'))
             values['period_id'] = self._get_period(cr, uid, ctx)
         return super(AccountVoucher, self).create(cr, uid, values, context)
-

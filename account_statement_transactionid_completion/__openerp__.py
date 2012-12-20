@@ -24,8 +24,11 @@
  'author': 'Camptocamp',
  'maintainer': 'Camptocamp',
  'category': 'Finance',
- 'complexity': 'normal', #easy, normal, expert
- 'depends': ['account_statement_base_completion', 'base_transaction_id'],
+ 'complexity': 'normal',
+ 'depends': [
+     'account_statement_base_completion',
+     'base_transaction_id'
+     ],
  'description': """
   Add a completion method based on transaction ID providen by the bank/office.
 

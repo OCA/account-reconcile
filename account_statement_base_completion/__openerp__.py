@@ -24,7 +24,7 @@
  'author': 'Camptocamp',
  'maintainer': 'Camptocamp',
  'category': 'Finance',
- 'complexity': 'normal', #easy, normal, expert
+ 'complexity': 'normal',
  'depends': ['account_statement_ext'],
  'description': """
  The goal of this module is to improve the basic bank statement, help dealing with huge volume of

@@ -21,7 +21,7 @@
 
 import time
 from openerp.osv.orm import Model, AbstractModel
-from openerp.osv import fields
+from openerp.osv import fields, osv
 from openerp.tools.translate import _
 from openerp.tools import DEFAULT_SERVER_DATETIME_FORMAT
 

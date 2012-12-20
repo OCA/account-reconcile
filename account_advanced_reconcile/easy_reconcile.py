@@ -34,4 +34,3 @@ class account_easy_reconcile_method(Model):
             'Advanced. Partner and Ref.'),
         ]
         return methods
-
