@@ -22,7 +22,7 @@
 {
     "name" : "Easy Reconcile",
     "version" : "1.1",
-    "depends" : ["account", "base_scheduler_creator"
+    "depends" : ["account",
                 ],
     "author" : "Akretion,Camptocamp",
     "description": """

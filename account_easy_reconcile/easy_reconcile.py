@@ -141,7 +141,6 @@ class account_easy_reconcile(Model):
         'name': fields.char('Name', size=64, required=True),
         'account': fields.many2one('account.account', 'Account', required=True),
         'reconcile_method': fields.one2many('account.easy.reconcile.method', 'task_id', 'Method'),
-        'scheduler': fields.many2one('ir.cron', 'scheduler', readonly=True),
         'rec_log': fields.text('log', readonly=True),
         'unreconciled_count': fields.function(_get_total_unrec,
             type='integer', string='Fully Unreconciled Entries'),
@@ -152,7 +151,7 @@ class account_easy_reconcile(Model):
     def copy_data(self, cr, uid, id, default=None, context=None):
         if default is None:
             default = {}
-        default = dict(default, rec_log=False, scheduler=False)
+        default = dict(default, rec_log=False)
         return super(account_easy_reconcile, self).copy_data(
             cr, uid, id, default=default, context=context)
 
