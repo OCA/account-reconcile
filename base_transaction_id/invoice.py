@@ -20,17 +20,17 @@
 ##############################################################################
 
 from openerp.osv.orm import Model
-from openerp.osv import fields, osv
-from openerp.tools.translate import _
+from openerp.osv import fields
+
 
 class AccountInvoice(Model):
     _inherit = 'account.invoice'
+
     _columns = {
-        'transaction_id':fields.char(
+        'transaction_id': fields.char(
             'Transaction id',
             size=128,
             required=False,
             select=1,
-            help="Transction id from the financial institute"
-        ),
+            help="Transction id from the financial institute"),
     }
