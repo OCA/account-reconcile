@@ -54,7 +54,7 @@ class easy_reconcile_options(orm.AbstractModel):
             'date_base_on': fields.selection(
                 _get_rec_base_date,
                 required=True,
-                string='Date of reconcilation'),
+                string='Date of reconciliation'),
             'filter': fields.char('Filter', size=128),
     }
 
