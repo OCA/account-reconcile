@@ -117,7 +117,6 @@ The lines should have the same amount (with the write-off) and the same referenc
                 <field name="account_profit_id" attrs="{'required':[('write_off','>',0)]}"/>
                 <field name="journal_id" attrs="{'required':[('write_off','>',0)]}"/>
                 <field name="date_base_on"/>
-                <field name="filter" groups="base.group_extended"/>
             </form>
         </field>
     </record>
@@ -135,7 +134,6 @@ The lines should have the same amount (with the write-off) and the same referenc
                 <field name="account_profit_id" attrs="{'required':[('write_off','>',0)]}"/>
                 <field name="journal_id" attrs="{'required':[('write_off','>',0)]}"/>
                 <field name="date_base_on"/>
-                <field name="filter"/>
             </tree>
         </field>
     </record>
