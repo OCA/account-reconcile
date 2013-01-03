@@ -152,8 +152,10 @@ class account_easy_reconcile(orm.Model):
     def _last_history(self, cr, uid, ids, name, args, context=None):
         result = {}
         for history in self.browse(cr, uid, ids, context=context):
-            # history is sorted by date desc
-            result[history.id] = history.history_ids[0].id
+            result[history.id] = False
+            if history.history_ids:
+                # history is sorted by date desc
+                result[history.id] = history.history_ids[0].id
         return result
 
     _columns = {
@@ -238,6 +240,16 @@ class account_easy_reconcile(orm.Model):
                 context=context)
         return True
 
+    def _no_history(self, cr, uid, rec, context=None):
+        """ Raise an `osv.except_osv` error, supposed to
+        be called when there is no history on the reconciliation
+        task.
+        """
+        raise osv.except_osv(
+                _('Error'),
+                _('There is no history of reconciled '
+                  'entries on the task: %s.') % rec.name)
+
     def last_history_reconcile(self, cr, uid, rec_id, context=None):
         """ Get the last history record for this reconciliation profile
         and return the action which opens move lines reconciled
@@ -247,6 +259,8 @@ class account_easy_reconcile(orm.Model):
                     "Only 1 id expected"
             rec_id = rec_id[0]
         rec = self.browse(cr, uid, rec_id, context=context)
+        if not rec.last_history:
+            self._no_history(cr, uid, rec, context=context)
         return rec.last_history.open_reconcile()
 
     def last_history_partial(self, cr, uid, rec_id, context=None):
@@ -258,4 +272,6 @@ class account_easy_reconcile(orm.Model):
                     "Only 1 id expected"
             rec_id = rec_id[0]
         rec = self.browse(cr, uid, rec_id, context=context)
+        if not rec.last_history:
+            self._no_history(cr, uid, rec, context=context)
         return rec.last_history.open_partial()
