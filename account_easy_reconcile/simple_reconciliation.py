@@ -41,7 +41,7 @@ class easy_reconcile_simple(AbstractModel):
         count = 0
         res = []
         while (count < len(lines)):
-            for i in range(count+1, len(lines)):
+            for i in xrange(count+1, len(lines)):
                 writeoff_account_id = False
                 if lines[count][self._key_field] != lines[i][self._key_field]:
                     break
