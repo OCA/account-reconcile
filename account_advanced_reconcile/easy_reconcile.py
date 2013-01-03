@@ -19,10 +19,10 @@
 #
 ##############################################################################
 
-from openerp.osv.orm import Model
+from openerp.osv import orm
 
 
-class account_easy_reconcile_method(Model):
+class account_easy_reconcile_method(orm.Model):
 
     _inherit = 'account.easy.reconcile.method'
 
@@ -31,6 +31,6 @@ class account_easy_reconcile_method(Model):
             _get_all_rec_method(cr, uid, context=context)
         methods += [
             ('easy.reconcile.advanced.ref',
-            'Advanced. Partner and Ref.'),
+             'Advanced. Partner and Ref.'),
         ]
         return methods

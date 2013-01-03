@@ -30,8 +30,6 @@
  'description': """
 Advanced reconciliation methods for the module account_easy_reconcile.
 
-account_easy_reconcile, which is a dependency, is available in the branch: lp:account-extra-addons
-
 In addition to the features implemented in account_easy_reconcile, which are:
  - reconciliation facilities for big volume of transactions
  - setup different profiles of reconciliation by account
@@ -39,7 +37,7 @@ In addition to the features implemented in account_easy_reconcile, which are:
  - this module is also a base to create others reconciliation methods
     which can plug in the profiles
  - a profile a reconciliation can be run manually or by a cron
- - monitoring of reconcilation runs with a few logs
+ - monitoring of reconcilation runs with an history
 
 It implements a basis to created advanced reconciliation methods in a few lines
 of code.
@@ -63,7 +61,6 @@ A method is already implemented in this module, it matches on entries:
 The base class to find the reconciliations is built to be as efficient as
 possible.
 
-
 So basically, if you have an invoice with 3 payments (one per month), the first
 month, it will partial reconcile the debit move line with the first payment, the second
 month, it will partial reconcile the debit move line with 2 first payments,
@@ -75,9 +72,7 @@ many offices.
 
  """,
  'website': 'http://www.camptocamp.com',
- 'init_xml': [],
- 'update_xml': ['easy_reconcile_view.xml'],
- 'demo_xml': [],
+ 'data': ['easy_reconcile_view.xml'],
  'test': [],
  'images': [],
  'installable': True,
