@@ -94,7 +94,6 @@ class easy_reconcile_simple_name(TransientModel):
 
     _name = 'easy.reconcile.simple.name'
     _inherit = 'easy.reconcile.simple'
-    _auto = True  # False when inherited from AbstractModel
 
     # has to be subclassed
     # field name used as key for matching the move lines
@@ -105,7 +104,6 @@ class easy_reconcile_simple_partner(TransientModel):
 
     _name = 'easy.reconcile.simple.partner'
     _inherit = 'easy.reconcile.simple'
-    _auto = True  # False when inherited from AbstractModel
 
     # has to be subclassed
     # field name used as key for matching the move lines
@@ -116,7 +114,6 @@ class easy_reconcile_simple_reference(TransientModel):
 
     _name = 'easy.reconcile.simple.reference'
     _inherit = 'easy.reconcile.simple'
-    _auto = True  # False when inherited from AbstractModel
 
     # has to be subclassed
     # field name used as key for matching the move lines
