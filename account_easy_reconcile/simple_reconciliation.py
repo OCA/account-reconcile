@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ##############################################################################
 #
-#    Copyright 2012 Camptocamp SA (Guewen Baconnier)
+#    Copyright 2012-2013 Camptocamp SA (Guewen Baconnier)
 #    Copyright (C) 2010   Sébastien Beau
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -110,6 +110,7 @@ class easy_reconcile_simple_partner(TransientModel):
     # has to be subclassed
     # field name used as key for matching the move lines
     _key_field = 'partner_id'
+
 
 class easy_reconcile_simple_reference(TransientModel):
 

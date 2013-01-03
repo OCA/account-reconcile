@@ -20,11 +20,11 @@
 ##############################################################################
 
 {
-    "name" : "Easy Reconcile",
-    "version" : "1.1",
-    "depends" : ["account",
+    "name": "Easy Reconcile",
+    "version": "1.1",
+    "depends": ["account",
                 ],
-    "author" : "Akretion,Camptocamp",
+    "author": "Akretion,Camptocamp",
     "description": """
 Easy Reconcile
 ==============
@@ -53,11 +53,11 @@ This latter add more complex reconciliations,
 allows multiple lines and partial.
 
 """,
-    "website" : "http://www.akretion.com/",
-    "category" : "Finance",
-    "init_xml" : [],
-    "demo_xml" : [],
-    "update_xml" : [
+    "website": "http://www.akretion.com/",
+    "category": "Finance",
+    "init_xml": [],
+    "demo_xml": [],
+    "update_xml": [
         "easy_reconcile.xml",
         "easy_reconcile_history_view.xml",
         ],
