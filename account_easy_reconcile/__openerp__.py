@@ -34,17 +34,18 @@ in order to provide:
  - reconciliation facilities for big volume of transactions
  - setup different profiles of reconciliation by account
  - each profile can use many methods of reconciliation
- - this module is also a base to create others reconciliation methods
-    which can plug in the profiles
- - a profile a reconciliation can be run manually or by a cron
- - monitoring of reconciliation runs with an history which keep track
-   of the reconciled entries
+ - this module is also a base to create others
+   reconciliation methods which can plug in the profiles
+ - a profile a reconciliation can be run manually
+   or by a cron
+ - monitoring of reconciliation runs with an history
+   which keep track of the reconciled Journal items
 
 2 simple reconciliation methods are integrated
 in this module, the simple reconciliations works
 on 2 lines (1 debit / 1 credit) and do not allow
 partial reconcilation, they also match on 1 key,
-partner or entry name.
+partner or Journal item name.
 
 You may be interested to install also the
 ``account_advanced_reconciliation`` module.
