@@ -43,19 +43,20 @@ It implements a basis to created advanced reconciliation methods in a few lines
 of code.
 
 Typically, such a method can be:
- - Reconcile entries if the partner and the ref are equal
- - Reconcile entries if the partner is equal and the ref is the same than ref
-   or name
- - Reconcile entries if the partner is equal and the ref match with a pattern
+ - Reconcile Journal items if the partner and the ref are equal
+ - Reconcile Journal items if the partner is equal and the ref
+   is the same than ref or name
+ - Reconcile Journal items if the partner is equal and the ref
+   match with a pattern
 
 And they allows:
  - Reconciliations with multiple credit / multiple debit lines
  - Partial reconciliations
  - Write-off amount as well
 
-A method is already implemented in this module, it matches on entries:
- * Partner
- * Ref on credit move lines should be case insensitive equals to the ref or
+A method is already implemented in this module, it matches on items:
+ - Partner
+ - Ref on credit move lines should be case insensitive equals to the ref or
    the name of the debit move line
 
 The base class to find the reconciliations is built to be as efficient as

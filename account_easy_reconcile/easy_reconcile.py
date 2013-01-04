@@ -165,11 +165,11 @@ class account_easy_reconcile(orm.Model):
         'reconcile_method': fields.one2many(
             'account.easy.reconcile.method', 'task_id', 'Method'),
         'unreconciled_count': fields.function(
-            _get_total_unrec, type='integer', string='Unreconciled Entries'),
+            _get_total_unrec, type='integer', string='Unreconciled Items'),
         'reconciled_partial_count': fields.function(
             _get_partial_rec,
             type='integer',
-            string='Partially Reconciled Entries'),
+            string='Partially Reconciled Items'),
         'history_ids': fields.one2many(
             'easy.reconcile.history',
             'easy_reconcile_id',
@@ -249,7 +249,7 @@ class account_easy_reconcile(orm.Model):
         raise osv.except_osv(
                 _('Error'),
                 _('There is no history of reconciled '
-                  'entries on the task: %s.') % rec.name)
+                  'items on the task: %s.') % rec.name)
 
     def last_history_reconcile(self, cr, uid, rec_id, context=None):
         """ Get the last history record for this reconciliation profile

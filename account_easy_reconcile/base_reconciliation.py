@@ -41,7 +41,7 @@ class easy_reconcile_base(orm.AbstractModel):
     def automatic_reconcile(self, cr, uid, ids, context=None):
         """ Reconciliation method called from the view.
 
-        :return: list of reconciled ids, list of partially reconciled entries
+        :return: list of reconciled ids, list of partially reconciled items
         """
         if isinstance(ids, (int, long)):
             ids = [ids]
@@ -161,7 +161,7 @@ class easy_reconcile_base(orm.AbstractModel):
         :param boolean allow_partial: if True, partial reconciliation will be
                                       created, otherwise only Full
                                       reconciliation will be created
-        :return: tuple of boolean values, first item is wether the the entries
+        :return: tuple of boolean values, first item is wether the items
                  have been reconciled or not,
                  the second is wether the reconciliation is full (True)
                  or partial (False)
