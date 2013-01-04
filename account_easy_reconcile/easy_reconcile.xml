@@ -22,7 +22,7 @@
                         type="object"/>
                 </header>
                 <sheet>
-                    <separator colspan="4" string="Task Information" />
+                    <separator colspan="4" string="Profile Information" />
                     <group>
                         <group>
                             <field name="name" select="1"/>
@@ -95,6 +95,16 @@ The lines should have the same amount (with the write-off) and the same referenc
         <field name="res_model">account.easy.reconcile</field>
         <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+          <p class="oe_view_nocontent_create">
+            Click to add a reconciliation profile.
+          </p><p>
+            A reconciliation profile specifies, for one account, how
+            the entries should be reconciled.
+            You can select one or many reconciliation methods which will
+            be run sequentially to match the entries between them.
+          </p>
+        </field>
     </record>
 
 
