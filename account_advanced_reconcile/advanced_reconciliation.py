@@ -19,14 +19,13 @@
 #
 ##############################################################################
 
-from openerp.osv.orm import TransientModel
+from openerp.osv import orm
 
 
-class easy_reconcile_advanced_ref(TransientModel):
+class easy_reconcile_advanced_ref(orm.TransientModel):
 
     _name = 'easy.reconcile.advanced.ref'
     _inherit = 'easy.reconcile.advanced'
-    _auto = True  # False when inherited from AbstractModel
 
     def _skip_line(self, cr, uid, rec, move_line, context=None):
         """

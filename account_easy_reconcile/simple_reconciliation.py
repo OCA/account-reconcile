@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ##############################################################################
 #
-#    Copyright 2012 Camptocamp SA (Guewen Baconnier)
+#    Copyright 2012-2013 Camptocamp SA (Guewen Baconnier)
 #    Copyright (C) 2010   Sébastien Beau
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -41,7 +41,7 @@ class easy_reconcile_simple(AbstractModel):
         count = 0
         res = []
         while (count < len(lines)):
-            for i in range(count+1, len(lines)):
+            for i in xrange(count+1, len(lines)):
                 writeoff_account_id = False
                 if lines[count][self._key_field] != lines[i][self._key_field]:
                     break
@@ -94,7 +94,6 @@ class easy_reconcile_simple_name(TransientModel):
 
     _name = 'easy.reconcile.simple.name'
     _inherit = 'easy.reconcile.simple'
-    _auto = True  # False when inherited from AbstractModel
 
     # has to be subclassed
     # field name used as key for matching the move lines
@@ -105,17 +104,16 @@ class easy_reconcile_simple_partner(TransientModel):
 
     _name = 'easy.reconcile.simple.partner'
     _inherit = 'easy.reconcile.simple'
-    _auto = True  # False when inherited from AbstractModel
 
     # has to be subclassed
     # field name used as key for matching the move lines
     _key_field = 'partner_id'
 
+
 class easy_reconcile_simple_reference(TransientModel):
 
     _name = 'easy.reconcile.simple.reference'
     _inherit = 'easy.reconcile.simple'
-    _auto = True  # False when inherited from AbstractModel
 
     # has to be subclassed
     # field name used as key for matching the move lines

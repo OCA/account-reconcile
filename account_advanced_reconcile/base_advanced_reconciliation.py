@@ -19,21 +19,17 @@
 #
 ##############################################################################
 
-from itertools import groupby, product
-from operator import itemgetter
-from openerp.osv.orm import Model, AbstractModel, TransientModel
-from openerp.osv import fields, osv
+from itertools import product
+from openerp.osv import orm
 
 
-class easy_reconcile_advanced(AbstractModel):
+class easy_reconcile_advanced(orm.AbstractModel):
 
     _name = 'easy.reconcile.advanced'
     _inherit = 'easy.reconcile.base'
 
     def _query_debit(self, cr, uid, rec, context=None):
-        """Select all move (debit>0) as candidate. Optional choice on invoice
-        will filter with an inner join on the related moves.
-        """
+        """Select all move (debit>0) as candidate. """
         select = self._select(rec)
         sql_from = self._from(rec)
         where, params = self._where(rec)
@@ -47,9 +43,7 @@ class easy_reconcile_advanced(AbstractModel):
         return cr.dictfetchall()
 
     def _query_credit(self, cr, uid, rec, context=None):
-        """Select all move (credit>0) as candidate. Optional choice on invoice
-        will filter with an inner join on the related moves.
-        """
+        """Select all move (credit>0) as candidate. """
         select = self._select(rec)
         sql_from = self._from(rec)
         where, params = self._where(rec)
@@ -176,9 +170,9 @@ class easy_reconcile_advanced(AbstractModel):
         """
         mkey, mvalue = matcher
         omkey, omvalue = opposite_matcher
-        assert mkey == omkey, "A matcher %s is compared with a matcher %s, " \
-                " the _matchers and _opposite_matchers are probably wrong" % \
-                (mkey, omkey)
+        assert mkey == omkey, ("A matcher %s is compared with a matcher %s, "
+                " the _matchers and _opposite_matchers are probably wrong" %
+                (mkey, omkey))
         if not isinstance(mvalue, (list, tuple)):
             mvalue = mvalue,
         if not isinstance(omvalue, (list, tuple)):
@@ -186,7 +180,13 @@ class easy_reconcile_advanced(AbstractModel):
         return easy_reconcile_advanced._compare_matcher_values(mkey, mvalue, omvalue)
 
     def _compare_opposite(self, cr, uid, rec, move_line, opposite_move_line,
-            matchers, context=None):
+                          matchers, context=None):
+        """ Iterate over the matchers of the move lines vs opposite move lines
+        and if they all match, return True.
+
+        If all the matchers match for a move line and an opposite move line,
+        they are candidate for a reconciliation.
+        """
         opp_matchers = self._opposite_matchers(cr, uid, rec, opposite_move_line,
                 context=context)
         for matcher in matchers:
@@ -216,14 +216,15 @@ class easy_reconcile_advanced(AbstractModel):
         :return: list of matching lines
         """
         matchers = self._matchers(cr, uid, rec, move_line, context=context)
-        return [op for op in opposite_move_lines if \
-            self._compare_opposite(cr, uid, rec, move_line, op, matchers, context=context)]
+        return [op for op in opposite_move_lines if
+                self._compare_opposite(
+                    cr, uid, rec, move_line, op, matchers, context=context)]
 
     def _action_rec(self, cr, uid, rec, context=None):
         credit_lines = self._query_credit(cr, uid, rec, context=context)
         debit_lines = self._query_debit(cr, uid, rec, context=context)
         return self._rec_auto_lines_advanced(
-            cr, uid, rec, credit_lines, debit_lines, context=context)
+                cr, uid, rec, credit_lines, debit_lines, context=context)
 
     def _skip_line(self, cr, uid, rec, move_line, context=None):
         """
@@ -234,9 +235,7 @@ class easy_reconcile_advanced(AbstractModel):
         return False
 
     def _rec_auto_lines_advanced(self, cr, uid, rec, credit_lines, debit_lines, context=None):
-        if context is None:
-            context = {}
-
+        """ Advanced reconciliation main loop """
         reconciled_ids = []
         partial_reconciled_ids = []
         reconcile_groups = []

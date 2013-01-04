@@ -20,11 +20,11 @@
 ##############################################################################
 
 {
-    "name" : "Easy Reconcile",
-    "version" : "1.1",
-    "depends" : ["account",
+    "name": "Easy Reconcile",
+    "version": "1.1",
+    "depends": ["account",
                 ],
-    "author" : "Akretion,Camptocamp",
+    "author": "Akretion,Camptocamp",
     "description": """
 Easy Reconcile
 ==============
@@ -39,13 +39,13 @@ in order to provide:
  - a profile a reconciliation can be run manually
    or by a cron
  - monitoring of reconciliation runs with an history
-   which keep track of the reconciled entries
+   which keep track of the reconciled Journal items
 
 2 simple reconciliation methods are integrated
 in this module, the simple reconciliations works
 on 2 lines (1 debit / 1 credit) and do not allow
 partial reconcilation, they also match on 1 key,
-partner or entry name.
+partner or Journal item name.
 
 You may be interested to install also the
 ``account_advanced_reconciliation`` module.
@@ -53,11 +53,11 @@ This latter add more complex reconciliations,
 allows multiple lines and partial.
 
 """,
-    "website" : "http://www.akretion.com/",
-    "category" : "Finance",
-    "init_xml" : [],
-    "demo_xml" : [],
-    "update_xml" : [
+    "website": "http://www.akretion.com/",
+    "category": "Finance",
+    "init_xml": [],
+    "demo_xml": [],
+    "update_xml": [
         "easy_reconcile.xml",
         "easy_reconcile_history_view.xml",
         ],
