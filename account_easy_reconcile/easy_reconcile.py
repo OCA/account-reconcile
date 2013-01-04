@@ -173,7 +173,8 @@ class account_easy_reconcile(orm.Model):
         'history_ids': fields.one2many(
             'easy.reconcile.history',
             'easy_reconcile_id',
-            string='History'),
+            string='History',
+            readonly=True),
         'last_history':
             fields.function(
                 _last_history,
