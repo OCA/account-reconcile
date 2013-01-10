@@ -44,5 +44,5 @@
  'images': [],
  'auto_install': True,
  'license': 'AGPL-3',
- 'active': False,
+ 
 }

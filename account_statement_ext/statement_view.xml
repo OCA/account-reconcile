@@ -2,31 +2,6 @@
 <openerp>
 <data>
 
-    <!-- Account Move Line : add statement_treasury_id -->
-     <record id="view_move_line_tree" model="ir.ui.view">
-            <field name="name">account.move.line.tree</field>
-            <field name="model">account.move.line</field>
-            <field name="type">tree</field>
-            <field name="inherit_id" ref="account.view_move_line_tree"/>
-            <field name="arch" type="xml">
-                <field name="ref" position="after">
-                    <field name="statement_id"/>
-                </field>
-            </field>
-        </record>
-        <record id="view_account_move_line_filter" model="ir.ui.view">
-            <field name="name">account.move.line.search.add_field</field>
-            <field name="model">account.move.line</field>
-            <field name="type">search</field>
-            <field name="inherit_id" ref="account.view_account_move_line_filter"/>
-            <field name="arch" type="xml">
-                <field name="period_id" context="{'period_id':self}" position="after">
-                    <field name="statement_id"/>
-                    <field name="ref"/>
-                </field>
-            </field>
-        </record>
-        
     <record id="statement_importer_view_form" model="ir.ui.view">
         <field name="name">account.statement.profile.view</field>
         <field name="model">account.statement.profile</field>
@@ -143,7 +118,7 @@
               <attribute name="attrs">{'invisible':[('balance_check','=',False)]}</attribute>
           </xpath>
           <xpath expr="/form/sheet/group/group/field[@name='balance_end_real']" position="after">
-               <field name="balance_end" widget="monetary" options='{"currency_field" : "currency"}'/>
+               <field name="balance_end" widget="monetary" options='{"currency_field" : "currency"}' attrs="{'invisible':[('balance_check','=',False)]}"/>
           </xpath>
           
           <xpath expr="/form/sheet/notebook/page/field/tree/field[@name='sequence']" position="after">
