@@ -286,6 +286,8 @@ class AccountStatementCompletionRule(Model):
             pattern = ".*%s.*" % st_line.label
             cr.execute(sql, (pattern,))
             result = cr.fetchall()
+            if not result:
+                return res
             if len(result) > 1:
                 raise ErrorTooManyPartner(
                         _('Line named "%s" (Ref:%s) was matched by more '
@@ -442,9 +444,9 @@ class AccountBankSatement(Model):
                     if res:
                         compl_lines += 1
                 except ErrorTooManyPartner, exc:
-                    msg += exc.value + "\n"
+                    msg += exc.__repr__() + "\n"
                 except Exception, exc:
-                    msg += exc.value + "\n"
+                    msg += exc.__repr__() + "\n"
                 # vals = res and res.keys() or False
                 if res:
                     vals = res[line.id]
