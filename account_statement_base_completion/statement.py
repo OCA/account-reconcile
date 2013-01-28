@@ -444,9 +444,9 @@ class AccountBankSatement(Model):
                     if res:
                         compl_lines += 1
                 except ErrorTooManyPartner, exc:
-                    msg += exc.__repr__() + "\n"
+                    msg += repr(exc) + "\n"
                 except Exception, exc:
-                    msg += exc.__repr__() + "\n"
+                    msg += repr(exc) + "\n"
                 # vals = res and res.keys() or False
                 if res:
                     vals = res[line.id]
