@@ -43,7 +43,6 @@ class AccountStatementProfil(Model):
             help="Tic that box to automatically launch the completion "
                  "on each imported file using this profile."),
         'last_import_date': fields.datetime("Last Import Date"),
-        'rec_log': fields.text('log', readonly=True),
         'import_type': fields.selection(
             get_import_type_selection,
             'Type of import',
@@ -55,29 +54,17 @@ class AccountStatementProfil(Model):
 
     def write_logs_after_import(self, cr, uid, ids, statement_id, num_lines, context):
         """
-        Write the log in the logger + in the log field of the profile to report the user about
-        what has been done.
+        Write the log in the logger
 
         :param int/long statement_id: ID of the concerned account.bank.statement
         :param int/long num_lines: Number of line that have been parsed
         :return: True
         """
-        if isinstance(ids, (int, long)):
-            ids = [ids]
-        for id in ids:
-            log = self.read(cr, uid, id, ['rec_log'], context=context)['rec_log']
-            log_line = log and log.split("\n") or []
-            import_date = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-            log_line[0:0] = [import_date + ' : '
-                + _("Bank Statement ID %s have been imported with %s lines ") % (statement_id, num_lines)]
-            log = "\n".join(log_line)
-            self.write(cr, uid, id, {'rec_log': log, 'last_import_date': import_date}, context=context)
-            self.message_post(
-                    cr,
-                    uid,
-                    [statement_id],
-                    body=_('Statement ID %s have been imported with %s lines.') % (statement_id, num_lines),
-                    context=context)
+        self.message_post(cr,
+                          uid,
+                          ids,
+                          body=_('Statement ID %s have been imported with %s lines.') % (statement_id, num_lines),
+                          context=context)
         return True
 
     def prepare_global_commission_line_vals(
