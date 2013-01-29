@@ -16,10 +16,9 @@
                 <field name="import_type"/>
                 <button name="%(account_statement_base_import.statement_importer_action)d"
                                                         string="Import Bank Statement"
-                                                        type="action" icon="gtk-ok" 
+                                                        type="action" icon="gtk-ok"
                                                         colspan = "2"/>
                 <separator colspan="4" string="Import Logs"/>
-                <field name="rec_log" colspan="4" nolabel="1"/>
             </field>
         </field>
     </record>
@@ -39,6 +38,6 @@
          </field>
      </record>
 
-    
+
 </data>
 </openerp>
