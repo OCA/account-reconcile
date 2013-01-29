@@ -43,6 +43,7 @@ class AccountStatementProfil(Model):
             help="Tic that box to automatically launch the completion "
                  "on each imported file using this profile."),
         'last_import_date': fields.datetime("Last Import Date"),
+        'rec_log': fields.text('log', readonly=True), # deprecated
         'import_type': fields.selection(
             get_import_type_selection,
             'Type of import',

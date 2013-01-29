@@ -18,7 +18,10 @@
                                                         string="Import Bank Statement"
                                                         type="action" icon="gtk-ok"
                                                         colspan = "2"/>
-                <separator colspan="4" string="Import Logs"/>
+                <group attrs="{'invisible': [('rec_log', '=', False)]}">
+                    <separator colspan="4" string="Historical Import Logs"/>
+                    <field name="rec_log" colspan="4" nolabel="1" />
+                </group>
             </field>
         </field>
     </record>
