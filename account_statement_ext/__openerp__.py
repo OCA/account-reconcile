@@ -27,7 +27,8 @@
  'complexity': 'normal',
  'depends': [
      'account',
-     'report_webkit'
+     'report_webkit',
+     'account_voucher'
      ],
  'description': """
  Improve the basic bank statement, by adding various new features,
