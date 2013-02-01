@@ -31,6 +31,8 @@ class AccountStatementProfil(Model):
     journal to use, the partner and commision account and so on.
     """
     _name = "account.statement.profile"
+    _inherit = ['mail.thread']
+
     _description = "Statement Profil"
 
     _columns = {
