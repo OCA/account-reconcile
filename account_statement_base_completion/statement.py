@@ -286,6 +286,8 @@ class AccountStatementCompletionRule(Model):
             pattern = ".*%s.*" % st_line.label
             cr.execute(sql, (pattern,))
             result = cr.fetchall()
+            if not result:
+                return res
             if len(result) > 1:
                 raise ErrorTooManyPartner(
                         _('Line named "%s" (Ref:%s) was matched by more '
@@ -430,9 +432,9 @@ class AccountBankSatement(Model):
         if context is None:
             context = {}
         stat_line_obj = self.pool.get('account.bank.statement.line')
-        msg = ""
         compl_lines = 0
         for stat in self.browse(cr, uid, ids, context=context):
+            msg_lines = []
             ctx = context.copy()
             for line in stat.line_ids:
                 res = {}
@@ -442,14 +444,15 @@ class AccountBankSatement(Model):
                     if res:
                         compl_lines += 1
                 except ErrorTooManyPartner, exc:
-                    msg += exc.value + "\n"
+                    msg_lines.append(repr(exc))
                 except Exception, exc:
-                    msg += exc.value + "\n"
+                    msg_lines.append(repr(exc))
                 # vals = res and res.keys() or False
                 if res:
                     vals = res[line.id]
                     vals['already_completed'] = True
                     stat_line_obj.write(cr, uid, [line.id], vals, context=ctx)
-            self.write_completion_log(
-                    cr, uid, stat.id, msg, compl_lines, context=context)
+            msg = u'\n'.join(msg_lines)
+            self.write_completion_log(cr, uid, stat.id,
+                                  msg, compl_lines, context=context)
         return True
