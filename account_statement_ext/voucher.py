@@ -28,8 +28,6 @@ class AccountVoucher(Model):
 
     def _get_period(self, cr, uid, context=None):
         """If period not in context, take it from the move lines"""
-        if context is None:
-            context = {}
         if not context.get('period_id') and context.get('move_line_ids'):
             res = self.pool.get('account.move.line').browse(
                     cr, uid, context.get('move_line_ids'), context=context)[0].period_id.id
