@@ -21,7 +21,7 @@
 
 {
     "name": "Easy Reconcile",
-    "version": "1.1",
+    "version": "1.2",
     "depends": ["account",
                 ],
     "author": "Akretion,Camptocamp",
@@ -55,12 +55,10 @@ allows multiple lines and partial.
 """,
     "website": "http://www.akretion.com/",
     "category": "Finance",
-    "init_xml": [],
     "demo_xml": [],
-    "update_xml": [
-        "easy_reconcile.xml",
-        "easy_reconcile_history_view.xml",
-        ],
+    "data": ["easy_reconcile.xml",
+             "easy_reconcile_history_view.xml",
+             "security/ir.model.access.csv"],
     'license': 'AGPL-3',
     "auto_install": False,
     "installable": True,
