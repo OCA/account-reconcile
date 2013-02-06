@@ -551,7 +551,7 @@ class AccountBankSatementLine(Model):
             res['account_id'] = receiv_account
         return res
 
-    def onchange_partner_id(self, cr, uid, ids, partner_id, profile_id, context=None):
+    def onchange_partner_id(self, cr, uid, ids, partner_id, profile_id=None, context=None):
         """
         Override of the basic method as we need to pass the profile_id in the on_change_type
         call.
@@ -571,7 +571,9 @@ class AccountBankSatementLine(Model):
                 type = 'customer'
         res_type = self.onchange_type(cr, uid, ids, partner_id, type, profile_id, context=context)  # Chg
         if res_type['value'] and res_type['value'].get('account_id', False):
-            return {'value': {'type': type, 'account_id': res_type['value']['account_id']}}
+            return {'value': {'type': type,
+                              'account_id': res_type['value']['account_id'],
+                              'voucher_id': False}}
         return {'value': {'type': type}}
 
     def onchange_type(self, cr, uid, line_id, partner_id, type, profile_id, context=None):

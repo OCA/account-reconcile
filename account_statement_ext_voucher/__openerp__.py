@@ -30,8 +30,12 @@
      'account_voucher'
      ],
  'description': """
- This module is only needed when using account_bank_statement_ext with voucher in order to compute the period
+ This module is deprecated. It was only needed when using account_bank_statement_ext with voucher in order to compute the period
  correctly. This is mainly because with account_bank_statement_ext, the period is computed for each line.
+ 
+ Now, we include this in the account_statement_ext module and added a dependencies on account_voucher (mainly cause we can't get
+ rid of the voucher in version 7.0).
+ 
  """,
  'website': 'http://www.camptocamp.com',
  'init_xml': [],
@@ -40,9 +44,9 @@
  ],
  'demo_xml': [],
  'test': [],
- 'installable': True,
+ 'installable': False,
  'images': [],
- 'auto_install': True,
+ 'auto_install': False,
  'license': 'AGPL-3',
  
 }

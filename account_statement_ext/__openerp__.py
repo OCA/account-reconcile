@@ -2,7 +2,7 @@
 ##############################################################################
 #
 #    Author: Nicolas Bessi, Joel Grand-Guillaume
-#    Copyright 2011-2012 Camptocamp SA
+#    Copyright 2011-2013 Camptocamp SA
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -20,14 +20,15 @@
 ##############################################################################
 
 {'name': "Bank statement extension and profiles",
- 'version': '1.1',
+ 'version': '1.2.0',
  'author': 'Camptocamp',
  'maintainer': 'Camptocamp',
  'category': 'Finance',
  'complexity': 'normal',
  'depends': [
      'account',
-     'report_webkit'
+     'report_webkit',
+     'account_voucher'
      ],
  'description': """
  Improve the basic bank statement, by adding various new features,
@@ -62,6 +63,8 @@
     all the erronous line in a same popup instead of raising and crashing on every step.
 
  4) Remove the period on the bank statement, and compute it for each line based on their date instead.
+    It also adds this feature in the voucher in order to compute the period correctly.
+
 
  5) Cancelling a bank statement is much more easy and will cancel all related entries, unreconcile them,
     and finally delete them.
