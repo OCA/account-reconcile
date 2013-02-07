@@ -179,23 +179,6 @@ class AccountBankSatement(Model):
          ['journal_id', 'period_id']),
     ]
 
-    def button_cancel(self, cr, uid, ids, context=None):
-        """
-        We cancel the related move, delete them and finally put the
-        statement in draft state. So no need to unreconcile all entries,
-        then unpost them, then finaly cancel the bank statement.
-        """
-        for st in self.browse(cr, uid, ids, context=context):
-            if st.state == 'draft':
-                continue
-            ids = []
-            for line in st.line_ids:
-                for move in line.move_ids:
-                    if move.state != 'draft':
-                        move.button_cancel(context=context)
-        return super(AccountBankSatement, self).button_cancel(
-                cr, uid, ids, context=context)
-
     def _prepare_move(self, cr, uid, st_line, st_line_number, context=None):
         """Add the period_id from the statement line date to the move preparation.
            Originaly, it was taken from the statement period_id
