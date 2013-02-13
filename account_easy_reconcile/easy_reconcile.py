@@ -96,6 +96,12 @@ class account_easy_reconcile_method(orm.Model):
                 string='Task',
                 required=True,
                 ondelete='cascade'),
+            'company_id': fields.related('task_id','company_id',
+                                         relation='res.company',
+                                         type='many2one',
+                                         string='Company',
+                                         store=True,
+                                         readonly=True),
     }
 
     _defaults = {
@@ -182,6 +188,7 @@ class account_easy_reconcile(orm.Model):
                 type='many2one',
                 relation='easy.reconcile.history',
                 readonly=True),
+        'company_id': fields.many2one('res.company', 'Company'),
     }
 
     def _prepare_run_transient(self, cr, uid, rec_method, context=None):

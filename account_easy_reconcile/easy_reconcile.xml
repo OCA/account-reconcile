@@ -27,6 +27,7 @@
                         <group>
                             <field name="name" select="1"/>
                             <field name="account"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
                         </group>
                         <group>
                             <field name="unreconciled_count"/>
@@ -76,6 +77,7 @@ The lines should have the same amount (with the write-off) and the same referenc
             <tree string="Automatic Easy Reconcile">
                 <field name="name"/>
                 <field name="account"/>
+                <field name="company_id" groups="base.group_multi_company"/>
                 <field name="unreconciled_count"/>
                 <field name="reconciled_partial_count"/>
                 <button icon="gtk-ok" name="run_reconcile" colspan="4"
