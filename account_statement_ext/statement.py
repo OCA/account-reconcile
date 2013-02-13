@@ -76,6 +76,7 @@ class AccountStatementProfil(Model):
             'Bank Statement Prefix', size=32),
         'bank_statement_ids': fields.one2many(
             'account.bank.statement', 'profile_id', 'Bank Statement Imported'),
+        'company_id': fields.many2one('res.company', 'Company'),
     }
 
     def _check_partner(self, cr, uid, ids, context=None):

@@ -76,13 +76,11 @@
 
  """,
  'website': 'http://www.camptocamp.com',
- 'init_xml': [],
- 'update_xml': [
-     'statement_view.xml',
-     'report/bank_statement_webkit_header.xml',
-     'report.xml',
-     'security/ir.model.access.csv',
- ],
+ 'data': ['statement_view.xml',
+          'report/bank_statement_webkit_header.xml',
+          'report.xml',
+          'security/ir.model.access.csv',
+          'security/ir_rule.xml'],
  'demo_xml': [],
  'test': [],
  'installable': True,
