@@ -81,6 +81,13 @@ class easy_reconcile_history(orm.Model):
                     relation='account.move.line',
                     readonly=True,
                     multi='lines'),
+            'company_id': fields.related('easy_reconcile_id','company_id',
+                                         relation='res.company',
+                                         type='many2one',
+                                         string='Company',
+                                         store=True,
+                                         readonly=True),
+
         }
 
     def _open_move_lines(self, cr, uid, history_id, rec_type='full', context=None):

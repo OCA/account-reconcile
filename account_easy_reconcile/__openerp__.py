@@ -21,9 +21,8 @@
 
 {
     "name": "Easy Reconcile",
-    "version": "1.2",
-    "depends": ["account",
-                ],
+    "version": "1.3.0",
+    "depends": ["account"],
     "author": "Akretion,Camptocamp",
     "description": """
 Easy Reconcile
@@ -58,6 +57,7 @@ allows multiple lines and partial.
     "demo_xml": [],
     "data": ["easy_reconcile.xml",
              "easy_reconcile_history_view.xml",
+             "security/ir_rule.xml",
              "security/ir.model.access.csv"],
     'license': 'AGPL-3',
     "auto_install": False,
