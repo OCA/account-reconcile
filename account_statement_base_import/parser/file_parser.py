@@ -131,17 +131,13 @@ class FileParser(BankStatementImportParser):
         wb_file.write(self.filebuffer)
         # We ensure that cursor is at beginig of file
         wb_file.seek(0)
-        wb = xlrd.open_workbook(wb_file.name)
-        self._datemode = wb.datemode
-        sheet = wb.sheet_by_index(0)
-        header = sheet.row_values(0)
-        res = []
-        for rownum in range(1, sheet.nrows):
-            res.append(dict(zip(header, sheet.row_values(rownum))))
-        try:
-            wb_file.close()
-        except Exception, e:
-            pass  # file is already closed
+        with xlrd.open_workbook(wb_file.name) as wb:
+            self._datemode = wb.datemode
+            sheet = wb.sheet_by_index(0)
+            header = sheet.row_values(0)
+            res = []
+            for rownum in range(1, sheet.nrows):
+                res.append(dict(zip(header, sheet.row_values(rownum))))
         return res
 
     def _from_csv(self, result_set, conversion_rules):
