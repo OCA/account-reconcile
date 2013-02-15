@@ -201,7 +201,7 @@ class FileParser(BankStatementImportParser):
                     except Exception, err:
                         raise except_osv(_('Invalid data'),
                                          _("Value %s of column %s is not valid."
-                                           "\n Please check the line with ref %s:"y
+                                           "\n Please check the line with ref %s:"
                                            "\n \n Detail: %s") % (line.get(rule, _('Missing')),
                                                                   rule,
                                                                   line.get('ref', line),
