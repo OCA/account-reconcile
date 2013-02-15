@@ -29,6 +29,11 @@ try:
 except:
     raise Exception(_('Please install python lib xlrd'))
 
+def float_or_zero(val):
+    """ Convertion function used to manage
+    empty string into float usecase"""
+    return val and float(val) or 0.0
+
 
 class GenericFileParser(FileParser):
     """
@@ -42,8 +47,8 @@ class GenericFileParser(FileParser):
                             'ref': unicode,
                             'label': unicode,
                             'date': datetime.datetime,
-                            'amount': float,
-                            'commission_amount': float
+                            'amount': float_or_zero,
+                            'commission_amount': float_or_zero
                           }
         # Order of cols does not matter but first row of the file has to be header
         keys_to_validate = ['ref', 'label', 'date', 'amount', 'commission_amount']
