@@ -157,22 +157,25 @@ class FileParser(BankStatementImportParser):
                         line[rule] = datetime.datetime.strptime(date_string,
                                                                 '%Y-%m-%d')
                     except ValueError, err:
-                        raise except_osv(_('Invalid data'),
-                                         _("Date format is not valid."
-                                           " It should be YYYY-MM-DD for column: %s"
-                                           " value: %s"
-                                           " \n line: %s \n Detail: %s") % (rule, line[rule],
-                                                                            line, repr(err)))
+                        raise except_osv(_("Date format is not valid."),
+                                         _(" It should be YYYY-MM-DD for column: %s"
+                                           " value: %s \n \n"
+                                           " \n Please check the line with ref: %s"
+                                           " \n \n Detail: %s") % (rule,
+                                                                   line.get(rule, _('Missing')),
+                                                                   line.get('ref', line),
+                                                                   repr(err)))
                 else:
                     try:
                         line[rule] = conversion_rules[rule](line[rule])
                     except Exception, err:
                         raise except_osv(_('Invalid data'),
-                                         _("Value %s of column % is not valid."
-                                           "\n line: %s "
-                                           "\n Detail: %s") % (line[rule], rule,
-                                                               line, repr(err)))
-
+                                         _("Value %s of column %s is not valid."
+                                           "\n Please check the line with ref %s:"
+                                           "\n \n Detail: %s") % (line.get(rule, _('Missing')),
+                                                                  rule,
+                                                                  line.get('ref', line),
+                                                                  repr(err)))
         return result_set
 
     def _from_xls(self, result_set, conversion_rules):
@@ -187,22 +190,26 @@ class FileParser(BankStatementImportParser):
                         t_tuple = xlrd.xldate_as_tuple(line[rule], self._datemode)
                         line[rule] = datetime.datetime(*t_tuple)
                     except Exception, err:
-                        raise except_osv(_('Invalid data'),
-                                         _("Date format is not valid. You should modify the cell formatting"
-                                           " of your column to be of type date."
-                                           " For column: %s"
+                        raise except_osv(_("Date format is not valid"),
+                                         _("Please modify the cell formatting to date format"
+                                           " for column: %s"
                                            " value: %s"
-                                           " \n line: %s \n Detail: %s") % (rule, line[rule],
-                                                                            line, repr(err)))
+                                           "\n Please check the line with ref: %s"
+                                           "\n \n Detail: %s") % (rule,
+                                                                  line.get(rule, _('Missing')),
+                                                                  line.get('ref', line),
+                                                                  repr(err)))
                 else:
                     try:
                         line[rule] = conversion_rules[rule](line[rule])
                     except Exception, err:
                         raise except_osv(_('Invalid data'),
-                                         _("Value %s of column % is not valid."
-                                           "\n line: %s "
-                                           "\n Detail: %s") % (line[rule], rule,
-                                                               line, repr(err)))
+                                         _("Value %s of column %s is not valid."
+                                           "\n Please check the line with ref %s:"y
+                                           "\n \n Detail: %s") % (line.get(rule, _('Missing')),
+                                                                  rule,
+                                                                  line.get('ref', line),
+                                                                  repr(err)))
         return result_set
 
     def _cast_rows(self, *args, **kwargs):
