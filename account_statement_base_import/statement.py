@@ -26,6 +26,8 @@ from openerp.osv import fields, osv
 from parser import new_bank_statement_parser
 import sys
 import traceback
+import profile
+import time
 
 
 class AccountStatementProfil(Model):
@@ -171,16 +173,19 @@ class AccountStatementProfil(Model):
         try:
             # Record every line in the bank statement and compute the global commission
             # based on the commission_amount column
+            statement_store = []
             for line in result_row_list:
                 parser_vals = parser.get_st_line_vals(line)
                 values = self.prepare_statetement_lines_vals(
                         cr, uid, parser_vals, account_payable,
                         account_receivable, statement_id, context)
                 # we finally create the line in system
-                statement_line_obj.create(cr, uid, values, context=context)
+                statement_store.append((0, 0, values))
             # Build and create the global commission line for the whole statement
-            comm_vals = self.prepare_global_commission_line_vals(
-                    cr, uid, parser, result_row_list, prof, statement_id, context)
+            statement_obj.write(cr, uid, [statement_id],
+                                {'line_ids': statement_store}, context=context)
+            comm_vals = self.prepare_global_commission_line_vals(cr, uid, parser, result_row_list,
+                                                                 prof, statement_id, context)
             if comm_vals:
                 statement_line_obj.create(cr, uid, comm_vals, context=context)
 
