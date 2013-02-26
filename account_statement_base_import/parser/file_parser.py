@@ -34,13 +34,13 @@ class FileParser(BankStatementImportParser):
     Generic abstract class for defining parser for .csv or .xls file format.
     """
 
-    def __init__(self, parse_name, keys_to_validate=[], ftype='csv', convertion_dict=None,
+    def __init__(self, parse_name, keys_to_validate=None, ftype='csv', conversion_dict=None,
                  header=None, *args, **kwargs):
         """
             :param char: parse_name : The name of the parser
             :param list: keys_to_validate : contain the key that need to be present in the file
             :param char ftype: extension of the file (could be csv or xls)
-            :param: convertion_dict : keys and type to convert of every column in the file like
+            :param: conversion_dict : keys and type to convert of every column in the file like
                 {
                     'ref': unicode,
                     'label': unicode,
@@ -50,15 +50,14 @@ class FileParser(BankStatementImportParser):
                 }
             :param list: header : specify header fields if the csv file has no header
             """
-
         super(FileParser, self).__init__(parse_name, *args, **kwargs)
         if ftype in ('csv', 'xls'):
             self.ftype = ftype
         else:
             raise except_osv(_('User Error'),
-                             _('Invalide file type %s. please use csv or xls') % (ftype))
-        self.keys_to_validate = keys_to_validate
-        self.convertion_dict = convertion_dict
+                             _('Invalid file type %s. Please use csv or xls') % ftype)
+        self.keys_to_validate = keys_to_validate if keys_to_validate is not None else [] 
+        self.conversion_dict = conversion_dict
         self.fieldnames = header
         self._datemode = 0  # used only for xls documents,
                             # 0 means Windows mode (1900 based dates).
@@ -102,7 +101,7 @@ class FileParser(BankStatementImportParser):
             for col in self.keys_to_validate:
                 if col not in parsed_cols:
                     raise except_osv(_('Invalid data'),
-                                     _('Column %s not present in file') % (col))
+                                     _('Column %s not present in file') % col)
         return True
 
     def _post(self, *args, **kwargs):
@@ -152,7 +151,7 @@ class FileParser(BankStatementImportParser):
                         date_string = line[rule].split(' ')[0]
                         line[rule] = datetime.datetime.strptime(date_string,
                                                                 '%Y-%m-%d')
-                    except ValueError, err:
+                    except ValueError as err:
                         raise except_osv(_("Date format is not valid."),
                                          _(" It should be YYYY-MM-DD for column: %s"
                                            " value: %s \n \n"
@@ -164,7 +163,7 @@ class FileParser(BankStatementImportParser):
                 else:
                     try:
                         line[rule] = conversion_rules[rule](line[rule])
-                    except Exception, err:
+                    except Exception as err:
                         raise except_osv(_('Invalid data'),
                                          _("Value %s of column %s is not valid."
                                            "\n Please check the line with ref %s:"
@@ -185,7 +184,7 @@ class FileParser(BankStatementImportParser):
                     try:
                         t_tuple = xlrd.xldate_as_tuple(line[rule], self._datemode)
                         line[rule] = datetime.datetime(*t_tuple)
-                    except Exception, err:
+                    except Exception as err:
                         raise except_osv(_("Date format is not valid"),
                                          _("Please modify the cell formatting to date format"
                                            " for column: %s"
@@ -198,7 +197,7 @@ class FileParser(BankStatementImportParser):
                 else:
                     try:
                         line[rule] = conversion_rules[rule](line[rule])
-                    except Exception, err:
+                    except Exception as err:
                         raise except_osv(_('Invalid data'),
                                          _("Value %s of column %s is not valid."
                                            "\n Please check the line with ref %s:"
@@ -210,9 +209,9 @@ class FileParser(BankStatementImportParser):
 
     def _cast_rows(self, *args, **kwargs):
         """
-        Convert the self.result_row_list using the self.convertion_dict providen.
+        Convert the self.result_row_list using the self.conversion_dict providen.
         We call here _from_xls or _from_csv depending on the self.ftype variable.
         """
         func = getattr(self, '_from_%s' % self.ftype)
-        res = func(self.result_row_list, self.convertion_dict)
+        res = func(self.result_row_list, self.conversion_dict)
         return res
