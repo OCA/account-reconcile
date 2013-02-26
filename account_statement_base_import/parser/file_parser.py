@@ -50,6 +50,7 @@ class FileParser(BankStatementImportParser):
                 }
             :param list: header : specify header fields if the csv file has no header
             """
+
         super(FileParser, self).__init__(parse_name, *args, **kwargs)
         if ftype in ('csv', 'xls'):
             self.ftype = ftype
