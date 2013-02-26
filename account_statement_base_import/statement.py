@@ -26,8 +26,6 @@ from openerp.osv import fields, osv
 from parser import new_bank_statement_parser
 import sys
 import traceback
-import profile
-import time
 
 
 class AccountStatementProfil(Model):
