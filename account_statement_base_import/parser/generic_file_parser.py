@@ -32,7 +32,7 @@ except:
 def float_or_zero(val):
     """ Conversion function used to manage
     empty string into float usecase"""
-    return val and float(val) or 0.0
+    return float(val) if val else 0.0
 
 
 class GenericFileParser(FileParser):
