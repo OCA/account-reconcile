@@ -26,8 +26,8 @@
 Prevent voucher creation when importing lines into statement.
 #############################################################
 
-When importing invoice or payment into a bank statement or a payment order, normaly a
-draf voucher is created on the line. This module will disable this voucher creation""",
+When importing invoice or payment into a bank statement or a payment order, normally a
+draft voucher is created on the line. This module will disable this voucher creation""",
  'author': 'Camptocamp',
  'website': 'http://www.camptocamp.com',
  'depends': ['account_voucher', 'account_payment'],
