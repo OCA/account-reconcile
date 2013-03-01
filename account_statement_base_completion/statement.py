@@ -159,7 +159,7 @@ class AccountStatementCompletionRule(Model):
                                                      uid,
                                                      profile_id=st_line.statement_id.profile_id.id,
                                                      partner_id=res.get('partner_id', False),
-                                                     line_type=st_line.type,
+                                                     line_type="supplier",
                                                      amount=st_line.amount,
                                                      context=context)
                 res.update(st_vals)
