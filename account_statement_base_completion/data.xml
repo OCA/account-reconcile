@@ -28,7 +28,7 @@
 
      <record id="bank_statement_completion_rule_5" model="account.statement.completion.rule">
           <field name="name">Match from line reference (based on Invoice Supplier number)</field>
-          <field name="sequence">40</field>
+          <field name="sequence">45</field>
           <field name="function_to_call">get_from_ref_and_invoice</field>
       </record>
 
