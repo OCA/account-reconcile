@@ -107,6 +107,7 @@ class AccountStatementCompletionRule(Model):
         """
         return [
             ('get_from_ref_and_invoice', 'From line reference (based on invoice number)'),
+            ('get_from_ref_and_supplier_invoice', 'From line reference (based on supplier invoice number)'),
             ('get_from_ref_and_so', 'From line reference (based on SO number)'),
             ('get_from_label_and_partner_field', 'From line label (based on partner field)'),
             ('get_from_label_and_partner_name', 'From line label (based on partner name)'),
@@ -122,9 +123,9 @@ class AccountStatementCompletionRule(Model):
         'function_to_call': fields.selection(_get_functions, 'Method'),
     }
 
-    def get_from_ref_and_invoice(self, cr, uid, line_id, context=None):
+    def get_from_ref_and_supplier_invoice(self, cr, uid, line_id, context=None):
         """
-        Match the partner based on the invoice number and the reference of the statement
+        Match the partner based on the invoice supplier invoice number and the reference of the statement
         line. Then, call the generic get_values_for_line method to complete other values.
         If more than one partner matched, raise the ErrorTooManyPartner error.
 
@@ -137,32 +138,70 @@ class AccountStatementCompletionRule(Model):
 
             ...}
         """
+        st_obj = self.pool['account.bank.statement.line']
+        st_line = st_obj.browse(cr, uid, line_id, context=context)
+        res = {}
+        inv_obj = self.pool.get('account.invoice')
+        if st_line:
+            inv_id = inv_obj.search(cr,
+                                    uid,
+                                    [('supplier_invoice_number', '=', st_line.ref),
+                                     ('type', 'in', ('in_invoice', 'in_refund'))],
+                                    context=context)
+            if inv_id:
+                if len(inv_id) == 1:
+                    inv = inv_obj.browse(cr, uid, inv_id[0], context=context)
+                    res['partner_id'] = inv.partner_id.id
+                else:
+                    raise ErrorTooManyPartner(_('Line named "%s" (Ref:%s) was matched by more '
+                                                'than one partner.') % (st_line.name, st_line.ref))
+                st_vals = st_obj.get_values_for_line(cr,
+                                                     uid,
+                                                     profile_id=st_line.statement_id.profile_id.id,
+                                                     partner_id=res.get('partner_id', False),
+                                                     line_type=st_line.type,
+                                                     amount=st_line.amount,
+                                                     context=context)
+                res.update(st_vals)
+        return res
+
+    def get_from_ref_and_invoice(self, cr, uid, line_id, context=None):
+        """
+        Match the partner based on the invoice number and the reference of the statement
+        line. Then, call the generic get_values_for_line method to complete other values.
+        If more than one partner matched, raise the ErrorTooManyPartner error.
+
+        :param int/long line_id: id of the concerned account.bank.statement.line
+        :return:
+            A dict of value that can be passed directly to the write method of
+            the statement line or {}
+           {'partner_id': value,
+            'account_id' : value,
+            ...}
+        """
         st_obj = self.pool.get('account.bank.statement.line')
         st_line = st_obj.browse(cr, uid, line_id, context=context)
         res = {}
         if st_line:
             inv_obj = self.pool.get('account.invoice')
-            inv_id = inv_obj.search(
-                    cr,
-                    uid,
-                    [('number', '=', st_line.ref)],
-                    context=context)
+            inv_id = inv_obj.search(cr,
+                                    uid,
+                                    [('number', '=', st_line.ref)],
+                                    context=context)
             if inv_id:
-                if inv_id and len(inv_id) == 1:
+                if len(inv_id) == 1:
                     inv = inv_obj.browse(cr, uid, inv_id[0], context=context)
                     res['partner_id'] = inv.partner_id.id
-                elif inv_id and len(inv_id) > 1:
-                    raise ErrorTooManyPartner(
-                            _('Line named "%s" (Ref:%s) was matched by more '
-                              'than one partner.') % (st_line.name, st_line.ref))
-                st_vals = st_obj.get_values_for_line(
-                        cr,
-                        uid,
-                        profile_id=st_line.statement_id.profile_id.id,
-                        partner_id=res.get('partner_id', False),
-                        line_type=st_line.type,
-                        amount=st_line.amount,
-                        context=context)
+                else:
+                    raise ErrorTooManyPartner(_('Line named "%s" (Ref:%s) was matched by more '
+                                                'than one partner.') % (st_line.name, st_line.ref))
+                st_vals = st_obj.get_values_for_line(cr,
+                                                     uid,
+                                                     profile_id=st_line.statement_id.profile_id.id,
+                                                     partner_id=res.get('partner_id', False),
+                                                     line_type=st_line.type,
+                                                     amount=st_line.amount,
+                                                     context=context)
                 res.update(st_vals)
         return res
 
