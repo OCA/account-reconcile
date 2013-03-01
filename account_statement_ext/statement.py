@@ -521,18 +521,15 @@ class AccountBankSatementLine(Model):
         # based on line_type first, then amount, otherwise take receivable one.
         if line_type is not False:
             if line_type == 'supplier':
-                res['account_id'] = pay_account
-            else:
-                res['account_id'] = receiv_account
+                account_id = pay_account
         elif amount is not False:
             if amount >= 0:
-                res['account_id'] = receiv_account
+                account_id = receiv_account
                 res['type'] = 'customer'
             else:
-                res['account_id'] = pay_account
+                account_id  = pay_account
                 res['type'] = 'supplier'
-        if not account_id:
-            res['account_id'] = receiv_account
+        res['account_id'] = account_id if account_id else receiv_account
         return res
 
     def onchange_partner_id(self, cr, uid, ids, partner_id, profile_id=None, context=None):
