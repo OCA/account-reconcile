@@ -499,14 +499,14 @@ class AccountBankSatementLine(Model):
         res = {}
         obj_partner = self.pool.get('res.partner')
         obj_stat = self.pool.get('account.bank.statement')
-        receiv_account = pay_account = account_id = False
+        line_type = receiv_account = pay_account = account_id = False
         # If profile has a receivable_account_id, we return it in any case
         if profile_id:
             profile = self.pool.get("account.statement.profile").browse(
                     cr, uid, profile_id, context=context)
             if profile.receivable_account_id:
-                res['account_id'] = profile.receivable_account_id.id
-                res['type'] = 'general'
+                account_id = profile.receivable_account_id.id
+                line_type = 'general'
                 return res
         # If partner -> take from him
         if partner_id:
@@ -521,18 +521,16 @@ class AccountBankSatementLine(Model):
         # based on line_type first, then amount, otherwise take receivable one.
         if line_type is not False:
             if line_type == 'supplier':
-                res['account_id'] = pay_account
-            else:
-                res['account_id'] = receiv_account
+                account_id = pay_account
         elif amount is not False:
             if amount >= 0:
-                res['account_id'] = receiv_account
-                res['type'] = 'customer'
+                account_id = receiv_account
+                line_type = 'customer'
             else:
-                res['account_id'] = pay_account
-                res['type'] = 'supplier'
-        if not account_id:
-            res['account_id'] = receiv_account
+                account_id  = pay_account
+                line_type = 'supplier'
+        res['account_id'] = account_id if account_id else receiv_account
+        res['type'] = line_type
         return res
 
     def onchange_partner_id(self, cr, uid, ids, partner_id, profile_id=None, context=None):
