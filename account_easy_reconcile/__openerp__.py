@@ -23,6 +23,7 @@
     "name" : "Easy Reconcile",
     "version" : "1.1",
     "depends" : ["account",
+                 "base_scheduler_creator"
                 ],
     "author" : "Akretion,Camptocamp",
     "description": """
@@ -38,6 +39,10 @@ in order to provide:
    reconciliation methods which can plug in the profiles
  - a profile a reconciliation can be run manually
    or by a cron
+ - monitoring of reconcilation runs with a few logs
+ - this module is also a base to create others
+   reconciliation methods which can plug in the profiles
+ - a profile a reconciliation can be run manually or by a cron
  - monitoring of reconciliation runs with an history
    which keep track of the reconciled entries
 
