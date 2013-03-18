@@ -29,6 +29,11 @@ try:
 except:
     raise Exception(_('Please install python lib xlrd'))
 
+def float_or_zero(val):
+    """ Conversion function used to manage
+    empty string into float usecase"""
+    return float(val) if val else 0.0
+
 
 class GenericFileParser(FileParser):
     """
@@ -38,16 +43,16 @@ class GenericFileParser(FileParser):
     """
 
     def __init__(self, parse_name, ftype='csv'):
-        convertion_dict = {
+        conversion_dict = {
                             'ref': unicode,
                             'label': unicode,
                             'date': datetime.datetime,
-                            'amount': float,
-                            'commission_amount': float
+                            'amount': float_or_zero,
+                            'commission_amount': float_or_zero
                           }
         # Order of cols does not matter but first row of the file has to be header
         keys_to_validate = ['ref', 'label', 'date', 'amount', 'commission_amount']
-        super(GenericFileParser, self).__init__(parse_name, keys_to_validate=keys_to_validate, ftype=ftype, convertion_dict=convertion_dict)
+        super(GenericFileParser, self).__init__(parse_name, keys_to_validate=keys_to_validate, ftype=ftype, conversion_dict=conversion_dict)
 
     @classmethod
     def parser_for(cls, parser_name):

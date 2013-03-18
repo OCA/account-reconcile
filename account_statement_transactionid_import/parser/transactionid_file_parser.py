@@ -30,7 +30,7 @@ class TransactionIDFileParser(FileParser):
     """
 
     def __init__(self, parse_name, ftype='csv'):
-        convertion_dict = {
+        conversion_dict = {
                             'transaction_id': unicode,
                             'label': unicode,
                             'date': datetime.datetime,
@@ -39,7 +39,8 @@ class TransactionIDFileParser(FileParser):
                           }
         # Order of cols does not matter but first row of the file has to be header
         keys_to_validate = ['transaction_id', 'label', 'date', 'amount', 'commission_amount']
-        super(TransactionIDFileParser, self).__init__(parse_name, keys_to_validate=keys_to_validate, ftype=ftype, convertion_dict=convertion_dict)
+        super(TransactionIDFileParser, self).__init__(parse_name, keys_to_validate=keys_to_validate,
+                                                      ftype=ftype, conversion_dict=conversion_dict)
 
     @classmethod
     def parser_for(cls, parser_name):

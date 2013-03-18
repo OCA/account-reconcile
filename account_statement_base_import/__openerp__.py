@@ -38,6 +38,8 @@
  a standard .csv or .xls file (you'll find it in the 'data' folder). It respects the profile
  (provided by the accouhnt_statement_ext module) to pass the entries. That means,
  you'll have to choose a file format for each profile.
+ In order to achieve this it uses the `xlrd` Python module which you will need to install
+ separately in your environment.
 
  This module can handle a commission taken by the payment office and has the following format:
 
@@ -56,12 +58,10 @@
 
  """,
  'website': 'http://www.camptocamp.com',
- 'init_xml': [],
- 'update_xml': [
+ 'data': [
         "wizard/import_statement_view.xml",
         "statement_view.xml",
  ],
- 'demo_xml': [],
  'test': [],
  'installable': True,
  'images': [],

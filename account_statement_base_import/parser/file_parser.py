@@ -17,8 +17,8 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-
 from openerp.tools.translate import _
+from openerp.osv.osv import except_osv
 import tempfile
 import datetime
 from parser import BankStatementImportParser
@@ -34,12 +34,13 @@ class FileParser(BankStatementImportParser):
     Generic abstract class for defining parser for .csv or .xls file format.
     """
 
-    def __init__(self, parse_name, keys_to_validate=[], ftype='csv', convertion_dict=None, header=None, *args, **kwargs):
+    def __init__(self, parse_name, keys_to_validate=None, ftype='csv', conversion_dict=None,
+                 header=None, *args, **kwargs):
         """
             :param char: parse_name : The name of the parser
             :param list: keys_to_validate : contain the key that need to be present in the file
             :param char ftype: extension of the file (could be csv or xls)
-            :param: convertion_dict : keys and type to convert of every column in the file like
+            :param: conversion_dict : keys and type to convert of every column in the file like
                 {
                     'ref': unicode,
                     'label': unicode,
@@ -54,9 +55,10 @@ class FileParser(BankStatementImportParser):
         if ftype in ('csv', 'xls'):
             self.ftype = ftype
         else:
-            raise Exception(_('Invalide file type %s. please use csv or xls') % (ftype))
-        self.keys_to_validate = keys_to_validate
-        self.convertion_dict = convertion_dict
+            raise except_osv(_('User Error'),
+                             _('Invalid file type %s. Please use csv or xls') % ftype)
+        self.keys_to_validate = keys_to_validate if keys_to_validate is not None else [] 
+        self.conversion_dict = conversion_dict
         self.fieldnames = header
         self._datemode = 0  # used only for xls documents,
                             # 0 means Windows mode (1900 based dates).
@@ -99,7 +101,8 @@ class FileParser(BankStatementImportParser):
             parsed_cols = self.result_row_list[0].keys()
             for col in self.keys_to_validate:
                 if col not in parsed_cols:
-                    raise Exception(_('Column %s not present in file') % (col))
+                    raise except_osv(_('Invalid data'),
+                                     _('Column %s not present in file') % col)
         return True
 
     def _post(self, *args, **kwargs):
@@ -128,17 +131,13 @@ class FileParser(BankStatementImportParser):
         wb_file.write(self.filebuffer)
         # We ensure that cursor is at beginig of file
         wb_file.seek(0)
-        wb = xlrd.open_workbook(wb_file.name)
-        self._datemode = wb.datemode
-        sheet = wb.sheet_by_index(0)
-        header = sheet.row_values(0)
-        res = []
-        for rownum in range(1, sheet.nrows):
-            res.append(dict(zip(header, sheet.row_values(rownum))))
-        try:
-            wb_file.close()
-        except Exception, e:
-            pass  # file is already closed
+        with xlrd.open_workbook(wb_file.name) as wb:
+            self._datemode = wb.datemode
+            sheet = wb.sheet_by_index(0)
+            header = sheet.row_values(0)
+            res = []
+            for rownum in range(1, sheet.nrows):
+                res.append(dict(zip(header, sheet.row_values(rownum))))
         return res
 
     def _from_csv(self, result_set, conversion_rules):
@@ -149,11 +148,30 @@ class FileParser(BankStatementImportParser):
         for line in result_set:
             for rule in conversion_rules:
                 if conversion_rules[rule] == datetime.datetime:
-                    date_string = line[rule].split(' ')[0]
-                    line[rule] = datetime.datetime.strptime(date_string,
-                                                            '%Y-%m-%d')
+                    try:
+                        date_string = line[rule].split(' ')[0]
+                        line[rule] = datetime.datetime.strptime(date_string,
+                                                                '%Y-%m-%d')
+                    except ValueError as err:
+                        raise except_osv(_("Date format is not valid."),
+                                         _(" It should be YYYY-MM-DD for column: %s"
+                                           " value: %s \n \n"
+                                           " \n Please check the line with ref: %s"
+                                           " \n \n Detail: %s") % (rule,
+                                                                   line.get(rule, _('Missing')),
+                                                                   line.get('ref', line),
+                                                                   repr(err)))
                 else:
-                    line[rule] = conversion_rules[rule](line[rule])
+                    try:
+                        line[rule] = conversion_rules[rule](line[rule])
+                    except Exception as err:
+                        raise except_osv(_('Invalid data'),
+                                         _("Value %s of column %s is not valid."
+                                           "\n Please check the line with ref %s:"
+                                           "\n \n Detail: %s") % (line.get(rule, _('Missing')),
+                                                                  rule,
+                                                                  line.get('ref', line),
+                                                                  repr(err)))
         return result_set
 
     def _from_xls(self, result_set, conversion_rules):
@@ -164,17 +182,37 @@ class FileParser(BankStatementImportParser):
         for line in result_set:
             for rule in conversion_rules:
                 if conversion_rules[rule] == datetime.datetime:
-                    t_tuple = xlrd.xldate_as_tuple(line[rule], self._datemode)
-                    line[rule] = datetime.datetime(*t_tuple)
+                    try:
+                        t_tuple = xlrd.xldate_as_tuple(line[rule], self._datemode)
+                        line[rule] = datetime.datetime(*t_tuple)
+                    except Exception as err:
+                        raise except_osv(_("Date format is not valid"),
+                                         _("Please modify the cell formatting to date format"
+                                           " for column: %s"
+                                           " value: %s"
+                                           "\n Please check the line with ref: %s"
+                                           "\n \n Detail: %s") % (rule,
+                                                                  line.get(rule, _('Missing')),
+                                                                  line.get('ref', line),
+                                                                  repr(err)))
                 else:
-                    line[rule] = conversion_rules[rule](line[rule])
+                    try:
+                        line[rule] = conversion_rules[rule](line[rule])
+                    except Exception as err:
+                        raise except_osv(_('Invalid data'),
+                                         _("Value %s of column %s is not valid."
+                                           "\n Please check the line with ref %s:"
+                                           "\n \n Detail: %s") % (line.get(rule, _('Missing')),
+                                                                  rule,
+                                                                  line.get('ref', line),
+                                                                  repr(err)))
         return result_set
 
     def _cast_rows(self, *args, **kwargs):
         """
-        Convert the self.result_row_list using the self.convertion_dict providen.
+        Convert the self.result_row_list using the self.conversion_dict providen.
         We call here _from_xls or _from_csv depending on the self.ftype variable.
         """
         func = getattr(self, '_from_%s' % self.ftype)
-        res = func(self.result_row_list, self.convertion_dict)
+        res = func(self.result_row_list, self.conversion_dict)
         return res
