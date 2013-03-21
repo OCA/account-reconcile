@@ -104,6 +104,14 @@ class AccountBankSatement(Model):
 
     _inherit = "account.bank.statement"
 
+    def _default_period(self, cr, uid, context=None):
+        """
+        Statement default period
+        """
+        period_obj = self.pool.get('account.period')
+        periods = period_obj.find(cr, uid, dt=context.get('date'), context=context)
+        return periods and periods[0] or False
+
     _columns = {
         'profile_id': fields.many2one(
             'account.statement.profile',
@@ -139,7 +147,7 @@ class AccountBankSatement(Model):
     }
 
     _defaults = {
-        'period_id': False,
+        'period_id': _default_period,
     }
 
     def create(self, cr, uid, vals, context=None):
