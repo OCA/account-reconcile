@@ -19,7 +19,7 @@
 #
 ##############################################################################
 from collections import defaultdict
-from re import escape
+import re
 
 from tools.translate import _
 from openerp.osv.orm import Model, fields
@@ -285,7 +285,7 @@ class AccountStatementCompletionRule(Model):
                                              [('bank_statement_label', '!=', False)])
             line_ids = tuple(x.id for x in context.get('line_ids', []))
             for partner in partner_obj.browse(cr, uid, partner_ids, context=context):
-                vals = '|'.join(escape(x.strip()) for x in partner.bank_statement_label.split(';'))
+                vals = '|'.join(re.escape(x.strip()) for x in partner.bank_statement_label.split(';'))
                 or_regex = ".*%s*." % vals
                 sql = ("SELECT id from account_bank_statement_line"
                        " WHERE id in %s"
@@ -334,7 +334,7 @@ class AccountStatementCompletionRule(Model):
         st_line = st_obj.browse(cr, uid, line_id, context=context)
         if st_line:
             sql = "SELECT id FROM res_partner WHERE name ~* %s"
-            pattern = ".*%s.*" % escape(st_line.label)
+            pattern = ".*%s.*" % re.escape(st_line.label)
             cr.execute(sql, (pattern,))
             result = cr.fetchall()
             if not result:
