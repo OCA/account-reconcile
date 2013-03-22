@@ -18,6 +18,9 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
+from collections import defaultdict
+import re
+
 from tools.translate import _
 from openerp.osv.orm import Model, fields
 from openerp.tools import DEFAULT_SERVER_DATETIME_FORMAT
@@ -269,35 +272,44 @@ class AccountStatementCompletionRule(Model):
             """
         partner_obj = self.pool.get('res.partner')
         st_obj = self.pool.get('account.bank.statement.line')
-        st_line = st_obj.browse(cr, uid, line_id, context=context)
         res = {}
-        compt = 0
-        if st_line:
-            ids = partner_obj.search(
-                    cr,
-                    uid,
-                    [('bank_statement_label', '!=', False)],
-                    context=context)
-            for partner in partner_obj.browse(cr, uid, ids, context=context):
-                for partner_label in partner.bank_statement_label.split(';'):
-                    if partner_label in st_line.label:
-                        compt += 1
-                        res['partner_id'] = partner.id
-                        if compt > 1:
-                            raise ErrorTooManyPartner(
-                                    _('Line named "%s" (Ref:%s) was matched by '
-                                      'more than one partner.') %
-                                    (st_line.name, st_line.ref))
-            if res:
-                st_vals = st_obj.get_values_for_line(
-                        cr,
-                        uid,
-                        profile_id=st_line.statement_id.profile_id.id,
-                        partner_id=res.get('partner_id', False),
-                        line_type=st_line.type,
-                        amount=st_line.amount,
-                        context=context)
-                res.update(st_vals)
+        # As we have to iterate on each partner for each line,
+        # we memoize the pair to avoid
+        # to redo computation for each line.
+        # Following code can be done by a single SQL query
+        # but this option is not really maintanable
+        if not context.get('label_memoizer'):
+            context['label_memoizer'] = defaultdict(list)
+            partner_ids = partner_obj.search(cr,
+                                             uid,
+                                             [('bank_statement_label', '!=', False)])
+            line_ids = tuple(x.id for x in context.get('line_ids', []))
+            for partner in partner_obj.browse(cr, uid, partner_ids, context=context):
+                vals = '|'.join(re.escape(x.strip()) for x in partner.bank_statement_label.split(';'))
+                or_regex = ".*%s*." % vals
+                sql = ("SELECT id from account_bank_statement_line"
+                       " WHERE id in %s"
+                       " AND name ~* %s")
+                cr.execute(sql, (line_ids, or_regex))
+                pairs = cr.fetchall()
+                for pair in pairs:
+                    context['label_memoizer'][pair[0]].append(partner)
+        st_line = st_obj.browse(cr, uid, line_id, context=context)
+        if st_line and st_line.id in context['label_memoizer']:
+            found_partner = context['label_memoizer'][st_line.id]
+            if len(found_partner) > 1:
+                raise ErrorTooManyPartner(_('Line named "%s" (Ref:%s) was matched by '
+                                            'more than one partner.') %
+                                          (st_line.name, st_line.ref))
+            res['partner_id'] = found_partner[0].id
+            st_vals = st_obj.get_values_for_line(cr,
+                                                 uid,
+                                                 profile_id=st_line.statement_id.profile_id.id,
+                                                 partner_id=found_partner[0].id,
+                                                 line_type=st_line.type,
+                                                 amount=st_line.amount,
+                                                 context=context)
+            res.update(st_vals)
         return res
 
     def get_from_label_and_partner_name(self, cr, uid, line_id, context=None):
@@ -322,24 +334,22 @@ class AccountStatementCompletionRule(Model):
         st_line = st_obj.browse(cr, uid, line_id, context=context)
         if st_line:
             sql = "SELECT id FROM res_partner WHERE name ~* %s"
-            pattern = ".*%s.*" % st_line.label
+            pattern = ".*%s.*" % re.escape(st_line.label)
             cr.execute(sql, (pattern,))
             result = cr.fetchall()
             if not result:
                 return res
             if len(result) > 1:
-                raise ErrorTooManyPartner(
-                        _('Line named "%s" (Ref:%s) was matched by more '
-                          'than one partner.') %
-                        (st_line.name, st_line.ref))
-            for id in result[0]:
-                res['partner_id'] = id
+                raise ErrorTooManyPartner(_('Line named "%s" (Ref:%s) was matched by more '
+                                            'than one partner.') %
+                                          (st_line.name, st_line.ref))
+            res['partner_id'] = result[0][0] if result else False
             if res:
                 st_vals = st_obj.get_values_for_line(
                         cr,
                         uid,
                         profile_id=st_line.statement_id.profile_id.id,
-                        partner_id=res.get('partner_id', False),
+                        partner_id=res['partner_id'],
                         line_type=st_line.type,
                         amount=st_line.amount,
                         context=context)
@@ -475,6 +485,7 @@ class AccountBankSatement(Model):
         for stat in self.browse(cr, uid, ids, context=context):
             msg_lines = []
             ctx = context.copy()
+            ctx['line_ids'] = stat.line_ids
             for line in stat.line_ids:
                 res = {}
                 try:
