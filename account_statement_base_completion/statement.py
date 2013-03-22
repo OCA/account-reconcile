@@ -19,6 +19,7 @@
 #
 ##############################################################################
 from collections import defaultdict
+from re import escape
 
 from tools.translate import _
 from openerp.osv.orm import Model, fields
@@ -275,7 +276,7 @@ class AccountStatementCompletionRule(Model):
         # As we have to iterate on each partner for each line,
         # we memoize the pair to avoid
         # to redo computation for each line.
-        # Follwing code can be done by a single SQL query
+        # Following code can be done by a single SQL query
         # but this option is not really maintanable
         if not context.get('label_memoizer'):
             context['label_memoizer'] = defaultdict(list)
@@ -284,15 +285,13 @@ class AccountStatementCompletionRule(Model):
                                              [('bank_statement_label', '!=', False)])
             line_ids = tuple(x.id for x in context.get('line_ids', []))
             for partner in partner_obj.browse(cr, uid, partner_ids, context=context):
-                vals = '|'.join(x.strip() for x in partner.bank_statement_label.split(';'))
+                vals = '|'.join(escape(x.strip()) for x in partner.bank_statement_label.split(';'))
                 or_regex = ".*%s*." % vals
                 sql = ("SELECT id from account_bank_statement_line"
                        " WHERE id in %s"
                        " AND name ~* %s")
                 cr.execute(sql, (line_ids, or_regex))
                 pairs = cr.fetchall()
-                if not pairs:
-                    continue
                 for pair in pairs:
                     context['label_memoizer'][pair[0]].append(partner)
         st_line = st_obj.browse(cr, uid, line_id, context=context)
@@ -335,23 +334,22 @@ class AccountStatementCompletionRule(Model):
         st_line = st_obj.browse(cr, uid, line_id, context=context)
         if st_line:
             sql = "SELECT id FROM res_partner WHERE name ~* %s"
-            pattern = ".*%s.*" % st_line.label
+            pattern = ".*%s.*" % escape(st_line.label)
             cr.execute(sql, (pattern,))
             result = cr.fetchall()
             if not result:
                 return res
             if len(result) > 1:
-                raise ErrorTooManyPartner(
-                        _('Line named "%s" (Ref:%s) was matched by more '
-                          'than one partner.') %
-                        (st_line.name, st_line.ref))
+                raise ErrorTooManyPartner(_('Line named "%s" (Ref:%s) was matched by more '
+                                            'than one partner.') %
+                                          (st_line.name, st_line.ref))
             res['partner_id'] = result[0][0] if result else False
             if res:
                 st_vals = st_obj.get_values_for_line(
                         cr,
                         uid,
                         profile_id=st_line.statement_id.profile_id.id,
-                        partner_id=res.get['partner_id'],
+                        partner_id=res['partner_id'],
                         line_type=st_line.type,
                         amount=st_line.amount,
                         context=context)
