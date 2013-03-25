@@ -18,7 +18,6 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-
 from openerp.osv.orm import Model
 from openerp.osv import fields, osv
 from openerp.tools.translate import _
@@ -143,7 +142,11 @@ class AccountBankSatement(Model):
                         store=True,
                         readonly=True),
         'period_id': fields.many2one(
-            'account.period', 'Period', required=False, readonly=True),
+                        'account.period',
+                        'Period',
+                        required=False,
+                        readonly=False,
+                        invisible="True"),
     }
 
     _defaults = {
