@@ -81,7 +81,7 @@ class AccountStatementProfil(Model):
     ]
 
 
-class AccountBankSatement(Model):
+class AccountBankStatement(Model):
     """
     We improve the bank statement class mostly for : 
     - Removing the period and compute it from the date of each line. 
@@ -132,7 +132,7 @@ class AccountBankSatement(Model):
             profile_obj = self.pool.get('account.statement.profile')
             profile = profile_obj.browse(cr,uid,vals['profile_id'],context)
             vals['journal_id'] = profile.journal_id.id
-        return super(AccountBankSatement, self).create(cr, uid, vals, context=context)
+        return super(AccountBankStatement, self).create(cr, uid, vals, context=context)
     
     def _get_period(self, cursor, uid, date, context=None):
         """
@@ -476,7 +476,7 @@ class AccountBankSatement(Model):
         """
         st = self.browse(cr, uid, st_id, context=context)
         if st.balance_check:
-            return super(AccountBankSatement,self).balance_check(cr, uid, st_id, journal_type, context)
+            return super(AccountBankStatement,self).balance_check(cr, uid, st_id, journal_type, context)
         else:
             return True
 
@@ -499,7 +499,7 @@ class AccountBankSatement(Model):
                     }}
 
 
-class AccountBankSatementLine(Model):
+class AccountBankStatementLine(Model):
     """
     Override to compute the period from the date of the line, add a method to retrieve
     the values for a line from the profile. Override the on_change method to take care of 
@@ -625,7 +625,7 @@ class AccountBankSatementLine(Model):
         """
         if context is None:
             context = {}
-        res = super(AccountBankSatementLine,self).onchange_type(cr, uid, line_id, partner_id, type, context)
+        res = super(AccountBankStatementLine,self).onchange_type(cr, uid, line_id, partner_id, type, context)
         if 'account_id' in res['value']:
             result = self.get_values_for_line(cr, uid, profile_id = profile_id, 
                 partner_id = partner_id, line_type = type, context = context)
