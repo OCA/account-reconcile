@@ -66,6 +66,10 @@ class AccountStatementProfil(Model):
                                                     ),
         'bank_statement_prefix': fields.char('Bank Statement Prefix', size=32),
         'bank_statement_ids': fields.one2many('account.bank.statement', 'profile_id', 'Bank Statement Imported'),
+        'internal_account_transfer_id': fields.many2one('account.account',
+                                'Internal Account Transfer',
+                                help="Choose the default account for internal\
+                                bank transfer")
         
         
     }

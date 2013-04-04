@@ -26,7 +26,7 @@
                 </field>
             </field>
         </record>
-        
+
     <record id="statement_importer_view_form" model="ir.ui.view">
         <field name="name">account.statement.profile.view</field>
         <field name="model">account.statement.profile</field>
@@ -40,6 +40,7 @@
                 <field name="commission_account_id" />
                 <field name="commission_analytic_id" />
                 <field name="receivable_account_id" />
+                <field name="internal_account_transfer_id"/>
                 <field name="force_partner_on_bank"/>
                 <field name="balance_check"/>
                 <field name="bank_statement_prefix"/>
@@ -71,7 +72,7 @@
         <field name="view_mode">tree,form</field>
     </record>
 
-    <menuitem string="Bank Statements Profile" action="action_treasury_statement_profile_tree" id="menu_treasury_statement_profile_tree" parent="account.menu_configuration_misc" sequence="30"/>    
+    <menuitem string="Bank Statements Profile" action="action_treasury_statement_profile_tree" id="menu_treasury_statement_profile_tree" parent="account.menu_configuration_misc" sequence="30"/>
 
     <record model="ir.ui.view" id="id_in_statement_line">
         <field name="name">account.bank.statement.line.inherit</field>
@@ -84,8 +85,8 @@
                 </xpath>
         </field>
     </record>
-    
-    
+
+
     <record id="view_treasury_statement_search" model="ir.ui.view">
         <field name="name">account.bank.statement.search</field>
         <field name="model">account.bank.statement</field>
@@ -124,7 +125,7 @@
         </field>
     </record>
 
-    
+
     <record id="view_treasury_statement_form" model="ir.ui.view">
         <field name="name">account.bank.statement.form</field>
         <field name="model">account.bank.statement</field>
@@ -160,7 +161,7 @@
             <xpath expr="/form/group/field[@name='balance_end']" position="replace">
                  <field name="balance_end"/>
             </xpath>
-            
+
             <xpath expr="/form/group/field[@name='journal_id']" position="attributes">
                  <attribute name="widget"></attribute>
             </xpath>
@@ -191,18 +192,18 @@
             <xpath expr="/form/notebook/page/field/tree/field[@name='type']" position="replace">
                  <field name="type" on_change="onchange_type(partner_id, type, parent.profile_id)"/>
             </xpath>
-            
+
         </field>
     </record>
 
-    
+
         <act_window id="act_bank_statement_from_profile"
-            name="Open Statements" 
-            res_model="account.bank.statement" 
-            src_model="account.statement.profile" 
+            name="Open Statements"
+            res_model="account.bank.statement"
+            src_model="account.statement.profile"
             domain="[('profile_id','=',active_id),]"
             view_type="form"/>
-        
+
 
 </data>
 </openerp>
