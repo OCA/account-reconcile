@@ -76,6 +76,26 @@ class AccountStatementProfil(Model):
             'Bank Statement Prefix', size=32),
         'bank_statement_ids': fields.one2many(
             'account.bank.statement', 'profile_id', 'Bank Statement Imported'),
+        # TODO
+        # 'how_get_type_account': fields.selection(
+        #         [   ('amount', 'Based on amount and partner type'),
+        #             ('force_customer', 'Force to customer'),
+        #             ('force_supplier', 'Force to supplier'),
+        #         ],
+        #     required=True,
+        #     string='Set type and account'),
+        #     help="Selection how do you want the bank statement to chose the type and account of "
+        #     "every line. "
+        #     "Based on amount and partner type: "
+        #     "If the customer checkbox is checked on the found partner, type and account will be customer"
+        #     "If the supplier checkbox is checked on the found partner, type and account will be supplier"
+        #     "If both checkbox are checked or none of them, it'll be based on the amount : "
+        #     "    If amount is positif the type and account will be customer, "
+        #     "    If amount is negativ, the type and account will be supplier"
+        #     "Force to customer: type and account will always be customer"
+        #     "Force to supplier: type and account will always be supplier"
+        #     "Using the 'Force Receivable/Payable Account' option will be the absolute priority for the "
+        #     "accont choice."
         'company_id': fields.many2one('res.company', 'Company'),
     }
 
@@ -339,30 +359,73 @@ class AccountBankSatement(Model):
             self.message_post(cr, uid, [st.id], body=_('Statement %s confirmed, journal items were created.') % (st_number,), context=context)
         return self.write(cr, uid, ids, {'state': 'confirm'}, context=context)
 
-    def get_account_for_counterpart(
-            self, cr, uid, amount, account_receivable, account_payable):
+    def get_account_for_counterpart(self, cr, uid, amount, account_receivable, account_payable):
+        """For backward compatibility."""
+        account_id, type = self.get_account_and_type_for_counterpart(cr, uid, amount, account_receivable, 
+            account_payable)
+        return account_id
+
+    def get_type_for_counterpart(self, cr, uid, amount, partner_id=False):
+        """Give the amount and receive the type to use for the line.
+        The rules are:
+         - If the customer checkbox is checked on the found partner, type customer
+         - If the supplier checkbox is checked on the found partner, typewill be supplier
+         - If both checkbox are checked or none of them, it'll be based on the amount :
+              If amount is positif the type customer,
+              If amount is negativ, the type supplier
+        :param float: amount of the line
+        :param int/long: partner_id the partner id
+        :return: type as string: the default type to use: 'customer' or 'supplier'.
+        """
+        obj_partner = self.pool.get('res.partner')
+        type = 'customer'
+        if amount >= 0:
+            type = 'customer'
+        else:
+            type = 'supplier'
+        if partner_id:
+            part = obj_partner.browse(cr, uid, partner_id, context=context)
+            if part.supplier == True:
+                type = 'supplier'
+            elif part.customer == True:
+                type = 'customer'
+        return type
+    
+    def get_account_and_type_for_counterpart(
+            self, cr, uid, amount, account_receivable, account_payable, partner_id=False):
         """
         Give the amount, payable and receivable account (that can be found using
         get_default_pay_receiv_accounts method) and receive the one to use. This method
         should be use when there is no other way to know which one to take.
-
+        The rules are:
+         - If the customer checkbox is checked on the found partner, type and account will be customer and receivable
+         - If the supplier checkbox is checked on the found partner, type and account will be supplier and payable
+         - If both checkbox are checked or none of them, it'll be based on the amount :
+              If amount is positif the type and account will be customer and receivable,
+              If amount is negativ, the type and account will be supplier and payable
+        Note that we return the payable or receivable account from agrs and not from the optional partner_id
+        given !
+        
         :param float: amount of the line
         :param int/long: account_receivable the  receivable account
         :param int/long: account_payable the payable account
-        :return: int/long :the default account to be used by statement line as the counterpart
-                 of the journal account depending on the amount.
+        :param int/long: partner_id the partner id
+        :return: dict with [account_id as int/long,type as string]: the default account to be used by
+            statement line as the counterpart of the journal account depending on the amount and the type 
+            as 'customer' or 'supplier'.
         """
         account_id = False
-        if amount >= 0:
-            account_id = account_receivable
-        else:
+        type = self.get_type_for_counterpart(cr, uid, amount, partner_id=partner_id)
+        if type == 'supplier':
             account_id = account_payable
+        else:
+            account_id = account_receivable
         if not account_id:
             raise osv.except_osv(
                 _('Can not determine account'),
                 _('Please ensure that minimal properties are set')
             )
-        return account_id
+        return [account_id, type]
 
     def get_default_pay_receiv_accounts(self, cr, uid, context=None):
         """
@@ -476,14 +539,20 @@ class AccountBankSatementLine(Model):
         """
         Return the account_id to be used in the line of a bank statement. It'll base the result as follow:
             - If a receivable_account_id is set in the profile, return this value and type = general
-            - Elif line_type is given, take the partner receivable/payable property (payable if type= supplier, receivable
+            # TODO
+            - Elif how_get_type_account is set to force_supplier or force_customer, will take respectively payable and type=supplier,
+              receivable and type=customer otherwise
+            # END TODO
+            - Elif line_type is given, take the partner receivable/payable property (payable if type=supplier, receivable
               otherwise)
-            - Elif amount is given, take the partner receivable/payable property (receivable if amount >= 0.0,
-              payable otherwise). In that case, we also fullfill the type (receivable = customer, payable = supplier)
-              so it is easier for the accountant to know why the receivable/payable has been chosen
+            - Elif amount is given:
+                 - If the customer checkbox is checked on the found partner, type and account will be customer and receivable
+                 - If the supplier checkbox is checked on the found partner, type and account will be supplier and payable
+                 - If both checkbox are checked or none of them, it'll be based on the amount :
+                      If amount is positif the type and account will be customer and receivable,
+                      If amount is negativ, the type and account will be supplier an payable
             - Then, if no partner are given we look and take the property from the company so we always give a value
               for account_id. Note that in that case, we return the receivable one.
-
         :param int/long profile_id of the related bank statement
         :param int/long partner_id of the line
         :param char line_type: a value from: 'general', 'supplier', 'customer'
@@ -523,12 +592,8 @@ class AccountBankSatementLine(Model):
             if line_type == 'supplier':
                 account_id = pay_account
         elif amount is not False:
-            if amount >= 0:
-                account_id = receiv_account
-                line_type = 'customer'
-            else:
-                account_id  = pay_account
-                line_type = 'supplier'
+            account_id, line_type = obj_stat.get_account_and_type_for_counterpart(cr, uid, amount, 
+                receiv_account, pay_account, partner_id=partner_id)
         res['account_id'] = account_id if account_id else receiv_account
         res['type'] = line_type
         return res
@@ -537,20 +602,14 @@ class AccountBankSatementLine(Model):
         """
         Override of the basic method as we need to pass the profile_id in the on_change_type
         call.
+        Moreover, we now call the get_account_and_type_for_counterpart method now to get the
+        type to use.
         """
         obj_partner = self.pool.get('res.partner')
+        obj_stat = self.pool.get('account.bank.statement')
         if not partner_id:
             return {}
-        part = obj_partner.browse(cr, uid, partner_id, context=context)
-        if not part.supplier and not part.customer:
-            type = 'general'
-        elif part.supplier and part.customer:
-            type = 'general'
-        else:
-            if part.supplier == True:
-                type = 'supplier'
-            if part.customer == True:
-                type = 'customer'
+        type = obj_stat.get_type_for_counterpart(cr, uid, amount, partner_id=partner_id) # Chg
         res_type = self.onchange_type(cr, uid, ids, partner_id, type, profile_id, context=context)  # Chg
         if res_type['value'] and res_type['value'].get('account_id', False):
             return {'value': {'type': type,

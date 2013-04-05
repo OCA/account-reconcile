@@ -65,7 +65,6 @@
  4) Remove the period on the bank statement, and compute it for each line based on their date instead.
     It also adds this feature in the voucher in order to compute the period correctly.
 
-
  5) Cancelling a bank statement is much more easy and will cancel all related entries, unreconcile them,
     and finally delete them.
 
