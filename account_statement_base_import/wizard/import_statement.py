@@ -29,7 +29,7 @@ import os
 
 class CreditPartnerStatementImporter(osv.osv_memory):
     _name = "credit.statement.import"
-    
+
     def default_get(self, cr, uid, fields, context=None):
         if context is None: context = {}
         res = {}
@@ -41,7 +41,7 @@ class CreditPartnerStatementImporter(osv.osv_memory):
             other_vals = self.onchange_profile_id(cr, uid, [], res['profile_id'], context=context)
             res.update(other_vals.get('value',{}))
         return res
-    
+
     _columns = {
         'profile_id': fields.many2one('account.statement.profile',
                                       'Import configuration parameter',
@@ -63,23 +63,23 @@ class CreditPartnerStatementImporter(osv.osv_memory):
                                                  ),
         'receivable_account_id': fields.many2one('account.account',
                                                  'Force Receivable/Payable Account'),
-        'force_partner_on_bank': fields.boolean('Force partner on bank move', 
+        'force_partner_on_bank': fields.boolean('Force partner on bank move',
                                                     help="Tic that box if you want to use the credit insitute partner\
                                                     in the counterpart of the treasury/banking move."
                                                     ),
-        'balance_check': fields.boolean('Balance check', 
+        'balance_check': fields.boolean('Balance check',
                                                     help="Tic that box if you want OpenERP to control the start/end balance\
                                                     before confirming a bank statement. If don't ticked, no balance control will be done."
                                                     ),
-    }   
-    
+    }
+
     def onchange_profile_id(self, cr, uid, ids, profile_id, context=None):
         res={}
         if profile_id:
             c = self.pool.get("account.statement.profile").browse(cr,uid,profile_id)
             res = {'value': {'partner_id': c.partner_id and c.partner_id.id or False,
                     'journal_id': c.journal_id and c.journal_id.id or False, 'commission_account_id': \
-                    c.commission_account_id and c.commission_account_id.id or False, 
+                    c.commission_account_id and c.commission_account_id.id or False,
                     'receivable_account_id': c.receivable_account_id and c.receivable_account_id.id or False,
                     'commission_a':c.commission_analytic_id and c.commission_analytic_id.id or False,
                     'force_partner_on_bank':c.force_partner_on_bank,

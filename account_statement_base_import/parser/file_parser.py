@@ -32,13 +32,13 @@ class FileParser(BankStatementImportParser):
     """
     Generic abstract class for defining parser for .csv or .xls file format.
     """
-    
-    def __init__(self, parse_name, keys_to_validate=[], ftype='csv', convertion_dict=None, header=None, *args, **kwargs):
+
+    def __init__(self, parse_name, keys_to_validate=None, ftype='csv', convertion_dict=None, header=None, dialect=None, *args, **kwargs):
         """
             :param char: parse_name : The name of the parser
             :param list: keys_to_validate : contain the key that need to be present in the file
             :param char ftype: extension of the file (could be csv or xls)
-            :param: convertion_dict : keys and type to convert of every column in the file like 
+            :param: convertion_dict : keys and type to convert of every column in the file like
                 {
                     'ref': unicode,
                     'label': unicode,
@@ -48,7 +48,7 @@ class FileParser(BankStatementImportParser):
                 }
             :param list: header : specify header fields if the csv file has no header
             """
-        
+
         super(FileParser, self).__init__(parse_name, *args, **kwargs)
         if ftype in ('csv', 'xls'):
             self.ftype = ftype
@@ -60,6 +60,7 @@ class FileParser(BankStatementImportParser):
         self._datemode = 0 # used only for xls documents,
                            # 0 means Windows mode (1900 based dates).
                            # Set in _parse_xls, from the contents of the file
+        self.dialect = dialect
 
     def _custom_format(self, *args, **kwargs):
         """
@@ -78,7 +79,7 @@ class FileParser(BankStatementImportParser):
         Launch the parsing through .csv or .xls depending on the
         given ftype
         """
-        
+
         res = None
         if self.ftype == 'csv':
             res = self._parse_csv()
@@ -94,7 +95,7 @@ class FileParser(BankStatementImportParser):
         We skip the validation step if the file header is provided separately
         (in the field: fieldnames).
         """
-        if self.fieldnames is None:
+        if self.fieldnames is None and self.keys_to_validate:
             parsed_cols = self.result_row_list[0].keys()
             for col in self.keys_to_validate:
                 if col not in parsed_cols:
@@ -116,8 +117,8 @@ class FileParser(BankStatementImportParser):
         csv_file = tempfile.NamedTemporaryFile()
         csv_file.write(self.filebuffer)
         csv_file.flush()
-        with open(csv_file.name, 'rU') as fobj: 
-            reader = UnicodeDictReader(fobj, fieldnames=self.fieldnames)
+        with open(csv_file.name, 'rU') as fobj:
+            reader = UnicodeDictReader(fobj, fieldnames=self.fieldnames, dialect=self.dialect)
             return list(reader)
 
     def _parse_xls(self):
