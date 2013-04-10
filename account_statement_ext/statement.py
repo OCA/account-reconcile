@@ -252,8 +252,8 @@ class AccountBankSatement(Model):
         """
         bank_partner_id = super(AccountBankSatement, self)._get_counter_part_partner(cr,
                                                                                      uid,
-                                                                                     st_line, c
-                                                                                     ontext=context)
+                                                                                     st_line,
+                                                                                     context=context)
         # get the right partner according to the chosen profil
         if st_line.statement_id.profile_id.force_partner_on_bank:
             bank_partner_id = st_line.statement_id.profile_id.partner_id.id
@@ -348,8 +348,9 @@ class AccountBankSatement(Model):
                        {'name': st_number,
                         'balance_end_real': st.balance_end},
                        context=context)
-            self.message_post(cr, uid, [st.id], b
-                              ody=_('Statement %s confirmed, journal items were created.') % (st_number,),
+            body = _('Statement %s confirmed, journal items were created.') % st_number
+            self.message_post(cr, uid, [st.id],
+                              body,
                               context=context)
         return self.write(cr, uid, ids, {'state': 'confirm'}, context=context)
 
@@ -360,7 +361,8 @@ class AccountBankSatement(Model):
                                                                      account_payable)
         return account_id
 
-    def _compute_type_from_partner_profile(self, cr, uid, partner_id, default_type):
+    def _compute_type_from_partner_profile(self, cr, uid, partner_id,
+                                           default_type, context=None):
         """Compute the statement line type
            from partner profile (customer, supplier)"""
         obj_partner = self.pool.get('res.partner')
@@ -369,7 +371,7 @@ class AccountBankSatement(Model):
             return default_type
         if part.supplier:
             return 'supplier'
-        else part.customer:
+        else:
             return 'customer'
 
     def _compute_type_from_amount(self, cr, uid, amount):
@@ -396,8 +398,8 @@ class AccountBankSatement(Model):
                                                                   partner_id, s_line_type)
         return s_line_type
 
-    def get_account_and_type_for_counterpart(
-            self, cr, uid, amount, account_receivable, account_payable, partner_id=False):
+    def get_account_and_type_for_counterpart(self, cr, uid, amount, account_receivable,
+                                             account_payable, partner_id=False):
         """
         Give the amount, payable and receivable account (that can be found using
         get_default_pay_receiv_accounts method) and receive the one to use. This method
@@ -454,14 +456,11 @@ class AccountBankSatement(Model):
              ('model', '=', 'res.partner')],
             context=context
         )
-        property_ids = property_obj.search(
-                    cr,
-                    uid,
-                    [('fields_id', 'in', model_fields_ids),
-                     ('res_id', '=', False),
-                    ],
-                    context=context
-        )
+        property_ids = property_obj.search(cr,
+                                           uid,
+                                           [('fields_id', 'in', model_fields_ids),
+                                            ('res_id', '=', False)],
+                                           context=context)
 
         for erp_property in property_obj.browse(
                 cr, uid, property_ids, context=context):
@@ -610,32 +609,33 @@ class AccountBankSatementLine(Model):
         Moreover, we now call the get_account_and_type_for_counterpart method now to get the
         type to use.
         """
-        obj_partner = self.pool.get('res.partner')
         obj_stat = self.pool.get('account.bank.statement')
         if not partner_id:
             return {}
-        type = obj_stat.get_type_for_counterpart(cr, uid, amount, partner_id=partner_id) # Chg
-        res_type = self.onchange_type(cr, uid, ids, partner_id, type, profile_id, context=context)  # Chg
+        line_type = obj_stat.get_type_for_counterpart(cr, uid, 0.0, partner_id=partner_id)
+        res_type = self.onchange_type(cr, uid, ids, partner_id, line_type, profile_id, context=context)
         if res_type['value'] and res_type['value'].get('account_id', False):
-            return {'value': {'type': type,
+            return {'value': {'type': line_type,
                               'account_id': res_type['value']['account_id'],
                               'voucher_id': False}}
-        return {'value': {'type': type}}
+        return {'value': {'type': line_type}}
 
-    def onchange_type(self, cr, uid, line_id, partner_id, type, profile_id, context=None):
+    def onchange_type(self, cr, uid, line_id, partner_id, line_type, profile_id, context=None):
         """
         Keep the same features as in standard and call super. If an account is returned,
         call the method to compute line values.
         """
-        res = super(AccountBankSatementLine, self).onchange_type(
-                cr, uid, line_id, partner_id, type, context=context)
+        res = super(AccountBankSatementLine, self).onchange_type(cr, uid,
+                                                                 line_id,
+                                                                 partner_id,
+                                                                 line_type,
+                                                                 context=context)
         if 'account_id' in res['value']:
-            result = self.get_values_for_line(
-                    cr, uid,
-                    profile_id=profile_id,
-                    partner_id=partner_id,
-                    line_type=type,
-                    context=context)
+            result = self.get_values_for_line(cr, uid,
+                                              profile_id=profile_id,
+                                              partner_id=partner_id,
+                                              line_type=line_type,
+                                              context=context)
             if result:
                 res['value'].update({'account_id': result['account_id']})
         return res
