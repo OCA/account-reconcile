@@ -380,6 +380,24 @@ class AccountBankSatement(Model):
                                                                      account_payable)
         return account_id
 
+    def _compute_type_from_partner_profile(self, cr, uid, partner_id, default_type):
+        """Compute the statement line type
+           from partner profile (customer, supplier)"""
+        obj_partner = self.pool.get('res.partner')
+        part = obj_partner.browse(cr, uid, partner_id, context=context)
+        if part.supplier == part.customer:
+            return default_type
+        if part.supplier:
+            return 'supplier'
+        else part.customer:
+            return 'customer'
+
+    def _compute_type_from_amount(self, cr, uid, amount):
+        """Compute the statement type based on amount"""
+        if amount < 0:
+            return 'supplier'
+        return 'customer'
+
     def get_type_for_counterpart(self, cr, uid, amount, partner_id=False):
         """Give the amount and receive the type to use for the line.
         The rules are:
@@ -392,19 +410,11 @@ class AccountBankSatement(Model):
         :param int/long: partner_id the partner id
         :return: type as string: the default type to use: 'customer' or 'supplier'.
         """
-        obj_partner = self.pool.get('res.partner')
-        type = 'customer'
-        if amount >= 0:
-            type = 'customer'
-        else:
-            type = 'supplier'
+        s_line_type = self._compute_type_from_amount(cr, uid, amount)
         if partner_id:
-            part = obj_partner.browse(cr, uid, partner_id, context=context)
-            if part.supplier:
-                type = 'supplier'
-            elif part.customer:
-                type = 'customer'
-        return type
+            s_line_type = self._compute_type_from_partner_profile(cr, uid,
+                                                                  partner_id, s_line_type)
+        return s_line_type
 
     def get_account_and_type_for_counterpart(
             self, cr, uid, amount, account_receivable, account_payable, partner_id=False):
