@@ -82,26 +82,6 @@ class AccountStatementProfil(Model):
         'bank_statement_ids': fields.one2many('account.bank.statement',
                                               'profile_id',
                                               'Bank Statement Imported'),
-        # TODO
-        # 'how_get_type_account': fields.selection(
-        #         [   ('amount', 'Based on amount and partner type'),
-        #             ('force_customer', 'Force to customer'),
-        #             ('force_supplier', 'Force to supplier'),
-        #         ],
-        #     required=True,
-        #     string='Set type and account'),
-        #     help="Selection how do you want the bank statement to chose the type and account of "
-        #     "every line. "
-        #     "Based on amount and partner type: "
-        #     "If the customer checkbox is checked on the found partner, type and account will be customer"
-        #     "If the supplier checkbox is checked on the found partner, type and account will be supplier"
-        #     "If both checkbox are checked or none of them, it'll be based on the amount : "
-        #     "    If amount is positif the type and account will be customer, "
-        #     "    If amount is negativ, the type and account will be supplier"
-        #     "Force to customer: type and account will always be customer"
-        #     "Force to supplier: type and account will always be supplier"
-        #     "Using the 'Force Receivable/Payable Account' option will be the absolute priority for the "
-        #     "accont choice."
         'company_id': fields.many2one('res.company', 'Company'),
     }
 
