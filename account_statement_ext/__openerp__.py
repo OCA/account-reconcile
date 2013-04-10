@@ -25,11 +25,9 @@
  'maintainer': 'Camptocamp',
  'category': 'Finance',
  'complexity': 'normal',
- 'depends': [
-     'account',
-     'report_webkit',
-     'account_voucher'
-     ],
+ 'depends': ['account',
+             'report_webkit',
+             'account_voucher'],
  'description': """
  Improve the basic bank statement, by adding various new features,
  and help dealing with huge volume of reconciliation through payment offices such as Paypal, Lazer,
@@ -87,4 +85,4 @@
  'auto_install': False,
  'license': 'AGPL-3',
  'active': False,
-}
+ }

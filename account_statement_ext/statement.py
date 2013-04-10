@@ -18,7 +18,6 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-
 from openerp.osv.orm import Model
 from openerp.osv import fields, osv
 from openerp.tools.translate import _
@@ -44,38 +43,45 @@ class AccountStatementProfil(Model):
                   "commission move (and optionaly on the counterpart "
                   "of the intermediate/banking move if you tick the "
                   "corresponding checkbox)."),
+
         'journal_id': fields.many2one(
             'account.journal',
              'Financial journal to use for transaction',
              required=True),
+
         'commission_account_id': fields.many2one(
             'account.account',
              'Commission account',
              required=True),
+
         'commission_analytic_id': fields.many2one(
             'account.analytic.account',
             'Commission analytic account'),
+
         'receivable_account_id': fields.many2one(
             'account.account',
             'Force Receivable/Payable Account',
             help="Choose a receivable account to force the default "
                  "debit/credit account (eg. an intermediat bank account "
                  "instead of default debitors)."),
+
         'force_partner_on_bank': fields.boolean(
             'Force partner on bank move',
             help="Tick that box if you want to use the credit "
                  "institute partner in the counterpart of the "
                  "intermediate/banking move."),
+
         'balance_check': fields.boolean(
             'Balance check',
             help="Tick that box if you want OpenERP to control "
                  "the start/end balance before confirming a bank statement. "
-                 "If don't ticked, no balance control will be done."
-            ),
-        'bank_statement_prefix': fields.char(
-            'Bank Statement Prefix', size=32),
-        'bank_statement_ids': fields.one2many(
-            'account.bank.statement', 'profile_id', 'Bank Statement Imported'),
+                 "If don't ticked, no balance control will be done."),
+
+        'bank_statement_prefix': fields.char('Bank Statement Prefix', size=32),
+
+        'bank_statement_ids': fields.one2many('account.bank.statement',
+                                              'profile_id',
+                                              'Bank Statement Imported'),
         # TODO
         # 'how_get_type_account': fields.selection(
         #         [   ('amount', 'Based on amount and partner type'),
@@ -186,11 +192,11 @@ class AccountBankSatement(Model):
         """
         for statement in self.browse(cr, uid, ids, context=context):
             if (statement.period_id and
-                statement.company_id.id != statement.period_id.company_id.id):
+                    statement.company_id.id != statement.period_id.company_id.id):
                 return False
             for line in statement.line_ids:
                 if (line.period_id and
-                    statement.company_id.id != line.period_id.company_id.id):
+                        statement.company_id.id != line.period_id.company_id.id):
                     return False
         return True
 
@@ -264,8 +270,10 @@ class AccountBankSatement(Model):
                   create the move from.
            :return: int/long of the res.partner to use as counterpart
         """
-        bank_partner_id = super(AccountBankSatement, self).\
-                _get_counter_part_partner(cr, uid, st_line, context=context)
+        bank_partner_id = super(AccountBankSatement, self)._get_counter_part_partner(cr,
+                                                                                     uid,
+                                                                                     st_line, c
+                                                                                     ontext=context)
         # get the right partner according to the chosen profil
         if st_line.statement_id.profile_id.force_partner_on_bank:
             bank_partner_id = st_line.statement_id.profile_id.partner_id.id
@@ -318,7 +326,7 @@ class AccountBankSatement(Model):
             if (not st.journal_id.default_credit_account_id) \
                     or (not st.journal_id.default_debit_account_id):
                 raise osv.except_osv(_('Configuration Error !'),
-                        _('Please verify that an account is defined in the journal.'))
+                                     _('Please verify that an account is defined in the journal.'))
 
             if not st.name == '/':
                 st_number = st.name
@@ -329,7 +337,7 @@ class AccountBankSatement(Model):
             for line in st.move_line_ids:
                 if line.state != 'valid':
                     raise osv.except_osv(_('Error !'),
-                            _('The account entries lines are not in valid state.'))
+                                         _('The account entries lines are not in valid state.'))
 # begin changes
             errors_stack = []
             for st_line in st.line_ids:
@@ -337,11 +345,15 @@ class AccountBankSatement(Model):
                     if st_line.analytic_account_id:
                         if not st.journal_id.analytic_journal_id:
                             raise osv.except_osv(_('No Analytic Journal !'),
-                                             _("You have to assign an analytic journal on the '%s' journal!") % (st.journal_id.name,))
+                                                 _("You have to assign an analytic"
+                                                   " journal on the '%s' journal!") % (st.journal_id.name,))
                     if not st_line.amount:
                         continue
                     st_line_number = self.get_next_st_line_number(cr, uid, st_number, st_line, context)
-                    self.create_move_from_st_line(cr, uid, st_line.id, company_currency_id, st_line_number, context)
+                    self.create_move_from_st_line(cr, uid, st_line.id,
+                                                  company_currency_id,
+                                                  st_line_number,
+                                                  context)
                 except osv.except_osv, exc:
                     msg = "Line ID %s with ref %s had following error: %s" % (st_line.id, st_line.ref, exc.value)
                     errors_stack.append(msg)
@@ -352,17 +364,20 @@ class AccountBankSatement(Model):
                 msg = u"\n".join(errors_stack)
                 raise osv.except_osv(_('Error'), msg)
 #end changes
-            self.write(cr, uid, [st.id], {
-                    'name': st_number,
-                    'balance_end_real': st.balance_end
-            }, context=context)
-            self.message_post(cr, uid, [st.id], body=_('Statement %s confirmed, journal items were created.') % (st_number,), context=context)
+            self.write(cr, uid, [st.id],
+                       {'name': st_number,
+                        'balance_end_real': st.balance_end},
+                       context=context)
+            self.message_post(cr, uid, [st.id], b
+                              ody=_('Statement %s confirmed, journal items were created.') % (st_number,),
+                              context=context)
         return self.write(cr, uid, ids, {'state': 'confirm'}, context=context)
 
     def get_account_for_counterpart(self, cr, uid, amount, account_receivable, account_payable):
         """For backward compatibility."""
-        account_id, type = self.get_account_and_type_for_counterpart(cr, uid, amount, account_receivable, 
-            account_payable)
+        account_id, type = self.get_account_and_type_for_counterpart(cr, uid, amount,
+                                                                     account_receivable,
+                                                                     account_payable)
         return account_id
 
     def get_type_for_counterpart(self, cr, uid, amount, partner_id=False):
@@ -385,12 +400,12 @@ class AccountBankSatement(Model):
             type = 'supplier'
         if partner_id:
             part = obj_partner.browse(cr, uid, partner_id, context=context)
-            if part.supplier == True:
+            if part.supplier:
                 type = 'supplier'
-            elif part.customer == True:
+            elif part.customer:
                 type = 'customer'
         return type
-    
+
     def get_account_and_type_for_counterpart(
             self, cr, uid, amount, account_receivable, account_payable, partner_id=False):
         """
@@ -405,13 +420,13 @@ class AccountBankSatement(Model):
               If amount is negativ, the type and account will be supplier and payable
         Note that we return the payable or receivable account from agrs and not from the optional partner_id
         given !
-        
+
         :param float: amount of the line
         :param int/long: account_receivable the  receivable account
         :param int/long: account_payable the payable account
         :param int/long: partner_id the partner id
         :return: dict with [account_id as int/long,type as string]: the default account to be used by
-            statement line as the counterpart of the journal account depending on the amount and the type 
+            statement line as the counterpart of the journal account depending on the amount and the type
             as 'customer' or 'supplier'.
         """
         account_id = False
@@ -592,7 +607,7 @@ class AccountBankSatementLine(Model):
             if line_type == 'supplier':
                 account_id = pay_account
         elif amount is not False:
-            account_id, line_type = obj_stat.get_account_and_type_for_counterpart(cr, uid, amount, 
+            account_id, line_type = obj_stat.get_account_and_type_for_counterpart(cr, uid, amount,
                 receiv_account, pay_account, partner_id=partner_id)
         res['account_id'] = account_id if account_id else receiv_account
         res['type'] = line_type
