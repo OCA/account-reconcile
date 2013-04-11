@@ -141,38 +141,12 @@ class AccountStatementProfil(Model):
         else:
             # This is awfully slow...
             periods = self.pool.get('account.period').find(cr, uid,
-                                                               dt=values.get('date'),
-                                                               context=context)
+                                                           dt=values.get('date'),
+                                                           context=context)
             values['period_id'] = periods[0]
             period_memoizer[date] = periods[0]
         values['type'] = 'general'
         return values
-
-    def _get_available_columns(self, statement_store):
-        """Return writeable by SQL columns"""
-        statement_line_obj = self.pool['account.bank.statement.line']
-        model_cols = statement_line_obj._columns
-        avail = [k for k, col in model_cols.iteritems() if not hasattr(col, '_fnct')]
-        keys = [k for k in statement_store[0].keys() if k in avail]
-        keys.sort()
-        return keys
-
-    def _insert_lines(self, cr, uid, statement_store, context=None):
-        """ Do raw insert into database because ORM is awfully slow
-            when doing batch write. It is a shame that batch function
-            does not exist"""
-        statement_line_obj = self.pool['account.bank.statement.line']
-        statement_line_obj.check_access_rule(cr, uid, [], 'create')
-        statement_line_obj.check_access_rights(cr, uid, 'create', raise_exception=True)
-        cols = self._get_available_columns(statement_store)
-        tmp_vals = (', '.join(cols), ', '.join(['%%(%s)s' % i for i in cols]))
-        sql = "INSERT INTO account_bank_statement_line (%s) VALUES (%s);" % tmp_vals
-        try:
-            cr.executemany(sql, tuple(statement_store))
-        except psycopg2.Error as sql_err:
-            cr.rollback()
-            raise osv.except_osv(_("ORM bypass error"),
-                                 sql_err.pgerror)
 
     def statement_import(self, cr, uid, ids, profile_id, file_stream, ftype="csv", context=None):
         """
@@ -224,7 +198,7 @@ class AccountStatementProfil(Model):
                                                              account_receivable, statement_id, context)
                 statement_store.append(values)
             # Hack to bypass ORM poor perfomance. Sob...
-            self._insert_lines(cr, uid, statement_store, context=context)
+            statement_line_obj._insert_lines(cr, uid, statement_store, context=context)
 
             # Build and create the global commission line for the whole statement
             comm_vals = self.prepare_global_commission_line_vals(cr, uid, parser, result_row_list,
@@ -255,7 +229,6 @@ class AccountStatementProfil(Model):
             if prof.launch_import_completion:
                 statement_obj.button_auto_completion(cr, uid, [statement_id], context)
 
-
             # Write the needed log infos on profile
             self.write_logs_after_import(cr, uid, prof.id,
                                          statement_id,
@@ -280,6 +253,31 @@ class AccountStatementLine(Model):
     """
     _inherit = "account.bank.statement.line"
 
+    def _get_available_columns(self, statement_store):
+        """Return writeable by SQL columns"""
+        statement_line_obj = self.pool['account.bank.statement.line']
+        model_cols = statement_line_obj._columns
+        avail = [k for k, col in model_cols.iteritems() if not hasattr(col, '_fnct')]
+        keys = [k for k in statement_store[0].keys() if k in avail]
+        keys.sort()
+        return keys
+
+    def _insert_lines(self, cr, uid, statement_store, context=None):
+        """ Do raw insert into database because ORM is awfully slow
+            when doing batch write. It is a shame that batch function
+            does not exist"""
+        statement_line_obj = self.pool['account.bank.statement.line']
+        statement_line_obj.check_access_rule(cr, uid, [], 'create')
+        statement_line_obj.check_access_rights(cr, uid, 'create', raise_exception=True)
+        cols = self._get_available_columns(statement_store)
+        tmp_vals = (', '.join(cols), ', '.join(['%%(%s)s' % i for i in cols]))
+        sql = "INSERT INTO account_bank_statement_line (%s) VALUES (%s);" % tmp_vals
+        try:
+            cr.executemany(sql, tuple(statement_store))
+        except psycopg2.Error as sql_err:
+            cr.rollback()
+            raise osv.except_osv(_("ORM bypass error"),
+                                 sql_err.pgerror)
     _columns = {
         'commission_amount': fields.sparse(
             type='float',
