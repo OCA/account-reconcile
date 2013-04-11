@@ -500,13 +500,10 @@ class AccountBankSatement(Model):
         journal_id = import_config.journal_id.id
         account_id = import_config.journal_id.default_debit_account_id.id
         credit_partner_id = import_config.partner_id and import_config.partner_id.id or False
-        return {'value':
-                    {'journal_id': journal_id,
-                     'account_id': account_id,
-                     'balance_check': import_config.balance_check,
-                     'credit_partner_id': credit_partner_id,
-                    }
-                }
+        return {'value': {'journal_id': journal_id,
+                          'account_id': account_id,
+                          'balance_check': import_config.balance_check,
+                          'credit_partner_id': credit_partner_id}}
 
 
 class AccountBankSatementLine(Model):
