@@ -18,14 +18,17 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
+import sys
+import traceback
+
+import psycopg2
 
 from openerp.tools.translate import _
 import datetime
 from openerp.osv.orm import Model
 from openerp.osv import fields, osv
 from parser import new_bank_statement_parser
-import sys
-import traceback
+
 
 
 class AccountStatementProfil(Model):
@@ -64,7 +67,8 @@ class AccountStatementProfil(Model):
         self.message_post(cr,
                           uid,
                           ids,
-                          body=_('Statement ID %s have been imported with %s lines.') % (statement_id, num_lines),
+                          body=_('Statement ID %s have been imported with %s lines.') %
+                                (statement_id, num_lines),
                           context=context)
         return True
 
@@ -121,14 +125,54 @@ class AccountStatementProfil(Model):
         statement_obj = self.pool.get('account.bank.statement')
         values = parser_vals
         values['statement_id'] = statement_id
-        values['account_id'] = statement_obj.get_account_for_counterpart(
-                cr,
-                uid,
-                parser_vals['amount'],
-                account_receivable,
-                account_payable
-        )
+        values['account_id'] = statement_obj.get_account_for_counterpart(cr,
+                                                                         uid,
+                                                                         parser_vals['amount'],
+                                                                         account_receivable,
+                                                                         account_payable)
+
+        date = values.get('date')
+        period_memoizer = context.get('period_memoizer')
+        if not period_memoizer:
+            period_memoizer = {}
+            context['period_memoizer'] = period_memoizer
+        if period_memoizer.get(date):
+            values['period_id'] = period_memoizer[date]
+        else:
+            # This is awfully slow...
+            periods = self.pool.get('account.period').find(cr, uid,
+                                                               dt=values.get('date'),
+                                                               context=context)
+            values['period_id'] = periods[0]
+            period_memoizer[date] = periods[0]
+        values['type'] = 'general'
         return values
+
+    def _get_available_columns(self, statement_store):
+        """Return writeable by SQL columns"""
+        statement_line_obj = self.pool['account.bank.statement.line']
+        model_cols = statement_line_obj._columns
+        avail = [k for k, col in model_cols.iteritems() if not hasattr(col, '_fnct')]
+        keys = [k for k in statement_store[0].keys() if k in avail]
+        keys.sort()
+        return keys
+
+    def _insert_lines(self, cr, uid, statement_store, context=None):
+        """ Do raw insert into database because ORM is awfully slow
+            when doing batch write. It is a shame that batch function
+            does not exist"""
+        statement_line_obj = self.pool['account.bank.statement.line']
+        statement_line_obj.check_access_rule(cr, uid, [], 'create')
+        statement_line_obj.check_access_rights(cr, uid, 'create', raise_exception=True)
+        cols = self._get_available_columns(statement_store)
+        tmp_vals = (', '.join(cols), ', '.join(['%%(%s)s' % i for i in cols]))
+        sql = "INSERT INTO account_bank_statement_line (%s) VALUES (%s);" % tmp_vals
+        try:
+            cr.executemany(sql, tuple(statement_store))
+        except psycopg2.Error as sql_err:
+            cr.rollback()
+            raise osv.except_osv(_("ORM bypass error"),
+                                 sql_err.pgerror)
 
     def statement_import(self, cr, uid, ids, profile_id, file_stream, ftype="csv", context=None):
         """
@@ -148,75 +192,83 @@ class AccountStatementProfil(Model):
         attachment_obj = self.pool.get('ir.attachment')
         prof_obj = self.pool.get("account.statement.profile")
         if not profile_id:
-            raise osv.except_osv(
-                    _("No Profile !"),
-                    _("You must provide a valid profile to import a bank statement !"))
+            raise osv.except_osv(_("No Profile !"),
+                                 _("You must provide a valid profile to import a bank statement !"))
         prof = prof_obj.browse(cr, uid, profile_id, context=context)
 
         parser = new_bank_statement_parser(prof.import_type, ftype=ftype)
         result_row_list = parser.parse(file_stream)
         # Check all key are present in account.bank.statement.line !!
+        if not result_row_list:
+            raise osv.except_osv(_("Nothing to import"),
+                                 _("The file is empty"))
         parsed_cols = parser.get_st_line_vals(result_row_list[0]).keys()
         for col in parsed_cols:
             if col not in statement_line_obj._columns:
-                raise osv.except_osv(
-                        _("Missing column !"),
-                        _("Column %s you try to import is not "
-                          "present in the bank statement line !") % col)
+                raise osv.except_osv(_("Missing column !"),
+                                     _("Column %s you try to import is not "
+                                       "present in the bank statement line !") % col)
 
-        statement_id = statement_obj.create(
-                cr, uid, {'profile_id': prof.id}, context=context)
+        statement_id = statement_obj.create(cr, uid,
+                                            {'profile_id': prof.id},
+                                            context=context)
         account_receivable, account_payable = statement_obj.get_default_pay_receiv_accounts(
-                cr, uid, context)
+                                                 cr, uid, context)
         try:
             # Record every line in the bank statement and compute the global commission
             # based on the commission_amount column
             statement_store = []
             for line in result_row_list:
                 parser_vals = parser.get_st_line_vals(line)
-                values = self.prepare_statetement_lines_vals(
-                        cr, uid, parser_vals, account_payable,
-                        account_receivable, statement_id, context)
-                # we finally create the line in system
-                statement_store.append((0, 0, values))
+                values = self.prepare_statetement_lines_vals(cr, uid, parser_vals, account_payable,
+                                                             account_receivable, statement_id, context)
+                statement_store.append(values)
+            # Hack to bypass ORM poor perfomance. Sob...
+            self._insert_lines(cr, uid, statement_store, context=context)
+
             # Build and create the global commission line for the whole statement
-            statement_obj.write(cr, uid, [statement_id],
-                                {'line_ids': statement_store}, context=context)
             comm_vals = self.prepare_global_commission_line_vals(cr, uid, parser, result_row_list,
                                                                  prof, statement_id, context)
             if comm_vals:
                 statement_line_obj.create(cr, uid, comm_vals, context=context)
+            else:
+                # Trigger store field computation if someone has better idea
+                start_bal = statement_obj.read(cr, uid, statement_id,
+                                               ['balance_start'],
+                                               context=context)
+                start_bal = start_bal['balance_start']
+                statement_obj.write(cr, uid, [statement_id],
+                                    {'balance_start': start_bal})
 
-            attachment_obj.create(
-                    cr,
-                    uid,
-                    {
-                        'name': 'statement file',
-                        'datas': file_stream,
-                        'datas_fname': "%s.%s" % (
-                            datetime.datetime.now().date(),
-                            ftype),
-                        'res_model': 'account.bank.statement',
-                        'res_id': statement_id,
-                    },
-                    context=context
-                )
+            attachment_obj.create(cr,
+                                  uid,
+                                  {'name': 'statement file',
+                                   'datas': file_stream,
+                                   'datas_fname': "%s.%s" % (
+                                       datetime.datetime.now().date(),
+                                       ftype),
+                                   'res_model': 'account.bank.statement',
+                                   'res_id': statement_id},
+                                  context=context)
+
             # If user ask to launch completion at end of import, do it !
             if prof.launch_import_completion:
                 statement_obj.button_auto_completion(cr, uid, [statement_id], context)
 
+
             # Write the needed log infos on profile
-            self.write_logs_after_import(
-                    cr, uid, prof.id, statement_id, len(result_row_list), context)
+            self.write_logs_after_import(cr, uid, prof.id,
+                                         statement_id,
+                                         len(result_row_list),
+                                         context)
 
         except Exception:
             statement_obj.unlink(cr, uid, [statement_id], context=context)
             error_type, error_value, trbk = sys.exc_info()
             st = "Error: %s\nDescription: %s\nTraceback:" % (error_type.__name__, error_value)
             st += ''.join(traceback.format_tb(trbk, 30))
-            raise osv.except_osv(
-                    _("Statement import error"),
-                    _("The statement cannot be created : %s") % st)
+            raise osv.except_osv(_("Statement import error"),
+                                 _("The statement cannot be created : %s") % st)
         return statement_id
 
 

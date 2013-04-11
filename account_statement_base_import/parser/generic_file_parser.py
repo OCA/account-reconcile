@@ -29,6 +29,7 @@ try:
 except:
     raise Exception(_('Please install python lib xlrd'))
 
+
 def float_or_zero(val):
     """ Conversion function used to manage
     empty string into float usecase"""
@@ -82,14 +83,12 @@ class GenericFileParser(FileParser):
         In this generic parser, the commission is given for every line, so we store it
         for each one.
         """
-        return {
-            'name': line.get('label', line.get('ref', '/')),
-            'date': line.get('date', datetime.datetime.now().date()),
-            'amount': line.get('amount', 0.0),
-            'ref': line.get('ref', '/'),
-            'label': line.get('label', ''),
-            'commission_amount': line.get('commission_amount', 0.0),
-        }
+        return {'name': line.get('label', line.get('ref', '/')),
+                'date': line.get('date', datetime.datetime.now().date()),
+                'amount': line.get('amount', 0.0),
+                'ref': line.get('ref', '/'),
+                'label': line.get('label', ''),
+                'commission_amount': line.get('commission_amount', 0.0)}
 
     def _post(self, *args, **kwargs):
         """
