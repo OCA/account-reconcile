@@ -94,7 +94,7 @@ class AccountStatementProfil(orm.Model):
             if result:
                 result['already_completed'] = True
                 return result
-        return {}
+        return None
 
 
 class AccountStatementCompletionRule(orm.Model):
@@ -407,14 +407,14 @@ class AccountStatementLine(orm.Model):
         res = {}
         errors_stack = []
         for line in self.browse(cr, uid, ids, context=context):
-            res[line.id] = {}
             if line.already_completed:
                 continue
             try:
                 # Ask the rule
                 vals = profile_obj._find_values_from_rules(
                         cr, uid, rules, line.id, context)
-                res[line.id].update(vals)
+                if vals:
+                    res[line.id] = vals
             except ErrorTooManyPartner, exc:
                 msg = "Line ID %s had following error: %s" % (line.id, exc.value)
                 errors_stack.append(msg)
