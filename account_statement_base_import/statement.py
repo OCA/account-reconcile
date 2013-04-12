@@ -186,8 +186,11 @@ class AccountStatementProfil(Model):
         statement_id = statement_obj.create(cr, uid,
                                             {'profile_id': prof.id},
                                             context=context)
-        account_receivable, account_payable = statement_obj.get_default_pay_receiv_accounts(
-                                                 cr, uid, context)
+        if prof.receivable_account_id:
+            account_receivable, account_payable = prof.receivable_account_id.id
+        else:
+            account_receivable, account_payable = statement_obj.get_default_pay_receiv_accounts(
+                                                       cr, uid, context)
         try:
             # Record every line in the bank statement and compute the global commission
             # based on the commission_amount column

@@ -137,14 +137,16 @@ class AccountStatementCompletionRule(orm.Model):
         inv_obj = self.pool.get('account.invoice')
         if inv_type == 'supplier':
             type_domain = ('in_invoice', 'in_refund')
+            number_field = 'supplier_invoice_number'
         elif inv_type == 'customer':
             type_domain = ('out_invoice', 'out_refund')
+            number_field = 'number'
         else:
             raise osv.except_osv(_('System error'),
                                  _('Invalid invoice type for completion: %') % inv_type)
 
         inv_id = inv_obj.search(cr, uid,
-                                [('supplier_invoice_number', '=', st_line.ref),
+                                [(number_field , '=', st_line.ref),
                                  ('type', 'in', type_domain)],
                                 context=context)
         if inv_id:
@@ -167,8 +169,11 @@ class AccountStatementCompletionRule(orm.Model):
         inv = self._find_invoice(cr, uid, st_line, inv_type, context=context)
         if inv:
             res = {'partner_id': inv.partner_id.id,
-                   'account_id': inv.account_id,
+                   'account_id': inv.account_id.id,
                    'type': inv_type}
+        override_acc = st_line.statement_id.profile_id.receivable_account_id
+        if override_acc:
+            res['account_id'] = override_acc.id
         return res
 
     def get_from_ref_and_supplier_invoice(self, cr, uid, line_id, context=None):
@@ -330,7 +335,7 @@ class AccountStatementCompletionRule(orm.Model):
         st_line = st_obj.browse(cr, uid, line_id, context=context)
         if st_line:
             sql = "SELECT id FROM res_partner WHERE name ~* %s"
-            pattern = ".*%s.*" % re.escape(st_line.label)
+            pattern = ".*%s.*" % re.escape(st_line.name)
             cr.execute(sql, (pattern,))
             result = cr.fetchall()
             if not result:
@@ -408,7 +413,14 @@ class AccountStatementLine(orm.Model):
                 # Ask the rule
                 vals = profile_obj._find_values_from_rules(
                         cr, uid, rules, line.id, context)
-                # Merge the result
+                # get the default
+                if not vals:
+                    vals= st_obj.get_values_for_line(cr,
+                                                     uid,
+                                                     profile_id=line.statement_id.profile_id.id,
+                                                     line_type=line.type,
+                                                     amount=line.amount,
+                                                     context=context)
                 res[line.id].update(vals)
             except ErrorTooManyPartner, exc:
                 msg = "Line ID %s had following error: %s" % (line.id, exc.value)
