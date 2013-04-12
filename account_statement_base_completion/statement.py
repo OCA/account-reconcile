@@ -92,6 +92,7 @@ class AccountStatementProfil(orm.Model):
             method_to_call = getattr(rule_obj, call)
             result = method_to_call(cr, uid, line_id, context)
             if result:
+                result['already_completed'] = True
                 return result
         return {}
 
@@ -413,14 +414,6 @@ class AccountStatementLine(orm.Model):
                 # Ask the rule
                 vals = profile_obj._find_values_from_rules(
                         cr, uid, rules, line.id, context)
-                # get the default
-                if not vals:
-                    vals= st_obj.get_values_for_line(cr,
-                                                     uid,
-                                                     profile_id=line.statement_id.profile_id.id,
-                                                     line_type=line.type,
-                                                     amount=line.amount,
-                                                     context=context)
                 res[line.id].update(vals)
             except ErrorTooManyPartner, exc:
                 msg = "Line ID %s had following error: %s" % (line.id, exc.value)
@@ -510,7 +503,6 @@ class AccountBankSatement(orm.Model):
                 # vals = res and res.keys() or False
                 if res:
                     vals = res[line.id]
-                    vals['already_completed'] = True
                     vals['id'] = line.id
                     #stat_line_obj.write(cr, uid, [line.id], vals, context=ctx)
                     try:
