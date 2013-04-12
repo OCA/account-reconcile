@@ -46,7 +46,7 @@ class AccountStatementProfil(Model):
             help="Tic that box to automatically launch the completion "
                  "on each imported file using this profile."),
         'last_import_date': fields.datetime("Last Import Date"),
-        'rec_log': fields.text('log', readonly=True, deprecated=True),
+        #'rec_log': fields.text('log', readonly=True, deprecated=True),
         'import_type': fields.selection(
             get_import_type_selection,
             'Type of import',
@@ -278,6 +278,21 @@ class AccountStatementLine(Model):
             cr.rollback()
             raise osv.except_osv(_("ORM bypass error"),
                                  sql_err.pgerror)
+
+    def _update_line(self, cr, uid, vals, context=None):
+        """ Do raw update into database because ORM is awfully slow
+            when doing batch write. It is a shame that batch function
+            does not exist"""
+        cols = self._get_available_columns([vals])
+        tmp_vals = (', '.join(['%s = %%(%s)s' % (i, i) for i in cols]))
+        sql = "UPDATE account_bank_statement_line SET %s where id = %%(id)s;" % tmp_vals
+        try:
+            cr.execute(sql, vals)
+        except psycopg2.Error as sql_err:
+            cr.rollback()
+            raise osv.except_osv(_("ORM bypass error"),
+                                 sql_err.pgerror)
+
     _columns = {
         'commission_amount': fields.sparse(
             type='float',

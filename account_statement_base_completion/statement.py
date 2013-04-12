@@ -62,7 +62,13 @@ class AccountStatementProfil(orm.Model):
             rel='as_rul_st_prof_rel'),
     }
 
-    def find_values_from_rules(self, cr, uid, id, line_id, context=None):
+    def _get_callable(self, cr, uid, pid, context=None):
+        profile = self.browse(cr, uid, pid, context=context)
+        # We need to respect the sequence order
+        sorted_array = sorted(profile.rule_ids, key=attrgetter('sequence'))
+        return tuple([x.function_to_call for x in sorted_array])
+
+    def _find_values_from_rules(self, cr, uid, calls, line_id, context=None):
         """
         This method will execute all related rules, in their sequence order,
         to retrieve all the values returned by the first rules that will match.
@@ -78,17 +84,16 @@ class AccountStatementProfil(orm.Model):
         """
         if context is None:
             context = {}
-        res = {}
+        if not calls:
+            calls = self._get_callable(cr, uid, id, context=context)
         rule_obj = self.pool.get('account.statement.completion.rule')
-        profile = self.browse(cr, uid, id, context=context)
-        # We need to respect the sequence order
-        sorted_array = sorted(profile.rule_ids, key=attrgetter('sequence'))
-        for rule in sorted_array:
-            method_to_call = getattr(rule_obj, rule.function_to_call)
+
+        for call in calls:
+            method_to_call = getattr(rule_obj, call)
             result = method_to_call(cr, uid, line_id, context)
             if result:
                 return result
-        return res
+        return {}
 
 
 class AccountStatementCompletionRule(orm.Model):
@@ -381,7 +386,7 @@ class AccountStatementLine(orm.Model):
         'already_completed': False,
     }
 
-    def get_line_values_from_rules(self, cr, uid, ids, context=None):
+    def get_line_values_from_rules(self, cr, uid, ids, rules, context=None):
         """
         We'll try to find out the values related to the line based on rules setted on
         the profile.. We will ignore line for which already_completed is ticked.
@@ -396,20 +401,13 @@ class AccountStatementLine(orm.Model):
         res = {}
         errors_stack = []
         for line in self.browse(cr, uid, ids, context=context):
+            res[line.id] = {}
             if line.already_completed:
                 continue
             try:
-                # Take the default values
-                res[line.id] = st_obj.get_values_for_line(
-                        cr,
-                        uid,
-                        profile_id=line.statement_id.profile_id.id,
-                        line_type=line.type,
-                        amount=line.amount,
-                        context=context)
                 # Ask the rule
-                vals = profile_obj.find_values_from_rules(
-                        cr, uid, line.statement_id.profile_id.id, line.id, context)
+                vals = profile_obj._find_values_from_rules(
+                        cr, uid, rules, line.id, context)
                 # Merge the result
                 res[line.id].update(vals)
             except ErrorTooManyPartner, exc:
@@ -476,16 +474,23 @@ class AccountBankSatement(orm.Model):
         """
         if context is None:
             context = {}
-        stat_line_obj = self.pool.get('account.bank.statement.line')
+        stat_line_obj = self.pool['account.bank.statement.line']
+        profile_obj = self.pool.get('account.statement.profile')
         compl_lines = 0
+        stat_line_obj.check_access_rule(cr, uid, [], 'create')
+        stat_line_obj.check_access_rights(cr, uid, 'create', raise_exception=True)
+        import datetime
+        a = datetime.datetime.now()
         for stat in self.browse(cr, uid, ids, context=context):
             msg_lines = []
             ctx = context.copy()
             ctx['line_ids'] = stat.line_ids
+            rules = profile_obj._get_callable(cr, uid, stat.profile_id.id, context=context)
             for line in stat.line_ids:
                 res = {}
                 try:
-                    res = stat_line_obj.get_line_values_from_rules(cr, uid, [line.id], context=ctx)
+                    res = stat_line_obj.get_line_values_from_rules(cr, uid, [line.id],
+                                                                   rules, context=ctx)
                     if res:
                         compl_lines += 1
                 except ErrorTooManyPartner, exc:
@@ -496,8 +501,18 @@ class AccountBankSatement(orm.Model):
                 if res:
                     vals = res[line.id]
                     vals['already_completed'] = True
-                    stat_line_obj.write(cr, uid, [line.id], vals, context=ctx)
+                    vals['id'] = line.id
+                    #stat_line_obj.write(cr, uid, [line.id], vals, context=ctx)
+                    try:
+                        stat_line_obj._update_line(cr, uid, vals, context=context)
+                    except osv.except_osv as exc:
+                        msg_lines.append(repr(exc))
+                    # we can commit as it is not needed to be atomic
+                    # commiting here adds a nice perfo boost
+                    if not compl_lines % 500:
+                        cr.commit()
             msg = u'\n'.join(msg_lines)
             self.write_completion_log(cr, uid, stat.id,
                                       msg, compl_lines, context=context)
+        print datetime.datetime.now() - a
         return True
