@@ -30,7 +30,6 @@ from openerp.osv import fields, osv
 from parser import new_bank_statement_parser
 
 
-
 class AccountStatementProfil(Model):
     _inherit = "account.statement.profile"
 
