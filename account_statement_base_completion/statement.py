@@ -491,8 +491,6 @@ class AccountBankSatement(orm.Model):
         compl_lines = 0
         stat_line_obj.check_access_rule(cr, uid, [], 'create')
         stat_line_obj.check_access_rights(cr, uid, 'create', raise_exception=True)
-        import datetime
-        a = datetime.datetime.now()
         for stat in self.browse(cr, uid, ids, context=context):
             msg_lines = []
             ctx = context.copy()
@@ -526,5 +524,4 @@ class AccountBankSatement(orm.Model):
             msg = u'\n'.join(msg_lines)
             self.write_completion_log(cr, uid, stat.id,
                                       msg, compl_lines, context=context)
-        print datetime.datetime.now() - a
         return True
