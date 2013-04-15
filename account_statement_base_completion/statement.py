@@ -21,7 +21,6 @@
 # TODO replace customer supplier by package constant
 from collections import defaultdict
 import re
-
 from tools.translate import _
 from openerp.osv import osv, orm, fields
 from openerp.tools import DEFAULT_SERVER_DATETIME_FORMAT
@@ -147,7 +146,7 @@ class AccountStatementCompletionRule(orm.Model):
                                  _('Invalid invoice type for completion: %') % inv_type)
 
         inv_id = inv_obj.search(cr, uid,
-                                [(number_field , '=', st_line.ref),
+                                [(number_field , '=', st_line.ref.strip()),
                                  ('type', 'in', type_domain)],
                                 context=context)
         if inv_id:
@@ -492,6 +491,7 @@ class AccountBankSatement(orm.Model):
             for line in stat.line_ids:
                 res = {}
                 try:
+
                     res = stat_line_obj.get_line_values_from_rules(cr, uid, [line.id],
                                                                    rules, context=ctx)
                     if res:
