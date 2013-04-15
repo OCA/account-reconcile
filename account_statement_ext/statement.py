@@ -552,7 +552,7 @@ class AccountBankSatementLine(Model):
         'account_id': _get_default_account,
     }
 
-    def get_values_for_line(self, cr, uid, profile_id=False, partner_id=False, line_type=False, amount=False, context=None):
+    def get_values_for_line(self, cr, uid, profile_id=False, partner_id=False, line_type=False, amount=False, master_account_id=None, context=None):
         """
         Return the account_id to be used in the line of a bank statement. It'll base the result as follow:
             - If a receivable_account_id is set in the profile, return this value and type = general
@@ -587,14 +587,19 @@ class AccountBankSatementLine(Model):
         obj_stat = self.pool.get('account.bank.statement')
         line_type = receiv_account = pay_account = account_id = False
         # If profile has a receivable_account_id, we return it in any case
-        if profile_id:
+        if master_account_id:
+            res['account_id'] = master_account_id
+            res['type'] = 'general'
+            return res
+        # To obtimize we consider passing false means there is no account
+        # on profile
+        if profile_id and master_account_id is None:
             profile = self.pool.get("account.statement.profile").browse(
-                    cr, uid, profile_id, context=context)
+                                       cr, uid, profile_id, context=context)
             if profile.receivable_account_id:
-                account_id = profile.receivable_account_id.id
-                line_type = 'general'
+                res['account_id'] = profile.receivable_account_id.id
+                res['type'] = 'general'
                 return res
-        # If partner -> take from him
         if partner_id:
             part = obj_partner.browse(cr, uid, partner_id, context=context)
             pay_account = part.property_account_payable.id
