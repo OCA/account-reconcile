@@ -208,7 +208,7 @@ class AccountStatementCompletionRule(orm.Model):
             'account_id' : value,
             ...}
         """
-        return self._from_invoice(cr, uid, line_id, 'supplier', context=context)
+        return self._from_invoice(cr, uid, line_id, 'customer', context=context)
 
     def get_from_ref_and_so(self, cr, uid, line_id, context=None):
         """
