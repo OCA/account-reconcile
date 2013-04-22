@@ -19,6 +19,10 @@
 #
 ##############################################################################
 # TODO replace customer supplier by package constant
+import traceback
+import sys
+import logging
+
 from collections import defaultdict
 import re
 from tools.translate import _
@@ -27,6 +31,7 @@ from openerp.tools import DEFAULT_SERVER_DATETIME_FORMAT
 from operator import attrgetter
 import datetime
 
+_logger = logging.getLogger(__name__)
 
 class ErrorTooManyPartner(Exception):
     """
@@ -173,7 +178,7 @@ class AccountStatementCompletionRule(orm.Model):
                    'type': inv_type}
         override_acc = line['master_account_id']
         if override_acc:
-            res['account_id'] = override_acc.id
+            res['account_id'] = override_acc
         return res
 
     # Should be private but data are initialised with no update XML
@@ -502,12 +507,22 @@ class AccountBankSatement(orm.Model):
                     msg_lines.append(repr(exc))
                 except Exception, exc:
                     msg_lines.append(repr(exc))
+                    error_type, error_value, trbk = sys.exc_info()
+                    st = "Error: %s\nDescription: %s\nTraceback:" % (error_type.__name__, error_value)
+                    st += ''.join(traceback.format_tb(trbk, 30))
+                    print st
+                    _logger.error(st)
                 if res:
                     #stat_line_obj.write(cr, uid, [line.id], vals, context=ctx)
                     try:
                         stat_line_obj._update_line(cr, uid, res, context=context)
-                    except osv.except_osv as exc:
+                    except Exception as exc:
                         msg_lines.append(repr(exc))
+                        error_type, error_value, trbk = sys.exc_info()
+                        st = "Error: %s\nDescription: %s\nTraceback:" % (error_type.__name__, error_value)
+                        st += ''.join(traceback.format_tb(trbk, 30))
+                        print st
+                        _logger.error(st)
                     # we can commit as it is not needed to be atomic
                     # commiting here adds a nice perfo boost
                     if not compl_lines % 500:
