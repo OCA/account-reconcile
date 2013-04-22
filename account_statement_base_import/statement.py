@@ -187,7 +187,7 @@ class AccountStatementProfil(Model):
                                             {'profile_id': prof.id},
                                             context=context)
         if prof.receivable_account_id:
-            account_receivable, account_payable = prof.receivable_account_id.id
+            account_receivable = account_payable = prof.receivable_account_id.id
         else:
             account_receivable, account_payable = statement_obj.get_default_pay_receiv_accounts(
                                                        cr, uid, context)
