@@ -392,6 +392,8 @@ class AccountBankSatement(Model):
 
     def _compute_type_from_amount(self, cr, uid, amount):
         """Compute the statement type based on amount"""
+        if amount in (None, False):
+            return 'general'
         if amount < 0:
             return 'supplier'
         return 'customer'
@@ -438,8 +440,8 @@ class AccountBankSatement(Model):
             as 'customer' or 'supplier'.
         """
         account_id = False
-        type = self.get_type_for_counterpart(cr, uid, amount, partner_id=partner_id)
-        if type == 'supplier':
+        ltype = self.get_type_for_counterpart(cr, uid, amount, partner_id=partner_id)
+        if ltype == 'supplier':
             account_id = account_payable
         else:
             account_id = account_receivable
@@ -448,7 +450,7 @@ class AccountBankSatement(Model):
                 _('Can not determine account'),
                 _('Please ensure that minimal properties are set')
             )
-        return [account_id, type]
+        return [account_id, ltype]
 
     def get_default_pay_receiv_accounts(self, cr, uid, context=None):
         """
@@ -585,39 +587,41 @@ class AccountBankSatementLine(Model):
         res = {}
         obj_partner = self.pool.get('res.partner')
         obj_stat = self.pool.get('account.bank.statement')
-        line_type = receiv_account = pay_account = account_id = False
+        receiv_account = pay_account = account_id = False
         # If profile has a receivable_account_id, we return it in any case
         if master_account_id:
             res['account_id'] = master_account_id
-            res['type'] = 'general'
+            # We return general as default instead of get_type_for_counterpart
+            # for perfomance reasons as line_type is not a meaningfull value
+            # as account is forced
+            res['type'] = line_type if line_type else 'general'
             return res
-        # To obtimize we consider passing false means there is no account
+        # To optimize we consider passing false means there is no account
         # on profile
         if profile_id and master_account_id is None:
             profile = self.pool.get("account.statement.profile").browse(
                                        cr, uid, profile_id, context=context)
             if profile.receivable_account_id:
                 res['account_id'] = profile.receivable_account_id.id
-                res['type'] = 'general'
+                # We return general as default instead of get_type_for_counterpart
+                # for perfomance reasons as line_type is not a meaningfull value
+                # as account is forced
+                res['type'] = line_type if line_type else 'general'
                 return res
+        # If no account is available on profile you have to do the lookup
+        # This can be quite a performance killer as we read ir.properity fields
         if partner_id:
             part = obj_partner.browse(cr, uid, partner_id, context=context)
             pay_account = part.property_account_payable.id
             receiv_account = part.property_account_receivable.id
         # If no value, look on the default company property
         if not pay_account or not receiv_account:
-            receiv_account, pay_account = obj_stat.get_default_pay_receiv_accounts(
-                    cr, uid, context=None)
-        # Now we have both pay and receive account, choose the one to use
-        # based on line_type first, then amount, otherwise take receivable one.
-        if line_type is not False:
-            if line_type == 'supplier':
-                account_id = pay_account
-        elif amount is not False:
-            account_id, line_type = obj_stat.get_account_and_type_for_counterpart(cr, uid, amount,
-                receiv_account, pay_account, partner_id=partner_id)
+            receiv_account, pay_account = obj_stat.get_default_pay_receiv_accounts(cr, uid, context=None)
+        account_id, comp_line_type = obj_stat.get_account_and_type_for_counterpart(cr, uid, amount,
+                                                                                   receiv_account, pay_account,
+                                                                                   partner_id=partner_id)
         res['account_id'] = account_id if account_id else receiv_account
-        res['type'] = line_type
+        res['type'] = line_type if line_type else comp_line_type
         return res
 
     def onchange_partner_id(self, cr, uid, ids, partner_id, profile_id=None, context=None):

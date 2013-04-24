@@ -253,7 +253,7 @@ class AccountStatementCompletionRule(orm.Model):
                                                      profile_id=st_line['profile_id'],
                                                      master_account_id=st_line['master_account_id'],
                                                      partner_id=res.get('partner_id', False),
-                                                     line_type=st_line['type'],
+                                                     line_type='customer',
                                                      amount=st_line['amount'] if st_line['amount'] else 0.0,
                                                      context=context)
                 res.update(st_vals)
@@ -313,7 +313,7 @@ class AccountStatementCompletionRule(orm.Model):
                                                  profile_id=st_line['profile_id'],
                                                  master_account_id=st_line['master_account_id'],
                                                  partner_id=found_partner[0].id,
-                                                 line_type=st_line['type'],
+                                                 line_type=False,
                                                  amount=st_line['amount'] if st_line['amount'] else 0.0,
                                                  context=context)
             res.update(st_vals)
@@ -354,7 +354,7 @@ class AccountStatementCompletionRule(orm.Model):
                                                  profile_id=st_line['porfile_id'],
                                                  master_account_id=profile['master_account_id'],
                                                  partner_id=res['partner_id'],
-                                                 line_type=st_line['type'],
+                                                 line_type=False,
                                                  amount=st_line['amount'] if st_line['amount'] else 0.0,
                                                  context=context)
             res.update(st_vals)
