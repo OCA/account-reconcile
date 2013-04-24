@@ -176,9 +176,9 @@ class AccountStatementCompletionRule(orm.Model):
             res = {'partner_id': inv.partner_id.id,
                    'account_id': inv.account_id.id,
                    'type': inv_type}
-        override_acc = line['master_account_id']
-        if override_acc:
-            res['account_id'] = override_acc
+            override_acc = line['master_account_id']
+            if override_acc:
+                res['account_id'] = override_acc
         return res
 
     # Should be private but data are initialised with no update XML
