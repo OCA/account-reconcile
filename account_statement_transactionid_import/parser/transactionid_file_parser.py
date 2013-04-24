@@ -17,8 +17,6 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-
-from openerp.tools.translate import _
 import datetime
 from account_statement_base_import.parser.file_parser import FileParser
 
@@ -30,13 +28,11 @@ class TransactionIDFileParser(FileParser):
     """
 
     def __init__(self, parse_name, ftype='csv'):
-        conversion_dict = {
-                            'transaction_id': unicode,
-                            'label': unicode,
-                            'date': datetime.datetime,
-                            'amount': float,
-                            'commission_amount': float
-                          }
+        conversion_dict = {'transaction_id': unicode,
+                           'label': unicode,
+                           'date': datetime.datetime,
+                           'amount': float,
+                           'commission_amount': float}
         # Order of cols does not matter but first row of the file has to be header
         keys_to_validate = ['transaction_id', 'label', 'date', 'amount', 'commission_amount']
         super(TransactionIDFileParser, self).__init__(parse_name, keys_to_validate=keys_to_validate,
@@ -70,15 +66,13 @@ class TransactionIDFileParser(FileParser):
         In this generic parser, the commission is given for every line, so we store it
         for each one.
         """
-        return {
-            'name': line.get('label', line.get('ref', '/')),
-            'date': line.get('date', datetime.datetime.now().date()),
-            'amount': line.get('amount', 0.0),
-            'ref': line.get('transaction_id', '/'),
-            'label': line.get('label', ''),
-            'transaction_id': line.get('transaction_id', '/'),
-            'commission_amount': line.get('commission_amount', 0.0),
-        }
+        return {'name': line.get('label', line.get('ref', '/')),
+                'date': line.get('date', datetime.datetime.now().date()),
+                'amount': line.get('amount', 0.0),
+                'ref': line.get('transaction_id', '/'),
+                'label': line.get('label', ''),
+                'transaction_id': line.get('transaction_id', '/'),
+                'commission_amount': line.get('commission_amount', 0.0)}
 
     def _post(self, *args, **kwargs):
         """
