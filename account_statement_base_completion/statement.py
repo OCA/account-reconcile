@@ -445,15 +445,12 @@ class AccountBankSatement(orm.Model):
         log = self.read(cr, uid, stat_id, ['completion_logs'],
                         context=context)['completion_logs']
 
-        log_line = log and log.split("\n") or []
         completion_date = datetime.datetime.now().strftime(DEFAULT_SERVER_DATETIME_FORMAT)
         if error_msg:
             error_log = error_msg
-        log_line[0:0] = [completion_date + ' : '
-                         + _("Bank Statement ID %s has %s lines completed by %s") %
-                         (stat_id, number_imported, user_name)
-                         + "\n" + error_log + "-------------" + "\n"]
-        log = "\n".join(log_line)
+        message = (_(u"%s Bank Statement ID %s has %s lines completed by %s \n%s\n") %
+                   (completion_date, stat_id, number_imported, user_name, error_log))
+        log = message + log
         self.write(cr, uid, [stat_id], {'completion_logs': log}, context=context)
 
         body = (_('Statement ID %s auto-completed for %s lines completed') %
