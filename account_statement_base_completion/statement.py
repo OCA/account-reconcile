@@ -338,10 +338,15 @@ class AccountStatementCompletionRule(orm.Model):
             ...}
             """
         res = {}
+        # We memoize allowed partner
+        if not context.get('partner_memoizer'):
+            context['partner_memoizer'] = tuple(self.pool['res.partner'].search(cr, uid, []))
+        if not context['partner_memoizer']:
+            return res
         st_obj = self.pool.get('account.bank.statement.line')
-        sql = "SELECT id FROM res_partner WHERE name ~* %s"
+        sql = "SELECT id FROM res_partner WHERE name ~* %s and id in %s"
         pattern = ".*%s.*" % re.escape(st_line['name'])
-        cr.execute(sql, (pattern,))
+        cr.execute(sql, (pattern, context['partner_memoizer']))
         result = cr.fetchall()
         if not result:
             return res
