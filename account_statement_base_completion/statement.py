@@ -80,8 +80,8 @@ class AccountStatementProfil(orm.Model):
         """
         This method will execute all related rules, in their sequence order,
         to retrieve all the values returned by the first rules that will match.
-
-        :param int/long st_line: read of the concerned account.bank.statement.line
+        :param calls: list of lookup function name available in rules
+        :param dict line: read of the concerned account.bank.statement.line
         :return:
             A dict of value that can be passed directly to the write method of
             the statement line or {}
@@ -93,7 +93,7 @@ class AccountStatementProfil(orm.Model):
         if context is None:
             context = {}
         if not calls:
-            calls = self._get_callable(cr, uid, id, context=context)
+            calls = self._get_callable(cr, uid, line['profile_id'], context=context)
         rule_obj = self.pool.get('account.statement.completion.rule')
 
         for call in calls:
