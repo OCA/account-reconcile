@@ -28,13 +28,12 @@ from openerp.tools.translate import _
 def fixed_write(self, cr, uid, ids, vals, context=None):
     """ Fix performance desing of original function
     Ideally we should use a real postgres sequence or serial fields.
-    Will do it when I have time."""
+    I will do it when I have time."""
     res = super(stat_mod.account_bank_statement, self).write(cr, uid, ids,
                                                              vals, context=context)
-    for s_id in ids:
-        cr.execute("UPDATE account_bank_statement_line"
-                   " SET sequence = account_bank_statement_line.id + 1"
-                   " where statement_id = %s", (s_id,))
+    cr.execute("UPDATE account_bank_statement_line"
+               " SET sequence = account_bank_statement_line.id + 1"
+               " where statement_id in %s", (tuple(ids),))
     return res
 stat_mod.account_bank_statement.write = fixed_write
 
