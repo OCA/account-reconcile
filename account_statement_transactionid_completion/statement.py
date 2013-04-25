@@ -32,7 +32,7 @@ class AccountStatementCompletionRule(Model):
 
     def _get_functions(self, cr, uid, context=None):
         res = super(AccountStatementCompletionRule, self)._get_functions(
-                cr, uid, context=context)
+                                                           cr, uid, context=context)
         res.append(('get_from_transaction_id_and_so',
                     'From line reference (based on SO transaction ID)'))
         return res
@@ -41,12 +41,12 @@ class AccountStatementCompletionRule(Model):
         'function_to_call': fields.selection(_get_functions, 'Method'),
     }
 
-    def get_from_transaction_id_and_so(self, cr, uid, line_id, context=None):
+    def get_from_transaction_id_and_so(self, cr, uid, st_line, context=None):
         """
         Match the partner based on the transaction ID field of the SO.
         Then, call the generic st_line method to complete other values.
         In that case, we always fullfill the reference of the line with the SO name.
-        :param int/long line_id: ID of the concerned account.bank.statement.line
+        :param dict st_line: read of the concerned account.bank.statement.line
         :return:
             A dict of value that can be passed directly to the write method of
             the statement line or {}
@@ -55,33 +55,28 @@ class AccountStatementCompletionRule(Model):
             ...}
             """
         st_obj = self.pool.get('account.bank.statement.line')
-        st_line = st_obj.browse(cr, uid, line_id, context=context)
         res = {}
-        if st_line:
-            so_obj = self.pool.get('sale.order')
-            so_id = so_obj.search(
-                    cr,
-                    uid,
-                    [('transaction_id', '=', st_line.transaction_id)],
-                    context=context)
-            if so_id and len(so_id) == 1:
-                so = so_obj.browse(cr, uid, so_id[0], context=context)
-                res['partner_id'] = so.partner_id.id
-                res['ref'] = so.name
-            elif so_id and len(so_id) > 1:
-                raise ErrorTooManyPartner(
-                        _('Line named "%s" (Ref:%s) was matched by more than '
-                          'one partner.') % (st_line.name, st_line.ref))
-            if so_id:
-                st_vals = st_obj.get_values_for_line(
-                        cr,
-                        uid,
-                        profile_id=st_line.statement_id.profile_id.id,
-                        partner_id=res.get('partner_id', False),
-                        line_type=st_line.type,
-                        amount=st_line.amount,
-                        context=context)
-                res.update(st_vals)
+        so_obj = self.pool.get('sale.order')
+        so_id = so_obj.search(cr,
+                              uid,
+                              [('transaction_id', '=', st_line['transaction_id'])],
+                              context=context)
+        if len(so_id) > 1:
+            raise ErrorTooManyPartner(_('Line named "%s" (Ref:%s) was matched by more than '
+                                        'one partner.') % (st_line['name'], st_line['ref']))
+        if len(so_id) == 1:
+            so = so_obj.browse(cr, uid, so_id[0], context=context)
+            res['partner_id'] = so.partner_id.id
+            res['ref'] = so.name
+            st_vals = st_obj.get_values_for_line(cr,
+                                                 uid,
+                                                 profile_id=st_line['profile_id'],
+                                                 master_account_id=st_line['master_account_id'],
+                                                 partner_id=res.get('partner_id', False),
+                                                 line_type=st_line['type'],
+                                                 amount=st_line['amount'] if st_line['amount'] else 0.0,
+                                                 context=context)
+            res.update(st_vals)
         return res
 
 

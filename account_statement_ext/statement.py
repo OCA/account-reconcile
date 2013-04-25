@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+#-*- coding: utf-8 -*-
 ##############################################################################
 #
 #    Author: Nicolas Bessi, Joel Grand-Guillaume
@@ -18,10 +18,24 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-
+import openerp.addons.account.account_bank_statement as stat_mod
 from openerp.osv.orm import Model
 from openerp.osv import fields, osv
 from openerp.tools.translate import _
+
+
+# Monkey patch to fix bad write implementation...
+def fixed_write(self, cr, uid, ids, vals, context=None):
+    """ Fix performance desing of original function
+    Ideally we should use a real PostgreSQL sequence or serial fields.
+    I will do it when I have time."""
+    res = super(stat_mod.account_bank_statement, self).write(cr, uid, ids,
+                                                             vals, context=context)
+    cr.execute("UPDATE account_bank_statement_line"
+               " SET sequence = account_bank_statement_line.id + 1"
+               " where statement_id in %s", (tuple(ids),))
+    return res
+stat_mod.account_bank_statement.write = fixed_write
 
 
 class AccountStatementProfil(Model):
@@ -44,38 +58,45 @@ class AccountStatementProfil(Model):
                   "commission move (and optionaly on the counterpart "
                   "of the intermediate/banking move if you tick the "
                   "corresponding checkbox)."),
+
         'journal_id': fields.many2one(
             'account.journal',
              'Financial journal to use for transaction',
              required=True),
+
         'commission_account_id': fields.many2one(
             'account.account',
              'Commission account',
              required=True),
+
         'commission_analytic_id': fields.many2one(
             'account.analytic.account',
             'Commission analytic account'),
+
         'receivable_account_id': fields.many2one(
             'account.account',
             'Force Receivable/Payable Account',
             help="Choose a receivable account to force the default "
                  "debit/credit account (eg. an intermediat bank account "
                  "instead of default debitors)."),
+
         'force_partner_on_bank': fields.boolean(
             'Force partner on bank move',
             help="Tick that box if you want to use the credit "
                  "institute partner in the counterpart of the "
                  "intermediate/banking move."),
+
         'balance_check': fields.boolean(
             'Balance check',
             help="Tick that box if you want OpenERP to control "
                  "the start/end balance before confirming a bank statement. "
-                 "If don't ticked, no balance control will be done."
-            ),
-        'bank_statement_prefix': fields.char(
-            'Bank Statement Prefix', size=32),
-        'bank_statement_ids': fields.one2many(
-            'account.bank.statement', 'profile_id', 'Bank Statement Imported'),
+                 "If don't ticked, no balance control will be done."),
+
+        'bank_statement_prefix': fields.char('Bank Statement Prefix', size=32),
+
+        'bank_statement_ids': fields.one2many('account.bank.statement',
+                                              'profile_id',
+                                              'Bank Statement Imported'),
         'company_id': fields.many2one('res.company', 'Company'),
     }
 
@@ -86,7 +107,7 @@ class AccountStatementProfil(Model):
         return True
 
     _constraints = [
-        (_check_partner, "You need to put a partner if you tic the 'Force partner on bank move' !", []),
+        (_check_partner, "You need to put a partner if you tic the 'Force partner on bank move'!", []),
     ]
 
 
@@ -166,11 +187,11 @@ class AccountBankSatement(Model):
         """
         for statement in self.browse(cr, uid, ids, context=context):
             if (statement.period_id and
-                statement.company_id.id != statement.period_id.company_id.id):
+                    statement.company_id.id != statement.period_id.company_id.id):
                 return False
             for line in statement.line_ids:
                 if (line.period_id and
-                    statement.company_id.id != line.period_id.company_id.id):
+                        statement.company_id.id != line.period_id.company_id.id):
                     return False
         return True
 
@@ -244,8 +265,10 @@ class AccountBankSatement(Model):
                   create the move from.
            :return: int/long of the res.partner to use as counterpart
         """
-        bank_partner_id = super(AccountBankSatement, self).\
-                _get_counter_part_partner(cr, uid, st_line, context=context)
+        bank_partner_id = super(AccountBankSatement, self)._get_counter_part_partner(cr,
+                                                                                     uid,
+                                                                                     st_line,
+                                                                                     context=context)
         # get the right partner according to the chosen profil
         if st_line.statement_id.profile_id.force_partner_on_bank:
             bank_partner_id = st_line.statement_id.profile_id.partner_id.id
@@ -285,7 +308,7 @@ class AccountBankSatement(Model):
         We have to copy paste a big block of code, changing the error
         stack + managing period from date.
 
-        TODO: Log the error in a bank statement field instead of using a popup !
+        TODO: Log the error in a bank statement field instead of using a popup!
         """
         for st in self.browse(cr, uid, ids, context=context):
 
@@ -297,8 +320,8 @@ class AccountBankSatement(Model):
             self.balance_check(cr, uid, st.id, journal_type=j_type, context=context)
             if (not st.journal_id.default_credit_account_id) \
                     or (not st.journal_id.default_debit_account_id):
-                raise osv.except_osv(_('Configuration Error !'),
-                        _('Please verify that an account is defined in the journal.'))
+                raise osv.except_osv(_('Configuration Error!'),
+                                     _('Please verify that an account is defined in the journal.'))
 
             if not st.name == '/':
                 st_number = st.name
@@ -308,20 +331,24 @@ class AccountBankSatement(Model):
 # End Changes
             for line in st.move_line_ids:
                 if line.state != 'valid':
-                    raise osv.except_osv(_('Error !'),
-                            _('The account entries lines are not in valid state.'))
+                    raise osv.except_osv(_('Error!'),
+                                         _('The account entries lines are not in valid state.'))
 # begin changes
             errors_stack = []
             for st_line in st.line_ids:
                 try:
                     if st_line.analytic_account_id:
                         if not st.journal_id.analytic_journal_id:
-                            raise osv.except_osv(_('No Analytic Journal !'),
-                                             _("You have to assign an analytic journal on the '%s' journal!") % (st.journal_id.name,))
+                            raise osv.except_osv(_('No Analytic Journal!'),
+                                                 _("You have to assign an analytic"
+                                                   " journal on the '%s' journal!") % st.journal_id.name)
                     if not st_line.amount:
                         continue
                     st_line_number = self.get_next_st_line_number(cr, uid, st_number, st_line, context)
-                    self.create_move_from_st_line(cr, uid, st_line.id, company_currency_id, st_line_number, context)
+                    self.create_move_from_st_line(cr, uid, st_line.id,
+                                                  company_currency_id,
+                                                  st_line_number,
+                                                  context)
                 except osv.except_osv, exc:
                     msg = "Line ID %s with ref %s had following error: %s" % (st_line.id, st_line.ref, exc.value)
                     errors_stack.append(msg)
@@ -332,37 +359,97 @@ class AccountBankSatement(Model):
                 msg = u"\n".join(errors_stack)
                 raise osv.except_osv(_('Error'), msg)
 #end changes
-            self.write(cr, uid, [st.id], {
-                    'name': st_number,
-                    'balance_end_real': st.balance_end
-            }, context=context)
-            self.message_post(cr, uid, [st.id], body=_('Statement %s confirmed, journal items were created.') % (st_number,), context=context)
+            self.write(cr, uid, [st.id],
+                       {'name': st_number,
+                        'balance_end_real': st.balance_end},
+                       context=context)
+            body = _('Statement %s confirmed, journal items were created.') % st_number
+            self.message_post(cr, uid, [st.id],
+                              body,
+                              context=context)
         return self.write(cr, uid, ids, {'state': 'confirm'}, context=context)
 
-    def get_account_for_counterpart(
-            self, cr, uid, amount, account_receivable, account_payable):
+    def get_account_for_counterpart(self, cr, uid, amount, account_receivable, account_payable):
+        """For backward compatibility."""
+        account_id, type = self.get_account_and_type_for_counterpart(cr, uid, amount,
+                                                                     account_receivable,
+                                                                     account_payable)
+        return account_id
+
+    def _compute_type_from_partner_profile(self, cr, uid, partner_id,
+                                           default_type, context=None):
+        """Compute the statement line type
+           from partner profile (customer, supplier)"""
+        obj_partner = self.pool.get('res.partner')
+        part = obj_partner.browse(cr, uid, partner_id, context=context)
+        if part.supplier == part.customer:
+            return default_type
+        if part.supplier:
+            return 'supplier'
+        else:
+            return 'customer'
+
+    def _compute_type_from_amount(self, cr, uid, amount):
+        """Compute the statement type based on amount"""
+        if amount in (None, False):
+            return 'general'
+        if amount < 0:
+            return 'supplier'
+        return 'customer'
+
+    def get_type_for_counterpart(self, cr, uid, amount, partner_id=False):
+        """Give the amount and receive the type to use for the line.
+        The rules are:
+         - If the customer checkbox is checked on the found partner, type customer
+         - If the supplier checkbox is checked on the found partner, typewill be supplier
+         - If both checkbox are checked or none of them, it'll be based on the amount :
+              If amount is positif the type customer,
+              If amount is negativ, the type supplier
+        :param float: amount of the line
+        :param int/long: partner_id the partner id
+        :return: type as string: the default type to use: 'customer' or 'supplier'.
+        """
+        s_line_type = self._compute_type_from_amount(cr, uid, amount)
+        if partner_id:
+            s_line_type = self._compute_type_from_partner_profile(cr, uid,
+                                                                  partner_id, s_line_type)
+        return s_line_type
+
+    def get_account_and_type_for_counterpart(self, cr, uid, amount, account_receivable,
+                                             account_payable, partner_id=False):
         """
         Give the amount, payable and receivable account (that can be found using
         get_default_pay_receiv_accounts method) and receive the one to use. This method
         should be use when there is no other way to know which one to take.
+        The rules are:
+         - If the customer checkbox is checked on the found partner, type and account will be customer and receivable
+         - If the supplier checkbox is checked on the found partner, type and account will be supplier and payable
+         - If both checkbox are checked or none of them, it'll be based on the amount :
+              If amount is positive, the type and account will be customer and receivable,
+              If amount is negative, the type and account will be supplier and payable
+        Note that we return the payable or receivable account from agrs and not from the optional partner_id
+        given!
 
         :param float: amount of the line
         :param int/long: account_receivable the  receivable account
         :param int/long: account_payable the payable account
-        :return: int/long :the default account to be used by statement line as the counterpart
-                 of the journal account depending on the amount.
+        :param int/long: partner_id the partner id
+        :return: dict with [account_id as int/long,type as string]: the default account to be used by
+            statement line as the counterpart of the journal account depending on the amount and the type
+            as 'customer' or 'supplier'.
         """
         account_id = False
-        if amount >= 0:
-            account_id = account_receivable
-        else:
+        ltype = self.get_type_for_counterpart(cr, uid, amount, partner_id=partner_id)
+        if ltype == 'supplier':
             account_id = account_payable
+        else:
+            account_id = account_receivable
         if not account_id:
             raise osv.except_osv(
                 _('Can not determine account'),
                 _('Please ensure that minimal properties are set')
             )
-        return account_id
+        return [account_id, ltype]
 
     def get_default_pay_receiv_accounts(self, cr, uid, context=None):
         """
@@ -386,14 +473,11 @@ class AccountBankSatement(Model):
              ('model', '=', 'res.partner')],
             context=context
         )
-        property_ids = property_obj.search(
-                    cr,
-                    uid,
-                    [('fields_id', 'in', model_fields_ids),
-                     ('res_id', '=', False),
-                    ],
-                    context=context
-        )
+        property_ids = property_obj.search(cr,
+                                           uid,
+                                           [('fields_id', 'in', model_fields_ids),
+                                            ('res_id', '=', False)],
+                                           context=context)
 
         for erp_property in property_obj.browse(
                 cr, uid, property_ids, context=context):
@@ -433,13 +517,10 @@ class AccountBankSatement(Model):
         journal_id = import_config.journal_id.id
         account_id = import_config.journal_id.default_debit_account_id.id
         credit_partner_id = import_config.partner_id and import_config.partner_id.id or False
-        return {'value':
-                    {'journal_id': journal_id,
-                     'account_id': account_id,
-                     'balance_check': import_config.balance_check,
-                     'credit_partner_id': credit_partner_id,
-                    }
-                }
+        return {'value': {'journal_id': journal_id,
+                          'account_id': account_id,
+                          'balance_check': import_config.balance_check,
+                          'credit_partner_id': credit_partner_id}}
 
 
 class AccountBankSatementLine(Model):
@@ -472,18 +553,24 @@ class AccountBankSatementLine(Model):
         'account_id': _get_default_account,
     }
 
-    def get_values_for_line(self, cr, uid, profile_id=False, partner_id=False, line_type=False, amount=False, context=None):
+    def get_values_for_line(self, cr, uid, profile_id=False, partner_id=False, line_type=False, amount=False, master_account_id=None, context=None):
         """
         Return the account_id to be used in the line of a bank statement. It'll base the result as follow:
             - If a receivable_account_id is set in the profile, return this value and type = general
-            - Elif line_type is given, take the partner receivable/payable property (payable if type= supplier, receivable
+            # TODO
+            - Elif how_get_type_account is set to force_supplier or force_customer, will take respectively payable and type=supplier,
+              receivable and type=customer otherwise
+            # END TODO
+            - Elif line_type is given, take the partner receivable/payable property (payable if type=supplier, receivable
               otherwise)
-            - Elif amount is given, take the partner receivable/payable property (receivable if amount >= 0.0,
-              payable otherwise). In that case, we also fullfill the type (receivable = customer, payable = supplier)
-              so it is easier for the accountant to know why the receivable/payable has been chosen
+            - Elif amount is given:
+                 - If the customer checkbox is checked on the found partner, type and account will be customer and receivable
+                 - If the supplier checkbox is checked on the found partner, type and account will be supplier and payable
+                 - If both checkbox are checked or none of them, it'll be based on the amount :
+                      If amount is positive, the type and account will be customer and receivable,
+                      If amount is negative, the type and account will be supplier an payable
             - Then, if no partner are given we look and take the property from the company so we always give a value
               for account_id. Note that in that case, we return the receivable one.
-
         :param int/long profile_id of the related bank statement
         :param int/long partner_id of the line
         :param char line_type: a value from: 'general', 'supplier', 'customer'
@@ -499,79 +586,77 @@ class AccountBankSatementLine(Model):
         res = {}
         obj_partner = self.pool.get('res.partner')
         obj_stat = self.pool.get('account.bank.statement')
-        line_type = receiv_account = pay_account = account_id = False
+        receiv_account = pay_account = account_id = False
         # If profile has a receivable_account_id, we return it in any case
-        if profile_id:
+        if master_account_id:
+            res['account_id'] = master_account_id
+            # We return general as default instead of get_type_for_counterpart
+            # for perfomance reasons as line_type is not a meaningfull value
+            # as account is forced
+            res['type'] = line_type if line_type else 'general'
+            return res
+        # To optimize we consider passing false means there is no account
+        # on profile
+        if profile_id and master_account_id is None:
             profile = self.pool.get("account.statement.profile").browse(
-                    cr, uid, profile_id, context=context)
+                                       cr, uid, profile_id, context=context)
             if profile.receivable_account_id:
-                account_id = profile.receivable_account_id.id
-                line_type = 'general'
+                res['account_id'] = profile.receivable_account_id.id
+                # We return general as default instead of get_type_for_counterpart
+                # for perfomance reasons as line_type is not a meaningfull value
+                # as account is forced
+                res['type'] = line_type if line_type else 'general'
                 return res
-        # If partner -> take from him
+        # If no account is available on profile you have to do the lookup
+        # This can be quite a performance killer as we read ir.properity fields
         if partner_id:
             part = obj_partner.browse(cr, uid, partner_id, context=context)
             pay_account = part.property_account_payable.id
             receiv_account = part.property_account_receivable.id
         # If no value, look on the default company property
         if not pay_account or not receiv_account:
-            receiv_account, pay_account = obj_stat.get_default_pay_receiv_accounts(
-                    cr, uid, context=None)
-        # Now we have both pay and receive account, choose the one to use
-        # based on line_type first, then amount, otherwise take receivable one.
-        if line_type is not False:
-            if line_type == 'supplier':
-                account_id = pay_account
-        elif amount is not False:
-            if amount >= 0:
-                account_id = receiv_account
-                line_type = 'customer'
-            else:
-                account_id  = pay_account
-                line_type = 'supplier'
+            receiv_account, pay_account = obj_stat.get_default_pay_receiv_accounts(cr, uid, context=None)
+        account_id, comp_line_type = obj_stat.get_account_and_type_for_counterpart(cr, uid, amount,
+                                                                                   receiv_account, pay_account,
+                                                                                   partner_id=partner_id)
         res['account_id'] = account_id if account_id else receiv_account
-        res['type'] = line_type
+        res['type'] = line_type if line_type else comp_line_type
         return res
 
     def onchange_partner_id(self, cr, uid, ids, partner_id, profile_id=None, context=None):
         """
         Override of the basic method as we need to pass the profile_id in the on_change_type
         call.
+        Moreover, we now call the get_account_and_type_for_counterpart method now to get the
+        type to use.
         """
-        obj_partner = self.pool.get('res.partner')
+        obj_stat = self.pool.get('account.bank.statement')
         if not partner_id:
             return {}
-        part = obj_partner.browse(cr, uid, partner_id, context=context)
-        if not part.supplier and not part.customer:
-            type = 'general'
-        elif part.supplier and part.customer:
-            type = 'general'
-        else:
-            if part.supplier == True:
-                type = 'supplier'
-            if part.customer == True:
-                type = 'customer'
-        res_type = self.onchange_type(cr, uid, ids, partner_id, type, profile_id, context=context)  # Chg
+        line_type = obj_stat.get_type_for_counterpart(cr, uid, 0.0, partner_id=partner_id)
+        res_type = self.onchange_type(cr, uid, ids, partner_id, line_type, profile_id, context=context)
         if res_type['value'] and res_type['value'].get('account_id', False):
-            return {'value': {'type': type,
+            return {'value': {'type': line_type,
                               'account_id': res_type['value']['account_id'],
                               'voucher_id': False}}
-        return {'value': {'type': type}}
+        return {'value': {'type': line_type}}
 
-    def onchange_type(self, cr, uid, line_id, partner_id, type, profile_id, context=None):
+    def onchange_type(self, cr, uid, line_id, partner_id, line_type, profile_id, context=None):
         """
         Keep the same features as in standard and call super. If an account is returned,
         call the method to compute line values.
         """
-        res = super(AccountBankSatementLine, self).onchange_type(
-                cr, uid, line_id, partner_id, type, context=context)
+        res = super(AccountBankSatementLine, self).onchange_type(cr, uid,
+                                                                 line_id,
+                                                                 partner_id,
+                                                                 line_type,
+                                                                 context=context)
         if 'account_id' in res['value']:
-            result = self.get_values_for_line(
-                    cr, uid,
-                    profile_id=profile_id,
-                    partner_id=partner_id,
-                    line_type=type,
-                    context=context)
+            result = self.get_values_for_line(cr, uid,
+                                              profile_id=profile_id,
+                                              partner_id=partner_id,
+                                              line_type=line_type,
+                                              context=context)
             if result:
                 res['value'].update({'account_id': result['account_id']})
         return res

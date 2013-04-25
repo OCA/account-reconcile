@@ -52,6 +52,10 @@
 
  You can use it with  our account_advanced_reconcile module to automatize the reconciliation process.
 
+
+ TODO: The rules that look for invoices to find out the partner should take back the payable / receivable
+       account from there directly instead of retrieving it from partner properties !
+
  """,
  'website': 'http://www.camptocamp.com',
  'init_xml': [],

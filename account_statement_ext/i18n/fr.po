@@ -41,7 +41,7 @@ msgstr "Veuillez vérifier que ce compte est défini au niveau du journal."
 #. module: account_statement_ext
 #: code:addons/account_statement_ext/statement.py:361
 #, python-format
-msgid "Configuration Error !"
+msgid "Configuration Error!"
 msgstr "Erreur de configuration !"
 
 #. module: account_statement_ext
@@ -64,7 +64,7 @@ msgstr "Banque ou Organisme financier"
 #: code:addons/account_statement_ext/statement.py:307
 #: code:addons/account_statement_ext/statement.py:372
 #, python-format
-msgid "Error !"
+msgid "Error!"
 msgstr "Erreur !"
 
 #. module: account_statement_ext
