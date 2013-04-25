@@ -33,6 +33,7 @@ import datetime
 
 _logger = logging.getLogger(__name__)
 
+
 class ErrorTooManyPartner(Exception):
     """
     New Exception definition that is raised when more than one partner is matched by
@@ -405,15 +406,14 @@ class AccountStatementLine(orm.Model):
             {117009: {'partner_id': 100997, 'account_id': 489L}}
         """
         profile_obj = self.pool.get('account.statement.profile')
-        res = {}
         if line.get('already_completed'):
-            return res
+            return {}
         # Ask the rule
         vals = profile_obj._find_values_from_rules(cr, uid, rules, line, context)
         if vals:
             vals['id'] = line['id']
             return vals
-        return res
+        return {}
 
 
 class AccountBankSatement(orm.Model):
