@@ -406,21 +406,13 @@ class AccountStatementLine(orm.Model):
         """
         profile_obj = self.pool.get('account.statement.profile')
         res = {}
-        errors_stack = []
         if line.get('already_completed'):
             return res
-        try:
-            # Ask the rule
-            vals = profile_obj._find_values_from_rules(cr, uid, rules, line, context)
-            if vals:
-                vals['id'] = line['id']
-                return vals
-        except ErrorTooManyPartner as exc:
-            msg = "Line ID %s had following error: %s" % (line['id'], exc.value)
-            errors_stack.append(msg)
-        if errors_stack:
-            msg = u"\n".join(errors_stack)
-            raise ErrorTooManyPartner(msg)
+        # Ask the rule
+        vals = profile_obj._find_values_from_rules(cr, uid, rules, line, context)
+        if vals:
+            vals['id'] = line['id']
+            return vals
         return res
 
 
