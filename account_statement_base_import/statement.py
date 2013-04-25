@@ -284,8 +284,7 @@ class AccountStatementLine(Model):
 
     def _update_line(self, cr, uid, vals, context=None):
         """ Do raw update into database because ORM is awfully slow
-            when doing batch write. It is a shame that batch function
-            does not exist"""
+            when cheking security."""
         cols = self._get_available_columns([vals])
         tmp_vals = (', '.join(['%s = %%(%s)s' % (i, i) for i in cols]))
         sql = "UPDATE account_bank_statement_line SET %s where id = %%(id)s;" % tmp_vals

@@ -499,7 +499,6 @@ class AccountBankSatement(orm.Model):
                     error_type, error_value, trbk = sys.exc_info()
                     st = "Error: %s\nDescription: %s\nTraceback:" % (error_type.__name__, error_value)
                     st += ''.join(traceback.format_tb(trbk, 30))
-                    print st
                     _logger.error(st)
                 if res:
                     #stat_line_obj.write(cr, uid, [line.id], vals, context=ctx)
@@ -510,7 +509,6 @@ class AccountBankSatement(orm.Model):
                         error_type, error_value, trbk = sys.exc_info()
                         st = "Error: %s\nDescription: %s\nTraceback:" % (error_type.__name__, error_value)
                         st += ''.join(traceback.format_tb(trbk, 30))
-                        print st
                         _logger.error(st)
                     # we can commit as it is not needed to be atomic
                     # commiting here adds a nice perfo boost
