@@ -348,12 +348,12 @@ class AccountStatementCompletionRule(orm.Model):
             raise ErrorTooManyPartner(_('Line named "%s" (Ref:%s) was matched by more '
                                         'than one partner while looking on partner by name') %
                                       (st_line['name'], st_line['ref']))
-        res['partner_id'] = result[0][0] if result else False
+        res['partner_id'] = result[0][0]
         if res:
             st_vals = st_obj.get_values_for_line(cr,
                                                  uid,
                                                  profile_id=st_line['porfile_id'],
-                                                 master_account_id=profile['master_account_id'],
+                                                 master_account_id=st_line['master_account_id'],
                                                  partner_id=res['partner_id'],
                                                  line_type=False,
                                                  amount=st_line['amount'] if st_line['amount'] else 0.0,
