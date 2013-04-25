@@ -190,7 +190,7 @@ class AccountStatementCompletionRule(orm.Model):
         line. Then, call the generic get_values_for_line method to complete other values.
         If more than one partner matched, raise the ErrorTooManyPartner error.
 
-        :param int/long st_line: read of the concerned account.bank.statement.line
+        :param dict line: read of the concerned account.bank.statement.line
         :return:
             A dict of value that can be passed directly to the write method of
             the statement line or {}
@@ -208,7 +208,7 @@ class AccountStatementCompletionRule(orm.Model):
         line. Then, call the generic get_values_for_line method to complete other values.
         If more than one partner matched, raise the ErrorTooManyPartner error.
 
-        :param int/long st_line: read of the concerned account.bank.statement.line
+        :param dict line: read of the concerned account.bank.statement.line
         :return:
             A dict of value that can be passed directly to the write method of
             the statement line or {}
@@ -270,7 +270,7 @@ class AccountStatementCompletionRule(orm.Model):
         get_values_for_line method to complete other values.
         If more than one partner matched, raise the ErrorTooManyPartner error.
 
-        :param int/long st_line: read of the concerned account.bank.statement.line
+        :param dict st_line: read of the concerned account.bank.statement.line
         :return:
             A dict of value that can be passed directly to the write method of
             the statement line or {}
@@ -328,7 +328,7 @@ class AccountStatementCompletionRule(orm.Model):
         Then, call the generic get_values_for_line method to complete other values.
         If more than one partner matched, raise the ErrorTooManyPartner error.
 
-        :param int/long st_line: read of the concerned account.bank.statement.line
+        :param dict st_line: read of the concerned account.bank.statement.line
         :return:
             A dict of value that can be passed directly to the write method of
             the statement line or {}

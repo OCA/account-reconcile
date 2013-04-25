@@ -46,7 +46,7 @@ class AccountStatementCompletionRule(Model):
         Match the partner based on the transaction ID field of the SO.
         Then, call the generic st_line method to complete other values.
         In that case, we always fullfill the reference of the line with the SO name.
-        :param int/long line_id: ID of the concerned account.bank.statement.line
+        :param dict st_line: read of the concerned account.bank.statement.line
         :return:
             A dict of value that can be passed directly to the write method of
             the statement line or {}
@@ -61,14 +61,13 @@ class AccountStatementCompletionRule(Model):
                               uid,
                               [('transaction_id', '=', st_line['transaction_id'])],
                               context=context)
-        if so_id and len(so_id) == 1:
+        if len(so_id) > 1:
+            raise ErrorTooManyPartner(_('Line named "%s" (Ref:%s) was matched by more than '
+                                        'one partner.') % (st_line['name'], st_line['ref']))
+        if len(so_id) == 1:
             so = so_obj.browse(cr, uid, so_id[0], context=context)
             res['partner_id'] = so.partner_id.id
             res['ref'] = so.name
-        elif so_id and len(so_id) > 1:
-            raise ErrorTooManyPartner(_('Line named "%s" (Ref:%s) was matched by more than '
-                                        'one partner.') % (st_line['name'], st_line['ref']))
-        if so_id:
             st_vals = st_obj.get_values_for_line(cr,
                                                  uid,
                                                  profile_id=st_line['profile_id'],

@@ -27,7 +27,7 @@ from openerp.tools.translate import _
 # Monkey patch to fix bad write implementation...
 def fixed_write(self, cr, uid, ids, vals, context=None):
     """ Fix performance desing of original function
-    Ideally we should use a real postgres sequence or serial fields.
+    Ideally we should use a real PostgreSQL sequence or serial fields.
     I will do it when I have time."""
     res = super(stat_mod.account_bank_statement, self).write(cr, uid, ids,
                                                              vals, context=context)
@@ -425,8 +425,8 @@ class AccountBankSatement(Model):
          - If the customer checkbox is checked on the found partner, type and account will be customer and receivable
          - If the supplier checkbox is checked on the found partner, type and account will be supplier and payable
          - If both checkbox are checked or none of them, it'll be based on the amount :
-              If amount is positif the type and account will be customer and receivable,
-              If amount is negativ, the type and account will be supplier and payable
+              If amount is positive, the type and account will be customer and receivable,
+              If amount is negative, the type and account will be supplier and payable
         Note that we return the payable or receivable account from agrs and not from the optional partner_id
         given!
 
@@ -567,8 +567,8 @@ class AccountBankSatementLine(Model):
                  - If the customer checkbox is checked on the found partner, type and account will be customer and receivable
                  - If the supplier checkbox is checked on the found partner, type and account will be supplier and payable
                  - If both checkbox are checked or none of them, it'll be based on the amount :
-                      If amount is positif the type and account will be customer and receivable,
-                      If amount is negativ, the type and account will be supplier an payable
+                      If amount is positive, the type and account will be customer and receivable,
+                      If amount is negative, the type and account will be supplier an payable
             - Then, if no partner are given we look and take the property from the company so we always give a value
               for account_id. Note that in that case, we return the receivable one.
         :param int/long profile_id of the related bank statement
