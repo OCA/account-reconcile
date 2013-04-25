@@ -107,7 +107,7 @@ class AccountStatementProfil(Model):
         return True
 
     _constraints = [
-        (_check_partner, "You need to put a partner if you tic the 'Force partner on bank move' !", []),
+        (_check_partner, "You need to put a partner if you tic the 'Force partner on bank move'!", []),
     ]
 
 
@@ -308,7 +308,7 @@ class AccountBankSatement(Model):
         We have to copy paste a big block of code, changing the error
         stack + managing period from date.
 
-        TODO: Log the error in a bank statement field instead of using a popup !
+        TODO: Log the error in a bank statement field instead of using a popup!
         """
         for st in self.browse(cr, uid, ids, context=context):
 
@@ -320,7 +320,7 @@ class AccountBankSatement(Model):
             self.balance_check(cr, uid, st.id, journal_type=j_type, context=context)
             if (not st.journal_id.default_credit_account_id) \
                     or (not st.journal_id.default_debit_account_id):
-                raise osv.except_osv(_('Configuration Error !'),
+                raise osv.except_osv(_('Configuration Error!'),
                                      _('Please verify that an account is defined in the journal.'))
 
             if not st.name == '/':
@@ -331,7 +331,7 @@ class AccountBankSatement(Model):
 # End Changes
             for line in st.move_line_ids:
                 if line.state != 'valid':
-                    raise osv.except_osv(_('Error !'),
+                    raise osv.except_osv(_('Error!'),
                                          _('The account entries lines are not in valid state.'))
 # begin changes
             errors_stack = []
@@ -339,7 +339,7 @@ class AccountBankSatement(Model):
                 try:
                     if st_line.analytic_account_id:
                         if not st.journal_id.analytic_journal_id:
-                            raise osv.except_osv(_('No Analytic Journal !'),
+                            raise osv.except_osv(_('No Analytic Journal!'),
                                                  _("You have to assign an analytic"
                                                    " journal on the '%s' journal!") % st.journal_id.name)
                     if not st_line.amount:
@@ -428,7 +428,7 @@ class AccountBankSatement(Model):
               If amount is positif the type and account will be customer and receivable,
               If amount is negativ, the type and account will be supplier and payable
         Note that we return the payable or receivable account from agrs and not from the optional partner_id
-        given !
+        given!
 
         :param float: amount of the line
         :param int/long: account_receivable the  receivable account

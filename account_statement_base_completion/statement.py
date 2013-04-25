@@ -55,11 +55,11 @@ class AccountStatementProfil(orm.Model):
     _inherit = "account.statement.profile"
 
     _columns = {
-        # @Akretion : For now, we don't implement this features, but this would probably be there:
+        # @Akretion: For now, we don't implement this features, but this would probably be there:
         # 'auto_completion': fields.text('Auto Completion'),
         # 'transferts_account_id':fields.many2one('account.account', 'Transferts Account'),
         # => You can implement it in a module easily, we design it with your needs in mind
-        # as well !
+        # as well!
 
         'rule_ids': fields.many2many(
             'account.statement.completion.rule',
@@ -86,7 +86,7 @@ class AccountStatementProfil(orm.Model):
             A dict of value that can be passed directly to the write method of
             the statement line or {}
            {'partner_id': value,
-            'account_id' : value,
+            'account_id: value,
 
             ...}
         """
@@ -195,7 +195,7 @@ class AccountStatementCompletionRule(orm.Model):
             A dict of value that can be passed directly to the write method of
             the statement line or {}
            {'partner_id': value,
-            'account_id' : value,
+            'account_id': value,
 
             ...}
         """
@@ -213,7 +213,7 @@ class AccountStatementCompletionRule(orm.Model):
             A dict of value that can be passed directly to the write method of
             the statement line or {}
            {'partner_id': value,
-            'account_id' : value,
+            'account_id': value,
             ...}
         """
         return self._from_invoice(cr, uid, line, 'customer', context=context)
@@ -230,7 +230,7 @@ class AccountStatementCompletionRule(orm.Model):
             A dict of value that can be passed directly to the write method of
             the statement line or {}
            {'partner_id': value,
-            'account_id' : value,
+            'account_id': value,
 
             ...}
         """
@@ -275,7 +275,7 @@ class AccountStatementCompletionRule(orm.Model):
             A dict of value that can be passed directly to the write method of
             the statement line or {}
            {'partner_id': value,
-            'account_id' : value,
+            'account_id': value,
 
             ...}
             """
@@ -333,7 +333,7 @@ class AccountStatementCompletionRule(orm.Model):
             A dict of value that can be passed directly to the write method of
             the statement line or {}
            {'partner_id': value,
-            'account_id' : value,
+            'account_id': value,
 
             ...}
             """
@@ -441,7 +441,7 @@ class AccountBankSatement(orm.Model):
         :param int/long stat_id: ID of the account.bank.statement
         :param char error_msg: Message to add
         :number_imported int/long: Number of lines that have been completed
-        :return : True
+        :return True
         """
         error_log = ""
         user_name = self.pool.get('res.users').read(cr, uid, uid,
@@ -469,7 +469,7 @@ class AccountBankSatement(orm.Model):
     def button_auto_completion(self, cr, uid, ids, context=None):
         """
         Complete line with values given by rules and tic the already_completed
-        checkbox so we won't compute them again unless the user untick them !
+        checkbox so we won't compute them again unless the user untick them!
         """
         if context is None:
             context = {}

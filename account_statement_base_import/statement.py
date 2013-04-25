@@ -83,7 +83,7 @@ class AccountStatementProfil(Model):
             :param:    browse_record of the current parser
             :param:    result_row_list: [{'key':value}]
             :param:    profile: browserecord of account.statement.profile
-            :param:    statement_id : int/long of the current importing statement ID
+            :param:    statement_id: int/long of the current importing statement ID
             :param:    context: global context
             return:    dict of vals that will be passed to create method of statement line.
         """
@@ -102,7 +102,7 @@ class AccountStatementProfil(Model):
                 'account_id': commission_account_id,
                 'ref': 'commission',
                 'analytic_account_id': commission_analytic_id,
-                # !! We set the already_completed so auto-completion will not update those values !
+                # !! We set the already_completed so auto-completion will not update those values!
                 'already_completed': True,
             }
         return comm_values
@@ -120,7 +120,7 @@ class AccountStatementProfil(Model):
         :param int/long account_payable: ID of the receivable account to use
         :param int/long account_receivable: ID of the payable account to use
         :param int/long statement_id: ID of the concerned account.bank.statement
-        :return : dict of vals that will be passed to create method of statement line.
+        :return: dict of vals that will be passed to create method of statement line.
         """
         statement_obj = self.pool.get('account.bank.statement')
         values = parser_vals
@@ -166,22 +166,22 @@ class AccountStatementProfil(Model):
         attachment_obj = self.pool.get('ir.attachment')
         prof_obj = self.pool.get("account.statement.profile")
         if not profile_id:
-            raise osv.except_osv(_("No Profile !"),
-                                 _("You must provide a valid profile to import a bank statement !"))
+            raise osv.except_osv(_("No Profile!"),
+                                 _("You must provide a valid profile to import a bank statement!"))
         prof = prof_obj.browse(cr, uid, profile_id, context=context)
 
         parser = new_bank_statement_parser(prof.import_type, ftype=ftype)
         result_row_list = parser.parse(file_stream)
-        # Check all key are present in account.bank.statement.line !!
+        # Check all key are present in account.bank.statement.line!!
         if not result_row_list:
             raise osv.except_osv(_("Nothing to import"),
                                  _("The file is empty"))
         parsed_cols = parser.get_st_line_vals(result_row_list[0]).keys()
         for col in parsed_cols:
             if col not in statement_line_obj._columns:
-                raise osv.except_osv(_("Missing column !"),
+                raise osv.except_osv(_("Missing column!"),
                                      _("Column %s you try to import is not "
-                                       "present in the bank statement line !") % col)
+                                       "present in the bank statement line!") % col)
 
         statement_id = statement_obj.create(cr, uid,
                                             {'profile_id': prof.id},
@@ -228,7 +228,7 @@ class AccountStatementProfil(Model):
                                    'res_id': statement_id},
                                   context=context)
 
-            # If user ask to launch completion at end of import, do it !
+            # If user ask to launch completion at end of import, do it!
             if prof.launch_import_completion:
                 statement_obj.button_auto_completion(cr, uid, [statement_id], context)
 
@@ -244,7 +244,7 @@ class AccountStatementProfil(Model):
             st = "Error: %s\nDescription: %s\nTraceback:" % (error_type.__name__, error_value)
             st += ''.join(traceback.format_tb(trbk, 30))
             raise osv.except_osv(_("Statement import error"),
-                                 _("The statement cannot be created : %s") % st)
+                                 _("The statement cannot be created: %s") % st)
         return statement_id
 
 
