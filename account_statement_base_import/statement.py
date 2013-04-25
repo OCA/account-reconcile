@@ -46,7 +46,7 @@ class AccountStatementProfil(Model):
                  "on each imported file using this profile."),
         'last_import_date': fields.datetime("Last Import Date"),
         #  we remove deprecated as it floods logs in standard/warning level sob...
-        'rec_log': fields.text('log', readonly=True), #  Deprecated
+        'rec_log': fields.text('log', readonly=True),  # Deprecated
         'import_type': fields.selection(
             get_import_type_selection,
             'Type of import',
