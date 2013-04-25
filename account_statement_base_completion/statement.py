@@ -443,20 +443,17 @@ class AccountBankSatement(orm.Model):
         :number_imported int/long: Number of lines that have been completed
         :return True
         """
-        error_log = ""
         user_name = self.pool.get('res.users').read(cr, uid, uid,
                                                     ['name'], context=context)['name']
 
         log = self.read(cr, uid, stat_id, ['completion_logs'],
                         context=context)['completion_logs']
+        log = log if log else ""
 
         completion_date = datetime.datetime.now().strftime(DEFAULT_SERVER_DATETIME_FORMAT)
-        if error_msg:
-            error_log = error_msg
-        message = (_(u"%s Bank Statement ID %s has %s lines completed by %s \n%s\n") %
-                   (completion_date, stat_id, number_imported, user_name, error_log))
-        log = message + log
-        self.write(cr, uid, [stat_id], {'completion_logs': log}, context=context)
+        message = (_("%s Bank Statement ID %s has %s lines completed by %s \n%s\n") %
+                   (completion_date, stat_id, number_imported, user_name, log))
+        self.write(cr, uid, [stat_id], {'completion_logs': message}, context=context)
 
         body = (_('Statement ID %s auto-completed for %s lines completed') %
                 (stat_id, number_imported)),
