@@ -161,7 +161,8 @@ class AccountStatementCompletionRule(orm.Model):
                 inv = inv_obj.browse(cr, uid, inv_id[0], context=context)
             else:
                 raise ErrorTooManyPartner(_('Line named "%s" (Ref:%s) was matched by more '
-                                            'than one partner.') % (st_line['name'], st_line['ref']))
+                                            'than one partner while looking on %s invoices') %
+                                          (st_line['name'], st_line['ref'], inv_type))
             return inv
         return False
 
@@ -246,7 +247,7 @@ class AccountStatementCompletionRule(orm.Model):
                     res['partner_id'] = so.partner_id.id
                 elif so_id and len(so_id) > 1:
                     raise ErrorTooManyPartner(_('Line named "%s" (Ref:%s) was matched by more '
-                                                'than one partner.') %
+                                                'than one partner while looking on SO by ref.') %
                                               (st_line['name'], st_line['ref']))
                 st_vals = st_obj.get_values_for_line(cr,
                                                      uid,
@@ -305,7 +306,7 @@ class AccountStatementCompletionRule(orm.Model):
             found_partner = context['label_memoizer'][st_line['id']]
             if len(found_partner) > 1:
                 raise ErrorTooManyPartner(_('Line named "%s" (Ref:%s) was matched by '
-                                            'more than one partner.') %
+                                            'more than one partner while looking on partner label') %
                                           (st_line['name'], st_line['ref']))
             res['partner_id'] = found_partner[0].id
             st_vals = st_obj.get_values_for_line(cr,
@@ -345,7 +346,7 @@ class AccountStatementCompletionRule(orm.Model):
             return res
         if len(result) > 1:
             raise ErrorTooManyPartner(_('Line named "%s" (Ref:%s) was matched by more '
-                                        'than one partner.') %
+                                        'than one partner while looking on partner by name') %
                                       (st_line['name'], st_line['ref']))
         res['partner_id'] = result[0][0] if result else False
         if res:
