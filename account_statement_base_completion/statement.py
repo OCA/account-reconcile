@@ -45,6 +45,9 @@ class ErrorTooManyPartner(Exception):
     def __str__(self):
         return repr(self.value)
 
+    def __repr__(self):
+        return repr(self.value)
+
 
 class AccountStatementProfil(orm.Model):
     """
@@ -303,12 +306,14 @@ class AccountStatementCompletionRule(orm.Model):
                 pairs = cr.fetchall()
                 for pair in pairs:
                     context['label_memoizer'][pair[0]].append(partner)
+
         if st_line['id'] in context['label_memoizer']:
             found_partner = context['label_memoizer'][st_line['id']]
             if len(found_partner) > 1:
-                raise ErrorTooManyPartner(_('Line named "%s" (Ref:%s) was matched by '
-                                            'more than one partner while looking on partner label') %
-                                          (st_line['name'], st_line['ref']))
+                msg = (_('Line named "%s" (Ref:%s) was matched by '
+                         'more than one partner while looking on partner label: %s') %
+                       (st_line['name'], st_line['ref'], ','.join([x.name for x in found_partner])))
+                raise ErrorTooManyPartner(msg)
             res['partner_id'] = found_partner[0].id
             st_vals = st_obj.get_values_for_line(cr,
                                                  uid,
@@ -451,8 +456,8 @@ class AccountBankSatement(orm.Model):
         log = log if log else ""
 
         completion_date = datetime.datetime.now().strftime(DEFAULT_SERVER_DATETIME_FORMAT)
-        message = (_("%s Bank Statement ID %s has %s lines completed by %s \n%s\n") %
-                   (completion_date, stat_id, number_imported, user_name, log))
+        message = (_("%s Bank Statement ID %s has %s lines completed by %s \n%s\n%s\n") %
+                   (completion_date, stat_id, number_imported, user_name, error_msg, log))
         self.write(cr, uid, [stat_id], {'completion_logs': message}, context=context)
 
         body = (_('Statement ID %s auto-completed for %s lines completed') %
