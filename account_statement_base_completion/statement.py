@@ -298,7 +298,7 @@ class AccountStatementCompletionRule(orm.Model):
             line_ids = context.get('line_ids', [])
             for partner in partner_obj.browse(cr, uid, partner_ids, context=context):
                 vals = '|'.join(re.escape(x.strip()) for x in partner.bank_statement_label.split(';'))
-                or_regex = ".*%s*." % vals
+                or_regex = ".*%s.*" % vals
                 sql = ("SELECT id from account_bank_statement_line"
                        " WHERE id in %s"
                        " AND name ~* %s")
