@@ -71,13 +71,11 @@ class AccountStatementCompletionRule(orm.Model):
 
     def get_from_label_and_partner_field(self, cr, uid, line_id, context=None):
         """
-        Match the partner based on the label field of the statement line
-        and the text defined in the 'bank_statement_label' field of the partner.
-        Remember that we can have values separated with ; Then, call the generic
-        get_values_for_line method to complete other values.
-        If more than one partner matched, raise the ErrorTooManyPartner error.
+        Match the partner and the account based on the name field of the
+        statement line and the table account.statement.label.
+        If more than one statement label matched, raise the ErrorTooManylabel error.
 
-        :param dict st_line: read of the concerned account.bank.statement.line
+        :param int line_id: id of the concerned account.bank.statement.line
         :return:
             A dict of value that can be passed directly to the write method of
             the statement line or {}
@@ -90,7 +88,7 @@ class AccountStatementCompletionRule(orm.Model):
         label_obj = self.pool.get('account.statement.label')
         st_line = st_obj.browse(cr, uid, line_id, context=context)
         res = {}
-        # As we have to iterate on each partner for each line,
+        # As we have to iterate on each label for each line,
         # we memorize the pair to avoid
         # to redo computation for each line.
         # Following code can be done by a single SQL query
@@ -141,6 +139,18 @@ class AccountStatementLabel(orm.Model):
         'profile_id': fields.many2one('account.statement.profile',
                                       'Account Profile'),
     }
+
+    _defaults = {
+        'company_id': lambda s,cr,uid,c:
+            s.pool.get('res.company')._company_default_get(cr, uid,
+                                                           'account.statement.label',
+                                                           context=c),
+    }
+
+    _sql_constraints = [
+        ('profile_label_unique', 'unique (label, profile_id, company_id)',
+         'You cannot have similar label for the same profile and company'),
+    ]
 
     def save_and_close_label(self, cr, uid, ids, context=None):
         return {'type': 'ir.actions.act_window_close'}
