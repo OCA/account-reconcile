@@ -43,26 +43,15 @@ class AccountBankSatement(orm.Model):
     """
     _inherit = "account.bank.statement"
 
-    def add_completion_label(self, cr, uid, ids, context=None):
-        model_data_obj = self.pool.get('ir.model.data')
-        model_data_id = model_data_obj.search(cr, uid,
-                                                 [('model', '=', 'ir.ui.view'),
-                                                 ('name', '=', 'statement_label_wizard_view_form')
-                                                 ], context=context)
-        if model_data_id:
-            res_id = model_data_obj.read(cr, uid,
-                                         model_data_id,
-                                         ['res_id'],
-                                         context=context)[0]['res_id']
+    def open_completion_label(self, cr, uid, ids, context=None):
         return {
             'name': 'Statement Label',
             'view_type': 'form',
-            'view_mode': 'form',
-            'view_id': [res_id],
+            'view_mode': 'tree,form',
             'res_model': 'account.statement.label',
             'type': 'ir.actions.act_window',
             'nodestroy': True,
-            'target': 'new',
+            'target': False,
         }
 
 

@@ -31,7 +31,6 @@
     'depends': ['account_statement_base_completion'],
     'init_xml': [],
     'update_xml': [
-           'partner_view.xml',
            'statement_view.xml',
            'security/ir.model.access.csv',
     ],

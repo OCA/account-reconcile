@@ -16,7 +16,7 @@
             <field name="arch" type="xml">
                 <data>
                     <xpath expr="/form/sheet/div[@name='import_buttons']" position="after">
-                        <button name="add_completion_label" string="Add Completion Label"
+                        <button name="open_completion_label" string="Open Completion Labels"
                                 states='draft,open' type="object" colspan="1"/>
                     </xpath>
                 </data>
@@ -37,29 +37,6 @@
              </field>
          </record>
 
-        <record model="ir.ui.view" id="statement_label_wizard_view_form">
-            <field name="name">account.statement.label.view.wizard</field>
-            <field name="model">account.statement.label</field>
-            <field eval="50" name="priority"/>
-            <field name="arch" type="xml">
-                <form string="Product" version="7.0">
-                    <group name="label">
-                        <field name="label"/>
-                        <field name="partner_id"/>
-                        <field name="account_id"/>
-                        <field name="profile_id"/>
-                    </group>
-                    <footer>
-                        <button name="save_and_close_label"
-                                string="Save and Close"
-                                type="object" class="oe_highlight"/>
-                        or
-                        <button special="cancel" string="Cancel" class="oe_link"/>
-                    </footer>
-                </form>
-            </field>
-        </record>
-
          <record id="statement_label_view_tree" model="ir.ui.view">
              <field name="name">account.statement.label.view</field>
              <field name="model">account.statement.label</field>
@@ -73,11 +50,25 @@
              </field>
          </record>
 
+        <record id="statement_label_view_search" model="ir.ui.view">
+            <field name="name">account.statement.label.search</field>
+            <field name="model">account.statement.label</field>
+            <field name="arch" type="xml">
+                <search string="Search Statement Label" >
+                     <field name="label"/>
+                     <field name="partner_id"/>
+                     <field name="account_id"/>
+                     <field name="profile_id"/>
+                </search>
+            </field>
+        </record>
+
          <record id="action_statement_label_tree" model="ir.actions.act_window">
              <field name="name">Account Statement Label</field>
              <field name="res_model">account.statement.label</field>
              <field name="view_type">form</field>
              <field name="view_mode">tree,form</field>
+             <field name="search_view_id" ref="statement_label_view_search"/>
          </record>
 
          <menuitem string="Statement Label" action="action_statement_label_tree"
