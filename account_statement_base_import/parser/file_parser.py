@@ -28,37 +28,41 @@ try:
 except:
     raise Exception(_('Please install python lib xlrd'))
 
+def float_or_zero(val):
+    """ Conversion function used to manage
+    empty string into float usecase"""
+    return float(val) if val else 0.0
 
 class FileParser(BankStatementImportParser):
     """
     Generic abstract class for defining parser for .csv or .xls file format.
     """
 
-    def __init__(self, parse_name, keys_to_validate=None, ftype='csv', conversion_dict=None,
-                 header=None, *args, **kwargs):
+    def __init__(self, parse_name, ftype='csv', extra_fields=None, header=None, **kwargs):
         """
             :param char: parse_name : The name of the parser
             :param list: keys_to_validate : contain the key that need to be present in the file
             :param char ftype: extension of the file (could be csv or xls)
-            :param: conversion_dict : keys and type to convert of every column in the file like
-                {
-                    'ref': unicode,
-                    'label': unicode,
-                    'date': datetime.datetime,
-                    'amount': float,
-                    'commission_amount': float
-                }
+            :param dict extra_fields: extra fields to add to the conversion dict. In the format
+                                     {fieldname: fieldtype}
             :param list: header : specify header fields if the csv file has no header
             """
 
-        super(FileParser, self).__init__(parse_name, *args, **kwargs)
+        super(FileParser, self).__init__(parse_name, **kwargs)
         if ftype in ('csv', 'xls'):
             self.ftype = ftype
         else:
             raise except_osv(_('User Error'),
                              _('Invalid file type %s. Please use csv or xls') % ftype)
-        self.keys_to_validate = keys_to_validate if keys_to_validate is not None else [] 
-        self.conversion_dict = conversion_dict
+        self.conversion_dict = {
+            'ref': unicode,
+            'label': unicode,
+            'date': datetime.datetime,
+            'amount': float_or_zero,
+        }
+        if extra_fields:
+            self.conversion_dict.update(extra_fields)
+        self.keys_to_validate = self.conversion_dict.keys()
         self.fieldnames = header
         self._datemode = 0  # used only for xls documents,
                             # 0 means Windows mode (1900 based dates).

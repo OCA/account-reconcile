@@ -49,9 +49,6 @@ class BankStatementImportParser(object):
         self.result_row_list = None
         # The file buffer on which to work on
         self.filebuffer = None
-        # Concatenate here the global commission taken by the bank/office
-        # for this statement.
-        self.commission_global_amount = None
 
     @classmethod
     def parser_for(cls, parser_name):
@@ -110,8 +107,6 @@ class BankStatementImportParser(object):
         """
         Implement a method in your parser to make some last changes on the result of parsing
         the datas, like converting dates, computing commission, ...
-        Work on self.result_row_list and put the commission global amount if any
-        in the self.commission_global_amount one.
         """
         return NotImplementedError
 
@@ -132,16 +127,6 @@ class BankStatementImportParser(object):
                 }
         """
         return NotImplementedError
-
-    def get_st_line_commision(self, *args, **kwargs):
-        """
-        This is called by the importation method to create the commission line in
-        the bank statement. We will always create one line for the commission in the
-        bank statement, but it could be computated from a value of each line, or given
-        in a single line for the whole file.
-            return: float of the whole commission (self.commission_global_amount)
-        """
-        return self.commission_global_amount
 
     def parse(self, filebuffer, *args, **kwargs):
         """
