@@ -25,7 +25,7 @@
  'maintainer': 'Camptocamp',
  'category': 'Finance',
  'complexity': 'normal', #easy, normal, expert
- 'depends': ['account'],
+ 'depends': ['account','report_webkit'],
  'description': """
  Improve the basic bank statement, by adding various new features,
  and help dealing with huge volume of reconciliation through payment offices such as Paypal, Lazer,
