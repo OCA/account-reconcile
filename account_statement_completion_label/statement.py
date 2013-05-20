@@ -105,7 +105,8 @@ class AccountStatementCompletionRule(orm.Model):
                 raise ErrorTooManyPartner(_('Line named "%s" (Ref:%s) was matched by '
                                             'more than one statement label.') %
                                           (st_line['name'], st_line['ref']))
-            res['partner_id'] = label_info[0]['partner_id']
+            if label_info[0]['partner_id']:
+                res['partner_id'] = label_info[0]['partner_id']
             res['account_id'] = label_info[0]['account_id']
         return res
 
@@ -122,6 +123,7 @@ class AccountStatementLabel(orm.Model):
         'partner_id': fields.many2one('res.partner', 'Partner'),
         'label': fields.char('Bank Statement Label', size=100),
         'account_id': fields.many2one('account.account', 'Account',
+                                      required = True,
                                       help='Account corresponding to the label '
                                       'for a given partner'),
         'company_id': fields.many2one('res.company', 'Company'),
