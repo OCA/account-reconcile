@@ -1,4 +1,4 @@
-#-*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 ##############################################################################
 #
 #    Author: Nicolas Bessi, Joel Grand-Guillaume
@@ -125,6 +125,16 @@ class AccountBankSatement(Model):
 
     _inherit = "account.bank.statement"
 
+    def _default_period(self, cr, uid, context=None):
+        """
+        Statement default period
+        """
+        if context is None:
+            context = {}
+        period_obj = self.pool.get('account.period')
+        periods = period_obj.find(cr, uid, dt=context.get('date'), context=context)
+        return periods and periods[0] or False
+
     _columns = {
         'profile_id': fields.many2one(
             'account.statement.profile',
@@ -156,11 +166,15 @@ class AccountBankSatement(Model):
                         store=True,
                         readonly=True),
         'period_id': fields.many2one(
-            'account.period', 'Period', required=False, readonly=True),
+                        'account.period',
+                        'Period',
+                        required=False,
+                        readonly=False,
+                        invisible=True),
     }
 
     _defaults = {
-        'period_id': False,
+        'period_id': _default_period,
     }
 
     def create(self, cr, uid, vals, context=None):
@@ -536,7 +550,9 @@ class AccountBankSatementLine(Model):
         """
         Return a period from a given date in the context.
         """
-        date = context.get('date', None)
+        if context is None:
+            context = {}
+        date = context.get('date')
         periods = self.pool.get('account.period').find(cr, uid, dt=date)
         return periods and periods[0] or False
 
