@@ -107,6 +107,8 @@ class AccountBankSatement(Model):
         """
         Statement default period
         """
+        if context is None:
+            context = {}
         period_obj = self.pool.get('account.period')
         periods = period_obj.find(cr, uid, dt=context.get('date'), context=context)
         return periods and periods[0] or False
@@ -146,7 +148,7 @@ class AccountBankSatement(Model):
                         'Period',
                         required=False,
                         readonly=False,
-                        invisible="True"),
+                        invisible=True),
     }
 
     _defaults = {
@@ -466,7 +468,9 @@ class AccountBankSatementLine(Model):
         """
         Return a period from a given date in the context.
         """
-        date = context.get('date', None)
+        if context is None:
+            context = {}
+        date = context.get('date')
         periods = self.pool.get('account.period').find(cr, uid, dt=date)
         return periods and periods[0] or False
 
