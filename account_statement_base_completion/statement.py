@@ -306,8 +306,6 @@ class AccountStatementLine(Model):
             if not line.already_completed:
                 try:
                     #Don't use default values, it should be called by the rules if needed
-                    #res[line.id] = self.get_values_for_line(cr, uid, profile_id = line.statement_id.profile_id.id,
-                    #    line_type = line.type, amount = line.amount, context = context)
                     # Ask the rule
                     vals = profile_obj.find_values_from_rules(cr, uid, line.statement_id.profile_id.id, line.id, context)
                     # Merge the result
@@ -381,7 +379,7 @@ class AccountBankStatement(Model):
                 except ErrorTooManyPartner, exc:
                     msg += exc.message + "\n"
                 except Exception, exc:
-                    msg += exc.message + "\n"# TODO FIXME
+                    msg += exc.message + "\n"
                 # vals = res and res.keys() or False
                 if res:
                     vals = res[line.id]
