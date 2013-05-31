@@ -29,6 +29,8 @@ from openerp.osv import fields, osv
 from parser import new_bank_statement_parser
 import sys
 import traceback
+import logging
+_logger = logging.getLogger(__name__)
 
 
 class AccountStatementProfil(Model):
@@ -116,6 +118,16 @@ class AccountStatementProfil(Model):
                 'already_completed': True,
             }
         return comm_values
+
+    def prepare_statetement_lines_vals(self, cursor, uid, parser_vals,
+            account_payable, account_receivable, statement_id, context):
+        """
+        Method to ensure backward compatibility with the old name of the method.
+        """
+        _logger.warning(_("The method prepare_statetement_lines_vals shouldn't "
+                          "be used anymore, use : prepare_statement_lines_vals"))
+        return self.prepare_statement_lines_vals(cursor, uid, parser_vals,
+            account_payable, account_receivable, statement_id, context)
 
     def prepare_statement_lines_vals(self, cursor, uid, parser_vals,
             account_payable, account_receivable, statement_id, context):
@@ -215,8 +227,6 @@ class AccountStatementProfil(Model):
                 len(result_row_list), context)
 
         except Exception, exc:
-            #??? unlink without commit the cursor, usefull?
-            statement_obj.unlink(cursor, uid, [statement_id])
             error_type, error_value, trbk = sys.exc_info()
             st = "Error: %s\nDescription: %s\nTraceback:" % (error_type.__name__, error_value)
             st += ''.join(traceback.format_tb(trbk, 30))

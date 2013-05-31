@@ -28,7 +28,8 @@ def UnicodeDictReader(utf8_data, **kwargs):
     utf8_data.seek(pos)
     if not kwargs.get('dialect'):
         dialect = sniffer.sniff(sample_data, delimiters=',;\t')
-        del kwargs['dialect']
+        if 'dialect' in kwargs:
+            del kwargs['dialect']
     else:
         dialect = kwargs.pop('dialect')
     csv_reader = csv.DictReader(utf8_data, dialect=dialect, **kwargs)

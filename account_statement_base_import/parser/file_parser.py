@@ -54,7 +54,7 @@ class FileParser(BankStatementImportParser):
             self.ftype = ftype
         else:
             raise Exception(_('Invalide file type %s. please use csv or xls') % (ftype))
-        self.keys_to_validate = keys_to_validate
+        self.keys_to_validate = keys_to_validate or []
         self.convertion_dict = convertion_dict
         self.fieldnames = header
         self._datemode = 0 # used only for xls documents,
@@ -95,7 +95,7 @@ class FileParser(BankStatementImportParser):
         We skip the validation step if the file header is provided separately
         (in the field: fieldnames).
         """
-        if self.fieldnames is None and self.keys_to_validate:
+        if self.fieldnames is None:
             parsed_cols = self.result_row_list[0].keys()
             for col in self.keys_to_validate:
                 if col not in parsed_cols:
