@@ -377,9 +377,9 @@ class AccountBankStatement(Model):
                     if res:
                         compl_lines += 1
                 except ErrorTooManyPartner, exc:
-                    msg += exc.message + "\n"
+                    msg += unicode(exc) + "\n"
                 except Exception, exc:
-                    msg += exc.message + "\n"
+                    msg += unicode(exc) + "\n"
                 # vals = res and res.keys() or False
                 if res:
                     vals = res[line.id]
