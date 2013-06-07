@@ -114,5 +114,5 @@ class easy_reconcile_advanced_ref(orm.TransientModel):
         :yield: matchers as tuple ('matcher key', value(s))
         """
         yield ('partner_id', move_line['partner_id'])
-        yield ('ref', (move_line['ref'].lower().strip(),
+        yield ('ref', ((move_line['ref'] or '').lower().strip(),
                        move_line['name'].lower().strip()))
