@@ -23,7 +23,7 @@
                  <xpath expr="/form/group/field[@name='balance_end']" position="after">
                      <button name="button_auto_completion" string="Auto Completion" states='draft,open' type="object" colspan="1"/>
                  </xpath>
-                 
+
                  <xpath expr="/form/notebook/page[@string='Journal Entries']" position="after">
                       <page string="Completion Logs" attrs="{'invisible':[('completion_logs','=',False)]}">
                           <field name="completion_logs" colspan="4" nolabel="1" attrs="{'invisible':[('completion_logs','=',False)]}"/>
@@ -59,8 +59,8 @@
              </field>
          </field>
      </record>
-    
-    
+
+
          <record id="statement_st_completion_rule_view_form" model="ir.ui.view">
              <field name="name">account.statement.completion.rule.view</field>
              <field name="model">account.statement.completion.rule</field>
@@ -97,8 +97,8 @@
          </record>
 
          <menuitem string="Statement Completion Rule" action="action_st_completion_rule_tree"
-             id="menu_action_st_completion_rule_tree_menu" parent="account.menu_configuration_misc" 
+             id="menu_action_st_completion_rule_tree_menu" parent="account.menu_configuration_misc"
              sequence="30"/>
-    
+
 </data>
 </openerp>
