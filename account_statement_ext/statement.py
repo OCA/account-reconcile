@@ -38,7 +38,7 @@ def fixed_write(self, cr, uid, ids, vals, context=None):
 stat_mod.account_bank_statement.write = fixed_write
 
 
-class AccountStatementProfil(Model):
+class AccountStatementProfile(Model):
     """
     A Profile will contain all infos related to the type of
     bank statement, and related generated entries. It defines the
@@ -47,7 +47,7 @@ class AccountStatementProfil(Model):
     _name = "account.statement.profile"
     _inherit = ['mail.thread']
 
-    _description = "Statement Profil"
+    _description = "Statement Profile"
 
     _columns = {
         'name': fields.char('Name', required=True),
@@ -138,7 +138,7 @@ class AccountBankSatement(Model):
     _columns = {
         'profile_id': fields.many2one(
             'account.statement.profile',
-            'Profil',
+            'Bank Account Profile',
             required=True,
             readonly=True,
             states={'draft': [('readonly', False)]}),
@@ -283,7 +283,7 @@ class AccountBankSatement(Model):
                                                                                      uid,
                                                                                      st_line,
                                                                                      context=context)
-        # get the right partner according to the chosen profil
+        # get the right partner according to the chosen profile
         if st_line.statement_id.profile_id.force_partner_on_bank:
             bank_partner_id = st_line.statement_id.profile_id.partner_id.id
         return bank_partner_id
