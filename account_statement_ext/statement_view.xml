@@ -99,24 +99,16 @@
       <field name="arch" type="xml">
 
           <!-- Add before the group : profile and related infos -->
-          <field name="journal_id" position="replace">
+          <field name="journal_id" position="attributes">
+              <attribute name="invisible">True</attribute>
           </field>
 
           <label for="name" position="before">
               <group>
                   <field name="profile_id" select="1" required="1" on_change="onchange_imp_config_id(profile_id)" widget="selection"/>
+                  <field name="balance_check" invisible="1"/>
               </group>
           </label>
-
-          <xpath expr="/form/sheet/group" position="after">
-              <group>
-                  <separator string="Profile Details" colspan="4"/>
-                  <field name="journal_id" domain="[('type', '=', 'bank')]" on_change="onchange_journal_id(journal_id)" widget="selection"/>
-                   <field name="credit_partner_id"/>
-                   <field name="account_id" invisible="1"/>
-                   <field name="balance_check" invisible="1"/>
-              </group>
-          </xpath>
 
           # Make balance visible or not depending on profile
           <field name="balance_start" position="attributes">
