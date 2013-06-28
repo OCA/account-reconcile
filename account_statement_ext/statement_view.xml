@@ -102,9 +102,14 @@
           <field name="journal_id" position="replace">
           </field>
 
-          <xpath expr="/form/sheet/group" position="after">
+          <label for="name" position="before">
               <group>
                   <field name="profile_id" select="1" required="1" on_change="onchange_imp_config_id(profile_id)" widget="selection"/>
+              </group>
+          </label>
+
+          <xpath expr="/form/sheet/group" position="after">
+              <group>
                   <separator string="Profile Details" colspan="4"/>
                   <field name="journal_id" domain="[('type', '=', 'bank')]" on_change="onchange_journal_id(journal_id)" widget="selection"/>
                    <field name="credit_partner_id"/>
