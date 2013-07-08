@@ -55,10 +55,6 @@ class CreditPartnerStatementImporter(orm.TransientModel):
         'journal_id': fields.many2one('account.journal',
                                       'Financial journal to use transaction'),
         'file_name': fields.char('File Name', size=128),
-        'commission_account_id': fields.many2one('account.account',
-                                                 'Commission account'),
-        'commission_analytic_id': fields.many2one('account.analytic.account',
-                                                 'Commission analytic account'),
         'receivable_account_id': fields.many2one('account.account',
                                                  'Force Receivable/Payable Account'),
         'force_partner_on_bank': fields.boolean(
@@ -80,10 +76,7 @@ class CreditPartnerStatementImporter(orm.TransientModel):
             res = {'value':
                     {'partner_id': c.partner_id and c.partner_id.id or False,
                      'journal_id': c.journal_id and c.journal_id.id or False,
-                     'commission_account_id':
-                        c.commission_account_id and c.commission_account_id.id or False,
                      'receivable_account_id': c.receivable_account_id and c.receivable_account_id.id or False,
-                     'commission_a': c.commission_analytic_id and c.commission_analytic_id.id or False,
                      'force_partner_on_bank': c.force_partner_on_bank,
                      'balance_check': c.balance_check,
                      }
