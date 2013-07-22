@@ -56,6 +56,21 @@ class AccountStatementProfil(Model):
 
     }
 
+    def _write_extra_statement_lines(
+            self, cr, uid, parser, result_row_list, profile, statement_id, context):
+        """Insert extra lines after the main statement lines.
+
+        After the main statement lines have been created, you can override this method to create
+        extra statement lines.
+
+            :param:    browse_record of the current parser
+            :param:    result_row_list: [{'key':value}]
+            :param:    profile: browserecord of account.statement.profile
+            :param:    statement_id: int/long of the current importing statement ID
+            :param:    context: global context
+        """
+        pass
+
     def write_logs_after_import(self, cr, uid, ids, statement_id, num_lines, context):
         """
         Write the log in the logger
@@ -71,41 +86,6 @@ class AccountStatementProfil(Model):
                                 (statement_id, num_lines),
                           context=context)
         return True
-
-    def prepare_global_commission_line_vals(
-            self, cr, uid, parser, result_row_list, profile, statement_id, context):
-        """
-        Prepare the global commission line if there is one. The global
-        commission is computed by by calling the get_st_line_commision
-        of the parser. Feel free to override the method to compute
-        your own commission line from the result_row_list.
-
-            :param:    browse_record of the current parser
-            :param:    result_row_list: [{'key':value}]
-            :param:    profile: browserecord of account.statement.profile
-            :param:    statement_id: int/long of the current importing statement ID
-            :param:    context: global context
-            return:    dict of vals that will be passed to create method of statement line.
-        """
-        comm_values = False
-        if parser.get_st_line_commision():
-            partner_id = profile.partner_id and profile.partner_id.id or False
-            commission_account_id = profile.commission_account_id and profile.commission_account_id.id or False
-            commission_analytic_id = profile.commission_analytic_id and profile.commission_analytic_id.id or False
-            comm_values = {
-                'name': 'IN ' + _('Commission line'),
-                'date': datetime.datetime.now().date(),
-                'amount': parser.get_st_line_commision(),
-                'partner_id': partner_id,
-                'type': 'general',
-                'statement_id': statement_id,
-                'account_id': commission_account_id,
-                'ref': 'commission',
-                'analytic_account_id': commission_analytic_id,
-                # !! We set the already_completed so auto-completion will not update those values!
-                'already_completed': True,
-            }
-        return comm_values
 
     def prepare_statetement_lines_vals(
             self, cr, uid, parser_vals, account_payable, account_receivable,
@@ -153,8 +133,6 @@ class AccountStatementProfil(Model):
         Create a bank statement with the given profile and parser. It will fullfill the bank statement
         with the values of the file providen, but will not complete data (like finding the partner, or
         the right account). This will be done in a second step with the completion rules.
-        It will also create the commission line if it apply and record the providen file as
-        an attachement of the bank statement.
 
         :param int/long profile_id: ID of the profile used to import the file
         :param filebuffer file_stream: binary of the providen file
@@ -192,41 +170,33 @@ class AccountStatementProfil(Model):
             account_receivable, account_payable = statement_obj.get_default_pay_receiv_accounts(
                                                        cr, uid, context)
         try:
-            # Record every line in the bank statement and compute the global commission
-            # based on the commission_amount column
+            # Record every line in the bank statement
             statement_store = []
             for line in result_row_list:
                 parser_vals = parser.get_st_line_vals(line)
-                values = self.prepare_statetement_lines_vals(cr, uid, parser_vals, account_payable,
-                                                             account_receivable, statement_id, context)
+                values = self.prepare_statetement_lines_vals(
+                    cr, uid, parser_vals, account_payable, account_receivable, statement_id,
+                    context)
                 statement_store.append(values)
             # Hack to bypass ORM poor perfomance. Sob...
             statement_line_obj._insert_lines(cr, uid, statement_store, context=context)
 
-            # Build and create the global commission line for the whole statement
-            comm_vals = self.prepare_global_commission_line_vals(cr, uid, parser, result_row_list,
-                                                                 prof, statement_id, context)
-            if comm_vals:
-                statement_line_obj.create(cr, uid, comm_vals, context=context)
-            else:
-                # Trigger store field computation if someone has better idea
-                start_bal = statement_obj.read(cr, uid, statement_id,
-                                               ['balance_start'],
-                                               context=context)
-                start_bal = start_bal['balance_start']
-                statement_obj.write(cr, uid, [statement_id],
-                                    {'balance_start': start_bal})
+            self._write_extra_statement_lines(
+                cr, uid, parser, result_row_list, prof, statement_id, context)
+            # Trigger store field computation if someone has better idea
+            start_bal = statement_obj.read(
+                cr, uid, statement_id, ['balance_start'], context=context)
+            start_bal = start_bal['balance_start']
+            statement_obj.write(cr, uid, [statement_id], {'balance_start': start_bal})
 
-            attachment_obj.create(cr,
-                                  uid,
-                                  {'name': 'statement file',
-                                   'datas': file_stream,
-                                   'datas_fname': "%s.%s" % (
-                                       datetime.datetime.now().date(),
-                                       ftype),
-                                   'res_model': 'account.bank.statement',
-                                   'res_id': statement_id},
-                                  context=context)
+            attachment_data = {
+                'name': 'statement file',
+                'datas': file_stream,
+                'datas_fname': "%s.%s" % (datetime.datetime.now().date(), ftype),
+                'res_model': 'account.bank.statement',
+                'res_id': statement_id,
+            }
+            attachment_obj.create(cr, uid, attachment_data, context=context)
 
             # If user ask to launch completion at end of import, do it!
             if prof.launch_import_completion:
@@ -251,8 +221,7 @@ class AccountStatementProfil(Model):
 class AccountStatementLine(Model):
     """
     Add sparse field on the statement line to allow to store all the
-    bank infos that are given by an office. In this basic sample case
-    it concern only commission_amount.
+    bank infos that are given by an office.
     """
     _inherit = "account.bank.statement.line"
 
@@ -294,10 +263,3 @@ class AccountStatementLine(Model):
             cr.rollback()
             raise osv.except_osv(_("ORM bypass error"),
                                  sql_err.pgerror)
-
-    _columns = {
-        'commission_amount': fields.sparse(
-            type='float',
-            string='Line Commission Amount',
-            serialization_field='additionnal_bank_fields'),
-    }

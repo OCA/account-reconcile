@@ -30,12 +30,6 @@ except:
     raise Exception(_('Please install python lib xlrd'))
 
 
-def float_or_zero(val):
-    """ Conversion function used to manage
-    empty string into float usecase"""
-    return float(val) if val else 0.0
-
-
 class GenericFileParser(FileParser):
     """
     Standard parser that use a define format in csv or xls to import into a
@@ -43,17 +37,8 @@ class GenericFileParser(FileParser):
     parser, but will also be useful as it allow to import a basic flat file.
     """
 
-    def __init__(self, parse_name, ftype='csv'):
-        conversion_dict = {
-                            'ref': unicode,
-                            'label': unicode,
-                            'date': datetime.datetime,
-                            'amount': float_or_zero,
-                            'commission_amount': float_or_zero
-                          }
-        # Order of cols does not matter but first row of the file has to be header
-        keys_to_validate = ['ref', 'label', 'date', 'amount', 'commission_amount']
-        super(GenericFileParser, self).__init__(parse_name, keys_to_validate=keys_to_validate, ftype=ftype, conversion_dict=conversion_dict)
+    def __init__(self, parse_name, ftype='csv', **kwargs):
+        super(GenericFileParser, self).__init__(parse_name, ftype=ftype, **kwargs)
 
     @classmethod
     def parser_for(cls, parser_name):
@@ -78,25 +63,12 @@ class GenericFileParser(FileParser):
                     'amount':value,
                     'ref':value,
                     'label':value,
-                    'commission_amount':value,
                 }
-        In this generic parser, the commission is given for every line, so we store it
-        for each one.
         """
-        return {'name': line.get('label', line.get('ref', '/')),
-                'date': line.get('date', datetime.datetime.now().date()),
-                'amount': line.get('amount', 0.0),
-                'ref': line.get('ref', '/'),
-                'label': line.get('label', ''),
-                'commission_amount': line.get('commission_amount', 0.0)}
-
-    def _post(self, *args, **kwargs):
-        """
-        Compute the commission from value of each line
-        """
-        res = super(GenericFileParser, self)._post(*args, **kwargs)
-        val = 0.0
-        for row in self.result_row_list:
-            val += row.get('commission_amount', 0.0)
-        self.commission_global_amount = val
-        return res
+        return {
+            'name': line.get('label', line.get('ref', '/')),
+            'date': line.get('date', datetime.datetime.now().date()),
+            'amount': line.get('amount', 0.0),
+            'ref': line.get('ref', '/'),
+            'label': line.get('label', ''),
+        }
