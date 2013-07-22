@@ -116,6 +116,11 @@ class account_bank_statement(orm.Model):
             'analytic_account_id': st_line.analytic_account_id and st_line.analytic_account_id.id or False
         }
 
+        #We use the reference as name as in case of one move             #Chg2
+        #as field ref is a related we had the same value for all move    #Chg2
+        if context.get('move_id'):                                       #Chg2
+            val['name'] = st_line.ref                                    #Chg2
+
         if st.currency.id <> company_currency_id:
             amount_cur = res_currency_obj.compute(cr, uid, company_currency_id,
                         st.currency.id, amount, context=context)
@@ -130,7 +135,7 @@ class account_bank_statement(orm.Model):
         move_line_id = account_move_line_obj.create(cr, uid, val, context=context)
         torec.append(move_line_id)
 
-        if context['move_id']:                   #Chg2
+        if context.get('move_id'):               #Chg2
             return move_id                       #Chg2
 
         # Fill the secondary amount/currency
@@ -229,6 +234,6 @@ class account_bank_statement(orm.Model):
                 st.write({'state':'draft'}, context=context)
             else:
                 super(account_bank_statement, self).button_cancel(cr, uid, ids, context=context)
-       return True
+        return True
 
 
