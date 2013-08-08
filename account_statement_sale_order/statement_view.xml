@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+<data>
+
+    <record id="bank_statement_view_form3" model="ir.ui.view">
+         <field name="name">account_bank_statement_import_base.bank_statement.sale_order</field>
+         <field name="model">account.bank.statement</field>
+         <field name="inherit_id" ref="account_statement_base_completion.bank_statement_view_form2" />
+         <field name="type">form</field>
+         <field name="arch" type="xml">
+             <data>
+                 <xpath expr="/form/sheet/notebook/page/field[@name='line_ids']/tree/field[@name='ref']" position="after">
+                    <field name="sale_ids" on_change="onchange_sale_ids(sale_ids)" widget="many2many_tags"/>
+                 </xpath>
+             </data>
+         </field>
+     </record>
+
+    <record id="view_accounting_entries_unassigned_search" model="ir.ui.view">
+            <field name="name">account.move.line.unassigned.search</field>
+            <field name="model">account.move.line</field>
+            <field name="inherit_id" ref="account.view_account_move_line_filter" />
+            <field name="arch" type="xml">
+                <xpath expr="/search/filter[@string='Unbalanced']" position="before">
+                    <filter name= "unassigned" string="Unassigned"
+                            domain="[('reconcile_id', '=', False),('partner_id', '=', False)]"/>
+                </xpath>
+            </field>
+    </record>
+
+</data>
+</openerp>
