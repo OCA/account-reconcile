@@ -36,7 +36,6 @@
  'init_xml': [],
  'update_xml': [
      'statement_view.xml',
-     'data.xml',
  ],
  'demo_xml': [],
  'test': [],
