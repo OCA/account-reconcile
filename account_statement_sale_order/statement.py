@@ -40,37 +40,21 @@ class AccountStatementLine(orm.Model):
             super(AccountStatementLine, self)._update_line(cr, uid, vals, context=context)
 
 
-    def onchange_sale_ids(self, cr, uid, ids, sale_ids, profile_id=None, context=None):
+    def onchange_sale_ids(self, cr, uid, ids, sale_ids, context=None):
         """
         Override of the basic method as we need to pass the profile_id in the on_change_type
         call.
         Moreover, we now call the get_account_and_type_for_counterpart method now to get the
         type to use.
         """
-        warning_msg = False
-        sale_obj = self.pool.get('sale.order')
-        if not sale_ids:
-            return {}
-        if sale_ids:
-            if len(sale_ids[0][2]) > 1:
-                partner = False
-                for sale in sale_obj.browse(cr, uid, sale_ids[0][2], context=context):
-                    if partner:
-                        if sale.partner_id != partner:
-                            warning_msg = {
-                                'title': _('Error !'),
-                                'message': _('The sale orders chosen have to belong to the same partner'),
-                            }
-                    else:
-                        partner = sale.partner_id
-            sale = sale_obj.browse(cr, uid, sale_ids[0][2:3][0], context=context)
-            partner_id = sale[0].partner_id.id
-            account_id = sale[0].partner_id.property_account_receivable.id
-            already_completed = True
-        return {'value': {'partner_id': partner_id,
-                          'account_id': account_id,
-                          'already_completed': already_completed,},
-                'warning':warning_msg}
+        if sale_ids and sale_ids[0][2]:
+            sale_obj = self.pool.get('sale.order')
+            sale_ids = sale_ids[0][2]
+            sale = sale_obj.browse(cr, uid, sale_ids[0], context=context)
+            res = self.onchange_partner_id(cr, uid, ids, sale.partner_id.id, context=context)
+            res['value'].update({'partner_id': sale.partner_id.id})
+            return res
+        return {}
 
     def _check_partner_id(self, cr, uid, ids, context=None):
         for line in self.browse(cr, uid, ids, context=context):
