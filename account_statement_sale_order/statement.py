@@ -25,9 +25,7 @@ from openerp.osv import osv, orm, fields
 
 
 class AccountStatementLine(orm.Model):
-
     _inherit = "account.bank.statement.line"
-
 
     _columns = {
         'sale_ids': fields.many2many('sale.order', string='Sale Orders',)
@@ -101,19 +99,13 @@ class AccountStatementCompletionRule(orm.Model):
 
     _inherit = "account.statement.completion.rule"
 
-    def get_functions(self, cr, uid, context=None):
+    #Sorry for the copy paste but there is no way to inherit correctly
+    #account_statement_base_completion need some refactor
+    def get_from_ref_and_so(self, cr, uid, st_line, context=None):
         """
-        List of available methods for rules. Override this to add you own.
-        """
-        return [
-            ('get_from_ref_and_sale_id', 'From line reference (based on Sale Id)')]
-
-
-    def get_from_ref_and_sale_id(self, cr, uid, st_line, context=None):
-        """
-        Match the partner and account receivable based on the Sale Id and the reference of the statement
+        Match the partner based on the SO number and the reference of the statement
         line. Then, call the generic get_values_for_line method to complete other values.
-
+        If more than one partner matched, raise the ErrorTooManyPartner error.
 
         :param int/long st_line: read of the concerned account.bank.statement.line
         :return:
@@ -127,15 +119,20 @@ class AccountStatementCompletionRule(orm.Model):
         st_obj = self.pool.get('account.bank.statement.line')
         res = {}
         if st_line:
-            sale_obj = self.pool.get('sale.order')
-            sale_ids = sale_obj.search(cr,
+            so_obj = self.pool.get('sale.order')
+            so_id = so_obj.search(cr,
                                   uid,
                                   [('name', '=', st_line['ref'])],
                                   context=context)
-            if sale_ids:
-                sale = sale_obj.browse(cr, uid, sale_ids[0], context=context)
-                res['partner_id'] = sale.partner_id.id
-                res['sale_ids'] = [(6,0,sale_ids)]
+            if so_id:
+                if so_id and len(so_id) == 1:
+                    so = so_obj.browse(cr, uid, so_id[0], context=context)
+                    res['partner_id'] = so.partner_id.id
+                    res['sale_ids'] = [(6, 0, [so.id])] #chg
+                elif so_id and len(so_id) > 1:
+                    raise ErrorTooManyPartner(_('Line named "%s" (Ref:%s) was matched by more '
+                                                'than one partner while looking on SO by ref.') %
+                                              (st_line['name'], st_line['ref']))
                 st_vals = st_obj.get_values_for_line(cr,
                                                      uid,
                                                      profile_id=st_line['profile_id'],
@@ -149,5 +146,27 @@ class AccountStatementCompletionRule(orm.Model):
 
 
 
+
+
+
+class account_bank_statement(orm.Model):
+    _inherit = "account.bank.statement"
+
+    def _prepare_counterpart_move_line(self, *args, **kwargs):
+        context = kwargs.get('context')
+        if context is None:
+            ctx = {}
+        else:
+            ctx = context.copy()
+        ctx['countrepart'] = True
+        kwargs['context'] = ctx
+        return super(account_bank_statement, self)._prepare_counterpart_move_line(*args, **kwargs)       
+
+
+    def _prepare_move_line_vals(self, cr, uid, st_line, *args, **kwargs):
+        res = super(account_bank_statement, self)._prepare_move_line_vals(cr, uid, st_line, *args, **kwargs)
+        if not kwargs.get('context', {}).get('countrepart'):
+            res['sale_ids'] = [(6, 0, [sale.id for sale in st_line.sale_ids])]
+        return res
 
 
