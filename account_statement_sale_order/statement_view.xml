@@ -8,11 +8,9 @@
          <field name="inherit_id" ref="account_statement_base_completion.bank_statement_view_form2" />
          <field name="type">form</field>
          <field name="arch" type="xml">
-             <data>
-                 <xpath expr="/form/sheet/notebook/page/field[@name='line_ids']/tree/field[@name='ref']" position="after">
-                    <field name="sale_ids" on_change="onchange_sale_ids(sale_ids)" widget="many2many_tags"/>
-                 </xpath>
-             </data>
+             <xpath expr="/form/sheet/notebook/page/field[@name='line_ids']/tree/field[@name='ref']" position="after">
+                 <field name="sale_ids" on_change="onchange_sale_ids(sale_ids)" widget="many2many_tags" context="{'only_partner_id': partner_id}"/>
+             </xpath>
          </field>
      </record>
 
