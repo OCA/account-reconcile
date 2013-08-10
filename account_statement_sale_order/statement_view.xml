@@ -23,7 +23,7 @@
             <field name="arch" type="xml">
                 <xpath expr="/search/filter[@string='Unbalanced']" position="before">
                     <filter name= "unassigned" string="Unassigned"
-                            domain="[('reconcile_id', '=', False),('partner_id', '=', False)]"/>
+                            domain="[('reconcile_id', '=', False), ('sale_ids', '=', False)]"/>
                 </xpath>
             </field>
     </record>
