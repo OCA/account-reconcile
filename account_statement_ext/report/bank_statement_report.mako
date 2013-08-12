@@ -11,7 +11,7 @@
                 return text.replace('-', '&#8209;')  # replace by a non-breaking hyphen (it will not word-wrap between hyphen and numbers)
             %>
 
-            <%setLang(user.context_lang)%>
+            <%setLang(user.partner_id.lang)%>
            %for statement in objects:
 
             <div class="act_as_table data_table">
