@@ -27,7 +27,7 @@ class AccountMoveLine(Model):
     """
     _inherit = "account.move.line"
     _columns = {
-        'transaction_ref':fields.char('Transaction Ref.', size=128),
+        'transaction_ref': fields.char('Transaction Ref.', size=128),
     }
     
 class AccountBankSatement(Model):
