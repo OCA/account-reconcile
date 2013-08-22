@@ -27,7 +27,7 @@
  'complexity': 'normal',
  'depends': [
      'account_statement_base_import',
-     'account_statement_transactionid_completion'
+     'account_statement_bankaccount_completion'
      ],
  'description': """
  This module brings generic methods and fields on bank statement to deal with

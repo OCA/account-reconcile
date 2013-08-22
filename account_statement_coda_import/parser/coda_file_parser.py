@@ -21,7 +21,7 @@
 #
 
 import datetime
-
+import simplejson
 from coda.parser import Parser
 from coda.statement import AmountSign, MovementRecordType
 
@@ -103,4 +103,10 @@ class CodaFileParser(BankStatementImportParser):
         return {'name': "\n".join(filter(None, [line.counterparty_name, line.communication])),
                 'date': line.entry_date or datetime.datetime.now().date(),
                 'amount': amount,
-                'ref': line.ref}
+                'ref': line.ref,
+                # TODO, since dictionary is directly used by the AccountStatementLine in a bulk insert
+                # method that bypass the ORM, we need to write by hand, the logic behind field.sparse
+                # to properly serialize our additional fields ('parner_acc_number', ....) in the right
+                # container field (additionnal_bank_fields)
+                'additionnal_bank_fields': simplejson.dumps({'partner_acc_number': line.counterparty_number or None,
+                                                             'partner_bank_bic':  line.counterparty_bic or None})}

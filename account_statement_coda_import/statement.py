@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-##############################################################################
+#
 #
 # Authors: Laurent Mignon
 # Copyright (c) 2013 Acsone SA/NV (http://www.acsone.eu)
@@ -18,7 +18,7 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-##############################################################################
+#
 
 from openerp.osv.orm import Model
 from openerp.osv import fields
@@ -32,7 +32,7 @@ class AccountStatementProfil(Model):
         Has to be inherited to add parser
         """
         res = super(AccountStatementProfil, self).get_import_type_selection(
-                cr, uid, context=context)
+            cr, uid, context=context)
         res.append(('coda_transaction',
                     'CODA based transaction'))
         return res
