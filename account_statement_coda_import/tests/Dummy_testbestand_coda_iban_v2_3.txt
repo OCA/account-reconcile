@@ -1,0 +1,93 @@
+0000005030972505        00191602  KOCHUYT RICHARD           KREDBEBB   00417331909 00000                                       2
+12042BE86407051416150                  EUR0000000000000000040309STORA ENSO LANGERBRUGGE NVKBC-Bedrijfsrekening               002
+2100010000SWJVZ0BN6 BKTBBNPOSKZ0000000000020000050309004500001114931384384900569504030912048LANGERBRUGGE    GENT   05030904201 0
+2200010000   2905172259460041                                                                                                0 0
+2100020000SWJVZ0BN9 BKTBBNPOSKZ0000000000020000050309004500001114931384384900569604030912068LANGERBRUGGE    GENT   05030904201 0
+2200020000   0405856587510021                                                                                                0 0
+2100030000SWJVZ0BOC BKTBBNPOSKZ0000000000020000050309004500001114931384384900569704030912098LANGERBRUGGE    GENT   05030904201 0
+2200030000   8909540347400232                                                                                                0 0
+2100040000SWJVZ0BOF BKTBBNPOSKZ0000000000015000050309004500001114931384384900569804030912178LANGERBRUGGE    GENT   05030904201 0
+2200040000   3900897147490232                                                                                                0 0
+2100050000SWJVZ0BOI BKTBBNPOSKZ0000000000015000050309004500001114931384384900569904030912198LANGERBRUGGE    GENT   05030904201 0
+2200050000   9300107562530013                                                                                                0 0
+2100060000SWJVZ0BOL BKTBBNPOSKZ0000000000020000050309004500001114931384384900570004030912228LANGERBRUGGE    GENT   05030904201 0
+2200060000   3900896402800143                                                                                                0 0
+2100070000SWJVZ0BOO BKTBBNPOSKZ0000000000020000050309004500001114931384384900570104030912258LANGERBRUGGE    GENT   05030904201 0
+2200070000   7370186958820221                                                                                                0 0
+2100080000SWJVZ0BOR BKTBBNPOSKZ0000000000015000050309004500001114931384384900570204030912328LANGERBRUGGE    GENT   05030904201 0
+2200080000   0010793710350087                                                                                                0 0
+2100090000SWJVZ0BOU BKTBBNPOSKZ0000000000015000050309004500001114931384384900570304030912328LANGERBRUGGE    GENT   05030904201 0
+2200090000   0412607977470006                                                                                                0 0
+2100100000SWJVZ0BOX DOMUCVDIU011000000062095010050309005010001107740907316152050309PAIEMT.BETALING374191651101003 005030904201 0
+22001000000876820909                                                                                                         1 0
+2300100000                                     AMERICAN EXPRESS                                                              0 1
+3100100001SWJVZ0BOX DOMUCVDIU01005010001001AMERICAN EXPRESS                                                                  0 0
+2100110000SWQSZ0187BOVSBBNONTVA0000000000148300050309001500000ONG. SG   20-4203595                             LOON05030904201 0
+2200110000VERLIES HAMERLYNCK TONY                                                                                            1 0
+2300110000310180203454                         VIVIUM                                                                        0 1
+3100110001SWQSZ0187BOVSBBNONTVA001500001001VIVIUM                                                                            1 0
+3200110001RUE ROYALE                         1210   BRUXELLES                                                                0 0
+2100120000SWQSZ019ABOVSBBNONTVA0000000002249700050309001500000ONG. SG   20-4203595                             TWO 05030904201 0
+2200120000HAMERLYNCK TONY                                                                                                    1 0
+2300120000310180203454                         VIVIUM                                                                        0 1
+3100120001SWQSZ019ABOVSBBNONTVA001500001001VIVIUM                                                                            1 0
+3200120001RUE ROYALE                         1210   BRUXELLES                                                                0 0
+2100130000TDGSZ0FAU BKTBBNPOSKZ0000000000020000050309004500001114931384385000570405030908558LANGERBRUGGE    GENT   05030904201 0
+2200130000   4453562821750147                                                                                                0 0
+2100140000TDGSZ0FAX BKTBBNPOSKZ0000000000015000050309004500001114931384385000570505030909128LANGERBRUGGE    GENT   05030904201 0
+2200140000   0501869082060021                                                                                                0 0
+2100150000TDGSZ0FA0 BKTBBNPOSKZ0000000000015000050309004500001114931384385000570605030910448LANGERBRUGGE    GENT   05030904201 0
+2200150000   0501837769240006                                                                                                0 0
+2100160000TPIA01169XBHKDSODSTOC0000000062095010050309201660000AANZUIVERING VANUIT CENTRALE REK.                    05030904211 0
+2200160000                                                                                        KREDBEBB                   1 0
+2300160000BE38733040385372                                                                                                   0 0
+2100160001SWJVZ0BOYXBNKNIANIVIN0000000062095010050309601660000AANZUIVERING VANUIT CENTRALE REK.                    05030904211 0
+2200160001                                                                                        KREDBEBB                   1 0
+2300160001BE38733040385372                                                                                                   0 0
+2100170000TPIA01170YBHKDSODSTOC1000000002608000050309201170000OVERBOEKING NAAR CENTRALE REKENING                   05030904211 0
+2200170000                                                                                        KREDBEBB                   1 0
+2300170000BE38733040385372                                                                                                   0 0
+2100170001SWJVZ0BN7YBNKNIANIVUI1000000000020000050309601170000OVERBOEKING NAAR CENTRALE REKENING                   05030904201 0
+2200170001                                                                                        KREDBEBB                   1 0
+2300170001BE38733040385372                                                                                                   0 0
+2100170002SWJVZ0BOAYBNKNIANIVUI1000000000020000050309601170000OVERBOEKING NAAR CENTRALE REKENING                   05030904201 0
+2200170002                                                                                        KREDBEBB                   1 0
+2300170002BE38733040385372                                                                                                   0 0
+2100170003SWJVZ0BODYBNKNIANIVUI1000000000020000050309601170000OVERBOEKING NAAR CENTRALE REKENING                   05030904201 0
+2200170003                                                                                        KREDBEBB                   1 0
+2300170003BE38733040385372                                                                                                   0 0
+2100170004SWJVZ0BOGYBNKNIANIVUI1000000000015000050309601170000OVERBOEKING NAAR CENTRALE REKENING                   05030904201 0
+2200170004                                                                                        KREDBEBB                   1 0
+2300170004BE38733040385372                                                                                                   0 0
+2100170005SWJVZ0BOJYBNKNIANIVUI1000000000015000050309601170000OVERBOEKING NAAR CENTRALE REKENING                   05030904201 0
+2200170005                                                                                        KREDBEBB                   1 0
+2300170005BE38733040385372                                                                                                   0 0
+2100170006SWJVZ0BOMYBNKNIANIVUI1000000000020000050309601170000OVERBOEKING NAAR CENTRALE REKENING                   05030904201 0
+2200170006                                                                                        KREDBEBB                   1 0
+2300170006BE38733040385372                                                                                                   0 0
+2100170007SWJVZ0BOPYBNKNIANIVUI1000000000020000050309601170000OVERBOEKING NAAR CENTRALE REKENING                   05030904201 0
+2200170007                                                                                        KREDBEBB                   1 0
+2300170007BE38733040385372                                                                                                   0 0
+2100170008SWJVZ0BOSYBNKNIANIVUI1000000000015000050309601170000OVERBOEKING NAAR CENTRALE REKENING                   05030904201 0
+2200170008                                                                                        KREDBEBB                   1 0
+2300170008BE38733040385372                                                                                                   0 0
+2100170009SWJVZ0BOVYBNKNIANIVUI1000000000015000050309601170000OVERBOEKING NAAR CENTRALE REKENING                   05030904201 0
+2200170009                                                                                        KREDBEBB                   1 0
+2300170009BE38733040385372                                                                                                   0 0
+2100170010SWQSZ0188YBNKNIANIVUI1000000000148300050309601170000OVERBOEKING NAAR CENTRALE REKENING                   05030904201 0
+2200170010                                                                                        KREDBEBB                   1 0
+2300170010BE38733040385372                                                                                                   0 0
+2100170011SWQSZ019BYBNKNIANIVUI1000000002249700050309601170000OVERBOEKING NAAR CENTRALE REKENING                   05030904201 0
+2200170011                                                                                        KREDBEBB                   1 0
+2300170011BE38733040385372                                                                                                   0 0
+2100170012TDGSZ0FAVYBNKNIANIVUI1000000000020000050309601170000OVERBOEKING NAAR CENTRALE REKENING                   05030904201 0
+2200170012                                                                                        KREDBEBB                   1 0
+2300170012BE38733040385372                                                                                                   0 0
+2100170013TDGSZ0FAYYBNKNIANIVUI1000000000015000050309601170000OVERBOEKING NAAR CENTRALE REKENING                   05030904201 0
+2200170013                                                                                        KREDBEBB                   1 0
+2300170013BE38733040385372                                                                                                   0 0
+2100170014TDGSZ0FA1YBNKNIANIVUI1000000000015000050309601170000OVERBOEKING NAAR CENTRALE REKENING                   05030904211 0
+2200170014                                                                                        KREDBEBB                   1 0
+2300170014BE38733040385372                                                                                                   0 0
+8042BE86407051416150                  EUR0000000000000000050309                                                                0
+9               000091000000064703010000000064703010                                                                           1
