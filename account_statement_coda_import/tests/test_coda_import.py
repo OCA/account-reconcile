@@ -72,13 +72,12 @@ class test_coda_import(common.TransactionCase):
                 'input_statement': base64.b64encode(content),
                 'file_name': os.path.basename(file_name),
             })
-            res =  self.import_wizard_obj.import_statement(self.cr, self.uid, wizard_id)
+            res = self.import_wizard_obj.import_statement(self.cr, self.uid, wizard_id)
             statement_id = self.account_bank_statement_obj.search(self.cr, self.uid, eval(res['domain']))
             return self.account_bank_statement_obj.browse(self.cr, self.uid, statement_id)[0]
-            
 
     def test_00(self):
-        """My test 0
+        """Test import from CODA 2.3
         """
         self.prepare()
         file_name = self._filename_to_abs_filename("Dummy_testbestand_coda_iban_v2_3.txt")
