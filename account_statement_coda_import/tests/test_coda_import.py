@@ -83,3 +83,13 @@ class test_coda_import(common.TransactionCase):
         file_name = self._filename_to_abs_filename("Dummy_testbestand_coda_iban_v2_3.txt")
         statement = self._import_coda_file(file_name)
         self.assertEqual(30, len(statement.line_ids))
+        st_line_obj = statement.line_ids[20]
+        # common infos
+        self.assertEqual(st_line_obj['ref'],"00170005")
+        self.assertEqual(st_line_obj['name'],"OVERBOEKING NAAR CENTRALE REKENING\nOVERBOEKING NAAR CENTRALE REKENING")
+        self.assertEqual(st_line_obj['amount'],-15.0)
+        # additional info provided by CODA
+        # check that the bank information are correctly filled on the statement line
+        self.assertEqual(st_line_obj["partner_acc_number"], "BE38733040385372")
+        self.assertEqual(st_line_obj["partner_bank_bic"], "KREDBEBB")
+        
