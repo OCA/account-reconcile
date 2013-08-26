@@ -27,6 +27,11 @@
  'complexity': 'normal',
  'depends': [
      'account_statement_base_completion',
+     # HACK! the account_statement_base_completion need
+     # to depend from account_statement_base_import since it use specific method on the
+     # statement line during completion. (methods are defined in the 
+     # account_statement_base_impor module
+     'account_statement_base_import'
  ],
  'description': """
   Add a completion method based on bank account number provided by the bank/office.
@@ -35,7 +40,7 @@
   , then it will fill in the bank statement line with it to ease the reconciliation.
 
  """,
- 'website': 'http://www.camptocamp.com',
+ 'website': 'http://www.acsone.eu',
  'init_xml': [],
  'update_xml': [
      "data.xml",

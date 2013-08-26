@@ -4,7 +4,7 @@
 
     <record id="bank_statement_completion_rule_10" model="account.statement.completion.rule">
          <field name="name">Match from bank account number (Nomal or IBAN))</field>
-         <field name="sequence">20</field>
+         <field name="sequence">10</field>
          <field name="function_to_call">get_from_bank_account</field>
      </record>
     
