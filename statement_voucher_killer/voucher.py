@@ -122,7 +122,7 @@ class AccountPaymentPopulateStatement(orm.TransientModel):
                 'account_id': line.move_line_id.account_id.id,
                 'statement_id': statement.id,
                 'ref': line.communication,
-                'date': line.date,
+                'date': line.date or line.ml_maturity_date or statement.date,
                 }, context=context)
 
             line_obj.write(cr, uid, [line.id], {'bank_statement_line_id': st_line_id})
