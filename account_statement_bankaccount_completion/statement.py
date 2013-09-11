@@ -93,10 +93,4 @@ class AccountStatementLine(Model):
             size=64,
             serialization_field='additionnal_bank_fields',
             help="Account number of the partner"),
-        'partner_bank_bic': fields.sparse(
-            type='char',
-            string='Bank Identifier Code',
-            size=16,
-            serialization_field='additionnal_bank_fields',
-            help="Bank Identifier Code"),
     }
