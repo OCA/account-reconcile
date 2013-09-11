@@ -34,10 +34,10 @@
      'account_statement_base_import'
  ],
  'description': """
-  Add a completion method based on bank account number provided by the bank/office.
+  Add a completion method based on the partner bank account number provided by the bank/office.
 
-  Completion will look in the partner with that bank account number to match the partner
-  , then it will fill in the bank statement line with it to ease the reconciliation.
+  Completion will look in the partner with that bank account number to match the partner, 
+  then it will fill in the bank statement line with it to ease the reconciliation.
 
  """,
  'website': 'http://www.acsone.eu',

@@ -47,7 +47,6 @@ class AccountStatementCompletionRule(Model):
         """
         Match the partner based on the partner account number field
         Then, call the generic st_line method to complete other values.
-        In that case, we always fullfill the reference of the line with the SO name.
         :param dict st_line: read of the concerned account.bank.statement.line
         :return:
             A dict of value that can be passed directly to the write method of
@@ -60,16 +59,16 @@ class AccountStatementCompletionRule(Model):
             return {}
         st_obj = self.pool.get('account.bank.statement.line')
         res = {}
-        res_bank = self.pool.get('res.partner.bank')
-        ids = res_bank.search(cr,
-                              uid,
-                              [('acc_number', '=', st_line['partner_acc_number'])],
-                              context=context)
+        res_bank_obj = self.pool.get('res.partner.bank')
+        ids = res_bank_obj.search(cr,
+                                  uid,
+                                  [('acc_number', '=', st_line['partner_acc_number'])],
+                                  context=context)
         if len(ids) > 1:
             raise ErrorTooManyPartner(_('Line named "%s" (Ref:%s) was matched by more than '
                                         'one partner.') % (st_line['name'], st_line['ref']))
         if len(ids) == 1:
-            partner = self.pool.get('res.partner.bank').browse(cr, uid, ids[0], context=context).partner_id
+            partner = res_bank_obj.browse(cr, uid, ids[0], context=context).partner_id
             res['partner_id'] = partner.id
             st_vals = st_obj.get_values_for_line(cr,
                                                  uid,
