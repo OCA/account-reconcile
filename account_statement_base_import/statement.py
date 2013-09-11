@@ -226,19 +226,20 @@ class AccountStatementLine(Model):
     """
     _inherit = "account.bank.statement.line"
 
-    def _get_available_columns(self, statement_store):
+    def _get_available_columns(self, statement_store, include_serializable=False):
         """Return writeable by SQL columns"""
         statement_line_obj = self.pool['account.bank.statement.line']
         model_cols = statement_line_obj._columns
         avail = [k for k, col in model_cols.iteritems() if not hasattr(col, '_fnct')]
         keys = [k for k in statement_store[0].keys() if k in avail]
         # add sparse fields..
-        for k, col in model_cols.iteritems():
-            if  k in statement_store[0].keys() and \
-                  isinstance(col, fields.sparse) and \
-                  col.serialization_field not in keys and \
-                  col._type == 'char':
-                keys.append(col.serialization_field)
+        if include_serializable:
+            for k, col in model_cols.iteritems():
+                if  k in statement_store[0].keys() and \
+                      isinstance(col, fields.sparse) and \
+                      col.serialization_field not in keys and \
+                      col._type == 'char':
+                    keys.append(col.serialization_field)
         keys.sort()
         return keys
     
@@ -267,7 +268,7 @@ class AccountStatementLine(Model):
         statement_line_obj = self.pool['account.bank.statement.line']
         statement_line_obj.check_access_rule(cr, uid, [], 'create')
         statement_line_obj.check_access_rights(cr, uid, 'create', raise_exception=True)
-        cols = self._get_available_columns(statement_store)
+        cols = self._get_available_columns(statement_store, include_serializable=True)
         tmp_vals = (', '.join(cols), ', '.join(['%%(%s)s' % i for i in cols]))
         sql = "INSERT INTO account_bank_statement_line (%s) VALUES (%s);" % tmp_vals
         try:
