@@ -90,5 +90,5 @@ class AccountStatementLine(Model):
             string='Transaction ID',
             size=128,
             serialization_field='additionnal_bank_fields',
-            help="Transction id from the financial institute"),
+            help="Transaction id from the financial institute"),
     }
