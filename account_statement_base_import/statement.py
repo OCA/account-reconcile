@@ -28,6 +28,7 @@ import datetime
 from openerp.osv.orm import Model
 from openerp.osv import fields, osv
 from parser import new_bank_statement_parser
+import simplejson
 
 
 class AccountStatementProfil(Model):
@@ -231,8 +232,33 @@ class AccountStatementLine(Model):
         model_cols = statement_line_obj._columns
         avail = [k for k, col in model_cols.iteritems() if not hasattr(col, '_fnct')]
         keys = [k for k in statement_store[0].keys() if k in avail]
+        # add sparse fields..
+        for k, col in model_cols.iteritems():
+            if  k in statement_store[0].keys() and \
+                  isinstance(col, fields.sparse) and \
+                  col.serialization_field not in keys and \
+                  col._type == 'char':
+                keys.append(col.serialization_field)
         keys.sort()
         return keys
+    
+    def _get_values(self, cols, statement_store):
+        statement_line_obj = self.pool['account.bank.statement.line']
+        model_cols = statement_line_obj._columns
+        sparse_fields = dict([(k , col) for k, col in model_cols.iteritems() if isinstance(col, fields.sparse) and col._type == 'char'])
+        values = []
+        for statement in statement_store:
+            to_json_k = set()
+            for k, col in sparse_fields.iteritems():
+                if k in statement:
+                    to_json_k.add(col.serialization_field)
+                    serialized = statement.setdefault(col.serialization_field, {})
+                    serialized[k] = statement[k]
+            for k in to_json_k:
+                statement[k] =  simplejson.dumps(statement[k])
+            values.append(statement)
+        return values
+        
 
     def _insert_lines(self, cr, uid, statement_store, context=None):
         """ Do raw insert into database because ORM is awfully slow
@@ -245,7 +271,7 @@ class AccountStatementLine(Model):
         tmp_vals = (', '.join(cols), ', '.join(['%%(%s)s' % i for i in cols]))
         sql = "INSERT INTO account_bank_statement_line (%s) VALUES (%s);" % tmp_vals
         try:
-            cr.executemany(sql, tuple(statement_store))
+            cr.executemany(sql, tuple(self._get_values(cols, statement_store)))
         except psycopg2.Error as sql_err:
             cr.rollback()
             raise osv.except_osv(_("ORM bypass error"),
