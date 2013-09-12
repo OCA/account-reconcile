@@ -21,7 +21,7 @@
 
 {'name': "Bank statement completion from bank account number",
  'version': '1.0',
- 'author': 'Laurent Mignon (Acsone)',
+ 'author': 'ACSONE SA/NV',
  'maintainer': 'ACSONE SA/NV',
  'category': 'Finance',
  'complexity': 'normal',
