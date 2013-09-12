@@ -42,7 +42,6 @@ class bankaccount_completion(common.TransactionCase):
             "name": "TEST",
             "commission_account_id": self.account_id,
             "journal_id": self.journal_id,
-            "import_type": 'generic_csvxls_so',
             "rule_ids": [(6, 0, [self.completion_rule_id])]})
         # Create the completion rule
 

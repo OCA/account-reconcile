@@ -22,6 +22,9 @@
 import traceback
 import sys
 import logging
+import simplejson
+
+import psycopg2
 
 from collections import defaultdict
 import re
@@ -424,6 +427,80 @@ class AccountStatementLine(orm.Model):
             vals['id'] = line['id']
             return vals
         return {}
+
+    def _get_available_columns(self, statement_store, include_serializable=False):
+        """Return writeable by SQL columns"""
+        statement_line_obj = self.pool['account.bank.statement.line']
+        model_cols = statement_line_obj._columns
+        avail = [k for k, col in model_cols.iteritems() if not hasattr(col, '_fnct')]
+        keys = [k for k in statement_store[0].keys() if k in avail]
+        # add sparse fields..
+        if include_serializable:
+            for k, col in model_cols.iteritems():
+                if  k in statement_store[0].keys() and \
+                      isinstance(col, fields.sparse) and \
+                      col.serialization_field not in keys and \
+                      col._type == 'char':
+                    keys.append(col.serialization_field)
+        keys.sort()
+        return keys
+
+    def _serialize_sparse_fields(self, cols, statement_store):
+        """ Serialize sparse fields values in the target serialized field
+        Return a copy of statement_store
+        """
+        statement_line_obj = self.pool['account.bank.statement.line']
+        model_cols = statement_line_obj._columns
+        sparse_fields = dict([(k , col) for k, col in model_cols.iteritems() if isinstance(col, fields.sparse) and col._type == 'char'])
+        values = []
+        for statement in statement_store:
+            to_json_k = set()
+            st_copy = statement.copy()
+            for k, col in sparse_fields.iteritems():
+                if k in st_copy:
+                    to_json_k.add(col.serialization_field)
+                    serialized = st_copy.setdefault(col.serialization_field, {})
+                    serialized[k] = st_copy[k]
+            for k in to_json_k:
+                st_copy[k] =  simplejson.dumps(st_copy[k])
+            values.append(st_copy)
+        return values
+        
+
+    def _insert_lines(self, cr, uid, statement_store, context=None):
+        """ Do raw insert into database because ORM is awfully slow
+            when doing batch write. It is a shame that batch function
+            does not exist"""
+        statement_line_obj = self.pool['account.bank.statement.line']
+        statement_line_obj.check_access_rule(cr, uid, [], 'create')
+        statement_line_obj.check_access_rights(cr, uid, 'create', raise_exception=True)
+        cols = self._get_available_columns(statement_store, include_serializable=True)
+        tmp_vals = (', '.join(cols), ', '.join(['%%(%s)s' % i for i in cols]))
+        sql = "INSERT INTO account_bank_statement_line (%s) VALUES (%s);" % tmp_vals
+        try:
+            cr.executemany(sql, tuple(self._serialize_sparse_fields(cols, statement_store)))
+        except psycopg2.Error as sql_err:
+            cr.rollback()
+            raise osv.except_osv(_("ORM bypass error"),
+                                 sql_err.pgerror)
+
+    def _update_line(self, cr, uid, vals, context=None):
+        """ Do raw update into database because ORM is awfully slow
+            when cheking security.
+        TODO / WARM: sparse fields are skipped by the method. IOW, if your
+        completion rule update an sparse field, the updated value will never
+        be stored in the database. It would be safer to call the update method 
+        from the ORM for records updating this kind of fields.
+        """
+        cols = self._get_available_columns([vals])
+        tmp_vals = (', '.join(['%s = %%(%s)s' % (i, i) for i in cols]))
+        sql = "UPDATE account_bank_statement_line SET %s where id = %%(id)s;" % tmp_vals
+        try:
+            cr.execute(sql, vals)
+        except psycopg2.Error as sql_err:
+            cr.rollback()
+            raise osv.except_osv(_("ORM bypass error"),
+                                 sql_err.pgerror)
 
 
 class AccountBankSatement(orm.Model):
