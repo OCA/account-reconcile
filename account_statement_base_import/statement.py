@@ -243,21 +243,25 @@ class AccountStatementLine(Model):
         keys.sort()
         return keys
     
-    def _get_values(self, cols, statement_store):
+    def _serialize_sparse_fields(self, cols, statement_store):
+        """ Serialize sparse fields values in the target serialized field
+        Return a copy of statement_store
+        """
         statement_line_obj = self.pool['account.bank.statement.line']
         model_cols = statement_line_obj._columns
         sparse_fields = dict([(k , col) for k, col in model_cols.iteritems() if isinstance(col, fields.sparse) and col._type == 'char'])
         values = []
         for statement in statement_store:
             to_json_k = set()
+            st_copy = statement.copy()
             for k, col in sparse_fields.iteritems():
-                if k in statement:
+                if k in st_copy:
                     to_json_k.add(col.serialization_field)
-                    serialized = statement.setdefault(col.serialization_field, {})
-                    serialized[k] = statement[k]
+                    serialized = st_copy.setdefault(col.serialization_field, {})
+                    serialized[k] = st_copy[k]
             for k in to_json_k:
-                statement[k] =  simplejson.dumps(statement[k])
-            values.append(statement)
+                st_copy[k] =  simplejson.dumps(st_copy[k])
+            values.append(st_copy)
         return values
         
 
@@ -272,7 +276,7 @@ class AccountStatementLine(Model):
         tmp_vals = (', '.join(cols), ', '.join(['%%(%s)s' % i for i in cols]))
         sql = "INSERT INTO account_bank_statement_line (%s) VALUES (%s);" % tmp_vals
         try:
-            cr.executemany(sql, tuple(self._get_values(cols, statement_store)))
+            cr.executemany(sql, tuple(self._serialize_sparse_fields(cols, statement_store)))
         except psycopg2.Error as sql_err:
             cr.rollback()
             raise osv.except_osv(_("ORM bypass error"),
