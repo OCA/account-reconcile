@@ -20,9 +20,6 @@
 #
 #
 from openerp.tests import common
-import inspect
-import os
-import base64
 import time
 
 ACC_NUMBER = "BE38733040385372"
@@ -70,16 +67,16 @@ class bankaccount_completion(common.TransactionCase):
 
         # Add a bank account number to the partner
         res_bank_obj = self.registry('res.partner.bank')
-        res_bank_id = res_bank_obj.create(self.cr, self.uid, {
-                                          "state": "bank",
-                                          "company_id": self.company_a.id,
-                                          "partner_id": self.partner_id,
-                                          "acc_number": ACC_NUMBER,
-                                          "footer": True,
-                                          "bank_name": "Reserve"
-                                          })
+        res_bank_obj.create(self.cr, self.uid, {
+                            "state": "bank",
+                            "company_id": self.company_a.id,
+                            "partner_id": self.partner_id,
+                            "acc_number": ACC_NUMBER,
+                            "footer": True,
+                            "bank_name": "Reserve"
+                            })
 
-    def test_OO(self):
+    def test_00(self):
         """Test complete partner_id from bank account number
         
         Test the automatic completion of the partner_id based on the account number associated to the
