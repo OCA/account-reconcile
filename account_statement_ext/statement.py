@@ -139,7 +139,10 @@ class AccountBankSatement(Model):
 
     def _default_profile(self, cr, uid, context=None):
         """
-        Statement default period
+        Returns the default statement profile
+        Default profile is the one with the lowest sequence of user's company
+
+        :return profile_id or False
         """
         if context is None:
             context = {}
