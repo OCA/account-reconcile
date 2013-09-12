@@ -27,7 +27,6 @@ from openerp.addons.account_statement_base_completion.statement import ErrorTooM
 
 
 class AccountStatementCompletionRule(Model):
-
     """Add a rule based on transaction ID"""
 
     _inherit = "account.statement.completion.rule"
@@ -36,7 +35,7 @@ class AccountStatementCompletionRule(Model):
         res = super(AccountStatementCompletionRule, self)._get_functions(
             cr, uid, context=context)
         res.append(('get_from_bank_account',
-                    'From bank account number (Nomal or IBAN)'))
+                    'From bank account number (Normal or IBAN)'))
         return res
 
     _columns = {
@@ -54,19 +53,20 @@ class AccountStatementCompletionRule(Model):
            {'partner_id': value,
             'account_id' : value,
             ...}
-            """
-        if st_line['partner_acc_number'] == False:
+        """
+        partner_acc_number = st_line['partner_acc_number']
+        if not partner_acc_number:
             return {}
         st_obj = self.pool.get('account.bank.statement.line')
         res = {}
         res_bank_obj = self.pool.get('res.partner.bank')
         ids = res_bank_obj.search(cr,
                                   uid,
-                                  [('acc_number', '=', st_line['partner_acc_number'])],
+                                  [('acc_number', '=', partner_acc_number)],
                                   context=context)
         if len(ids) > 1:
             raise ErrorTooManyPartner(_('Line named "%s" (Ref:%s) was matched by more than '
-                                        'one partner.') % (st_line['name'], st_line['ref']))
+                                        'one partner for account number "%s".') % (st_line['name'], st_line['ref'], partner_acc_number))
         if len(ids) == 1:
             partner = res_bank_obj.browse(cr, uid, ids[0], context=context).partner_id
             res['partner_id'] = partner.id
@@ -86,7 +86,7 @@ class AccountStatementLine(Model):
     _inherit = "account.bank.statement.line"
 
     _columns = {
-        # 'additionnal_bank_fields' : fields.serialized('Additionnal infos from bank', help="Used by completion and import system."),
+        # 'additional_bank_fields' : fields.serialized('Additional infos from bank', help="Used by completion and import system."),
         'partner_acc_number': fields.sparse(
             type='char',
             string='Account Number',
