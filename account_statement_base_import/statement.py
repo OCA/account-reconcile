@@ -284,7 +284,12 @@ class AccountStatementLine(Model):
 
     def _update_line(self, cr, uid, vals, context=None):
         """ Do raw update into database because ORM is awfully slow
-            when cheking security."""
+            when cheking security.
+        TODO / WARM: sparse fields are skipped by the method. IOW, if your
+        completion rule update an sparse field, the updated value will never
+        be stored in the database. It would be safer to call the update method 
+        from the ORM for records updating this kind of fields.
+        """
         cols = self._get_available_columns([vals])
         tmp_vals = (', '.join(['%s = %%(%s)s' % (i, i) for i in cols]))
         sql = "UPDATE account_bank_statement_line SET %s where id = %%(id)s;" % tmp_vals
