@@ -20,10 +20,10 @@
                                      <attribute name="col">10</attribute>
                                  </xpath> -->
 
-                 <xpath expr="/form/sheet/div[@name='import_buttons']" position="after">
-                     <button name="button_auto_completion" string="Auto Completion" states='draft,open' type="object" colspan="1"/>
-                 </xpath>
-                 
+                 <button name="button_confirm_bank" position="before">
+                     <button name="button_auto_completion" string="Auto Completion" states='draft,open' type="object" class="oe_highlight" icon="gtk-execute"/>
+                 </button>
+
                  <xpath expr="/form/sheet/notebook/page[@string='Transactions']" position="after">
                       <page string="Completion Logs" attrs="{'invisible':[('completion_logs','=',False)]}">
                           <field name="completion_logs" colspan="4" nolabel="1" attrs="{'invisible':[('completion_logs','=',False)]}"/>
