@@ -38,7 +38,7 @@ def fixed_write(self, cr, uid, ids, vals, context=None):
 stat_mod.account_bank_statement.write = fixed_write
 
 
-class AccountStatementProfil(Model):
+class AccountStatementProfile(Model):
     """
     A Profile will contain all infos related to the type of
     bank statement, and related generated entries. It defines the
@@ -47,10 +47,12 @@ class AccountStatementProfil(Model):
     _name = "account.statement.profile"
     _inherit = ['mail.thread']
 
-    _description = "Statement Profil"
+    _description = "Statement Profile"
+    _order = 'sequence'
 
     _columns = {
         'name': fields.char('Name', required=True),
+        'sequence': fields.integer('Sequence', help="Gives a sequence in lists, the first profile will be used as default"),
         'partner_id': fields.many2one(
             'res.partner',
             'Bank/Payment Office partner',
@@ -135,12 +137,27 @@ class AccountBankSatement(Model):
         periods = period_obj.find(cr, uid, dt=context.get('date'), context=context)
         return periods and periods[0] or False
 
+    def _default_profile(self, cr, uid, context=None):
+        """
+        Returns the default statement profile
+        Default profile is the one with the lowest sequence of user's company
+
+        :return profile_id or False
+        """
+        if context is None:
+            context = {}
+        user_obj = self.pool.get('res.users')
+        profile_obj = self.pool.get('account.statement.profile')
+        user = user_obj.browse(cr, uid, uid, context=context)
+        profile_ids = profile_obj.search(cr, uid, [('company_id', '=', user.company_id.id)], context=context)
+
+        return profile_ids[0] if profile_ids else False
+
     _columns = {
         'profile_id': fields.many2one(
             'account.statement.profile',
-            'Profil',
+            'Bank Account Profile',
             required=True,
-            readonly=True,
             states={'draft': [('readonly', False)]}),
         'credit_partner_id': fields.related(
                         'profile_id',
@@ -175,6 +192,7 @@ class AccountBankSatement(Model):
 
     _defaults = {
         'period_id': _default_period,
+        'profile_id': _default_profile,
     }
 
     def create(self, cr, uid, vals, context=None):
@@ -283,7 +301,7 @@ class AccountBankSatement(Model):
                                                                                      uid,
                                                                                      st_line,
                                                                                      context=context)
-        # get the right partner according to the chosen profil
+        # get the right partner according to the chosen profile
         if st_line.statement_id.profile_id.force_partner_on_bank:
             bank_partner_id = st_line.statement_id.profile_id.partner_id.id
         return bank_partner_id
