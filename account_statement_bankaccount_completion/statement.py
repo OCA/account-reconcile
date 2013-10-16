@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
-##############################################################################
 #
-#    Author: Joel Grand-Guillaume
-#    Copyright 2011-2012 Camptocamp SA
+#
+#    Author: Laurent Mignon
+#    Copyright 2013 'ACSONE SA/NV'
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -17,7 +17,8 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-##############################################################################
+#
+
 
 from openerp.tools.translate import _
 from openerp.osv.orm import Model
@@ -32,20 +33,19 @@ class AccountStatementCompletionRule(Model):
 
     def _get_functions(self, cr, uid, context=None):
         res = super(AccountStatementCompletionRule, self)._get_functions(
-                                                           cr, uid, context=context)
-        res.append(('get_from_transaction_id_and_so',
-                    'From line reference (based on SO transaction ID)'))
+            cr, uid, context=context)
+        res.append(('get_from_bank_account',
+                    'From bank account number (Normal or IBAN)'))
         return res
 
     _columns = {
         'function_to_call': fields.selection(_get_functions, 'Method'),
     }
 
-    def get_from_transaction_id_and_so(self, cr, uid, st_line, context=None):
+    def get_from_bank_account(self, cr, uid, st_line, context=None):
         """
-        Match the partner based on the transaction ID field of the SO.
+        Match the partner based on the partner account number field
         Then, call the generic st_line method to complete other values.
-        In that case, we always fullfill the reference of the line with the SO name.
         :param dict st_line: read of the concerned account.bank.statement.line
         :return:
             A dict of value that can be passed directly to the write method of
@@ -53,21 +53,23 @@ class AccountStatementCompletionRule(Model):
            {'partner_id': value,
             'account_id' : value,
             ...}
-            """
+        """
+        partner_acc_number = st_line['partner_acc_number']
+        if not partner_acc_number:
+            return {}
         st_obj = self.pool.get('account.bank.statement.line')
         res = {}
-        so_obj = self.pool.get('sale.order')
-        so_id = so_obj.search(cr,
-                              uid,
-                              [('transaction_id', '=', st_line['transaction_id'])],
-                              context=context)
-        if len(so_id) > 1:
+        res_bank_obj = self.pool.get('res.partner.bank')
+        ids = res_bank_obj.search(cr,
+                                  uid,
+                                  [('acc_number', '=', partner_acc_number)],
+                                  context=context)
+        if len(ids) > 1:
             raise ErrorTooManyPartner(_('Line named "%s" (Ref:%s) was matched by more than '
-                                        'one partner.') % (st_line['name'], st_line['ref']))
-        if len(so_id) == 1:
-            so = so_obj.browse(cr, uid, so_id[0], context=context)
-            res['partner_id'] = so.partner_id.id
-            res['ref'] = so.name
+                                        'one partner for account number "%s".') % (st_line['name'], st_line['ref'], partner_acc_number))
+        if len(ids) == 1:
+            partner = res_bank_obj.browse(cr, uid, ids[0], context=context).partner_id
+            res['partner_id'] = partner.id
             st_vals = st_obj.get_values_for_line(cr,
                                                  uid,
                                                  profile_id=st_line['profile_id'],
@@ -84,11 +86,11 @@ class AccountStatementLine(Model):
     _inherit = "account.bank.statement.line"
 
     _columns = {
-        # 'additionnal_bank_fields' : fields.serialized('Additionnal infos from bank', help="Used by completion and import system."),
-        'transaction_id': fields.sparse(
+        # 'additional_bank_fields' : fields.serialized('Additional infos from bank', help="Used by completion and import system."),
+        'partner_acc_number': fields.sparse(
             type='char',
-            string='Transaction ID',
-            size=128,
+            string='Account Number',
+            size=64,
             serialization_field='additionnal_bank_fields',
-            help="Transaction id from the financial institute"),
+            help="Account number of the partner"),
     }

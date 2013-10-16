@@ -571,7 +571,11 @@ class AccountBankSatementLine(Model):
         if context is None:
             context = {}
         date = context.get('date')
-        periods = self.pool.get('account.period').find(cr, uid, dt=date)
+        try:
+            periods = self.pool.get('account.period').find(cr, uid, dt=date)
+        except osv.except_osv:
+            # if no period defined, we are certainly at installation time
+            return False
         return periods and periods[0] or False
 
     def _get_default_account(self, cr, uid, context=None):

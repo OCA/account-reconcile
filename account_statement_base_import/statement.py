@@ -21,8 +21,6 @@
 import sys
 import traceback
 
-import psycopg2
-
 from openerp.tools.translate import _
 import datetime
 from openerp.osv.orm import Model
@@ -216,50 +214,3 @@ class AccountStatementProfil(Model):
             raise osv.except_osv(_("Statement import error"),
                                  _("The statement cannot be created: %s") % st)
         return statement_id
-
-
-class AccountStatementLine(Model):
-    """
-    Add sparse field on the statement line to allow to store all the
-    bank infos that are given by an office.
-    """
-    _inherit = "account.bank.statement.line"
-
-    def _get_available_columns(self, statement_store):
-        """Return writeable by SQL columns"""
-        statement_line_obj = self.pool['account.bank.statement.line']
-        model_cols = statement_line_obj._columns
-        avail = [k for k, col in model_cols.iteritems() if not hasattr(col, '_fnct')]
-        keys = [k for k in statement_store[0].keys() if k in avail]
-        keys.sort()
-        return keys
-
-    def _insert_lines(self, cr, uid, statement_store, context=None):
-        """ Do raw insert into database because ORM is awfully slow
-            when doing batch write. It is a shame that batch function
-            does not exist"""
-        statement_line_obj = self.pool['account.bank.statement.line']
-        statement_line_obj.check_access_rule(cr, uid, [], 'create')
-        statement_line_obj.check_access_rights(cr, uid, 'create', raise_exception=True)
-        cols = self._get_available_columns(statement_store)
-        tmp_vals = (', '.join(cols), ', '.join(['%%(%s)s' % i for i in cols]))
-        sql = "INSERT INTO account_bank_statement_line (%s) VALUES (%s);" % tmp_vals
-        try:
-            cr.executemany(sql, tuple(statement_store))
-        except psycopg2.Error as sql_err:
-            cr.rollback()
-            raise osv.except_osv(_("ORM bypass error"),
-                                 sql_err.pgerror)
-
-    def _update_line(self, cr, uid, vals, context=None):
-        """ Do raw update into database because ORM is awfully slow
-            when cheking security."""
-        cols = self._get_available_columns([vals])
-        tmp_vals = (', '.join(['%s = %%(%s)s' % (i, i) for i in cols]))
-        sql = "UPDATE account_bank_statement_line SET %s where id = %%(id)s;" % tmp_vals
-        try:
-            cr.execute(sql, vals)
-        except psycopg2.Error as sql_err:
-            cr.rollback()
-            raise osv.except_osv(_("ORM bypass error"),
-                                 sql_err.pgerror)
