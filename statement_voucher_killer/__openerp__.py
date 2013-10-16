@@ -19,7 +19,7 @@
 #
 ##############################################################################
 
-{'name': 'voucher killer',
+{'name': 'Satement voucher killer',
  'version': '1.0.0',
  'category': 'other',
  'description': """
@@ -27,7 +27,15 @@ Prevent voucher creation when importing lines into statement.
 #############################################################
 
 When importing invoice or payment into a bank statement or a payment order, normally a
-draft voucher is created on the line. This module will disable this voucher creation""",
+draft voucher is created on the line. This module will disable this voucher creation.
+When importing payment line, date used to populate statement
+line will be take from imported line in this order:
+
+ * Date
+ * Maturity date
+ * Related statement date
+
+""",
  'author': 'Camptocamp',
  'website': 'http://www.camptocamp.com',
  'depends': ['account_voucher', 'account_payment'],

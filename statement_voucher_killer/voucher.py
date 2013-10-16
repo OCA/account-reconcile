@@ -35,7 +35,7 @@ class AccountStatementFromInvoiceLines(orm.TransientModel):
         statement_id = context.get('statement_id', False)
         if not statement_id:
             return {'type': 'ir.actions.act_window_close'}
-        data =  self.read(cr, uid, ids, context=context)[0]
+        data = self.read(cr, uid, ids, context=context)[0]
         line_ids = data['line_ids']
         if not line_ids:
             return {'type': 'ir.actions.act_window_close'}
@@ -61,7 +61,7 @@ class AccountStatementFromInvoiceLines(orm.TransientModel):
             if line.amount_currency:
                 amount = currency_obj.compute(cr, uid, line.currency_id.id,
                     statement.currency.id, line.amount_currency, context=ctx)
-            elif (line.invoice and line.invoice.currency_id.id <> statement.currency.id):
+            elif (line.invoice and line.invoice.currency_id.id != statement.currency.id):
                 amount = currency_obj.compute(cr, uid, line.invoice.currency_id.id,
                     statement.currency.id, amount, context=ctx)
 
@@ -108,7 +108,7 @@ class AccountPaymentPopulateStatement(orm.TransientModel):
 
         for line in line_obj.browse(cr, uid, line_ids, context=context):
             ctx = context.copy()
-            ctx['date'] = line.ml_maturity_date # was value_date earlier,but this field exists no more now
+            ctx['date'] = line.ml_maturity_date  # Last value_date earlier,but this field exists no more now
             amount = currency_obj.compute(cr, uid, line.currency.id,
                     statement.currency.id, line.amount_currency, context=ctx)
             if not line.move_line_id.id:
@@ -122,6 +122,7 @@ class AccountPaymentPopulateStatement(orm.TransientModel):
                 'account_id': line.move_line_id.account_id.id,
                 'statement_id': statement.id,
                 'ref': line.communication,
+                'date': line.date or line.ml_maturity_date or statement.date,
                 }, context=context)
 
             line_obj.write(cr, uid, [line.id], {'bank_statement_line_id': st_line_id})
