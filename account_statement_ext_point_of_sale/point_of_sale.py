@@ -68,7 +68,6 @@ if not hasattr(std_pos_session, '_prepare_bank_statement'):
 
         pos_config = jobj.browse(cr, uid, config_id, context=context)
         bank_statement_ids = []
-        print pos_config.journal_ids
         for journal in pos_config.journal_ids:
             bank_values = self._prepare_bank_statement(cr, uid, pos_config, journal, context)
             statement_id = self.pool.get('account.bank.statement').create(cr, uid, bank_values, context=context)
@@ -90,6 +89,12 @@ class pos_session(orm.Model):
 
     def _prepare_bank_statement(self, cr, uid, pos_config, journal, context=None):
         bank_values = super(pos_session, self)._prepare_bank_statement(cr, uid, pos_config, journal, context)
+        user_obj = self.pool.get('res.users')
+        profile_obj = self.pool.get('account.statement.profile')
+        user = user_obj.browse(cr, uid, uid, context=context)
         defaults = self.pool['account.bank.statement'].default_get(cr, uid, ['profile_id', 'period_id'], context=context)
+        profile_ids = profile_obj.search(cr, uid, [('company_id', '=', user.company_id.id), ('journal_id', '=', bank_values['journal_id'])], context=context)
+        if profile_ids:
+            defaults['profile_id'] = profile_ids[0]
         bank_values.update(defaults)
         return bank_values
