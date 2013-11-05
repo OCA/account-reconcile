@@ -29,7 +29,7 @@
              'account_statement_ext',
              ],
  'description': """
- Update the point of sale code to work with improved bank statements. 
+ Update the point of sale code to work with improved bank statements.
  """,
  'website': 'http://www.camptocamp.com',
  'data': [],
