@@ -98,12 +98,25 @@ class pos_session(orm.Model):
     _inherit = 'pos.session'
 
     def _prepare_bank_statement(self, cr, uid, pos_config, journal, context=None):
-        bank_values = super(pos_session, self)._prepare_bank_statement(cr, uid, pos_config, journal, context)
+        """ Override the function _mp_create. To add the bank profile to the statement
+
+        Function That was previously added to pos.session model using monkey patching
+
+        """
+
+        bank_values = super(pos_session, self)._prepare_bank_statement(cr, uid,
+                                                                       pos_config,
+                                                                       journal, context)
         user_obj = self.pool.get('res.users')
         profile_obj = self.pool.get('account.statement.profile')
         user = user_obj.browse(cr, uid, uid, context=context)
-        defaults = self.pool['account.bank.statement'].default_get(cr, uid, ['profile_id', 'period_id'], context=context)
-        profile_ids = profile_obj.search(cr, uid, [('company_id', '=', user.company_id.id), ('journal_id', '=', bank_values['journal_id'])], context=context)
+        defaults = self.pool['account.bank.statement'].default_get(cr, uid,
+                                                                   ['profile_id', 'period_id'],
+                                                                   context=context)
+        profile_ids = profile_obj.search(cr, uid,
+                                         [('company_id', '=', user.company_id.id),
+                                          ('journal_id', '=', bank_values['journal_id'])],
+                                         context=context)
         if profile_ids:
             defaults['profile_id'] = profile_ids[0]
         bank_values.update(defaults)
