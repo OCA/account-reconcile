@@ -24,6 +24,16 @@ from openerp.tools.translate import _
 
 if not hasattr(std_pos_session, '_prepare_bank_statement'):
     # monkey patch to fix lp:1245375
+    #
+    # We replace pos_session.create with the implementation in
+    # mp_create below which is essentially the same, only with a call
+    # to self._prepare_bank_statement.
+    #
+    # The default implementation has been extracted in
+    # mp_prepare_bank_statement below, and can be overridden in models
+    # which _inherit pos.session
+    #
+    # This change has been proposed for merging to fix lp:125375
     def mp_prepare_bank_statement(self, cr, uid, pos_config, journal, context=None):
         bank_values = {
             'journal_id' : journal.id,
