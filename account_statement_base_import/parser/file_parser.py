@@ -40,10 +40,9 @@ class FileParser(BankStatementImportParser):
 
     def __init__(self, parse_name, ftype='csv', extra_fields=None, header=None, **kwargs):
         """
-            :param char: parse_name : The name of the parser
-            :param list: keys_to_validate : contain the key that need to be present in the file
-            :param char ftype: extension of the file (could be csv or xls)
-            :param dict extra_fields: extra fields to add to the conversion dict. In the format
+            :param char: parse_name: The name of the parser
+            :param char: ftype: extension of the file (could be csv or xls)
+            :param dict: extra_fields: extra fields to add to the conversion dict. In the format
                                      {fieldname: fieldtype}
             :param list: header : specify header fields if the csv file has no header
             """
