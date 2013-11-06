@@ -78,14 +78,3 @@ class TransactionIDFileParser(FileParser):
                 'label': line.get('label', ''),
                 'transaction_id': line.get('transaction_id', '/'),
                 'commission_amount': line.get('commission_amount', 0.0)}
-
-    def _post(self, *args, **kwargs):
-        """
-        Compute the commission from value of each line
-        """
-        res = super(TransactionIDFileParser, self)._post(*args, **kwargs)
-        val = 0.0
-        for row in self.result_row_list:
-            val += row.get('commission_amount', 0.0)
-        self.commission_global_amount = val
-        return res
