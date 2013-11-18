@@ -38,11 +38,26 @@ class account_bank_statement(orm.Model):
 
     def _prepare_move_line_vals(self, cr, uid, st_line, *args, **kwargs):
         res = super(account_bank_statement, self)._prepare_move_line_vals(cr, uid, st_line, *args, **kwargs)
+        period_id = self._get_period(cr, uid, st_line.statement_id.date, context=kwargs.get('context'))
         if st_line.statement_id.profile_id.one_move:
             res.update({
+                'period_id': period_id,
                 'date': st_line.statement_id.date,
                 'name': st_line.ref,
                 })
+        return res
+
+
+        return res
+
+    def _prepare_move(self, cr, uid, st_line, st_line_number, context=None):
+        res = super(account_bank_statement, self).\
+                _prepare_move(cr, uid, st_line, st_line_number, context=context)
+        res.update({
+            'ref': st_line.statement_id.name,
+            'name': st_line.statement_id.name,
+            'date': st_line.statement_id.date,
+            })
         return res
 
     def create_move_from_st_line(self, cr, uid, st_line_id, company_currency_id, st_line_number, context):
@@ -68,7 +83,6 @@ class account_bank_statement(orm.Model):
            :param int/long company_currency_id: ID of the res.currency of the company
            :return: ID of the account.move created
         """
-
         if context is None:
             context = {}
         res_currency_obj = self.pool.get('res.currency')
@@ -90,7 +104,7 @@ class account_bank_statement(orm.Model):
             company_currency_id, context=context)
         return account_move_line_obj.create(cr, uid, bank_move_vals, context=context)
 
-   def _valid_move(self, cr, uid, move_id, context=None):
+    def _valid_move(self, cr, uid, move_id, context=None):
         move_obj = self.pool.get('account.move')
         move = move_obj.browse(cr, uid, move_id, context=context)
         move_obj.post(cr, uid, [move_id], context=context)
