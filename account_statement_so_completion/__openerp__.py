@@ -48,6 +48,6 @@
  'test': [],
  'installable': True,
  'images': [],
- 'auto_install': False,
+ 'auto_install': True,
  'license': 'AGPL-3',
  }
