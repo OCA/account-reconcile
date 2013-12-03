@@ -35,7 +35,6 @@
 
  1) Match from statement line label (based on partner field 'Bank Statement Label')
  2) Match from statement line label (based on partner name)
- 3) Match from statement line reference (based on SO number)
  3) Match from statement line reference (based on Invoice number)
 
  You can easily override this module and add your own rules in your own one. The basic rules only
