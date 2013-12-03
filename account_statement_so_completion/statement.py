@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 ###############################################################################
 #                                                                             #
-#   Author: Joel Grand-Guillaume
-#   Copyright 2011-2012 Camptocamp SA
+#   Author: Joel Grand-Guillaume                                              #
+#   Copyright 2011-2012 Camptocamp SA                                         #
 #                                                                             #
 #   Author: Leonardo Pistone <leonardo.pistone@camptocamp.com>                #
 #   Copyright 2013 Camptocamp SA                                              #
