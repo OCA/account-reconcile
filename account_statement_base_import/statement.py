@@ -160,6 +160,7 @@ class AccountStatementProfil(Model):
                                        "present in the bank statement line!") % col)
         st_vals = {
             'profile_id': prof.id,
+            'name': parser.get_statement_name(),
             'balance_start': parser.get_start_balance(),
             'balance_end_real': parser.get_end_balance(),
         }
