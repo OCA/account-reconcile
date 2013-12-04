@@ -210,7 +210,7 @@ class AccountStatementProfil(Model):
         return statement_id
         
     
-class AccountBankStatementLine(orm.Model):
+class AccountBankStatementLine(Model):
     _inherit = "account.bank.statement.line"
 
     _columns = { 
