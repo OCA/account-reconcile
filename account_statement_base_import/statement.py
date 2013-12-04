@@ -103,12 +103,6 @@ class AccountStatementProfil(Model):
         statement_obj = self.pool.get('account.bank.statement')
         values = parser_vals
         values['statement_id'] = statement_id
-        values['account_id'] = statement_obj.get_account_for_counterpart(cr,
-                                                                         uid,
-                                                                         parser_vals['amount'],
-                                                                         account_receivable,
-                                                                         account_payable)
-
         date = values.get('date')
         period_memoizer = context.get('period_memoizer')
         if not period_memoizer:
@@ -214,3 +208,12 @@ class AccountStatementProfil(Model):
             raise osv.except_osv(_("Statement import error"),
                                  _("The statement cannot be created: %s") % st)
         return statement_id
+        
+    
+class AccountBankStatementLine(orm.Model):
+    _inherit = "account.bank.statement.line"
+
+    _columns = { 
+        'account_id': fields.many2one('account.account','Account'),
+    }   
+ 
