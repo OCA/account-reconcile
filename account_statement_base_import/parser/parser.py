@@ -49,6 +49,8 @@ class BankStatementImportParser(object):
         self.result_row_list = None
         # The file buffer on which to work on
         self.filebuffer = None
+        self.balance_start = None
+        self.balance_end = None
 
     @classmethod
     def parser_for(cls, parser_name):
@@ -149,6 +151,22 @@ class BankStatementImportParser(object):
         self._validate(*args, **kwargs)
         self._post(*args, **kwargs)
         return self.result_row_list
+
+    def get_start_balance(self, *args, **kwargs):
+        """
+        This is called by the importation method to set the balance start
+        amount in the bank statement.
+            return: float of the balance start (self.balance_start)
+        """
+        return self.balance_start
+
+    def get_end_balance(self, *args, **kwargs):
+        """
+        This is called by the importation method to set the balance end
+        amount in the bank statement.
+            return: float of the balance end (self.balance_end)
+        """
+        return self.balance_end
 
 
 def itersubclasses(cls, _seen=None):

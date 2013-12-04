@@ -158,10 +158,13 @@ class AccountStatementProfil(Model):
                 raise osv.except_osv(_("Missing column!"),
                                      _("Column %s you try to import is not "
                                        "present in the bank statement line!") % col)
-
-        statement_id = statement_obj.create(cr, uid,
-                                            {'profile_id': prof.id},
-                                            context=context)
+        st_vals = {
+            'profile_id': prof.id,
+            'balance_start': parser.get_start_balance(),
+            'balance_end_real': parser.get_end_balance(),
+        }
+ 
+        statement_id = statement_obj.create(cr, uid, st_vals, context=context)
         if prof.receivable_account_id:
             account_receivable = account_payable = prof.receivable_account_id.id
         else:
