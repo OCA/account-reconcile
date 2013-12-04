@@ -212,7 +212,6 @@ class AccountStatementProfil(Model):
                                          context)
 
         except Exception:
-            statement_obj.unlink(cr, uid, [statement_id], context=context)
             error_type, error_value, trbk = sys.exc_info()
             st = "Error: %s\nDescription: %s\nTraceback:" % (error_type.__name__, error_value)
             st += ''.join(traceback.format_tb(trbk, 30))
