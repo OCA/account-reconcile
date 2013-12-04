@@ -30,7 +30,7 @@ class AccountMoveLine(Model):
         'transaction_ref': fields.char('Transaction Ref.', size=128),
     }
     
-class AccountBankSatement(Model):
+class AccountBankStatement(Model):
     """
     Inherit account.bank.statement class in order to set transaction_ref info on account.move.line
     """
@@ -43,7 +43,7 @@ class AccountBankSatement(Model):
 
         if context is None:
             context = {}
-        res = super(AccountBankSatement, self)._prepare_move_line_vals(
+        res = super(AccountBankStatement, self)._prepare_move_line_vals(
                 cr, uid, st_line, move_id, debit, credit,
                 currency_id=currency_id,
                 amount_currency=amount_currency,
