@@ -85,7 +85,12 @@ class AccountStatementProfil(Model):
                           context=context)
         return True
 
-    def prepare_statetement_lines_vals(
+    #Deprecated remove on V8
+    def prepare_statetement_lines_vals(self, *args, **kwargs):
+        return super(self, AccountStatementProfil).\
+                prepare_statetement_lines_vals(*args, **kwargs)
+
+    def prepare_statement_lines_vals(
             self, cr, uid, parser_vals, account_payable, account_receivable,
             statement_id, context):
         """
@@ -172,7 +177,7 @@ class AccountStatementProfil(Model):
             statement_store = []
             for line in result_row_list:
                 parser_vals = parser.get_st_line_vals(line)
-                values = self.prepare_statetement_lines_vals(
+                values = self.prepare_statement_lines_vals(
                     cr, uid, parser_vals, account_payable, account_receivable, statement_id,
                     context)
                 statement_store.append(values)
