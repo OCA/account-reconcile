@@ -58,7 +58,7 @@ class AccountBankSatement(orm.Model):
 class AccountStatementCompletionRule(orm.Model):
     _inherit = "account.statement.completion.rule"
 
-    def get_from_label_and_partner_field(self, cr, uid, line_id, context=None):
+    def get_from_label_and_partner_field(self, cr, uid, st_line, context=None):
         """
         Match the partner and the account based on the name field of the
         statement line and the table account.statement.label.
@@ -73,9 +73,10 @@ class AccountStatementCompletionRule(orm.Model):
 
             ...}
             """
-        st_obj = self.pool.get('account.bank.statement.line')
+        st_obj = self.pool.get('account.bank.statement')
+        st_line_obj = self.pool.get('account.bank.statement.line')
         label_obj = self.pool.get('account.statement.label')
-        st_line = st_obj.browse(cr, uid, line_id, context=context)
+        statement = st_obj.browse(cr, uid, st_line['statement_id'][0], context=context)
         res = {}
         # As we have to iterate on each label for each line,
         # we memorize the pair to avoid
@@ -86,16 +87,15 @@ class AccountStatementCompletionRule(orm.Model):
             context['label_memorizer'] = defaultdict(list)
             label_ids = label_obj.search(cr, uid,
                                          ['|',
-                                          ('profile_id', '=', st_line.statement_id.profile_id.id),
+                                          ('profile_id', '=', statement.profile_id.id),
                                           ('profile_id', '=', False)],
                                          context=context)
             for label in label_obj.browse(cr, uid, label_ids, context=context):
-                line_ids = st_obj.search(cr, uid,
-                                         [('statement_id', '=', st_line.statement_id.id),
+                line_ids = st_line_obj.search(cr, uid,
+                                         [('statement_id', '=', statement.id),
                                           ('name', 'ilike', label.label),
                                           ('already_completed', '=', False)],
                                          context=context)
-                import pdb;pdb.set_trace()
                 for line_id in line_ids:
                     context['label_memorizer'][line_id].append({'partner_id': label.partner_id.id,
                                                                 'account_id': label.account_id.id})
