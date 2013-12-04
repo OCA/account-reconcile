@@ -22,7 +22,7 @@ class AccountStatementProfil(orm.Model):
         commission_analytic_id = profile.commission_analytic_id and profile.commission_analytic_id.id or False
         comm_values = {
             'name': 'IN ' + _('Commission line'),
-            'date': datetime.datetime.now().date(),
+            'date': parser.get_statement_date(),
             'amount': global_commission_amount,
             'partner_id': partner_id,
             'type': 'general',
