@@ -1,9 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--
-  account_bank_statement_simple_view for OpenERP
-  Copyright (C) 2013-TODAY Akretion <http://www.akretion.com>.
-  The licence is in the file __openerp__.py
--->
 
 <openerp>
     <data>
