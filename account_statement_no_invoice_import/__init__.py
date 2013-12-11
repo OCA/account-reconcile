@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ###############################################################################
 #
-#   account_bank_statement_simple_view for OpenERP
+#   module for OpenERP
 #   Copyright (C) 2013-TODAY Akretion <http://www.akretion.com>.
 #   @author Sébastien BEAU <sebastien.beau@akretion.com>
 #

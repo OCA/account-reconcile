@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ###############################################################################
 #
-#   account_statement_simple_view for OpenERP
+#   module for OpenERP
 #   Copyright (C) 2013-TODAY Akretion <http://www.akretion.com>.
 #   @author Sébastien BEAU <sebastien.beau@akretion.com>
 #
@@ -21,15 +21,15 @@
 ###############################################################################
 
 {
-    'name': 'account_bank_statement_simple_view',
+    'name': 'account bank statement no invoice import',
     'version': '0.1',
     'category': 'Generic Modules/Others',
     'license': 'AGPL-3',
-    'description': """Module that remove the useless import button on bank statement and also the useless red icon on bank statement line""",
+    'description': """Module that remove the import button on bank statement""",
     'author': 'Akretion',
     'website': 'http://www.akretion.com/',
     'depends': [
-        'account_statement_base_import',
+        'account',
         ], 
     'init_xml': [],
     'update_xml': [ 

@@ -19,9 +19,6 @@
             <field name="arch" type="xml">
                 <div name="import_buttons" position="replace">
                 </div>
-                <field name="voucher_id" position="replace">
-                </field>
-
             </field>
         </record>
 
