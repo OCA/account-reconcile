@@ -90,7 +90,7 @@ class AccountStatementProfil(Model):
             statement_id, context):
         """
         Hook to build the values of a line from the parser returned values. At
-        least it fullfill the statement_id and account_id. Overide it to add your
+        least it fullfill the statement_id. Overide it to add your
         own completion if needed.
 
         :param dict of vals from parser for account.bank.statement.line (called by
