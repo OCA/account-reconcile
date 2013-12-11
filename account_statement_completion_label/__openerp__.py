@@ -21,21 +21,28 @@
 ###############################################################################
 
 {
-    'name': 'account_statement_completion_label',
+    'name': 'Bank statement completion from label',
     'version': '0.1',
     'category': 'Generic Modules/Others',
     'license': 'AGPL-3',
-    'description': """empty""",
+    'description': """
+    Improve the basic rule "Match from statement line label (based on partner field 'Bank Statement Label')" provided by the
+    Bank statement base completion module. The goal is to match the label field from the bank statement line with a partner and 
+    an account.
+    For this, you have to create your record in the new class account.statement.label where you can link the label you want with a 
+    partner and an account.
+
+    """,
     'author': 'Akretion',
     'website': 'http://www.akretion.com/',
     'depends': ['account_statement_base_completion'],
     'init_xml': [],
-    'update_xml': [
+    'data': [
            'partner_view.xml',
            'statement_view.xml',
            'security/ir.model.access.csv',
     ],
-    'demo_xml': [],
+    'demo': [],
     'installable': True,
     'active': False,
 }
