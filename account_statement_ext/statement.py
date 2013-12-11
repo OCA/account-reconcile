@@ -113,7 +113,7 @@ class AccountStatementProfile(Model):
     ]
     
     _sql_constraints = [
-        ('name_uniq', 'unique (name)', 'The name of the bank statement must be unique !')
+        ('name_uniq', 'unique (name, company_id)', 'The name of the bank statement must be unique !')
     ]
 
 
