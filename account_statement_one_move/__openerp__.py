@@ -21,19 +21,24 @@
 ###############################################################################
 
 {
-    'name': 'account_statement_one_move',
+    'name': 'Bank statement one move',
     'version': '0.1',
     'category': 'Generic Modules/Others',
     'license': 'AGPL-3',
-    'description': """empty""",
+    'description': """
+    This module allow to groupe all lines of a bank statement in only one move. This feature is optional
+    and can be activated with a checkbox in the bank statement's profile. This is very useful for credit card deposit for example, 
+    you won't have a move for each line.
+
+    """,
     'author': 'Akretion',
     'website': 'http://www.akretion.com/',
     'depends': ['account_statement_ext'], 
-    'init_xml': [],
-    'update_xml': [ 
+    'data': [ 
         'statement_view.xml'
     ],
-    'demo_xml': [],
+    'demo': [],
     'installable': True,
+    'auto_install': False,
     'active': False,
 }

@@ -37,8 +37,10 @@ class account_bank_statement(orm.Model):
     _inherit = "account.bank.statement"
 
     def _prepare_move_line_vals(self, cr, uid, st_line, *args, **kwargs):
-        res = super(account_bank_statement, self)._prepare_move_line_vals(cr, uid, st_line, *args, **kwargs)
-        period_id = self._get_period(cr, uid, st_line.statement_id.date, context=kwargs.get('context'))
+        res = super(account_bank_statement, self)._prepare_move_line_vals(cr, uid, st_line,
+                                                                          *args, **kwargs)
+        period_id = self._get_period(cr, uid, st_line.statement_id.date,
+                                     context=kwargs.get('context'))
         if st_line.statement_id.profile_id.one_move:
             res.update({
                 'period_id': period_id,
@@ -60,22 +62,32 @@ class account_bank_statement(orm.Model):
             })
         return res
 
-    def create_move_from_st_line(self, cr, uid, st_line_id, company_currency_id, st_line_number, context):
+    def create_move_from_st_line(self, cr, uid, st_line_id, company_currency_id,
+                                 st_line_number, context=None):
+        if context is None:
+            context = {}
         account_move_obj = self.pool.get('account.move')
         account_bank_statement_line_obj = self.pool.get('account.bank.statement.line')
-        st_line = account_bank_statement_line_obj.browse(cr, uid, st_line_id, context=context)
+        st_line = account_bank_statement_line_obj.browse(cr, uid, st_line_id,
+                                                         context=context)
         st = st_line.statement_id
 
         if st.profile_id.one_move:
             if not context.get('move_id'):
                 move_vals = self._prepare_move(cr, uid, st_line, st_line_number, context=context)
                 context['move_id'] = account_move_obj.create(cr, uid, move_vals, context=context)
-            self.create_move_line_from_st_line(cr, uid, context['move_id'], st_line_id, company_currency_id, context=context)
+            self.create_move_line_from_st_line(cr, uid, context['move_id'], 
+                                              st_line_id, company_currency_id,
+                                              context=context)
             return context['move_id']
         else:
-            return super(account_bank_statement, self).create_move_from_st_line(cr, uid, st_line_id, company_currency_id, st_line_number, context=context)
+            return super(account_bank_statement, self).create_move_from_st_line(cr, uid, st_line_id, 
+                                                                                company_currency_id, 
+                                                                                st_line_number,
+                                                                                context=context)
     
-    def create_move_line_from_st_line(self, cr, uid, move_id, st_line_id, company_currency_id, context):
+    def create_move_line_from_st_line(self, cr, uid, move_id, st_line_id,
+                                     company_currency_id, context=None):
         """Create the account move line from the statement line.
            
            :param int/long move_id: ID of the account.move
@@ -115,7 +127,8 @@ class account_bank_statement(orm.Model):
         if context is None:
             context = {}
         for st in self.browse(cr, uid, ids, context=context):
-            super(account_bank_statement, self).button_confirm_bank(cr, uid, ids, context=context)
+            super(account_bank_statement, self).button_confirm_bank(cr, uid, ids,
+                                                                    context=context)
             if st.profile_id.one_move:
                 move_id = context['move_id']
                 self._valid_move(cr, uid, move_id, context=context)
@@ -135,7 +148,8 @@ class account_bank_statement(orm.Model):
                     move.unlink(context=context)
                 st.write({'state':'draft'}, context=context)
             else:
-                super(account_bank_statement, self).button_cancel(cr, uid, ids, context=context)
+                super(account_bank_statement, self).button_cancel(cr, uid, ids, 
+                                                                 context=context)
         return True
 
 
