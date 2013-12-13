@@ -111,6 +111,11 @@ class AccountStatementProfile(Model):
     _constraints = [
         (_check_partner, "You need to put a partner if you tic the 'Force partner on bank move'!", []),
     ]
+    
+    _sql_constraints = [
+        ('name_uniq', 'unique (name, company_id)', 'The name of the bank statement must be unique !')
+    ]
+
 
 
 class AccountBankSatement(Model):
