@@ -89,9 +89,10 @@ class account_statement_completion_rule(orm.Model):
     def _get_functions(self, cr, uid, context=None):
         res = super(account_statement_completion_rule, self)._get_functions(
             cr, uid, context=context)
-        return res.append(
+        res.append(
             ('get_from_ref_and_so', 'From line reference (based on SO number)')
         )
+        return res
 
     _columns = {
         'function_to_call': fields.selection(_get_functions, 'Method'),
