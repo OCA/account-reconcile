@@ -66,7 +66,10 @@
      'security/ir.model.access.csv',
  ],
  'demo_xml': [],
- 'test': [],
+ 'test': [
+    'test/invoice.yml',
+    'test/completion_test.yml'
+ ],
  'installable': True,
  'images': [],
  'auto_install': False,

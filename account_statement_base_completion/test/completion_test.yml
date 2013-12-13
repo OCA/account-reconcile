@@ -1,0 +1,31 @@
+-
+  In order to test the banking framework, I first need to create a profile
+-
+  !record {model: account.statement.profile, id: profile_test1}:
+    name: Bank EUR Profile
+    journal_id: account.bank_journal
+    commission_account_id: account.a_expense
+    company_id: base.main_company
+    balance_check: True
+    rule_ids:
+      - bank_statement_completion_rule_4
+      - bank_statement_completion_rule_5
+      - bank_statement_completion_rule_2
+      - bank_statement_completion_rule_3
+-
+  Now I create a statement
+-
+  !record {model: account.bank.statement, id: statement_test1}:
+    name: Statement 2
+    profile_id: profile_test1
+    company_id: base.main_company
+    line_ids:
+      - name: Test autocompletion based on Invoice Number
+        ref: CI0001
+        date: '2013-12-13'
+        amount: 2100.0
+-
+  I run the auto complete
+-
+  !python {model: account.bank.statement}: |
+    result = self.button_auto_completion(cr, uid, [ref("statement_test1")])

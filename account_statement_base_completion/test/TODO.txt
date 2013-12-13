@@ -1,0 +1,3 @@
+* statement default company, or company required?
+* on_change
+* statment doesn't have a company, why?
