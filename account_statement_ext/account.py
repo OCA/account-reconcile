@@ -36,6 +36,6 @@ class account_move(Model):
         for move in self.browse(cr, uid, ids, context=context):
             for move_line in move.line_id:
                 if move_line.reconcile_id:
-					reconcile_to_delete.append(move_line.reconcile_id.id)
-        reconcile_obj.unlink(cr,uid,reconcile_to_delete,context=context)
+                    reconcile_to_delete.append(move_line.reconcile_id.id)
+        reconcile_obj.unlink(cr, uid, reconcile_to_delete, context=context)
         return super(account_move, self).unlink(cr, uid, ids, context=context)
