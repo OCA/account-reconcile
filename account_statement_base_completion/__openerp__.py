@@ -69,6 +69,7 @@
  'test': [
     'test/partner.yml',
     'test/invoice.yml',
+    'test/supplier_invoice.yml',
     'test/completion_test.yml'
  ],
  'installable': True,

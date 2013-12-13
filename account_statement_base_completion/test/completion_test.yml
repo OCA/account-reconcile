@@ -19,25 +19,49 @@
     name: Statement 2
     profile_id: profile_test1
     company_id: base.main_company
-    line_ids:
-      - name: Test autocompletion based on Customer Invoice Number
-        ref: CI0001
-        date: '2013-12-20'
-        amount: 210.0
-      - name: Test autocompletion based on Supplier Invoice Number
-        ref: T2S12345
-        date: '2013-12-19'
-        amount: -65.0
-      - name: Test autocompletion based on Partner Name Vauxoo
-        ref: /
-        date: '2013-12-17'
-        amount: 600.0
-      - name: test autocompletion based on text (XXX66Z) matching with partner form information (note that Ref does not exist)
-        ref: ZU788
-        date: '2013-12-24'
-        amount: -932.4
+-
+  I create a statement line for a CI
+-
+  !record {model: account.bank.statement.line, id: statement_line_ci}:
+    name: Test autocompletion based on Customer Invoice Number
+    statement_id: statement_test1
+    ref: CI0001
+    date: '2013-12-20'
+    amount: 210.0
+-
+  I create a statement line for a SI
+-
+  !record {model: account.bank.statement.line, id: statement_line_si}:
+    name: Test autocompletion based on Supplier Invoice Number
+    statement_id: statement_test1
+    ref: T2S12345
+    date: '2013-12-19'
+    amount: -65.0
+-
+  I create a statement line for the Partner Name
+-
+  !record {model: account.bank.statement.line, id: statement_line_partner_name}:
+    name: Test autocompletion based on Partner Name Vauxoo
+    statement_id: statement_test1
+    ref: /
+    date: '2013-12-17'
+    amount: 600.0
+-
+  I create a statement line for the Partner Label
+-
+  !record {model: account.bank.statement.line, id: statement_line_partner_label}:
+    name: test autocompletion based on text (XXX66Z) matching with partner form information (note that Ref does not exist)
+    statement_id: statement_test1
+    ref: ZU788
+    date: '2013-12-24'
+    amount: -932.4
 -
   I run the auto complete
 -
   !python {model: account.bank.statement}: |
     result = self.button_auto_completion(cr, uid, [ref("statement_test1")])
+-
+  Now I can check that all is nice and shiny, line 1
+-
+  !assert {model: account.bank.statement.line, id: statement_line_ci, string: Check completion by CI number}:
+    - partner_id == ref('res_partner_12')
