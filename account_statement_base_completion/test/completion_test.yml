@@ -20,10 +20,22 @@
     profile_id: profile_test1
     company_id: base.main_company
     line_ids:
-      - name: Test autocompletion based on Invoice Number
+      - name: Test autocompletion based on Customer Invoice Number
         ref: CI0001
-        date: '2013-12-13'
-        amount: 2100.0
+        date: '2013-12-20'
+        amount: 210.0
+      - name: Test autocompletion based on Supplier Invoice Number
+        ref: T2S12345
+        date: '2013-12-19'
+        amount: -65.0
+      - name: Test autocompletion based on Partner Name Vauxoo
+        ref: /
+        date: '2013-12-17'
+        amount: 600.0
+      - name: test autocompletion based on text (XXX66Z) matching with partner form information (note that Ref does not exist)
+        ref: ZU788
+        date: '2013-12-24'
+        amount: -932.4
 -
   I run the auto complete
 -

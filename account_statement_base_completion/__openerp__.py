@@ -67,6 +67,7 @@
  ],
  'demo_xml': [],
  'test': [
+    'test/partner.yml',
     'test/invoice.yml',
     'test/completion_test.yml'
  ],

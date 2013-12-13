@@ -9,7 +9,7 @@
     invoice_line:
       - account_id: account.a_sale
         name: '[PCSC234] PC Assemble SC234'
-        price_unit: 450.0
+        price_unit: 210.0
         quantity: 1.0
         product_id: product.product_product_3
         uos_id: product.product_uom_unit
