@@ -36,7 +36,6 @@
     'author': 'Akretion',
     'website': 'http://www.akretion.com/',
     'depends': ['account_statement_base_completion'],
-    'init_xml': [],
     'data': [
            'partner_view.xml',
            'statement_view.xml',

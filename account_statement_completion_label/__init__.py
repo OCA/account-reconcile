@@ -20,6 +20,6 @@
 #
 ###############################################################################
 
-import partner
-import statement
+from . import partner
+from . import statement
 
