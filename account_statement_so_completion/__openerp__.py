@@ -45,7 +45,8 @@
      'data.xml',
  ],
  'demo_xml': [],
- 'test': [],
+ 'test': [
+     'test/completion_so_test.yml'],
  'installable': True,
  'images': [],
  'auto_install': True,
