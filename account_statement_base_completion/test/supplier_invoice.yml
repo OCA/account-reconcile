@@ -1,0 +1,14 @@
+-
+  I add a reference to an existing supplier invoce
+-
+  !record {model: account.invoice, id: account.demo_invoice_0}:
+    supplier_invoice_number: T2S12345
+-
+  Now I confirm it
+-
+  !workflow {model: account.invoice, action: invoice_open, ref: account.demo_invoice_0}
+-
+  I check that the supplier number is there
+-
+  !assert {model: account.invoice, id: account.demo_invoice_0, string: Check supplier number}:
+    - supplier_invoice_number == 'T2S12345'
