@@ -31,7 +31,7 @@
     ],
     'external_dependencies': {
         'python': ['ofxparse'],
-    }
+    },
     'description': """
     Allows to import OFX (Open Financial Exchange) statement files, using
     *account_statement_base_import* generic inheritance mechanism to import 
