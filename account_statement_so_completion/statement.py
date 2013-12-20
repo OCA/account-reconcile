@@ -28,9 +28,18 @@ from tools.translate import _
 from openerp.addons.account_statement_base_completion.statement import ErrorTooManyPartner
 
 
-class account_statement_profile(orm.Model):
+class account_statement_completion_rule(orm.Model):
 
-    _inherit = "account.statement.profile"
+    _name = "account.statement.completion.rule"
+    _inherit = "account.statement.completion.rule"
+
+    def _get_functions(self, cr, uid, context=None):
+        res = super(account_statement_completion_rule, self)._get_functions(
+            cr, uid, context=context)
+        res.append(
+            ('get_from_ref_and_so', 'From line reference (based on SO number)')
+        )
+        return res
 
     # Should be private but data are initialised with no update XML
     def get_from_ref_and_so(self, cr, uid, st_line, context=None):
@@ -78,20 +87,6 @@ class account_statement_profile(orm.Model):
                     amount=st_line['amount'] if st_line['amount'] else 0.0,
                     context=context)
                 res.update(st_vals)
-        return res
-
-
-class account_statement_completion_rule(orm.Model):
-
-    _name = "account.statement.completion.rule"
-    _inherit = "account.statement.completion.rule"
-
-    def _get_functions(self, cr, uid, context=None):
-        res = super(account_statement_completion_rule, self)._get_functions(
-            cr, uid, context=context)
-        res.append(
-            ('get_from_ref_and_so', 'From line reference (based on SO number)')
-        )
         return res
 
     _columns = {
