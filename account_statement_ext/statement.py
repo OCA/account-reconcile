@@ -226,18 +226,14 @@ class AccountBankSatement(Model):
             # statement.company_id is a related store=True that for some
             # reason doesn't work in YAML tests. As a workaround, I unwind it
             # to statement.journal_id.company_id here.
-            if (
-                statement.period_id
-                and statement.journal_id.company_id.id
-                != statement.period_id.company_id.id
-            ):
+            if (statement.period_id and
+                    statement.journal_id.company_id.id !=
+                    statement.period_id.company_id.id):
                 return False
             for line in statement.line_ids:
-                if (
-                    line.period_id
-                    and statement.journal_id.company_id.id
-                    != line.period_id.company_id.id
-                ):
+                if (line.period_id and
+                        statement.journal_id.company_id.id
+                        != line.period_id.company_id.id):
                     return False
         return True
 
