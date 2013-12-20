@@ -61,7 +61,9 @@
   !python {model: account.bank.statement}: |
     result = self.button_auto_completion(cr, uid, [ref("statement_test1")])
 -
-  Now I can check that all is nice and shiny, line 1
+  Now I can check that all is nice and shiny, line 1. I expect the Customer
+  Invoice Number to be recognised.
+  I Use _ref, because ref conflicts with the field ref of the statement line
 -
   !assert {model: account.bank.statement.line, id: statement_line_ci, string: Check completion by CI number}:
-    - partner_id == ref('res_partner_12')
+    - partner_id.id == _ref("base.res_partner_12")
