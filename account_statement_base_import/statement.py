@@ -31,11 +31,12 @@ from parser import new_bank_statement_parser
 class AccountStatementProfil(Model):
     _inherit = "account.statement.profile"
 
-    def get_import_type_selection(self, cr, uid, context=None):
-        """
-        Has to be inherited to add parser
-        """
+    def _get_import_type_selection(self, cr, uid, context=None):
+        """This is the method to be inherited for adding the parser"""
         return [('generic_csvxls_so', 'Generic .csv/.xls based on SO Name')]
+
+    def get_import_type_selection(self, cr, uid, context=None):
+        return _get_import_type selection(cr, uid, context=context)
 
     _columns = {
         'launch_import_completion': fields.boolean(
