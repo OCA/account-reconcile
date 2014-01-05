@@ -23,16 +23,15 @@ import traceback
 import sys
 import logging
 import simplejson
-
+import datetime
 import psycopg2
 
 from collections import defaultdict
 import re
-from tools.translate import _
+from openerp.tools.translate import _
 from openerp.osv import osv, orm, fields
 from openerp.tools import DEFAULT_SERVER_DATETIME_FORMAT
 from operator import attrgetter
-import datetime
 
 _logger = logging.getLogger(__name__)
 
