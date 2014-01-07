@@ -48,7 +48,10 @@
     "data.xml",
  ],
  'demo_xml': [],
- 'test': [],
+ 'test': [
+     'test/sale.yml',
+     'test/completion_transactionid_test.yml',
+ ],
  'installable': True,
  'images': [],
  'auto_install': True,
