@@ -90,7 +90,7 @@ class AccountStatementProfil(Model):
             statement_id, context):
         """
         Hook to build the values of a line from the parser returned values. At
-        least it fullfill the statement_id and account_id. Overide it to add your
+        least it fullfill the statement_id and account_id. Override it to add your
         own completion if needed.
 
         :param dict of vals from parser for account.bank.statement.line (called by
@@ -126,6 +126,13 @@ class AccountStatementProfil(Model):
         values['type'] = 'general'
         return values
 
+    def prepare_statement_vals(self, cr, uid, profile_id, result_row_list, parser, context):
+        """
+        Hook to build the values of the statement from the parser and
+        the profile.
+        """
+        return {'profile_id': profile_id}
+
     def statement_import(self, cr, uid, ids, profile_id, file_stream, ftype="csv", context=None):
         """
         Create a bank statement with the given profile and parser. It will fullfill the bank statement
@@ -159,9 +166,11 @@ class AccountStatementProfil(Model):
                                      _("Column %s you try to import is not "
                                        "present in the bank statement line!") % col)
 
+        statement_vals = self.prepare_statement_vals(cr, uid, prof.id, result_row_list, parser, context)
         statement_id = statement_obj.create(cr, uid,
-                                            {'profile_id': prof.id},
+                                            statement_vals,
                                             context=context)
+
         if prof.receivable_account_id:
             account_receivable = account_payable = prof.receivable_account_id.id
         else:
