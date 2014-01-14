@@ -74,7 +74,7 @@ class AccountStatementProfil(orm.Model):
             rel='as_rul_st_prof_rel'),
     }
 
-    def _get_callable(self, cr, uid, profile, context=None):
+    def _get_rules(self, cr, uid, profile, context=None):
         if isinstance(profile, (int, long)):
             prof = self.browse(cr, uid, profile, context=context)
         else:
@@ -99,12 +99,12 @@ class AccountStatementProfil(orm.Model):
         if context is None:
             context = {}
         if not calls:
-            calls = self._get_callable(cr, uid, line['profile_id'], context=context)
+            calls = self._get_rules(cr, uid, line['profile_id'], context=context)
         rule_obj = self.pool.get('account.statement.completion.rule')
 
         for call in calls:
             method_to_call = getattr(rule_obj, call.function_to_call)
-            if len(inspect.getargspec(method_to_call)) == 5:
+            if len(inspect.getargspec(method_to_call).args) == 6:
                 result = method_to_call(cr, uid, call.id, line, context)
             else:
                 result = method_to_call(cr, uid, line, context)
@@ -573,7 +573,7 @@ class AccountBankSatement(orm.Model):
             ctx = context.copy()
             ctx['line_ids'] = tuple((x.id for x in stat.line_ids))
             b_profile = stat.profile_id
-            rules = profile_obj._get_callable(cr, uid, b_profile, context=context)
+            rules = profile_obj._get_rules(cr, uid, b_profile, context=context)
             profile_id = b_profile.id  # Only for perfo even it gains almost nothing
             master_account_id = b_profile.receivable_account_id
             master_account_id = master_account_id.id if master_account_id else False
