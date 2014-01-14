@@ -23,6 +23,7 @@ import traceback
 import sys
 import logging
 import simplejson
+import inspect
 
 import psycopg2
 
@@ -79,8 +80,7 @@ class AccountStatementProfil(orm.Model):
         else:
             prof = profile
         # We need to respect the sequence order
-        sorted_array = sorted(prof.rule_ids, key=attrgetter('sequence'))
-        return tuple((x.function_to_call for x in sorted_array))
+        return sorted(prof.rule_ids, key=attrgetter('sequence'))
 
     def _find_values_from_rules(self, cr, uid, calls, line, context=None):
         """
@@ -103,8 +103,11 @@ class AccountStatementProfil(orm.Model):
         rule_obj = self.pool.get('account.statement.completion.rule')
 
         for call in calls:
-            method_to_call = getattr(rule_obj, call)
-            result = method_to_call(cr, uid, line, context)
+            method_to_call = getattr(rule_obj, call.function_to_call)
+            if len(inspect.getargspec(method_to_call)) == 5:
+                result = method_to_call(cr, uid, call.id, line, context)
+            else:
+                result = method_to_call(cr, uid, line, context)
             if result:
                 result['already_completed'] = True
                 return result
