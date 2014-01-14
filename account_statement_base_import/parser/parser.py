@@ -110,6 +110,14 @@ class BankStatementImportParser(object):
         """
         return NotImplementedError
 
+    def get_st_vals(self):
+        """
+        This method return a dict of vals that ca be passed to
+        create method of statement.
+        :return: dict of vals that represent additional infos for the statement
+        """
+        return {}
+
     def get_st_line_vals(self, line, *args, **kwargs):
         """
         Implement a method in your parser that must return a dict of vals that can be

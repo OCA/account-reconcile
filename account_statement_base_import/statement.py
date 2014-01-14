@@ -131,7 +131,9 @@ class AccountStatementProfil(Model):
         Hook to build the values of the statement from the parser and
         the profile.
         """
-        return {'profile_id': profile_id}
+        vals = {'profile_id': profile_id}
+        vals.update(parser.get_st_vals())
+        return vals
 
     def statement_import(self, cr, uid, ids, profile_id, file_stream, ftype="csv", context=None):
         """
