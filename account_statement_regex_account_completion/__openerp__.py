@@ -43,7 +43,7 @@ Account Statement Regex Account Completion addon
 - Add a completion method based on a specified regular expression
     and update account to use in the bank statement line with the specified account.
 """,
-    "data": [#'statement_view.xml',
+    "data": ['statement_view.xml',
               ],
     "demo": [],
     "test": [],
