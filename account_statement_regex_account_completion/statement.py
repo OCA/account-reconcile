@@ -48,13 +48,13 @@ class AccountStatementCompletionRule(Model):
 
     _columns = {
         'function_to_call': fields.selection(_get_functions, 'Method'),
-        'regexp': fields.char('Regular Expression', size=128),
+        'regex': fields.char('Regular Expression', size=128),
         'account_id': fields.many2one('account.account', string="Account to set"),
     }
 
     def set_account(self, cr, uid, id, st_line, context=None):
         """
-        If line name match regexp, update account_id
+        If line name match regex, update account_id
         Then, call the generic st_line method to complete other values.
         :param dict st_line: read of the concerned account.bank.statement.line
         :return:
@@ -68,7 +68,7 @@ class AccountStatementCompletionRule(Model):
         res = {}
         if name:
             rule = self.browse(cr, uid, id, context=context)
-            if re.match(rule.regexp, name):
+            if re.match(rule.regex, name):
                 res['account_id'] = rule.account_id.id
         return res
 
