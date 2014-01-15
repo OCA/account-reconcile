@@ -43,23 +43,23 @@ class test_regex_account_completion(common.TransactionCase):
         rule_vals = {'function_to_call': 'set_account',
                      'regex': '^My statement',
                      'account_id': self.account_id}
-        self.completion_rule_id = self.registry("account.statement.completion.rule").create(self.cr, self.uid, rule_vals)
+        completion_rule_id = self.registry("account.statement.completion.rule").create(self.cr, self.uid, rule_vals)
 
         # Create the profile
-        self.journal_id = self.ref("account.bank_journal")
-        self.profile_id = self.registry("account.statement.profile").create(self.cr, self.uid, {
+        journal_id = self.ref("account.bank_journal")
+        profile_id = self.registry("account.statement.profile").create(self.cr, self.uid, {
             "name": "TEST",
             "commission_account_id": self.ref("account.a_recv"),
-            "journal_id": self.journal_id,
-            "rule_ids": [(6, 0, [self.completion_rule_id])]})
+            "journal_id": journal_id,
+            "rule_ids": [(6, 0, [completion_rule_id])]})
 
         # Create a bank statement
         self.statement_id = self.account_bank_statement_obj.create(self.cr, self.uid, {
             "balance_end_real": 0.0,
             "balance_start": 0.0,
             "date": time.strftime('%Y-%m-%d'),
-            "journal_id": self.journal_id,
-            "profile_id": self.profile_id
+            "journal_id": journal_id,
+            "profile_id": profile_id
         })
 
         # Create two bank statement lines
@@ -83,10 +83,9 @@ class test_regex_account_completion(common.TransactionCase):
         """Test the automatic completion on account
         """
         self.prepare()
-        statement_line = self.account_bank_statement_line_obj.browse(self.cr, self.uid, self.statement_line_id)
-        # before import, the
-        self.assertFalse(statement_line.partner_id, "Partner_id must be blank before completion")
         statement_obj = self.account_bank_statement_obj.browse(self.cr, self.uid, self.statement_id)
         statement_obj.button_auto_completion()
-        statement_line = self.account_bank_statement_line_obj.browse(self.cr, self.uid, self.statement_line_id)
-        self.assertEquals(self.partner_id, statement_line.partner_id['id'], "Missing expected partner id after completion")
+        statement_line1 = self.account_bank_statement_line_obj.browse(self.cr, self.uid, self.statement_line1_id)
+        self.assertEquals(self.account_id, statement_line1.account_id.id, "The account should be the account of the completion")
+        statement_line2 = self.account_bank_statement_line_obj.browse(self.cr, self.uid, self.statement_line2_id)
+        self.assertNotEqual(self.account_id, statement_line2.account_id.id, "The account should be not the account of the completion")
