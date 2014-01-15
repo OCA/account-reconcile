@@ -14,8 +14,6 @@
             <field name="name">account_statement_one_move.account_statement.view_form</field>
             <field name="model">account.statement.profile</field>
             <field name="inherit_id" ref="account_statement_ext.statement_importer_view_form" />
-            <field eval="16" name="priority"/>
-            <field name="type">form</field>
             <field name="arch" type="xml">
                 <field name="balance_check" position="after">
                     <field name="one_move"/>

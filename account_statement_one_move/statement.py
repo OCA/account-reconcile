@@ -23,14 +23,13 @@
 from openerp.osv import fields, orm, osv
 
 
-
-class AccountStatementProfil(orm.Model):
+class AccountStatementProfile(orm.Model):
     _inherit = "account.statement.profile"   
     _columns = {
-       'one_move': fields.boolean('One Move', 
-                help="Tic that box if you want OpenERP to generated only"
-                "one move when the bank statement is validated")
-    }
+        'one_move': fields.boolean(
+            'Group Journal Items',
+            help="Only one Journal Entry will be generated on the "
+                 "validation of the bank statement."),
 
 
 class account_bank_statement(orm.Model):
@@ -61,6 +60,7 @@ class account_bank_statement(orm.Model):
             'date': st_line.statement_id.date,
             })
         return res
+
 
     def create_move_from_st_line(self, cr, uid, st_line_id, company_currency_id,
                                  st_line_number, context=None):
@@ -110,7 +110,9 @@ class account_bank_statement(orm.Model):
                 'res.currency.compute.account': acc_cur,
             })
         amount = res_currency_obj.compute(cr, uid, st.currency.id,
-                company_currency_id, st_line.amount, context=context)
+                                          company_currency_id, 
+                                          st_line.amount, 
+                                          context=context)
 
         bank_move_vals = self._prepare_bank_move_line(cr, uid, st_line, move_id, amount,
             company_currency_id, context=context)
@@ -122,6 +124,7 @@ class account_bank_statement(orm.Model):
         move_obj.post(cr, uid, [move_id], context=context)
         return True
 
+           
     def button_confirm_bank(self, cr, uid, ids, context=None):
         st_line_obj = self.pool.get('account.bank.statement.line')
         if context is None:
@@ -142,8 +145,9 @@ class account_bank_statement(orm.Model):
         done = []
         for st in self.browse(cr, uid, ids, context=context):
             if st.profile_id.one_move:
+                assert st.line_ids, "This statement does not contain any lines"
                 for move in st.line_ids[0].move_ids:
-                    if move.state <> 'draft':
+                    if move.state != 'draft':
                         move.button_cancel(context=context)
                     move.unlink(context=context)
                 st.write({'state':'draft'}, context=context)

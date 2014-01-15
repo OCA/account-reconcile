@@ -26,7 +26,7 @@
     'category': 'Generic Modules/Others',
     'license': 'AGPL-3',
     'description': """
-    This module allow to groupe all lines of a bank statement in only one move. This feature is optional
+    This module allows to group all lines of a bank statement in only one move. This feature is optional
     and can be activated with a checkbox in the bank statement's profile. This is very useful for credit card deposit for example, 
     you won't have a move for each line.
 
