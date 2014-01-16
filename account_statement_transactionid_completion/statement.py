@@ -33,12 +33,12 @@ class AccountStatementCompletionRule(Model):
     def _get_functions(self, cr, uid, context=None):
         res = super(AccountStatementCompletionRule, self)._get_functions(
                                                            cr, uid, context=context)
-        res.append(
+        res += [
             ('get_from_transaction_id_and_so',
              'Match Sales Order using transaction ID'),
             ('get_from_transaction_id_and_invoice',
              'Match Invoice using transaction ID'),
-        )
+        ]
         return res
 
     _columns = {
