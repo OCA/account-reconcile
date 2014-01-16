@@ -58,8 +58,8 @@ class easy_reconcile_advanced_transaction_ref_vs_ref(orm.TransientModel):
 
     def _matchers(self, cr, uid, rec, move_line, context=None):
         return (('partner_id', move_line['partner_id']),
-                ('ref', move_line['transaction_ref'].lower().strip()))
+                ('ref', move_line['ref'].lower().strip()))
 
     def _opposite_matchers(self, cr, uid, rec, move_line, context=None):
         yield ('partner_id', move_line['partner_id'])
-        yield ('ref', (move_line['ref'] or '').lower().strip())
+        yield ('ref', (move_line['transaction_ref'] or '').lower().strip())
