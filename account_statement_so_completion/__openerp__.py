@@ -40,11 +40,9 @@
   1) Match from statement line reference (based on SO number)
 """,
  'website': 'http://www.camptocamp.com',
- 'init_xml': [],
- 'update_xml': [
+ 'data': [
      'data.xml',
  ],
- 'demo_xml': [],
  'test': [
      'test/completion_so_test.yml'],
  'installable': True,
