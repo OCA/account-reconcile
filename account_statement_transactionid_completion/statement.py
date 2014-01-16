@@ -173,7 +173,6 @@ class AccountBankStatement(Model):
             account_id=account_id,
             analytic_id=analytic_id,
             partner_id=partner_id, context=context)
-        if st_line.transaction_ref:
-            res['transaction_ref'] = st_line.transaction_ref
+        if st_line.transaction_id:
+            res['transaction_ref'] = st_line.transaction_id
         return res
-
