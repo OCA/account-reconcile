@@ -106,13 +106,17 @@ class AccountStatementCompletionRule(Model):
             [('transaction_id', '=', st_line['transaction_id'])],
             context=context)
         if len(invoice_id) > 1:
-            raise ErrorTooManyPartner(_('Line named "%s" (Ref:%s) was matched by more than '
-                                        'one partner.') % (st_line['name'], st_line['ref']))
-        if len(so_id) == 1:
-            invoice = invoice_obj.browse(cr, uid, invoice_id[0], context=context)
+            raise ErrorTooManyPartner(
+                _('Line named "%s" (Ref:%s) was matched by more than '
+                  'one partner.') % (st_line['name'], st_line['ref']))
+        elif len(invoice_id) == 1:
+            invoice = invoice_obj.browse(cr, uid, invoice_id[0],
+                                         context=context)
             res['partner_id'] = invoice.partner_id.id
-            # TODO: should have the same ref than the invoice's move
-            # res['ref'] = invoice.ref
+            # should have the same ref than the invoice's move
+            # what TODO if the invoice is no yet validated
+            if invoice.move_id:
+                res['ref'] = invoice.move_id.ref
             st_vals = st_obj.get_values_for_line(
                 cr, uid,
                 profile_id=st_line['profile_id'],
