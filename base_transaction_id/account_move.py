@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 ##############################################################################
 #
-#    Author: Nicolas Bessi
-#    Copyright 2011-2012 Camptocamp SA
+#    Author: Guewen Baconnier
+#    Copyright 2014 Camptocamp SA
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -18,24 +18,20 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-
-from openerp.osv.orm import Model
-from openerp.osv import fields
+from openerp.osv import orm, fields
 
 
-class AccountInvoice(Model):
-    _inherit = 'account.invoice'
+class account_move_line(orm.Model):
+    _inherit = 'account.move.line'
 
     _columns = {
-        'transaction_id': fields.char(
-            'Transaction id',
-            select=1,
-            help="Transaction id from the financial institute"),
+        'transaction_ref': fields.char('Transaction Ref.',
+                                       select=True),
     }
 
     def copy_data(self, cr, uid, id, default=None, context=None):
         if default is None:
             default = {}
-        default['transaction_id'] = False
-        return super(AccountInvoice, self).\
+        default['transaction_ref'] = False
+        return super(account_move_line, self).\
             copy_data(cr, uid, id, default=default, context=context)
