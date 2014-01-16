@@ -163,12 +163,12 @@ class AccountBankStatement(Model):
            :return: dict of value to create() the account.move.line
         """
         res = super(AccountBankStatement, self)._prepare_move_line_vals(
-                cr, uid, st_line, move_id, debit, credit,
-                currency_id=currency_id,
-                amount_currency=amount_currency,
-                account_id=account_id,
-                analytic_id=analytic_id,
-                partner_id=partner_id, context=context)
+            cr, uid, st_line, move_id, debit, credit,
+            currency_id=currency_id,
+            amount_currency=amount_currency,
+            account_id=account_id,
+            analytic_id=analytic_id,
+            partner_id=partner_id, context=context)
         if st_line.transaction_ref:
             res['transaction_ref'] = st_line.transaction_ref
         return res

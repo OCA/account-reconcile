@@ -20,8 +20,8 @@
 
 {'name': 'Advanced Reconcile Transaction Ref',
  'description':  """
-Advanced reconciliation method for the module account_easy_reconcile
-=================================================
+Advanced reconciliation method for the module account_advanced_reconcile
+========================================================================
 Reconcile rules with transaction_ref
 
 """,
