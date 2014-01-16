@@ -118,7 +118,7 @@ The lines should have the same amount (with the write-off) and the same referenc
         <field name="model">account.easy.reconcile.method</field>
         <field name="arch" type="xml">
             <form string="Automatic Easy Reconcile Method">
-                <field name="sequence"/>
+                <field name="sequence" widget="handle"/>
                 <field name="name"/>
                 <field name="write_off"/>
                 <field name="account_lost_id" attrs="{'required':[('write_off','>',0)]}"/>
@@ -135,7 +135,7 @@ The lines should have the same amount (with the write-off) and the same referenc
         <field name="model">account.easy.reconcile.method</field>
         <field name="arch" type="xml">
             <tree editable="top" string="Automatic Easy Reconcile Method">
-                <field name="sequence"/>
+                <field name="sequence" widget="handle"/>
                 <field name="name"/>
                 <field name="write_off"/>
                 <field name="account_lost_id" attrs="{'required':[('write_off','>',0)]}"/>
