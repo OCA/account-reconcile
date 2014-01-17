@@ -57,15 +57,19 @@
 
  """,
  'website': 'http://www.camptocamp.com',
- 'init_xml': [],
- 'update_xml': [
+ 'data': [
      'statement_view.xml',
      'partner_view.xml',
      'data.xml',
      'security/ir.model.access.csv',
  ],
- 'demo_xml': [],
- 'test': [],
+ 'demo': [],
+ 'test': [
+    'test/partner.yml',
+    'test/invoice.yml',
+    'test/supplier_invoice.yml',
+    'test/completion_test.yml'
+ ],
  'installable': True,
  'images': [],
  'auto_install': False,
