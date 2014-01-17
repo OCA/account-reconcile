@@ -655,6 +655,8 @@ class AccountBankSatementLine(Model):
         # This can be quite a performance killer as we read ir.properity fields
         if partner_id:
             part = obj_partner.browse(cr, uid, partner_id, context=context)
+            part = part.commercial_partner_id
+            res['partner_id'] = part.id
             pay_account = part.property_account_payable.id
             receiv_account = part.property_account_receivable.id
         # If no value, look on the default company property
