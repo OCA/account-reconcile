@@ -26,9 +26,9 @@ class account_move(orm.Model):
     _inherit = 'account.move'
 
     def _ref_from_invoice(self, cr, uid, invoice, context=None):
-        if invoice.type == 'out_invoice':
+        if invoice.type in ('out_invoice', 'out_refund'):
             return invoice.origin or invoice.name
-        elif invoice.type == 'in_invoice':
+        elif invoice.type == ('in_invoice', 'in_refund'):
             # the supplier invoice number is now mandatory, but
             # if historical invoices should not have one, we fallback
             # to the name of the invoice
