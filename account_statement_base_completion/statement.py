@@ -132,7 +132,6 @@ class AccountStatementCompletionRule(orm.Model):
         return [
             ('get_from_ref_and_invoice', 'From line reference (based on customer invoice number)'),
             ('get_from_ref_and_supplier_invoice', 'From line reference (based on supplier invoice number)'),
-            ('get_from_ref_and_so', 'From line reference (based on SO number)'),
             ('get_from_label_and_partner_field', 'From line label (based on partner field)'),
             ('get_from_label_and_partner_name', 'From line label (based on partner name)')]
 
@@ -231,49 +230,6 @@ class AccountStatementCompletionRule(orm.Model):
             ...}
         """
         return self._from_invoice(cr, uid, line, 'customer', context=context)
-
-    # Should be private but data are initialised with no update XML
-    def get_from_ref_and_so(self, cr, uid, st_line, context=None):
-        """
-        Match the partner based on the SO number and the reference of the statement
-        line. Then, call the generic get_values_for_line method to complete other values.
-        If more than one partner matched, raise the ErrorTooManyPartner error.
-
-        :param int/long st_line: read of the concerned account.bank.statement.line
-        :return:
-            A dict of value that can be passed directly to the write method of
-            the statement line or {}
-           {'partner_id': value,
-            'account_id': value,
-
-            ...}
-        """
-        st_obj = self.pool.get('account.bank.statement.line')
-        res = {}
-        if st_line:
-            so_obj = self.pool.get('sale.order')
-            so_id = so_obj.search(cr,
-                                  uid,
-                                  [('name', '=', st_line['ref'])],
-                                  context=context)
-            if so_id:
-                if so_id and len(so_id) == 1:
-                    so = so_obj.browse(cr, uid, so_id[0], context=context)
-                    res['partner_id'] = so.partner_id.id
-                elif so_id and len(so_id) > 1:
-                    raise ErrorTooManyPartner(_('Line named "%s" (Ref:%s) was matched by more '
-                                                'than one partner while looking on SO by ref.') %
-                                              (st_line['name'], st_line['ref']))
-                st_vals = st_obj.get_values_for_line(cr,
-                                                     uid,
-                                                     profile_id=st_line['profile_id'],
-                                                     master_account_id=st_line['master_account_id'],
-                                                     partner_id=res.get('partner_id', False),
-                                                     line_type='customer',
-                                                     amount=st_line['amount'] if st_line['amount'] else 0.0,
-                                                     context=context)
-                res.update(st_vals)
-        return res
 
     # Should be private but data are initialised with no update XML
     def get_from_label_and_partner_field(self, cr, uid, st_line, context=None):
