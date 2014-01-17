@@ -32,7 +32,8 @@ class easy_reconcile_advanced_transaction_ref(orm.TransientModel):
         will be skipped for reconciliation. Can be inherited to
         skip on some conditions. ie: ref or partner_id is empty.
         """
-        return not (move_line.get('ref') and move_line.get('partner_id'))
+        return not (move_line.get('transaction_ref') and
+                    move_line.get('partner_id'))
 
     def _matchers(self, cr, uid, rec, move_line, context=None):     
         return (('partner_id', move_line['partner_id']),
