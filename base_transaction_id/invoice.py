@@ -39,3 +39,10 @@ class AccountInvoice(Model):
         default['transaction_id'] = False
         return super(AccountInvoice, self).\
             copy_data(cr, uid, id, default=default, context=context)
+
+    def finalize_invoice_move_lines(self, cr, uid, invoice_browse, move_lines):
+        if invoice_browse.transaction_id:
+            for line in move_lines:
+                # tuple (0, 0, {values})
+                line[2]['transaction_ref'] = invoice_browse.transaction_id
+        return move_lines
