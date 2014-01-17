@@ -113,8 +113,9 @@ class AccountStatementCompletionRule(Model):
             invoice = invoice_obj.browse(cr, uid, invoice_id[0],
                                          context=context)
             res['partner_id'] = invoice.partner_id.id
-            # should have the same ref than the invoice's move
-            # what TODO if the invoice is no yet validated
+            # we want the move to have the same ref than the found
+            # invoice's move, thus it will be easier to link them for the
+            # accountants
             if invoice.move_id:
                 res['ref'] = invoice.move_id.ref
             st_vals = st_obj.get_values_for_line(
