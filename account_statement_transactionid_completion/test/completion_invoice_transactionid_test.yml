@@ -38,3 +38,12 @@
 -
   !assert {model: account.bank.statement.line, id: statement_line_invoice_transactionid, string: Check completion by Invoice transaction ID}:
     - partner_id.name == u'Agrolait'
+-
+  I verify if the reference of the move has been copied to the statement line
+-
+  !python {model: account.bank.statement.line}: |
+    statement_line = self.browse(cr, uid, ref('statement_line_invoice_transactionid'))
+    invoice_obj = self.pool['account.invoice']
+    invoice = invoice_obj.browse(cr, uid, ref('invoice_with_transaction_id'))
+    reference = invoice.move_id.ref
+    assert statement_line.ref == reference
