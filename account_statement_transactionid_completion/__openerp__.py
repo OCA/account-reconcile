@@ -51,6 +51,8 @@
  'test': [
      'test/sale.yml',
      'test/completion_transactionid_test.yml',
+     'test/invoice.yml',
+     'test/completion_invoice_transactionid_test.yml',
  ],
  'installable': True,
  'images': [],
