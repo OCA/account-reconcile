@@ -43,7 +43,7 @@ class AccountStatementCompletionRule(Model):
         res = super(AccountStatementCompletionRule, self)._get_functions(
             cr, uid, context=context)
         res.append(('set_account',
-                    'Set account'))
+                    'Set account for line labels matching a regular expression'))
         return res
 
     _columns = {
