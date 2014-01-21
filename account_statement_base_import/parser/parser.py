@@ -20,6 +20,7 @@
 ##############################################################################
 import base64
 import csv
+from datetime import datetime
 
 
 def UnicodeDictReader(utf8_data, **kwargs):
@@ -49,6 +50,10 @@ class BankStatementImportParser(object):
         self.result_row_list = None
         # The file buffer on which to work on
         self.filebuffer = None
+        self.balance_start = None
+        self.balance_end = None
+        self.statement_name = None
+        self.statement_date = None
 
     @classmethod
     def parser_for(cls, parser_name):
@@ -150,6 +155,37 @@ class BankStatementImportParser(object):
         self._post(*args, **kwargs)
         return self.result_row_list
 
+    def get_start_balance(self, *args, **kwargs):
+        """
+        This is called by the importation method to set the balance start
+        amount in the bank statement.
+            return: float of the balance start (self.balance_start)
+        """
+        return self.balance_start
+
+    def get_end_balance(self, *args, **kwargs):
+        """
+        This is called by the importation method to set the balance end
+        amount in the bank statement.
+            return: float of the balance end (self.balance_end)
+        """
+        return self.balance_end
+
+    def get_statement_name(self, *args, **kwargs):
+        """
+        This is called by the importation method to set the statement
+        name in the bank statement.
+            return: string of the statement name (self.statement_name)
+        """
+        return self.statement_name or '/'
+
+    def get_statement_date(self, *args, **kwargs):
+        """
+        This is called by the importation method to set the statement
+        date in the bank statement.
+            return: datetime of the statement date (self.statement_date)
+        """
+        return self.statement_date or datetime.now()
 
 def itersubclasses(cls, _seen=None):
     """

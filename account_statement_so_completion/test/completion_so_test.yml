@@ -1,0 +1,44 @@
+-
+  In order to test the banking framework for Sale Orders, I first need to
+  create a profile
+-
+  !record {model: account.statement.profile, id: profile_test_so}:
+    name: Bank EUR Profile for SO
+    journal_id: account.bank_journal
+    commission_account_id: account.a_expense
+    company_id: base.main_company
+    balance_check: True
+    rule_ids:
+      - account_statement_base_completion.bank_statement_completion_rule_4
+      - account_statement_base_completion.bank_statement_completion_rule_5
+      - account_statement_base_completion.bank_statement_completion_rule_2
+      - account_statement_base_completion.bank_statement_completion_rule_3
+      - bank_statement_completion_rule_1
+-
+  Now I create a statement. I create statment lines separately because I need
+  to find each one by XML id
+-
+  !record {model: account.bank.statement, id: statement_test_sale1}:
+    name: Statement for SO
+    profile_id: profile_test_so
+    company_id: base.main_company
+-
+  I create a statement line for a SO
+-
+  !record {model: account.bank.statement.line, id: statement_line_so}:
+    name: Test autocompletion based on Sale Order Number
+    statement_id: statement_test_sale1
+    ref: SO007
+    date: '2013-12-20'
+    amount: 14981.0
+-
+  I run the auto complete
+-
+  !python {model: account.bank.statement}: |
+    result = self.button_auto_completion(cr, uid, [ref("statement_test_sale1")])
+-
+  Now I can check that all is nice and shiny, line 1. I expect the Sale Order
+  Number to be recognised.
+-
+  !assert {model: account.bank.statement.line, id: statement_line_so, string: Check completion by SO number}:
+    - partner_id.name == u'Luminous Technologies'
