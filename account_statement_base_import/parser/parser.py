@@ -49,6 +49,10 @@ class BankStatementImportParser(object):
         self.result_row_list = None
         # The file buffer on which to work on
         self.filebuffer = None
+        self.balance_start = None
+        self.balance_end = None
+        self.statement_name = None
+        self.statement_date = None
 
     @classmethod
     def parser_for(cls, parser_name):
@@ -116,7 +120,12 @@ class BankStatementImportParser(object):
         create method of statement.
         :return: dict of vals that represent additional infos for the statement
         """
-        return {}
+        return {
+                'name': self.statement_name,
+                'balance_start': self.balance_start,
+                'balance_end_real': self.balance_end,
+                'date': self.statement_date
+        }
 
     def get_st_line_vals(self, line, *args, **kwargs):
         """

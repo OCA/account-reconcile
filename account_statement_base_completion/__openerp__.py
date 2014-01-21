@@ -35,7 +35,6 @@
 
  1) Match from statement line label (based on partner field 'Bank Statement Label')
  2) Match from statement line label (based on partner name)
- 3) Match from statement line reference (based on SO number)
  3) Match from statement line reference (based on Invoice number)
 
  You can easily override this module and add your own rules in your own one. The basic rules only
@@ -58,15 +57,19 @@
 
  """,
  'website': 'http://www.camptocamp.com',
- 'init_xml': [],
- 'update_xml': [
+ 'data': [
      'statement_view.xml',
      'partner_view.xml',
      'data.xml',
      'security/ir.model.access.csv',
  ],
- 'demo_xml': [],
- 'test': [],
+ 'demo': [],
+ 'test': [
+    'test/partner.yml',
+    'test/invoice.yml',
+    'test/supplier_invoice.yml',
+    'test/completion_test.yml'
+ ],
  'installable': True,
  'images': [],
  'auto_install': False,
