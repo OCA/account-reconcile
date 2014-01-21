@@ -1,5 +1,5 @@
 -
-  In order to check if the reference of the invoice is the origin of
+  In order to check if the reference of the move is the origin of
   the invoice (customer invoices), I create an invoice
 -
   !record {model: account.invoice, id: invoice_reference_origin}:

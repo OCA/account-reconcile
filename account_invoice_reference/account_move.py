@@ -34,9 +34,8 @@ class account_move(orm.Model):
             assert isinstance(invoice, orm.browse_record)
             invoice_obj = self.pool['account.invoice']
             ref = invoice_obj._ref_from_invoice(cr, uid, invoice, context=context)
-            if ref:
-                vals = vals.copy()
-                vals['ref'] = ref
+            vals = vals.copy()
+            vals['ref'] = ref
         move_id = super(account_move, self).\
             create(cr, uid, vals, context=context)
         return move_id
@@ -48,7 +47,7 @@ class account_invoice(orm.Model):
     def _ref_from_invoice(self, cr, uid, invoice, context=None):
         if invoice.type in ('out_invoice', 'out_refund'):
             return invoice.origin
-        elif invoice.type == ('in_invoice', 'in_refund'):
+        elif invoice.type in ('in_invoice', 'in_refund'):
             return invoice.supplier_invoice_number
 
     def action_number(self, cr, uid, ids, context=None):
