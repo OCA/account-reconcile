@@ -54,7 +54,8 @@ Supplier invoices
  'website': 'http://www.camptocamp.com',
  'data': ['account_invoice_view.xml',
           ],
- 'tests': [],
+ 'test': ['test/in_invoice_with_origin.yml',
+          ],
  'installable': True,
  'auto_install': False,
 }

@@ -25,15 +25,6 @@ from openerp.osv import orm, fields
 class account_move(orm.Model):
     _inherit = 'account.move'
 
-    def _ref_from_invoice(self, cr, uid, invoice, context=None):
-        if invoice.type in ('out_invoice', 'out_refund'):
-            return invoice.origin or invoice.name
-        elif invoice.type == ('in_invoice', 'in_refund'):
-            # the supplier invoice number is now mandatory, but
-            # if historical invoices should not have one, we fallback
-            # to the name of the invoice
-            return invoice.supplier_invoice_number or invoice.name
-
     def create(self, cr, uid, vals, context=None):
         if context is None:
             context = {}
@@ -41,10 +32,48 @@ class account_move(orm.Model):
         invoice = context.get('invoice')
         if invoice:
             assert isinstance(invoice, orm.browse_record)
-            ref = self._ref_from_invoice(cr, uid, invoice, context=context)
+            invoice_obj = self.pool['account.invoice']
+            ref = invoice_obj._ref_from_invoice(cr, uid, invoice, context=context)
             if ref:
                 vals = vals.copy()
                 vals['ref'] = ref
         move_id = super(account_move, self).\
             create(cr, uid, vals, context=context)
         return move_id
+
+
+class account_invoice(orm.Model):
+    _inherit = 'account.invoice'
+
+    def _ref_from_invoice(self, cr, uid, invoice, context=None):
+        if invoice.type in ('out_invoice', 'out_refund'):
+            return invoice.origin
+        elif invoice.type == ('in_invoice', 'in_refund'):
+            return invoice.supplier_invoice_number
+
+    def action_number(self, cr, uid, ids, context=None):
+        if context is None:
+            context = {}
+        #TODO: not correct fix but required a frech values before reading it.
+        self.write(cr, uid, ids, {})
+
+        for invoice in self.browse(cr, uid, ids, context=context):
+            ref = self._ref_from_invoice(cr, uid, invoice, context=context)
+            if not ref:
+                ref = invoice.number
+            move_id = invoice.move_id.id if invoice.move_id else False
+
+            self.write(cr, uid, ids, {'internal_number': invoice.number},
+                       context=context)
+            cr.execute('UPDATE account_move SET ref=%s '
+                       'WHERE id=%s AND (ref is null OR ref = \'\')',
+                       (ref, move_id))
+            cr.execute('UPDATE account_move_line SET ref=%s '
+                       'WHERE move_id=%s AND (ref is null OR ref = \'\')',
+                       (ref, move_id))
+            cr.execute('UPDATE account_analytic_line SET ref=%s '
+                       'FROM account_move_line '
+                       'WHERE account_move_line.move_id = %s '
+                       'AND account_analytic_line.move_id = account_move_line.id',
+                       (ref, move_id))
+        return True
