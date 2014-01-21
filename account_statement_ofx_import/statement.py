@@ -24,7 +24,7 @@ from openerp.osv import fields, orm
 class AccountStatementProfil(orm.Model):
     _inherit = "account.statement.profile"
 
-    def _get_import_type_selection(self, cr, uid, context=None):
+    def get_import_type_selection(self, cr, uid, context=None):
         """
         Inherited from parent to add parser.
         """
