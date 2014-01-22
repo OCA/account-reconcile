@@ -58,6 +58,11 @@ Supplier invoices
           'test/out_invoice_without_origin.yml',
           'test/in_invoice_with_supplier_number.yml',
           'test/in_invoice_without_supplier_number.yml',
+          'test/out_refund_with_origin.yml',
+          'test/out_refund_without_origin.yml',
+          'test/in_refund_with_supplier_number.yml',
+          'test/in_refund_without_supplier_number.yml',
+
           ],
  'installable': True,
  'auto_install': False,

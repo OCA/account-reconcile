@@ -1,0 +1,34 @@
+-
+  In order to check if the reference of the move is the origin of
+  the refund (customer refunds), I create a refund
+-
+  !record {model: account.invoice, id: refund_reference_origin, view: account.invoice_form}:
+    payment_term: account.account_payment_term_advance
+    journal_id: account.sales_journal
+    partner_id: base.res_partner_3
+    reference_type: none
+    name: 'Test Customer refund'
+    origin: RABC123
+    invoice_line:
+      - product_id: product.product_product_5
+        quantity: 10.0
+    type: out_refund
+-
+  Set again the type of the invoice (not set on the first one...)
+-
+  !record {model: account.invoice, id: refund_reference_origin, view: account.invoice_form}:
+    type: out_refund
+-
+  Ensure that the invoice is a customer refund
+-
+  !assert {model: account.invoice, id: refund_reference_origin}:
+    - type == 'out_refund'
+-
+  I create a refund by clicking on Create button
+-
+  !workflow {model: account.invoice, action: invoice_open, ref: refund_reference_origin}
+-
+  I check that the reference of the move is the origin of the refund
+-
+  !assert {model: account.invoice, id: refund_reference_origin}:
+    - move_id.ref == 'RABC123'
