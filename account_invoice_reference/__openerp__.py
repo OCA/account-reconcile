@@ -32,12 +32,19 @@
 Invoices Reference
 ==================
 
-Aims to simplify the "references" things on the invoices.
-There is too many fields on the invoices.  And it is very difficult
-to remember which field goes in which field of the Journal Entries.
+Aims to simplify the "references" things on the invoices.  There is too
+many fields on the invoices.  And it is very difficult to remember
+which field goes in which field of the Journal Entries and under which
+conditions.
+
+Is follows this rule: the reference of a journal entry is
+always the reference of the document which generated it to
+be able to trace them in the accounting reports. That means the origin
+of an invoice or if the invoice has been created manually without origin,
+its number.
 
 It particularly fits with other modules of the bank-statement-reconcile series
-as account_advanced_reconcile_transaction_ref.
+like account_advanced_reconcile_transaction_ref.
 
 Use cases
 ---------

@@ -51,9 +51,8 @@ class account_invoice(orm.Model):
             return invoice.supplier_invoice_number
 
     def action_number(self, cr, uid, ids, context=None):
-        if context is None:
-            context = {}
-        #TODO: not correct fix but required a frech values before reading it.
+        # force the number of the invoice to be updated for the
+        # subsequent browse
         self.write(cr, uid, ids, {})
 
         for invoice in self.browse(cr, uid, ids, context=context):
