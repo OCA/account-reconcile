@@ -25,7 +25,7 @@
  'maintainer': 'Akretion',
  'category': 'Finance',
  'complexity': 'normal',
- 'depends': ['account_statement_base_import'],
+ 'depends': ['account_statement_base_import', 'sale'],
  'description': """
 
  The goal of this module is to create a self-completion method fill: command, partner and receivable account
