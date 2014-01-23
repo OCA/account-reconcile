@@ -27,7 +27,7 @@ class Statement(orm.Model):
 
     """Bank Statement.
 
-    All logic is in the BankStatementLine
+    Minimal changes to allow cancelling single lines.
 
     """
 
@@ -38,3 +38,25 @@ class Statement(orm.Model):
 
     _defaults = {
     }
+
+    def button_confirm_bank(self, cr, uid, ids, context=None):
+        """Change the state on the statement lines. Return super."""
+        st_line_obj = self.pool['account.bank.statement.line']
+        for st_data in self.read(cr, uid, ids, ['line_ids'], context=context):
+            st_line_obj.write(cr, uid, st_data['line_ids'], {
+                'state': 'confirmed'
+            }, context=context)
+
+        return super(Statement, self).button_confirm_bank(
+            cr, uid, ids, context)
+
+    def button_cancel(self, cr, uid, ids, context=None):
+        """Change the state on the statement lines. Return super."""
+        st_line_obj = self.pool['account.bank.statement.line']
+        for st_data in self.read(cr, uid, ids, ['line_ids'], context=context):
+            st_line_obj.write(cr, uid, st_data['line_ids'], {
+                'state': 'draft'
+            }, context=context)
+
+        return super(Statement, self).button_cancel(
+            cr, uid, ids, context)
