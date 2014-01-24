@@ -31,6 +31,7 @@
         'account',
         'account_statement_ext',
         'account_default_draft_move',
+        'account_statement_base_completion',
     ],
     'description': """
         Account Statement Cancel Line

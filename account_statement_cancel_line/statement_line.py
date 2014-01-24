@@ -45,7 +45,7 @@ class StatementLine(orm.Model):
     }
 
     def confirm(self, cr, uid, ids, context=None):
-        """Confirm just one statement line, return true.
+        """Confirm just one statement line, return action.
 
         The module account_banking does have a similar method, but at the
         moment it uses a different logic (for example, it uses vouchers, where
@@ -60,7 +60,9 @@ class StatementLine(orm.Model):
         # The module tries to prevent direct changes to the moves created by
         # bank statements.
         local_ctx['from_parent_object'] = True
+
         statement_pool = self.pool.get('account.bank.statement')
+        res = {}
 
         for st_line in self.browse(cr, uid, ids, context):
             if st_line.state != 'draft':
@@ -84,10 +86,19 @@ class StatementLine(orm.Model):
             self.write(cr, uid, st_line.id, {
                 'state': 'confirmed'
             }, context)
-        return True
+            if statement_pool.confirm_statement_from_lines(cr, uid, [st.id],
+                                                           context=context):
+                # to see that the state of the statement has changed, we need
+                # to update the whole view. Do that only if necessary.
+                res = {
+                    'type': 'ir.actions.client',
+                    'tag': 'reload',
+                }
+
+        return res
 
     def cancel(self, cr, uid, ids, context=None):
-        """Cancel one statement line, return True.
+        """Cancel one statement line, return action.
 
         This is again similar to the method cancel in the account_banking
         module.
@@ -102,9 +113,14 @@ class StatementLine(orm.Model):
         # bank statements.
         local_ctx['from_parent_object'] = True
 
-        move_pool = self.pool.get('account.move')
+        move_pool = self.pool['account.move']
+        statement_pool = self.pool['account.bank.statement']
 
-        set_draft_ids = []
+        st_line_ids = []
+
+        # to avoid duplicates if all lines come from the same statement
+        statement_ids = set()
+
         move_unlink_ids = []
         # harvest ids for various actions
         for st_line in self.browse(cr, uid, ids, context):
@@ -122,15 +138,24 @@ class StatementLine(orm.Model):
                         _('Confirmed Journal Entry'),
                         _('You cannot delete a confirmed Statement Line '
                           'associated to a Journal Entry that is posted.'))
-            set_draft_ids.append(st_line.id)
+            st_line_ids.append(st_line.id)
+            statement_ids.add(st_line.statement_id.id)
 
         move_pool.button_cancel(
             cr, uid, move_unlink_ids, context=context)
 
         move_pool.unlink(cr, uid, move_unlink_ids, context=local_ctx)
-        self.write(
-            cr, uid, set_draft_ids, {'state': 'draft'}, context=context)
-        return True
+        self.write(cr, uid, st_line_ids, {
+            'state': 'draft',
+            'already_completed': False
+        }, context=context)
+        # if we cancel one or more lines, the statement goes back to draft, too
+        statement_pool.write(
+            cr, uid, list(statement_ids), {'state': 'draft'}, context=context)
+        return {
+            'type': 'ir.actions.client',
+            'tag': 'reload',
+        }
 
     def unlink(self, cr, uid, ids, context=None):
         """Don't allow deletion of a confirmed statement line. Return super."""

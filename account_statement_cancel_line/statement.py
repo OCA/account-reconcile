@@ -33,12 +33,6 @@ class Statement(orm.Model):
 
     _inherit = "account.bank.statement"
 
-    _columns = {
-    }
-
-    _defaults = {
-    }
-
     def button_confirm_bank(self, cr, uid, ids, context=None):
         """Change the state on the statement lines. Return super."""
         st_line_obj = self.pool['account.bank.statement.line']
@@ -60,3 +54,18 @@ class Statement(orm.Model):
 
         return super(Statement, self).button_cancel(
             cr, uid, ids, context)
+
+    def confirm_statement_from_lines(self, cr, uid, ids, context=None):
+        """If all lines are confirmed, so is the whole statement.
+
+        Return True if we changed anything.
+
+        """
+        need_to_update_view = False
+        for statement in self.browse(cr, uid, ids, context=context):
+            if all(line.state == 'confirmed' for line in statement.line_ids):
+                self.write(cr, uid, [statement.id], {
+                    'state': 'confirm'
+                }, context=context)
+                need_to_update_view = True
+        return need_to_update_view
