@@ -75,3 +75,25 @@ class account_invoice(orm.Model):
                        'AND account_analytic_line.move_id = account_move_line.id',
                        (ref, move_id))
         return True
+
+    def create(self, cr, uid, vals, context=None):
+        if (vals.get('supplier_invoice_reference') and not
+                vals.get('reference')):
+            vals['reference'] = vals['supplier_invoice_reference']
+        return super(account_invoice, self).create(cr, uid, vals,
+                                                   context=context)
+
+    def write(self, cr, uid, ids, vals, context=None):
+        if vals.get('supplier_invoice_reference'):
+            if isinstance(ids, (int, long)):
+                ids = [ids]
+            for invoice in self.browse(cr, uid, ids, context=context):
+                local_vals = vals
+                if not invoice.reference:
+                    locvals = vals.copy()
+                    locvals['reference'] = vals['supplier_invoice_reference']
+            return super(account_invoice, self).write(cr, uid, [invoice.id],
+                                                      locvals, context=context)
+        else:
+            return super(account_invoice, self).write(cr, uid, ids, vals,
+                                                      context=context)
