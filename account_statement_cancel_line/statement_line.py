@@ -139,7 +139,8 @@ class StatementLine(orm.Model):
                         _('You cannot delete a confirmed Statement Line '
                           'associated to a Journal Entry that is posted.'))
             st_line_ids.append(st_line.id)
-            statement_ids.add(st_line.statement_id.id)
+            if st_line.statement_id.state != 'draft':
+                statement_ids.add(st_line.statement_id.id)
 
         move_pool.button_cancel(
             cr, uid, move_unlink_ids, context=context)
@@ -149,13 +150,20 @@ class StatementLine(orm.Model):
             'state': 'draft',
             'already_completed': False
         }, context=context)
-        # if we cancel one or more lines, the statement goes back to draft, too
-        statement_pool.write(
-            cr, uid, list(statement_ids), {'state': 'draft'}, context=context)
-        return {
-            'type': 'ir.actions.client',
-            'tag': 'reload',
-        }
+        if statement_ids:
+            # if we cancel one or more lines, the statement goes back to draft,
+            # too
+            statement_pool.write(cr, uid, list(statement_ids), {
+                'state': 'draft'
+            }, context=context)
+            # then we manually update the view of the statement
+            return {
+                'type': 'ir.actions.client',
+                'tag': 'reload',
+            }
+        else:
+            # no need to update the view then
+            return {}
 
     def unlink(self, cr, uid, ids, context=None):
         """Don't allow deletion of a confirmed statement line. Return super."""
