@@ -51,13 +51,13 @@
 -
   I check that the state of the statement line is "Confirmed"
 -
-  !assert {model: account.bank.statement, id: statement_line_1}:
+  !assert {model: account.bank.statement.line, id: statement_line_1}:
     - state == 'confirmed'
 -
   I check that a move was generated
 -
-  !assert {model: account.bank.statement, id: statement_line_1}:
-    - move_id
+  !assert {model: account.bank.statement.line, id: statement_line_1}:
+    - move_ids
 -
   Now I cancel a statement line
 -
@@ -77,4 +77,4 @@
   And the move is not there anymore
 -
   !assert {model: account.bank.statement.line, id: statement_line_1}:
-    - move_id is False
+    - move_ids == []
