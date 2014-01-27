@@ -45,7 +45,33 @@ class Statement(orm.Model):
             cr, uid, ids, context)
 
     def button_cancel(self, cr, uid, ids, context=None):
-        """Change the state on the statement lines. Return super."""
+        """Check if there is any reconciliation. Return action."""
+        st_line_obj = self.pool['account.bank.statement.line']
+        for statement in self.browse(cr, uid, ids, context=context):
+            if st_line_obj.has_reconciliation(
+                    cr,
+                    uid,
+                    [line.id for line in statement.line_ids],
+                    context=context):
+                # ask confirmation, we have some reconciliation already
+                return {
+                    'type': 'ir.actions.act_window',
+                    'res_model': 'wizard.cancel.statement',
+                    'view_type': 'form',
+                    'view_mode': 'form',
+                    'target': 'new',
+                    'context': context,
+                }
+
+        self.do_cancel(cr, uid, ids, context=context)
+
+    def do_cancel(self, cr, uid, ids, context=None):
+        """Change the state on the statement lines. Return super.
+
+        This method is called directly when there are no reconciliations, or
+        from the warning wizard, if there are reconciliations.
+
+        """
         st_line_obj = self.pool['account.bank.statement.line']
         for st_data in self.read(cr, uid, ids, ['line_ids'], context=context):
             st_line_obj.write(cr, uid, st_data['line_ids'], {

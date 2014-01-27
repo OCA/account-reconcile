@@ -18,6 +18,7 @@
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.     #
 #                                                                             #
 ###############################################################################
-"""Account Statement Cancel Line."""
+"""Wizard for asking the confirmation when some move is reconciled."""
 
-import cancel_line  # noqa
+import cancel_statement  # noqa
+import cancel_statement_line  # noqa

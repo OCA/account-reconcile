@@ -23,12 +23,12 @@
 from openerp.osv import orm
 
 
-class wizard_cancel_line(orm.TransientModel):
+class wizard_cancel_statement_line(orm.TransientModel):
 
     """Wizard to Cancel a Statement Line."""
 
-    _name = "wizard.cancel.line"
-    _description = "Cancel Line"
+    _name = "wizard.cancel.statement.line"
+    _description = "Cancel Statement Line"
     _columns = {
     }
 
