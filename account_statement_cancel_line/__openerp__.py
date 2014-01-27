@@ -43,6 +43,7 @@
     'init_xml': [],
     'update_xml': [
         'statement_view.xml',
+        'wizard/cancel_line_view.xml',
     ],
     'demo_xml': [],
     'test': [

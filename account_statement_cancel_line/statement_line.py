@@ -97,6 +97,28 @@ class StatementLine(orm.Model):
 
         return res
 
+    def button_cancel(self, cr, uid, ids, context=None):
+        """Check if a line is reconciled, and cancel it. Return action."""
+        if context is None:
+            context = {}
+
+        for st_line in self.browse(cr, uid, ids, context=context):
+            for move in st_line.move_ids:
+                for move_line in move.line_id:
+                    if move_line.reconcile:
+                        # ask confirmation, we have some reconciliation already
+                        return {
+                            'type': 'ir.actions.act_window',
+                            'res_model': 'wizard.cancel.line',
+                            'view_type': 'form',
+                            'view_mode': 'form',
+                            'target': 'new',
+                            'context': context,
+                        }
+
+        # no reconciliation to worry about: we cancel our lines directly then
+        return self.cancel(cr, uid, ids, context=context)
+
     def cancel(self, cr, uid, ids, context=None):
         """Cancel one statement line, return action.
 

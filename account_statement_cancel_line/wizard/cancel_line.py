@@ -18,8 +18,29 @@
 #   along with this program.  If not, see <http://www.gnu.org/licenses/>.     #
 #                                                                             #
 ###############################################################################
-"""Account Statement Cancel Line."""
+"""Wizard to Cancel a Statement Line."""
 
-import statement  # noqa
-import statement_line  # noqa
-import wizard  # noqa
+from openerp.osv import orm
+
+
+class wizard_cancel_line(orm.TransientModel):
+
+    """Wizard to Cancel a Statement Line."""
+
+    _name = "wizard.cancel.line"
+    _description = "Cancel Line"
+    _columns = {
+    }
+
+    def unreconcile(self, cr, uid, ids, context=None):
+        """Proceed and cancel the statement line, return Action.
+
+        This will delete the move.line and the reconciliation.
+
+        """
+        return self.pool['account.bank.statement.line'].cancel(
+            cr,
+            uid,
+            context['active_ids'],
+            context=context
+        )

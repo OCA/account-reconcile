@@ -15,7 +15,7 @@
                                 string="Confirm transaction"
                                 icon="gtk-ok"
                                 type="object"/>
-                        <button name="cancel" states="confirmed"
+                        <button name="button_cancel" states="confirmed"
                                 string="Cancel transaction"
                                 icon="gtk-cancel"
                                 type="object"/>
