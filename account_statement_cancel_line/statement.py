@@ -27,7 +27,8 @@ class Statement(orm.Model):
 
     """Bank Statement.
 
-    Minimal changes to allow cancelling single lines.
+    Minimal changes to allow cancelling single lines and checking if there are
+    any lines that are already reconciled.
 
     """
 

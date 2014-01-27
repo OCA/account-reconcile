@@ -61,6 +61,7 @@
     ],
     'demo_xml': [],
     'test': [
+        'test/cancel_line.yml',
     ],
     'installable': True,
     'images': [],
