@@ -22,7 +22,7 @@
 ###############################################################################
 {
     'name': "Account Statement Cancel Line",
-    'version': '0.1',
+    'version': '0.2',
     'author': 'Camptocamp',
     'maintainer': 'Camptocamp',
     'category': 'Finance',
@@ -38,6 +38,19 @@
 
         This module allows to cancel one line of the statement without
         cancelling the whole thing.
+
+        To do that, a state is added to the statement line.
+
+        When the user confirms or cancels the whole statement, we keep the
+        previous functionality, and then we change the state in all statement
+        lines.
+
+        When the user confirms or cancels a statement line, we update the state
+        of the line, and if necessary we update the state of the whole
+        statement, too.
+
+        If the user tries to cancel a line that is reconciled, we ask for
+        confirmation before proceeding.
     """,
     'website': 'http://www.camptocamp.com',
     'init_xml': [],
