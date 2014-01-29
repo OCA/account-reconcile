@@ -92,8 +92,9 @@ class account_invoice(orm.Model):
                 if not invoice.reference:
                     locvals = vals.copy()
                     locvals['reference'] = vals['supplier_invoice_reference']
-            return super(account_invoice, self).write(cr, uid, [invoice.id],
-                                                      locvals, context=context)
+                super(account_invoice, self).write(cr, uid, [invoice.id],
+                                                   locvals, context=context)
+            return True
         else:
             return super(account_invoice, self).write(cr, uid, ids, vals,
                                                       context=context)
