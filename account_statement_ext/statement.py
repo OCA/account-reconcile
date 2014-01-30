@@ -216,8 +216,9 @@ class AccountBankSatement(Model):
         if context is None:
             context = {}
         period_obj = self.pool.get('account.period')
-        context['account_period_prefer_normal'] = True
-        periods = period_obj.find(cr, uid, dt=date, context=context)
+        local_context = context.copy()
+        local_context['account_period_prefer_normal'] = True
+        periods = period_obj.find(cr, uid, dt=date, context=local_context)
         return periods and periods[0] or False
 
     def _check_company_id(self, cr, uid, ids, context=None):
