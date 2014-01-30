@@ -213,7 +213,10 @@ class AccountBankSatement(Model):
         """
         Find matching period for date, used in the statement line creation.
         """
+        if context is None:
+            context = {}
         period_obj = self.pool.get('account.period')
+        context['account_period_prefer_normal'] = True
         periods = period_obj.find(cr, uid, dt=date, context=context)
         return periods and periods[0] or False
 
