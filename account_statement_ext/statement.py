@@ -576,9 +576,12 @@ class AccountBankSatementLine(Model):
         """Return matching period for a date."""
         if context is None:
             context = {}
+        period_obj = self.pool['account.period']
         date = context.get('date')
+        local_context = context.copy()
+        local_context['account_period_prefer_normal'] = True
         try:
-            periods = self.pool.get('account.period').find(cr, uid, dt=date)
+            periods = period_obj.find(cr, uid, dt=date, context=local_context)
         except osv.except_osv:
             # if no period defined, we are certainly at installation time
             return False
