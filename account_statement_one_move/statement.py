@@ -132,7 +132,7 @@ class account_bank_statement(orm.Model):
         for st in self.browse(cr, uid, ids, context=context):
             super(account_bank_statement, self).button_confirm_bank(cr, uid, ids,
                                                                     context=context)
-            if st.profile_id.one_move:
+            if st.profile_id.one_move and context.get('move_id', False):
                 move_id = context['move_id']
                 self._valid_move(cr, uid, move_id, context=context)
                 lines_ids = [x.id for x in st.line_ids]
@@ -144,8 +144,7 @@ class account_bank_statement(orm.Model):
     def button_cancel(self, cr, uid, ids, context=None):
         done = []
         for st in self.browse(cr, uid, ids, context=context):
-            if st.profile_id.one_move:
-                assert st.line_ids, "This statement does not contain any lines"
+            if st.profile_id.one_move and st.line_ids:
                 for move in st.line_ids[0].move_ids:
                     if move.state != 'draft':
                         move.button_cancel(context=context)
