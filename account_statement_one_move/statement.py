@@ -30,7 +30,7 @@ class AccountStatementProfile(orm.Model):
             'Group Journal Items',
             help="Only one Journal Entry will be generated on the "
                  "validation of the bank statement."),
-
+    }
 
 class account_bank_statement(orm.Model):
     _inherit = "account.bank.statement"
