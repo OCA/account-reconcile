@@ -21,8 +21,6 @@
 ###############################################################################
 
 from openerp.osv import fields, orm, osv
-from openerp.tools.translate import _
-
 
 
 class AccountStatementProfile(orm.Model):
@@ -37,7 +35,6 @@ class AccountStatementProfile(orm.Model):
             help="Two transfer lines will be automatically generated : one "
                  "for the refunds and one for the payments.")
     }
-
 
 class account_bank_statement(orm.Model):
     _inherit = "account.bank.statement"
@@ -132,89 +129,78 @@ class account_bank_statement(orm.Model):
         return True
 
 
-    def create_statement_payment_line(self, cr, uid, st, payment_amount, context=None):
-        st_line_obj = self.pool.get('account.bank.statement.line')
-        payment_account_id = st.profile_id.journal_id.default_credit_account_id.id
+    def _prepare_transfer_move_line_vals(self, cr, uid, st, name, debit, credit, move_id, context=None):
+        """
+            Prepare the dict of values to create the transfer move lines.
+        """
+        account_id = st.profile_id.journal_id.default_debit_account_id.id
         partner_id = st.profile_id.partner_id and profile.partner_id.id or False
         vals = {
-            'name': _('Payment Transfer'),
+            'name': name,
             'date': st.date,
-            'amount': -payment_amount,
             'partner_id': partner_id,
-            'type': 'general',
             'statement_id': st.id,
-            'account_id': payment_account_id,
-            'ref': _('Transfer'),
-            'already_completed': True
-                }
-        payment_line_id = st_line_obj.create(cr, uid, vals, context=context)
-        return payment_line_id
+            'account_id': account_id,
+            'ref': name,
+            'move_id': move_id,
+            'credit': credit,
+            'debit': debit,
+            'journal_id': st.journal_id.id,
+            'period_id': st.period_id.id,
+        }
+        return vals
 
 
-    def create_statement_refund_line(self, cr, uid, st, refund_amount, context=None):
-        st_line_obj = self.pool.get('account.bank.statement.line')
-        refund_account_id = st.profile_id.journal_id.default_credit_account_id.id
-        partner_id = st.profile_id.partner_id and profile.partner_id.id or False
-        vals = {
-            'name': _('Refund Transfer'),
-            'date': st.date,
-            'amount': -refund_amount,
-            'partner_id': partner_id,
-            'type': 'general',
-            'statement_id': st.id,
-            'account_id': refund_account_id,
-            'ref': _('Transfer'),
-            'already_completed': True
-                }
-        refund_line_id = st_line_obj.create(cr, uid, vals, context=context)
-        return refund_line_id
-
-
-    def prepare_statement_transfer_lines(self, cr, uid, st, context=None):
-        refund_amount = 0.0
-        payment_amount = 0.0
+    def create_move_transfer_lines(self, cr, uid, move, st, context=None):
+        move_line_obj = self.pool.get('account.move.line')
+        move_id = move.id
+        refund = 0.0
+        payment = 0.0
         transfer_line_ids = []
         #Calculate the part of the refund amount and the payment amount
-        for st_line in st.line_ids:
-            if st_line.amount < 0.0:
-                refund_amount += st_line.amount
-            else:
-                payment_amount += st_line.amount
+        for move_line in move.line_id:
+            refund += move_line.debit
+            payment += move_line.credit
         #Create 2 Transfer lines or One global tranfer line
-        if st.profile_id.split_transfer_line:
-            transfer_line_ids.append(self.create_statement_refund_line(cr, uid, st,
-                                                               refund_amount,
-                                                               context=context))
-            transfer_line_ids.append(self.create_statement_payment_line(cr, uid, st,
-                                                                 payment_amount,
-                                                                 context=context))
+        refund_name = 'Refund Transfer'
+        payment_name = 'Payment Transfer'
+        if st.profile_id.split_transfer_line and refund != 0.0 and payment != 0.0:
+            refund_vals = self._prepare_transfer_move_line_vals(cr, uid, st,
+                                                                refund_name, 0, refund,
+                                                                move_id, context=context)
+            transfer_line_ids.append(move_line_obj.create(cr, uid, refund_vals, context=context))
+            payment_vals = self._prepare_transfer_move_line_vals(cr, uid, st,
+                                                                 payment_name, payment, 0,
+                                                                 move_id, context=context)
+            transfer_line_ids.append(move_line_obj.create(cr, uid, payment_vals, context=context))
         else:
-            global_amount = refund_amount + payment_amount
             #The global transfer line can be a refund or a payment transfer
-            if global_amount < 0.00:
-                transfer_line_ids.append(self.create_statement_refund_line(cr, uid, st,
-                                                                   global_amount,
-                                                                   context=context))
+            global_amount = abs(payment-refund)
+            if payment > refund:
+                vals = self._prepare_transfer_move_line_vals(cr, uid, st,
+                                                             payment_name, 
+                                                             global_amount, 0,
+                                                             move_id, context=context)
             else:
-                transfer_line_ids.append(self.create_statement_payment_line(cr, uid, st,
-                                                                     global_amount,
-                                                                     context=context))
+                vals = self._prepare_transfer_move_line_vals(cr, uid, st,
+                                                             refund_name, 0, global_amount,
+                                                             move_id, context=context)
+            transfer_line_ids.append(move_line_obj.create(cr, uid, vals, context=context))
         return transfer_line_ids
-            
 
-
+           
     def button_confirm_bank(self, cr, uid, ids, context=None):
         st_line_obj = self.pool.get('account.bank.statement.line')
+        move_obj = self.pool.get('account.move')
         if context is None:
             context = {}
         for st in self.browse(cr, uid, ids, context=context):
-            if st.profile_id.one_move:
-                refund_line_ids = self.prepare_statement_transfer_lines(cr, uid, st, 
-                                                                        context=context)
             super(account_bank_statement, self).button_confirm_bank(cr, uid, ids,
                                                                     context=context)
             if st.profile_id.one_move:
                 move_id = context['move_id']
+                move = move_obj.browse(cr, uid, move_id, context=context)
+                transfe_line_ids = self.create_move_transfer_lines(cr, uid, move, st, context=context)
                 self._valid_move(cr, uid, move_id, context=context)
                 lines_ids = [x.id for x in st.line_ids]
                 st_line_obj.write(cr, uid, lines_ids,
