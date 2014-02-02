@@ -2,8 +2,10 @@ from openerp.tools.translate import _
 import datetime
 from openerp.osv import orm, fields
 
+
 def float_or_zero(val):
     return float(val) if val else 0.0
+
 
 class AccountStatementProfil(orm.Model):
     _inherit = "account.statement.profile"
@@ -22,7 +24,7 @@ class AccountStatementProfil(orm.Model):
         commission_analytic_id = profile.commission_analytic_id and profile.commission_analytic_id.id or False
         comm_values = {
             'name': 'IN ' + _('Commission line'),
-            'date': parser.get_statement_date(),
+            'date': parser.get_st_vals().get('date') or datetime.datetime.now(),
             'amount': global_commission_amount,
             'partner_id': partner_id,
             'type': 'general',
@@ -36,6 +38,7 @@ class AccountStatementProfil(orm.Model):
         statement_line_obj = self.pool.get('account.bank.statement.line')
         statement_line_obj.create(cr, uid, comm_values, context=context)
 
+
 class AccountStatementLineWithCommission(orm.Model):
     _inherit = "account.bank.statement.line"
     _columns = {
@@ -44,6 +47,7 @@ class AccountStatementLineWithCommission(orm.Model):
             string='Line Commission Amount',
             serialization_field='additionnal_bank_fields'),
     }
+
 
 class CreditPartnerStatementImporter(orm.TransientModel):
     _inherit = "credit.statement.import"

@@ -184,7 +184,7 @@ class AccountStatementCompletionRule(orm.Model):
         inv = self._find_invoice(cr, uid, line, inv_type, context=context)
         if inv:
             # FIXME use only commercial_partner_id of invoice in 7.1
-            # this is for backward compatibility in 7.0 before 
+            # this is for backward compatibility in 7.0 before
             # the refactoring of res.partner
             if hasattr(inv, 'commercial_partner_id'):
                 partner_id = inv.commercial_partner_id.id
@@ -418,7 +418,7 @@ class AccountStatementLine(orm.Model):
         """
         statement_line_obj = self.pool['account.bank.statement.line']
         model_cols = statement_line_obj._columns
-        sparse_fields = dict([(k , col) for k, col in model_cols.iteritems() if isinstance(col, fields.sparse) and col._type == 'char'])
+        sparse_fields = dict([(k, col) for k, col in model_cols.iteritems() if isinstance(col, fields.sparse) and col._type == 'char'])
         values = []
         for statement in statement_store:
             to_json_k = set()
@@ -429,10 +429,9 @@ class AccountStatementLine(orm.Model):
                     serialized = st_copy.setdefault(col.serialization_field, {})
                     serialized[k] = st_copy[k]
             for k in to_json_k:
-                st_copy[k] =  simplejson.dumps(st_copy[k])
+                st_copy[k] = simplejson.dumps(st_copy[k])
             values.append(st_copy)
         return values
-        
 
     def _insert_lines(self, cr, uid, statement_store, context=None):
         """ Do raw insert into database because ORM is awfully slow
@@ -456,7 +455,7 @@ class AccountStatementLine(orm.Model):
             when cheking security.
         TODO / WARM: sparse fields are skipped by the method. IOW, if your
         completion rule update an sparse field, the updated value will never
-        be stored in the database. It would be safer to call the update method 
+        be stored in the database. It would be safer to call the update method
         from the ORM for records updating this kind of fields.
         """
         cols = self._get_available_columns([vals])
