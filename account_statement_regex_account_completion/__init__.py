@@ -1,8 +1,16 @@
 # -*- coding: utf-8 -*-
 ##############################################################################
 #
-#    Author: Joel Grand-Guillaume
-#    Copyright 2011-2012 Camptocamp SA
+#    Authors: Laetitia Gangloff
+#    Copyright (c) 2014 Acsone SA/NV (http://www.acsone.eu)
+#    All Rights Reserved
+#
+#    WARNING: This program as such is intended to be used by professional
+#    programmers who take the whole responsibility of assessing all potential
+#    consequences resulting from its eventual inadequacies and bugs.
+#    End users who are looking for a ready-to-use solution with commercial
+#    guarantees and support are strongly advised to contact a Free Software
+#    Service Company.
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -19,23 +27,6 @@
 #
 ##############################################################################
 
-from openerp.osv.orm import Model
-from openerp.osv import fields
+from . import statement
 
-
-class account_move(Model):
-    _inherit = 'account.move'
-
-    def unlink(self, cr, uid, ids, context=None):
-        """
-        Delete the reconciliation when we delete the moves. This
-        allow an easier way of cancelling the bank statement.
-        """
-        reconcile_to_delete = []
-        reconcile_obj = self.pool.get('account.move.reconcile')
-        for move in self.browse(cr, uid, ids, context=context):
-            for move_line in move.line_id:
-                if move_line.reconcile_id:
-                    reconcile_to_delete.append(move_line.reconcile_id.id)
-        reconcile_obj.unlink(cr, uid, reconcile_to_delete, context=context)
-        return super(account_move, self).unlink(cr, uid, ids, context=context)
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

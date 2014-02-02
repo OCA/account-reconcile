@@ -126,6 +126,15 @@ class AccountStatementProfil(Model):
         values['type'] = 'general'
         return values
 
+
+    def _prepare_statement_vals(self, cr, uid, prof, parser, context=None):
+        return {
+            'profile_id': prof.id,
+            'name': parser.get_statement_name(),
+            'balance_start': parser.get_start_balance(),
+            'balance_end_real': parser.get_end_balance(),
+        }
+
     def statement_import(self, cr, uid, ids, profile_id, file_stream, ftype="csv", context=None):
         """
         Create a bank statement with the given profile and parser. It will fullfill the bank statement
@@ -159,9 +168,8 @@ class AccountStatementProfil(Model):
                                      _("Column %s you try to import is not "
                                        "present in the bank statement line!") % col)
 
-        statement_id = statement_obj.create(cr, uid,
-                                            {'profile_id': prof.id},
-                                            context=context)
+        st_vals = self._prepare_statement_vals(cr, uid, prof, parser, context=context) 
+        statement_id = statement_obj.create(cr, uid, st_vals, context=context)
         if prof.receivable_account_id:
             account_receivable = account_payable = prof.receivable_account_id.id
         else:

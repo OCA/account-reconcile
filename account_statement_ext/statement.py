@@ -223,12 +223,17 @@ class AccountBankSatement(Model):
         move of period_id to the statement line
         """
         for statement in self.browse(cr, uid, ids, context=context):
+            # statement.company_id is a related store=True that for some
+            # reason doesn't work in YAML tests. As a workaround, I unwind it
+            # to statement.journal_id.company_id here.
             if (statement.period_id and
-                    statement.company_id.id != statement.period_id.company_id.id):
+                    statement.journal_id.company_id.id !=
+                    statement.period_id.company_id.id):
                 return False
             for line in statement.line_ids:
                 if (line.period_id and
-                        statement.company_id.id != line.period_id.company_id.id):
+                        statement.journal_id.company_id.id
+                        != line.period_id.company_id.id):
                     return False
         return True
 
@@ -536,12 +541,8 @@ class AccountBankSatement(Model):
         import_config = self.pool.get("account.statement.profile").browse(
                 cr, uid, profile_id, context=context)
         journal_id = import_config.journal_id.id
-        account_id = import_config.journal_id.default_debit_account_id.id
-        credit_partner_id = import_config.partner_id and import_config.partner_id.id or False
         return {'value': {'journal_id': journal_id,
-                          'account_id': account_id,
-                          'balance_check': import_config.balance_check,
-                          'credit_partner_id': credit_partner_id}}
+                          'balance_check': import_config.balance_check}}
 
 
 class AccountBankSatementLine(Model):
