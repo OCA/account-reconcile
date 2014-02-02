@@ -24,16 +24,17 @@ import sys
 import logging
 import simplejson
 import inspect
+import datetime
 
 import psycopg2
 
 from collections import defaultdict
 import re
-from tools.translate import _
+from openerp.tools.translate import _
 from openerp.osv import osv, orm, fields
 from openerp.tools import DEFAULT_SERVER_DATETIME_FORMAT
 from operator import attrgetter
-import datetime
+
 
 _logger = logging.getLogger(__name__)
 
@@ -184,7 +185,7 @@ class AccountStatementCompletionRule(orm.Model):
         inv = self._find_invoice(cr, uid, line, inv_type, context=context)
         if inv:
             # FIXME use only commercial_partner_id of invoice in 7.1
-            # this is for backward compatibility in 7.0 before 
+            # this is for backward compatibility in 7.0 before
             # the refactoring of res.partner
             if hasattr(inv, 'commercial_partner_id'):
                 partner_id = inv.commercial_partner_id.id
@@ -256,7 +257,7 @@ class AccountStatementCompletionRule(orm.Model):
         st_obj = self.pool.get('account.bank.statement.line')
         res = {}
         # As we have to iterate on each partner for each line,
-        # we memoize the pair to avoid
+        #  we memoize the pair to avoid
         # to redo computation for each line.
         # Following code can be done by a single SQL query
         # but this option is not really maintanable
@@ -429,10 +430,10 @@ class AccountStatementLine(orm.Model):
                     serialized = st_copy.setdefault(col.serialization_field, {})
                     serialized[k] = st_copy[k]
             for k in to_json_k:
-                st_copy[k] =  simplejson.dumps(st_copy[k])
+                st_copy[k] = simplejson.dumps(st_copy[k])
             values.append(st_copy)
         return values
-        
+
 
     def _insert_lines(self, cr, uid, statement_store, context=None):
         """ Do raw insert into database because ORM is awfully slow
@@ -456,7 +457,7 @@ class AccountStatementLine(orm.Model):
             when cheking security.
         TODO / WARM: sparse fields are skipped by the method. IOW, if your
         completion rule update an sparse field, the updated value will never
-        be stored in the database. It would be safer to call the update method 
+        be stored in the database. It would be safer to call the update method
         from the ORM for records updating this kind of fields.
         """
         cols = self._get_available_columns([vals])
@@ -552,7 +553,7 @@ class AccountBankSatement(orm.Model):
                     st += ''.join(traceback.format_tb(trbk, 30))
                     _logger.error(st)
                 if res:
-                    #stat_line_obj.write(cr, uid, [line.id], vals, context=ctx)
+                    # stat_line_obj.write(cr, uid, [line.id], vals, context=ctx)
                     try:
                         stat_line_obj._update_line(cr, uid, res, context=context)
                     except Exception as exc:
