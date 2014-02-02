@@ -21,17 +21,17 @@
 from openerp.tools.translate import _
 from openerp.osv import fields, orm
 
-class AccountStatementProfile(orm.Model):
+class AccountStatementProfil(orm.Model):
     _inherit = "account.statement.profile"
 
     def get_import_type_selection(self, cr, uid, context=None):
         """
         Inherited from parent to add parser.
         """
-        selection = super(AccountStatementProfile, self
-                          ).get_import_type_selection(cr, uid, context=context)
-        selection.extend([('ofx_so', _('OFX - Open Financial Exchange')),
-                          ('ofx_alt', _('OFX - (memo rather than type in ref field)'))])
+        selection = super(AccountStatementProfil, self
+                          ).get_import_type_selection(cr, uid,
+                                                      context=context)
+        selection.append(('ofx_so', _('OFX - Open Financial Exchange')))
         return selection
 
     _columns = {
