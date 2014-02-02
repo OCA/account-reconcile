@@ -34,7 +34,7 @@ class OfxParser(BankStatementImportParser):
     """
     Class for defining parser for OFX file format.
     """
-    
+
     def __init__(self, parser_name, *args, **kwargs):
         """
         """
@@ -60,25 +60,23 @@ class OfxParser(BankStatementImportParser):
         """
         return True
 
+    def _prepare_lines(self, transactions):
+        return [{'date': transaction.date,
+                'amount': transaction.amount,
+                'ref': transaction.type,
+                'label': transaction.payee} for transaction in transactions]
+
     def _parse(self, *args, **kwargs):
         """
         Launch the parsing itself.
         """
-        ofx_file = tempfile.NamedTemporaryFile()
-        ofx_file.seek(0)
-        ofx_file.write(self.filebuffer)
-        ofx_file.flush()
-        ofx = ofxparse.OfxParser.parse(file(ofx_file.name))
-        ofx_file.close()
-        res = []
-        for transaction in ofx.account.statement.transactions:
-            res.append({
-                'date': transaction.date,
-                'amount': transaction.amount,
-                'ref': transaction.type,
-                'label': transaction.payee,
-            })
-        self.result_row_list = res
+        with tempfile.NamedTemporaryFile() as ofx_file:
+            ofx_file.seek(0)
+            ofx_file.write(self.filebuffer)
+            ofx_file.flush()
+            ofx = ofxparse.OfxParser.parse(file(ofx_file.name))
+            ofx_file.close()
+        self.result_row_list = self._prepare_lines(ofx.account.statement.transactions)
         return True
 
     def _validate(self, *args, **kwargs):
@@ -90,12 +88,6 @@ class OfxParser(BankStatementImportParser):
     def _post(self, *args, **kwargs):
         """
         Nothing is needed to do after parsing.
-        """
-        return True
-
-    def _post(self, *args, **kwargs):
-        """
-        Nothing to do.
         """
         return True
 
@@ -118,3 +110,27 @@ class OfxParser(BankStatementImportParser):
             'label': line.get('label', ''),
         }
 
+class OfxParser2(OfxParser):
+    """
+    Class for defining parser for OFX file format. Only differs from above
+    by setting ref to be the memo rather than type field
+    """
+
+    def __init__(self, parser_name, *args, **kwargs):
+        """
+        """
+        super(OfxParser2, self).__init__(parser_name, *args, **kwargs)
+
+    @classmethod
+    def parser_for(cls, parser_name):
+        """
+        Used by the new_bank_statement_parser class factory. Return true if
+        the providen name is 'ofx_alt'.
+        """
+        return parser_name == 'ofx_alt'
+
+    def _prepare_lines(self, transactions):
+        return [{'date': transaction.date,
+                'amount': transaction.amount,
+                'ref': transaction.memo,
+                'label': transaction.payee} for transaction in transactions]
