@@ -31,11 +31,10 @@
     'depends': [
         'account',
         ], 
-    'init_xml': [],
-    'update_xml': [ 
+    'data': [ 
         'statement_view.xml',
     ],
-    'demo_xml': [],
+    'demo': [],
     'installable': True,
     'active': False,
 }
