@@ -87,8 +87,7 @@ class AccountStatementProfil(Model):
 
     #Deprecated remove on V8
     def prepare_statetement_lines_vals(self, *args, **kwargs):
-        return super(self, AccountStatementProfil).\
-                prepare_statetement_lines_vals(*args, **kwargs)
+        return self.prepare_statement_lines_vals(*args, **kwargs)
 
     def prepare_statement_lines_vals(
             self, cr, uid, parser_vals, account_payable, account_receivable,
