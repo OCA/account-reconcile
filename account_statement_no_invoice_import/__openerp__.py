@@ -25,7 +25,7 @@
     'version': '0.1',
     'category': 'Generic Modules/Others',
     'license': 'AGPL-3',
-    'description': """Module that remove the import button on bank statement""",
+    'description': """Module that remove the 'Import invoices' button on bank statement""",
     'author': 'Akretion',
     'website': 'http://www.akretion.com/',
     'depends': [
