@@ -78,27 +78,30 @@ class AccountStatementCompletionRule(orm.Model):
         label_obj = self.pool.get('account.statement.label')
         statement = st_obj.browse(cr, uid, st_line['statement_id'][0], context=context)
         res = {}
-        # As we have to iterate on each label for each line,
-        # we memorize the pair to avoid
-        # to redo computation for each line.
-        # Following code can be done by a single SQL query
-        # but this option is not really maintanable
         if not context.get('label_memorizer'):
             context['label_memorizer'] = defaultdict(list)
-            label_ids = label_obj.search(cr, uid,
-                                         ['|',
-                                          ('profile_id', '=', statement.profile_id.id),
-                                          ('profile_id', '=', False)],
-                                         context=context)
-            for label in label_obj.browse(cr, uid, label_ids, context=context):
-                line_ids = st_line_obj.search(cr, uid,
-                                         [('statement_id', '=', statement.id),
-                                          ('name', 'ilike', label.label),
-                                          ('already_completed', '=', False)],
-                                         context=context)
-                for line_id in line_ids:
-                    context['label_memorizer'][line_id].append({'partner_id': label.partner_id.id,
-                                                                'account_id': label.account_id.id})
+            for line in statement.line_ids:
+                print "ll***"
+                sub_query = "SELECT st_l.name FROM account_bank_statement_line as st_l WHERE st_l.id = %s" % (line.id)
+                sign = "'%'"
+                cr.execute(""" 
+                    SELECT l.partner_id,
+                           l.account_id
+                    FROM account_statement_label as l
+                    WHERE (
+                        SELECT st_l.name
+                        FROM account_bank_statement_line as st_l
+                        WHERE st_l.id = %s) ILIKE %s || l.label || %s
+                    AND l.profile_id = (
+                        SELECT s.profile_id
+                        FROM account_bank_statement as s
+                        LEFT JOIN account_bank_statement_line st_l
+                            ON st_l.statement_id = s.id
+                        WHERE st_l.id = %s)
+                        """ % (line.id, sign, sign, line.id))
+                for partner, account in cr.fetchall():
+                    context['label_memorizer'][line.id].append({'partner_id': partner,
+                                                                'account_id': account})
         if st_line['id'] in context['label_memorizer']:
             label_info = context['label_memorizer'][st_line['id']]
             if len(label_info) > 1:
@@ -126,7 +129,12 @@ class AccountStatementLabel(orm.Model):
                                       required = True,
                                       help='Account corresponding to the label '
                                       'for a given partner'),
-        'company_id': fields.many2one('res.company', 'Company'),
+        'company_id': fields.related('account_id', 'company_id',
+                                     type='many2one',
+                                     reation='res.company',
+                                     string='Company',
+                                     store=True,
+                                     readonly=True),
         'profile_id': fields.many2one('account.statement.profile',
                                       'Account Profile'),
     }
