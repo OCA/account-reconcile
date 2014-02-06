@@ -7,13 +7,13 @@
          <field name="model">account.bank.statement</field>
          <field name="inherit_id" ref="account.view_bank_statement_form" />
          <field eval="20" name="priority"/>
-         <field name="type">form</field>
          <field name="arch" type="xml">
-             <data>
-                 <xpath expr="/form/sheet/notebook/page/field[@name='line_ids']/form/group/field[@name='label']" position="after">
-                     <field name="transaction_id" />
-                 </xpath>
-             </data>
+            <xpath expr="//field[@name='line_ids']/form//field[@name='label']" position="after">
+                <field name="transaction_id" />
+            </xpath>
+            <xpath expr="//field[@name='line_ids']/tree/field[@name='ref']" position="after">
+                <field name="transaction_id" />
+            </xpath>
          </field>
      </record>
 
