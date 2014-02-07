@@ -30,6 +30,10 @@ class AccountStatementProfile(orm.Model):
             'Group Journal Items',
             help="Only one Journal Entry will be generated on the "
                  "validation of the bank statement."),
+        'split_transfer_line': fields.boolean(
+            'Split Transfer Line',
+            help="Two transfer lines will be automatically generated : one "
+                 "for the refunds and one for the payments.")
     }
 
 class account_bank_statement(orm.Model):
@@ -125,9 +129,69 @@ class account_bank_statement(orm.Model):
         move_obj.post(cr, uid, [move_id], context=context)
         return True
 
+
+    def _prepare_transfer_move_line_vals(self, cr, uid, st, name, amount, move_id, context=None):
+        """
+            Prepare the dict of values to create the transfer move lines.
+        """
+        account_id = st.profile_id.journal_id.default_debit_account_id.id
+        partner_id = st.profile_id.partner_id and profile.partner_id.id or False
+        if amount < 0.0:
+            debit = 0.0
+            credit = -amount
+        else:
+            debit = amount
+            credit = 0.0
+        vals = {
+            'name': name,
+            'date': st.date,
+            'partner_id': partner_id,
+            'statement_id': st.id,
+            'account_id': account_id,
+            'ref': name,
+            'move_id': move_id,
+            'credit': credit,
+            'debit': debit,
+            'journal_id': st.journal_id.id,
+            'period_id': st.period_id.id,
+        }
+        return vals
+
+
+    def create_move_transfer_lines(self, cr, uid, move, st, context=None):
+        move_line_obj = self.pool.get('account.move.line')
+        move_id = move.id
+        refund = 0.0
+        payment = 0.0
+        transfer_lines = []
+        transfer_line_ids = []
+        #Calculate the part of the refund amount and the payment amount
+        for move_line in move.line_id:
+            refund -= move_line.debit
+            payment += move_line.credit
+        #Create 2 Transfer lines or One global tranfer line
+        if st.profile_id.split_transfer_line:
+            if refund:
+                transfer_lines.append(['Refund Transfer', refund])
+            if payment:
+                transfer_lines.append(['Payment Transfer', payment])
+        else:
+            amount = payment + refund
+            if amount:
+                transfer_lines.append(['Transfer', amount])
+        for transfer_line in transfer_lines:
+            vals = self._prepare_transfer_move_line_vals(cr, uid, st, 
+                                                         transfer_line[0],
+                                                         transfer_line[1], 
+                                                         move_id,
+                                                         context=context)
+            transfer_line_ids.append(move_line_obj.create(cr, uid, vals, context=context))
+        return transfer_line_ids
+
            
     def button_confirm_bank(self, cr, uid, ids, context=None):
         st_line_obj = self.pool.get('account.bank.statement.line')
+        move_obj = self.pool.get('account.move')
         if context is None:
             context = {}
         for st in self.browse(cr, uid, ids, context=context):
@@ -135,6 +199,8 @@ class account_bank_statement(orm.Model):
                                                                     context=context)
             if st.profile_id.one_move and context.get('move_id', False):
                 move_id = context['move_id']
+                move = move_obj.browse(cr, uid, move_id, context=context)
+                transfe_line_ids = self.create_move_transfer_lines(cr, uid, move, st, context=context)
                 self._valid_move(cr, uid, move_id, context=context)
                 lines_ids = [x.id for x in st.line_ids]
                 st_line_obj.write(cr, uid, lines_ids,

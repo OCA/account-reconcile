@@ -17,6 +17,7 @@
             <field name="arch" type="xml">
                 <field name="balance_check" position="after">
                     <field name="one_move"/>
+                    <field name="split_transfer_line" attrs="{'invisible': [('one_move', '=', False)]}"/>
                 </field>
             </field>
         </record>
