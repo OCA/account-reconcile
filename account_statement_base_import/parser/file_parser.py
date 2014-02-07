@@ -91,7 +91,6 @@ class FileParser(BankStatementImportParser):
         else:
             res = self._parse_xls()
         self.result_row_list = res
-        print "******************", self.result_row_list
         return True
 
     def _validate(self, *args, **kwargs):
