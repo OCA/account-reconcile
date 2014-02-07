@@ -66,6 +66,7 @@ class account_bank_statement(orm.Model):
                                  st_line_number, context=None):
         if context is None:
             context = {}
+        context['from_parent_object'] = True #For compability with module account_constraints
         account_move_obj = self.pool.get('account.move')
         account_bank_statement_line_obj = self.pool.get('account.bank.statement.line')
         st_line = account_bank_statement_line_obj.browse(cr, uid, st_line_id,
