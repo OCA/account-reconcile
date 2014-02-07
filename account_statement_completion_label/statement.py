@@ -22,12 +22,13 @@
 
 from openerp.osv import fields, orm
 from collections import defaultdict
+from openerp.addons.account_statement_base_completion.statement import ErrorTooManyPartner
 
 
 class ErrorTooManyLabel(Exception):
     """
-    New Exception definition that is raised when more than one label is matched by
-    the completion rule.
+    New Exception definition that is raised when more than one label is matched
+    by the completion rule.
     """
     def __init__(self, value):
         self.value = value
@@ -62,7 +63,8 @@ class AccountStatementCompletionRule(orm.Model):
         """
         Match the partner and the account based on the name field of the
         statement line and the table account.statement.label.
-        If more than one statement label matched, raise the ErrorTooManylabel error.
+        If more than one statement label matched, raise the ErrorTooManylabel
+        error.
 
         :param int line_id: id of the concerned account.bank.statement.line
         :return:
@@ -74,31 +76,28 @@ class AccountStatementCompletionRule(orm.Model):
             ...}
             """
         st_obj = self.pool.get('account.bank.statement')
-        st_line_obj = self.pool.get('account.bank.statement.line')
-        label_obj = self.pool.get('account.statement.label')
-        statement = st_obj.browse(cr, uid, st_line['statement_id'][0], context=context)
+        statement = st_obj.browse(cr, uid, st_line['statement_id'][0], 
+                                  context=context)
         res = {}
         if not context.get('label_memorizer'):
             context['label_memorizer'] = defaultdict(list)
             for line in statement.line_ids:
-                print "ll***"
-                sub_query = "SELECT st_l.name FROM account_bank_statement_line as st_l WHERE st_l.id = %s" % (line.id)
-                sign = "'%'"
                 cr.execute(""" 
                     SELECT l.partner_id,
                            l.account_id
-                    FROM account_statement_label as l
-                    WHERE (
-                        SELECT st_l.name
-                        FROM account_bank_statement_line as st_l
-                        WHERE st_l.id = %s) ILIKE %s || l.label || %s
-                    AND l.profile_id = (
-                        SELECT s.profile_id
-                        FROM account_bank_statement as s
-                        LEFT JOIN account_bank_statement_line st_l
-                            ON st_l.statement_id = s.id
-                        WHERE st_l.id = %s)
-                        """ % (line.id, sign, sign, line.id))
+                    FROM account_statement_label as l,
+                         account_bank_statement as s
+                    LEFT JOIN
+                         account_bank_statement_line as st_l
+                         ON
+                            st_l.statement_id = s.id
+                    WHERE
+                        st_l.name ~* l.label
+                    AND
+                        l.profile_id = s.profile_id
+                    AND
+                        st_l.id = %s
+                        """ % (line.id))
                 for partner, account in cr.fetchall():
                     context['label_memorizer'][line.id].append({'partner_id': partner,
                                                                 'account_id': account})
