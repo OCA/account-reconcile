@@ -29,7 +29,7 @@
     'author': 'Akretion',
     'website': 'http://www.akretion.com/',
     'depends': [
-        'account',
+        'account_voucher',
         ], 
     'data': [ 
         'statement_view.xml',
