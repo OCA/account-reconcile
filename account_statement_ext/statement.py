@@ -210,11 +210,13 @@ class AccountBankSatement(Model):
         return super(AccountBankSatement, self).create(cr, uid, vals, context=context)
 
     def _get_period(self, cr, uid, date, context=None):
-        """
-        Find matching period for date, used in the statement line creation.
-        """
+        """Return matching period for a date."""
+        if context is None:
+            context = {}
         period_obj = self.pool.get('account.period')
-        periods = period_obj.find(cr, uid, dt=date, context=context)
+        local_context = context.copy()
+        local_context['account_period_prefer_normal'] = True
+        periods = period_obj.find(cr, uid, dt=date, context=local_context)
         return periods and periods[0] or False
 
     def _check_company_id(self, cr, uid, ids, context=None):
@@ -571,14 +573,15 @@ class AccountBankSatementLine(Model):
     _inherit = "account.bank.statement.line"
 
     def _get_period(self, cr, uid, context=None):
-        """
-        Return a period from a given date in the context.
-        """
+        """Return matching period for a date."""
         if context is None:
             context = {}
+        period_obj = self.pool['account.period']
         date = context.get('date')
+        local_context = context.copy()
+        local_context['account_period_prefer_normal'] = True
         try:
-            periods = self.pool.get('account.period').find(cr, uid, dt=date)
+            periods = period_obj.find(cr, uid, dt=date, context=local_context)
         except osv.except_osv:
             # if no period defined, we are certainly at installation time
             return False
