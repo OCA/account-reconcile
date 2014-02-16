@@ -320,7 +320,7 @@ class AccountStatementCompletionRule(orm.Model):
             return res
         st_obj = self.pool.get('account.bank.statement.line')
         sql = """SELECT id FROM  (
-                        SELECT id, regexp_matches(%s, name) AS name_match  FROM res_partner) AS res_patner_matcher
+                        SELECT id, regexp_matches(%s, name) AS name_match FROM res_partner) AS res_patner_matcher
                     WHERE name_match IS NOT NULL AND id IN %s """
         pattern = ".*%s.*" % re.escape(st_line['name'])
         cr.execute(sql, (pattern, context['partner_memoizer']))
