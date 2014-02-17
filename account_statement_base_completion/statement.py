@@ -319,12 +319,12 @@ class AccountStatementCompletionRule(orm.Model):
         if not context['partner_memoizer']:
             return res
         st_obj = self.pool.get('account.bank.statement.line')
+        # regexp_replace(name,'([^a-zA-Z0-9 -])', '\\\1', 'g'), 'i') escape the column name to avoid false positive. (ex 'jho..doe' -> 'joh\.\.doe'
         sql = """SELECT id FROM  (
-                        SELECT id, regexp_matches(%s, name) AS name_match FROM res_partner
+                        SELECT id, regexp_matches(%s, regexp_replace(name,'([^[:alpha:]0-9 -])', %s, 'g'), 'i') AS name_match FROM res_partner
                             WHERE id IN %s) AS res_patner_matcher
                     WHERE name_match IS NOT NULL"""
-        pattern = ".*%s.*" % re.escape(st_line['name'])
-        cr.execute(sql, (pattern, context['partner_memoizer']))
+        cr.execute(sql, (st_line['name'], r"\\\1", context['partner_memoizer']))
         result = cr.fetchall()
         if not result:
             return res
