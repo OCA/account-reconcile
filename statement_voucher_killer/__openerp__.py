@@ -39,9 +39,9 @@ line will be take from imported line in this order:
  'author': 'Camptocamp',
  'website': 'http://www.camptocamp.com',
  'depends': ['account_voucher', 'account_payment'],
- 'init_xml': [],
- 'update_xml': [],
- 'demo_xml': [],
+ 'data': [
+     'statement_view.xml',
+     ],
  'test': [],
  'installable': True,
  'active': False,
