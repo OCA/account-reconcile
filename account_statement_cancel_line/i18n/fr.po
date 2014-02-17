@@ -1,0 +1,97 @@
+# Translation of OpenERP Server.
+# This file contains the translation of the following modules:
+#	* account_statement_cancel_line
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: OpenERP Server 7.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2014-02-17 15:59+0000\n"
+"PO-Revision-Date: 2014-02-17 15:59+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: account_statement_cancel_line
+#: model:ir.model,name:account_statement_cancel_line.model_account_bank_statement_line
+msgid "Bank Statement Line"
+msgstr "Ligne de relevé bancaire"
+
+#. module: account_statement_cancel_line
+#: view:wizard.cancel.statement:0
+#: view:wizard.cancel.statement.line:0
+msgid "Some entries are already reconciled. Do you want to unreconcile them and proceed?"
+msgstr "Certaines écritures sont déja léttrées. Voulez-vous annuler définitivement tout les léttrages et poursuivre?"
+
+#. module: account_statement_cancel_line
+#: view:account.bank.statement:0
+msgid "Cancel transaction"
+msgstr "Annuler ligne"
+
+#. module: account_statement_cancel_line
+#: model:ir.model,name:account_statement_cancel_line.model_wizard_cancel_statement
+msgid "Cancel Statement"
+msgstr "Annuler le relevé"
+
+#. module: account_statement_cancel_line
+#: model:ir.model,name:account_statement_cancel_line.model_account_bank_statement
+msgid "Bank Statement"
+msgstr "Relevé bancaire"
+
+#. module: account_statement_cancel_line
+#: model:ir.model,name:account_statement_cancel_line.model_wizard_cancel_statement_line
+msgid "Cancel Statement Line"
+msgstr "Annuler ligne de relevé"
+
+#. module: account_statement_cancel_line
+#: field:account.bank.statement.line,state:0
+msgid "State"
+msgstr "Etat"
+
+#. module: account_statement_cancel_line
+#: view:wizard.cancel.statement:0
+#: view:wizard.cancel.statement.line:0
+msgid "Reconciled Entries"
+msgstr "Lignes léttrées"
+
+#. module: account_statement_cancel_line
+#: selection:account.bank.statement.line,state:0
+msgid "Draft"
+msgstr "Brouillon"
+
+#. module: account_statement_cancel_line
+#: selection:account.bank.statement.line,state:0
+msgid "Confirmed"
+msgstr "Confirmée"
+
+#. module: account_statement_cancel_line
+#: view:wizard.cancel.statement:0
+#: view:wizard.cancel.statement.line:0
+msgid "Cancel"
+msgstr "Annuler"
+
+#. module: account_statement_cancel_line
+#: view:account.bank.statement:0
+msgid "Confirm transaction"
+msgstr "Confirmer ligne"
+
+#. module: account_statement_cancel_line
+#: view:wizard.cancel.statement:0
+#: view:wizard.cancel.statement.line:0
+msgid "Unreconcile"
+msgstr "Déléttrer"
+
+#. module: account_statement_cancel_line
+#: view:wizard.cancel.statement:0
+#: view:wizard.cancel.statement.line:0
+msgid "or"
+msgstr "ou"
+
+#. module: account_statement_cancel_line
+#: view:wizard.cancel.statement:0
+#: view:wizard.cancel.statement.line:0
+msgid "Unreconciliation"
+msgstr "Déléttrage"
