@@ -20,7 +20,6 @@
 ##############################################################################
 import base64
 import csv
-from datetime import datetime
 
 
 def UnicodeDictReader(utf8_data, **kwargs):
@@ -115,6 +114,19 @@ class BankStatementImportParser(object):
         """
         return NotImplementedError
 
+    def get_st_vals(self):
+        """
+        This method return a dict of vals that ca be passed to
+        create method of statement.
+        :return: dict of vals that represent additional infos for the statement
+        """
+        return {
+                'name': self.statement_name,
+                'balance_start': self.balance_start,
+                'balance_end_real': self.balance_end,
+                'date': self.statement_date
+        }
+
     def get_st_line_vals(self, line, *args, **kwargs):
         """
         Implement a method in your parser that must return a dict of vals that can be
@@ -155,37 +167,6 @@ class BankStatementImportParser(object):
         self._post(*args, **kwargs)
         return self.result_row_list
 
-    def get_start_balance(self, *args, **kwargs):
-        """
-        This is called by the importation method to set the balance start
-        amount in the bank statement.
-            return: float of the balance start (self.balance_start)
-        """
-        return self.balance_start
-
-    def get_end_balance(self, *args, **kwargs):
-        """
-        This is called by the importation method to set the balance end
-        amount in the bank statement.
-            return: float of the balance end (self.balance_end)
-        """
-        return self.balance_end
-
-    def get_statement_name(self, *args, **kwargs):
-        """
-        This is called by the importation method to set the statement
-        name in the bank statement.
-            return: string of the statement name (self.statement_name)
-        """
-        return self.statement_name or '/'
-
-    def get_statement_date(self, *args, **kwargs):
-        """
-        This is called by the importation method to set the statement
-        date in the bank statement.
-            return: datetime of the statement date (self.statement_date)
-        """
-        return self.statement_date or datetime.now()
 
 def itersubclasses(cls, _seen=None):
     """
