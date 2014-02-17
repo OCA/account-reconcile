@@ -22,7 +22,7 @@
 ###############################################################################
 {
     'name': "Account Statement Cancel Line",
-    'version': '0.2',
+    'version': '0.3',
     'author': 'Camptocamp',
     'maintainer': 'Camptocamp',
     'category': 'Finance',
