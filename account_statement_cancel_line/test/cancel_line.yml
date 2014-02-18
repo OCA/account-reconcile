@@ -20,7 +20,7 @@
 -
   !record {model: account.bank.statement.line, id: statement_line_1}:
     name: line1
-    statement_id: profile_test
+    statement_id: statement_test
     ref: ref1
     date: '2014-01-20'
     amount: 100.0
@@ -29,7 +29,7 @@
 -
   !record {model: account.bank.statement.line, id: statement_line_2}:
     name: line2
-    statement_id: profile_test
+    statement_id: statement_test
     ref: ref2
     date: '2014-01-25'
     amount: 200.0
