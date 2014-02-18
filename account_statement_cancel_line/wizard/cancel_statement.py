@@ -20,7 +20,7 @@
 ###############################################################################
 """Wizard to Cancel a Statement."""
 
-from openerp.osv import orm
+from openerp.osv import orm, fields
 
 
 class wizard_cancel_statement(orm.TransientModel):
@@ -30,9 +30,14 @@ class wizard_cancel_statement(orm.TransientModel):
     _name = "wizard.cancel.statement"
     _description = "Cancel Statement"
     _columns = {
+        'reconcile_warning': fields.boolean(
+            'Show reconcile warning',
+            help='This is a hidden field set with a default in the context '
+            'to choose between two different warning messages in the view.'
+            ),
     }
 
-    def unreconcile(self, cr, uid, ids, context=None):
+    def do_cancel_button(self, cr, uid, ids, context=None):
         """Proceed and cancel the statement, return Action.
 
         This will delete the move.line and the reconciliation.

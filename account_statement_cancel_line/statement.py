@@ -49,20 +49,20 @@ class Statement(orm.Model):
         """Check if there is any reconciliation. Return action."""
         st_line_obj = self.pool['account.bank.statement.line']
         for statement in self.browse(cr, uid, ids, context=context):
-            if st_line_obj.has_reconciliation(
-                    cr,
-                    uid,
-                    [line.id for line in statement.line_ids],
-                    context=context):
-                # ask confirmation, we have some reconciliation already
-                return {
-                    'type': 'ir.actions.act_window',
-                    'res_model': 'wizard.cancel.statement',
-                    'view_type': 'form',
-                    'view_mode': 'form',
-                    'target': 'new',
-                    'context': context,
-                }
+            ctx = context.copy()
+            ctx['default_reconcile_warning'] = st_line_obj.has_reconciliation(
+                cr,
+                uid,
+                [line.id for line in statement.line_ids],
+                context=context)
+            return {
+                'type': 'ir.actions.act_window',
+                'res_model': 'wizard.cancel.statement',
+                'view_type': 'form',
+                'view_mode': 'form',
+                'target': 'new',
+                'context': ctx,
+            }
 
         self.do_cancel(cr, uid, ids, context=context)
 

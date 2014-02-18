@@ -43,7 +43,9 @@
 
         When the user confirms or cancels the whole statement, we keep the
         previous functionality, and then we change the state in all statement
-        lines. We also add a warning if any lines are reconciled.
+        lines. We also add a warning if any lines are reconciled. If no lines
+        are reconciled, we show a generic warning because the operation could
+        take a long time.
 
         When the user confirms or cancels a statement line, we update the state
         of the line, and if necessary we update the state of the whole
