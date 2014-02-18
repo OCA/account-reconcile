@@ -27,6 +27,9 @@ __name__ = ("account.bank.statement.line:: set new field 'state' to "
 
 
 def migrate(cr, version):
+    """This module adds the field state to the statement line. Here we set it
+    correctly on existing statements. The names, and so this migration, are
+    intentionally kept in sync with the account_banking module."""
     cr.execute("UPDATE account_bank_statement_line as sl "
                " SET state = 'confirmed'"
                " FROM account_bank_statement as s "
