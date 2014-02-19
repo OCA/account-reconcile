@@ -19,5 +19,5 @@
 #
 ##############################################################################
 
-import statement
-import partner
+from . import partner
+from . import statement
