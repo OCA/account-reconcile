@@ -202,7 +202,8 @@ class AccountBankStatement(Model):
             profile_obj = self.pool.get('account.statement.profile')
             profile = profile_obj.browse(cr, uid, vals['profile_id'], context=context)
             vals['journal_id'] = profile.journal_id.id
-        return super(AccountBankStatement, self).create(cr, uid, vals, context=context)
+        return super(AccountBankStatement, self
+                     ).create(cr, uid, vals, context=context)
 
     def _get_period(self, cr, uid, date, context=None):
         """
@@ -243,8 +244,9 @@ class AccountBankStatement(Model):
         """
         if context is None:
             context = {}
-        res = super(AccountBankStatement, self)._prepare_move(
-                cr, uid, st_line, st_line_number, context=context)
+        res = super(AccountBankStatement, self
+                    )._prepare_move(cr, uid, st_line, st_line_number,
+                                    context=context)
         ctx = context.copy()
         ctx['company_id'] = st_line.company_id.id
         period_id = self._get_period(cr, uid, st_line.date, context=ctx)
@@ -297,10 +299,9 @@ class AccountBankStatement(Model):
                   create the move from.
            :return: int/long of the res.partner to use as counterpart
         """
-        bank_partner_id = super(AccountBankStatement, self)._get_counter_part_partner(cr,
-                                                                                     uid,
-                                                                                     st_line,
-                                                                                     context=context)
+        bank_partner_id = super(AccountBankStatement, self
+                                )._get_counter_part_partner(cr, uid, st_line,
+                                                            context=context)
         # get the right partner according to the chosen profile
         if st_line.statement_id.profile_id.force_partner_on_bank:
             bank_partner_id = st_line.statement_id.profile_id.partner_id.id
@@ -530,8 +531,9 @@ class AccountBankStatement(Model):
         """
         st = self.browse(cr, uid, st_id, context=context)
         if st.balance_check:
-            return super(AccountBankStatement, self).balance_check(
-                    cr, uid, st_id, journal_type, context=context)
+            return super(AccountBankStatement, self
+                         ).balance_check(cr, uid, st_id, journal_type,
+                                         context=context)
         else:
             return True
 
@@ -684,11 +686,9 @@ class AccountBankStatementLine(Model):
         Keep the same features as in standard and call super. If an account is returned,
         call the method to compute line values.
         """
-        res = super(AccountBankStatementLine, self).onchange_type(cr, uid,
-                                                                 line_id,
-                                                                 partner_id,
-                                                                 line_type,
-                                                                 context=context)
+        res = super(AccountBankStatementLine, self
+                    ).onchange_type(cr, uid, line_id, partner_id,
+                                    line_type, context=context)
         if 'account_id' in res['value']:
             result = self.get_values_for_line(cr, uid,
                                               profile_id=profile_id,
