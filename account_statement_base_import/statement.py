@@ -85,7 +85,11 @@ class AccountStatementProfil(Model):
                           context=context)
         return True
 
-    def prepare_statetement_lines_vals(
+    #Deprecated remove on V8
+    def prepare_statetement_lines_vals(self, *args, **kwargs):
+        return self.prepare_statement_lines_vals(*args, **kwargs)
+
+    def prepare_statement_lines_vals(
             self, cr, uid, parser_vals, account_payable, account_receivable,
             statement_id, context):
         """
@@ -183,7 +187,7 @@ class AccountStatementProfil(Model):
             statement_store = []
             for line in result_row_list:
                 parser_vals = parser.get_st_line_vals(line)
-                values = self.prepare_statetement_lines_vals(
+                values = self.prepare_statement_lines_vals(
                     cr, uid, parser_vals, account_payable, account_receivable, statement_id,
                     context)
                 statement_store.append(values)
@@ -218,7 +222,6 @@ class AccountStatementProfil(Model):
                                          context)
 
         except Exception:
-            statement_obj.unlink(cr, uid, [statement_id], context=context)
             error_type, error_value, trbk = sys.exc_info()
             st = "Error: %s\nDescription: %s\nTraceback:" % (error_type.__name__, error_value)
             st += ''.join(traceback.format_tb(trbk, 30))

@@ -472,7 +472,7 @@ class AccountStatementLine(orm.Model):
                                  sql_err.pgerror)
 
 
-class AccountBankSatement(orm.Model):
+class AccountBankStatement(orm.Model):
     """
     We add a basic button and stuff to support the auto-completion
     of the bank statement once line have been imported or manually fullfill.
