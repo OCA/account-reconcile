@@ -212,6 +212,9 @@ class AccountStatementProfil(Model):
             error_type, error_value, trbk = sys.exc_info()
             st = "Error: %s\nDescription: %s\nTraceback:" % (error_type.__name__, error_value)
             st += ''.join(traceback.format_tb(trbk, 30))
+            #TODO we should catch correctly the exception with a python
+            #Exception and only re-catch some special exception.
+            #For now we avoid re-catching error in debug mode
             if config['debug_mode']:
                 raise
             raise osv.except_osv(_("Statement import error"),
