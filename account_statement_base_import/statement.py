@@ -36,7 +36,7 @@ class AccountStatementProfil(Model):
         return [('generic_csvxls_so', 'Generic .csv/.xls based on SO Name')]
 
     def _get_import_type_selection(self, cr, uid, context=None):
-        return get_import_type selection(cr, uid, context=context)
+        return self.get_import_type_selection(cr, uid, context=context)
 
     _columns = {
         'launch_import_completion': fields.boolean(
