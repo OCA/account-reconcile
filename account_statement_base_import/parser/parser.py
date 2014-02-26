@@ -25,7 +25,7 @@ import csv
 def UnicodeDictReader(utf8_data, **kwargs):
     sniffer = csv.Sniffer()
     pos = utf8_data.tell()
-    sample_data = utf8_data.read(1024)
+    sample_data = utf8_data.read(2048)
     utf8_data.seek(pos)
     dialect = sniffer.sniff(sample_data, delimiters=',;\t')
     csv_reader = csv.DictReader(utf8_data, dialect=dialect, **kwargs)
