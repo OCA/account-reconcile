@@ -54,6 +54,10 @@ class AccountStatementProfil(Model):
 
     }
 
+    _defaults = {
+                'import_type': 'generic_csvxls_so'
+            }
+
     def _write_extra_statement_lines(
             self, cr, uid, parser, result_row_list, profile, statement_id, context):
         """Insert extra lines after the main statement lines.
