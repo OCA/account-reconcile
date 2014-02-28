@@ -32,10 +32,11 @@ class AccountStatementProfil(Model):
     _inherit = "account.statement.profile"
 
     def get_import_type_selection(self, cr, uid, context=None):
-        """
-        Has to be inherited to add parser
-        """
+        """This is the method to be inherited for adding the parser"""
         return [('generic_csvxls_so', 'Generic .csv/.xls based on SO Name')]
+
+    def _get_import_type_selection(self, cr, uid, context=None):
+        return self.get_import_type_selection(cr, uid, context=context)
 
     _columns = {
         'launch_import_completion': fields.boolean(
@@ -46,12 +47,11 @@ class AccountStatementProfil(Model):
         #  we remove deprecated as it floods logs in standard/warning level sob...
         'rec_log': fields.text('log', readonly=True),  # Deprecated
         'import_type': fields.selection(
-            get_import_type_selection,
+            _get_import_type_selection,
             'Type of import',
             required=True,
             help="Choose here the method by which you want to import bank"
                  "statement for this profile."),
-
     }
 
     _defaults = {

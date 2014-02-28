@@ -33,14 +33,3 @@ class AccountStatementProfil(orm.Model):
                                                       context=context)
         selection.append(('ofx_so', _('OFX - Open Financial Exchange')))
         return selection
-
-    _columns = {
-        'import_type': fields.selection(
-            get_import_type_selection,
-            'Type of import',
-            required=True,
-            help="Choose here the method by which you want to import bank"
-                 "statement for this profile."),
-
-    }
-
