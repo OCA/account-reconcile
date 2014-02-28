@@ -20,6 +20,7 @@
 ##############################################################################
 import base64
 import csv
+from datetime import datetime
 
 
 def UnicodeDictReader(utf8_data, **kwargs):
@@ -121,10 +122,10 @@ class BankStatementImportParser(object):
         :return: dict of vals that represent additional infos for the statement
         """
         return {
-                'name': self.statement_name,
+                'name': self.statement_name or '/',
                 'balance_start': self.balance_start,
                 'balance_end_real': self.balance_end,
-                'date': self.statement_date
+                'date': self.statement_date or datetime.now()
         }
 
     def get_st_line_vals(self, line, *args, **kwargs):
