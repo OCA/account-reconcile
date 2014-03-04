@@ -22,41 +22,26 @@
 from openerp.osv import orm
 
 
-class payment_line(orm.Model):
-    _inherit = 'payment.line'
+class AccountPaymentPopulateStatement(orm.TransientModel):
+    _inherit = "account.payment.populate.statement"
 
-    def _update_transaction_id(self, cr, uid, ids, context=None):
-        """ Update the bank statement line's transaction id
+    def _prepare_statement_line_vals(self, cr, uid, payment_line, amount,
+                                     statement, context=None):
+        superself = super(AccountPaymentPopulateStatement, self)
+        vals = superself._prepare_statement_line_vals(
+            cr, uid, payment_line, amount, statement, context=context)
+        if payment_line.move_line_id:
+            vals['transaction_id'] = payment_line.move_line_id.transaction_ref
+        return vals
 
-        When the payment line is linked with a bank statement line,
-        copy the transaction id of the related move line.
 
-        """
-        if isinstance(ids, (int, long)):
-            ids = [ids]
-        for line in self.browse(cr, uid, ids, context=context):
-            if not line.move_line_id:
-                continue
-            if not line.bank_statement_line_id:
-                continue
-            stat_trans_id = line.bank_statement_line_id.transaction_id
-            move_trans_id = line.move_line_id.transaction_ref
-            if stat_trans_id != move_trans_id:
-                line.bank_statement_line_id.write(
-                    {'transaction_id': move_trans_id}
-                )
+class account_statement_from_invoice_lines(orm.TransientModel):
+    _inherit = "account.statement.from.invoice.lines"
 
-    def create(self, cr, uid, vals, context=None):
-        line_id = super(payment_line, self).create(cr, uid, vals,
-                                                   context=context)
-        if vals.get('bank_statement_line_id'):
-            self._update_transaction_id(cr, uid, [line_id], context=context)
-        return line_id
-
-    def write(self, cr, uid, ids, vals, context=None):
-        result = super(payment_line, self).write(cr, uid, ids, vals,
-                                                 context=context)
-        if vals.get('bank_statement_line_id'):
-            self._update_transaction_id(cr, uid, ids, context=context)
-        return result
-
+    def _prepare_statement_line_vals(self, cr, uid, move_line, s_type,
+                                     statement_id, amount, context=None):
+        superself = super(account_statement_from_invoice_lines, self)
+        vals = superself._prepare_statement_line_vals(
+            cr, uid, move_line, s_type, statement_id, amount, context=context)
+        vals['transaction_id'] = move_line.transaction_ref
+        return vals
