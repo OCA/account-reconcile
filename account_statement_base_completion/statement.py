@@ -319,9 +319,15 @@ class AccountStatementCompletionRule(orm.Model):
         if not context['partner_memoizer']:
             return res
         st_obj = self.pool.get('account.bank.statement.line')
-        # regexp_replace(name,'([^a-zA-Z0-9 -])', '\\\1', 'g'), 'i') escape the column name to avoid false positive. (ex 'jho..doe' -> 'joh\.\.doe'
+        # The regexp_replace() escapes the name to avoid false positive
+        # example: 'John J. Doe (No 1)' is escaped to 'John J\. Doe \(No 1\)'
+        # See http://stackoverflow.com/a/400316/1504003 for a list of
+        # chars to escape. Postgres is POSIX-ARE, compatible with
+        # POSIX-ERE excepted that '\' must be escaped inside brackets according to:
+        # http://www.postgresql.org/docs/9.0/static/functions-matching.html
+        # in chapter 9.7.3.6. Limits and Compatibility
         sql = """SELECT id FROM  (
-                        SELECT id, regexp_matches(%s, regexp_replace(name,'([^[:alpha:]0-9 -])', %s, 'g'), 'i') AS name_match FROM res_partner
+                        SELECT id, regexp_matches(%s, regexp_replace(name,'([\.\^\$\*\+\?\(\)\[\{\\\|])', %s, 'g'), 'i') AS name_match FROM res_partner
                             WHERE id IN %s) AS res_patner_matcher
                     WHERE name_match IS NOT NULL"""
         cr.execute(sql, (st_line['name'], r"\\\1", context['partner_memoizer']))
