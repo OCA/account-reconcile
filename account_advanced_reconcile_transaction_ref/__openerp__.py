@@ -25,7 +25,7 @@ Advanced reconciliation method for the module account_advanced_reconcile
 Reconcile rules with transaction_ref
 
 """,
- 'version': '1.0',
+ 'version': '1.0.1',
  'author': 'Camptocamp',
  'category': 'Finance',
  'website': 'http://www.camptocamp.com',

@@ -1,8 +1,16 @@
 # -*- coding: utf-8 -*-
 ##############################################################################
 #
-#    Author: Pedro Manuel Baeza Romero
-#    Copyright 2013 Servicios Tecnológicos Avanzados
+#    Authors: Laetitia Gangloff
+#    Copyright (c) 2014 Acsone SA/NV (http://www.acsone.eu)
+#    All Rights Reserved
+#
+#    WARNING: This program as such is intended to be used by professional
+#    programmers who take the whole responsibility of assessing all potential
+#    consequences resulting from its eventual inadequacies and bugs.
+#    End users who are looking for a ready-to-use solution with commercial
+#    guarantees and support are strongly advised to contact a Free Software
+#    Service Company.
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -18,18 +26,7 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-from openerp.tools.translate import _
-from openerp.osv import fields, orm
 
-class AccountStatementProfil(orm.Model):
-    _inherit = "account.statement.profile"
+from . import statement
 
-    def get_import_type_selection(self, cr, uid, context=None):
-        """
-        Inherited from parent to add parser.
-        """
-        selection = super(AccountStatementProfil, self
-                          ).get_import_type_selection(cr, uid,
-                                                      context=context)
-        selection.append(('ofx_so', _('OFX - Open Financial Exchange')))
-        return selection
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
