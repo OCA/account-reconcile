@@ -42,7 +42,9 @@ class AccountInvoice(Model):
 
     def finalize_invoice_move_lines(self, cr, uid, invoice_browse, move_lines):
         if invoice_browse.transaction_id:
+            invoice_account_id = invoice_browse.account_id.id
             for line in move_lines:
                 # tuple (0, 0, {values})
-                line[2]['transaction_ref'] = invoice_browse.transaction_id
+                if invoice_account_id == line[2]['account_id']:
+                    line[2]['transaction_ref'] = invoice_browse.transaction_id
         return move_lines
