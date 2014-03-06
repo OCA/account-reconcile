@@ -159,6 +159,13 @@ class AccountBankStatement(Model):
 
         return profile_ids[0] if profile_ids else False
 
+    def _get_statement_from_profile(self, cr, uid, profile_ids, context=None):
+        """Weirdness warning! self is another class."""
+        triggered = []
+        for profile in self.browse(cr, uid, profile_ids, context=context):
+            triggered += [st.id for st in profile.bank_statement_ids]
+        return triggered
+
     _columns = {
         'profile_id': fields.many2one(
             'account.statement.profile',
@@ -174,12 +181,16 @@ class AccountBankStatement(Model):
                         store=True,
                         readonly=True),
         'balance_check': fields.related(
-                        'profile_id',
-                        'balance_check',
-                        type='boolean',
-                        string='Balance check',
-                        store=True,
-                        readonly=True),
+            'profile_id',
+            'balance_check',
+            type='boolean',
+            string='Balance check',
+            store={
+                'account.statement.profile': (
+                    _get_statement_from_profile, ['balance_check'], 10),
+            },
+            readonly=True
+        ),
         'journal_id': fields.related(
                         'profile_id',
                         'journal_id',

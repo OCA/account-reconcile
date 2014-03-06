@@ -79,7 +79,7 @@
           'security/ir.model.access.csv',
           'security/ir_rule.xml'],
  'demo_xml': [],
- 'test': [],
+ 'test': ['test/test_balance_check.yml'],
  'installable': True,
  'images': [],
  'auto_install': False,
