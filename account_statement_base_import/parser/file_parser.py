@@ -35,24 +35,24 @@ def float_or_zero(val):
 
 class FileParser(BankStatementImportParser):
     """
-    Generic abstract class for defining parser for .csv or .xls file format.
+    Generic abstract class for defining parser for .csv, .xls or .xlsx file format.
     """
 
     def __init__(self, parse_name, ftype='csv', extra_fields=None, header=None, **kwargs):
         """
             :param char: parse_name: The name of the parser
-            :param char: ftype: extension of the file (could be csv or xls)
+            :param char: ftype: extension of the file (could be csv, xls or xlsx)
             :param dict: extra_fields: extra fields to add to the conversion dict. In the format
                                      {fieldname: fieldtype}
             :param list: header : specify header fields if the csv file has no header
             """
 
         super(FileParser, self).__init__(parse_name, **kwargs)
-        if ftype in ('csv', 'xls'):
-            self.ftype = ftype
+        if ftype in ('csv', 'xls' ,'xlsx'):
+            self.ftype = ftype[0:3]
         else:
             raise except_osv(_('User Error'),
-                             _('Invalid file type %s. Please use csv or xls') % ftype)
+                             _('Invalid file type %s. Please use csv, xls or xlsx') % ftype)
         self.conversion_dict = {
             'ref': unicode,
             'label': unicode,
@@ -81,7 +81,7 @@ class FileParser(BankStatementImportParser):
 
     def _parse(self, *args, **kwargs):
         """
-        Launch the parsing through .csv or .xls depending on the
+        Launch the parsing through .csv, .xls or .xlsx depending on the
         given ftype
         """
 
@@ -128,7 +128,7 @@ class FileParser(BankStatementImportParser):
 
     def _parse_xls(self):
         """
-        :return: dict of dict from xls file (line/rows)
+        :return: dict of dict from xls/xlsx file (line/rows)
         """
         wb_file = tempfile.NamedTemporaryFile()
         wb_file.write(self.filebuffer)
@@ -180,7 +180,7 @@ class FileParser(BankStatementImportParser):
     def _from_xls(self, result_set, conversion_rules):
         """
         Handle the converstion from the dict and handle date format from
-        an .xls file.
+        an .csv, .xls or .xlsx file.
         """
         for line in result_set:
             for rule in conversion_rules:
