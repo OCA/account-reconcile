@@ -166,6 +166,9 @@ class AccountBankStatement(Model):
             triggered += [st.id for st in profile.bank_statement_ids]
         return triggered
 
+    def _us(self, cr, uid, ids, context=None):
+        return ids
+
     _columns = {
         'profile_id': fields.many2one(
             'account.statement.profile',
@@ -173,32 +176,41 @@ class AccountBankStatement(Model):
             required=True,
             states={'draft': [('readonly', False)]}),
         'credit_partner_id': fields.related(
-                        'profile_id',
-                        'partner_id',
-                        type='many2one',
-                        relation='res.partner',
-                        string='Financial Partner',
-                        store=True,
-                        readonly=True),
+            'profile_id',
+            'partner_id',
+            type='many2one',
+            relation='res.partner',
+            string='Financial Partner',
+            store={
+                'account.bank.statement': (_us, ['profile_id'], 10),
+                'account.statement.profile': (
+                    _get_statement_from_profile, ['partner_id'], 10),
+            },
+            readonly=True),
         'balance_check': fields.related(
             'profile_id',
             'balance_check',
             type='boolean',
             string='Balance check',
             store={
+                'account.bank.statement': (_us, ['profile_id'], 10),
                 'account.statement.profile': (
                     _get_statement_from_profile, ['balance_check'], 10),
             },
             readonly=True
         ),
         'journal_id': fields.related(
-                        'profile_id',
-                        'journal_id',
-                        type='many2one',
-                        relation='account.journal',
-                        string='Journal',
-                        store=True,
-                        readonly=True),
+            'profile_id',
+            'journal_id',
+            type='many2one',
+            relation='account.journal',
+            string='Journal',
+            store={
+                'account.bank.statement': (_us, ['profile_id'], 10),
+                'account.statement.profile': (
+                    _get_statement_from_profile, ['journal_id'], 10),
+            },
+            readonly=True),
         'period_id': fields.many2one(
                         'account.period',
                         'Period',
