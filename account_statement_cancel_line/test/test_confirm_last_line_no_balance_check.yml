@@ -1,0 +1,44 @@
+-
+  I want to check that the behaviour when I confirm the only line of a
+  statement that is draft.
+-
+  I start with a profile
+-
+  !record {model: account.statement.profile, id: profile_test4}:
+    name: Profile for automatic checks
+    balance_check: False
+    journal_id: account.bank_journal
+    commission_account_id: account.a_expense
+-
+  Now I create a statement.
+-
+  !record {model: account.bank.statement, id: statement_test4}:
+    name: My Statement
+    profile_id: profile_test4
+    company_id: base.main_company
+    balance_start: 100.0
+    balance_end_real: 150.0
+-
+  I create a statement line
+-
+  !record {model: account.bank.statement.line, id: statement_line_4}:
+    name: line1
+    statement_id: statement_test4
+    ref: line1
+    date: '2014-01-20'
+    amount: 10.0
+-
+  Now I confirm the statement line
+-
+  !python {model: account.bank.statement.line}: |
+    result = self.confirm(cr, uid, [ref("statement_line_4")])
+-
+  The line should be confirmed
+-
+  !assert {model: account.bank.statement.line, id: statement_line_4}:
+    - state == 'confirmed'
+-
+  And the statement should be confirmed as well
+-
+  !assert {model: account.bank.statement, id: statement_test4}:
+    - state == 'confirm'
