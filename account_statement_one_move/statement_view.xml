@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  account_statement_one_move for OpenERP
+  Copyright (C) 2013-TODAY Akretion <http://www.akretion.com>.
+  The licence is in the file __openerp__.py
+-->
+
+<openerp>
+    <data>
+    
+        <!-- INHERITED VIEW FOR THE OBJECT : account_statement -->
+    
+        <record id="account_statement_view_form" model="ir.ui.view">
+            <field name="name">account_statement_one_move.account_statement.view_form</field>
+            <field name="model">account.statement.profile</field>
+            <field name="inherit_id" ref="account_statement_ext.statement_importer_view_form" />
+            <field name="arch" type="xml">
+                <field name="balance_check" position="after">
+                    <field name="one_move"/>
+                    <field name="split_transfer_line" attrs="{'invisible': [('one_move', '=', False)]}"/>
+                </field>
+            </field>
+        </record>
+
+    </data>
+</openerp>

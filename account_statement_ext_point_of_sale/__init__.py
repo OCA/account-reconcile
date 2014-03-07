@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 ##############################################################################
 #
-#    Author: Pedro Manuel Baeza Romero
-#    Copyright 2013 Servicios Tecnológicos Avanzados
+#    Author: Alexandre Fayolle
+#    Copyright 2013 Camptocamp SA
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -18,18 +18,5 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-from openerp.tools.translate import _
-from openerp.osv import fields, orm
 
-class AccountStatementProfil(orm.Model):
-    _inherit = "account.statement.profile"
-
-    def get_import_type_selection(self, cr, uid, context=None):
-        """
-        Inherited from parent to add parser.
-        """
-        selection = super(AccountStatementProfil, self
-                          ).get_import_type_selection(cr, uid,
-                                                      context=context)
-        selection.append(('ofx_so', _('OFX - Open Financial Exchange')))
-        return selection
+from . import point_of_sale

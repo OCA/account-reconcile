@@ -31,9 +31,10 @@ def fixed_write(self, cr, uid, ids, vals, context=None):
     I will do it when I have time."""
     res = super(stat_mod.account_bank_statement, self).write(cr, uid, ids,
                                                              vals, context=context)
-    cr.execute("UPDATE account_bank_statement_line"
-               " SET sequence = account_bank_statement_line.id + 1"
-               " where statement_id in %s", (tuple(ids),))
+    if ids: # will be false for an new empty bank statement
+        cr.execute("UPDATE account_bank_statement_line"
+                   " SET sequence = account_bank_statement_line.id + 1"
+                   " where statement_id in %s", (tuple(ids),))
     return res
 stat_mod.account_bank_statement.write = fixed_write
 
@@ -118,7 +119,7 @@ class AccountStatementProfile(Model):
 
 
 
-class AccountBankSatement(Model):
+class AccountBankStatement(Model):
     """
     We improve the bank statement class mostly for :
     - Removing the period and compute it from the date of each line.
@@ -207,7 +208,8 @@ class AccountBankSatement(Model):
             profile_obj = self.pool.get('account.statement.profile')
             profile = profile_obj.browse(cr, uid, vals['profile_id'], context=context)
             vals['journal_id'] = profile.journal_id.id
-        return super(AccountBankSatement, self).create(cr, uid, vals, context=context)
+        return super(AccountBankStatement, self
+                     ).create(cr, uid, vals, context=context)
 
     def _get_period(self, cr, uid, date, context=None):
         """Return matching period for a date."""
@@ -255,8 +257,9 @@ class AccountBankSatement(Model):
         """
         if context is None:
             context = {}
-        res = super(AccountBankSatement, self)._prepare_move(
-                cr, uid, st_line, st_line_number, context=context)
+        res = super(AccountBankStatement, self
+                    )._prepare_move(cr, uid, st_line, st_line_number,
+                                    context=context)
         ctx = context.copy()
         ctx['company_id'] = st_line.company_id.id
         period_id = self._get_period(cr, uid, st_line.date, context=ctx)
@@ -285,7 +288,7 @@ class AccountBankSatement(Model):
         """
         if context is None:
             context = {}
-        res = super(AccountBankSatement, self)._prepare_move_line_vals(
+        res = super(AccountBankStatement, self)._prepare_move_line_vals(
                 cr, uid, st_line, move_id, debit, credit,
                 currency_id=currency_id,
                 amount_currency=amount_currency,
@@ -309,10 +312,9 @@ class AccountBankSatement(Model):
                   create the move from.
            :return: int/long of the res.partner to use as counterpart
         """
-        bank_partner_id = super(AccountBankSatement, self)._get_counter_part_partner(cr,
-                                                                                     uid,
-                                                                                     st_line,
-                                                                                     context=context)
+        bank_partner_id = super(AccountBankStatement, self
+                                )._get_counter_part_partner(cr, uid, st_line,
+                                                            context=context)
         # get the right partner according to the chosen profile
         if st_line.statement_id.profile_id.force_partner_on_bank:
             bank_partner_id = st_line.statement_id.profile_id.partner_id.id
@@ -542,8 +544,9 @@ class AccountBankSatement(Model):
         """
         st = self.browse(cr, uid, st_id, context=context)
         if st.balance_check:
-            return super(AccountBankSatement, self).balance_check(
-                    cr, uid, st_id, journal_type, context=context)
+            return super(AccountBankStatement, self
+                         ).balance_check(cr, uid, st_id, journal_type,
+                                         context=context)
         else:
             return True
 
@@ -563,7 +566,7 @@ class AccountBankSatement(Model):
                           'balance_check': import_config.balance_check}}
 
 
-class AccountBankSatementLine(Model):
+class AccountBankStatementLine(Model):
     """
     Override to compute the period from the date of the line, add a method to retrieve
     the values for a line from the profile. Override the on_change method to take care of
@@ -658,6 +661,11 @@ class AccountBankSatementLine(Model):
         # This can be quite a performance killer as we read ir.properity fields
         if partner_id:
             part = obj_partner.browse(cr, uid, partner_id, context=context)
+            part = part.commercial_partner_id
+            # When the method is called from bank statement completion,
+            # ensure that the line's partner is a commercial
+            # (accounting) entity
+            res['partner_id'] = part.id
             pay_account = part.property_account_payable.id
             receiv_account = part.property_account_receivable.id
         # If no value, look on the default company property
@@ -693,11 +701,9 @@ class AccountBankSatementLine(Model):
         Keep the same features as in standard and call super. If an account is returned,
         call the method to compute line values.
         """
-        res = super(AccountBankSatementLine, self).onchange_type(cr, uid,
-                                                                 line_id,
-                                                                 partner_id,
-                                                                 line_type,
-                                                                 context=context)
+        res = super(AccountBankStatementLine, self
+                    ).onchange_type(cr, uid, line_id, partner_id,
+                                    line_type, context=context)
         if 'account_id' in res['value']:
             result = self.get_values_for_line(cr, uid,
                                               profile_id=profile_id,

@@ -319,9 +319,12 @@ class AccountStatementCompletionRule(orm.Model):
         if not context['partner_memoizer']:
             return res
         st_obj = self.pool.get('account.bank.statement.line')
-        sql = "SELECT id FROM res_partner WHERE name ~* %s and id in %s"
-        pattern = ".*%s.*" % re.escape(st_line['name'])
-        cr.execute(sql, (pattern, context['partner_memoizer']))
+        # regexp_replace(name,'([^a-zA-Z0-9 -])', '\\\1', 'g'), 'i') escape the column name to avoid false positive. (ex 'jho..doe' -> 'joh\.\.doe'
+        sql = """SELECT id FROM  (
+                        SELECT id, regexp_matches(%s, regexp_replace(name,'([^[:alpha:]0-9 -])', %s, 'g'), 'i') AS name_match FROM res_partner
+                            WHERE id IN %s) AS res_patner_matcher
+                    WHERE name_match IS NOT NULL"""
+        cr.execute(sql, (st_line['name'], r"\\\1", context['partner_memoizer']))
         result = cr.fetchall()
         if not result:
             return res
@@ -332,7 +335,7 @@ class AccountStatementCompletionRule(orm.Model):
         res['partner_id'] = result[0][0]
         st_vals = st_obj.get_values_for_line(cr,
                                              uid,
-                                             profile_id=st_line['porfile_id'],
+                                             profile_id=st_line['profile_id'],
                                              master_account_id=st_line['master_account_id'],
                                              partner_id=res['partner_id'],
                                              line_type=False,
@@ -469,7 +472,7 @@ class AccountStatementLine(orm.Model):
                                  sql_err.pgerror)
 
 
-class AccountBankSatement(orm.Model):
+class AccountBankStatement(orm.Model):
     """
     We add a basic button and stuff to support the auto-completion
     of the bank statement once line have been imported or manually fullfill.
