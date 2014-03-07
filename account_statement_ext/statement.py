@@ -160,7 +160,14 @@ class AccountBankStatement(Model):
         return profile_ids[0] if profile_ids else False
 
     def _get_statement_from_profile(self, cr, uid, profile_ids, context=None):
-        """Weirdness warning! self is another class."""
+        """Stored function field trigger.
+
+        Weirdness warning: we are in the class account.bank.statement, but
+        when the ORM calls this, self is an account.statement.profile.
+
+        Returns a list of account.bank.statement ids to recompute.
+
+        """
         triggered = []
         for profile in self.browse(cr, uid, profile_ids, context=context):
             triggered += [st.id for st in profile.bank_statement_ids]
