@@ -64,6 +64,7 @@
     'demo_xml': [],
     'test': [
         'test/cancel_line.yml',
+        'test/test_confirm_last_line_balance_check.yml',
         'test/test_confirm_last_line_no_balance_check.yml',
     ],
     'installable': True,

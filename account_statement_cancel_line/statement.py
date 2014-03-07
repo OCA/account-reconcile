@@ -95,4 +95,10 @@ class Statement(orm.Model):
                     'state': 'confirm'
                 }, context=context)
                 need_to_update_view = True
+                self.balance_check(
+                    cr,
+                    uid,
+                    statement.id,
+                    journal_type=statement.journal_id.type,
+                    context=context)
         return need_to_update_view
