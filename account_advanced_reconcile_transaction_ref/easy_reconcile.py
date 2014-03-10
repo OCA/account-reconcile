@@ -32,7 +32,7 @@ class account_easy_reconcile_method(orm.Model):
         methods += [
             ('easy.reconcile.advanced.transaction_ref',
              'Advanced. Partner and Transaction Ref.'),
-            ('easy.reconcile.advanced.transaction_ref_vs_ref',
+            ('easy.reconcile.advanced.trans_ref_vs_ref',
              'Advanced. Partner and Transaction Ref. vs Ref.'),
         ]
         return methods
