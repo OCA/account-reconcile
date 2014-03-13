@@ -394,7 +394,7 @@ class AccountStatement(orm.Model):
                 ], context=context)
             if line_without_account:
                 stat = self.browse(cr, uid, stat_id, context=context)
-                raise osv.except_osv(_('User error'),
+                raise orm.except_orm(_('User error'),
                         _('You should fill all account on the line of the'
                         ' statement %s')%stat.name)
         return super(AccountStatement, self).button_confirm_bank(cr, uid, ids, context=context)

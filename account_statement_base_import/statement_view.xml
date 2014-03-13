@@ -34,10 +34,10 @@
          <field name="type">form</field>
          <field eval="20" name="priority"/>
          <field name="arch" type="xml">
-             <xpath expr="/form/sheet/notebook/page/field[@name='line_ids']/form/group/field[@name='account_id']" position="attributes">
+             <xpath expr="//field[@name='line_ids']/form//field[@name='account_id']" position="attributes">
                  <attribute name="attrs">{'required': [('already_completed','=', True)]}</attribute>
              </xpath>
-             <xpath expr="/form/sheet/notebook/page/field[@name='line_ids']/tree/field[@name='account_id']" position="attributes">
+             <xpath expr="//field[@name='line_ids']/tree//field[@name='account_id']" position="attributes">
                  <attribute name="attrs">{'required': [('already_completed','=', True)]}</attribute>
              </xpath>
          </field>
