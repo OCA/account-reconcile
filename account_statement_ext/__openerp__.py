@@ -74,6 +74,7 @@
  """,
  'website': 'http://www.camptocamp.com',
  'data': ['statement_view.xml',
+          'account_view.xml',
           'report/bank_statement_webkit_header.xml',
           'report.xml',
           'security/ir.model.access.csv',
