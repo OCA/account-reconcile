@@ -496,18 +496,21 @@ class AccountBankStatement(orm.Model):
         """
         user_name = self.pool.get('res.users').read(cr, uid, uid,
                                                     ['name'], context=context)['name']
+        statement = self.browse(cr, uid, stat_id, context=context)
+        number_line = len(statement.line_ids)
 
         log = self.read(cr, uid, stat_id, ['completion_logs'],
                         context=context)['completion_logs']
         log = log if log else ""
 
         completion_date = datetime.datetime.now().strftime(DEFAULT_SERVER_DATETIME_FORMAT)
-        message = (_("%s Bank Statement ID %s has %s lines completed by %s \n%s\n%s\n") %
-                   (completion_date, stat_id, number_imported, user_name, error_msg, log))
+        message = (_("%s Bank Statement ID %s has %s/%s lines completed by %s \n%s\n%s\n") %
+                   (completion_date, stat_id, number_imported, number_line, user_name, 
+                    error_msg, log))
         self.write(cr, uid, [stat_id], {'completion_logs': message}, context=context)
 
-        body = (_('Statement ID %s auto-completed for %s lines completed') %
-                (stat_id, number_imported)),
+        body = (_('Statement ID %s auto-completed for %s/%s lines completed') %
+                (stat_id, number_imported, number_line)),
         self.message_post(cr, uid,
                           [stat_id],
                           body=body,
