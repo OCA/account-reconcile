@@ -13,11 +13,9 @@
                     <button name="run_reconcile" class="oe_highlight"
                         string="Start Auto Reconciliation" type="object"/>
                     <button icon="STOCK_JUMP_TO" name="last_history_reconcile"
-                        class="oe_highlight"
                         string="Display items reconciled on the last run"
                         type="object"/>
                     <button icon="STOCK_JUMP_TO" name="last_history_partial"
-                        class="oe_highlight"
                         string="Display items partially reconciled on the last run"
                         type="object"/>
                 </header>
@@ -30,8 +28,16 @@
                             <field name="company_id" groups="base.group_multi_company"/>
                         </group>
                         <group>
-                            <field name="unreconciled_count"/>
-                            <field name="reconciled_partial_count"/>
+                            <group>
+                                <field name="unreconciled_count"/>
+                                <button icon="STOCK_JUMP_TO" name="open_unreconcile"
+                                        string="Go to unreconciled items" type="object"/>
+                            </group>
+                            <group>
+                                <field name="reconciled_partial_count"/>
+                                <button icon="STOCK_JUMP_TO" name="open_partial_reconcile"
+                                        string="Go to partial reconciled items" type="object"/>
+                            </group>
                         </group>
                     </group>
                     <notebook colspan="4">
