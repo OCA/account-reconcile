@@ -1,0 +1,27 @@
+# Translation of OpenERP Server.
+# This file contains the translation of the following modules:
+#	* statement_voucher_killer
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: OpenERP Server 7.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2014-01-21 12:00+0000\n"
+"PO-Revision-Date: 2014-01-21 12:00+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: statement_voucher_killer
+#: model:ir.model,name:statement_voucher_killer.model_account_statement_from_invoice_lines
+msgid "Entries by Statement from Invoices"
+msgstr ""
+
+#. module: statement_voucher_killer
+#: model:ir.model,name:statement_voucher_killer.model_account_payment_populate_statement
+msgid "Account Payment Populate Statement"
+msgstr ""
+
