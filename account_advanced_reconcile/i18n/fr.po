@@ -6,15 +6,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 6.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-01-04 08:25+0000\n"
-"PO-Revision-Date: 2013-01-04 09:27+0100\n"
-"Last-Translator: Guewen Baconnier <guewen.baconnier@camptocamp.com>\n"
+"POT-Creation-Date: 2014-01-21 11:54+0000\n"
+"PO-Revision-Date: 2014-03-21 15:24+0000\n"
+"Last-Translator: Guewen Baconnier @ Camptocamp <Unknown>\n"
 "Language-Team: \n"
-"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: \n"
+"X-Launchpad-Export-Date: 2014-03-22 07:11+0000\n"
+"X-Generator: Launchpad (build 16967)\n"
+"Language: \n"
 
 #. module: account_advanced_reconcile
 #: field:easy.reconcile.advanced,partner_ids:0
@@ -47,8 +48,15 @@ msgstr "Compte de produit"
 
 #. module: account_advanced_reconcile
 #: view:account.easy.reconcile:0
-msgid "Match multiple debit vs multiple credit entries. Allow partial reconciliation. The lines should have the partner, the credit entry ref. is matched vs the debit entry ref. or name."
-msgstr "Le Lettrage peut s'effectuer sur plusieurs écritures de débit et crédit. Le Lettrage partiel est autorisé. Les écritures doivent avoir le même partenaire et la référence sur les écritures de crédit doit se retrouver dans la référence ou la description sur les écritures de débit."
+msgid ""
+"Match multiple debit vs multiple credit entries. Allow partial "
+"reconciliation. The lines should have the partner, the credit entry ref. is "
+"matched vs the debit entry ref. or name."
+msgstr ""
+"Le Lettrage peut s'effectuer sur plusieurs écritures de débit et crédit. Le "
+"Lettrage partiel est autorisé. Les écritures doivent avoir le même "
+"partenaire et la référence sur les écritures de crédit doit se retrouver "
+"dans la référence ou la description sur les écritures de débit."
 
 #. module: account_advanced_reconcile
 #: field:easy.reconcile.advanced,filter:0
@@ -88,4 +96,3 @@ msgstr "easy.reconcile.advanced.ref"
 #: field:easy.reconcile.advanced.ref,write_off:0
 msgid "Write off allowed"
 msgstr "Écart autorisé"
-
