@@ -188,6 +188,9 @@ class easy_reconcile_base(orm.AbstractModel):
             period_id = self.pool.get('account.period').find(
                 cr, uid, dt=date, context=context)[0]
 
+            if rec.analytic_account_id:
+                rec_ctx['analytic_id'] = rec.analytic_account_id.id
+
             ml_obj.reconcile(
                 cr, uid,
                 line_ids,
