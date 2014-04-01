@@ -110,6 +110,7 @@ class AccountStatementProfil(Model):
         :return: dict of vals that will be passed to create method of statement line.
         """
         statement_obj = self.pool.get('account.bank.statement')
+        statement_line_obj = self.pool['account.bank.statement.line']
         values = parser_vals
         values['statement_id'] = statement_id
         values['account_id'] = statement_obj.get_account_for_counterpart(cr,
@@ -132,7 +133,7 @@ class AccountStatementProfil(Model):
                                                            context=context)
             values['period_id'] = periods[0]
             period_memoizer[date] = periods[0]
-        values['type'] = 'general'
+        values = statement_line_obj._add_missing_default_values(cr, uid, values, context)
         return values
 
     def prepare_statement_vals(self, cr, uid, profile_id, result_row_list, parser, context):
