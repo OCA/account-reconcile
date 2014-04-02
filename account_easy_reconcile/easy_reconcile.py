@@ -22,6 +22,7 @@
 from openerp.osv import fields, osv, orm
 from openerp.tools.translate import _
 from openerp.tools import DEFAULT_SERVER_DATETIME_FORMAT
+from openerp.tools.translate import _
 
 
 class easy_reconcile_options(orm.AbstractModel):
@@ -257,6 +258,58 @@ class account_easy_reconcile(orm.Model):
                 _('Error'),
                 _('There is no history of reconciled '
                   'items on the task: %s.') % rec.name)
+     
+    def _open_move_line_list(sefl, cr, uid, move_line_ids, name, context=None):
+        return {
+            'name': name,
+            'view_mode': 'tree,form',
+            'view_id': False,
+            'view_type': 'form',
+            'res_model': 'account.move.line',
+            'type': 'ir.actions.act_window',
+            'nodestroy': True,
+            'target': 'current',
+            'domain': unicode([('id', 'in', move_line_ids)]),
+            }
+
+    def open_unreconcile(self, cr, uid, ids, context=None):
+        """ Open the view of move line with the unreconciled move lines
+        """
+
+        assert len(ids) == 1 , \
+                "You can only open entries from one profile at a time"
+
+        obj_move_line = self.pool.get('account.move.line')
+        res = {}
+        for task in self.browse(cr, uid, ids, context=context):
+             line_ids = obj_move_line.search(
+                cr, uid,
+                [('account_id', '=', task.account.id),
+                 ('reconcile_id', '=', False),
+                 ('reconcile_partial_id', '=', False)],
+                context=context)
+
+        name = _('Unreconciled items')
+        return self._open_move_line_list(cr, uid, line_ids, name, context=context)
+
+    def open_partial_reconcile(self, cr, uid, ids, context=None):
+        """ Open the view of move line with the unreconciled move lines
+        """
+
+        assert len(ids) == 1 , \
+                "You can only open entries from one profile at a time"
+
+        obj_move_line = self.pool.get('account.move.line')
+        res = {}
+        for task in self.browse(cr, uid, ids, context=context):
+             line_ids = obj_move_line.search(
+                cr, uid,
+                [('account_id', '=', task.account.id),
+                 ('reconcile_id', '=', False),
+                 ('reconcile_partial_id', '!=', False)],
+                context=context)
+        name = _('Partial reconciled items')
+        return self._open_move_line_list(cr, uid, line_ids, name, context=context)
 
     def last_history_reconcile(self, cr, uid, rec_id, context=None):
         """ Get the last history record for this reconciliation profile
