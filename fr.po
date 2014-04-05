@@ -6,389 +6,191 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 6.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-04-02 21:42+0000\n"
-"PO-Revision-Date: 2014-04-02 22:09+0000\n"
-"Last-Translator: Benoit Guillot - http://www.akretion.com <Unknown>\n"
+"POT-Creation-Date: 2014-04-02 22:26+0000\n"
+"PO-Revision-Date: 2014-04-04 10:29+0000\n"
+"Last-Translator: Joël Grand-Guillaume @ camptocamp "
+"<joel.grandguillaume@camptocamp.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2014-04-03 06:06+0000\n"
-"X-Generator: Launchpad (build 16967)\n"
+"X-Launchpad-Export-Date: 2014-04-05 06:23+0000\n"
+"X-Generator: Launchpad (build 16976)\n"
 "Language: \n"
 
-#. module: account_easy_reconcile
-#: code:addons/account_easy_reconcile/easy_reconcile_history.py:101
-#: field:easy.reconcile.history,reconcile_ids:0
+#. module: account_statement_base_completion
+#: view:account.statement.completion.rule:0
+msgid "Related Profiles"
+msgstr "Profils liÃ©s"
+
+#. module: account_statement_base_completion
+#: code:addons/account_statement_base_completion/statement.py:153
+#: code:addons/account_statement_base_completion/statement.py:185
+#: code:addons/account_statement_base_completion/statement.py:222
+#: code:addons/account_statement_base_completion/statement.py:255
 #, python-format
-msgid "Reconciliations"
-msgstr "Lettrages"
-
-#. module: account_easy_reconcile
-#: view:account.easy.reconcile:0
-msgid "Information"
-msgstr "Information"
-
-#. module: account_easy_reconcile
-#: view:account.easy.reconcile:0
-#: view:easy.reconcile.history:0
-msgid "Automatic Easy Reconcile History"
-msgstr "Historique des lettrages automatisés"
-
-#. module: account_easy_reconcile
-#: view:account.easy.reconcile:0
-#: view:easy.reconcile.history:0
-msgid "Go to partially reconciled items"
-msgstr "Voir les entrées partiellement lettrées"
-
-#. module: account_easy_reconcile
-#: help:account.easy.reconcile.method,sequence:0
-msgid "The sequence field is used to order the reconcile method"
-msgstr "La séquence détermine l'ordre des méthodes de lettrage"
-
-#. module: account_easy_reconcile
-#: model:ir.model,name:account_easy_reconcile.model_easy_reconcile_history
-msgid "easy.reconcile.history"
-msgstr "easy.reconcile.history"
-
-#. module: account_easy_reconcile
-#: model:ir.model,name:account_easy_reconcile.model_easy_reconcile_simple_name
-msgid "easy.reconcile.simple.name"
-msgstr "easy.reconcile.simple.name"
-
-#. module: account_easy_reconcile
-#: model:ir.model,name:account_easy_reconcile.model_easy_reconcile_options
-msgid "easy.reconcile.options"
-msgstr "lettrage automatisé.options"
-
-#. module: account_easy_reconcile
-#: view:easy.reconcile.history:0
-msgid "Group By..."
-msgstr "Grouper par..."
-
-#. module: account_easy_reconcile
-#: view:account.easy.reconcile:0
-msgid "Task Information"
-msgstr "Information sur la tâche"
-
-#. module: account_easy_reconcile
-#: field:account.easy.reconcile,reconciled_partial_count:0
-msgid "Partially Reconciled Entries"
+msgid "Line named \"%s\" (Ref:%s) was matched by more than one partner."
 msgstr ""
+"La ligne nommÃ©e \"%s\" (Ref:%s) correspond Ã  plusieurs partenaires."
 
-#. module: account_easy_reconcile
-#: field:account.easy.reconcile,unreconciled_count:0
-msgid "Unreconciled Entries"
+#. module: account_statement_base_completion
+#: field:account.bank.statement,completion_logs:0
+msgid "Completion Log"
+msgstr "Journal des complÃ©tions"
+
+#. module: account_statement_base_completion
+#: field:account.bank.statement.line,label:0
+msgid "Label"
+msgstr "Description"
+
+#. module: account_statement_base_completion
+#: help:account.bank.statement.line,label:0
+msgid ""
+"Generiy field to store a label given from the bank/office on which we can    "
+"         base the default/standard providen rule."
 msgstr ""
+"Ce champs permet de stocker une description complÃ©mentaire fournie par la "
+"banque.Le lettrage avancÃ© pourra Ãªtre effectuÃ© sur ce critÃ¨re."
 
-#. module: account_easy_reconcile
-#: view:account.easy.reconcile:0
-msgid "Reconcile Method"
-msgstr "Méthode de lettrage"
+#. module: account_statement_base_completion
+#: model:ir.model,name:account_statement_base_completion.model_account_bank_statement
+msgid "Bank Statement"
+msgstr "RelevÃ© bancaire"
 
-#. module: account_easy_reconcile
-#: model:ir.model,name:account_easy_reconcile.model_easy_reconcile_base
-msgid "easy.reconcile.base"
-msgstr "easy.reconcile.base"
-
-#. module: account_easy_reconcile
-#: field:easy.reconcile.history,reconcile_line_ids:0
-msgid "Reconciled Items"
-msgstr "Écritures lettrées"
-
-#. module: account_easy_reconcile
-#: field:account.easy.reconcile,reconcile_method:0
+#. module: account_statement_base_completion
+#: field:account.statement.completion.rule,function_to_call:0
 msgid "Method"
 msgstr "Méthode"
 
-#. module: account_easy_reconcile
-#: view:easy.reconcile.history:0
-msgid "7 Days"
-msgstr "7 jours"
+#. module: account_statement_base_completion
+#: code:addons/account_statement_base_completion/statement.py:353
+#, python-format
+msgid "Bank Statement ID %s has %s lines completed by %s"
+msgstr "Le relevÃ© bancaire avec l'ID %s a %s lignes completÃ©es par %s"
 
-#. module: account_easy_reconcile
-#: model:ir.actions.act_window,name:account_easy_reconcile.action_easy_reconcile_history
-msgid "Easy Automatic Reconcile History"
-msgstr "Lettrage automatisé"
+#. module: account_statement_base_completion
+#: field:account.bank.statement.line,additionnal_bank_fields:0
+msgid "Additionnal infos from bank"
+msgstr "Informations additionnelles de la banque"
 
-#. module: account_easy_reconcile
-#: field:easy.reconcile.history,date:0
-msgid "Run date"
-msgstr "Date de lancement"
+#. module: account_statement_base_completion
+#: view:account.statement.profile:0
+msgid "Auto-Completion Rules"
+msgstr "RÃ¨gles d'auto-complÃ©tion"
 
-#. module: account_easy_reconcile
-#: model:ir.actions.act_window,name:account_easy_reconcile.act_easy_reconcile_to_history
-msgid "History Details"
-msgstr "Détails de l'historique"
-
-#. module: account_easy_reconcile
-#: view:account.easy.reconcile:0
+#. module: account_statement_base_completion
+#: help:account.bank.statement.line,additionnal_bank_fields:0
 msgid ""
-"Match one debit line vs one credit line. Do not allow partial reconcilation. "
-"The lines should have the same amount (with the write-off) and the same name "
-"to be reconciled."
+"Used by completion and import system. Adds every field that is present in "
+"your bank/office             statement file"
 msgstr ""
-"Lettre un débit avec un crédit ayant le même montant et la même description. "
-"Le lettrage ne peut être partiel (écriture d'ajustement en cas d'écart)."
+"UtilisÃ© au niveau de l'auto-complÃ©tion et de l'import. Permet l'ajout de "
+"n'importe quel champs additionnel communiquÃ© par la banque"
 
-#. module: account_easy_reconcile
-#: view:account.easy.reconcile:0
-msgid "Display items reconciled on the last run"
-msgstr "Voir les entrées lettrées au dernier lettrage"
+#. module: account_statement_base_completion
+#: view:account.bank.statement:0
+msgid "Importation related infos"
+msgstr "Importation des informations liÃ©es"
 
-#. module: account_easy_reconcile
-#: field:account.easy.reconcile.method,name:0
-msgid "Type"
-msgstr "Type"
+#. module: account_statement_base_completion
+#: model:ir.model,name:account_statement_base_completion.model_account_statement_profile
+msgid "Statement Profil"
+msgstr "Profil de relevÃ©"
 
-#. module: account_easy_reconcile
-#: field:account.easy.reconcile.method,journal_id:0
-#: field:easy.reconcile.base,journal_id:0
-#: field:easy.reconcile.options,journal_id:0
-#: field:easy.reconcile.simple,journal_id:0
-#: field:easy.reconcile.simple.name,journal_id:0
-#: field:easy.reconcile.simple.partner,journal_id:0
-#: field:easy.reconcile.simple.reference,journal_id:0
-msgid "Journal"
-msgstr "Journal"
-
-#. module: account_easy_reconcile
-#: field:account.easy.reconcile.method,account_profit_id:0
-#: field:easy.reconcile.base,account_profit_id:0
-#: field:easy.reconcile.options,account_profit_id:0
-#: field:easy.reconcile.simple,account_profit_id:0
-#: field:easy.reconcile.simple.name,account_profit_id:0
-#: field:easy.reconcile.simple.partner,account_profit_id:0
-#: field:easy.reconcile.simple.reference,account_profit_id:0
-msgid "Account Profit"
-msgstr "Compte de profits"
-
-#. module: account_easy_reconcile
-#: view:easy.reconcile.history:0
-msgid "Todays' Reconcilations"
-msgstr "Lettrages du jour"
-
-#. module: account_easy_reconcile
-#: view:account.easy.reconcile:0
-msgid "Simple. Amount and Name"
-msgstr "Simple. Montant et description"
-
-#. module: account_easy_reconcile
-#: field:easy.reconcile.base,partner_ids:0
-#: field:easy.reconcile.simple,partner_ids:0
-#: field:easy.reconcile.simple.name,partner_ids:0
-#: field:easy.reconcile.simple.partner,partner_ids:0
-#: field:easy.reconcile.simple.reference,partner_ids:0
-msgid "Restrict on partners"
-msgstr "Filtrer sur des partenaires"
-
-#. module: account_easy_reconcile
-#: model:ir.actions.act_window,name:account_easy_reconcile.action_account_easy_reconcile
-#: model:ir.ui.menu,name:account_easy_reconcile.menu_easy_reconcile
-msgid "Easy Automatic Reconcile"
-msgstr "Lettrage automatisé"
-
-#. module: account_easy_reconcile
-#: view:easy.reconcile.history:0
-msgid "Today"
-msgstr "Aujourd'hui"
-
-#. module: account_easy_reconcile
-#: view:easy.reconcile.history:0
-msgid "Date"
-msgstr "Date"
-
-#. module: account_easy_reconcile
-#: view:account.easy.reconcile:0
-msgid "Configuration"
-msgstr "Configuration"
-
-#. module: account_easy_reconcile
-#: field:easy.reconcile.history,partial_line_ids:0
-msgid "Partially Reconciled Items"
-msgstr "Écritures partiellement lettrées"
-
-#. module: account_easy_reconcile
-#: model:ir.model,name:account_easy_reconcile.model_easy_reconcile_simple_partner
-msgid "easy.reconcile.simple.partner"
-msgstr "easy.reconcile.simple.partner"
-
-#. module: account_easy_reconcile
-#: field:account.easy.reconcile.method,write_off:0
-#: field:easy.reconcile.base,write_off:0
-#: field:easy.reconcile.options,write_off:0
-#: field:easy.reconcile.simple,write_off:0
-#: field:easy.reconcile.simple.name,write_off:0
-#: field:easy.reconcile.simple.partner,write_off:0
-#: field:easy.reconcile.simple.reference,write_off:0
-msgid "Write off allowed"
-msgstr "Écart autorisé"
-
-#. module: account_easy_reconcile
-#: view:account.easy.reconcile:0
-msgid "Automatic Easy Reconcile"
-msgstr "Lettrage automatisé"
-
-#. module: account_easy_reconcile
-#: field:account.easy.reconcile,account:0
-#: field:easy.reconcile.base,account_id:0
-#: field:easy.reconcile.simple,account_id:0
-#: field:easy.reconcile.simple.name,account_id:0
-#: field:easy.reconcile.simple.partner,account_id:0
-#: field:easy.reconcile.simple.reference,account_id:0
-msgid "Account"
-msgstr "Compte"
-
-#. module: account_easy_reconcile
-#: field:account.easy.reconcile.method,task_id:0
-msgid "Task"
-msgstr "Tâche"
-
-#. module: account_easy_reconcile
-#: field:account.easy.reconcile,name:0
+#. module: account_statement_base_completion
+#: field:account.statement.completion.rule,name:0
 msgid "Name"
 msgstr "Nom"
 
-#. module: account_easy_reconcile
-#: field:account.easy.reconcile.method,date_base_on:0
-#: field:easy.reconcile.base,date_base_on:0
-#: field:easy.reconcile.options,date_base_on:0
-#: field:easy.reconcile.simple,date_base_on:0
-#: field:easy.reconcile.simple.name,date_base_on:0
-#: field:easy.reconcile.simple.partner,date_base_on:0
-#: field:easy.reconcile.simple.reference,date_base_on:0
-msgid "Date of reconcilation"
-msgstr ""
-
-#. module: account_easy_reconcile
-#: view:account.easy.reconcile:0
-msgid "Start Auto Reconcilation"
-msgstr "Lancer le lettrage automatisé"
-
-#. module: account_easy_reconcile
-#: field:account.easy.reconcile.method,filter:0
-#: field:easy.reconcile.base,filter:0
-#: field:easy.reconcile.options,filter:0
-#: field:easy.reconcile.simple,filter:0
-#: field:easy.reconcile.simple.name,filter:0
-#: field:easy.reconcile.simple.partner,filter:0
-#: field:easy.reconcile.simple.reference,filter:0
-msgid "Filter"
-msgstr "Filtre"
-
-#. module: account_easy_reconcile
-#: field:easy.reconcile.history,easy_reconcile_id:0
-msgid "Reconcile Profile"
-msgstr "Profil de réconciliation"
-
-#. module: account_easy_reconcile
-#: code:addons/account_easy_reconcile/easy_reconcile.py:233
-#, python-format
-msgid "Error"
-msgstr "Erreur"
-
-#. module: account_easy_reconcile
-#: field:account.easy.reconcile.method,account_lost_id:0
-#: field:easy.reconcile.base,account_lost_id:0
-#: field:easy.reconcile.options,account_lost_id:0
-#: field:easy.reconcile.simple,account_lost_id:0
-#: field:easy.reconcile.simple.name,account_lost_id:0
-#: field:easy.reconcile.simple.partner,account_lost_id:0
-#: field:easy.reconcile.simple.reference,account_lost_id:0
-msgid "Account Lost"
-msgstr "Compte de pertes"
-
-#. module: account_easy_reconcile
-#: view:easy.reconcile.history:0
-msgid "Reconciliation Profile"
-msgstr "Profil de réconciliation"
-
-#. module: account_easy_reconcile
-#: view:account.easy.reconcile:0
-#: field:account.easy.reconcile,history_ids:0
-msgid "History"
-msgstr "Historique"
-
-#. module: account_easy_reconcile
-#: view:easy.reconcile.history:0
-msgid "Reconcilations"
-msgstr ""
-
-#. module: account_easy_reconcile
-#: view:account.easy.reconcile:0
-#: view:easy.reconcile.history:0
-msgid "Go to reconciled items"
-msgstr "Voir les entrées lettrées"
-
-#. module: account_easy_reconcile
-#: view:account.easy.reconcile.method:0
-msgid "Automatic Easy Reconcile Method"
-msgstr "Méthode de lettrage automatisé"
-
-#. module: account_easy_reconcile
-#: view:account.easy.reconcile:0
+#. module: account_statement_base_completion
+#: constraint:account.statement.profile:0
 msgid ""
-"Match one debit line vs one credit line. Do not allow partial reconcilation. "
-"The lines should have the same amount (with the write-off) and the same "
-"partner to be reconciled."
+"You need to put a partner if you tic the 'Force partner on bank move' !"
 msgstr ""
-"Lettre un débit avec un crédit ayant le même montant et le même partenaire. "
-"Le lettrage ne peut être partiel (écriture d'ajustement en cas d'écart)."
+"Vous devez indiquer un partenaire si vous avez cochÃ© 'Indiquer un "
+"partenaire sur la ligne d'Ã©criture de la banque' !"
 
-#. module: account_easy_reconcile
-#: view:account.easy.reconcile:0
-msgid "Display items partially reconciled on the last run"
-msgstr "Afficher les entrées partiellement lettrées au dernier lettrage"
+#. module: account_statement_base_completion
+#: model:ir.model,name:account_statement_base_completion.model_account_bank_statement_line
+msgid "Bank Statement Line"
+msgstr "Ligne de relevÃ© bancaire"
 
-#. module: account_easy_reconcile
-#: field:account.easy.reconcile.method,sequence:0
+#. module: account_statement_base_completion
+#: view:account.statement.completion.rule:0
+#: model:ir.actions.act_window,name:account_statement_base_completion.action_st_completion_rule_tree
+#: model:ir.ui.menu,name:account_statement_base_completion.menu_action_st_completion_rule_tree_menu
+msgid "Statement Completion Rule"
+msgstr "RÃ¨gle d'auto-complÃ©tion du relevÃ©"
+
+#. module: account_statement_base_completion
+#: model:ir.model,name:account_statement_base_completion.model_account_statement_completion_rule
+msgid "account.statement.completion.rule"
+msgstr "account.statement.completion.rule"
+
+#. module: account_statement_base_completion
+#: field:account.statement.completion.rule,profile_ids:0
+#: field:account.statement.profile,rule_ids:0
+msgid "Related statement profiles"
+msgstr "Profils liÃ©s"
+
+#. module: account_statement_base_completion
+#: field:account.bank.statement.line,already_completed:0
+msgid "Auto-Completed"
+msgstr "Auto-CompletÃ©"
+
+#. module: account_statement_base_completion
+#: view:account.bank.statement:0
+msgid "Auto Completion"
+msgstr "Auto-complÃ©tion"
+
+#. module: account_statement_base_completion
+#: field:account.statement.completion.rule,sequence:0
 msgid "Sequence"
 msgstr "Séquence"
 
-#. module: account_easy_reconcile
-#: view:easy.reconcile.history:0
-msgid "Partial Reconcilations"
-msgstr "Lettrages partiels"
+#. module: account_statement_base_completion
+#: help:account.statement.completion.rule,sequence:0
+msgid "Lower means parsed first."
+msgstr "Plus petite sÃ©quence analysÃ©e en premier."
 
-#. module: account_easy_reconcile
-#: code:addons/account_easy_reconcile/easy_reconcile.py:234
-#, python-format
-msgid "There is no history of reconciled entries on the task: %s."
+#. module: account_statement_base_completion
+#: constraint:account.bank.statement:0
+msgid "The journal and period chosen have to belong to the same company."
+msgstr "Le journal et la pÃ©riode doivent appartenir Ã  la mÃªme sociÃ©tÃ©."
+
+#. module: account_statement_base_completion
+#: field:res.partner,bank_statement_label:0
+msgid "Bank Statement Label"
+msgstr "Description de relevÃ© bancaire"
+
+#. module: account_statement_base_completion
+#: help:account.bank.statement.line,already_completed:0
+msgid ""
+"When this checkbox is ticked, the auto-completion process/button will ignore "
+"this line."
 msgstr ""
+"Les lignes cochÃ©es seront ignorÃ©es lorsque vous cliquez sur le bouton auto-"
+"complÃ©tion"
 
-#. module: account_easy_reconcile
-#: model:ir.model,name:account_easy_reconcile.model_easy_reconcile_simple
-msgid "easy.reconcile.simple"
-msgstr "easy.reconcile.simple"
+#. module: account_statement_base_completion
+#: help:res.partner,bank_statement_label:0
+msgid ""
+"Enter the various label found on your bank statement separated by a ; If     "
+"             one of this label is include in the bank statement line, the "
+"partner will be automatically                  filled (as long as you use "
+"this method/rules in your statement profile)."
+msgstr ""
+"Entrez les diffÃ©rentes descriptions/informations sur votre relevÃ© bancaire "
+"sÃ©parÃ©es par un ';' Si l'une d'entre elles figure dans la ligne du "
+"relevÃ©, le partenaire correspondant pourraÃªtre automatiquement retrouvÃ© "
+"(Ã  condition d'utiliser un rÃ¨gle de lettrage dans le profil)."
 
-#. module: account_easy_reconcile
-#: view:easy.reconcile.history:0
-msgid "Reconciliations of last 7 days"
-msgstr "Lettrages des 7 derniers jours"
+#. module: account_statement_base_completion
+#: model:ir.model,name:account_statement_base_completion.model_res_partner
+msgid "Partner"
+msgstr "Partenaire"
 
-#. module: account_easy_reconcile
-#: field:account.easy.reconcile,last_history:0
-msgid "Last History"
-msgstr "Dernier historique"
-
-#. module: account_easy_reconcile
-#: code:addons/account_easy_reconcile/easy_reconcile_history.py:104
-#: field:easy.reconcile.history,reconcile_partial_ids:0
-#, python-format
-msgid "Partial Reconciliations"
-msgstr "Lettrages partiels"
-
-#. module: account_easy_reconcile
-#: model:ir.model,name:account_easy_reconcile.model_account_easy_reconcile_method
-msgid "reconcile method for account_easy_reconcile"
-msgstr "Méthode de lettrage"
-
-#. module: account_easy_reconcile
-#: model:ir.model,name:account_easy_reconcile.model_easy_reconcile_simple_reference
-msgid "easy.reconcile.simple.reference"
-msgstr "easy.reconcile.simple.reference"
-
-#. module: account_easy_reconcile
-#: model:ir.model,name:account_easy_reconcile.model_account_easy_reconcile
-msgid "account easy reconcile"
-msgstr "Lettrage automatisé"
+#. module: account_statement_base_completion
+#: view:account.bank.statement:0
+msgid "Completion Logs"
+msgstr "Journaux d'auto-complÃ©tion"
