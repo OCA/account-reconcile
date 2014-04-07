@@ -130,7 +130,7 @@ class AccountStatementLabel(orm.Model):
                                       'for a given partner'),
         'company_id': fields.related('account_id', 'company_id',
                                      type='many2one',
-                                     reation='res.company',
+                                     relation='res.company',
                                      string='Company',
                                      store=True,
                                      readonly=True),

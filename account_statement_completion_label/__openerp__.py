@@ -40,6 +40,7 @@
            'partner_view.xml',
            'statement_view.xml',
            'security/ir.model.access.csv',
+           'security/ir_rule.xml',
     ],
     'demo': [],
     'installable': True,
