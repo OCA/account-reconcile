@@ -97,7 +97,7 @@ class AccountStatementCompletionRule(orm.Model):
                         l.profile_id = s.profile_id
                     AND
                         st_l.id = %s
-                        """ % (line.id))
+                        """, (line.id,))
                 for partner, account in cr.fetchall():
                     context['label_memorizer'][line.id].append({'partner_id': partner,
                                                                 'account_id': account})
