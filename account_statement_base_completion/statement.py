@@ -397,7 +397,8 @@ class AccountStatement(orm.Model):
                 raise orm.except_orm(_('User error'),
                         _('You should fill all account on the line of the'
                         ' statement %s')%stat.name)
-        return super(AccountStatement, self).button_confirm_bank(cr, uid, ids, context=context)
+        return super(AccountStatement, self).button_confirm_bank(
+                                                cr, uid, ids, context=context)
 
 
 class AccountStatementLine(orm.Model):
