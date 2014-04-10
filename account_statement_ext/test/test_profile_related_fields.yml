@@ -1,0 +1,78 @@
+-
+  In order to test the related fields in the profile, I first need to create a profile
+-
+  !record {model: account.statement.profile, id: profile_test1}:
+    name: Bank EUR Profile
+    journal_id: account.bank_journal
+    commission_account_id: account.a_expense
+    company_id: base.main_company
+    partner_id: base.res_partner_1
+    journal_id: account.check_journal
+    balance_check: True
+-
+  I create a second profile
+-
+  !record {model: account.statement.profile, id: profile_test2}:
+    name: Second profile
+    journal_id: account.bank_journal
+    commission_account_id: account.a_expense
+    company_id: base.main_company
+    partner_id: base.res_partner_3
+    journal_id: account.bank_journal
+    balance_check: True
+-
+  Now I create a statement.
+-
+  !record {model: account.bank.statement, id: statement_test1}:
+    name: Statement 1
+    profile_id: profile_test1
+    company_id: base.main_company
+-
+  Now I check that the related data come from the profile
+-
+  !assert {model: account.bank.statement, id: statement_test1, string: Initial data should come from the profile}:
+    - balance_check is True
+    - credit_partner_id.id == _ref('base.res_partner_1')
+    - journal_id.id == _ref('account.check_journal')
+-
+  Now I set the balance flag to False in the profile
+-
+  !record {model: account.statement.profile, id: profile_test1}:
+    balance_check: False
+-
+  It should be false in the statement as well.
+-
+  !assert {model: account.bank.statement, id: statement_test1, string: We should not check the balance}:
+    - balance_check is False
+-
+  Now I change the journal in the profile
+-
+  !record {model: account.statement.profile, id: profile_test1}:
+    journal_id: account.cash_journal
+-
+  The journal should propagate to the statement
+-
+  !assert {model: account.bank.statement, id: statement_test1, string: The journal should be updated}:
+    - journal_id.id == _ref('account.cash_journal')
+-
+  Now I change the partner in the profile
+-
+  !record {model: account.statement.profile, id: profile_test1}:
+    partner_id: base.res_partner_2
+-
+  The partner should propagate to the statement
+-
+  !assert {model: account.bank.statement, id: statement_test1, string: The partner should be updated}:
+    - credit_partner_id.id == _ref('base.res_partner_2')
+-
+  Now I change the profile associated to the statement.
+-
+  !record {model: account.bank.statement, id: statement_test1}:
+    profile_id: profile_test2
+-
+  The statement should receive information from the new statement.
+-
+  !assert {model: account.bank.statement, id: statement_test1, string: All information should be probagated from the new profile}:
+    - balance_check is True
+    - credit_partner_id.id == _ref('base.res_partner_3')
+    - journal_id.id == _ref('account.bank_journal')

@@ -97,6 +97,7 @@ class CreditPartnerStatementImporter(orm.TransientModel):
             req_id = req_id[0]
         importer = self.browse(cr, uid, req_id, context)
         ftype = self._check_extension(importer.file_name)
+        context['file_name'] = importer.file_name
         sid = self.pool.get(
                 'account.statement.profile').statement_import(
                                             cr,

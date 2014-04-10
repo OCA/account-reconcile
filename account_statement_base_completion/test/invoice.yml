@@ -1,0 +1,32 @@
+-
+  I create a customer Invoice to be found by the completion.
+-
+  !record {model: account.invoice, id: invoice_for_completion_1}:
+    account_id: account.a_recv
+    company_id: base.main_company
+    currency_id: base.EUR
+    internal_number: CI0001
+    invoice_line:
+      - account_id: account.a_sale
+        name: '[PCSC234] PC Assemble SC234'
+        price_unit: 210.0
+        quantity: 1.0
+        product_id: product.product_product_3
+        uos_id: product.product_uom_unit
+    journal_id: account.bank_journal
+    partner_id: base.res_partner_12
+    reference_type: none
+-
+  I confirm the Invoice
+-
+  !workflow {model: account.invoice, action: invoice_open, ref: invoice_for_completion_1}
+-
+  I check that the invoice state is "Open"
+-
+  !assert {model: account.invoice, id: invoice_for_completion_1}:
+    - state == 'open'
+-
+  I check that it is given the number "CI0001"
+-
+  !assert {model: account.invoice, id: invoice_for_completion_1, string: Check CI number}:
+    - number == 'CI0001'

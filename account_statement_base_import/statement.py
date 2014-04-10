@@ -26,16 +26,18 @@ import datetime
 from openerp.osv.orm import Model
 from openerp.osv import fields, osv
 from parser import new_bank_statement_parser
+from openerp.tools.config import config
 
 
 class AccountStatementProfil(Model):
     _inherit = "account.statement.profile"
 
     def get_import_type_selection(self, cr, uid, context=None):
-        """
-        Has to be inherited to add parser
-        """
+        """This is the method to be inherited for adding the parser"""
         return [('generic_csvxls_so', 'Generic .csv/.xls based on SO Name')]
+
+    def _get_import_type_selection(self, cr, uid, context=None):
+        return self.get_import_type_selection(cr, uid, context=context)
 
     _columns = {
         'launch_import_completion': fields.boolean(
@@ -46,13 +48,16 @@ class AccountStatementProfil(Model):
         #  we remove deprecated as it floods logs in standard/warning level sob...
         'rec_log': fields.text('log', readonly=True),  # Deprecated
         'import_type': fields.selection(
-            get_import_type_selection,
+            _get_import_type_selection,
             'Type of import',
             required=True,
             help="Choose here the method by which you want to import bank"
                  "statement for this profile."),
-
     }
+
+    _defaults = {
+                'import_type': 'generic_csvxls_so'
+            }
 
     def _write_extra_statement_lines(
             self, cr, uid, parser, result_row_list, profile, statement_id, context):
@@ -85,7 +90,11 @@ class AccountStatementProfil(Model):
                           context=context)
         return True
 
-    def prepare_statetement_lines_vals(
+    #Deprecated remove on V8
+    def prepare_statetement_lines_vals(self, *args, **kwargs):
+        return self.prepare_statement_lines_vals(*args, **kwargs)
+
+    def prepare_statement_lines_vals(
             self, cr, uid, parser_vals, account_payable, account_receivable,
             statement_id, context):
         """
@@ -101,6 +110,7 @@ class AccountStatementProfil(Model):
         :return: dict of vals that will be passed to create method of statement line.
         """
         statement_obj = self.pool.get('account.bank.statement')
+        statement_line_obj = self.pool['account.bank.statement.line']
         values = parser_vals
         values['statement_id'] = statement_id
         date = values.get('date')
@@ -117,8 +127,17 @@ class AccountStatementProfil(Model):
                                                            context=context)
             values['period_id'] = periods[0]
             period_memoizer[date] = periods[0]
-        values['type'] = 'general'
+        values = statement_line_obj._add_missing_default_values(cr, uid, values, context)
         return values
+
+    def prepare_statement_vals(self, cr, uid, profile_id, result_row_list, parser, context):
+        """
+        Hook to build the values of the statement from the parser and
+        the profile.
+        """
+        vals = {'profile_id': profile_id}
+        vals.update(parser.get_st_vals())
+        return vals
 
     def statement_import(self, cr, uid, ids, profile_id, file_stream, ftype="csv", context=None):
         """
@@ -153,9 +172,11 @@ class AccountStatementProfil(Model):
                                      _("Column %s you try to import is not "
                                        "present in the bank statement line!") % col)
 
+        statement_vals = self.prepare_statement_vals(cr, uid, prof.id, result_row_list, parser, context)
         statement_id = statement_obj.create(cr, uid,
-                                            {'profile_id': prof.id},
+                                            statement_vals,
                                             context=context)
+
         if prof.receivable_account_id:
             account_receivable = account_payable = prof.receivable_account_id.id
         else:
@@ -166,7 +187,7 @@ class AccountStatementProfil(Model):
             statement_store = []
             for line in result_row_list:
                 parser_vals = parser.get_st_line_vals(line)
-                values = self.prepare_statetement_lines_vals(
+                values = self.prepare_statement_lines_vals(
                     cr, uid, parser_vals, account_payable, account_receivable, statement_id,
                     context)
                 statement_store.append(values)
@@ -201,10 +222,14 @@ class AccountStatementProfil(Model):
                                          context)
 
         except Exception:
-            statement_obj.unlink(cr, uid, [statement_id], context=context)
             error_type, error_value, trbk = sys.exc_info()
             st = "Error: %s\nDescription: %s\nTraceback:" % (error_type.__name__, error_value)
             st += ''.join(traceback.format_tb(trbk, 30))
+            #TODO we should catch correctly the exception with a python
+            #Exception and only re-catch some special exception.
+            #For now we avoid re-catching error in debug mode
+            if config['debug_mode']:
+                raise
             raise osv.except_osv(_("Statement import error"),
                                  _("The statement cannot be created: %s") % st)
         return statement_id

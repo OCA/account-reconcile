@@ -23,6 +23,7 @@ import traceback
 import sys
 import logging
 import simplejson
+import inspect
 
 import psycopg2
 
@@ -73,14 +74,13 @@ class AccountStatementProfil(orm.Model):
             rel='as_rul_st_prof_rel'),
     }
 
-    def _get_callable(self, cr, uid, profile, context=None):
+    def _get_rules(self, cr, uid, profile, context=None):
         if isinstance(profile, (int, long)):
             prof = self.browse(cr, uid, profile, context=context)
         else:
             prof = profile
         # We need to respect the sequence order
-        sorted_array = sorted(prof.rule_ids, key=attrgetter('sequence'))
-        return tuple((x.function_to_call for x in sorted_array))
+        return sorted(prof.rule_ids, key=attrgetter('sequence'))
 
     def _find_values_from_rules(self, cr, uid, calls, line, context=None):
         """
@@ -99,12 +99,15 @@ class AccountStatementProfil(orm.Model):
         if context is None:
             context = {}
         if not calls:
-            calls = self._get_callable(cr, uid, line['profile_id'], context=context)
+            calls = self._get_rules(cr, uid, line['profile_id'], context=context)
         rule_obj = self.pool.get('account.statement.completion.rule')
 
         for call in calls:
-            method_to_call = getattr(rule_obj, call)
-            result = method_to_call(cr, uid, line, context)
+            method_to_call = getattr(rule_obj, call.function_to_call)
+            if len(inspect.getargspec(method_to_call).args) == 6:
+                result = method_to_call(cr, uid, call.id, line, context)
+            else:
+                result = method_to_call(cr, uid, line, context)
             if result:
                 result['already_completed'] = True
                 return result
@@ -132,7 +135,6 @@ class AccountStatementCompletionRule(orm.Model):
         return [
             ('get_from_ref_and_invoice', 'From line reference (based on customer invoice number)'),
             ('get_from_ref_and_supplier_invoice', 'From line reference (based on supplier invoice number)'),
-            ('get_from_ref_and_so', 'From line reference (based on SO number)'),
             ('get_from_label_and_partner_field', 'From line label (based on partner field)'),
             ('get_from_label_and_partner_name', 'From line label (based on partner name)')]
 
@@ -182,7 +184,7 @@ class AccountStatementCompletionRule(orm.Model):
         inv = self._find_invoice(cr, uid, line, inv_type, context=context)
         if inv:
             # FIXME use only commercial_partner_id of invoice in 7.1
-            # this is for backward compatibility in 7.0 before 
+            # this is for backward compatibility in 7.0 before
             # the refactoring of res.partner
             if hasattr(inv, 'commercial_partner_id'):
                 partner_id = inv.commercial_partner_id.id
@@ -231,49 +233,6 @@ class AccountStatementCompletionRule(orm.Model):
             ...}
         """
         return self._from_invoice(cr, uid, line, 'customer', context=context)
-
-    # Should be private but data are initialised with no update XML
-    def get_from_ref_and_so(self, cr, uid, st_line, context=None):
-        """
-        Match the partner based on the SO number and the reference of the statement
-        line. Then, call the generic get_values_for_line method to complete other values.
-        If more than one partner matched, raise the ErrorTooManyPartner error.
-
-        :param int/long st_line: read of the concerned account.bank.statement.line
-        :return:
-            A dict of value that can be passed directly to the write method of
-            the statement line or {}
-           {'partner_id': value,
-            'account_id': value,
-
-            ...}
-        """
-        st_obj = self.pool.get('account.bank.statement.line')
-        res = {}
-        if st_line:
-            so_obj = self.pool.get('sale.order')
-            so_id = so_obj.search(cr,
-                                  uid,
-                                  [('name', '=', st_line['ref'])],
-                                  context=context)
-            if so_id:
-                if so_id and len(so_id) == 1:
-                    so = so_obj.browse(cr, uid, so_id[0], context=context)
-                    res['partner_id'] = so.partner_id.id
-                elif so_id and len(so_id) > 1:
-                    raise ErrorTooManyPartner(_('Line named "%s" (Ref:%s) was matched by more '
-                                                'than one partner while looking on SO by ref.') %
-                                              (st_line['name'], st_line['ref']))
-                st_vals = st_obj.get_values_for_line(cr,
-                                                     uid,
-                                                     profile_id=st_line['profile_id'],
-                                                     master_account_id=st_line['master_account_id'],
-                                                     partner_id=res.get('partner_id', False),
-                                                     line_type='customer',
-                                                     amount=st_line['amount'] if st_line['amount'] else 0.0,
-                                                     context=context)
-                res.update(st_vals)
-        return res
 
     # Should be private but data are initialised with no update XML
     def get_from_label_and_partner_field(self, cr, uid, st_line, context=None):
@@ -360,9 +319,12 @@ class AccountStatementCompletionRule(orm.Model):
         if not context['partner_memoizer']:
             return res
         st_obj = self.pool.get('account.bank.statement.line')
-        sql = "SELECT id FROM res_partner WHERE name ~* %s and id in %s"
-        pattern = ".*%s.*" % re.escape(st_line['name'])
-        cr.execute(sql, (pattern, context['partner_memoizer']))
+        # regexp_replace(name,'([^a-zA-Z0-9 -])', '\\\1', 'g'), 'i') escape the column name to avoid false positive. (ex 'jho..doe' -> 'joh\.\.doe'
+        sql = """SELECT id FROM  (
+                        SELECT id, regexp_matches(%s, regexp_replace(name,'([^[:alpha:]0-9 -])', %s, 'g'), 'i') AS name_match FROM res_partner
+                            WHERE id IN %s) AS res_patner_matcher
+                    WHERE name_match IS NOT NULL"""
+        cr.execute(sql, (st_line['name'], r"\\\1", context['partner_memoizer']))
         result = cr.fetchall()
         if not result:
             return res
@@ -373,7 +335,7 @@ class AccountStatementCompletionRule(orm.Model):
         res['partner_id'] = result[0][0]
         st_vals = st_obj.get_values_for_line(cr,
                                              uid,
-                                             profile_id=st_line['porfile_id'],
+                                             profile_id=st_line['profile_id'],
                                              master_account_id=st_line['master_account_id'],
                                              partner_id=res['partner_id'],
                                              line_type=False,
@@ -478,7 +440,7 @@ class AccountStatementLine(orm.Model):
         """
         statement_line_obj = self.pool['account.bank.statement.line']
         model_cols = statement_line_obj._columns
-        sparse_fields = dict([(k , col) for k, col in model_cols.iteritems() if isinstance(col, fields.sparse) and col._type == 'char'])
+        sparse_fields = dict([(k, col) for k, col in model_cols.iteritems() if isinstance(col, fields.sparse) and col._type == 'char'])
         values = []
         for statement in statement_store:
             to_json_k = set()
@@ -489,10 +451,9 @@ class AccountStatementLine(orm.Model):
                     serialized = st_copy.setdefault(col.serialization_field, {})
                     serialized[k] = st_copy[k]
             for k in to_json_k:
-                st_copy[k] =  simplejson.dumps(st_copy[k])
+                st_copy[k] = simplejson.dumps(st_copy[k])
             values.append(st_copy)
         return values
-        
 
     def _insert_lines(self, cr, uid, statement_store, context=None):
         """ Do raw insert into database because ORM is awfully slow
@@ -516,7 +477,7 @@ class AccountStatementLine(orm.Model):
             when cheking security.
         TODO / WARM: sparse fields are skipped by the method. IOW, if your
         completion rule update an sparse field, the updated value will never
-        be stored in the database. It would be safer to call the update method 
+        be stored in the database. It would be safer to call the update method
         from the ORM for records updating this kind of fields.
         """
         cols = self._get_available_columns([vals])
@@ -530,7 +491,7 @@ class AccountStatementLine(orm.Model):
                                  sql_err.pgerror)
 
 
-class AccountBankSatement(orm.Model):
+class AccountBankStatement(orm.Model):
     """
     We add a basic button and stuff to support the auto-completion
     of the bank statement once line have been imported or manually fullfill.
@@ -554,18 +515,21 @@ class AccountBankSatement(orm.Model):
         """
         user_name = self.pool.get('res.users').read(cr, uid, uid,
                                                     ['name'], context=context)['name']
+        statement = self.browse(cr, uid, stat_id, context=context)
+        number_line = len(statement.line_ids)
 
         log = self.read(cr, uid, stat_id, ['completion_logs'],
                         context=context)['completion_logs']
         log = log if log else ""
 
         completion_date = datetime.datetime.now().strftime(DEFAULT_SERVER_DATETIME_FORMAT)
-        message = (_("%s Bank Statement ID %s has %s lines completed by %s \n%s\n%s\n") %
-                   (completion_date, stat_id, number_imported, user_name, error_msg, log))
+        message = (_("%s Bank Statement ID %s has %s/%s lines completed by %s \n%s\n%s\n") %
+                   (completion_date, stat_id, number_imported, number_line, user_name, 
+                    error_msg, log))
         self.write(cr, uid, [stat_id], {'completion_logs': message}, context=context)
 
-        body = (_('Statement ID %s auto-completed for %s lines completed') %
-                (stat_id, number_imported)),
+        body = (_('Statement ID %s auto-completed for %s/%s lines completed') %
+                (stat_id, number_imported, number_line)),
         self.message_post(cr, uid,
                           [stat_id],
                           body=body,
@@ -589,7 +553,7 @@ class AccountBankSatement(orm.Model):
             ctx = context.copy()
             ctx['line_ids'] = tuple((x.id for x in stat.line_ids))
             b_profile = stat.profile_id
-            rules = profile_obj._get_callable(cr, uid, b_profile, context=context)
+            rules = profile_obj._get_rules(cr, uid, b_profile, context=context)
             profile_id = b_profile.id  # Only for perfo even it gains almost nothing
             master_account_id = b_profile.receivable_account_id
             master_account_id = master_account_id.id if master_account_id else False

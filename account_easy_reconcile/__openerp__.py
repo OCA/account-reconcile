@@ -21,7 +21,7 @@
 
 {
     "name": "Easy Reconcile",
-    "version": "1.3.0",
+    "version": "1.3.1",
     "depends": ["account"],
     "author": "Akretion,Camptocamp",
     "description": """

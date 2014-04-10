@@ -20,12 +20,13 @@
 ##############################################################################
 import base64
 import csv
+from datetime import datetime
 
 
 def UnicodeDictReader(utf8_data, **kwargs):
     sniffer = csv.Sniffer()
     pos = utf8_data.tell()
-    sample_data = utf8_data.read(1024)
+    sample_data = utf8_data.read(2048)
     utf8_data.seek(pos)
     dialect = sniffer.sniff(sample_data, delimiters=',;\t')
     csv_reader = csv.DictReader(utf8_data, dialect=dialect, **kwargs)
@@ -49,6 +50,10 @@ class BankStatementImportParser(object):
         self.result_row_list = None
         # The file buffer on which to work on
         self.filebuffer = None
+        self.balance_start = None
+        self.balance_end = None
+        self.statement_name = None
+        self.statement_date = None
 
     @classmethod
     def parser_for(cls, parser_name):
@@ -109,6 +114,19 @@ class BankStatementImportParser(object):
         the datas, like converting dates, computing commission, ...
         """
         return NotImplementedError
+
+    def get_st_vals(self):
+        """
+        This method return a dict of vals that ca be passed to
+        create method of statement.
+        :return: dict of vals that represent additional infos for the statement
+        """
+        return {
+                'name': self.statement_name or '/',
+                'balance_start': self.balance_start,
+                'balance_end_real': self.balance_end,
+                'date': self.statement_date or datetime.now()
+        }
 
     def get_st_line_vals(self, line, *args, **kwargs):
         """

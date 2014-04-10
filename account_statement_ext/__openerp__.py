@@ -20,7 +20,7 @@
 ##############################################################################
 
 {'name': "Bank statement extension and profiles",
- 'version': '1.3.0',
+ 'version': '1.3.5',
  'author': 'Camptocamp',
  'maintainer': 'Camptocamp',
  'category': 'Finance',
@@ -74,12 +74,13 @@
  """,
  'website': 'http://www.camptocamp.com',
  'data': ['statement_view.xml',
+          'account_view.xml',
           'report/bank_statement_webkit_header.xml',
           'report.xml',
           'security/ir.model.access.csv',
           'security/ir_rule.xml'],
  'demo_xml': [],
- 'test': [],
+ 'test': ['test/test_profile_related_fields.yml'],
  'installable': True,
  'images': [],
  'auto_install': False,

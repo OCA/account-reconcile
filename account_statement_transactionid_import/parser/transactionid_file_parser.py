@@ -27,16 +27,21 @@ class TransactionIDFileParser(FileParser):
     bank statement.
     """
 
-    def __init__(self, parse_name, ftype='csv'):
-        conversion_dict = {'transaction_id': unicode,
-                           'label': unicode,
-                           'date': datetime.datetime,
-                           'amount': float,
-                           'commission_amount': float}
-        # Order of cols does not matter but first row of the file has to be header
-        keys_to_validate = ['transaction_id', 'label', 'date', 'amount', 'commission_amount']
-        super(TransactionIDFileParser, self).__init__(parse_name, keys_to_validate=keys_to_validate,
-                                                      ftype=ftype, conversion_dict=conversion_dict)
+    def __init__(self, parse_name, ftype='csv', extra_fields=None, header=None, **kwargs):
+        """
+        Add transaction_id in header keys
+            :param char: parse_name: The name of the parser
+            :param char: ftype: extension of the file (could be csv or xls)
+            :param dict: extra_fields: extra fields to add to the conversion dict. In the format
+                                     {fieldname: fieldtype}
+            :param list: header : specify header fields if the csv file has no header
+            """
+        extra_fields = {'transaction_id': unicode}
+        super(TransactionIDFileParser, self).__init__(parse_name, extra_fields=extra_fields,
+                                                      ftype=ftype, header=header, **kwargs)
+        # ref is replaced by transaction_id thus we delete it from check
+        self.keys_to_validate = [k for k in self.keys_to_validate if k != 'ref']
+        del self.conversion_dict['ref']
 
     @classmethod
     def parser_for(cls, parser_name):
@@ -73,14 +78,3 @@ class TransactionIDFileParser(FileParser):
                 'label': line.get('label', ''),
                 'transaction_id': line.get('transaction_id', '/'),
                 'commission_amount': line.get('commission_amount', 0.0)}
-
-    def _post(self, *args, **kwargs):
-        """
-        Compute the commission from value of each line
-        """
-        res = super(TransactionIDFileParser, self)._post(*args, **kwargs)
-        val = 0.0
-        for row in self.result_row_list:
-            val += row.get('commission_amount', 0.0)
-        self.commission_global_amount = val
-        return res
