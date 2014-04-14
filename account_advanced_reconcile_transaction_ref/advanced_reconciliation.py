@@ -32,12 +32,35 @@ class easy_reconcile_advanced_transaction_ref(orm.TransientModel):
         will be skipped for reconciliation. Can be inherited to
         skip on some conditions. ie: ref or partner_id is empty.
         """
-        return not (move_line.get('ref') and move_line.get('partner_id'))
+        return not (move_line.get('transaction_ref') and
+                    move_line.get('partner_id'))
 
     def _matchers(self, cr, uid, rec, move_line, context=None):     
         return (('partner_id', move_line['partner_id']),
                 ('ref', move_line['transaction_ref'].lower().strip()))
   
+    def _opposite_matchers(self, cr, uid, rec, move_line, context=None):
+        yield ('partner_id', move_line['partner_id'])
+        yield ('ref', (move_line['transaction_ref'] or '').lower().strip())
+
+
+class easy_reconcile_advanced_transaction_ref_vs_ref(orm.TransientModel):
+
+    _name = 'easy.reconcile.advanced.trans_ref_vs_ref'
+    _inherit = 'easy.reconcile.advanced'
+
+    def _skip_line(self, cr, uid, rec, move_line, context=None):
+        """
+        When True is returned on some conditions, the credit move line
+        will be skipped for reconciliation. Can be inherited to
+        skip on some conditions. ie: ref or partner_id is empty.
+        """
+        return not (move_line.get('ref') and move_line.get('partner_id'))
+
+    def _matchers(self, cr, uid, rec, move_line, context=None):
+        return (('partner_id', move_line['partner_id']),
+                ('ref', move_line['ref'].lower().strip()))
+
     def _opposite_matchers(self, cr, uid, rec, move_line, context=None):
         yield ('partner_id', move_line['partner_id'])
         yield ('ref', (move_line['transaction_ref'] or '').lower().strip())

@@ -1,0 +1,49 @@
+-
+  In order to test the banking framework, I first need to create a profile
+-
+  !record {model: account.statement.profile, id: statement_profile_invoice_transactionid}:
+    name: Bank EUR Profile (invoice transaction ID)
+    journal_id: account.bank_journal
+    commission_account_id: account.a_expense
+    company_id: base.main_company
+    balance_check: True
+    rule_ids:
+      - bank_statement_completion_rule_trans_id_invoice
+-
+  Now I create a statement. I create statment lines separately because I need
+  to find each one by XML id
+-
+  !record {model: account.bank.statement, id: statement_invoice_transactionid_test1}:
+    name: Statement with transaction ID
+    profile_id: statement_profile_invoice_transactionid
+    company_id: base.main_company
+-
+  I create a statement line for an invoice with transaction ID
+-
+  !record {model: account.bank.statement.line, id: statement_line_invoice_transactionid}:
+    name: Test autocompletion based on invoice with transaction ID
+    statement_id: statement_invoice_transactionid_test1
+    transaction_id: XXX77Z
+    ref: 6
+    date: !eval time.strftime('%Y-%m-%d')
+    amount: 450
+-
+  I run the auto complete
+-
+  !python {model: account.bank.statement}: |
+    result = self.button_auto_completion(cr, uid, [ref("statement_invoice_transactionid_test1")])
+-
+  Now I can check that all is nice and shiny, line 1. I expect the invoice has been
+  recognised from the transaction ID.
+-
+  !assert {model: account.bank.statement.line, id: statement_line_invoice_transactionid, string: Check completion by Invoice transaction ID}:
+    - partner_id.name == u'Agrolait'
+-
+  I verify if the reference of the move has been copied to the statement line
+-
+  !python {model: account.bank.statement.line}: |
+    statement_line = self.browse(cr, uid, ref('statement_line_invoice_transactionid'))
+    invoice_obj = self.pool['account.invoice']
+    invoice = invoice_obj.browse(cr, uid, ref('invoice_with_transaction_id'))
+    reference = invoice.move_id.ref
+    assert statement_line.ref == reference

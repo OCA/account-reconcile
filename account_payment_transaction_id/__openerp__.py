@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 ##############################################################################
 #
-#    Author: Joel Grand-Guillaume
-#    Copyright 2011-2012 Camptocamp SA
+#    Author: Guewen Baconnier
+#    Copyright 2014 Camptocamp SA
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -19,43 +19,25 @@
 #
 ##############################################################################
 
-{'name': "Bank statement completion from transaction ID",
+
+{'name': 'Account Payment - Transaction ID',
  'version': '1.0',
  'author': 'Camptocamp',
  'maintainer': 'Camptocamp',
- 'category': 'Finance',
- 'complexity': 'normal',
- 'depends': [
-     'account_statement_base_completion',
-     'base_transaction_id'
-     ],
+ 'license': 'AGPL-3',
+ 'category': 'Hidden',
+ 'depends': ['base_transaction_id',
+             'account_payment',
+             'statement_voucher_killer',
+             ],
  'description': """
-  Add a completion method based on transaction ID providen by the bank/office.
+Compatibility module between Account Payment and Base Transaction ID.
 
-  This transaction ID has been recorded on the SO (by a mapping
-  through the e-commerce connector, or manually). Completion will look
-  in the SO with that transaction ID to match the partner, then it
-  will fill in the bank statement line with it,  as well as
-  the reference with the found SO name to ease the reconciliation.
-
-  This way, the reconciliation always happen on the SO name stored in ref.
-
+Needs `statement_voucher_killer`
  """,
  'website': 'http://www.camptocamp.com',
- 'init_xml': [],
- 'update_xml': [
-    "statement_view.xml",
-    "data.xml",
- ],
- 'demo_xml': [],
- 'test': [
-     'test/sale.yml',
-     'test/completion_transactionid_test.yml',
-     'test/invoice.yml',
-     'test/completion_invoice_transactionid_test.yml',
- ],
+ 'data': [],
+ 'test': [],
  'installable': True,
- 'images': [],
  'auto_install': True,
- 'license': 'AGPL-3',
 }

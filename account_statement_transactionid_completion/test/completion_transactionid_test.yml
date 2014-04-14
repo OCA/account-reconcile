@@ -35,7 +35,7 @@
   I run the auto complete
 -
   !python {model: account.bank.statement}: |
-    result = self.button_auto_completion(cr, uid, [ref("statement_profile_transactionid")])
+    result = self.button_auto_completion(cr, uid, [ref("statement_transactionid_test1")])
 -
   Now I can check that all is nice and shiny, line 1. I expect the SO has been
   recognised from the transaction ID.

@@ -72,18 +72,23 @@ class AccountStatementFromInvoiceLines(orm.TransientModel):
                 s_type = 'customer'
             elif line.journal_id.type in ('purchase', 'purhcase_refund'):
                 s_type = 'supplier'
-            statement_line_obj.create(cr, uid, {
-                'name': line.name or '?',
+            vals = self._prepare_statement_line_vals(
+                cr, uid, line, s_type, statement_id, amount, context=context)
+            statement_line_obj.create(cr, uid, vals, context=context)
+        return {'type': 'ir.actions.act_window_close'}
+
+    def _prepare_statement_line_vals(self, cr, uid, move_line, s_type,
+                                     statement_id, amount, context=None):
+        return {'name': move_line.name or '?',
                 'amount': amount,
                 'type': s_type,
-                'partner_id': line.partner_id.id,
-                'account_id': line.account_id.id,
+                'partner_id': move_line.partner_id.id,
+                'account_id': move_line.account_id.id,
                 'statement_id': statement_id,
-                'ref': line.ref,
+                'ref': move_line.ref,
                 'voucher_id': False,
                 'date': time.strftime('%Y-%m-%d'),
-            }, context=context)
-        return {'type': 'ir.actions.act_window_close'}
+                }
 
 
 class AccountPaymentPopulateStatement(orm.TransientModel):
@@ -114,16 +119,23 @@ class AccountPaymentPopulateStatement(orm.TransientModel):
             if not line.move_line_id.id:
                 continue
             context.update({'move_line_ids': [line.move_line_id.id]})
-            st_line_id = statement_line_obj.create(cr, uid, {
-                'name': line.order_id.reference or '?',
-                'amount': - amount,
-                'type': 'supplier',
-                'partner_id': line.partner_id.id,
-                'account_id': line.move_line_id.account_id.id,
-                'statement_id': statement.id,
-                'ref': line.communication,
-                'date': line.date or line.ml_maturity_date or statement.date,
-                }, context=context)
+            vals = self._prepare_statement_line_vals(
+                cr, uid, line, -amount, statement, context=context)
+            st_line_id = statement_line_obj.create(cr, uid, vals,
+                                                   context=context)
 
             line_obj.write(cr, uid, [line.id], {'bank_statement_line_id': st_line_id})
         return {'type': 'ir.actions.act_window_close'}
+
+    def _prepare_statement_line_vals(self, cr, uid, payment_line, amount,
+                                     statement, context=None):
+        return {'name': payment_line.order_id.reference or '?',
+                'amount': amount,
+                'type': 'supplier',
+                'partner_id': payment_line.partner_id.id,
+                'account_id': payment_line.move_line_id.account_id.id,
+                'statement_id': statement.id,
+                'ref': payment_line.communication,
+                'date': (payment_line.date or payment_line.ml_maturity_date or
+                         statement.date)
+                }

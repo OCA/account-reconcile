@@ -33,8 +33,12 @@ class AccountStatementCompletionRule(Model):
     def _get_functions(self, cr, uid, context=None):
         res = super(AccountStatementCompletionRule, self)._get_functions(
                                                            cr, uid, context=context)
-        res.append(('get_from_transaction_id_and_so',
-                    'From line reference (based on SO transaction ID)'))
+        res += [
+            ('get_from_transaction_id_and_so',
+             'Match Sales Order using transaction ID'),
+            ('get_from_transaction_id_and_invoice',
+             'Match Invoice using transaction ID'),
+        ]
         return res
 
     _columns = {
@@ -79,6 +83,52 @@ class AccountStatementCompletionRule(Model):
             res.update(st_vals)
         return res
 
+    def get_from_transaction_id_and_invoice(self, cr, uid, st_line, context=None):
+        """
+        Match the partner based on the transaction ID field of the invoice.
+        Then, call the generic st_line method to complete other values.
+
+        In that case, we always fullfill the reference of the line with the invoice name.
+
+        :param dict st_line: read of the concerned account.bank.statement.line
+        :return:
+            A dict of value that can be passed directly to the write method of
+            the statement line or {}
+           {'partner_id': value,
+            'account_id' : value,
+            ...}
+            """
+        st_obj = self.pool.get('account.bank.statement.line')
+        res = {}
+        invoice_obj = self.pool.get('account.invoice')
+        invoice_id = invoice_obj.search(
+            cr, uid,
+            [('transaction_id', '=', st_line['transaction_id'])],
+            context=context)
+        if len(invoice_id) > 1:
+            raise ErrorTooManyPartner(
+                _('Line named "%s" (Ref:%s) was matched by more than '
+                  'one partner.') % (st_line['name'], st_line['ref']))
+        elif len(invoice_id) == 1:
+            invoice = invoice_obj.browse(cr, uid, invoice_id[0],
+                                         context=context)
+            res['partner_id'] = invoice.partner_id.id
+            # we want the move to have the same ref than the found
+            # invoice's move, thus it will be easier to link them for the
+            # accountants
+            if invoice.move_id:
+                res['ref'] = invoice.move_id.ref
+            st_vals = st_obj.get_values_for_line(
+                cr, uid,
+                profile_id=st_line['profile_id'],
+                master_account_id=st_line['master_account_id'],
+                partner_id=res.get('partner_id', False),
+                line_type=st_line['type'],
+                amount=st_line['amount'] if st_line['amount'] else 0.0,
+                context=context)
+            res.update(st_vals)
+        return res
+
 
 class AccountStatementLine(Model):
     _inherit = "account.bank.statement.line"
@@ -92,3 +142,38 @@ class AccountStatementLine(Model):
             serialization_field='additionnal_bank_fields',
             help="Transaction id from the financial institute"),
     }
+
+
+class AccountBankStatement(Model):
+    _inherit = "account.bank.statement"
+
+    def _prepare_move_line_vals(
+            self, cr, uid, st_line, move_id, debit, credit, currency_id=False,
+            amount_currency=False, account_id=False, analytic_id=False,
+            partner_id=False, context=None):
+        """Add the period_id from the statement line date to the move preparation.
+           Originaly, it was taken from the statement period_id
+
+           :param browse_record st_line: account.bank.statement.line record to
+                  create the move from.
+           :param int/long move_id: ID of the account.move to link the move line
+           :param float debit: debit amount of the move line
+           :param float credit: credit amount of the move line
+           :param int/long currency_id: ID of currency of the move line to create
+           :param float amount_currency: amount of the debit/credit expressed in the currency_id
+           :param int/long account_id: ID of the account to use in the move line if different
+                  from the statement line account ID
+           :param int/long analytic_id: ID of analytic account to put on the move line
+           :param int/long partner_id: ID of the partner to put on the move line
+           :return: dict of value to create() the account.move.line
+        """
+        res = super(AccountBankStatement, self)._prepare_move_line_vals(
+            cr, uid, st_line, move_id, debit, credit,
+            currency_id=currency_id,
+            amount_currency=amount_currency,
+            account_id=account_id,
+            analytic_id=analytic_id,
+            partner_id=partner_id, context=context)
+        if st_line.transaction_id:
+            res['transaction_ref'] = st_line.transaction_id
+        return res
