@@ -13,13 +13,12 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2014-03-22 07:11+0000\n"
-"X-Generator: Launchpad (build 16967)\n"
+"X-Launchpad-Export-Date: 2014-04-22 08:29+0000\n"
+"X-Generator: Launchpad (build 16985)\n"
 "Language: \n"
 
 #. module: account_easy_reconcile
-#: code:addons/account_easy_reconcile/easy_reconcile_history.py:108
-#: view:easy.reconcile.history:0
+#: code:addons/account_easy_reconcile/easy_reconcile_history.py:101
 #: field:easy.reconcile.history,reconcile_ids:0
 #, python-format
 msgid "Reconciliations"
@@ -78,7 +77,7 @@ msgstr ""
 #. module: account_easy_reconcile
 #: model:ir.model,name:account_easy_reconcile.model_easy_reconcile_options
 msgid "easy.reconcile.options"
-msgstr "easy.reconcile.options"
+msgstr "lettrage automatisé.options"
 
 #. module: account_easy_reconcile
 #: view:easy.reconcile.history:0
@@ -209,7 +208,6 @@ msgid "Configuration"
 msgstr "Configuration"
 
 #. module: account_easy_reconcile
-#: field:account.easy.reconcile,reconciled_partial_count:0
 #: field:easy.reconcile.history,partial_line_ids:0
 msgid "Partially Reconciled Items"
 msgstr "Écritures partiellement lettrées"
@@ -307,7 +305,7 @@ msgid "Start Auto Reconciliation"
 msgstr "Lancer le lettrage automatisé"
 
 #. module: account_easy_reconcile
-#: code:addons/account_easy_reconcile/easy_reconcile.py:257
+#: code:addons/account_easy_reconcile/easy_reconcile.py:233
 #, python-format
 msgid "Error"
 msgstr "Erreur"
@@ -403,8 +401,7 @@ msgid "Date of reconciliation"
 msgstr "Date de lettrage"
 
 #. module: account_easy_reconcile
-#: code:addons/account_easy_reconcile/easy_reconcile_history.py:111
-#: view:easy.reconcile.history:0
+#: code:addons/account_easy_reconcile/easy_reconcile_history.py:104
 #: field:easy.reconcile.history,reconcile_partial_ids:0
 #, python-format
 msgid "Partial Reconciliations"

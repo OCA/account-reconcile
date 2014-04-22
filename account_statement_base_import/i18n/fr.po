@@ -14,14 +14,14 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2014-03-22 07:11+0000\n"
-"X-Generator: Launchpad (build 16967)\n"
+"X-Launchpad-Export-Date: 2014-04-22 08:29+0000\n"
+"X-Generator: Launchpad (build 16985)\n"
 
 #. module: account_statement_base_import
 #: view:credit.statement.import:0
 #: model:ir.actions.act_window,name:account_statement_base_import.statement_importer_action
 msgid "Import statement"
-msgstr ""
+msgstr "Import de relevé"
 
 #. module: account_statement_base_import
 #: view:account.statement.profile:0
@@ -31,12 +31,12 @@ msgstr ""
 #. module: account_statement_base_import
 #: model:ir.model,name:account_statement_base_import.model_credit_statement_import
 msgid "credit.statement.import"
-msgstr ""
+msgstr "credit.statement.import"
 
 #. module: account_statement_base_import
 #: field:credit.statement.import,input_statement:0
 msgid "Statement file"
-msgstr ""
+msgstr "Fichier à importer"
 
 #. module: account_statement_base_import
 #: code:addons/account_statement_base_import/statement.py:168
@@ -54,19 +54,19 @@ msgstr ""
 #. module: account_statement_base_import
 #: field:credit.statement.import,journal_id:0
 msgid "Financial journal to use transaction"
-msgstr ""
+msgstr "Journal"
 
 #. module: account_statement_base_import
-#: code:addons/account_statement_base_import/parser/file_parser.py:108
+#: code:addons/account_statement_base_import/parser/file_parser.py:102
 #, python-format
 msgid "Column %s not present in file"
-msgstr ""
+msgstr "Colonne %s non présente dans le fichier"
 
 #. module: account_statement_base_import
 #: view:account.statement.profile:0
 #: model:ir.ui.menu,name:account_statement_base_import.statement_importer_menu
 msgid "Import Bank Statement"
-msgstr ""
+msgstr "Importation de relevé"
 
 #. module: account_statement_base_import
 #: code:addons/account_statement_base_import/parser/file_parser.py:54
@@ -87,10 +87,10 @@ msgid "Missing column!"
 msgstr ""
 
 #. module: account_statement_base_import
-#: code:addons/account_statement_base_import/parser/parser.py:150
+#: code:addons/account_statement_base_import/parser/parser.py:166
 #, python-format
 msgid "No buffer file given."
-msgstr ""
+msgstr "Pas de fichier tampon donné."
 
 #. module: account_statement_base_import
 #: code:addons/account_statement_base_import/parser/file_parser.py:107
@@ -103,17 +103,17 @@ msgstr ""
 #. module: account_statement_base_import
 #: field:account.statement.profile,launch_import_completion:0
 msgid "Launch completion after import"
-msgstr ""
+msgstr "Lancer l'auto-complétion après import"
 
 #. module: account_statement_base_import
 #: field:credit.statement.import,partner_id:0
 msgid "Credit insitute partner"
-msgstr ""
+msgstr "Organisme bancaire"
 
 #. module: account_statement_base_import
 #: view:account.statement.profile:0
 msgid "Import related infos"
-msgstr ""
+msgstr "Importation des informations liées"
 
 #. module: account_statement_base_import
 #: code:addons/account_statement_base_import/statement.py:163
@@ -122,10 +122,10 @@ msgid "The file is empty"
 msgstr ""
 
 #. module: account_statement_base_import
-#: code:addons/account_statement_base_import/wizard/import_statement.py:90
+#: code:addons/account_statement_base_import/wizard/import_statement.py:93
 #, python-format
 msgid "Please use a file with an extention"
-msgstr ""
+msgstr "Veuillez sélectionner un fichier avec une extension"
 
 #. module: account_statement_base_import
 #: code:addons/account_statement_base_import/parser/file_parser.py:172
@@ -140,10 +140,10 @@ msgstr ""
 
 #. module: account_statement_base_import
 #: code:addons/account_statement_base_import/parser/file_parser.py:29
-#: code:addons/account_statement_base_import/parser/generic_file_parser.py:30
+#: code:addons/account_statement_base_import/parser/generic_file_parser.py:31
 #, python-format
 msgid "Please install python lib xlrd"
-msgstr ""
+msgstr "Veuillez installer la bibliothèque python xlrd"
 
 #. module: account_statement_base_import
 #: code:addons/account_statement_base_import/parser/file_parser.py:160
@@ -160,7 +160,7 @@ msgstr ""
 #. module: account_statement_base_import
 #: field:account.statement.profile,last_import_date:0
 msgid "Last Import Date"
-msgstr ""
+msgstr "Date de dernier import"
 
 #. module: account_statement_base_import
 #: model:ir.model,name:account_statement_base_import.model_account_statement_profile
@@ -168,10 +168,10 @@ msgid "Statement Profile"
 msgstr ""
 
 #. module: account_statement_base_import
-#: code:addons/account_statement_base_import/statement.py:222
+#: code:addons/account_statement_base_import/statement.py:234
 #, python-format
 msgid "Statement import error"
-msgstr ""
+msgstr "Erreur d'import de relevé"
 
 #. module: account_statement_base_import
 #: code:addons/account_statement_base_import/parser/file_parser.py:193
@@ -192,7 +192,7 @@ msgstr ""
 #. module: account_statement_base_import
 #: field:account.statement.profile,import_type:0
 msgid "Type of import"
-msgstr ""
+msgstr "Type d'import"
 
 #. module: account_statement_base_import
 #: help:account.statement.profile,launch_import_completion:0
@@ -224,32 +224,32 @@ msgstr ""
 #. module: account_statement_base_import
 #: field:credit.statement.import,profile_id:0
 msgid "Import configuration parameter"
-msgstr ""
+msgstr "Paramètres de configuration d'import"
 
 #. module: account_statement_base_import
 #: field:account.statement.profile,rec_log:0
 msgid "log"
-msgstr ""
+msgstr "journal"
 
 #. module: account_statement_base_import
 #: view:credit.statement.import:0
 msgid "Import Parameters Summary"
-msgstr ""
+msgstr "Résumé des paramètres d'import"
 
 #. module: account_statement_base_import
 #: field:credit.statement.import,balance_check:0
 msgid "Balance check"
-msgstr ""
+msgstr "Vérification des soldes"
 
 #. module: account_statement_base_import
 #: field:credit.statement.import,force_partner_on_bank:0
 msgid "Force partner on bank move"
-msgstr ""
+msgstr "Forcer un partenaire sur la ligne du compte de banque"
 
 #. module: account_statement_base_import
 #: field:credit.statement.import,file_name:0
 msgid "File Name"
-msgstr ""
+msgstr "Nom du fichier"
 
 #. module: account_statement_base_import
 #: code:addons/account_statement_base_import/parser/file_parser.py:55
@@ -272,7 +272,7 @@ msgstr ""
 #. module: account_statement_base_import
 #: field:credit.statement.import,receivable_account_id:0
 msgid "Force Receivable/Payable Account"
-msgstr ""
+msgstr "Forcer le compte Client/Fournisseur"
 
 #. module: account_statement_base_import
 #: code:addons/account_statement_base_import/parser/file_parser.py:164
@@ -288,12 +288,12 @@ msgstr ""
 msgid ""
 "Choose here the method by which you want to import bank statement for this "
 "profile."
-msgstr ""
+msgstr "Choisissez la méthode d'import de relevé pour ce profil."
 
 #. module: account_statement_base_import
 #: view:credit.statement.import:0
 msgid "Cancel"
-msgstr ""
+msgstr "Annulation"
 
 #. module: account_statement_base_import
 #: help:credit.statement.import,force_partner_on_bank:0
