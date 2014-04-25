@@ -99,7 +99,7 @@ class AccountStatementProfil(Model):
             statement_id, context):
         """
         Hook to build the values of a line from the parser returned values. At
-        least it fullfill the statement_id and account_id. Override it to add your
+        least it fullfill the statement_id. Overide it to add your
         own completion if needed.
 
         :param dict of vals from parser for account.bank.statement.line (called by
@@ -113,12 +113,6 @@ class AccountStatementProfil(Model):
         statement_line_obj = self.pool['account.bank.statement.line']
         values = parser_vals
         values['statement_id'] = statement_id
-        values['account_id'] = statement_obj.get_account_for_counterpart(cr,
-                                                                         uid,
-                                                                         parser_vals['amount'],
-                                                                         account_receivable,
-                                                                         account_payable)
-
         date = values.get('date')
         period_memoizer = context.get('period_memoizer')
         if not period_memoizer:
@@ -239,3 +233,16 @@ class AccountStatementProfil(Model):
             raise osv.except_osv(_("Statement import error"),
                                  _("The statement cannot be created: %s") % st)
         return statement_id
+        
+    
+class AccountBankStatementLine(Model):
+    _inherit = "account.bank.statement.line"
+
+    _columns = { 
+        'account_id': fields.many2one('account.account','Account'),
+    }   
+
+    _defaults = {
+        'account_id': False,
+    }
+ 

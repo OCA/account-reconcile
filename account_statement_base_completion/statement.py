@@ -344,6 +344,24 @@ class AccountStatementCompletionRule(orm.Model):
         res.update(st_vals)
         return res
 
+class AccountStatement(orm.Model):
+    _inherit = "account.bank.statement"
+
+    def button_confirm_bank(self, cr, uid, ids, context=None):
+        line_obj = self.pool['account.bank.statement.line']
+        for stat_id in ids:
+            line_without_account = line_obj.search(cr, uid, [
+                ['statement_id', '=', stat_id],
+                ['account_id', '=', False],
+                ], context=context)
+            if line_without_account:
+                stat = self.browse(cr, uid, stat_id, context=context)
+                raise orm.except_orm(_('User error'),
+                        _('You should fill all account on the line of the'
+                        ' statement %s')%stat.name)
+        return super(AccountStatement, self).button_confirm_bank(
+                                                cr, uid, ids, context=context)
+
 
 class AccountStatementLine(orm.Model):
     """
@@ -355,6 +373,7 @@ class AccountStatementLine(orm.Model):
     module to see how we've done it.
     """
     _inherit = "account.bank.statement.line"
+    _order = "already_completed desc, date asc"
 
     _columns = {
         'additionnal_bank_fields': fields.serialized(
