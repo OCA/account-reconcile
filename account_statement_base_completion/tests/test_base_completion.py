@@ -36,6 +36,8 @@ NAMES_COMPLETION_CASES = [
          name_completion_case("A.one SA", "A.one SA for line", True),
          name_completion_case("Acsone SA", "Line for Acsone ([^a-zA-Z0-9 -]) SA test", False),
          name_completion_case("Acsone ([^a-zA-Z0-9 -]) SA", "Line for Acsone ([^a-zA-Z0-9 -]) SA test", True),
+         name_completion_case(r"Acsone (.^$*+?()[{\| -]\) SA", r"Line for Acsone (.^$*+?()[{\| -]\) SA test", True),
+         name_completion_case("Acšone SA", "Line for Acšone SA test", True),
         ]
 
 
