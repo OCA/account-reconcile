@@ -240,7 +240,3 @@ class AccountBankStatementLine(Model):
     _columns = {
         'account_id': fields.many2one('account.account', 'Account'),
     }
-
-    _defaults = {
-        'account_id': False,
-    }
