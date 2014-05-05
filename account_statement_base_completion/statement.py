@@ -397,6 +397,8 @@ class AccountStatementLine(orm.Model):
             "Auto-Completed",
             help="When this checkbox is ticked, the auto-completion "
                  "process/button will ignore this line."),
+        # Set account_id field as optional by removing required option.
+        'account_id': fields.many2one('account.account', 'Account'),
     }
 
     _defaults = {

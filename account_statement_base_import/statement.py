@@ -233,16 +233,3 @@ class AccountStatementProfil(Model):
             raise osv.except_osv(_("Statement import error"),
                                  _("The statement cannot be created: %s") % st)
         return statement_id
-        
-    
-class AccountBankStatementLine(Model):
-    _inherit = "account.bank.statement.line"
-
-    _columns = { 
-        'account_id': fields.many2one('account.account','Account'),
-    }   
-
-    _defaults = {
-        'account_id': False,
-    }
- 
