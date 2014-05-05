@@ -109,7 +109,6 @@ class AccountStatementProfil(Model):
         :param int/long statement_id: ID of the concerned account.bank.statement
         :return: dict of vals that will be passed to create method of statement line.
         """
-        statement_obj = self.pool.get('account.bank.statement')
         statement_line_obj = self.pool['account.bank.statement.line']
         values = parser_vals
         values['statement_id'] = statement_id
@@ -233,16 +232,11 @@ class AccountStatementProfil(Model):
             raise osv.except_osv(_("Statement import error"),
                                  _("The statement cannot be created: %s") % st)
         return statement_id
-        
-    
+
+
 class AccountBankStatementLine(Model):
     _inherit = "account.bank.statement.line"
 
-    _columns = { 
-        'account_id': fields.many2one('account.account','Account'),
-    }   
-
-    _defaults = {
-        'account_id': False,
+    _columns = {
+        'account_id': fields.many2one('account.account', 'Account'),
     }
- 
