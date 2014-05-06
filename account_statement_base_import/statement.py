@@ -109,7 +109,6 @@ class AccountStatementProfil(Model):
         :param int/long statement_id: ID of the concerned account.bank.statement
         :return: dict of vals that will be passed to create method of statement line.
         """
-        statement_obj = self.pool.get('account.bank.statement')
         statement_line_obj = self.pool['account.bank.statement.line']
         values = parser_vals
         values['statement_id'] = statement_id
