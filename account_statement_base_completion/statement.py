@@ -397,6 +397,8 @@ class AccountStatementLine(orm.Model):
             "Auto-Completed",
             help="When this checkbox is ticked, the auto-completion "
                  "process/button will ignore this line."),
+        # Set account_id field as optional by removing required option.
+        'account_id': fields.many2one('account.account', 'Account'),
     }
 
     _defaults = {
@@ -440,6 +442,25 @@ class AccountStatementLine(orm.Model):
         keys.sort()
         return keys
 
+    def _prepare_insert(self, statement, cols):
+        """ Apply column formating to prepare data for SQL inserting
+        Return a copy of statement
+        """
+        st_copy = statement
+        for k, col in st_copy.iteritems():
+            if k in cols:
+                st_copy[k] = self._columns[k]._symbol_set[1](col)
+        return st_copy
+
+    def _prepare_manyinsert(self, statement_store, cols):
+        """ Apply column formating to prepare multiple SQL inserts
+        Return a copy of statement_store
+        """
+        values = []
+        for statement in statement_store:
+            values.append(self._prepare_insert(statement, cols))
+        return values
+
     def _serialize_sparse_fields(self, cols, statement_store):
         """ Serialize sparse fields values in the target serialized field
         Return a copy of statement_store
@@ -469,6 +490,7 @@ class AccountStatementLine(orm.Model):
         statement_line_obj.check_access_rule(cr, uid, [], 'create')
         statement_line_obj.check_access_rights(cr, uid, 'create', raise_exception=True)
         cols = self._get_available_columns(statement_store, include_serializable=True)
+        statement_store = self._prepare_manyinsert(statement_store, cols)
         tmp_vals = (', '.join(cols), ', '.join(['%%(%s)s' % i for i in cols]))
         sql = "INSERT INTO account_bank_statement_line (%s) VALUES (%s);" % tmp_vals
         try:
@@ -487,6 +509,7 @@ class AccountStatementLine(orm.Model):
         from the ORM for records updating this kind of fields.
         """
         cols = self._get_available_columns([vals])
+        vals = self._prepare_insert(vals, cols)
         tmp_vals = (', '.join(['%s = %%(%s)s' % (i, i) for i in cols]))
         sql = "UPDATE account_bank_statement_line SET %s where id = %%(id)s;" % tmp_vals
         try:
