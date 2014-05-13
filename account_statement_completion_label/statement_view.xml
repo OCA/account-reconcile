@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  account_statement_completion_label for OpenERP
+  Copyright (C) 2013 Akretion (http://www.akretion.com). All Rights Reserved
+  @author Benoît GUILLOT <benoit.guillot@akretion.com>
+  The licence is in the file __openerp__.py
+-->
+
+<openerp>
+    <data>
+
+        <record id="bank_statement_view_form" model="ir.ui.view">
+            <field name="name">account_statement_completion_label.bank_statement.view_form</field>
+            <field name="model">account.bank.statement</field>
+            <field name="inherit_id" ref="account.view_bank_statement_form" />
+            <field name="arch" type="xml">
+                <data>
+                    <xpath expr="/form/sheet/div[@name='import_buttons']" position="after">
+                        <button name="open_completion_label" string="Open Completion Labels"
+                                states='draft,open' type="object" colspan="1"/>
+                    </xpath>
+                </data>
+            </field>
+        </record>
+
+        <record id="statement_label_view_form" model="ir.ui.view">
+             <field name="name">account.statement.label.view</field>
+             <field name="model">account.statement.label</field>
+             <field name="arch" type="xml">
+                 <form string="Statement Label">
+                     <field name="label"/>
+                     <field name="partner_id"/>
+                     <field name="account_id"/>
+                     <field name="profile_id"/>
+                     <field name="company_id"/>
+                 </form>
+             </field>
+         </record>
+
+         <record id="statement_label_view_tree" model="ir.ui.view">
+             <field name="name">account.statement.label.view</field>
+             <field name="model">account.statement.label</field>
+             <field name="arch" type="xml">
+                 <tree string="Statement Label">
+                     <field name="label"/>
+                     <field name="partner_id"/>
+                     <field name="account_id"/>
+                     <field name="profile_id"/>
+                 </tree>
+             </field>
+         </record>
+
+        <record id="statement_label_view_search" model="ir.ui.view">
+            <field name="name">account.statement.label.search</field>
+            <field name="model">account.statement.label</field>
+            <field name="arch" type="xml">
+                <search string="Search Statement Label" >
+                     <field name="label"/>
+                     <field name="partner_id"/>
+                     <field name="account_id"/>
+                     <field name="profile_id"/>
+                </search>
+            </field>
+        </record>
+
+         <record id="action_statement_label_tree" model="ir.actions.act_window">
+             <field name="name">Account Statement Label</field>
+             <field name="res_model">account.statement.label</field>
+             <field name="view_type">form</field>
+             <field name="view_mode">tree,form</field>
+             <field name="search_view_id" ref="statement_label_view_search"/>
+         </record>
+
+         <menuitem string="Statement Label" action="action_statement_label_tree"
+             id="menu_action_statement_label_tree_menu" parent="account.menu_configuration_misc"
+             sequence="40"/>
+
+    </data>
+</openerp>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+<data>
+
+    <record id="label_rule" model="ir.rule">
+        <field name="name">Multicompany label</field>
+        <field ref="model_account_statement_label" name="model_id"/>
+        <field name="domain_force">['|',('company_id','=',False),('company_id','child_of',[user.company_id.id])]</field>
+        <field name="global" eval="True"/>
+    </record>
+
+</data>
+</openerp>
+
