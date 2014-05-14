@@ -24,16 +24,17 @@ import sys
 import logging
 import simplejson
 import inspect
+import datetime
 
 import psycopg2
 
 from collections import defaultdict
 import re
-from tools.translate import _
+from openerp.tools.translate import _
 from openerp.osv import osv, orm, fields
 from openerp.tools import DEFAULT_SERVER_DATETIME_FORMAT
 from operator import attrgetter
-import datetime
+
 
 _logger = logging.getLogger(__name__)
 
@@ -256,7 +257,7 @@ class AccountStatementCompletionRule(orm.Model):
         st_obj = self.pool.get('account.bank.statement.line')
         res = {}
         # As we have to iterate on each partner for each line,
-        # we memoize the pair to avoid
+        #  we memoize the pair to avoid
         # to redo computation for each line.
         # Following code can be done by a single SQL query
         # but this option is not really maintanable
@@ -605,7 +606,7 @@ class AccountBankStatement(orm.Model):
                     st += ''.join(traceback.format_tb(trbk, 30))
                     _logger.error(st)
                 if res:
-                    #stat_line_obj.write(cr, uid, [line.id], vals, context=ctx)
+                    # stat_line_obj.write(cr, uid, [line.id], vals, context=ctx)
                     try:
                         stat_line_obj._update_line(cr, uid, res, context=context)
                     except Exception as exc:

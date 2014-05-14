@@ -18,10 +18,12 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-from openerp.tools.translate import _
-from account_statement_base_import.parser import BankStatementImportParser
+
 import tempfile
 import datetime
+
+from openerp.tools.translate import _
+from openerp.addons.account_statement_base_import.parser import BankStatementImportParser
 
 try:
     import ofxparse
