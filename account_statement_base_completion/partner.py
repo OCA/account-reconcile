@@ -20,7 +20,7 @@
 #################################################################################
 
 from openerp.osv.orm import Model
-from openerp.osv import fields, osv
+from openerp.osv import fields
 
 
 class res_partner(Model):
@@ -32,7 +32,7 @@ class res_partner(Model):
 
     _columns = {
         'bank_statement_label': fields.char('Bank Statement Label', size=100,
-                help="Enter the various label found on your bank statement separated by a ; If \
-                 one of this label is include in the bank statement line, the partner will be automatically \
-                 filled (as long as you use this method/rules in your statement profile)."),
+                help="Enter the various label found on your bank statement separated by a ; If "
+                 "one of this label is include in the bank statement line, the partner will be automatically "
+                 "filled (as long as you use this method/rules in your statement profile)."),
             }

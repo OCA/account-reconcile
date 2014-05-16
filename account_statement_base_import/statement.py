@@ -95,7 +95,7 @@ class AccountStatementProfil(Model):
         return self.prepare_statement_lines_vals(*args, **kwargs)
 
     def prepare_statement_lines_vals(
-            self, cr, uid, parser_vals, account_payable, account_receivable,
+            self, cr, uid, parser_vals,
             statement_id, context):
         """
         Hook to build the values of a line from the parser returned values. At
@@ -104,8 +104,6 @@ class AccountStatementProfil(Model):
 
         :param dict of vals from parser for account.bank.statement.line (called by
                 parser.get_st_line_vals)
-        :param int/long account_payable: ID of the receivable account to use
-        :param int/long account_receivable: ID of the payable account to use
         :param int/long statement_id: ID of the concerned account.bank.statement
         :return: dict of vals that will be passed to create method of statement line.
         """
@@ -195,18 +193,13 @@ class AccountStatementProfil(Model):
                                             statement_vals,
                                             context=context)
 
-        if profile.receivable_account_id:
-            account_receivable = account_payable = profile.receivable_account_id.id
-        else:
-            account_receivable, account_payable = statement_obj.get_default_pay_receiv_accounts(
-                                                       cr, uid, context)
         try:
             # Record every line in the bank statement
             statement_store = []
             for line in result_row_list:
                 parser_vals = parser.get_st_line_vals(line)
                 values = self.prepare_statement_lines_vals(
-                    cr, uid, parser_vals, account_payable, account_receivable, statement_id,
+                    cr, uid, parser_vals, statement_id,
                     context)
                 statement_store.append(values)
             # Hack to bypass ORM poor perfomance. Sob...
@@ -251,11 +244,3 @@ class AccountStatementProfil(Model):
             raise osv.except_osv(_("Statement import error"),
                                  _("The statement cannot be created: %s") % st)
         return statement_id
-
-
-class AccountBankStatementLine(Model):
-    _inherit = "account.bank.statement.line"
-
-    _columns = {
-        'account_id': fields.many2one('account.account', 'Account'),
-    }

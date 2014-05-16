@@ -96,13 +96,9 @@
       <field name="model">account.bank.statement</field>
       <field name="inherit_id" ref="account.view_bank_statement_form"/>
       <field name="type">form</field>
-      <field name="arch" type="xml">
+      <field name="arch" type="xml" >
 
           <!-- Add before the group : profile and related infos -->
-          <field name="journal_id" position="attributes">
-              <attribute name="invisible">True</attribute>
-          </field>
-
           <label for="name" position="before">
               <group>
                   <field name="profile_id" select="1" required="1" on_change="onchange_imp_config_id(profile_id)" widget="selection"/>
@@ -110,7 +106,11 @@
               </group>
           </label>
 
-          # Make balance visible or not depending on profile
+          <field name="journal_id" position="attributes">
+              <attribute name="invisible">True</attribute>
+          </field>
+
+          <!-- Make balance visible or not depending on profile -->
           <field name="balance_start" position="attributes">
               <attribute name="attrs">{'invisible':[('balance_check','=',False)]}</attribute>
           </field>
@@ -128,7 +128,7 @@
           <xpath expr="//field[@name='line_ids']/form//field[@name='date']" position="before">
               <field name="id" readonly="1" />
           </xpath>
-          # Adapt onchange signature
+          <!-- Adapt onchange signature -->
           <xpath expr="//field[@name='line_ids']/tree/field[@name='partner_id']" position="replace">
               <field name="partner_id" on_change="onchange_partner_id(partner_id,parent.profile_id)" domain="['|',('parent_id','=',False),('is_company','=',True)]"/>
           </xpath>
@@ -139,7 +139,7 @@
           <xpath expr="//field[@name='line_ids']/form//field[@name='type']" position="replace">
                <field name="type" on_change="onchange_type(partner_id, type, parent.profile_id)"/>
           </xpath>
-          # also set type hidden as it has no impact on reconciliation
+          <!-- also set type hidden as it has no impact on reconciliation -->
           <xpath expr="//field[@name='line_ids']/tree/field[@name='type']" position="replace">
                <field name="type" on_change="onchange_type(partner_id, type, parent.profile_id)" invisible="1"/>
           </xpath>

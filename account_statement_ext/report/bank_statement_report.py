@@ -22,7 +22,7 @@ from openerp.report import report_sxw
 from openerp.tools.translate import _
 from openerp import pooler
 from datetime import datetime
-from report_webkit import webkit_report
+from openerp.addons.report_webkit import webkit_report
 
 
 class BankStatementWebkit(report_sxw.rml_parse):

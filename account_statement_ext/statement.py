@@ -112,7 +112,7 @@ class AccountStatementProfile(Model):
     _constraints = [
         (_check_partner, "You need to put a partner if you tic the 'Force partner on bank move'!", []),
     ]
-    
+
     _sql_constraints = [
         ('name_uniq', 'unique (name, company_id)', 'The name of the bank statement must be unique !')
     ]
@@ -434,7 +434,7 @@ class AccountBankStatement(Model):
             if errors_stack:
                 msg = u"\n".join(errors_stack)
                 raise osv.except_osv(_('Error'), msg)
-#end changes
+# end changes
             self.write(cr, uid, [st.id],
                        {'name': st_number,
                         'balance_end_real': st.balance_end},
@@ -537,31 +537,15 @@ class AccountBankStatement(Model):
         :return: tuple of int/long ID that give account_receivable, account_payable based on
                  company default.
         """
-        account_receivable = False
-        account_payable = False
-        property_obj = self.pool.get('ir.property')
-        model_fields_obj = self.pool.get('ir.model.fields')
-        model_fields_ids = model_fields_obj.search(
-            cr,
-            uid,
-            [('name', 'in', ['property_account_receivable',
-                             'property_account_payable']),
-             ('model', '=', 'res.partner')],
-            context=context
-        )
-        property_ids = property_obj.search(cr,
-                                           uid,
-                                           [('fields_id', 'in', model_fields_ids),
-                                            ('res_id', '=', False)],
-                                           context=context)
 
-        for erp_property in property_obj.browse(
-                cr, uid, property_ids, context=context):
-            if erp_property.fields_id.name == 'property_account_receivable':
-                account_receivable = erp_property.value_reference.id
-            elif erp_property.fields_id.name == 'property_account_payable':
-                account_payable = erp_property.value_reference.id
-        return account_receivable, account_payable
+        property_obj = self.pool.get('ir.property')
+        account_receivable = property_obj.get(cr, uid, 'property_account_receivable',
+                                              'res.partner', context=context)
+        account_payable = property_obj.get(cr, uid, 'property_account_payable',
+                                           'res.partner', context=context)
+
+        return (account_receivable and account_receivable.id or False,
+                account_payable and account_payable.id or False)
 
     def balance_check(self, cr, uid, st_id, journal_type='bank', context=None):
         """

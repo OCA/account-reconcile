@@ -21,7 +21,7 @@
 ##############################################################################
 
 {'name': "Bank statement OFX import",
-    'version': '1.0',
+    'version': '1.0.1',
     'author': 'Servicios Tecnológicos Avanzados - Pedro M. Baeza',
     'maintainer': 'Pedro M. Baeza',
     'category': 'Finance',
@@ -36,7 +36,7 @@
     Allows to import OFX (Open Financial Exchange) statement files, using
     *account_statement_base_import* generic inheritance mechanism to import 
     statements.
-    
+
     It requires ofxparse library to work.
     """,
     'website': 'http://www.serviciosbaeza.com',
