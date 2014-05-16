@@ -140,7 +140,16 @@ class AccountStatementProfil(Model):
 
     def multi_statement_import(self, cr, uid, ids, profile_id, file_stream,
                                ftype="csv", context=None):
-        prof_obj = self.pool.get("account.statement.profile")
+        """
+        Create multiple bank statements from values given by the parser for the given
+        profile.
+
+        :param int/long profile_id: ID of the profile used to import the file
+        :param filebuffer file_stream: binary of the providen file
+        :param char: ftype represent the file exstension (csv by default)
+        :return: list: list of ids of the created account.bank.statemênt
+        """
+        prof_obj = self.pool.get('account.statement.profile')
         if not profile_id:
             raise osv.except_osv(_("No Profile!"),
                                  _("You must provide a valid profile to import a bank statement!"))
@@ -153,7 +162,7 @@ class AccountStatementProfil(Model):
             res.append(statement_id)
         return res
 
-    def _statement_import(self, cr, uid, ids, prof, parser, file_stream, ftype="csv", context=None):
+    def _statement_import(self, cr, uid, ids, profile, parser, file_stream, ftype="csv", context=None):
         """
         Create a bank statement with the given profile and parser. It will fullfill the bank statement
         with the values of the file providen, but will not complete data (like finding the partner, or
