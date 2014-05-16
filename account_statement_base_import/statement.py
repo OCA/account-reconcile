@@ -190,13 +190,13 @@ class AccountStatementProfil(Model):
                                      _("Column %s you try to import is not "
                                        "present in the bank statement line!") % col)
 
-        statement_vals = self.prepare_statement_vals(cr, uid, prof.id, result_row_list, parser, context)
+        statement_vals = self.prepare_statement_vals(cr, uid, profile.id, result_row_list, parser, context)
         statement_id = statement_obj.create(cr, uid,
                                             statement_vals,
                                             context=context)
 
-        if prof.receivable_account_id:
-            account_receivable = account_payable = prof.receivable_account_id.id
+        if profile.receivable_account_id:
+            account_receivable = account_payable = profile.receivable_account_id.id
         else:
             account_receivable, account_payable = statement_obj.get_default_pay_receiv_accounts(
                                                        cr, uid, context)
@@ -213,7 +213,7 @@ class AccountStatementProfil(Model):
             statement_line_obj._insert_lines(cr, uid, statement_store, context=context)
 
             self._write_extra_statement_lines(
-                cr, uid, parser, result_row_list, prof, statement_id, context)
+                cr, uid, parser, result_row_list, profile, statement_id, context)
             # Trigger store field computation if someone has better idea
             start_bal = statement_obj.read(
                 cr, uid, statement_id, ['balance_start'], context=context)
@@ -230,11 +230,11 @@ class AccountStatementProfil(Model):
             attachment_obj.create(cr, uid, attachment_data, context=context)
 
             # If user ask to launch completion at end of import, do it!
-            if prof.launch_import_completion:
+            if profile.launch_import_completion:
                 statement_obj.button_auto_completion(cr, uid, [statement_id], context)
 
             # Write the needed log infos on profile
-            self.write_logs_after_import(cr, uid, prof.id,
+            self.write_logs_after_import(cr, uid, profile.id,
                                          statement_id,
                                          len(result_row_list),
                                          context)
