@@ -160,13 +160,13 @@ class AccountStatementProfil(Model):
             res.append(statement_id)
         return res
 
-    def _statement_import(self, cr, uid, ids, profile, parser, file_stream, ftype="csv", context=None):
+    def _statement_import(self, cr, uid, ids, prof, parser, file_stream, ftype="csv", context=None):
         """
         Create a bank statement with the given profile and parser. It will fullfill the bank statement
         with the values of the file providen, but will not complete data (like finding the partner, or
         the right account). This will be done in a second step with the completion rules.
 
-        :param profile : The profile used to import the file
+        :param prof : The profile used to import the file
         :param parser: the parser
         :param filebuffer file_stream: binary of the providen file
         :param char: ftype represent the file exstension (csv by default)
@@ -188,7 +188,7 @@ class AccountStatementProfil(Model):
                                      _("Column %s you try to import is not "
                                        "present in the bank statement line!") % col)
 
-        statement_vals = self.prepare_statement_vals(cr, uid, profile.id, result_row_list, parser, context)
+        statement_vals = self.prepare_statement_vals(cr, uid, prof.id, result_row_list, parser, context)
         statement_id = statement_obj.create(cr, uid,
                                             statement_vals,
                                             context=context)
@@ -206,7 +206,7 @@ class AccountStatementProfil(Model):
             statement_line_obj._insert_lines(cr, uid, statement_store, context=context)
 
             self._write_extra_statement_lines(
-                cr, uid, parser, result_row_list, profile, statement_id, context)
+                cr, uid, parser, result_row_list, prof, statement_id, context)
             # Trigger store field computation if someone has better idea
             start_bal = statement_obj.read(
                 cr, uid, statement_id, ['balance_start'], context=context)
@@ -223,11 +223,11 @@ class AccountStatementProfil(Model):
             attachment_obj.create(cr, uid, attachment_data, context=context)
 
             # If user ask to launch completion at end of import, do it!
-            if profile.launch_import_completion:
+            if prof.launch_import_completion:
                 statement_obj.button_auto_completion(cr, uid, [statement_id], context)
 
             # Write the needed log infos on profile
-            self.write_logs_after_import(cr, uid, profile.id,
+            self.write_logs_after_import(cr, uid, prof.id,
                                          statement_id,
                                          len(result_row_list),
                                          context)
