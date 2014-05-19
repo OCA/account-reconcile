@@ -136,13 +136,39 @@ class AccountStatementProfil(Model):
         vals.update(parser.get_st_vals())
         return vals
 
-    def statement_import(self, cr, uid, ids, profile_id, file_stream, ftype="csv", context=None):
+    def multi_statement_import(self, cr, uid, ids, profile_id, file_stream,
+                               ftype="csv", context=None):
+        """
+        Create multiple bank statements from values given by the parser for the
+         givenprofile.
+
+        :param int/long profile_id: ID of the profile used to import the file
+        :param filebuffer file_stream: binary of the providen file
+        :param char: ftype represent the file exstension (csv by default)
+        :return: list: list of ids of the created account.bank.statemênt
+        """
+        prof_obj = self.pool['account.statement.profile']
+        if not profile_id:
+            raise osv.except_osv(_("No Profile!"),
+             _("You must provide a valid profile to import a bank statement!"))
+        prof = prof_obj.browse(cr, uid, profile_id, context=context)
+
+        parser = new_bank_statement_parser(prof.import_type, ftype=ftype)
+        res = []
+        for result_row_list in parser.parse(file_stream):
+            statement_id = self._statement_import(cr, uid, ids, prof, parser,
+                                    file_stream, ftype=ftype, context=context)
+            res.append(statement_id)
+        return res
+
+    def _statement_import(self, cr, uid, ids, prof, parser, file_stream, ftype="csv", context=None):
         """
         Create a bank statement with the given profile and parser. It will fullfill the bank statement
         with the values of the file providen, but will not complete data (like finding the partner, or
         the right account). This will be done in a second step with the completion rules.
 
-        :param int/long profile_id: ID of the profile used to import the file
+        :param prof : The profile used to import the file
+        :param parser: the parser
         :param filebuffer file_stream: binary of the providen file
         :param char: ftype represent the file exstension (csv by default)
         :return: ID of the created account.bank.statemênt
@@ -150,14 +176,8 @@ class AccountStatementProfil(Model):
         statement_obj = self.pool.get('account.bank.statement')
         statement_line_obj = self.pool.get('account.bank.statement.line')
         attachment_obj = self.pool.get('ir.attachment')
-        prof_obj = self.pool.get("account.statement.profile")
-        if not profile_id:
-            raise osv.except_osv(_("No Profile!"),
-                                 _("You must provide a valid profile to import a bank statement!"))
-        prof = prof_obj.browse(cr, uid, profile_id, context=context)
 
-        parser = new_bank_statement_parser(prof.import_type, ftype=ftype)
-        result_row_list = parser.parse(file_stream)
+        result_row_list = parser.result_row_list
         # Check all key are present in account.bank.statement.line!!
         if not result_row_list:
             raise osv.except_osv(_("Nothing to import"),

@@ -54,6 +54,7 @@ class BankStatementImportParser(object):
         self.balance_end = None
         self.statement_name = None
         self.statement_date = None
+        self.support_multi_statements = False
 
     @classmethod
     def parser_for(cls, parser_name):
@@ -163,10 +164,16 @@ class BankStatementImportParser(object):
             raise Exception(_('No buffer file given.'))
         self._format(*args, **kwargs)
         self._pre(*args, **kwargs)
-        self._parse(*args, **kwargs)
-        self._validate(*args, **kwargs)
-        self._post(*args, **kwargs)
-        return self.result_row_list
+        if self.support_multi_statements:
+            while self._parse(*args, **kwargs):
+                self._validate(*args, **kwargs)
+                self._post(*args, **kwargs)
+                yield self.result_row_list
+        else:
+            self._parse(*args, **kwargs)
+            self._validate(*args, **kwargs)
+            self._post(*args, **kwargs)
+            yield self.result_row_list
 
 
 def itersubclasses(cls, _seen=None):

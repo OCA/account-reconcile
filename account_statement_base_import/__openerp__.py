@@ -20,7 +20,7 @@
 ##############################################################################
 
 {'name': "Bank statement base import",
- 'version': '1.1.1',
+ 'version': '1.2',
  'author': 'Camptocamp',
  'maintainer': 'Camptocamp',
  'category': 'Finance',
