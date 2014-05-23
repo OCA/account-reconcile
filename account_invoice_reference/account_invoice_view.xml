@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+  <data noupdate="0">
+    <record id="invoice_supplier_form" model="ir.ui.view">
+      <field name="name">account.invoice.supplier.form</field>
+      <field name="model">account.invoice</field>
+      <field name="inherit_id" ref="account.invoice_supplier_form"/>
+      <field name="arch" type="xml">
+        <field name="supplier_invoice_number" position="attributes">
+          <attribute name="required">1</attribute>
+        </field>
+        <!-- remove the name to move it in a better place -->
+        <xpath expr="/form/sheet/notebook/page[@string='Other Info']//field[@name='name']"
+          position="replace">
+        </xpath>
+        <field name="reference_type" position="after">
+          <label string="Enter the reference in the Supplier Invoice Number field"
+            class="oe_inline"
+            attrs="{'invisible': [('reference_type', '!=', 'none')]}"/>
+        </field>
+        <field name="reference" position="attributes">
+          <attribute name="attrs">{'invisible': [('reference_type', '=', 'none')]}</attribute>
+        </field>
+
+        <xpath expr="//field[@name='reference_type']/parent::div" position="after">
+          <field name="name"/>
+        </xpath>
+      </field>
+    </record>
+
+
+    <record id="invoice_form" model="ir.ui.view">
+      <field name="name">account.invoice.form</field>
+      <field name="model">account.invoice</field>
+      <field name="inherit_id" ref="account.invoice_form"/>
+      <field name="arch" type="xml">
+        <xpath expr="//page[@string='Other Info']//field[@name='name']" position="replace">
+          <field name="reference" string="Customer Reference"/>
+        </xpath>
+
+        <field name="fiscal_position" position="after">
+          <field name="name"/>
+        </field>
+
+      </field>
+    </record>
+
+  </data>
+</openerp>

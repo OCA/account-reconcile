@@ -1,0 +1,22 @@
+-
+  In order to check if the reference of the move is the number of
+  the invoice (customer invoices) when it has no origin, I create an invoice
+-
+  !record {model: account.invoice, id: invoice_reference_no_origin}:
+    payment_term: account.account_payment_term_advance
+    journal_id: account.sales_journal
+    partner_id: base.res_partner_3
+    reference_type: none
+    name: 'Test Customer Invoice no origin'
+    invoice_line:
+      - product_id: product.product_product_5
+        quantity: 10.0
+-
+  I create invoice by clicking on Create button
+-
+  !workflow {model: account.invoice, action: invoice_open, ref: invoice_reference_no_origin}
+-
+  I check that the reference of the move is the number of the invoice
+-
+  !assert {model: account.invoice, id: invoice_reference_no_origin}:
+    - move_id.ref == number
