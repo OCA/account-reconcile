@@ -7,14 +7,13 @@ msgstr ""
 "Project-Id-Version: OpenERP Server 6.1\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-04-02 21:42+0000\n"
-"PO-Revision-Date: 2014-04-02 21:57+0000\n"
-"Last-Translator: Pedro Manuel Baeza <pedro.baeza@gmail.com>\n"
+"PO-Revision-Date: 2014-04-02 23:52+0100\n"
+"Last-Translator: Pedro Manuel Baeza <pedro.baeza@serviciosbaeza.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2014-04-03 06:06+0000\n"
-"X-Generator: Launchpad (build 16967)\n"
+"Plural-Forms: \n"
 
 #. module: account_easy_reconcile
 #: code:addons/account_easy_reconcile/easy_reconcile_history.py:101
@@ -43,8 +42,7 @@ msgstr "Ir a los elementos parcialmente conciliados"
 #. module: account_easy_reconcile
 #: help:account.easy.reconcile.method,sequence:0
 msgid "The sequence field is used to order the reconcile method"
-msgstr ""
-"El campo de secuencia se usa para ordenar los métodos de conciliación"
+msgstr "El campo de secuencia se usa para ordenar los métodos de conciliación"
 
 #. module: account_easy_reconcile
 #: model:ir.model,name:account_easy_reconcile.model_easy_reconcile_history
@@ -123,14 +121,8 @@ msgstr "Detalles del historial"
 
 #. module: account_easy_reconcile
 #: view:account.easy.reconcile:0
-msgid ""
-"Match one debit line vs one credit line. Do not allow partial reconcilation. "
-"The lines should have the same amount (with the write-off) and the same name "
-"to be reconciled."
-msgstr ""
-"Casa una línea del haber contra una del debe. No permite conciliación "
-"parcial. Las líneas deben tener la misma cantidad (incluido el desajuste) y "
-"el mismo nombre para ser conciliadas."
+msgid "Match one debit line vs one credit line. Do not allow partial reconcilation. The lines should have the same amount (with the write-off) and the same name to be reconciled."
+msgstr "Casa una línea del haber contra una del debe. No permite conciliación parcial. Las líneas deben tener la misma cantidad (incluido el desajuste) y el mismo nombre para ser conciliadas."
 
 #. module: account_easy_reconcile
 #: view:account.easy.reconcile:0
@@ -328,14 +320,8 @@ msgstr "Método de conciliación automática sencilla"
 
 #. module: account_easy_reconcile
 #: view:account.easy.reconcile:0
-msgid ""
-"Match one debit line vs one credit line. Do not allow partial reconcilation. "
-"The lines should have the same amount (with the write-off) and the same "
-"partner to be reconciled."
-msgstr ""
-"Casa una línea del haber contra una del debe. No permite conciliación "
-"parcial. Las líneas deben tener la misma cantidad (incluido el desajuste) y "
-"la misma empresa para ser conciliadas."
+msgid "Match one debit line vs one credit line. Do not allow partial reconcilation. The lines should have the same amount (with the write-off) and the same partner to be reconciled."
+msgstr "Casa una línea del haber contra una del debe. No permite conciliación parcial. Las líneas deben tener la misma cantidad (incluido el desajuste) y la misma empresa para ser conciliadas."
 
 #. module: account_easy_reconcile
 #: view:account.easy.reconcile:0
@@ -394,3 +380,4 @@ msgstr "easy.reconcile.simple.reference"
 #: model:ir.model,name:account_easy_reconcile.model_account_easy_reconcile
 msgid "account easy reconcile"
 msgstr "account easy reconcile"
+
