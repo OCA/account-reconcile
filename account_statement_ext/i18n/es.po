@@ -19,239 +19,208 @@ msgstr ""
 #: model:ir.actions.act_window,name:account_statement_ext.action_treasury_statement_profile_tree
 #: model:ir.ui.menu,name:account_statement_ext.menu_treasury_statement_profile_tree
 msgid "Bank Statements Profile"
-msgstr "Profil de relevé bancaire"
+msgstr "Perfil de extractos bancarios"
 
 #. module: account_statement_ext
-#: code:addons/account_statement_ext/statement.py:423
+#: code:addons/account_statement_ext/statement.py:427
 #, python-format
 msgid "Can not determine account"
-msgstr "Impossible de trouver le compte"
+msgstr "No se puede determinar la cuenta"
 
 #. module: account_statement_ext
 #: constraint:account.move:0
 msgid "You can not create more than one move per period on centralized journal"
-msgstr ""
-"Vous ne pouvez pas créer plus d'un mouvement par période dans un journal "
-"centralisateur"
+msgstr "No puede crear más de un asiento por periodo en el diario centralizado"
 
 #. module: account_statement_ext
 #: view:account.statement.profile:0
 msgid "Import statement"
-msgstr "Importation du relevé"
+msgstr "Importar extracto"
 
 #. module: account_statement_ext
 #: field:account.statement.profile,bank_statement_prefix:0
 msgid "Bank Statement Prefix"
-msgstr "Préfixe du N° de Relevé"
+msgstr "Prefijo del extracto bancario"
 
 #. module: account_statement_ext
 #: field:account.bank.statement,profile_id:0
 msgid "Profil"
-msgstr "Profil"
+msgstr "Perfil"
 
 #. module: account_statement_ext
-#: code:addons/account_statement_ext/statement.py:362
+#: code:addons/account_statement_ext/statement.py:366
 #, python-format
 msgid "Please verify that an account is defined in the journal."
-msgstr "Veuillez vérifier que ce compte est défini au niveau du journal."
+msgstr "Por favor verifique que se ha definido una cuenta en el diario."
 
 #. module: account_statement_ext
-#: code:addons/account_statement_ext/statement.py:361
+#: code:addons/account_statement_ext/statement.py:365
 #, python-format
 msgid "Configuration Error !"
-msgstr "Erreur de configuration !"
+msgstr "Error de configuración"
 
 #. module: account_statement_ext
 #: field:account.statement.profile,receivable_account_id:0
 msgid "Force Receivable/Payable Account"
-msgstr "Remplacer le compte client/fournisseur par défaut par "
+msgstr "Forzar la cuenta a cobrar/a pagar"
 
 #. module: account_statement_ext
 #: field:account.statement.profile,commission_account_id:0
 msgid "Commission account"
-msgstr "Compte de commission"
+msgstr "Cuenta de la comisión"
 
 #. module: account_statement_ext
 #: view:account.bank.statement:0
 #: field:account.bank.statement,credit_partner_id:0
 msgid "Financial Partner"
-msgstr "Banque ou Organisme financier"
+msgstr "Empresa financiera"
 
 #. module: account_statement_ext
-#: code:addons/account_statement_ext/statement.py:307
-#: code:addons/account_statement_ext/statement.py:372
+#: code:addons/account_statement_ext/statement.py:311
+#: code:addons/account_statement_ext/statement.py:376
 #, python-format
 msgid "Error !"
-msgstr "Erreur !"
+msgstr "Error"
 
 #. module: account_statement_ext
 #: field:account.statement.profile,partner_id:0
 msgid "Bank/Payment Office partner"
-msgstr "Banque ou Organisme financier"
+msgstr "Empresa para el banco/oficina de pago"
 
 #. module: account_statement_ext
-#: code:addons/account_statement_ext/statement.py:373
+#: code:addons/account_statement_ext/statement.py:377
 #, python-format
 msgid "The account entries lines are not in valid state."
-msgstr "Les écritures comptables ne sont pas équilibrées."
+msgstr "Los apuntes contables no están en un estado válido."
 
 #. module: account_statement_ext
-#: constraint:account.statement.profile:0
-msgid "You need to put a partner if you tic the 'Force partner on bank move' !"
-msgstr ""
-"Vous devez choisir un partenaire si vous cochez 'Remplacer le compte client/fournisseur' !"
+#: help:account.statement.profile,internal_account_transfer_id:0
+msgid "Choose the default account for internal                                bank transfer"
+msgstr "Escoja la cuenta por defecto para la transferencia interna del banco"
 
 #. module: account_statement_ext
 #: help:account.statement.profile,force_partner_on_bank:0
-msgid ""
-"Tic that box if you want to use the credit insitute "
-"partner                                                    in the "
-"counterpart of the intermediat/banking move."
-msgstr ""
-"Cochez cette case si vous voulez utiliser le partenaire financier dans "
-"la contrepartie de l'écriture."
+msgid "Tic that box if you want to use the credit insitute partner                                                    in the counterpart of the intermediat/banking move."
+msgstr "Marque esta casilla si quiere usar la empresa de la institución financiera en la contrapartida del apunte del banco."
 
 #. module: account_statement_ext
 #: report:addons/account_statement_ext/report/bank_statement_report.mako:20
 msgid "Date"
-msgstr "Date"
+msgstr "Fecha"
 
 #. module: account_statement_ext
-#: code:addons/account_statement_ext/statement.py:308
+#: code:addons/account_statement_ext/statement.py:312
 #, python-format
 msgid "Journal item \"%s\" is not valid."
-msgstr "L'écriture \"%s\" n'est pas équilibrée."
+msgstr "El apunte \"%s\" no es válido."
 
 #. module: account_statement_ext
-#: code:addons/account_statement_ext/statement.py:424
+#: code:addons/account_statement_ext/statement.py:428
 #, python-format
 msgid "Please ensure that minimal properties are set"
-msgstr "Veuillez vérifiez que les propriétés minimales sont bien paramétrées"
+msgstr "Asegúrese por favor que las propiedades mínimas se han establecido"
 
 #. module: account_statement_ext
 #: view:account.bank.statement:0
 msgid "Balance Check"
-msgstr "Contrôle sur solde final"
+msgstr "Comprobar saldo"
 
 #. module: account_statement_ext
 #: view:account.bank.statement:0
 msgid "Profile Details"
-msgstr "Détails du profil"
+msgstr "Detalles del perfil"
 
 #. module: account_statement_ext
 #: model:ir.model,name:account_statement_ext.model_account_statement_profile
 msgid "Statement Profil"
-msgstr "Profil du relevé"
+msgstr "Perfil del extracto"
 
 #. module: account_statement_ext
 #: field:account.statement.profile,name:0
 msgid "Name"
-msgstr "Nom"
+msgstr "Nombre"
 
 #. module: account_statement_ext
 #: field:account.statement.profile,commission_analytic_id:0
 msgid "Commission analytic account"
-msgstr "Compte analytique où affecter la commission"
+msgstr "Cuenta analítica de la comisión"
 
 #. module: account_statement_ext
-#: constraint:account.move:0
-msgid "The date of your Journal Entry is not in the defined period!"
-msgstr "La date de l'écriture n'est pas dans la période définie!"
+#: constraint:account.statement.profile:0
+msgid "You need to put a partner if you tic the 'Force partner on bank move' !"
+msgstr "Debe poner una empresa si marca la casilla 'Forzar empresa en el apunte del banco'"
 
 #. module: account_statement_ext
 #: help:account.statement.profile,balance_check:0
-msgid ""
-"Tic that box if you want OpenERP to control the start/"
-"end                                                     balance before "
-"confirming a bank statement. If don't ticked, "
-"no                                                     balance control will "
-"be done."
-msgstr ""
-"Cochez cette case si vous voulez qu'OpenERP fasse "
-"une vérification au niveau du solde final avant confirmation."
+msgid "Tic that box if you want OpenERP to control the start/end                                                     balance before confirming a bank statement. If don't ticked, no                                                     balance control will be done."
+msgstr "Marque esta casilla si quiere que OpenERP controle el saldo de inicio/final antes de confirmar un extracto bancario. Si no lo marca, no se hará ningún control."
 
 #. module: account_statement_ext
 #: code:addons/account_statement_ext/report/bank_statement_report.py:40
 #: code:addons/account_statement_ext/report/bank_statement_report.py:48
 #, python-format
 msgid "BORDEREAU DE REMISE DE CHEQUES"
-msgstr "BORDEREAU DE REMISE DE CHEQUES"
+msgstr "CALENDARIO DE ENTREGA DE VALES"
 
 #. module: account_statement_ext
-#: code:addons/account_statement_ext/statement.py:400
+#: code:addons/account_statement_ext/statement.py:404
 #, python-format
 msgid "Statement %s is confirmed, journal items are created."
-msgstr "Le relevé %s est confirmé, les écritures comptables ont été générées."
+msgstr "El extracto %s se ha confirmado. Se han creado los asientos contables."
 
 #. module: account_statement_ext
 #: report:addons/account_statement_ext/report/bank_statement_report.mako:37
 msgid "Montant"
-msgstr "Montant"
+msgstr "Importe"
 
 #. module: account_statement_ext
-#: code:addons/account_statement_ext/statement.py:394
+#: code:addons/account_statement_ext/statement.py:398
 #, python-format
 msgid "Error"
-msgstr "Erreur"
+msgstr "Error"
 
 #. module: account_statement_ext
 #: help:account.statement.profile,partner_id:0
-msgid ""
-"Put a partner if you want to have it on the commission "
-"move                                       (and optionaly on the counterpart "
-"of the intermediate/banking move                                       if "
-"you tic the corresponding checkbox)."
-msgstr ""
-"Sélectionnez un partenaire si vous voulez l'avoir dans l'écriture comptable "
-"au niveau de la commision (et du compte de trésorerie selon les cas si vous cochez "
-"la case 'Indiquer un partenaire sur la ligne d'écriture de la banque ou organisme')."
-
-#. module: account_statement_ext
-#: constraint:account.bank.statement.line:0
-msgid ""
-"The amount of the voucher must be the same amount as the one on the "
-"statement line"
-msgstr ""
-"Le montant du justificatif doit être identique à celui de la ligne le "
-"concernant sur le relevé"
+msgid "Put a partner if you want to have it on the commission move                                       (and optionaly on the counterpart of the intermediate/banking move                                       if you tic the corresponding checkbox)."
+msgstr "Ponga una empresa si desea tenerla en el asiento de la comisión (y opcionalmente en la contrapartida del apunte del banco si marca la correspondiente casilla)."
 
 #. module: account_statement_ext
 #: code:addons/account_statement_ext/report/bank_statement_report.py:57
 #, python-format
 msgid "Page"
-msgstr "Page"
+msgstr "Página"
 
 #. module: account_statement_ext
 #: field:account.bank.statement,balance_check:0
 #: field:account.statement.profile,balance_check:0
 msgid "Balance check"
-msgstr "Activation contrôle du solde final"
+msgstr "Comprobar saldo"
 
 #. module: account_statement_ext
 #: model:ir.model,name:account_statement_ext.model_account_bank_statement_line
 msgid "Bank Statement Line"
-msgstr "Ligne de relevé bancaire"
+msgstr "Línea del extracto bancario"
 
 #. module: account_statement_ext
 #: model:ir.model,name:account_statement_ext.model_account_move
 msgid "Account Entry"
-msgstr "Écriture comptable"
+msgstr "Asiento"
 
 #. module: account_statement_ext
 #: field:account.statement.profile,force_partner_on_bank:0
 msgid "Force partner on bank move"
-msgstr "Indiquer un partenaire sur la ligne d'écriture de la banque"
+msgstr "Forzar empresa en el apunte del banco"
 
 #. module: account_statement_ext
 #: report:addons/account_statement_ext/report/bank_statement_report.mako:33
 msgid "Reference"
-msgstr "Référence"
+msgstr "Referencia"
 
 #. module: account_statement_ext
-#: code:addons/account_statement_ext/statement.py:380
+#: code:addons/account_statement_ext/statement.py:384
 #, python-format
 msgid "No Analytic Journal !"
-msgstr "Pas de journal analytique trouvé !"
+msgstr "Sin diario analítico"
 
 #. module: account_statement_ext
 #: code:addons/account_statement_ext/report/bank_statement_report.py:57
@@ -262,57 +231,57 @@ msgstr "de"
 #. module: account_statement_ext
 #: field:account.statement.profile,bank_statement_ids:0
 msgid "Bank Statement Imported"
-msgstr "Relevé importé"
+msgstr "Extracto bancario importado"
 
 #. module: account_statement_ext
 #: field:account.bank.statement.line,period_id:0
 msgid "Period"
-msgstr "Période"
+msgstr "Periodo"
 
 #. module: account_statement_ext
 #: constraint:account.bank.statement:0
 msgid "The journal and period chosen have to belong to the same company."
-msgstr "Le journal et la période doivent appartenir à la même société."
+msgstr "El diario y el periodo seleccionados deben pertenecer a la misma compañía."
 
 #. module: account_statement_ext
 #: model:ir.actions.report.xml,name:account_statement_ext.report_bank_statement_webkit
 #: model:ir.model,name:account_statement_ext.model_account_bank_statement
 msgid "Bank Statement"
-msgstr "Relevé bancaire"
+msgstr "Extracto bancario"
 
 #. module: account_statement_ext
 #: report:addons/account_statement_ext/report/bank_statement_report.mako:35
 msgid "Partenaire"
-msgstr "Partenaire"
+msgstr "Contrapartida"
 
 #. module: account_statement_ext
 #: help:account.statement.profile,receivable_account_id:0
-msgid ""
-"Choose a receivable account to force the "
-"default                                                        debit/credit "
-"account (eg. an intermediat bank account instead "
-"of                                                        default debitors)."
-msgstr ""
-"Sélectionnez un compte de type client ou fournisseur afin de remplacer "
-"le compte client ou fournisseur par défaut"
+msgid "Choose a receivable account to force the default                                                        debit/credit account (eg. an intermediat bank account instead of                                                        default debitors)."
+msgstr "Escoja una cuenta a cobrar para forzar la cuenta debe/haber por defecto (por ejemplo, una cuenta bancaria intermedia en lugar de la deudora por defecto)."
 
 #. module: account_statement_ext
-#: code:addons/account_statement_ext/statement.py:381
+#: code:addons/account_statement_ext/statement.py:385
 #, python-format
 msgid "You have to assign an analytic journal on the '%s' journal!"
-msgstr "Vous devez associer un journal analytique au journal comptable '%s'."
+msgstr "Tiene que asignar un diario analítico en el diario '%s'"
 
 #. module: account_statement_ext
 #: model:ir.actions.act_window,name:account_statement_ext.act_bank_statement_from_profile
 msgid "Open Statements"
-msgstr "Relevés ouverts"
+msgstr "Abrir extractos"
+
+#. module: account_statement_ext
+#: field:account.statement.profile,internal_account_transfer_id:0
+msgid "Internal Account Transfer"
+msgstr "Cuenta interna de transferencia"
 
 #. module: account_statement_ext
 #: field:account.statement.profile,journal_id:0
 msgid "Financial journal to use for transaction"
-msgstr "Journal à utiliser pour cette écriture"
+msgstr "Diario contable a usar para la transacción"
 
 #. module: account_statement_ext
 #: report:addons/account_statement_ext/report/bank_statement_report.mako:19
 msgid "Bordereau"
-msgstr "Bordereau"
+msgstr "Calendario"
+

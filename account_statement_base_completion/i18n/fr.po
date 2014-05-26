@@ -1,3 +1,18 @@
+# Translation of OpenERP Server.
+# This file contains the translation of the following modules:
+#	* account_statement_base_completion
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: Pedro Manuel Baeza <pedro.baeza@serviciosbaeza.com>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=iso-8859-1\n"
+"Content-Transfer-Encoding: 8bit\n"
+
 #. module: account_statement_base_completion
 #: view:account.statement.completion.rule:0
 msgid "Related Profiles"
@@ -29,12 +44,8 @@ msgstr "Description"
 
 #. module: account_statement_base_completion
 #: help:account.bank.statement.line,label:0
-msgid ""
-"Generiy field to store a label given from the bank/office on which we "
-"can             base the default/standard providen rule."
-msgstr ""
-"Ce champs permet de stocker une description complémentaire fournie par la banque."
-"Le lettrage avancé pourra être effectué sur ce critère."
+msgid "Generiy field to store a label given from the bank/office on which we can             base the default/standard providen rule."
+msgstr "Ce champs permet de stocker une description complémentaire fournie par la banque.Le lettrage avancé pourra être effectué sur ce critère."
 
 #. module: account_statement_base_completion
 #: model:ir.model,name:account_statement_base_completion.model_account_bank_statement
@@ -64,12 +75,8 @@ msgstr "Règles d'auto-complétion"
 
 #. module: account_statement_base_completion
 #: help:account.bank.statement.line,additionnal_bank_fields:0
-msgid ""
-"Used by completion and import system. Adds every field that is present in "
-"your bank/office             statement file"
-msgstr ""
-"Utilisé au niveau de l'auto-complétion et de l'import. Permet l'ajout de n'importe quel "
-"champs additionnel communiqué par la banque"
+msgid "Used by completion and import system. Adds every field that is present in your bank/office             statement file"
+msgstr "Utilisé au niveau de l'auto-complétion et de l'import. Permet l'ajout de n'importe quel champs additionnel communiqué par la banque"
 
 #. module: account_statement_base_completion
 #: view:account.bank.statement:0
@@ -89,8 +96,7 @@ msgstr "Nom"
 #. module: account_statement_base_completion
 #: constraint:account.statement.profile:0
 msgid "You need to put a partner if you tic the 'Force partner on bank move' !"
-msgstr ""
-"Vous devez indiquer un partenaire si vous avez coché 'Indiquer un partenaire sur la ligne d'écriture de la banque' !"
+msgstr "Vous devez indiquer un partenaire si vous avez coché 'Indiquer un partenaire sur la ligne d'écriture de la banque' !"
 
 #. module: account_statement_base_completion
 #: model:ir.model,name:account_statement_base_completion.model_account_bank_statement_line
@@ -117,12 +123,8 @@ msgstr "Profils liés"
 
 #. module: account_statement_base_completion
 #: constraint:account.bank.statement.line:0
-msgid ""
-"The amount of the voucher must be the same amount as the one on the "
-"statement line"
-msgstr ""
-"Le montant du justificatif doit être identique à celui de la ligne le "
-"concernant sur le relevé"
+msgid "The amount of the voucher must be the same amount as the one on the statement line"
+msgstr "Le montant du justificatif doit être identique à celui de la ligne le concernant sur le relevé"
 
 #. module: account_statement_base_completion
 #: field:account.bank.statement.line,already_completed:0
@@ -151,23 +153,13 @@ msgstr "Description de relevé bancaire"
 
 #. module: account_statement_base_completion
 #: help:account.bank.statement.line,already_completed:0
-msgid ""
-"When this checkbox is ticked, the auto-completion process/button will ignore "
-"this line."
-msgstr ""
-"Les lignes cochées seront ignorées lorsque vous cliquez sur le bouton auto-complétion"
+msgid "When this checkbox is ticked, the auto-completion process/button will ignore this line."
+msgstr "Les lignes cochées seront ignorées lorsque vous cliquez sur le bouton auto-complétion"
 
 #. module: account_statement_base_completion
 #: help:res.partner,bank_statement_label:0
-msgid ""
-"Enter the various label found on your bank statement separated by a ; "
-"If                  one of this label is include in the bank statement line, "
-"the partner will be automatically                  filled (as long as you "
-"use this method/rules in your statement profile)."
-msgstr ""
-"Entrez les différentes descriptions/informations sur votre relevé bancaire séparées par un ';' "
-"Si l'une d'entre elles figure dans la ligne du relevé, le partenaire correspondant pourra"
-"être automatiquement retrouvé (à condition d'utiliser un règle de lettrage dans le profil)."
+msgid "Enter the various label found on your bank statement separated by a ; If                  one of this label is include in the bank statement line, the partner will be automatically                  filled (as long as you use this method/rules in your statement profile)."
+msgstr "Entrez les différentes descriptions/informations sur votre relevé bancaire séparées par un ';' Si l'une d'entre elles figure dans la ligne du relevé, le partenaire correspondant pourraêtre automatiquement retrouvé (à condition d'utiliser un règle de lettrage dans le profil)."
 
 #. module: account_statement_base_completion
 #: model:ir.model,name:account_statement_base_completion.model_res_partner
@@ -178,3 +170,4 @@ msgstr "Partenaire"
 #: view:account.bank.statement:0
 msgid "Completion Logs"
 msgstr "Journaux d'auto-complétion"
+
