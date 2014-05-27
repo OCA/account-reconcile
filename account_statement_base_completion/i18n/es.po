@@ -7,13 +7,14 @@ msgstr ""
 "Project-Id-Version: OpenERP Server 6.1\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-04-02 22:26+0000\n"
-"PO-Revision-Date: 2014-04-03 00:39+0100\n"
-"Last-Translator: Pedro Manuel Baeza <pedro.baeza@serviciosbaeza.com>\n"
+"PO-Revision-Date: 2014-05-26 11:15+0000\n"
+"Last-Translator: Pedro Manuel Baeza <pedro.baeza@gmail.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: \n"
+"X-Launchpad-Export-Date: 2014-05-27 06:08+0000\n"
+"X-Generator: Launchpad (build 17017)\n"
 
 #. module: account_statement_base_completion
 #: view:account.statement.completion.rule:0
@@ -41,8 +42,12 @@ msgstr "Etiqueta"
 
 #. module: account_statement_base_completion
 #: help:account.bank.statement.line,label:0
-msgid "Generiy field to store a label given from the bank/office on which we can             base the default/standard providen rule."
-msgstr "Campo genérico para almacenar una etiqueta dad por el banco/oficina en la que se puede basar las reglas estándar/por defecto provistas."
+msgid ""
+"Generiy field to store a label given from the bank/office on which we can    "
+"         base the default/standard providen rule."
+msgstr ""
+"Campo genérico para almacenar una etiqueta dad por el banco/oficina en la "
+"que se puede basar las reglas estándar/por defecto provistas."
 
 #. module: account_statement_base_completion
 #: model:ir.model,name:account_statement_base_completion.model_account_bank_statement
@@ -72,8 +77,12 @@ msgstr "Reglas de auto-completado"
 
 #. module: account_statement_base_completion
 #: help:account.bank.statement.line,additionnal_bank_fields:0
-msgid "Used by completion and import system. Adds every field that is present in your bank/office             statement file"
-msgstr "Usado por el sistema de completado e importación. Añade cada campo que está presente en el archivo de extracto del banco/oficina"
+msgid ""
+"Used by completion and import system. Adds every field that is present in "
+"your bank/office             statement file"
+msgstr ""
+"Usado por el sistema de completado e importación. Añade cada campo que está "
+"presente en el archivo de extracto del banco/oficina"
 
 #. module: account_statement_base_completion
 #: view:account.bank.statement:0
@@ -92,8 +101,11 @@ msgstr "Nombre"
 
 #. module: account_statement_base_completion
 #: constraint:account.statement.profile:0
-msgid "You need to put a partner if you tic the 'Force partner on bank move' !"
-msgstr "Es necesario poner una empresa si marca la casilla 'Forzar empresa en el apunte del banco'"
+msgid ""
+"You need to put a partner if you tic the 'Force partner on bank move' !"
+msgstr ""
+"Es necesario poner una empresa si marca la casilla 'Forzar empresa en el "
+"apunte del banco'"
 
 #. module: account_statement_base_completion
 #: model:ir.model,name:account_statement_base_completion.model_account_bank_statement_line
@@ -141,7 +153,8 @@ msgstr "Más bajo significa reconocido primero."
 #. module: account_statement_base_completion
 #: constraint:account.bank.statement:0
 msgid "The journal and period chosen have to belong to the same company."
-msgstr "El diario y el periodo escogido tiene que pertenecer a la misma compañía."
+msgstr ""
+"El diario y el periodo escogido tiene que pertenecer a la misma compañía."
 
 #. module: account_statement_base_completion
 #: field:res.partner,bank_statement_label:0
@@ -150,13 +163,25 @@ msgstr "Etiqueta del extracto bancario"
 
 #. module: account_statement_base_completion
 #: help:account.bank.statement.line,already_completed:0
-msgid "When this checkbox is ticked, the auto-completion process/button will ignore this line."
-msgstr "Cuando la casilla está marcada, el proceso de auto-completado/botón será ignorado para esta línea."
+msgid ""
+"When this checkbox is ticked, the auto-completion process/button will ignore "
+"this line."
+msgstr ""
+"Cuando la casilla está marcada, el proceso de auto-completado/botón será "
+"ignorado para esta línea."
 
 #. module: account_statement_base_completion
 #: help:res.partner,bank_statement_label:0
-msgid "Enter the various label found on your bank statement separated by a ; If                  one of this label is include in the bank statement line, the partner will be automatically                  filled (as long as you use this method/rules in your statement profile)."
-msgstr "Introduzca los diversos tipos de etiqueta encontrados en el extracto bancario, separados por un ;. Si una de estas etiquetas está incluida en la línea del extracto bancario, la empresa será rellenada automáticamente (mientras use este método/reglas en el perfil de extracto)."
+msgid ""
+"Enter the various label found on your bank statement separated by a ; If     "
+"             one of this label is include in the bank statement line, the "
+"partner will be automatically                  filled (as long as you use "
+"this method/rules in your statement profile)."
+msgstr ""
+"Introduzca los diversos tipos de etiqueta encontrados en el extracto "
+"bancario, separados por un ;. Si una de estas etiquetas está incluida en la "
+"línea del extracto bancario, la empresa será rellenada automáticamente "
+"(mientras use este método/reglas en el perfil de extracto)."
 
 #. module: account_statement_base_completion
 #: model:ir.model,name:account_statement_base_completion.model_res_partner
@@ -167,4 +192,3 @@ msgstr "Empresa"
 #: view:account.bank.statement:0
 msgid "Completion Logs"
 msgstr "Registro de completado"
-

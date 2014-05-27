@@ -1,19 +1,20 @@
 # Translation of OpenERP Server.
 # This file contains the translation of the following modules:
-#	* account_statement_base_import
+#	* account_statement_base_completion
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: OpenERP Server 6.1\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-04-02 22:11+0000\n"
-"PO-Revision-Date: 2014-04-03 00:22+0100\n"
-"Last-Translator: Pedro Manuel Baeza <pedro.baeza@serviciosbaeza.com>\n"
+"PO-Revision-Date: 2014-05-26 11:03+0000\n"
+"Last-Translator: Pedro Manuel Baeza <pedro.baeza@gmail.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: \n"
+"X-Launchpad-Export-Date: 2014-05-27 06:08+0000\n"
+"X-Generator: Launchpad (build 17017)\n"
 
 #. module: account_statement_base_import
 #: view:credit.statement.import:0
@@ -50,8 +51,12 @@ msgstr "Diario contable a usar"
 #. module: account_statement_base_import
 #: code:addons/account_statement_base_import/statement.py:127
 #, python-format
-msgid "The method prepare_statetement_lines_vals shouldn't be used anymore, use : prepare_statement_lines_vals"
-msgstr "El método prepare_statement_lines_vals no debe ser usado más. Utilice: prepare_statement_lines_vals"
+msgid ""
+"The method prepare_statetement_lines_vals shouldn't be used anymore, use : "
+"prepare_statement_lines_vals"
+msgstr ""
+"El método prepare_statement_lines_vals no debe ser usado más. Utilice: "
+"prepare_statement_lines_vals"
 
 #. module: account_statement_base_import
 #: code:addons/account_statement_base_import/parser/file_parser.py:102
@@ -84,14 +89,17 @@ msgstr "Cuenta de comisión"
 #. module: account_statement_base_import
 #: code:addons/account_statement_base_import/statement.py:190
 #, python-format
-msgid "Column %s you try to import is not present in the bank statement line !"
-msgstr "La columna %s que intenta importar no está presente en la línea de extracto bancario"
+msgid ""
+"Column %s you try to import is not present in the bank statement line !"
+msgstr ""
+"La columna %s que intenta importar no está presente en la línea de extracto "
+"bancario"
 
 #. module: account_statement_base_import
 #: code:addons/account_statement_base_import/statement.py:79
 #, python-format
 msgid "Bank Statement ID %s have been imported with %s lines "
-msgstr "El extracto bancario con ID %s ha sido importado con %s líneas"
+msgstr "El extracto bancario con ID %s ha sido importado con %s líneas "
 
 #. module: account_statement_base_import
 #: field:account.statement.profile,launch_import_completion:0
@@ -116,8 +124,13 @@ msgstr "Importar información relacionada"
 
 #. module: account_statement_base_import
 #: help:credit.statement.import,force_partner_on_bank:0
-msgid "Tic that box if you want to use the credit insitute partner                                                    in the counterpart of the treasury/banking move."
-msgstr "Marque esta casilla si desea usar la empresa del agente financiero como contrapartida en el apunte de tesorería/banco."
+msgid ""
+"Tic that box if you want to use the credit insitute partner                  "
+"                                  in the counterpart of the treasury/banking "
+"move."
+msgstr ""
+"Marque esta casilla si desea usar la empresa del agente financiero como "
+"contrapartida en el apunte de tesorería/banco."
 
 #. module: account_statement_base_import
 #: code:addons/account_statement_base_import/wizard/import_statement.py:93
@@ -133,8 +146,14 @@ msgstr "Debe seleccionar un perfil válido para importar un extracto bancario"
 
 #. module: account_statement_base_import
 #: help:credit.statement.import,balance_check:0
-msgid "Tic that box if you want OpenERP to control the start/end balance                                                    before confirming a bank statement. If don't ticked, no balance control will be done."
-msgstr "Marque esta casilla si desea que OpenERP controle el saldo inicial/final antes de confirmar un extracto bancario. Si no lo marca, no se realizará ningún control."
+msgid ""
+"Tic that box if you want OpenERP to control the start/end balance            "
+"                                        before confirming a bank statement. "
+"If don't ticked, no balance control will be done."
+msgstr ""
+"Marque esta casilla si desea que OpenERP controle el saldo inicial/final "
+"antes de confirmar un extracto bancario. Si no lo marca, no se realizará "
+"ningún control."
 
 #. module: account_statement_base_import
 #: code:addons/account_statement_base_import/parser/file_parser.py:29
@@ -161,8 +180,11 @@ msgstr "Cuenta analítica de la comisión"
 
 #. module: account_statement_base_import
 #: constraint:account.statement.profile:0
-msgid "You need to put a partner if you tic the 'Force partner on bank move' !"
-msgstr "Necesita rellenar la empresa si marca la casilla 'Forzar empresa en el apunte bancario'"
+msgid ""
+"You need to put a partner if you tic the 'Force partner on bank move' !"
+msgstr ""
+"Necesita rellenar la empresa si marca la casilla 'Forzar empresa en el "
+"apunte bancario'"
 
 #. module: account_statement_base_import
 #: code:addons/account_statement_base_import/statement.py:234
@@ -193,8 +215,12 @@ msgstr "Tipo de importación"
 
 #. module: account_statement_base_import
 #: help:account.statement.profile,launch_import_completion:0
-msgid "Tic that box to automatically launch the completion on each imported                file using this profile."
-msgstr "Marque esta casilla para lanzar automáticamente el completado en cada archivo importado con este perfil."
+msgid ""
+"Tic that box to automatically launch the completion on each imported         "
+"       file using this profile."
+msgstr ""
+"Marque esta casilla para lanzar automáticamente el completado en cada "
+"archivo importado con este perfil."
 
 #. module: account_statement_base_import
 #: field:credit.statement.import,profile_id:0
@@ -239,11 +265,14 @@ msgstr "Forzar cuenta a cobrar/a pagar"
 
 #. module: account_statement_base_import
 #: help:account.statement.profile,import_type:0
-msgid "Choose here the method by which you want to import bank statement for this profile."
-msgstr "Escoja aquí el método con el que quiere importar el extracto bancario para este perfil."
+msgid ""
+"Choose here the method by which you want to import bank statement for this "
+"profile."
+msgstr ""
+"Escoja aquí el método con el que quiere importar el extracto bancario para "
+"este perfil."
 
 #. module: account_statement_base_import
 #: view:credit.statement.import:0
 msgid "Cancel"
 msgstr "Cancelar"
-

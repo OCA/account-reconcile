@@ -7,13 +7,14 @@ msgstr ""
 "Project-Id-Version: OpenERP Server 6.1\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-04-02 22:11+0000\n"
-"PO-Revision-Date: 2014-04-03 00:22+0100\n"
-"Last-Translator: Pedro Manuel Baeza <pedro.baeza@serviciosbaeza.com>\n"
+"PO-Revision-Date: 2014-05-26 10:49+0000\n"
+"Last-Translator: Pedro Manuel Baeza <pedro.baeza@gmail.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: \n"
+"X-Launchpad-Export-Date: 2014-05-27 06:08+0000\n"
+"X-Generator: Launchpad (build 17017)\n"
 
 #. module: account_statement_base_import
 #: view:credit.statement.import:0
@@ -27,7 +28,7 @@ msgid "credit.statement.import"
 msgstr "credit.statement.import"
 
 #. module: account_statement_base_import
-#: code:addons/account_statement_base_import/statement.py:218
+#: code:addons/account_statement_base_import/statement.py:235
 #, python-format
 msgid "The statement cannot be created : %s"
 msgstr "Le relevé ne peut être créé : %s"
@@ -48,7 +49,15 @@ msgid "Financial journal to use transaction"
 msgstr "Journal"
 
 #. module: account_statement_base_import
-#: code:addons/account_statement_base_import/parser/file_parser.py:100
+#: code:addons/account_statement_base_import/statement.py:127
+#, python-format
+msgid ""
+"The method prepare_statetement_lines_vals shouldn't be used anymore, use : "
+"prepare_statement_lines_vals"
+msgstr ""
+
+#. module: account_statement_base_import
+#: code:addons/account_statement_base_import/parser/file_parser.py:102
 #, python-format
 msgid "Column %s not present in file"
 msgstr "Colonne %s non présente dans le fichier"
@@ -65,7 +74,7 @@ msgid "Statement Profil"
 msgstr "Profil du relevé"
 
 #. module: account_statement_base_import
-#: code:addons/account_statement_base_import/statement.py:100
+#: code:addons/account_statement_base_import/statement.py:108
 #, python-format
 msgid "Commission line"
 msgstr "Ligne de commission"
@@ -76,14 +85,16 @@ msgid "Commission account"
 msgstr "Compte de commission"
 
 #. module: account_statement_base_import
-#: code:addons/account_statement_base_import/statement.py:172
+#: code:addons/account_statement_base_import/statement.py:190
 #, python-format
-msgid "Column %s you try to import is not present in the bank statement line !"
+msgid ""
+"Column %s you try to import is not present in the bank statement line !"
 msgstr ""
-"La colonne %s que vous essayez d'importer n'est pas présente dans la ligne de relevé !"
+"La colonne %s que vous essayez d'importer n'est pas présente dans la ligne "
+"de relevé !"
 
 #. module: account_statement_base_import
-#: code:addons/account_statement_base_import/statement.py:71
+#: code:addons/account_statement_base_import/statement.py:79
 #, python-format
 msgid "Bank Statement ID %s have been imported with %s lines "
 msgstr "Le relevé avec l'ID %s a été importé avec %s lignes "
@@ -99,7 +110,7 @@ msgid "Credit insitute partner"
 msgstr "Organisme bancaire"
 
 #. module: account_statement_base_import
-#: code:addons/account_statement_base_import/statement.py:160
+#: code:addons/account_statement_base_import/statement.py:178
 #, python-format
 msgid "No Profile !"
 msgstr "Aucun Profil !"
@@ -112,12 +123,12 @@ msgstr "Importation des informations liées"
 #. module: account_statement_base_import
 #: help:credit.statement.import,force_partner_on_bank:0
 msgid ""
-"Tic that box if you want to use the credit insitute "
-"partner                                                    in the "
-"counterpart of the treasury/banking move."
+"Tic that box if you want to use the credit insitute partner                  "
+"                                  in the counterpart of the treasury/banking "
+"move."
 msgstr ""
-"Cochez cette case si vous voulez utiliser comme partenaire "
-"l'organisme bancaire au niveau de la ligne de banque"
+"Cochez cette case si vous voulez utiliser comme partenaire l'organisme "
+"bancaire au niveau de la ligne de banque"
 
 #. module: account_statement_base_import
 #: code:addons/account_statement_base_import/wizard/import_statement.py:93
@@ -126,7 +137,7 @@ msgid "Please use a file with an extention"
 msgstr "Veuillez sélectionner un fichier avec une extension"
 
 #. module: account_statement_base_import
-#: code:addons/account_statement_base_import/statement.py:161
+#: code:addons/account_statement_base_import/statement.py:179
 #, python-format
 msgid "You must provide a valid profile to import a bank statement !"
 msgstr "Vous devez fournir un profil valide pour importer un relevé !"
@@ -134,22 +145,22 @@ msgstr "Vous devez fournir un profil valide pour importer un relevé !"
 #. module: account_statement_base_import
 #: help:credit.statement.import,balance_check:0
 msgid ""
-"Tic that box if you want OpenERP to control the start/end "
-"balance                                                    before confirming "
-"a bank statement. If don't ticked, no balance control will be done."
+"Tic that box if you want OpenERP to control the start/end balance            "
+"                                        before confirming a bank statement. "
+"If don't ticked, no balance control will be done."
 msgstr ""
-"Cochez cette case si vous souhaitez un contrôle du solde final "
-"avant la validation du relevé."
+"Cochez cette case si vous souhaitez un contrôle du solde final avant la "
+"validation du relevé."
 
 #. module: account_statement_base_import
-#: code:addons/account_statement_base_import/parser/file_parser.py:31
+#: code:addons/account_statement_base_import/parser/file_parser.py:29
 #: code:addons/account_statement_base_import/parser/generic_file_parser.py:31
 #, python-format
 msgid "Please install python lib xlrd"
 msgstr "Veuillez installer la bibliothèque python xlrd"
 
 #. module: account_statement_base_import
-#: code:addons/account_statement_base_import/parser/file_parser.py:58
+#: code:addons/account_statement_base_import/parser/file_parser.py:56
 #, python-format
 msgid "Invalide file type %s. please use csv or xls"
 msgstr "Type de fichier invalide : %s. Veuillez utiliser un csv ou un xls"
@@ -166,12 +177,14 @@ msgstr "Compte analytique de la commission"
 
 #. module: account_statement_base_import
 #: constraint:account.statement.profile:0
-msgid "You need to put a partner if you tic the 'Force partner on bank move' !"
+msgid ""
+"You need to put a partner if you tic the 'Force partner on bank move' !"
 msgstr ""
-"Vous devez spécifier un partenaire si vous avez coché 'Forcer un partenaire sur la ligne de la banque' !"
+"Vous devez spécifier un partenaire si vous avez coché 'Forcer un partenaire "
+"sur la ligne de la banque' !"
 
 #. module: account_statement_base_import
-#: code:addons/account_statement_base_import/statement.py:217
+#: code:addons/account_statement_base_import/statement.py:234
 #, python-format
 msgid "Statement import error"
 msgstr "Erreur d'import de relevé"
@@ -182,7 +195,7 @@ msgid "Line Commission Amount"
 msgstr "Montant de la commission de la ligne"
 
 #. module: account_statement_base_import
-#: code:addons/account_statement_base_import/statement.py:171
+#: code:addons/account_statement_base_import/statement.py:189
 #, python-format
 msgid "Missing column !"
 msgstr "Colonne manquante !"
@@ -198,22 +211,13 @@ msgid "Type of import"
 msgstr "Type d'import"
 
 #. module: account_statement_base_import
-#: constraint:account.bank.statement.line:0
-msgid ""
-"The amount of the voucher must be the same amount as the one on the "
-"statement line"
-msgstr ""
-"Le montant du justificatif doit être identique à celui de la ligne le "
-"concernant sur le relevé"
-
-#. module: account_statement_base_import
 #: help:account.statement.profile,launch_import_completion:0
 msgid ""
-"Tic that box to automatically launch the completion on each "
-"imported                file using this profile."
+"Tic that box to automatically launch the completion on each imported         "
+"       file using this profile."
 msgstr ""
-"Cocher cette case pour lancer automatiquement l'auto-complétion sur"
-"chaque fichier importé avec ce profil."
+"Cocher cette case pour lancer automatiquement l'auto-complétion surchaque "
+"fichier importé avec ce profil."
 
 #. module: account_statement_base_import
 #: field:credit.statement.import,profile_id:0
@@ -221,7 +225,7 @@ msgid "Import configuration parameter"
 msgstr "Paramètres de configuration d'import"
 
 #. module: account_statement_base_import
-#: code:addons/account_statement_base_import/parser/parser.py:156
+#: code:addons/account_statement_base_import/parser/parser.py:166
 #, python-format
 msgid "No buffer file given."
 msgstr "Pas de fichier tampon donné."
@@ -261,8 +265,7 @@ msgstr "Forcer le compte Client/Fournisseur"
 msgid ""
 "Choose here the method by which you want to import bank statement for this "
 "profile."
-msgstr ""
-"Choisissez la méthode d'import de relevé pour ce profil."
+msgstr "Choisissez la méthode d'import de relevé pour ce profil."
 
 #. module: account_statement_base_import
 #: view:credit.statement.import:0
