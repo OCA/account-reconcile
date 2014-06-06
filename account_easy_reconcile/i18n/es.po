@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: banking-addons\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2014-01-21 11:55+0000\n"
-"PO-Revision-Date: 2014-04-02 21:56+0000\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"PO-Revision-Date: 2014-06-05 22:21+0000\n"
+"Last-Translator: Pedro Manuel Baeza <pedro.baeza@gmail.com>\n"
 "Language-Team: Spanish <es@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2014-05-22 06:49+0000\n"
-"X-Generator: Launchpad (build 17017)\n"
+"X-Launchpad-Export-Date: 2014-06-06 06:36+0000\n"
+"X-Generator: Launchpad (build 17031)\n"
 
 #. module: account_easy_reconcile
 #: code:addons/account_easy_reconcile/easy_reconcile_history.py:101
@@ -65,6 +65,16 @@ msgid ""
 "          </p>\n"
 "        "
 msgstr ""
+"<p class=\"oe_view_nocontent_create\">\n"
+"Pulse para añadir un pefil de conciliación.\n"
+"</p><p>\n"
+"Un perfil de conciliación especifica, para una cuenta, como\n"
+"los apuntes deben ser conciliados.\n"
+"Puede seleccionar uno o varios métodos de conciliación que\n"
+"serán ejecutados secuencialmente para casar los apuntes\n"
+"entre ellos.\n"
+"</p>\n"
+"        "
 
 #. module: account_easy_reconcile
 #: model:ir.model,name:account_easy_reconcile.model_easy_reconcile_options
@@ -79,7 +89,7 @@ msgstr "Agrupar por..."
 #. module: account_easy_reconcile
 #: field:account.easy.reconcile,unreconciled_count:0
 msgid "Unreconciled Items"
-msgstr ""
+msgstr "Apuntes no conciliados"
 
 #. module: account_easy_reconcile
 #: model:ir.model,name:account_easy_reconcile.model_easy_reconcile_base
@@ -118,6 +128,9 @@ msgid ""
 "reconciliation. The lines should have the same amount (with the write-off) "
 "and the same reference to be reconciled."
 msgstr ""
+"Casa una línea del debe con una línea del haber. No permite conciliación "
+"parcial. Las líneas deben tener el mismo importe (con el desajuste) y la "
+"misma referencia para ser conciliadas."
 
 #. module: account_easy_reconcile
 #: model:ir.actions.act_window,name:account_easy_reconcile.act_easy_reconcile_to_history
@@ -139,7 +152,7 @@ msgstr "Tipo"
 #: field:account.easy.reconcile.method,company_id:0
 #: field:easy.reconcile.history,company_id:0
 msgid "Company"
-msgstr ""
+msgstr "Compañía"
 
 #. module: account_easy_reconcile
 #: field:account.easy.reconcile.method,account_profit_id:0
@@ -246,7 +259,7 @@ msgstr "Nombre"
 #. module: account_easy_reconcile
 #: view:account.easy.reconcile:0
 msgid "Simple. Amount and Partner"
-msgstr ""
+msgstr "Simple. Cantidad y empresa"
 
 #. module: account_easy_reconcile
 #: view:account.easy.reconcile:0
@@ -276,6 +289,9 @@ msgid ""
 "reconciliation. The lines should have the same amount (with the write-off) "
 "and the same partner to be reconciled."
 msgstr ""
+"Casa una línea del debe con una línea del haber. No permite conciliación "
+"parcial. Las líneas deben tener el mismo importe (con el desajuste) y la "
+"misma empresa para ser conciliadas."
 
 #. module: account_easy_reconcile
 #: field:easy.reconcile.history,easy_reconcile_id:0
@@ -290,7 +306,7 @@ msgstr "Método de conciliación para account_easy_reconcile"
 #. module: account_easy_reconcile
 #: view:account.easy.reconcile:0
 msgid "Start Auto Reconciliation"
-msgstr ""
+msgstr "Iniciar auto-conciliación"
 
 #. module: account_easy_reconcile
 #: code:addons/account_easy_reconcile/easy_reconcile.py:233
@@ -302,7 +318,7 @@ msgstr "Error"
 #: code:addons/account_easy_reconcile/easy_reconcile.py:258
 #, python-format
 msgid "There is no history of reconciled items on the task: %s."
-msgstr ""
+msgstr "No hay histórico de elementos conciliados en la tarea: %s"
 
 #. module: account_easy_reconcile
 #: view:account.easy.reconcile:0
@@ -311,6 +327,9 @@ msgid ""
 "reconciliation. The lines should have the same amount (with the write-off) "
 "and the same name to be reconciled."
 msgstr ""
+"Casa una línea del debe con una línea del haber. No permite conciliación "
+"parcial. Las líneas deben tener el mismo importe (con el desajuste) y el "
+"mismo nombre para ser conciliadas."
 
 #. module: account_easy_reconcile
 #: field:account.easy.reconcile.method,account_lost_id:0
@@ -343,7 +362,7 @@ msgstr "Ir a los elementos conciliados"
 #. module: account_easy_reconcile
 #: view:account.easy.reconcile:0
 msgid "Profile Information"
-msgstr ""
+msgstr "Información del perfil"
 
 #. module: account_easy_reconcile
 #: view:account.easy.reconcile.method:0
@@ -353,7 +372,7 @@ msgstr "Método de conciliación automática sencilla"
 #. module: account_easy_reconcile
 #: view:account.easy.reconcile:0
 msgid "Simple. Amount and Reference"
-msgstr ""
+msgstr "Simple. Cantidad y referencia"
 
 #. module: account_easy_reconcile
 #: view:account.easy.reconcile:0
@@ -384,7 +403,7 @@ msgstr "Conciliaciones de los últimos 7 días"
 #: field:easy.reconcile.simple.partner,date_base_on:0
 #: field:easy.reconcile.simple.reference,date_base_on:0
 msgid "Date of reconciliation"
-msgstr ""
+msgstr "Fecha de conciliación"
 
 #. module: account_easy_reconcile
 #: code:addons/account_easy_reconcile/easy_reconcile_history.py:104

@@ -1,0 +1,28 @@
+# Spanish translation for banking-addons
+# Copyright (c) 2014 Rosetta Contributors and Canonical Ltd 2014
+# This file is distributed under the same license as the banking-addons package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2014.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: banking-addons\n"
+"Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
+"POT-Creation-Date: 2014-01-21 12:00+0000\n"
+"PO-Revision-Date: 2014-06-05 22:50+0000\n"
+"Last-Translator: Pedro Manuel Baeza <pedro.baeza@gmail.com>\n"
+"Language-Team: Spanish <es@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Launchpad-Export-Date: 2014-06-06 06:36+0000\n"
+"X-Generator: Launchpad (build 17031)\n"
+
+#. module: statement_voucher_killer
+#: model:ir.model,name:statement_voucher_killer.model_account_statement_from_invoice_lines
+msgid "Entries by Statement from Invoices"
+msgstr "Entradas por extracto desde facturas"
+
+#. module: statement_voucher_killer
+#: model:ir.model,name:statement_voucher_killer.model_account_payment_populate_statement
+msgid "Account Payment Populate Statement"
+msgstr "El pago rellena el extracto"

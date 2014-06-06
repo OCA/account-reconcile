@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: banking-addons\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2014-01-21 11:57+0000\n"
-"PO-Revision-Date: 2014-05-26 10:35+0000\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"PO-Revision-Date: 2014-06-05 22:02+0000\n"
+"Last-Translator: Pedro Manuel Baeza <pedro.baeza@gmail.com>\n"
 "Language-Team: Spanish <es@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2014-05-27 06:08+0000\n"
-"X-Generator: Launchpad (build 17017)\n"
+"X-Launchpad-Export-Date: 2014-06-06 06:36+0000\n"
+"X-Generator: Launchpad (build 17031)\n"
 
 #. module: account_statement_base_completion
 #: view:account.statement.completion.rule:0
@@ -28,6 +28,8 @@ msgid ""
 "Generic field to store a label given from the bank/office on which we can "
 "base the default/standard providen rule."
 msgstr ""
+"Campo genérico para almacenar una etiqueta dad por el banco/entidad en la "
+"que podemos basar la regla provista por defecto."
 
 #. module: account_statement_base_completion
 #: code:addons/account_statement_base_completion/statement.py:169
@@ -36,6 +38,8 @@ msgid ""
 "Line named \"%s\" (Ref:%s) was matched by more than one partner while "
 "looking on %s invoices"
 msgstr ""
+"La línea llamada \"%s\" (Ref: %s) fue casada con más de una empresa al "
+"buscar en las facturas %s"
 
 #. module: account_statement_base_completion
 #: field:account.bank.statement,completion_logs:0
@@ -64,12 +68,14 @@ msgid ""
 "Line named \"%s\" (Ref:%s) was matched by more than one partner while "
 "looking on partner by name"
 msgstr ""
+"La línea llamada \"%s\" (Ref: %s) fue casada con más de una empresa al "
+"buscar por nombre de empresa"
 
 #. module: account_statement_base_completion
 #: code:addons/account_statement_base_completion/statement.py:504
 #, python-format
 msgid "Statement ID %s auto-completed for %s lines completed"
-msgstr ""
+msgstr "Se han auto-completado para el extracto con ID %s %s líneas"
 
 #. module: account_statement_base_completion
 #: code:addons/account_statement_base_completion/statement.py:500
@@ -79,6 +85,9 @@ msgid ""
 "%s\n"
 "%s\n"
 msgstr ""
+"%s El extracto bancario con ID %s tiene %s líneas completadas por %s \n"
+"%s\n"
+"%s\n"
 
 #. module: account_statement_base_completion
 #: model:ir.model,name:account_statement_base_completion.model_account_bank_statement_line
@@ -105,7 +114,7 @@ msgstr "Información relacionada con la importación"
 #: code:addons/account_statement_base_completion/statement.py:179
 #, python-format
 msgid "Invalid invoice type for completion: %"
-msgstr ""
+msgstr "Tipo de factura no válida para completado: %s"
 
 #. module: account_statement_base_completion
 #: field:account.statement.completion.rule,name:0
@@ -115,7 +124,7 @@ msgstr "Nombre"
 #. module: account_statement_base_completion
 #: model:ir.model,name:account_statement_base_completion.model_account_statement_profile
 msgid "Statement Profile"
-msgstr ""
+msgstr "Perfil de extracto"
 
 #. module: account_statement_base_completion
 #: view:account.bank.statement:0
@@ -140,6 +149,8 @@ msgid ""
 "Used by completion and import system. Adds every field that is present in "
 "your bank/office statement file"
 msgstr ""
+"Usado por el sistema de importación y completado. Añade cada campo que está "
+"presente en su archivo de extracto del banco/entidad"
 
 #. module: account_statement_base_completion
 #: field:account.statement.completion.rule,profile_ids:0
@@ -152,7 +163,7 @@ msgstr "Perfiles de extractos relacionados"
 #: code:addons/account_statement_base_completion/statement.py:178
 #, python-format
 msgid "System error"
-msgstr ""
+msgstr "Error de sistema"
 
 #. module: account_statement_base_completion
 #: field:account.bank.statement.line,already_completed:0
@@ -164,7 +175,7 @@ msgstr "Auto-completado"
 #: code:addons/account_statement_base_completion/statement.py:466
 #, python-format
 msgid "ORM bypass error"
-msgstr ""
+msgstr "Error al saltar el ORM"
 
 #. module: account_statement_base_completion
 #: field:account.statement.completion.rule,sequence:0
@@ -178,6 +189,8 @@ msgid ""
 "Line named \"%s\" (Ref:%s) was matched by more than one partner while "
 "looking on partner label: %s"
 msgstr ""
+"La línea llamada \"%s\" (Ref: %s) fue casada con más de una empresa al "
+"buscar por la etiqueta de empresa: %s"
 
 #. module: account_statement_base_completion
 #: help:account.statement.completion.rule,sequence:0

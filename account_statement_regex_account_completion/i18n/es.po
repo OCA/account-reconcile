@@ -1,0 +1,33 @@
+# Spanish translation for banking-addons
+# Copyright (c) 2014 Rosetta Contributors and Canonical Ltd 2014
+# This file is distributed under the same license as the banking-addons package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2014.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: banking-addons\n"
+"Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
+"POT-Creation-Date: 2014-01-22 10:59+0000\n"
+"PO-Revision-Date: 2014-06-05 22:40+0000\n"
+"Last-Translator: Pedro Manuel Baeza <pedro.baeza@gmail.com>\n"
+"Language-Team: Spanish <es@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Launchpad-Export-Date: 2014-06-06 06:36+0000\n"
+"X-Generator: Launchpad (build 17031)\n"
+
+#. module: account_statement_regex_account_completion
+#: field:account.statement.completion.rule,regex:0
+msgid "Regular Expression"
+msgstr "Expresión regular"
+
+#. module: account_statement_regex_account_completion
+#: field:account.statement.completion.rule,account_id:0
+msgid "Account to set"
+msgstr "Cuenta a establecer"
+
+#. module: account_statement_regex_account_completion
+#: model:ir.model,name:account_statement_regex_account_completion.model_account_statement_completion_rule
+msgid "account.statement.completion.rule"
+msgstr "account.statement.completion.rule"
