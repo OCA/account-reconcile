@@ -35,15 +35,29 @@ class Statement(orm.Model):
     _inherit = "account.bank.statement"
 
     def button_confirm_bank(self, cr, uid, ids, context=None):
-        """Change the state on the statement lines. Return super."""
-        st_line_obj = self.pool['account.bank.statement.line']
-        for st_data in self.read(cr, uid, ids, ['line_ids'], context=context):
-            st_line_obj.write(cr, uid, st_data['line_ids'], {
-                'state': 'confirmed'
-            }, context=context)
+        """If all lines are draft, change their state.
+        Otherwise, confirm line by line to avoid duplicate moves.
+        Return super.
 
-        return super(Statement, self).button_confirm_bank(
-            cr, uid, ids, context)
+        """
+        st_line_obj = self.pool['account.bank.statement.line']
+
+        statement_ids_fully_confirm = []
+        for st in self.browse(cr, uid, ids, context=context):
+            if all(l.state == 'draft' for l in st.line_ids):
+                statement_ids_fully_confirm.append(st.id)
+                st_line_obj.write(cr, uid, [l.id for l in st.line_ids], {
+                    'state': 'confirmed'
+                }, context=context)
+            else:
+                st_line_obj.confirm(cr, uid, [l.id for l in st.line_ids],
+                                    context=context)
+
+        if statement_ids_fully_confirm:
+            return super(Statement, self).button_confirm_bank(
+                cr, uid, statement_ids_fully_confirm, context)
+        else:
+            return True
 
     def button_cancel(self, cr, uid, ids, context=None):
         """Check if there is any reconciliation. Return action."""

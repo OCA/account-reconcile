@@ -66,6 +66,7 @@
         'test/cancel_line.yml',
         'test/test_confirm_last_line_balance_check.yml',
         'test/test_confirm_last_line_no_balance_check.yml',
+        'test/confirm_statement_no_double_moves.yml',
     ],
     'installable': True,
     'images': [],
