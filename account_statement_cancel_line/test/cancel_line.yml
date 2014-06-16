@@ -1,0 +1,80 @@
+-
+  In order to test the cancellation of statement lines, I need a statement
+  profile.
+-
+  !record {model: account.statement.profile, id: profile_test}:
+    name: Bank EUR Profile for automatic checks
+    journal_id: account.bank_journal
+    commission_account_id: account.a_expense
+    company_id: base.main_company
+-
+  Now I create a statement. I create statment lines separately because I need
+  to find each one by XML id
+-
+  !record {model: account.bank.statement, id: statement_test}:
+    name: My Statement
+    profile_id: profile_test
+    company_id: base.main_company
+-
+  I create a first statement line
+-
+  !record {model: account.bank.statement.line, id: statement_line_1}:
+    name: line1
+    statement_id: statement_test
+    ref: ref1
+    date: '2014-01-20'
+    amount: 100.0
+-
+  I create a second statement line
+-
+  !record {model: account.bank.statement.line, id: statement_line_2}:
+    name: line2
+    statement_id: statement_test
+    ref: ref2
+    date: '2014-01-25'
+    amount: 200.0
+-
+  I check that the state of the statement is "Draft"
+-
+  !assert {model: account.bank.statement, id: statement_test}:
+    - state == 'draft'
+-
+  I confirm the statement
+-
+  !python {model: account.bank.statement}: |
+    result = self.button_confirm_bank(cr, uid, [ref("statement_test")])
+-
+  I check that the state of the statement is "Closed"
+-
+  !assert {model: account.bank.statement, id: statement_test}:
+    - state == 'confirm'
+-
+  I check that the state of the statement line is "Confirmed"
+-
+  !assert {model: account.bank.statement.line, id: statement_line_1}:
+    - state == 'confirmed'
+-
+  I check that a move was generated
+-
+  !assert {model: account.bank.statement.line, id: statement_line_1}:
+    - move_ids
+-
+  Now I cancel a statement line
+-
+  !python {model: account.bank.statement.line}: |
+    result = self.button_cancel(cr, uid, [ref("statement_line_1")])
+-
+  I check that the state of the statement went back to "Draft"
+-
+  !assert {model: account.bank.statement, id: statement_test}:
+    - state == 'draft'
+-
+  I also check that the state of the statement line went back to "Draft"
+-
+  !assert {model: account.bank.statement.line, id: statement_line_1}:
+    - state == 'draft'
+-
+  And the move is not there anymore
+-
+  !assert {model: account.bank.statement.line, id: statement_line_1}:
+    - move_ids == []

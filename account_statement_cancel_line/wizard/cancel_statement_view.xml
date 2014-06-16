@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record id="view_wizard_cancel_statement_form" model="ir.ui.view">
+            <field name="name">view.wizard.cancel.statement.form</field>
+            <field name="model">wizard.cancel.statement</field>
+            <field name="arch" type="xml">
+                <form string="Reconciled Entries" version="7.0">
+                    <separator string="Cancel statement"/>
+                    <field name="reconcile_warning" invisible="1" />
+                    <label attrs="{'invisible': [('reconcile_warning', '=', False)]}" string="Some entries are already reconciled. Do you want to unreconcile them and proceed?"/>
+                    <label attrs="{'invisible': [('reconcile_warning', '=', True)]}" string="Cancelling the statement will delete the generated Journal Entries (if un posted) and could take a long time for a long statement. Do you want to proceed?"/>
+                    <footer>
+                        <button name="do_cancel_button" string="Proceed" type="object" class="oe_highlight"/>
+                        or
+                        <button string="Cancel" class="oe_link" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+    </data>
+</openerp>

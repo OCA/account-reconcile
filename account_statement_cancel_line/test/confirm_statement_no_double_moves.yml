@@ -1,0 +1,70 @@
+-
+  I want to check that if I confirm a line and then the whole statement,
+  no duplicate moves are created.
+  First, I need a statement profile.
+-
+  !record {model: account.statement.profile, id: profile_test_10}:
+    name: Another Bank EUR Profile for automatic checks
+    journal_id: account.bank_journal
+    commission_account_id: account.a_expense
+    company_id: base.main_company
+-
+  Now I create a statement. I create statment lines separately because I need
+  to find each one by XML id
+-
+  !record {model: account.bank.statement, id: statement_test_10}:
+    name: My Statement
+    profile_id: profile_test_10
+    company_id: base.main_company
+-
+  I create a first statement line
+-
+  !record {model: account.bank.statement.line, id: statement_line_11}:
+    name: line11
+    statement_id: statement_test_10
+    ref: ref11
+    date: '2014-01-20'
+    amount: 100.0
+-
+  I create a second statement line
+-
+  !record {model: account.bank.statement.line, id: statement_line_12}:
+    name: line12
+    statement_id: statement_test_10
+    ref: ref12
+    date: '2014-01-25'
+    amount: 200.0
+-
+  Now I confirm only the first statement line
+-
+  !python {model: account.bank.statement.line}: |
+    result = self.confirm(cr, uid, [ref("statement_line_11")])
+-
+  I check that the state of the statement is still "Draft"
+-
+  !assert {model: account.bank.statement, id: statement_test_10}:
+    - state == 'draft'
+-
+  I confirm the statement
+-
+  !python {model: account.bank.statement}: |
+    result = self.button_confirm_bank(cr, uid, [ref("statement_test_10")])
+-
+  I check that the state of the statement is "Closed"
+-
+  !assert {model: account.bank.statement, id: statement_test_10}:
+    - state == 'confirm'
+-
+  I check that a move was generated for the first statment line
+  and that the state is confirmed
+-
+  !assert {model: account.bank.statement.line, id: statement_line_11}:
+    - len(move_ids) == 1
+    - state == 'confirmed'
+-
+  I check that a move was generated for the second statment line
+  and that the state is confirmed
+-
+  !assert {model: account.bank.statement.line, id: statement_line_12}:
+    - len(move_ids) == 1
+    - state == 'confirmed'

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record id="view_wizard_cancel_statement_line_form" model="ir.ui.view">
+            <field name="name">view.wizard.cancel.statement.line.form</field>
+            <field name="model">wizard.cancel.statement.line</field>
+            <field name="arch" type="xml">
+                <form string="Reconciled Entries" version="7.0">
+                    <separator string="Unreconciliation"/>
+                    <label string="Some entries are already reconciled. Do you want to unreconcile them and proceed?"/>
+                    <footer>
+                        <button name="unreconcile" string="Unreconcile" type="object" class="oe_highlight"/>
+                        or
+                        <button string="Cancel" class="oe_link" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+    </data>
+</openerp>

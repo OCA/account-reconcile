@@ -1,0 +1,42 @@
+-
+  I want to check that the behaviour when I confirm the only line of a
+  statement that is draft.
+-
+  I start with a profile
+-
+  !record {model: account.statement.profile, id: profile_test3}:
+    name: Profile for automatic checks
+    balance_check: True
+    journal_id: account.bank_journal
+    commission_account_id: account.a_expense
+-
+  Now I create a statement.
+-
+  !record {model: account.bank.statement, id: statement_test3}:
+    name: My Statement
+    profile_id: profile_test3
+    company_id: base.main_company
+    balance_start: 100.0
+    balance_end_real: 150.0
+-
+  I create a statement line
+-
+  !record {model: account.bank.statement.line, id: statement_line_3}:
+    name: line1
+    statement_id: statement_test3
+    ref: line1
+    date: '2014-01-20'
+    amount: 10.0
+-
+  Now I confirm the statement line. That should not pass the balance check
+-
+  !python {model: account.bank.statement.line}: |
+    # i.e. assertRaises 
+    from openerp.osv.osv import except_osv
+    try:
+        self.confirm(cr, uid, [ref("statement_line_3")])
+    except except_osv as exc:
+        print exc.args
+        assert u'The statement balance is incorrect' in exc.args[1], 'We got an error which is not what we expected'
+    else:
+        raise AssertionError('Balance check should have blocked this.')
