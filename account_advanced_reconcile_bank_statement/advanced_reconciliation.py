@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
 ##############################################################################
 #
-#    Author: Matthieu Dietrich
-#    Copyright 2014 Camptocamp SA
+#    Author: Matthieu Dietrich. Copyright Camptocamp SA
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -27,6 +26,33 @@ class easy_reconcile_advanced_bank_statement(orm.TransientModel):
     _name = 'easy.reconcile.advanced.bank_statement'
     _inherit = 'easy.reconcile.advanced'
 
+    def _base_columns(self, rec):
+        """ Mandatory columns for move lines queries
+        An extra column aliased as ``key`` should be defined
+        in each query."""
+        aml_cols = (
+            'id',
+            'debit',
+            'credit',
+            'date',
+            'period_id',
+            'ref',
+            'name',
+            'partner_id',
+            'account_id',
+            'move_id',
+            'statement_id')
+        result = ["account_move_line.%s" % col for col in aml_cols]
+        result += ["account_bank_statement.name as statement_name"]
+        return result
+
+    def _from(self, rec, *args, **kwargs):
+        # Overriden to use a inner join
+        return """FROM account_move_line
+                  INNER JOIN account_bank_statement
+                  ON account_bank_statement.id =
+                  account_move_line.statement_id"""
+
     def _skip_line(self, cr, uid, rec, move_line, context=None):
         """
         When True is returned on some conditions, the credit move line
@@ -42,13 +68,8 @@ class easy_reconcile_advanced_bank_statement(orm.TransientModel):
 
     def _opposite_matchers(self, cr, uid, rec, move_line, context=None):
         yield ('partner_id', move_line['partner_id'])
-        if move_line['statement_id']:
-            cr.execute("""SELECT name FROM account_bank_statement
-                          WHERE id = %s""", (move_line['statement_id'],))
-            statement_name = cr.fetchone()[0]
-            yield ('ref', statement_name.lower().strip())
-        else:
-            yield ('ref', '')
+        yield ('ref',
+               (move_line['statement_name'] or '').lower().strip())
 
     # Re-defined for this particular rule; since the commission line is a
     # credit line inside of the target statement, it should also be considered

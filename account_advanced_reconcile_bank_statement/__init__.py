@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
 ##############################################################################
 #
-#    Author: Matthieu Dietrich
-#    Copyright 2014 Camptocamp SA
+#    Author: Romain Deheele. Copyright Camptocamp SA
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -20,5 +19,4 @@
 ##############################################################################
 
 from . import easy_reconcile
-from . import base_advanced_reconciliation
 from . import advanced_reconciliation
