@@ -20,7 +20,7 @@ msgstr ""
 #. module: account_statement_base_completion
 #: view:account.statement.completion.rule:0
 msgid "Related Profiles"
-msgstr "Profils liÃ©s"
+msgstr "Profils liés"
 
 #. module: account_statement_base_completion
 #: help:account.bank.statement.line,label:0
@@ -40,7 +40,7 @@ msgstr ""
 #. module: account_statement_base_completion
 #: field:account.bank.statement,completion_logs:0
 msgid "Completion Log"
-msgstr "Journal des complÃ©tions"
+msgstr "Journal des complétions"
 
 #. module: account_statement_base_completion
 #: field:account.bank.statement.line,label:0
@@ -50,7 +50,7 @@ msgstr "Description"
 #. module: account_statement_base_completion
 #: model:ir.model,name:account_statement_base_completion.model_account_bank_statement
 msgid "Bank Statement"
-msgstr "RelevÃ© bancaire"
+msgstr "Relevé bancaire"
 
 #. module: account_statement_base_completion
 #: field:account.statement.completion.rule,function_to_call:0
@@ -83,7 +83,7 @@ msgstr ""
 #. module: account_statement_base_completion
 #: model:ir.model,name:account_statement_base_completion.model_account_bank_statement_line
 msgid "Bank Statement Line"
-msgstr "Ligne de relevÃ© bancaire"
+msgstr "Ligne de relevé bancaire"
 
 #. module: account_statement_base_completion
 #: field:account.bank.statement.line,additionnal_bank_fields:0
@@ -93,12 +93,12 @@ msgstr "Informations additionnelles de la banque"
 #. module: account_statement_base_completion
 #: view:account.statement.profile:0
 msgid "Auto-Completion Rules"
-msgstr "RÃ¨gles d'auto-complÃ©tion"
+msgstr "Règles d'auto-complétion"
 
 #. module: account_statement_base_completion
 #: view:account.bank.statement:0
 msgid "Importation related infos"
-msgstr "Importation des informations liÃ©es"
+msgstr "Importation des informations liées"
 
 #. module: account_statement_base_completion
 #: code:addons/account_statement_base_completion/statement.py:159
@@ -120,14 +120,14 @@ msgstr ""
 #. module: account_statement_base_completion
 #: view:account.bank.statement:0
 msgid "Auto Completion"
-msgstr "Auto-complÃ©tion"
+msgstr "Auto-complétion"
 
 #. module: account_statement_base_completion
 #: view:account.statement.completion.rule:0
 #: model:ir.actions.act_window,name:account_statement_base_completion.action_st_completion_rule_tree
 #: model:ir.ui.menu,name:account_statement_base_completion.menu_action_st_completion_rule_tree_menu
 msgid "Statement Completion Rule"
-msgstr "RÃ¨gle d'auto-complÃ©tion du relevÃ©"
+msgstr "Règle d'auto-complétion du relevé"
 
 #. module: account_statement_base_completion
 #: model:ir.model,name:account_statement_base_completion.model_account_statement_completion_rule
@@ -145,26 +145,26 @@ msgstr ""
 #: field:account.statement.completion.rule,profile_ids:0
 #: field:account.statement.profile,rule_ids:0
 msgid "Related statement profiles"
-msgstr "Profils liÃ©s"
+msgstr "Profils liés"
 
 #. module: account_statement_base_completion
 #: code:addons/account_statement_base_completion/statement.py:158
 #: code:addons/account_statement_base_completion/statement.py:178
 #, python-format
 msgid "System error"
-msgstr ""
+msgstr "Erreur système"
 
 #. module: account_statement_base_completion
 #: field:account.bank.statement.line,already_completed:0
 msgid "Auto-Completed"
-msgstr "Auto-CompletÃ©"
+msgstr "Auto-Completé"
 
 #. module: account_statement_base_completion
 #: code:addons/account_statement_base_completion/statement.py:448
 #: code:addons/account_statement_base_completion/statement.py:466
 #, python-format
 msgid "ORM bypass error"
-msgstr ""
+msgstr "Erreur de bypass de l'ORM"
 
 #. module: account_statement_base_completion
 #: field:account.statement.completion.rule,sequence:0
@@ -182,12 +182,12 @@ msgstr ""
 #. module: account_statement_base_completion
 #: help:account.statement.completion.rule,sequence:0
 msgid "Lower means parsed first."
-msgstr "Plus petite sÃ©quence analysÃ©e en premier."
+msgstr "Plus petite séquence analysée en premier."
 
 #. module: account_statement_base_completion
 #: field:res.partner,bank_statement_label:0
 msgid "Bank Statement Label"
-msgstr "Description de relevÃ© bancaire"
+msgstr "Description de relevé bancaire"
 
 #. module: account_statement_base_completion
 #: help:account.bank.statement.line,already_completed:0
@@ -195,8 +195,8 @@ msgid ""
 "When this checkbox is ticked, the auto-completion process/button will ignore "
 "this line."
 msgstr ""
-"Les lignes cochÃ©es seront ignorÃ©es lorsque vous cliquez sur le bouton auto-"
-"complÃ©tion"
+"Les lignes cochées seront ignorées lorsque vous cliquez sur le bouton auto-"
+"complétion"
 
 #. module: account_statement_base_completion
 #: help:res.partner,bank_statement_label:0
@@ -206,10 +206,10 @@ msgid ""
 "partner will be automatically                  filled (as long as you use "
 "this method/rules in your statement profile)."
 msgstr ""
-"Entrez les diffÃ©rentes descriptions/informations sur votre relevÃ© bancaire "
-"sÃ©parÃ©es par un ';' Si l'une d'entre elles figure dans la ligne du "
-"relevÃ©, le partenaire correspondant pourraÃªtre automatiquement retrouvÃ© "
-"(Ã  condition d'utiliser un rÃ¨gle de lettrage dans le profil)."
+"Entrez les différentes descriptions/informations sur votre relevé bancaire "
+"séparées par un ';' Si l'une d'entre elles figure dans la ligne du "
+"relevé, le partenaire correspondant pourraître automatiquement retrouvé "
+"(A condition d'utiliser un règle de lettrage dans le profil)."
 
 #. module: account_statement_base_completion
 #: model:ir.model,name:account_statement_base_completion.model_res_partner
@@ -219,4 +219,4 @@ msgstr "Partenaire"
 #. module: account_statement_base_completion
 #: view:account.bank.statement:0
 msgid "Completion Logs"
-msgstr "Journaux d'auto-complÃ©tion"
+msgstr "Journaux d'auto-complétion"
