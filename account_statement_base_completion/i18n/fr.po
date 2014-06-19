@@ -208,7 +208,7 @@ msgid ""
 msgstr ""
 "Entrez les différentes descriptions/informations sur votre relevé bancaire "
 "séparées par un ';' Si l'une d'entre elles figure dans la ligne du "
-"relevé, le partenaire correspondant pourraître automatiquement retrouvé "
+"relevé, le partenaire correspondant sera automatiquement retrouvé "
 "(A condition d'utiliser un règle de lettrage dans le profil)."
 
 #. module: account_statement_base_completion
