@@ -31,14 +31,7 @@ except:
     raise Exception(_('Please install python lib ofxparse'))
 
 class OfxParser(BankStatementImportParser):
-    """
-    Class for defining parser for OFX file format.
-    """
-    
-    def __init__(self, parser_name, *args, **kwargs):
-        """
-        """
-        super(OfxParser, self).__init__(parser_name, *args, **kwargs)
+    """Class for defining parser for OFX file format."""
 
     @classmethod
     def parser_for(cls, parser_name):

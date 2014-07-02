@@ -27,17 +27,17 @@ class TransactionIDFileParser(FileParser):
     bank statement.
     """
 
-    def __init__(self, parse_name, ftype='csv', extra_fields=None, header=None, **kwargs):
+    def __init__(self, profile, ftype='csv', extra_fields=None, header=None, **kwargs):
         """
         Add transaction_id in header keys
-            :param char: parse_name: The name of the parser
+            :param char: profile: Reference to the profile
             :param char: ftype: extension of the file (could be csv or xls)
             :param dict: extra_fields: extra fields to add to the conversion dict. In the format
                                      {fieldname: fieldtype}
             :param list: header : specify header fields if the csv file has no header
             """
         extra_fields = {'transaction_id': unicode}
-        super(TransactionIDFileParser, self).__init__(parse_name, extra_fields=extra_fields,
+        super(TransactionIDFileParser, self).__init__(profile, extra_fields=extra_fields,
                                                       ftype=ftype, header=header, **kwargs)
         # ref is replaced by transaction_id thus we delete it from check
         self.keys_to_validate = [k for k in self.keys_to_validate if k != 'ref']
