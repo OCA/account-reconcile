@@ -42,14 +42,16 @@ class BankStatementImportParser(object):
     from the FileParser instead.
     """
 
-    def __init__(self, parser_name, *args, **kwargs):
+    def __init__(self, profile, *args, **kwargs):
         # The name of the parser as it will be called
-        self.parser_name = parser_name
+        self.parser_name = profile.import_type
         # The result as a list of row. One row per line of data in the file, but
         # not the commission one !
         self.result_row_list = None
         # The file buffer on which to work on
         self.filebuffer = None
+        # The profile record to access its parameters in any parser method
+        self.profile = profile
         self.balance_start = None
         self.balance_end = None
         self.statement_name = None
@@ -217,13 +219,13 @@ def itersubclasses(cls, _seen=None):
                 yield sub
 
 
-def new_bank_statement_parser(parser_name, *args, **kwargs):
-    """
-    Return an instance of the good parser class base on the providen name
-    :param char: parser_name
-    :return: class instance of parser_name providen.
+def new_bank_statement_parser(profile, *args, **kwargs):
+    """Return an instance of the good parser class based on the given profile.
+    
+    :param profile: browse_record of import profile.
+    :return: class instance for given profile import type.
     """
     for cls in itersubclasses(BankStatementImportParser):
-        if cls.parser_for(parser_name):
-            return cls(parser_name, *args, **kwargs)
+        if cls.parser_for(profile.import_type):
+            return cls(profile, *args, **kwargs)
     raise ValueError
