@@ -56,9 +56,9 @@ class AccountStatementCompletionRule(Model):
         st_obj = self.pool.get('account.bank.statement.line')
         res = {}
         res_bank_obj = self.pool.get('res.partner.bank')
-        ids = res_bank_obj.search(cr,
+        ids = res_bank_obj.search_by_acc_number(cr,
                                   uid,
-                                  [('acc_number', '=', partner_acc_number)],
+                                  partner_acc_number,
                                   context=context)
         if len(ids) > 1:
             raise ErrorTooManyPartner(_('Line named "%s" (Ref:%s) was matched by more than '
