@@ -53,7 +53,7 @@ class EasyReconcileHistory(orm.Model):
     _columns = {
         'easy_reconcile_id': fields.many2one(
             'account.easy.reconcile', 'Reconcile Profile', readonly=True),
-        'date': fields.datetime('Run date', readonly=True),
+        'date': fields.datetime('Run date', readonly=True, required=True),
         'reconcile_ids': fields.many2many(
             'account.move.reconcile',
             'account_move_reconcile_history_rel',
@@ -62,28 +62,27 @@ class EasyReconcileHistory(orm.Model):
             'account.move.reconcile',
             'account_move_reconcile_history_partial_rel',
             string='Partial Reconciliations', readonly=True),
-        'reconcile_line_ids':
-        fields.function(
+        'reconcile_line_ids': fields.function(
             _reconcile_line_ids,
             string='Reconciled Items',
             type='many2many',
             relation='account.move.line',
             readonly=True,
             multi='lines'),
-            'partial_line_ids':
-                fields.function(
-                    _reconcile_line_ids,
-                    string='Partially Reconciled Items',
-                    type='many2many',
-                    relation='account.move.line',
-                    readonly=True,
-                    multi='lines'),
-            'company_id': fields.related('easy_reconcile_id', 'company_id',
-                                         relation='res.company',
-                                         type='many2one',
-                                         string='Company',
-                                         store=True,
-                                         readonly=True),
+        'partial_line_ids': fields.function(
+            _reconcile_line_ids,
+            string='Partially Reconciled Items',
+            type='many2many',
+            relation='account.move.line',
+            readonly=True,
+            multi='lines'),
+        'company_id': fields.related(
+            'easy_reconcile_id', 'company_id',
+            relation='res.company',
+            type='many2one',
+            string='Company',
+            store=True,
+            readonly=True),
 
     }
 
