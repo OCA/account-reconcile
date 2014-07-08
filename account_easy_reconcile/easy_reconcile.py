@@ -19,7 +19,9 @@
 #
 ##############################################################################
 
+from datetime import datetime
 from openerp.osv import fields, orm
+from openerp.tools import DEFAULT_SERVER_DATETIME_FORMAT
 from openerp.tools.translate import _
 from openerp import pooler
 
@@ -272,7 +274,7 @@ class AccountEasyReconcile(orm.Model):
         return True
 
     def _no_history(self, cr, uid, rec, context=None):
-        """ Raise an `osv.except_osv` error, supposed to
+        """ Raise an `orm.except_orm` error, supposed to
         be called when there is no history on the reconciliation
         task.
         """
