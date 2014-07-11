@@ -57,6 +57,9 @@ class easy_reconcile_options(orm.AbstractModel):
                 required=True,
                 string='Date of reconciliation'),
             'filter': fields.char('Filter', size=128),
+            'analytic_account_id': fields.many2one(
+                'account.analytic.account', 'Analytic Account',
+                help="Analytic account for the write-off"),
     }
 
     _defaults = {
@@ -199,6 +202,8 @@ class account_easy_reconcile(orm.Model):
                                     rec_method.account_lost_id.id),
                 'account_profit_id': (rec_method.account_profit_id and
                                       rec_method.account_profit_id.id),
+                'analytic_account_id': (rec_method.analytic_account_id and
+                                        rec_method.analytic_account_id.id),
                 'journal_id': (rec_method.journal_id and
                                rec_method.journal_id.id),
                 'date_base_on': rec_method.date_base_on,
