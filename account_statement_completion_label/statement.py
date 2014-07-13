@@ -92,7 +92,7 @@ class AccountStatementCompletionRule(orm.Model):
                          ON
                             st_l.statement_id = s.id
                     WHERE
-                        st_l.name ~* l.label
+                        (st_l.name ~* l.label OR st_l.ref ~* l.label)
                     AND
                         l.profile_id = s.profile_id
                     AND
