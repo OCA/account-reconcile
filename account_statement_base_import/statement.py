@@ -153,7 +153,7 @@ class AccountStatementProfil(Model):
              _("You must provide a valid profile to import a bank statement!"))
         prof = prof_obj.browse(cr, uid, profile_id, context=context)
 
-        parser = new_bank_statement_parser(prof.import_type, ftype=ftype)
+        parser = new_bank_statement_parser(prof, ftype=ftype)
         res = []
         for result_row_list in parser.parse(file_stream):
             statement_id = self._statement_import(cr, uid, ids, prof, parser,
