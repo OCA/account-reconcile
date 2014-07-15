@@ -282,7 +282,7 @@ class easy_reconcile_advanced(orm.AbstractModel):
             elif reconciled:
                 partial_reconciled_ids += reconcile_group_ids
 
-            if COMMIT_EVERY and group_count % COMMIT_EVERY == COMMIT_EVERY - 1:
+            if COMMIT_EVERY and (group_count + 1) % COMMIT_EVERY == 0:
                 cr.commit()
 
         return reconciled_ids, partial_reconciled_ids
