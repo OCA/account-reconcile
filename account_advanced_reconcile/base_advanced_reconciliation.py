@@ -244,6 +244,7 @@ class easy_reconcile_advanced(orm.AbstractModel):
                 new_cr, uid, rec, credit_lines, debit_lines, context=ctx)
         finally:
             if ctx['commit_every']:
+                new_cr.commit()
                 new_cr.close()
         return result
 
