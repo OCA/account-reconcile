@@ -21,6 +21,9 @@
 
 from itertools import product
 from openerp.osv import orm
+from openerp import pooler
+
+COMMIT_EVERY = 10
 
 
 class easy_reconcile_advanced(orm.AbstractModel):
@@ -221,10 +224,19 @@ class easy_reconcile_advanced(orm.AbstractModel):
                     cr, uid, rec, move_line, op, matchers, context=context)]
 
     def _action_rec(self, cr, uid, rec, context=None):
-        credit_lines = self._query_credit(cr, uid, rec, context=context)
-        debit_lines = self._query_debit(cr, uid, rec, context=context)
-        return self._rec_auto_lines_advanced(
-                cr, uid, rec, credit_lines, debit_lines, context=context)
+        # we use a new cursor to be able to commit the reconciliation
+        # often. We have to create it here and not later to avoid problems
+        # where the new cursor sees the lines as reconciles but the old one
+        # does not.
+        new_cr = pooler.get_db(cr.dbname).cursor()
+        try:
+            credit_lines = self._query_credit(new_cr, uid, rec, context=context)
+            debit_lines = self._query_debit(new_cr, uid, rec, context=context)
+            result = self._rec_auto_lines_advanced(
+                new_cr, uid, rec, credit_lines, debit_lines, context=context)
+        finally:
+            new_cr.close()
+        return result
 
     def _skip_line(self, cr, uid, rec, move_line, context=None):
         """
@@ -260,7 +272,8 @@ class easy_reconcile_advanced(orm.AbstractModel):
                 reconcile_groups.append(set(line_ids))
 
         lines_by_id = dict([(l['id'], l) for l in credit_lines + debit_lines])
-        for reconcile_group_ids in reconcile_groups:
+
+        for group_count, reconcile_group_ids in enumerate(reconcile_groups):
             group_lines = [lines_by_id[lid] for lid in reconcile_group_ids]
             reconciled, full = self._reconcile_lines(
                 cr, uid, rec, group_lines, allow_partial=True, context=context)
@@ -268,5 +281,8 @@ class easy_reconcile_advanced(orm.AbstractModel):
                 reconciled_ids += reconcile_group_ids
             elif reconciled:
                 partial_reconciled_ids += reconcile_group_ids
+
+            if COMMIT_EVERY and (group_count + 1) % COMMIT_EVERY == 0:
+                cr.commit()
 
         return reconciled_ids, partial_reconciled_ids
