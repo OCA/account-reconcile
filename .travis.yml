@@ -11,6 +11,7 @@ before_install:
   - export PATH=/tmp/maintainer-quality-tools/travis:$PATH
   - travis_install_nightly 7.0
   - pip install coveralls flake8
+  - sudo pip install ofxparse
   - git clone https://github.com/OCA/account-financial-tools /tmp/account-financial-tools -b 7.0
 
 script:
