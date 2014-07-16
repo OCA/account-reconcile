@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 ##############################################################################
 #
-#    Author: Guewen Baconnier, Leonardo Pistone
+#    Author: Guewen Baconnier
+#    Contributor: Leonardo Pistone
 #    Copyright 2012-2014 Camptocamp SA
 #
 #    This program is free software: you can redistribute it and/or modify
