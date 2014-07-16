@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 ##############################################################################
 #
-#    Author: Guewen Baconnier
-#    Copyright 2012 Camptocamp SA
+#    Author: Guewen Baconnier, Leonardo Pistone
+#    Copyright 2012-2014 Camptocamp SA
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -22,3 +22,4 @@
 import easy_reconcile
 import base_advanced_reconciliation
 import advanced_reconciliation
+import res_config  # noqa

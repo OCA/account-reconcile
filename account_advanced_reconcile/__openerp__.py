@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 ##############################################################################
 #
-#    Author: Guewen Baconnier
-#    Copyright 2012 Camptocamp SA
+#    Author: Guewen Baconnier, Leonardo Pistone
+#    Copyright 2012-2014 Camptocamp SA
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -73,7 +73,8 @@ many offices.
 
  """,
  'website': 'http://www.camptocamp.com',
- 'data': ['easy_reconcile_view.xml'],
+ 'data': ['easy_reconcile_view.xml',
+          'res_config_view.xml'],
  'test': [],
  'images': [],
  'installable': True,
