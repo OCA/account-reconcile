@@ -11,10 +11,11 @@ before_install:
   - export PATH=/tmp/maintainer-quality-tools/travis:$PATH
   - travis_install_nightly 7.0
   - pip install coveralls flake8
+  - git clone https://github.com/OCA/account-financial-tools /tmp/account-financial-tools -b 7.0
 
 script:
     - travis_run_flake8
-    - travis_run_tests 7.0
+    - travis_run_tests 7.0 /tmp/account-financial-tools
 
 after_success:
   coveralls
