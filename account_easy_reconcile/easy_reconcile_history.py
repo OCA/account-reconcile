@@ -56,7 +56,7 @@ class easy_reconcile_history(orm.Model):
     _columns = {
             'easy_reconcile_id': fields.many2one(
                 'account.easy.reconcile', 'Reconcile Profile', readonly=True),
-            'date': fields.datetime('Run date', readonly=True),
+            'date': fields.datetime('Run date', readonly=True, required=True),
             'reconcile_ids': fields.many2many(
                 'account.move.reconcile',
                 'account_move_reconcile_history_rel',
