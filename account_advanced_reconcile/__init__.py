@@ -23,4 +23,3 @@
 import easy_reconcile
 import base_advanced_reconciliation
 import advanced_reconciliation
-import res_config  # noqa

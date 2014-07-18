@@ -23,3 +23,4 @@ import easy_reconcile
 import base_reconciliation
 import simple_reconciliation
 import easy_reconcile_history
+import res_config  # noqa

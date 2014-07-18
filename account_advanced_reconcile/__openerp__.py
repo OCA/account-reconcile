@@ -75,7 +75,7 @@ many offices.
  """,
  'website': 'http://www.camptocamp.com',
  'data': ['easy_reconcile_view.xml',
-          'res_config_view.xml'],
+          ],
  'test': [],
  'images': [],
  'installable': True,
