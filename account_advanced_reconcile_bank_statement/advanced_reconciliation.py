@@ -30,28 +30,21 @@ class easy_reconcile_advanced_bank_statement(orm.TransientModel):
         """ Mandatory columns for move lines queries
         An extra column aliased as ``key`` should be defined
         in each query."""
-        aml_cols = (
-            'id',
-            'debit',
-            'credit',
-            'date',
-            'period_id',
-            'ref',
-            'name',
-            'partner_id',
-            'account_id',
-            'move_id',
-            'statement_id')
-        result = ["account_move_line.%s" % col for col in aml_cols]
-        result += ["account_bank_statement.name as statement_name"]
-        return result
+        aml_cols = super(easy_reconcile_advanced_bank_statement, self).\
+            _base_columns(rec)
+        aml_cols += ['account_move_line.statement_id',
+                     'account_bank_statement.name as statement_name',
+                     ]
+        return aml_cols
 
     def _from(self, rec, *args, **kwargs):
-        # Overriden to use a inner join
-        return """FROM account_move_line
-                  INNER JOIN account_bank_statement
-                  ON account_bank_statement.id =
-                  account_move_line.statement_id"""
+        result = super(easy_reconcile_advanced_bank_statement, self).\
+            _from(rec, *args, **kwargs)
+        result = result + (
+            " INNER JOIN account_bank_statement "
+            "ON account_bank_statement.id = account_move_line.statement_id "
+        )
+        return result
 
     def _skip_line(self, cr, uid, rec, move_line, context=None):
         """
@@ -59,6 +52,10 @@ class easy_reconcile_advanced_bank_statement(orm.TransientModel):
         will be skipped for reconciliation. Can be inherited to
         skip on some conditions. ie: ref or partner_id is empty.
         """
+        result = super(easy_reconcile_advanced_bank_statement, self).\
+            _skip_line(cr, uid, rec, move_line, context=context)
+        if result:
+            return result
         return not (move_line.get('ref') and
                     move_line.get('partner_id'))
 
