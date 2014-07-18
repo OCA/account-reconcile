@@ -271,7 +271,7 @@ class easy_reconcile_advanced(orm.AbstractModel):
 
         for idx, credit_line in enumerate(credit_lines, start=1):
             if idx % 50 == 0:
-                _logger.info("... %d/%d credit lines inspected ...", idx * 50,
+                _logger.info("... %d/%d credit lines inspected ...", idx,
                              len(credit_lines))
             if self._skip_line(cr, uid, rec, credit_line, context=context):
                 continue
