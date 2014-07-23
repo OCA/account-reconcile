@@ -20,7 +20,6 @@
 ##############################################################################
 
 from openerp.osv.orm import Model
-from openerp.osv import fields
 
 
 class account_move(Model):
@@ -32,7 +31,7 @@ class account_move(Model):
         allow an easier way of cancelling the bank statement.
         """
         reconcile_to_delete = []
-        reconcile_obj = self.pool.get('account.move.reconcile')
+        reconcile_obj = self.pool['account.move.reconcile']
         for move in self.browse(cr, uid, ids, context=context):
             for move_line in move.line_id:
                 if move_line.reconcile_id:
