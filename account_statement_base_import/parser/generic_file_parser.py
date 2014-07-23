@@ -20,6 +20,11 @@
 
 import datetime
 from file_parser import FileParser
+from openerp.addons.account_statement_base_import.parser.file_parser import float_or_zero
+try:
+    import xlrd
+except:
+    raise Exception(_('Please install python lib xlrd'))
 
 
 class GenericFileParser(FileParser):
@@ -30,8 +35,16 @@ class GenericFileParser(FileParser):
     """
 
     def __init__(self, parse_name, ftype='csv', **kwargs):
+        conversion_dict = {
+            'ref': unicode,
+            'label': unicode,
+            'date': datetime.datetime,
+            'amount': float_or_zero,
+        }
         super(GenericFileParser, self).__init__(
-            parse_name, ftype=ftype, **kwargs)
+            parse_name, ftype=ftype, 
+            extra_fields=conversion_dict,
+            **kwargs)
 
     @classmethod
     def parser_for(cls, parser_name):
