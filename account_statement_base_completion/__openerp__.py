@@ -58,9 +58,9 @@
  """,
  'website': 'http://www.camptocamp.com',
  'data': [
-     'statement_view.xml',
-     'partner_view.xml',
-     'data.xml',
+     'views/statement_view.xml',
+     'views/partner_view.xml',
+     'data/data.xml',
      'security/ir.model.access.csv',
  ],
  'demo': [],
