@@ -31,7 +31,7 @@ def fixed_write(self, cr, uid, ids, vals, context=None):
     I will do it when I have time."""
     res = super(stat_mod.account_bank_statement, self).write(cr, uid, ids,
                                                              vals, context=context)
-    if ids: # will be false for an new empty bank statement
+    if ids:  # will be false for an new empty bank statement
         cr.execute("UPDATE account_bank_statement_line"
                    " SET sequence = account_bank_statement_line.id + 1"
                    " where statement_id in %s", (tuple(ids),))
@@ -53,24 +53,26 @@ class AccountStatementProfile(Model):
 
     _columns = {
         'name': fields.char('Name', required=True),
-        'sequence': fields.integer('Sequence', help="Gives a sequence in lists, the first profile will be used as default"),
+        'sequence': fields.integer(
+            'Sequence',
+            help="Gives a sequence in lists, the first profile will be used as default"),
         'partner_id': fields.many2one(
             'res.partner',
             'Bank/Payment Office partner',
-             help="Put a partner if you want to have it on the "
-                  "commission move (and optionaly on the counterpart "
-                  "of the intermediate/banking move if you tick the "
-                  "corresponding checkbox)."),
+            help="Put a partner if you want to have it on the "
+                 "commission move (and optionaly on the counterpart "
+                 "of the intermediate/banking move if you tick the "
+                 "corresponding checkbox)."),
 
         'journal_id': fields.many2one(
             'account.journal',
-             'Financial journal to use for transaction',
-             required=True),
+            'Financial journal to use for transaction',
+            required=True),
 
         'commission_account_id': fields.many2one(
             'account.account',
-             'Commission account',
-             required=True),
+            'Commission account',
+            required=True),
 
         'commission_analytic_id': fields.many2one(
             'account.analytic.account',
@@ -118,7 +120,6 @@ class AccountStatementProfile(Model):
     ]
 
 
-
 class AccountBankStatement(Model):
     """
     We improve the bank statement class mostly for :
@@ -139,7 +140,7 @@ class AccountBankStatement(Model):
         """
         if context is None:
             context = {}
-        period_obj = self.pool.get('account.period')
+        period_obj = self.pool['account.period']
         periods = period_obj.find(cr, uid, dt=context.get('date'), context=context)
         return periods and periods[0] or False
 
@@ -152,8 +153,8 @@ class AccountBankStatement(Model):
         """
         if context is None:
             context = {}
-        user_obj = self.pool.get('res.users')
-        profile_obj = self.pool.get('account.statement.profile')
+        user_obj = self.pool['res.users']
+        profile_obj = self.pool['account.statement.profile']
         user = user_obj.browse(cr, uid, uid, context=context)
         profile_ids = profile_obj.search(cr, uid, [('company_id', '=', user.company_id.id)], context=context)
 
@@ -219,11 +220,7 @@ class AccountBankStatement(Model):
             },
             readonly=True),
         'period_id': fields.many2one(
-                        'account.period',
-                        'Period',
-                        required=False,
-                        readonly=False,
-                        invisible=True),
+            'account.period', 'Period', required=False, readonly=False, invisible=True),
     }
 
     _defaults = {
@@ -235,7 +232,7 @@ class AccountBankStatement(Model):
         """Need to pass the journal_id in vals anytime because of account.cash.statement
         need it."""
         if 'profile_id' in vals:
-            profile_obj = self.pool.get('account.statement.profile')
+            profile_obj = self.pool['account.statement.profile']
             profile = profile_obj.browse(cr, uid, vals['profile_id'], context=context)
             vals['journal_id'] = profile.journal_id.id
         return super(AccountBankStatement, self
@@ -245,7 +242,7 @@ class AccountBankStatement(Model):
         """Return matching period for a date."""
         if context is None:
             context = {}
-        period_obj = self.pool.get('account.period')
+        period_obj = self.pool['account.period']
         local_context = context.copy()
         local_context['account_period_prefer_normal'] = True
         periods = period_obj.find(cr, uid, dt=date, context=local_context)
@@ -319,12 +316,12 @@ class AccountBankStatement(Model):
         if context is None:
             context = {}
         res = super(AccountBankStatement, self)._prepare_move_line_vals(
-                cr, uid, st_line, move_id, debit, credit,
-                currency_id=currency_id,
-                amount_currency=amount_currency,
-                account_id=account_id,
-                analytic_id=analytic_id,
-                partner_id=partner_id, context=context)
+            cr, uid, st_line, move_id, debit, credit,
+            currency_id=currency_id,
+            amount_currency=amount_currency,
+            account_id=account_id,
+            analytic_id=analytic_id,
+            partner_id=partner_id, context=context)
         ctx = context.copy()
         ctx['company_id'] = st_line.company_id.id
         period_id = self._get_period(cr, uid, st_line.date, context=ctx)
@@ -361,11 +358,11 @@ class AccountBankStatement(Model):
         :return: char: name of the bank statement (st_number)
 
         """
-        year = self.pool.get('account.period').browse(
-                cr, uid, self._get_period(cr, uid, date)).fiscalyear_id.id
-        profile = self.pool.get('account.statement.profile').browse(cr, uid, profile_id)
+        year = self.pool['account.period'].browse(
+            cr, uid, self._get_period(cr, uid, date)).fiscalyear_id.id
+        profile = self.pool['account.statement.profile'].browse(cr, uid, profile_id)
         c = {'fiscalyear_id': year}
-        obj_seq = self.pool.get('ir.sequence')
+        obj_seq = self.pool['ir.sequence']
         journal_sequence_id = (profile.journal_id.sequence_id and
                                profile.journal_id.sequence_id.id or False)
         if journal_sequence_id:
@@ -456,7 +453,7 @@ class AccountBankStatement(Model):
                                            default_type, context=None):
         """Compute the statement line type
            from partner profile (customer, supplier)"""
-        obj_partner = self.pool.get('res.partner')
+        obj_partner = self.pool['res.partner']
         part = obj_partner.browse(cr, uid, partner_id, context=context)
         if part.supplier == part.customer:
             return default_type
@@ -538,7 +535,7 @@ class AccountBankStatement(Model):
                  company default.
         """
 
-        property_obj = self.pool.get('ir.property')
+        property_obj = self.pool['ir.property']
         account_receivable = property_obj.get(cr, uid, 'property_account_receivable',
                                               'res.partner', context=context)
         account_payable = property_obj.get(cr, uid, 'property_account_payable',
@@ -573,8 +570,8 @@ class AccountBankStatement(Model):
         """
         if not profile_id:
             return {}
-        import_config = self.pool.get("account.statement.profile").browse(
-                cr, uid, profile_id, context=context)
+        import_config = self.pool["account.statement.profile"].browse(
+            cr, uid, profile_id, context=context)
         journal_id = import_config.journal_id.id
         return {'value': {'journal_id': journal_id,
                           'balance_check': import_config.balance_check}}
@@ -617,19 +614,23 @@ class AccountBankStatementLine(Model):
         'account_id': _get_default_account,
     }
 
-    def get_values_for_line(self, cr, uid, profile_id=False, partner_id=False, line_type=False, amount=False, master_account_id=None, context=None):
+    def get_values_for_line(self, cr, uid, profile_id=False, partner_id=False, line_type=False,
+                            amount=False, master_account_id=None, context=None):
         """
         Return the account_id to be used in the line of a bank statement. It'll base the result as follow:
             - If a receivable_account_id is set in the profile, return this value and type = general
             # TODO
-            - Elif how_get_type_account is set to force_supplier or force_customer, will take respectively payable and type=supplier,
+            - Elif how_get_type_account is set to force_supplier or force_customer, will take
+            respectively payable and type=supplier,
               receivable and type=customer otherwise
             # END TODO
-            - Elif line_type is given, take the partner receivable/payable property (payable if type=supplier, receivable
-              otherwise)
+            - Elif line_type is given, take the partner receivable/payable property
+                (payable if type=supplier, receivable otherwise)
             - Elif amount is given:
-                 - If the customer checkbox is checked on the found partner, type and account will be customer and receivable
-                 - If the supplier checkbox is checked on the found partner, type and account will be supplier and payable
+                 - If the customer checkbox is checked on the found partner, type and
+                     account will be customer and receivable
+                 - If the supplier checkbox is checked on the found partner, type and
+                     account will be supplier and payable
                  - If both checkbox are checked or none of them, it'll be based on the amount :
                       If amount is positive, the type and account will be customer and receivable,
                       If amount is negative, the type and account will be supplier an payable
@@ -648,8 +649,8 @@ class AccountBankStatementLine(Model):
                      }
         """
         res = {}
-        obj_partner = self.pool.get('res.partner')
-        obj_stat = self.pool.get('account.bank.statement')
+        obj_partner = self.pool['res.partner']
+        obj_stat = self.pool['account.bank.statement']
         receiv_account = pay_account = account_id = False
         # If profile has a receivable_account_id, we return it in any case
         if master_account_id:
@@ -662,8 +663,8 @@ class AccountBankStatementLine(Model):
         # To optimize we consider passing false means there is no account
         # on profile
         if profile_id and master_account_id is None:
-            profile = self.pool.get("account.statement.profile").browse(
-                                       cr, uid, profile_id, context=context)
+            profile = self.pool["account.statement.profile"].browse(
+                cr, uid, profile_id, context=context)
             if profile.receivable_account_id:
                 res['account_id'] = profile.receivable_account_id.id
                 # We return general as default instead of get_type_for_counterpart
@@ -699,7 +700,7 @@ class AccountBankStatementLine(Model):
         Moreover, we now call the get_account_and_type_for_counterpart method now to get the
         type to use.
         """
-        obj_stat = self.pool.get('account.bank.statement')
+        obj_stat = self.pool['account.bank.statement']
         if not partner_id:
             return {}
         line_type = obj_stat.get_type_for_counterpart(cr, uid, 0.0, partner_id=partner_id)
