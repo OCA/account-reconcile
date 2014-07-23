@@ -24,7 +24,8 @@ import csv
 import tempfile
 import datetime
 from file_parser import FileParser
-+from openerp.addons.account_statement_base_import.parser.file_parser import float_or_zero
+from openerp.addons.account_statement_base_import.parser.file_parser import float_or_zero
+from openerp.loglevels import ustr
 try:
     import xlrd
 except:
@@ -40,8 +41,8 @@ class GenericFileParser(FileParser):
 
     def __init__(self, parse_name, ftype='csv', **kwargs):
         conversion_dict = {
-            'ref': unicode,
-            'label': unicode,
+            'ref': ustr,
+            'label': ustr,
             'date': datetime.datetime,
             'amount': float_or_zero,
         }
