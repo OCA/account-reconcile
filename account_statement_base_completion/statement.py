@@ -140,9 +140,7 @@ class AccountStatementCompletionRule(orm.Model):
             ('get_from_label_and_partner_name', 'From line label (based on partner name)')]
 
     def __get_functions(self, cr, uid, context=None):
-        """
-        Call method which can be inherited
-        """
+        """ Call method which can be inherited """
         return self._get_functions(cr, uid, context=context)
 
     _columns = {
