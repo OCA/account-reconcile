@@ -41,10 +41,6 @@ class AccountStatementCompletionRule(Model):
         ]
         return res
 
-    _columns = {
-        'function_to_call': fields.selection(_get_functions, 'Method'),
-    }
-
     def get_from_transaction_id_and_so(self, cr, uid, st_line, context=None):
         """
         Match the partner based on the transaction ID field of the SO.

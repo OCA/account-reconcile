@@ -38,10 +38,6 @@ class AccountStatementCompletionRule(Model):
                     'From bank account number (Normal or IBAN)'))
         return res
 
-    _columns = {
-        'function_to_call': fields.selection(_get_functions, 'Method'),
-    }
-
     def get_from_bank_account(self, cr, uid, st_line, context=None):
         """
         Match the partner based on the partner account number field

@@ -139,6 +139,12 @@ class AccountStatementCompletionRule(orm.Model):
             ('get_from_label_and_partner_field', 'From line label (based on partner field)'),
             ('get_from_label_and_partner_name', 'From line label (based on partner name)')]
 
+    def __get_functions(self, cr, uid, context=None):
+        """
+        Call method which can be inherited
+        """
+        return self._get_functions(cr, uid, context=context)
+
     _columns = {
         'sequence': fields.integer('Sequence', help="Lower means parsed first."),
         'name': fields.char('Name', size=128),
@@ -146,7 +152,7 @@ class AccountStatementCompletionRule(orm.Model):
             'account.statement.profile',
             rel='as_rul_st_prof_rel',
             string='Related statement profiles'),
-        'function_to_call': fields.selection(_get_functions, 'Method'),
+        'function_to_call': fields.selection(__get_functions, 'Method'),
     }
 
     def _find_invoice(self, cr, uid, st_line, inv_type, context=None):

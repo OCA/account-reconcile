@@ -24,12 +24,12 @@ from openerp.osv import fields, orm
 class AccountStatementProfil(orm.Model):
     _inherit = "account.statement.profile"
 
-    def get_import_type_selection(self, cr, uid, context=None):
+    def _get_import_type_selection(self, cr, uid, context=None):
         """
         Inherited from parent to add parser.
         """
         selection = super(AccountStatementProfil, self
-                          ).get_import_type_selection(cr, uid,
+                          )._get_import_type_selection(cr, uid,
                                                       context=context)
         selection.append(('ofx_so', _('OFX - Open Financial Exchange')))
         return selection

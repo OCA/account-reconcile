@@ -47,7 +47,6 @@ class AccountStatementCompletionRule(Model):
         return res
 
     _columns = {
-        'function_to_call': fields.selection(_get_functions, 'Method'),
         'regex': fields.char('Regular Expression', size=128),
         'account_id': fields.many2one('account.account', string="Account to set"),
     }
