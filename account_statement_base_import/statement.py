@@ -37,9 +37,7 @@ class AccountStatementProfil(Model):
         return [('generic_csvxls_so', 'Generic .csv/.xls based on SO Name')]
 
     def __get_import_type_selection(self, cr, uid, context=None):
-        """
-        Call method which can be inherited
-        """
+        """ Call method which can be inherited """
         return self._get_import_type_selection(cr, uid, context=context)
 
     _columns = {
