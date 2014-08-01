@@ -18,7 +18,6 @@
 #
 #
 from openerp.osv.orm import Model
-from openerp.addons.base_iban import base_iban
 
 
 class res_partner_bank(Model):
@@ -26,14 +25,14 @@ class res_partner_bank(Model):
 
     def search_by_acc_number(self, cr, uid, acc_number, context=None):
         '''
-        Try to find the Account Number using a 'like' operator to avoid problems with the input mask
-        used to store the value.
+        Try to find the Account Number using a 'like' operator to avoid
+        problems with the input mask used to store the value.
         '''
         # first try with an exact match
         ids = self.search(cr,
-                                  uid,
-                                  [('acc_number', '=', acc_number)],
-                                  context=context)
+                          uid,
+                          [('acc_number', '=', acc_number)],
+                          context=context)
         if ids:
             return ids
 
@@ -43,7 +42,11 @@ class res_partner_bank(Model):
             FROM
                 res_partner_bank
             WHERE
-                regexp_replace(acc_number,'([^[:alnum:]])', '','g')  ilike  regexp_replace(%s,'([^[:alnum:]])', '','g') """,
-            (acc_number,))
-        #apply security constraints by using the orm
-        return self.search(cr, uid, [('id', 'in', [r[0] for r in cr.fetchall()])])
+                regexp_replace(acc_number,'([^[:alnum:]])', '','g')
+                ilike
+                regexp_replace(%s,'([^[:alnum:]])', '','g')
+        """, (acc_number,))
+        # apply security constraints by using the orm
+        return self.search(cr, uid,
+                           [('id', 'in', [r[0] for r in cr.fetchall()])],
+                           context=context)

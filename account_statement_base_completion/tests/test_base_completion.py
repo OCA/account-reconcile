@@ -49,7 +49,7 @@ class base_completion(common.TransactionCase):
         self.profile_obj = self.registry("account.statement.profile")
         self.partner_obj = self.registry("res.partner")
         self.account_bank_statement_obj = self.registry("account.bank.statement")
-        self.account_bank_statement_line_obj = self.registry("account.bank.statement.line")
+        self.acc_bk_stmt_line_obj = self.registry("account.bank.statement.line")
         self.journal_id = self.ref("account.bank_journal")
         self.partner_id = self.ref('base.main_partner')
         self.account_id = self.ref("account.a_recv")
@@ -78,17 +78,17 @@ class base_completion(common.TransactionCase):
 
         for case in NAMES_COMPLETION_CASES:
             self.partner_obj.write(self.cr, self.uid, self.partner_id, {'name': case.partner_name})
-            statement_line_id = self.account_bank_statement_line_obj.create(self.cr, self.uid, {
+            statement_line_id = self.acc_bk_stmt_line_obj.create(self.cr, self.uid, {
                     'amount': 1000.0,
                     'name': case.line_label,
                     'ref': 'My ref',
                     'statement_id': self.statement_id,
                 })
-            statement_line = self.account_bank_statement_line_obj.browse(self.cr, self.uid, statement_line_id)
+            statement_line = self.acc_bk_stmt_line_obj.browse(self.cr, self.uid, statement_line_id)
             self.assertFalse(statement_line.partner_id, "Partner_id must be blank before completion")
             statement_obj = self.account_bank_statement_obj.browse(self.cr, self.uid, self.statement_id)
             statement_obj.button_auto_completion()
-            statement_line = self.account_bank_statement_line_obj.browse(self.cr, self.uid, statement_line_id)
+            statement_line = self.acc_bk_stmt_line_obj.browse(self.cr, self.uid, statement_line_id)
             if case.should_match:
                 self.assertEquals(self.partner_id, statement_line.partner_id['id'],
                                 "Missing expected partner id after completion (partner_name: %s, line_name: %s)" % (case.partner_name, case.line_label))

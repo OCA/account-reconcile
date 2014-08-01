@@ -23,7 +23,8 @@
 from openerp.tools.translate import _
 from openerp.osv.orm import Model
 from openerp.osv import fields
-from openerp.addons.account_statement_base_completion.statement import ErrorTooManyPartner
+from openerp.addons.account_statement_base_completion.statement \
+    import ErrorTooManyPartner
 
 
 class AccountStatementCompletionRule(Model):
@@ -57,22 +58,34 @@ class AccountStatementCompletionRule(Model):
         res = {}
         res_bank_obj = self.pool.get('res.partner.bank')
         ids = res_bank_obj.search_by_acc_number(cr,
-                                  uid,
-                                  partner_acc_number,
-                                  context=context)
+                                                uid,
+                                                partner_acc_number,
+                                                context=context)
         if len(ids) > 1:
-            raise ErrorTooManyPartner(_('Line named "%s" (Ref:%s) was matched by more than '
-                                        'one partner for account number "%s".') % (st_line['name'], st_line['ref'], partner_acc_number))
+            raise ErrorTooManyPartner(_('Line named "%s" (Ref:%s) was matched '
+                                        'by more than one partner for account '
+                                        'number "%s".') %
+                                      (st_line['name'],
+                                       st_line['ref'],
+                                       partner_acc_number))
         if len(ids) == 1:
-            partner = res_bank_obj.browse(cr, uid, ids[0], context=context).partner_id
+            partner = res_bank_obj.browse(cr,
+                                          uid,
+                                          ids[0],
+                                          context=context).partner_id
             res['partner_id'] = partner.id
+            profile_id = st_line['profile_id']
+            m_acc_id = st_line['master_account_id']
+            partner_id = res.get('partner_id', False)
+            line_type = st_line['type']
+            amout = st_line['amount'] if st_line['amount'] else 0.0
             st_vals = st_obj.get_values_for_line(cr,
                                                  uid,
-                                                 profile_id=st_line['profile_id'],
-                                                 master_account_id=st_line['master_account_id'],
-                                                 partner_id=res.get('partner_id', False),
-                                                 line_type=st_line['type'],
-                                                 amount=st_line['amount'] if st_line['amount'] else 0.0,
+                                                 profile_id=profile_id,
+                                                 master_account_id=m_acc_id,
+                                                 partner_id=partner_id,
+                                                 line_type=line_type,
+                                                 amount=amout,
                                                  context=context)
             res.update(st_vals)
         return res
@@ -82,7 +95,8 @@ class AccountStatementLine(Model):
     _inherit = "account.bank.statement.line"
 
     _columns = {
-        # 'additional_bank_fields' : fields.serialized('Additional infos from bank', help="Used by completion and import system."),
+        # 'additional_bank_fields' : fields.serialized('Additional infos from
+        # bank', help="Used by completion and import system."),
         'partner_acc_number': fields.sparse(
             type='char',
             string='Account Number',
