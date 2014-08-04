@@ -7,7 +7,6 @@
          <field name="model">account.bank.statement</field>
          <field name="inherit_id" ref="account.view_bank_statement_form" />
          <field eval="16" name="priority"/>
-         <field name="type">form</field>
          <field name="arch" type="xml">
              <data>
                  <xpath expr="/form/sheet/notebook/page/field[@name='line_ids']/form/group/field[@name='sequence']" position="after">
@@ -37,7 +36,6 @@
          <field name="name">account_bank_statement_import_base.bank_statement.auto_cmpl</field>
          <field name="model">account.bank.statement</field>
          <field name="inherit_id" ref="account.view_bank_statement_form" />
-         <field name="type">form</field>
          <field name="arch" type="xml">
              <data>
                  <xpath expr="/form/sheet/notebook/page/field[@name='line_ids']/tree/field[@name='amount']" position="after">
@@ -51,7 +49,6 @@
          <field name="name">account.statement.profile.view</field>
          <field name="model">account.statement.profile</field>
          <field name="inherit_id" ref="account_statement_ext.statement_importer_view_form"/>
-         <field name="type">form</field>
          <field name="arch" type="xml">
              <field name="bank_statement_prefix" position="after">
                  <separator colspan="4" string="Auto-Completion Rules"/>
@@ -59,12 +56,11 @@
              </field>
          </field>
      </record>
-    
-    
+
+
          <record id="statement_st_completion_rule_view_form" model="ir.ui.view">
              <field name="name">account.statement.completion.rule.view</field>
              <field name="model">account.statement.completion.rule</field>
-             <field name="type">form</field>
              <field name="arch" type="xml">
                  <form string="Statement Completion Rule">
                      <field name="sequence"/>
@@ -79,7 +75,6 @@
          <record id="statement_st_completion_rule_view_tree" model="ir.ui.view">
              <field name="name">account.statement.completion.rule.view</field>
              <field name="model">account.statement.completion.rule</field>
-             <field name="type">tree</field>
              <field name="arch" type="xml">
                  <tree string="Statement Completion Rule">
                      <field name="sequence"/>
@@ -97,8 +92,8 @@
          </record>
 
          <menuitem string="Statement Completion Rule" action="action_st_completion_rule_tree"
-             id="menu_action_st_completion_rule_tree_menu" parent="account.menu_configuration_misc" 
+             id="menu_action_st_completion_rule_tree_menu" parent="account.menu_configuration_misc"
              sequence="30"/>
-    
+
 </data>
 </openerp>

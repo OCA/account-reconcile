@@ -22,7 +22,7 @@
 #                                                                             #
 ###############################################################################
 
-from openerp.osv import fields, orm
+from openerp.osv import orm
 from tools.translate import _
 from openerp.addons.account_statement_base_completion.statement import \
     ErrorTooManyPartner

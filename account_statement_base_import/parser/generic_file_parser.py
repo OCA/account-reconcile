@@ -19,15 +19,8 @@
 ##############################################################################
 
 from openerp.tools.translate import _
-import base64
-import csv
-import tempfile
 import datetime
 from file_parser import FileParser
-try:
-    import xlrd
-except:
-    raise Exception(_('Please install python lib xlrd'))
 
 
 class GenericFileParser(FileParser):

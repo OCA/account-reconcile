@@ -19,11 +19,10 @@
 #
 ##############################################################################
 
-from itertools import product
 from openerp.osv import orm
 
 
-class easy_reconcile_advanced(orm.AbstractModel):
+class EasyReconcileAdvanced(orm.AbstractModel):
 
     _inherit = 'easy.reconcile.advanced'
 

@@ -19,16 +19,14 @@
 #
 ##############################################################################
 from openerp.tools.translate import _
-from openerp.osv import fields, orm
+from openerp.osv import orm
 
 
 class AccountStatementProfil(orm.Model):
     _inherit = "account.statement.profile"
 
     def _get_import_type_selection(self, cr, uid, context=None):
-        """
-        Inherited from parent to add parser.
-        """
+        """Inherited from parent to add parser."""
         selection = super(AccountStatementProfil, self
                           )._get_import_type_selection(cr, uid,
                                                        context=context)

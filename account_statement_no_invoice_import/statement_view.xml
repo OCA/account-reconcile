@@ -2,7 +2,7 @@
 
 <openerp>
     <data>
-    
+
         <!-- INHERITED VIEW FOR THE OBJECT : account_bank_statement -->
 
         <record id="account_bank_statement_view_form" model="ir.ui.view">
@@ -10,7 +10,6 @@
             <field name="model">account.bank.statement</field>
             <field name="inherit_id" ref="account_voucher.view_bank_statement_form_invoice" />
             <field eval="100" name="priority"/>
-            <field name="type">form</field>
             <field name="arch" type="xml">
                 <button string="Import Invoices" position="replace">
                 </button>
