@@ -38,9 +38,11 @@ NAMES_COMPLETION_CASES = [
     name_completion_case(
         "Acsone SA", "Line for Acsone ([^a-zA-Z0-9 -]) SA test", False),
     name_completion_case(
-        "Acsone ([^a-zA-Z0-9 -]) SA", "Line for Acsone ([^a-zA-Z0-9 -]) SA test", True),
+        "Acsone ([^a-zA-Z0-9 -]) SA", "Line for Acsone ([^a-zA-Z0-9 -]) SA "
+                                      "test", True),
     name_completion_case(
-        r"Acsone (.^$*+?()[{\| -]\) SA", r"Line for Acsone (.^$*+?()[{\| -]\) SA test", True),
+        r"Acsone (.^$*+?()[{\| -]\) SA", r"Line for Acsone (.^$*+?()[{\| -]\) "
+                                         r"SA test", True),
     name_completion_case("Acšone SA", "Line for Acšone SA test", True),
 ]
 
@@ -63,11 +65,12 @@ class base_completion(common.TransactionCase):
 
     def test_name_completion(self):
         """Test complete partner_id from statement line label
-        Test the automatic completion of the partner_id based if the name of the partner appears in
-        the statement line label
+        Test the automatic completion of the partner_id based if the name of the
+        partner appears in the statement line label
         """
         self.completion_rule_id = self.ref(
-            'account_statement_base_completion.bank_statement_completion_rule_3')
+            'account_statement_base_completion.'
+            'bank_statement_completion_rule_3')
         # Create the profile
         self.profile_id = self.profile_obj.create(self.cr, self.uid, {
             "name": "TEST",
@@ -75,35 +78,43 @@ class base_completion(common.TransactionCase):
             "journal_id": self.journal_id,
             "rule_ids": [(6, 0, [self.completion_rule_id])]})
         # Create a bank statement
-        self.statement_id = self.account_bank_statement_obj.create(self.cr, self.uid, {
-            "balance_end_real": 0.0,
-            "balance_start": 0.0,
-            "date": time.strftime('%Y-%m-%d'),
-            "journal_id": self.journal_id,
-            "profile_id": self.profile_id
-        })
+        self.statement_id = self.account_bank_statement_obj.create(
+            self.cr, self.uid, {
+                "balance_end_real": 0.0,
+                "balance_start": 0.0,
+                "date": time.strftime('%Y-%m-%d'),
+                "journal_id": self.journal_id,
+                "profile_id": self.profile_id
+            })
 
         for case in NAMES_COMPLETION_CASES:
             self.partner_obj.write(
                 self.cr, self.uid, self.partner_id, {'name': case.partner_name})
-            statement_line_id = self.account_bank_statement_line_obj.create(self.cr, self.uid, {
-                'amount': 1000.0,
-                'name': case.line_label,
-                'ref': 'My ref',
-                'statement_id': self.statement_id,
-            })
+            statement_line_id = self.account_bank_statement_line_obj.create(
+                self.cr, self.uid, {
+                    'amount': 1000.0,
+                    'name': case.line_label,
+                    'ref': 'My ref',
+                    'statement_id': self.statement_id,
+                })
             statement_line = self.account_bank_statement_line_obj.browse(
                 self.cr, self.uid, statement_line_id)
             self.assertFalse(
-                statement_line.partner_id, "Partner_id must be blank before completion")
+                statement_line.partner_id,
+                "Partner_id must be blank before completion")
             statement_obj = self.account_bank_statement_obj.browse(
                 self.cr, self.uid, self.statement_id)
             statement_obj.button_auto_completion()
             statement_line = self.account_bank_statement_line_obj.browse(
                 self.cr, self.uid, statement_line_id)
             if case.should_match:
-                self.assertEquals(self.partner_id, statement_line.partner_id['id'],
-                                  "Missing expected partner id after completion (partner_name: %s, line_name: %s)" % (case.partner_name, case.line_label))
+                self.assertEquals(
+                    self.partner_id, statement_line.partner_id['id'],
+                    "Missing expected partner id after completion "
+                    "(partner_name: %s, line_name: %s)" %
+                    (case.partner_name, case.line_label))
             else:
-                self.assertNotEquals(self.partner_id, statement_line.partner_id['id'],
-                                     "Partner id should be empty after completion(partner_name: %s, line_name: %s)" % (case.partner_name, case.line_label))
+                self.assertNotEquals(
+                    self.partner_id, statement_line.partner_id['id'],
+                    "Partner id should be empty after completion(partner_name: "
+                    "%s, line_name: %s)" % (case.partner_name, case.line_label))
