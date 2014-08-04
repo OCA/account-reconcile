@@ -70,11 +70,12 @@ class account_invoice(orm.Model):
             cr.execute('UPDATE account_move_line SET ref=%s '
                        'WHERE move_id=%s AND (ref is null OR ref = \'\')',
                        (ref, move_id))
-            cr.execute('UPDATE account_analytic_line SET ref=%s '
-                       'FROM account_move_line '
-                       'WHERE account_move_line.move_id = %s '
-                       'AND account_analytic_line.move_id = account_move_line.id',
-                       (ref, move_id))
+            cr.execute(
+                'UPDATE account_analytic_line SET ref=%s '
+                'FROM account_move_line '
+                'WHERE account_move_line.move_id = %s '
+                'AND account_analytic_line.move_id = account_move_line.id',
+                (ref, move_id))
         return True
 
     def create(self, cr, uid, vals, context=None):
@@ -89,7 +90,6 @@ class account_invoice(orm.Model):
             if isinstance(ids, (int, long)):
                 ids = [ids]
             for invoice in self.browse(cr, uid, ids, context=context):
-                local_vals = vals
                 if not invoice.reference:
                     locvals = vals.copy()
                     locvals['reference'] = vals['supplier_invoice_reference']
