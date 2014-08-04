@@ -32,10 +32,11 @@ class AccountVoucher(Model):
             context = {}
         if not context.get('period_id') and context.get('move_line_ids'):
             res = self.pool.get('account.move.line').browse(
-                cr, uid, context.get('move_line_ids'), context=context)[0].period_id.id
+                cr, uid, context.get('move_line_ids'),
+                context=context)[0].period_id.id
             context['period_id'] = res
         elif context.get('date'):
-            periods = self.pool.get('account.period').find(
+            periods = self.pool['account.period'].find(
                 cr, uid, dt=context['date'], context=context)
             if periods:
                 context['period_id'] = periods[0]
