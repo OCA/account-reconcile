@@ -127,12 +127,21 @@ class AccountStatementProfil(Model):
         values = statement_line_obj._add_missing_default_values(cr, uid, values, context)
         return values
 
-    def prepare_statement_vals(self, cr, uid, profile_id, result_row_list, parser, context):
+    def prepare_statement_vals(self, cr, uid, profile_id, result_row_list,
+                               parser, context=None):
         """
         Hook to build the values of the statement from the parser and
         the profile.
         """
         vals = {'profile_id': profile_id}
+        if not vals.get('balance_start'):
+            # Get starting balance from journal balance if parser doesn't
+            # fill this data, simulating the manual flow
+            statement_obj = self.pool['account.bank.statement']
+            profile = self.browse(cr, uid, profile_id, context=context)
+            temp = statement_obj.onchange_journal_id(
+                cr, uid, None, profile.journal_id.id, context=context)
+            vals['balance_start'] = temp['value'].get('balance_start', False)
         vals.update(parser.get_st_vals())
         return vals
 
