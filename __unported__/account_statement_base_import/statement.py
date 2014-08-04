@@ -134,6 +134,7 @@ class AccountStatementProfil(Model):
         the profile.
         """
         vals = {'profile_id': profile_id}
+        vals.update(parser.get_st_vals())
         if not vals.get('balance_start'):
             # Get starting balance from journal balance if parser doesn't
             # fill this data, simulating the manual flow
@@ -142,7 +143,6 @@ class AccountStatementProfil(Model):
             temp = statement_obj.onchange_journal_id(
                 cr, uid, None, profile.journal_id.id, context=context)
             vals['balance_start'] = temp['value'].get('balance_start', False)
-        vals.update(parser.get_st_vals())
         return vals
 
     def multi_statement_import(self, cr, uid, ids, profile_id, file_stream,
