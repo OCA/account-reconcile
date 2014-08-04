@@ -18,7 +18,6 @@
 #
 ##############################################################################
 
-from openerp.tools.translate import _
 import datetime
 from file_parser import FileParser
 
