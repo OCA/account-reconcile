@@ -22,11 +22,11 @@
 from openerp.tools.translate import _
 from openerp.osv.orm import Model
 from openerp.osv import fields
-from openerp.addons.account_statement_base_completion.statement import ErrorTooManyPartner
+from openerp.addons.account_statement_base_completion.statement import \
+    ErrorTooManyPartner
 
 
 class AccountStatementCompletionRule(Model):
-
     """Add a rule based on transaction ID"""
 
     _inherit = "account.statement.completion.rule"
@@ -46,7 +46,8 @@ class AccountStatementCompletionRule(Model):
         """
         Match the partner based on the transaction ID field of the SO.
         Then, call the generic st_line method to complete other values.
-        In that case, we always fullfill the reference of the line with the SO name.
+        In that case, we always fullfill the reference of the line with the SO
+        name.
         :param dict st_line: read of the concerned account.bank.statement.line
         :return:
             A dict of value that can be passed directly to the write method of
@@ -55,42 +56,37 @@ class AccountStatementCompletionRule(Model):
             'account_id' : value,
             ...}
             """
-        st_obj = self.pool.get('account.bank.statement.line')
+        st_obj = self.pool['account.bank.statement.line']
         res = {}
-        so_obj = self.pool.get('sale.order')
-        so_id = so_obj.search(cr,
-                              uid,
-                              [('transaction_id', '=',
-                                st_line['transaction_id'])],
-                              context=context)
+        so_obj = self.pool['sale.order']
+        so_id = so_obj.search(
+            cr, uid, [('transaction_id', '=', st_line['transaction_id'])],
+            context=context)
         if len(so_id) > 1:
-            raise ErrorTooManyPartner(_('Line named "%s" (Ref:%s) was matched by more than '
-                                        'one partner.') % (st_line['name'], st_line['ref']))
+            raise ErrorTooManyPartner(
+                _('Line named "%s" (Ref:%s) was matched by more than '
+                  'one partner.') % (st_line['name'], st_line['ref']))
         if len(so_id) == 1:
             so = so_obj.browse(cr, uid, so_id[0], context=context)
             res['partner_id'] = so.partner_id.id
             res['ref'] = so.name
-            st_vals = st_obj.get_values_for_line(cr,
-                                                 uid,
-                                                 profile_id=st_line[
-                                                     'profile_id'],
-                                                 master_account_id=st_line[
-                                                     'master_account_id'],
-                                                 partner_id=res.get(
-                                                     'partner_id', False),
-                                                 line_type=st_line['type'],
-                                                 amount=st_line['amount'] if st_line[
-                                                     'amount'] else 0.0,
-                                                 context=context)
+            st_vals = st_obj.get_values_for_line(
+                cr, uid, profile_id=st_line['profile_id'],
+                master_account_id=st_line['master_account_id'],
+                partner_id=res.get('partner_id', False),
+                line_type=st_line['type'],
+                amount=st_line['amount'] if st_line['amount'] else 0.0,
+                context=context)
             res.update(st_vals)
         return res
 
-    def get_from_transaction_id_and_invoice(self, cr, uid, st_line, context=None):
-        """
-        Match the partner based on the transaction ID field of the invoice.
+    def get_from_transaction_id_and_invoice(self, cr, uid, st_line,
+                                            context=None):
+        """Match the partner based on the transaction ID field of the invoice.
         Then, call the generic st_line method to complete other values.
 
-        In that case, we always fullfill the reference of the line with the invoice name.
+        In that case, we always fullfill the reference of the line with the
+        invoice name.
 
         :param dict st_line: read of the concerned account.bank.statement.line
         :return:
@@ -100,9 +96,9 @@ class AccountStatementCompletionRule(Model):
             'account_id' : value,
             ...}
             """
-        st_obj = self.pool.get('account.bank.statement.line')
+        st_obj = self.pool['account.bank.statement.line']
         res = {}
-        invoice_obj = self.pool.get('account.invoice')
+        invoice_obj = self.pool['account.invoice']
         invoice_id = invoice_obj.search(
             cr, uid,
             [('transaction_id', '=', st_line['transaction_id'])],
@@ -136,11 +132,8 @@ class AccountStatementLine(Model):
     _inherit = "account.bank.statement.line"
 
     _columns = {
-        # 'additionnal_bank_fields' : fields.serialized('Additionnal infos from bank', help="Used by completion and import system."),
         'transaction_id': fields.sparse(
-            type='char',
-            string='Transaction ID',
-            size=128,
+            type='char', string='Transaction ID', size=128,
             serialization_field='additionnal_bank_fields',
             help="Transaction id from the financial institute"),
     }
@@ -153,19 +146,22 @@ class AccountBankStatement(Model):
             self, cr, uid, st_line, move_id, debit, credit, currency_id=False,
             amount_currency=False, account_id=False, analytic_id=False,
             partner_id=False, context=None):
-        """Add the period_id from the statement line date to the move preparation.
-           Originaly, it was taken from the statement period_id
+        """Add the period_id from the statement line date to the move
+        preparation. Originaly, it was taken from the statement period_id
 
-           :param browse_record st_line: account.bank.statement.line record to
-                  create the move from.
+           :param browse_record st_line: account.bank.statement.line record to \
+           create the move from.
            :param int/long move_id: ID of the account.move to link the move line
            :param float debit: debit amount of the move line
            :param float credit: credit amount of the move line
-           :param int/long currency_id: ID of currency of the move line to create
-           :param float amount_currency: amount of the debit/credit expressed in the currency_id
-           :param int/long account_id: ID of the account to use in the move line if different
-                  from the statement line account ID
-           :param int/long analytic_id: ID of analytic account to put on the move line
+           :param int/long currency_id: ID of currency of the move line to \
+           create
+           :param float amount_currency: amount of the debit/credit expressed \
+           in the currency_id
+           :param int/long account_id: ID of the account to use in the move \
+           line if different from the statement line account ID
+           :param int/long analytic_id: ID of analytic account to put on the \
+           move line
            :param int/long partner_id: ID of the partner to put on the move line
            :return: dict of value to create() the account.move.line
         """
