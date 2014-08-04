@@ -30,7 +30,8 @@
      'account_voucher'
  ],
  'description': """
- This module is only needed when using account_statement_base_completion with voucher in order adapt the view correctly.
+ This module is only needed when using account_statement_base_completion with
+ voucher in order adapt the view correctly.
  """,
  'website': 'http://www.camptocamp.com',
  'init_xml': [],
