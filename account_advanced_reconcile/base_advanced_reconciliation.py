@@ -24,13 +24,13 @@ import logging
 from itertools import product
 from openerp.osv import orm
 from openerp import pooler
+from openerp.tools.translate import _
 
 
 _logger = logging.getLogger(__name__)
 
 
 class easy_reconcile_advanced(orm.AbstractModel):
-
     _name = 'easy.reconcile.advanced'
     _inherit = 'easy.reconcile.base'
 
@@ -40,11 +40,8 @@ class easy_reconcile_advanced(orm.AbstractModel):
         sql_from = self._from(rec)
         where, params = self._where(rec)
         where += " AND account_move_line.debit > 0 "
-
         where2, params2 = self._get_filter(cr, uid, rec, context=context)
-
         query = ' '.join((select, sql_from, where, where2))
-
         cr.execute(query, params + params2)
         return cr.dictfetchall()
 
@@ -54,11 +51,8 @@ class easy_reconcile_advanced(orm.AbstractModel):
         sql_from = self._from(rec)
         where, params = self._where(rec)
         where += " AND account_move_line.credit > 0 "
-
         where2, params2 = self._get_filter(cr, uid, rec, context=context)
-
         query = ' '.join((select, sql_from, where, where2))
-
         cr.execute(query, params + params2)
         return cr.dictfetchall()
 
@@ -176,14 +170,15 @@ class easy_reconcile_advanced(orm.AbstractModel):
         """
         mkey, mvalue = matcher
         omkey, omvalue = opposite_matcher
-        assert mkey == omkey, ("A matcher %s is compared with a matcher %s, "
-                               " the _matchers and _opposite_matchers are probably wrong" %
-                               (mkey, omkey))
+        assert mkey == omkey, \
+            (_("A matcher %s is compared with a matcher %s, the _matchers and "
+               "_opposite_matchers are probably wrong") % (mkey, omkey))
         if not isinstance(mvalue, (list, tuple)):
             mvalue = mvalue,
         if not isinstance(omvalue, (list, tuple)):
             omvalue = omvalue,
-        return easy_reconcile_advanced._compare_matcher_values(mkey, mvalue, omvalue)
+        return easy_reconcile_advanced._compare_matcher_values(mkey, mvalue,
+                                                               omvalue)
 
     def _compare_opposite(self, cr, uid, rec, move_line, opposite_move_line,
                           matchers, context=None):
@@ -212,13 +207,14 @@ class easy_reconcile_advanced(orm.AbstractModel):
 
         return True
 
-    def _search_opposites(self, cr, uid, rec, move_line, opposite_move_lines, context=None):
+    def _search_opposites(self, cr, uid, rec, move_line, opposite_move_lines,
+                          context=None):
         """
         Search the opposite move lines for a move line
 
         :param dict move_line: the move line for which we search opposites
-        :param list opposite_move_lines: list of dict of move lines values, the move
-            lines we want to search for
+        :param list opposite_move_lines: list of dict of move lines values, \
+        the move lines we want to search for
         :return: list of matching lines
         """
         matchers = self._matchers(cr, uid, rec, move_line, context=context)
@@ -237,7 +233,6 @@ class easy_reconcile_advanced(orm.AbstractModel):
         ctx['commit_every'] = (
             rec.journal_id.company_id.reconciliation_commit_every
         )
-
         if ctx['commit_every']:
             new_cr = pooler.get_db(cr.dbname).cursor()
         else:
@@ -261,27 +256,23 @@ class easy_reconcile_advanced(orm.AbstractModel):
         """
         return False
 
-    def _rec_auto_lines_advanced(self, cr, uid, rec, credit_lines, debit_lines, context=None):
+    def _rec_auto_lines_advanced(self, cr, uid, rec, credit_lines, debit_lines,
+                                 context=None):
         """ Advanced reconciliation main loop """
         reconciled_ids = []
         partial_reconciled_ids = []
         reconcile_groups = []
-
         _logger.info("%d credit lines to reconcile", len(credit_lines))
-
         for idx, credit_line in enumerate(credit_lines, start=1):
             if idx % 50 == 0:
                 _logger.info("... %d/%d credit lines inspected ...", idx,
                              len(credit_lines))
             if self._skip_line(cr, uid, rec, credit_line, context=context):
                 continue
-
             opposite_lines = self._search_opposites(
                 cr, uid, rec, credit_line, debit_lines, context=context)
-
             if not opposite_lines:
                 continue
-
             opposite_ids = [l['id'] for l in opposite_lines]
             line_ids = opposite_ids + [credit_line['id']]
             for group in reconcile_groups:
@@ -293,18 +284,13 @@ class easy_reconcile_advanced(orm.AbstractModel):
             else:
                 _logger.debug("New group of lines matched %s", line_ids)
                 reconcile_groups.append(set(line_ids))
-
         lines_by_id = dict([(l['id'], l) for l in credit_lines + debit_lines])
-
         _logger.info("Found %d groups to reconcile", len(reconcile_groups))
-
         for group_count, reconcile_group_ids in enumerate(reconcile_groups,
                                                           start=1):
-
             _logger.debug("Reconciling group %d/%d with ids %s",
                           group_count, len(reconcile_groups),
                           reconcile_group_ids)
-
             group_lines = [lines_by_id[lid] for lid in reconcile_group_ids]
             reconciled, full = self._reconcile_lines(
                 cr, uid, rec, group_lines, allow_partial=True, context=context)
@@ -313,15 +299,10 @@ class easy_reconcile_advanced(orm.AbstractModel):
             elif reconciled:
                 partial_reconciled_ids += reconcile_group_ids
 
-            if (
-                context['commit_every']
-                and group_count % context['commit_every'] == 0
-            ):
+            if (context['commit_every'] and
+                    group_count % context['commit_every'] == 0):
                 cr.commit()
-
                 _logger.info("Commit the reconciliations after %d groups",
                              group_count)
-
         _logger.info("Reconciliation is over")
-
         return reconciled_ids, partial_reconciled_ids
