@@ -88,7 +88,3 @@ class account_statement_completion_rule(orm.Model):
                     context=context)
                 res.update(st_vals)
         return res
-
-    _columns = {
-        'function_to_call': fields.selection(_get_functions, 'Method'),
-    }
