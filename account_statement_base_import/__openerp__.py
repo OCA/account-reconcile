@@ -31,30 +31,34 @@
  ],
  'description': """
  This module brings basic methods and fields on bank statement to deal with
- the importation of different bank and offices. A generic abstract method is defined and an
- example that gives you a basic way of importing bank statement through a standard file is provided.
+ the importation of different bank and offices. A generic abstract method is
+ defined and an example that gives you a basic way of importing bank statement
+ through a standard file is provided.
 
- This module improves the bank statement and allows you to import your bank transactions with
- a standard .csv or .xls file (you'll find it in the 'data' folder). It respects the profile
- (provided by the accouhnt_statement_ext module) to pass the entries. That means,
- you'll have to choose a file format for each profile.
- In order to achieve this it uses the `xlrd` Python module which you will need to install
- separately in your environment.
+ This module improves the bank statement and allows you to import your bank
+ transactions with a standard .csv or .xls file (you'll find it in the 'data'
+ folder). It respects the profile (provided by the accouhnt_statement_ext
+ module) to pass the entries. That means, you'll have to choose a file format
+ for each profile.
+ In order to achieve this it uses the `xlrd` Python module which you will need
+ to install separately in your environment.
 
- This module can handle a commission taken by the payment office and has the following format:
+ This module can handle a commission taken by the payment office and has the
+ following format:
 
- * ref :               the SO number, INV number or any matching ref found. It'll be used as reference
-                       in the generated entries and will be useful for reconciliation process
- * date :              date of the payment
- * amount :            amount paid in the currency of the journal used in the importation profile
- * label :             the comunication given by the payment office, used as communication in the
-                       generated entries.
+ * __ref__: the SO number, INV number or any matching ref found. It'll be used
+   as reference in the generated entries and will be useful for reconciliation
+   process
+ * __date__: date of the payment
+ * __amount__: amount paid in the currency of the journal used in the
+   importation profile
+ * __label__: the comunication given by the payment office, used as
+   communication in the generated entries.
 
- The goal is here to populate the statement lines of a bank statement with the infos that the
- bank or office give you. Fell free to inherit from this module to add your own format.Then,
- if you need to complete data from there, add your own account_statement_*_completion module and implement
- the needed rules.
-
+ The goal is here to populate the statement lines of a bank statement with the
+ infos that the bank or office give you. Fell free to inherit from this module
+ to add your own format. Then, if you need to complete data from there, add your
+ own account_statement_*_completion module and implement the needed rules.
  """,
  'website': 'http://www.camptocamp.com',
  'data': [

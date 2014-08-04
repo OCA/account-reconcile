@@ -22,11 +22,10 @@
 import base64
 import inspect
 import os
-
 from openerp.tests import common
 
 
-class test_coda_import(common.TransactionCase):
+class TestCodaImport(common.TransactionCase):
 
     def prepare(self):
         self.company_a = self.browse_ref('base.main_company')
@@ -36,7 +35,6 @@ class test_coda_import(common.TransactionCase):
         # create the 2009 fiscal year since imported coda file reference
         # statement lines in 2009
         self.fiscalyear_id = self._create_fiscalyear("2011", self.company_a.id)
-
         self.account_id = self.ref("account.a_recv")
         self.journal_id = self.ref("account.bank_journal")
         self.import_wizard_obj = self.registry('credit.statement.import')
@@ -77,7 +75,8 @@ class test_coda_import(common.TransactionCase):
                 self.cr, self.uid, wizard_id)
             statement_id = self.account_bank_statement_obj.search(
                 self.cr, self.uid, eval(res['domain']))
-            return self.account_bank_statement_obj.browse(self.cr, self.uid, statement_id)[0]
+            return self.account_bank_statement_obj.browse(
+                self.cr, self.uid, statement_id)[0]
 
     def test_simple_xls(self):
         """Test import from xls

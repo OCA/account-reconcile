@@ -36,7 +36,8 @@ class CreditPartnerStatementImporter(orm.TransientModel):
         if context is None:
             context = {}
         res = {}
-        if (context.get('active_model', False) == 'account.statement.profile' and
+        if (context.get('active_model', False) ==
+                'account.statement.profile' and
                 context.get('active_ids', False)):
             ids = context['active_ids']
             assert len(
@@ -57,8 +58,8 @@ class CreditPartnerStatementImporter(orm.TransientModel):
         'journal_id': fields.many2one('account.journal',
                                       'Financial journal to use transaction'),
         'file_name': fields.char('File Name', size=128),
-        'receivable_account_id': fields.many2one('account.account',
-                                                 'Force Receivable/Payable Account'),
+        'receivable_account_id': fields.many2one(
+            'account.account', 'Force Receivable/Payable Account'),
         'force_partner_on_bank': fields.boolean(
             'Force partner on bank move',
             help="Tic that box if you want to use the credit insitute partner "
@@ -73,12 +74,12 @@ class CreditPartnerStatementImporter(orm.TransientModel):
     def onchange_profile_id(self, cr, uid, ids, profile_id, context=None):
         res = {}
         if profile_id:
-            c = self.pool.get("account.statement.profile").browse(
+            c = self.pool["account.statement.profile"].browse(
                 cr, uid, profile_id, context=context)
             res = {'value':
                    {'partner_id': c.partner_id and c.partner_id.id or False,
                     'journal_id': c.journal_id and c.journal_id.id or False,
-                    'receivable_account_id': c.receivable_account_id and c.receivable_account_id.id or False,
+                    'receivable_account_id': c.receivable_account_id.id,
                     'force_partner_on_bank': c.force_partner_on_bank,
                     'balance_check': c.balance_check,
                     }
