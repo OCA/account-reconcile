@@ -22,8 +22,7 @@
 from openerp.osv.orm import AbstractModel, TransientModel
 
 
-class easy_reconcile_simple(AbstractModel):
-
+class EasyReconcileSimple(AbstractModel):
     _name = 'easy.reconcile.simple'
     _inherit = 'easy.reconcile.base'
 
@@ -32,20 +31,14 @@ class easy_reconcile_simple(AbstractModel):
     _key_field = None
 
     def rec_auto_lines_simple(self, cr, uid, rec, lines, context=None):
-        if context is None:
-            context = {}
-
         if self._key_field is None:
             raise ValueError("_key_field has to be defined")
-
         count = 0
         res = []
         while (count < len(lines)):
             for i in xrange(count + 1, len(lines)):
-                writeoff_account_id = False
                 if lines[count][self._key_field] != lines[i][self._key_field]:
                     break
-
                 check = False
                 if lines[count]['credit'] > 0 and lines[i]['debit'] > 0:
                     credit_line = lines[count]
@@ -57,7 +50,6 @@ class easy_reconcile_simple(AbstractModel):
                     check = True
                 if not check:
                     continue
-
                 reconciled, dummy = self._reconcile_lines(
                     cr, uid, rec, [credit_line, debit_line],
                     allow_partial=False, context=context)
@@ -90,8 +82,7 @@ class easy_reconcile_simple(AbstractModel):
         return self.rec_auto_lines_simple(cr, uid, rec, lines, context)
 
 
-class easy_reconcile_simple_name(TransientModel):
-
+class EasyReconcileSimpleName(TransientModel):
     _name = 'easy.reconcile.simple.name'
     _inherit = 'easy.reconcile.simple'
 
@@ -100,8 +91,7 @@ class easy_reconcile_simple_name(TransientModel):
     _key_field = 'name'
 
 
-class easy_reconcile_simple_partner(TransientModel):
-
+class EasyReconcileSimplePartner(TransientModel):
     _name = 'easy.reconcile.simple.partner'
     _inherit = 'easy.reconcile.simple'
 
@@ -110,8 +100,7 @@ class easy_reconcile_simple_partner(TransientModel):
     _key_field = 'partner_id'
 
 
-class easy_reconcile_simple_reference(TransientModel):
-
+class EasyReconcileSimpleReference(TransientModel):
     _name = 'easy.reconcile.simple.reference'
     _inherit = 'easy.reconcile.simple'
 

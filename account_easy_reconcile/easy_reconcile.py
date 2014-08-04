@@ -22,11 +22,9 @@
 from openerp.osv import fields, osv, orm
 from openerp.tools.translate import _
 from openerp.tools import DEFAULT_SERVER_DATETIME_FORMAT
-from openerp.tools.translate import _
 
 
-class easy_reconcile_options(orm.AbstractModel):
-
+class EasyReconcileOptions(orm.AbstractModel):
     """Options of a reconciliation profile
 
     Columns shared by the configuration of methods
@@ -38,12 +36,14 @@ class easy_reconcile_options(orm.AbstractModel):
     _name = 'easy.reconcile.options'
 
     def _get_rec_base_date(self, cr, uid, context=None):
-        return [('end_period_last_credit', 'End of period of most recent credit'),
-                ('newest', 'Most recent move line'),
-                ('actual', 'Today'),
-                ('end_period', 'End of period of most recent move line'),
-                ('newest_credit', 'Date of most recent credit'),
-                ('newest_debit', 'Date of most recent debit')]
+        return [
+            ('end_period_last_credit', 'End of period of most recent credit'),
+            ('newest', 'Most recent move line'),
+            ('actual', 'Today'),
+            ('end_period', 'End of period of most recent move line'),
+            ('newest_credit', 'Date of most recent credit'),
+            ('newest_debit', 'Date of most recent debit')
+        ]
 
     _columns = {
         'write_off': fields.float('Write off allowed'),
@@ -69,13 +69,10 @@ class easy_reconcile_options(orm.AbstractModel):
     }
 
 
-class account_easy_reconcile_method(orm.Model):
-
+class AccountEasyReconcileMethod(orm.Model):
     _name = 'account.easy.reconcile.method'
     _description = 'reconcile method for account_easy_reconcile'
-
     _inherit = 'easy.reconcile.options'
-
     _order = 'sequence'
 
     def _get_all_rec_method(self, cr, uid, context=None):
@@ -132,7 +129,7 @@ class account_easy_reconcile_method(orm.Model):
         """)
 
 
-class account_easy_reconcile(orm.Model):
+class AccountEasyReconcile(orm.Model):
 
     _name = 'account.easy.reconcile'
     _description = 'account easy reconcile'
@@ -261,7 +258,7 @@ class account_easy_reconcile(orm.Model):
         be called when there is no history on the reconciliation
         task.
         """
-        raise osv.except_osv(
+        raise orm.except_orm(
             _('Error'),
             _('There is no history of reconciled '
               'items on the task: %s.') % rec.name)
@@ -280,14 +277,10 @@ class account_easy_reconcile(orm.Model):
         }
 
     def open_unreconcile(self, cr, uid, ids, context=None):
-        """ Open the view of move line with the unreconciled move lines
-        """
-
+        """ Open the view of move line with the unreconciled move lines"""
         assert len(ids) == 1, \
             "You can only open entries from one profile at a time"
-
         obj_move_line = self.pool.get('account.move.line')
-        res = {}
         for task in self.browse(cr, uid, ids, context=context):
             line_ids = obj_move_line.search(
                 cr, uid,
@@ -297,17 +290,14 @@ class account_easy_reconcile(orm.Model):
                 context=context)
 
         name = _('Unreconciled items')
-        return self._open_move_line_list(cr, uid, line_ids, name, context=context)
+        return self._open_move_line_list(cr, uid, line_ids, name,
+                                         context=context)
 
     def open_partial_reconcile(self, cr, uid, ids, context=None):
-        """ Open the view of move line with the unreconciled move lines
-        """
-
+        """ Open the view of move line with the unreconciled move lines"""
         assert len(ids) == 1, \
             "You can only open entries from one profile at a time"
-
         obj_move_line = self.pool.get('account.move.line')
-        res = {}
         for task in self.browse(cr, uid, ids, context=context):
             line_ids = obj_move_line.search(
                 cr, uid,
@@ -316,7 +306,8 @@ class account_easy_reconcile(orm.Model):
                  ('reconcile_partial_id', '!=', False)],
                 context=context)
         name = _('Partial reconciled items')
-        return self._open_move_line_list(cr, uid, line_ids, name, context=context)
+        return self._open_move_line_list(cr, uid, line_ids, name,
+                                         context=context)
 
     def last_history_reconcile(self, cr, uid, rec_id, context=None):
         """ Get the last history record for this reconciliation profile

@@ -23,8 +23,7 @@ from openerp.osv import orm, fields
 from openerp.tools.translate import _
 
 
-class easy_reconcile_history(orm.Model):
-
+class EasyReconcileHistory(orm.Model):
     """ Store an history of the runs per profile
     Each history stores the list of reconciliations done"""
 
@@ -34,10 +33,8 @@ class easy_reconcile_history(orm.Model):
 
     def _reconcile_line_ids(self, cr, uid, ids, name, args, context=None):
         result = {}
-
         for history in self.browse(cr, uid, ids, context=context):
             result[history.id] = {}
-
             move_line_ids = []
             for reconcile in history.reconcile_ids:
                 move_line_ids += [line.id
@@ -51,7 +48,6 @@ class easy_reconcile_history(orm.Model):
                                   for line
                                   in reconcile.line_partial_ids]
             result[history.id]['partial_line_ids'] = move_line_ids
-
         return result
 
     _columns = {
@@ -91,7 +87,8 @@ class easy_reconcile_history(orm.Model):
 
     }
 
-    def _open_move_lines(self, cr, uid, history_id, rec_type='full', context=None):
+    def _open_move_lines(self, cr, uid, history_id, rec_type='full',
+                         context=None):
         """ For an history record, open the view of move line with
         the reconciled or partially reconciled move lines
 
@@ -101,18 +98,14 @@ class easy_reconcile_history(orm.Model):
         """
         assert rec_type in ('full', 'partial'), \
             "rec_type must be 'full' or 'partial'"
-
         history = self.browse(cr, uid, history_id, context=context)
-
         if rec_type == 'full':
             field = 'reconcile_line_ids'
             name = _('Reconciliations')
         else:
             field = 'partial_line_ids'
             name = _('Partial Reconciliations')
-
         move_line_ids = [line.id for line in getattr(history, field)]
-
         return {
             'name': name,
             'view_mode': 'tree,form',
