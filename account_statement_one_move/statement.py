@@ -20,7 +20,7 @@
 #
 ###############################################################################
 
-from openerp.osv import fields, orm, osv
+from openerp.osv import fields, orm
 
 
 class AccountStatementProfile(orm.Model):
@@ -37,12 +37,12 @@ class AccountStatementProfile(orm.Model):
     }
 
 
-class account_bank_statement(orm.Model):
+class AccountBankStatement(orm.Model):
     _inherit = "account.bank.statement"
 
     def _prepare_move_line_vals(self, cr, uid, st_line, *args, **kwargs):
-        res = super(account_bank_statement, self)._prepare_move_line_vals(cr, uid, st_line,
-                                                                          *args, **kwargs)
+        res = super(AccountBankStatement, self)._prepare_move_line_vals(
+            cr, uid, st_line, *args, **kwargs)
         period_id = self._get_period(cr, uid, st_line.statement_id.date,
                                      context=kwargs.get('context'))
         if st_line.statement_id.profile_id.one_move:
@@ -56,7 +56,7 @@ class account_bank_statement(orm.Model):
         return res
 
     def _prepare_move(self, cr, uid, st_line, st_line_number, context=None):
-        res = super(account_bank_statement, self).\
+        res = super(AccountBankStatement, self).\
             _prepare_move(cr, uid, st_line, st_line_number, context=context)
         res.update({
             'ref': st_line.statement_id.name,
@@ -71,13 +71,10 @@ class account_bank_statement(orm.Model):
             context = {}
         # For compability with module account_constraints
         context['from_parent_object'] = True
-        account_move_obj = self.pool.get('account.move')
-        account_bank_statement_line_obj = self.pool.get(
-            'account.bank.statement.line')
-        st_line = account_bank_statement_line_obj.browse(cr, uid, st_line_id,
-                                                         context=context)
+        account_move_obj = self.pool['account.move']
+        st_line_obj = self.pool['account.bank.statement.line']
+        st_line = st_line_obj.browse(cr, uid, st_line_id, context=context)
         st = st_line.statement_id
-
         if st.profile_id.one_move:
             if not context.get('move_id'):
                 move_vals = self._prepare_move(
@@ -89,58 +86,53 @@ class account_bank_statement(orm.Model):
                                                context=context)
             return context['move_id']
         else:
-            return super(account_bank_statement, self).create_move_from_st_line(cr, uid, st_line_id,
-                                                                                company_currency_id,
-                                                                                st_line_number,
-                                                                                context=context)
+            return super(AccountBankStatement, self).create_move_from_st_line(
+                cr, uid, st_line_id, company_currency_id, st_line_number,
+                context=context)
 
     def create_move_line_from_st_line(self, cr, uid, move_id, st_line_id,
                                       company_currency_id, context=None):
         """Create the account move line from the statement line.
 
-           :param int/long move_id: ID of the account.move
-           :param int/long st_line_id: ID of the account.bank.statement.line to create the move line from.
-           :param int/long company_currency_id: ID of the res.currency of the company
-           :return: ID of the account.move created
+        :param int/long move_id: ID of the account.move
+        :param int/long st_line_id: ID of the account.bank.statement.line \
+        to create the move line from.
+        :param int/long company_currency_id: ID of the res.currency of the
+        company
+        :return: ID of the account.move created
         """
         if context is None:
             context = {}
-        res_currency_obj = self.pool.get('res.currency')
-        account_move_line_obj = self.pool.get('account.move.line')
-        account_bank_statement_line_obj = self.pool.get(
-            'account.bank.statement.line')
-        st_line = account_bank_statement_line_obj.browse(
-            cr, uid, st_line_id, context=context)
+        res_currency_obj = self.pool['res.currency']
+        account_move_line_obj = self.pool['account.move.line']
+        st_line_obj = self.pool['account.bank.statement.line']
+        st_line = st_line_obj.browse(cr, uid, st_line_id, context=context)
         st = st_line.statement_id
-
         context.update({'date': st_line.date})
-        acc_cur = ((st_line.amount <= 0)
-                   and st.journal_id.default_debit_account_id) or st_line.account_id
-
+        acc_cur = (((st_line.amount <= 0)
+                    and st.journal_id.default_debit_account_id) or
+                   st_line.account_id)
         context.update({
             'res.currency.compute.account': acc_cur,
         })
-        amount = res_currency_obj.compute(cr, uid, st.currency.id,
-                                          company_currency_id,
-                                          st_line.amount,
-                                          context=context)
-
-        bank_move_vals = self._prepare_bank_move_line(cr, uid, st_line, move_id, amount,
-                                                      company_currency_id, context=context)
-        return account_move_line_obj.create(cr, uid, bank_move_vals, context=context)
+        amount = res_currency_obj.compute(
+            cr, uid, st.currency.id, company_currency_id, st_line.amount,
+            context=context)
+        bank_move_vals = self._prepare_bank_move_line(
+            cr, uid, st_line, move_id, amount, company_currency_id,
+            context=context)
+        return account_move_line_obj.create(cr, uid, bank_move_vals,
+                                            context=context)
 
     def _valid_move(self, cr, uid, move_id, context=None):
-        move_obj = self.pool.get('account.move')
-        move = move_obj.browse(cr, uid, move_id, context=context)
+        move_obj = self.pool['account.move']
         move_obj.post(cr, uid, [move_id], context=context)
         return True
 
-    def _prepare_transfer_move_line_vals(self, cr, uid, st, name, amount, move_id, context=None):
-        """
-            Prepare the dict of values to create the transfer move lines.
-        """
+    def _prepare_transfer_move_line_vals(self, cr, uid, st, name, amount,
+                                         move_id, context=None):
+        """Prepare the dict of values to create the transfer move lines."""
         account_id = st.profile_id.journal_id.default_debit_account_id.id
-        partner_id = st.profile_id.partner_id and profile.partner_id.id or False
         if amount < 0.0:
             debit = 0.0
             credit = -amount
@@ -150,7 +142,7 @@ class account_bank_statement(orm.Model):
         vals = {
             'name': name,
             'date': st.date,
-            'partner_id': partner_id,
+            'partner_id': st.profile_id.partner_id.id,
             'statement_id': st.id,
             'account_id': account_id,
             'ref': name,
@@ -163,7 +155,7 @@ class account_bank_statement(orm.Model):
         return vals
 
     def create_move_transfer_lines(self, cr, uid, move, st, context=None):
-        move_line_obj = self.pool.get('account.move.line')
+        move_line_obj = self.pool['account.move.line']
         move_id = move.id
         refund = 0.0
         payment = 0.0
@@ -184,28 +176,22 @@ class account_bank_statement(orm.Model):
             if amount:
                 transfer_lines.append(['Transfer', amount])
         for transfer_line in transfer_lines:
-            vals = self._prepare_transfer_move_line_vals(cr, uid, st,
-                                                         transfer_line[0],
-                                                         transfer_line[1],
-                                                         move_id,
-                                                         context=context)
+            vals = self._prepare_transfer_move_line_vals(
+                cr, uid, st, transfer_line[0], transfer_line[1], move_id,
+                context=context)
             transfer_line_ids.append(
                 move_line_obj.create(cr, uid, vals, context=context))
         return transfer_line_ids
 
     def button_confirm_bank(self, cr, uid, ids, context=None):
-        st_line_obj = self.pool.get('account.bank.statement.line')
-        move_obj = self.pool.get('account.move')
+        st_line_obj = self.pool['account.bank.statement.line']
         if context is None:
             context = {}
         for st in self.browse(cr, uid, ids, context=context):
-            super(account_bank_statement, self).button_confirm_bank(cr, uid, ids,
-                                                                    context=context)
+            super(AccountBankStatement, self).button_confirm_bank(
+                cr, uid, ids, context=context)
             if st.profile_id.one_move and context.get('move_id', False):
                 move_id = context['move_id']
-                move = move_obj.browse(cr, uid, move_id, context=context)
-                transfe_line_ids = self.create_move_transfer_lines(
-                    cr, uid, move, st, context=context)
                 self._valid_move(cr, uid, move_id, context=context)
                 lines_ids = [x.id for x in st.line_ids]
                 st_line_obj.write(cr, uid, lines_ids,
@@ -214,7 +200,6 @@ class account_bank_statement(orm.Model):
         return True
 
     def button_cancel(self, cr, uid, ids, context=None):
-        done = []
         for st in self.browse(cr, uid, ids, context=context):
             if st.profile_id.one_move and st.line_ids:
                 for move in st.line_ids[0].move_ids:
@@ -223,6 +208,6 @@ class account_bank_statement(orm.Model):
                     move.unlink(context=context)
                 st.write({'state': 'draft'}, context=context)
             else:
-                super(account_bank_statement, self).button_cancel(cr, uid, ids,
-                                                                  context=context)
+                super(AccountBankStatement, self).button_cancel(
+                    cr, uid, ids, context=context)
         return True
