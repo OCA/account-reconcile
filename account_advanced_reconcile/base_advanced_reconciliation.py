@@ -177,8 +177,8 @@ class easy_reconcile_advanced(orm.AbstractModel):
         mkey, mvalue = matcher
         omkey, omvalue = opposite_matcher
         assert mkey == omkey, ("A matcher %s is compared with a matcher %s, "
-                " the _matchers and _opposite_matchers are probably wrong" %
-                (mkey, omkey))
+                               " the _matchers and _opposite_matchers are probably wrong" %
+                               (mkey, omkey))
         if not isinstance(mvalue, (list, tuple)):
             mvalue = mvalue,
         if not isinstance(omvalue, (list, tuple)):
@@ -194,7 +194,7 @@ class easy_reconcile_advanced(orm.AbstractModel):
         they are candidate for a reconciliation.
         """
         opp_matchers = self._opposite_matchers(cr, uid, rec, opposite_move_line,
-                context=context)
+                                               context=context)
         for matcher in matchers:
             try:
                 opp_matcher = opp_matchers.next()

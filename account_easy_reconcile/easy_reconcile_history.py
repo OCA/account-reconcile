@@ -24,6 +24,7 @@ from openerp.tools.translate import _
 
 
 class easy_reconcile_history(orm.Model):
+
     """ Store an history of the runs per profile
     Each history stores the list of reconciliations done"""
 
@@ -40,39 +41,39 @@ class easy_reconcile_history(orm.Model):
             move_line_ids = []
             for reconcile in history.reconcile_ids:
                 move_line_ids += [line.id
-                                    for line
-                                    in reconcile.line_id]
+                                  for line
+                                  in reconcile.line_id]
             result[history.id]['reconcile_line_ids'] = move_line_ids
 
             move_line_ids = []
             for reconcile in history.reconcile_partial_ids:
                 move_line_ids += [line.id
-                                    for line
-                                    in reconcile.line_partial_ids]
+                                  for line
+                                  in reconcile.line_partial_ids]
             result[history.id]['partial_line_ids'] = move_line_ids
 
         return result
 
     _columns = {
-            'easy_reconcile_id': fields.many2one(
-                'account.easy.reconcile', 'Reconcile Profile', readonly=True),
-            'date': fields.datetime('Run date', readonly=True),
-            'reconcile_ids': fields.many2many(
-                'account.move.reconcile',
-                'account_move_reconcile_history_rel',
-                string='Reconciliations', readonly=True),
-            'reconcile_partial_ids': fields.many2many(
-                'account.move.reconcile',
-                'account_move_reconcile_history_partial_rel',
-                string='Partial Reconciliations', readonly=True),
-            'reconcile_line_ids':
-                fields.function(
-                    _reconcile_line_ids,
-                    string='Reconciled Items',
-                    type='many2many',
-                    relation='account.move.line',
-                    readonly=True,
-                    multi='lines'),
+        'easy_reconcile_id': fields.many2one(
+            'account.easy.reconcile', 'Reconcile Profile', readonly=True),
+        'date': fields.datetime('Run date', readonly=True),
+        'reconcile_ids': fields.many2many(
+            'account.move.reconcile',
+            'account_move_reconcile_history_rel',
+            string='Reconciliations', readonly=True),
+        'reconcile_partial_ids': fields.many2many(
+            'account.move.reconcile',
+            'account_move_reconcile_history_partial_rel',
+            string='Partial Reconciliations', readonly=True),
+        'reconcile_line_ids':
+        fields.function(
+            _reconcile_line_ids,
+            string='Reconciled Items',
+            type='many2many',
+            relation='account.move.line',
+            readonly=True,
+            multi='lines'),
             'partial_line_ids':
                 fields.function(
                     _reconcile_line_ids,
@@ -81,14 +82,14 @@ class easy_reconcile_history(orm.Model):
                     relation='account.move.line',
                     readonly=True,
                     multi='lines'),
-            'company_id': fields.related('easy_reconcile_id','company_id',
+            'company_id': fields.related('easy_reconcile_id', 'company_id',
                                          relation='res.company',
                                          type='many2one',
                                          string='Company',
                                          store=True,
                                          readonly=True),
 
-        }
+    }
 
     def _open_move_lines(self, cr, uid, history_id, rec_type='full', context=None):
         """ For an history record, open the view of move line with
@@ -99,7 +100,7 @@ class easy_reconcile_history(orm.Model):
         :return: action to open the move lines
         """
         assert rec_type in ('full', 'partial'), \
-                "rec_type must be 'full' or 'partial'"
+            "rec_type must be 'full' or 'partial'"
 
         history = self.browse(cr, uid, history_id, context=context)
 
@@ -122,7 +123,7 @@ class easy_reconcile_history(orm.Model):
             'nodestroy': True,
             'target': 'current',
             'domain': unicode([('id', 'in', move_line_ids)]),
-            }
+        }
 
     def open_reconcile(self, cr, uid, history_ids, context=None):
         """ For an history record, open the view of move line
@@ -136,7 +137,7 @@ class easy_reconcile_history(orm.Model):
             assert len(history_ids) == 1, "only 1 ID is accepted"
             history_ids = history_ids[0]
         return self._open_move_lines(
-                cr, uid, history_ids, rec_type='full', context=None)
+            cr, uid, history_ids, rec_type='full', context=None)
 
     def open_partial(self, cr, uid, history_ids, context=None):
         """ For an history record, open the view of move line
@@ -150,4 +151,4 @@ class easy_reconcile_history(orm.Model):
             assert len(history_ids) == 1, "only 1 ID is accepted"
             history_ids = history_ids[0]
         return self._open_move_lines(
-                cr, uid, history_ids, rec_type='partial', context=None)
+            cr, uid, history_ids, rec_type='partial', context=None)

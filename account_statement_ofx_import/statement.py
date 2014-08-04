@@ -21,6 +21,7 @@
 from openerp.tools.translate import _
 from openerp.osv import fields, orm
 
+
 class AccountStatementProfil(orm.Model):
     _inherit = "account.statement.profile"
 
@@ -30,6 +31,6 @@ class AccountStatementProfil(orm.Model):
         """
         selection = super(AccountStatementProfil, self
                           )._get_import_type_selection(cr, uid,
-                                                      context=context)
+                                                       context=context)
         selection.append(('ofx_so', _('OFX - Open Financial Exchange')))
         return selection

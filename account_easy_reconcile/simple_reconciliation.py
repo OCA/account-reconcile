@@ -41,7 +41,7 @@ class easy_reconcile_simple(AbstractModel):
         count = 0
         res = []
         while (count < len(lines)):
-            for i in xrange(count+1, len(lines)):
+            for i in xrange(count + 1, len(lines)):
                 writeoff_account_id = False
                 if lines[count][self._key_field] != lines[i][self._key_field]:
                     break
@@ -51,7 +51,7 @@ class easy_reconcile_simple(AbstractModel):
                     credit_line = lines[count]
                     debit_line = lines[i]
                     check = True
-                elif lines[i]['credit'] > 0  and lines[count]['debit'] > 0:
+                elif lines[i]['credit'] > 0 and lines[count]['debit'] > 0:
                     credit_line = lines[i]
                     debit_line = lines[count]
                     check = True

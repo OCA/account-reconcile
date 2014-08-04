@@ -28,12 +28,15 @@ try:
 except:
     raise Exception(_('Please install python lib xlrd'))
 
+
 def float_or_zero(val):
     """ Conversion function used to manage
     empty string into float usecase"""
     return float(val) if val else 0.0
 
+
 class FileParser(BankStatementImportParser):
+
     """
     Generic abstract class for defining parser for .csv, .xls or .xlsx file format.
     """
@@ -48,7 +51,7 @@ class FileParser(BankStatementImportParser):
             """
 
         super(FileParser, self).__init__(parse_name, **kwargs)
-        if ftype in ('csv', 'xls' ,'xlsx'):
+        if ftype in ('csv', 'xls', 'xlsx'):
             self.ftype = ftype[0:3]
         else:
             raise except_osv(_('User Error'),
@@ -64,8 +67,8 @@ class FileParser(BankStatementImportParser):
         self.keys_to_validate = self.conversion_dict.keys()
         self.fieldnames = header
         self._datemode = 0  # used only for xls documents,
-                            # 0 means Windows mode (1900 based dates).
-                            # Set in _parse_xls, from the contents of the file
+        # 0 means Windows mode (1900 based dates).
+        # Set in _parse_xls, from the contents of the file
 
     def _custom_format(self, *args, **kwargs):
         """
@@ -161,8 +164,10 @@ class FileParser(BankStatementImportParser):
                                            " value: %s \n \n"
                                            " \n Please check the line with ref: %s"
                                            " \n \n Detail: %s") % (rule,
-                                                                   line.get(rule, _('Missing')),
-                                                                   line.get('ref', line),
+                                                                   line.get(
+                                                                       rule, _('Missing')),
+                                                                   line.get(
+                                                                       'ref', line),
                                                                    repr(err)))
                 else:
                     try:
@@ -173,7 +178,8 @@ class FileParser(BankStatementImportParser):
                                            "\n Please check the line with ref %s:"
                                            "\n \n Detail: %s") % (line.get(rule, _('Missing')),
                                                                   rule,
-                                                                  line.get('ref', line),
+                                                                  line.get(
+                                                                      'ref', line),
                                                                   repr(err)))
         return result_set
 
@@ -186,7 +192,8 @@ class FileParser(BankStatementImportParser):
             for rule in conversion_rules:
                 if conversion_rules[rule] == datetime.datetime:
                     try:
-                        t_tuple = xlrd.xldate_as_tuple(line[rule], self._datemode)
+                        t_tuple = xlrd.xldate_as_tuple(
+                            line[rule], self._datemode)
                         line[rule] = datetime.datetime(*t_tuple)
                     except Exception as err:
                         raise except_osv(_("Date format is not valid"),
@@ -195,8 +202,10 @@ class FileParser(BankStatementImportParser):
                                            " value: %s"
                                            "\n Please check the line with ref: %s"
                                            "\n \n Detail: %s") % (rule,
-                                                                  line.get(rule, _('Missing')),
-                                                                  line.get('ref', line),
+                                                                  line.get(
+                                                                      rule, _('Missing')),
+                                                                  line.get(
+                                                                      'ref', line),
                                                                   repr(err)))
                 else:
                     try:
@@ -207,7 +216,8 @@ class FileParser(BankStatementImportParser):
                                            "\n Please check the line with ref %s:"
                                            "\n \n Detail: %s") % (line.get(rule, _('Missing')),
                                                                   rule,
-                                                                  line.get('ref', line),
+                                                                  line.get(
+                                                                      'ref', line),
                                                                   repr(err)))
         return result_set
 

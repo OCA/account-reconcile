@@ -28,7 +28,7 @@
  'depends': [
      'account_statement_ext',
      'account_voucher'
-     ],
+ ],
  'description': """
  This module is deprecated. It was only needed when using account_bank_statement_ext with voucher in order to compute the period
  correctly. This is mainly because with account_bank_statement_ext, the period is computed for each line.
@@ -40,7 +40,7 @@
  'website': 'http://www.camptocamp.com',
  'init_xml': [],
  'update_xml': [
-        "statement_voucher_view.xml",
+     "statement_voucher_view.xml",
  ],
  'demo_xml': [],
  'test': [],
@@ -48,5 +48,5 @@
  'images': [],
  'auto_install': False,
  'license': 'AGPL-3',
- 
-}
+
+ }

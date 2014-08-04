@@ -24,6 +24,7 @@ from operator import itemgetter, attrgetter
 
 
 class easy_reconcile_base(orm.AbstractModel):
+
     """Abstract Model for reconciliation methods"""
 
     _name = 'easy.reconcile.base'
@@ -112,9 +113,9 @@ class easy_reconcile_base(orm.AbstractModel):
         sums = reduce(
             lambda line, memo:
                 dict((key, value + memo[key])
-                for key, value
-                in line.iteritems()
-                if key in keys), lines)
+                     for key, value
+                     in line.iteritems()
+                     if key in keys), lines)
 
         debit, credit = sums['debit'], sums['credit']
         writeoff_amount = round(debit - credit, precision)

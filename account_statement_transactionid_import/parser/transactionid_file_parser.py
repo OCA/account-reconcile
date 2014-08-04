@@ -22,6 +22,7 @@ from account_statement_base_import.parser.file_parser import FileParser
 
 
 class TransactionIDFileParser(FileParser):
+
     """
     TransactionID parser that use a define format in csv or xls to import
     bank statement.
@@ -40,7 +41,8 @@ class TransactionIDFileParser(FileParser):
         super(TransactionIDFileParser, self).__init__(profile, extra_fields=extra_fields,
                                                       ftype=ftype, header=header, **kwargs)
         # ref is replaced by transaction_id thus we delete it from check
-        self.keys_to_validate = [k for k in self.keys_to_validate if k != 'ref']
+        self.keys_to_validate = [
+            k for k in self.keys_to_validate if k != 'ref']
         del self.conversion_dict['ref']
 
     @classmethod

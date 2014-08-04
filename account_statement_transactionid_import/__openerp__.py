@@ -28,7 +28,7 @@
  'depends': [
      'account_statement_base_import',
      'account_statement_transactionid_completion'
-     ],
+ ],
  'description': """
  This module brings generic methods and fields on bank statement to deal with
  the importation of different bank and offices that uses transactionID.
@@ -57,4 +57,4 @@
  'images': [],
  'auto_install': False,
  'license': 'AGPL-3',
-}
+ }

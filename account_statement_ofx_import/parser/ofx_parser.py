@@ -30,7 +30,9 @@ try:
 except:
     raise Exception(_('Please install python lib ofxparse'))
 
+
 class OfxParser(BankStatementImportParser):
+
     """Class for defining parser for OFX file format."""
 
     @classmethod
@@ -110,4 +112,3 @@ class OfxParser(BankStatementImportParser):
             'ref': line.get('ref', '/'),
             'label': line.get('label', ''),
         }
-

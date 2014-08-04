@@ -26,10 +26,12 @@ from openerp.addons.account_statement_base_completion.statement import ErrorTooM
 
 
 class ErrorTooManyLabel(Exception):
+
     """
     New Exception definition that is raised when more than one label is matched
     by the completion rule.
     """
+
     def __init__(self, value):
         self.value = value
 
@@ -38,6 +40,7 @@ class ErrorTooManyLabel(Exception):
 
 
 class AccountBankSatement(orm.Model):
+
     """
     We add a basic button and stuff to support the auto-completion
     of the bank statement once line have been imported or manually fullfill.
@@ -76,7 +79,7 @@ class AccountStatementCompletionRule(orm.Model):
             ...}
             """
         st_obj = self.pool.get('account.bank.statement')
-        statement = st_obj.browse(cr, uid, st_line['statement_id'][0], 
+        statement = st_obj.browse(cr, uid, st_line['statement_id'][0],
                                   context=context)
         res = {}
         if not context.get('label_memorizer'):
@@ -114,6 +117,7 @@ class AccountStatementCompletionRule(orm.Model):
 
 
 class AccountStatementLabel(orm.Model):
+
     """Create a new class to map an account statement label to a partner
     and a specific account
     """
@@ -125,7 +129,7 @@ class AccountStatementLabel(orm.Model):
         'partner_id': fields.many2one('res.partner', 'Partner'),
         'label': fields.char('Bank Statement Label', size=100),
         'account_id': fields.many2one('account.account', 'Account',
-                                      required = True,
+                                      required=True,
                                       help='Account corresponding to the label '
                                       'for a given partner'),
         'company_id': fields.related('account_id', 'company_id',
@@ -139,7 +143,7 @@ class AccountStatementLabel(orm.Model):
     }
 
     _defaults = {
-        'company_id': lambda s,cr,uid,c:
+        'company_id': lambda s, cr, uid, c:
             s.pool.get('res.company')._company_default_get(cr, uid,
                                                            'account.statement.label',
                                                            context=c),

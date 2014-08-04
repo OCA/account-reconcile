@@ -27,6 +27,7 @@ from openerp.addons.account_statement_base_completion.statement import ErrorTooM
 
 
 class AccountStatementCompletionRule(Model):
+
     """Add a rule based on transaction ID"""
 
     _inherit = "account.statement.completion.rule"
@@ -64,15 +65,20 @@ class AccountStatementCompletionRule(Model):
             raise ErrorTooManyPartner(_('Line named "%s" (Ref:%s) was matched by more than '
                                         'one partner for account number "%s".') % (st_line['name'], st_line['ref'], partner_acc_number))
         if len(ids) == 1:
-            partner = res_bank_obj.browse(cr, uid, ids[0], context=context).partner_id
+            partner = res_bank_obj.browse(
+                cr, uid, ids[0], context=context).partner_id
             res['partner_id'] = partner.id
             st_vals = st_obj.get_values_for_line(cr,
                                                  uid,
-                                                 profile_id=st_line['profile_id'],
-                                                 master_account_id=st_line['master_account_id'],
-                                                 partner_id=res.get('partner_id', False),
+                                                 profile_id=st_line[
+                                                     'profile_id'],
+                                                 master_account_id=st_line[
+                                                     'master_account_id'],
+                                                 partner_id=res.get(
+                                                     'partner_id', False),
                                                  line_type=st_line['type'],
-                                                 amount=st_line['amount'] if st_line['amount'] else 0.0,
+                                                 amount=st_line['amount'] if st_line[
+                                                     'amount'] else 0.0,
                                                  context=context)
             res.update(st_vals)
         return res

@@ -45,7 +45,8 @@ class AccountStatementFromInvoiceLines(orm.TransientModel):
         statement_line_obj = self.pool.get('account.bank.statement.line')
         currency_obj = self.pool.get('res.currency')
         line_date = time.strftime('%Y-%m-%d')
-        statement = statement_obj.browse(cr, uid, statement_id, context=context)
+        statement = statement_obj.browse(
+            cr, uid, statement_id, context=context)
         # for each selected move lines
         for line in line_obj.browse(cr, uid, line_ids, context=context):
             ctx = context.copy()
@@ -60,10 +61,10 @@ class AccountStatementFromInvoiceLines(orm.TransientModel):
 
             if line.amount_currency:
                 amount = currency_obj.compute(cr, uid, line.currency_id.id,
-                    statement.currency.id, line.amount_currency, context=ctx)
+                                              statement.currency.id, line.amount_currency, context=ctx)
             elif (line.invoice and line.invoice.currency_id.id != statement.currency.id):
                 amount = currency_obj.compute(cr, uid, line.invoice.currency_id.id,
-                    statement.currency.id, amount, context=ctx)
+                                              statement.currency.id, amount, context=ctx)
 
             context.update({'move_line_ids': [line.id],
                             'invoice_id': line.invoice.id})
@@ -109,13 +110,15 @@ class AccountPaymentPopulateStatement(orm.TransientModel):
         if not line_ids:
             return {'type': 'ir.actions.act_window_close'}
 
-        statement = statement_obj.browse(cr, uid, context['active_id'], context=context)
+        statement = statement_obj.browse(
+            cr, uid, context['active_id'], context=context)
 
         for line in line_obj.browse(cr, uid, line_ids, context=context):
             ctx = context.copy()
-            ctx['date'] = line.ml_maturity_date  # Last value_date earlier,but this field exists no more now
+            # Last value_date earlier,but this field exists no more now
+            ctx['date'] = line.ml_maturity_date
             amount = currency_obj.compute(cr, uid, line.currency.id,
-                    statement.currency.id, line.amount_currency, context=ctx)
+                                          statement.currency.id, line.amount_currency, context=ctx)
             if not line.move_line_id.id:
                 continue
             context.update({'move_line_ids': [line.move_line_id.id]})
@@ -124,7 +127,8 @@ class AccountPaymentPopulateStatement(orm.TransientModel):
             st_line_id = statement_line_obj.create(cr, uid, vals,
                                                    context=context)
 
-            line_obj.write(cr, uid, [line.id], {'bank_statement_line_id': st_line_id})
+            line_obj.write(
+                cr, uid, [line.id], {'bank_statement_line_id': st_line_id})
         return {'type': 'ir.actions.act_window_close'}
 
     def _prepare_statement_line_vals(self, cr, uid, payment_line, amount,

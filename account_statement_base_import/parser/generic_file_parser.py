@@ -31,6 +31,7 @@ except:
 
 
 class GenericFileParser(FileParser):
+
     """
     Standard parser that use a define format in csv or xls to import into a
     bank statement. This is mostely an example of how to proceed to create a new
@@ -38,7 +39,8 @@ class GenericFileParser(FileParser):
     """
 
     def __init__(self, parse_name, ftype='csv', **kwargs):
-        super(GenericFileParser, self).__init__(parse_name, ftype=ftype, **kwargs)
+        super(GenericFileParser, self).__init__(
+            parse_name, ftype=ftype, **kwargs)
 
     @classmethod
     def parser_for(cls, parser_name):

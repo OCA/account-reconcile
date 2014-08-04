@@ -35,6 +35,7 @@ import re
 
 
 class AccountStatementCompletionRule(Model):
+
     """Add a rule to complete account based on a regular expression"""
 
     _inherit = "account.statement.completion.rule"

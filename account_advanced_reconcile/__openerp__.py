@@ -82,4 +82,4 @@ many offices.
  'auto_install': False,
  'license': 'AGPL-3',
  'application': True,
-}
+ }

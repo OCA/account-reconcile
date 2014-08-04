@@ -30,8 +30,8 @@
     'website': 'http://www.akretion.com/',
     'depends': [
         'account_voucher',
-        ], 
-    'data': [ 
+    ],
+    'data': [
         'statement_view.xml',
     ],
     'demo': [],

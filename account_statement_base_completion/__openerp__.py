@@ -65,13 +65,13 @@
  ],
  'demo': [],
  'test': [
-    'test/partner.yml',
-    'test/invoice.yml',
-    'test/supplier_invoice.yml',
-    'test/completion_test.yml'
+     'test/partner.yml',
+     'test/invoice.yml',
+     'test/supplier_invoice.yml',
+     'test/completion_test.yml'
  ],
  'installable': True,
  'images': [],
  'auto_install': False,
  'license': 'AGPL-3',
-}
+ }

@@ -19,15 +19,15 @@
 #
 ##############################################################################
 
-{'name' : 'Invoices Reference',
- 'version' : '1.0',
- 'author' : 'Camptocamp',
+{'name': 'Invoices Reference',
+ 'version': '1.0',
+ 'author': 'Camptocamp',
  'maintainer': 'Camptocamp',
  'license': 'AGPL-3',
  'category': 'category',
  'complexity': "easy",
- 'depends' : ['account',
-              ],
+ 'depends': ['account',
+             ],
  'description': """
 Invoices Reference
 ==================
@@ -143,4 +143,4 @@ Information propagated to the move lines:
           ],
  'installable': True,
  'auto_install': False,
-}
+ }

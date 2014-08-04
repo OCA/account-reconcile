@@ -41,7 +41,7 @@ line will be take from imported line in this order:
  'depends': ['account_voucher', 'account_payment'],
  'data': [
      'statement_view.xml',
-     ],
+ ],
  'test': [],
  'installable': True,
  'active': False,

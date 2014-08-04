@@ -31,7 +31,7 @@ class AccountStatementProfil(Model):
         Has to be inherited to add parser
         """
         res = super(AccountStatementProfil, self)._get_import_type_selection(
-                cr, uid, context=context)
+            cr, uid, context=context)
         res.append(('generic_csvxls_transaction',
                     'Generic .csv/.xls based on SO transaction ID'))
         return res

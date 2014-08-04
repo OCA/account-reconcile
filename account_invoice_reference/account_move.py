@@ -33,7 +33,8 @@ class account_move(orm.Model):
         if invoice:
             assert isinstance(invoice, orm.browse_record)
             invoice_obj = self.pool['account.invoice']
-            ref = invoice_obj._ref_from_invoice(cr, uid, invoice, context=context)
+            ref = invoice_obj._ref_from_invoice(
+                cr, uid, invoice, context=context)
             vals = vals.copy()
             vals['ref'] = ref
         move_id = super(account_move, self).\

@@ -35,6 +35,7 @@ def UnicodeDictReader(utf8_data, **kwargs):
 
 
 class BankStatementImportParser(object):
+
     """
     Generic abstract class for defining parser for different files and
     format to import in a bank statement. Inherit from it to create your
@@ -125,10 +126,10 @@ class BankStatementImportParser(object):
         :return: dict of vals that represent additional infos for the statement
         """
         return {
-                'name': self.statement_name or '/',
-                'balance_start': self.balance_start,
-                'balance_end_real': self.balance_end,
-                'date': self.statement_date or datetime.now()
+            'name': self.statement_name or '/',
+            'balance_start': self.balance_start,
+            'balance_end_real': self.balance_end,
+            'date': self.statement_date or datetime.now()
         }
 
     def get_st_line_vals(self, line, *args, **kwargs):
@@ -221,7 +222,7 @@ def itersubclasses(cls, _seen=None):
 
 def new_bank_statement_parser(profile, *args, **kwargs):
     """Return an instance of the good parser class based on the given profile.
-    
+
     :param profile: browse_record of import profile.
     :return: class instance for given profile import type.
     """

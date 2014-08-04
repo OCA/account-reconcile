@@ -28,7 +28,7 @@
  'depends': [
      'account_statement_ext',
      'account_statement_base_completion'
-     ],
+ ],
  'description': """
  This module brings basic methods and fields on bank statement to deal with
  the importation of different bank and offices. A generic abstract method is defined and an
@@ -58,12 +58,12 @@
  """,
  'website': 'http://www.camptocamp.com',
  'data': [
-        "wizard/import_statement_view.xml",
-        "statement_view.xml",
+     "wizard/import_statement_view.xml",
+     "statement_view.xml",
  ],
  'test': [],
  'installable': True,
  'images': [],
  'auto_install': False,
  'license': 'AGPL-3',
-}
+ }

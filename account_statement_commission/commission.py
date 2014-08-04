@@ -16,7 +16,8 @@ class AccountStatementProfil(orm.Model):
         """
         global_commission_amount = 0
         for row in parser.result_row_list:
-            global_commission_amount += float_or_zero(row.get('commission_amount', '0.0'))
+            global_commission_amount += float_or_zero(
+                row.get('commission_amount', '0.0'))
         if not global_commission_amount:
             return
         partner_id = profile.partner_id and profile.partner_id.id or False
@@ -56,7 +57,7 @@ class CreditPartnerStatementImporter(orm.TransientModel):
         'commission_account_id': fields.many2one('account.account',
                                                  'Commission account'),
         'commission_analytic_id': fields.many2one('account.analytic.account',
-                                                 'Commission analytic account'),
+                                                  'Commission analytic account'),
     }
 
     def onchange_profile_id(self, cr, uid, ids, profile_id, context=None):
@@ -64,7 +65,7 @@ class CreditPartnerStatementImporter(orm.TransientModel):
             cr, uid, ids, profile_id, context=context)
         if profile_id:
             c = self.pool.get("account.statement.profile").browse(
-                    cr, uid, profile_id, context=context)
+                cr, uid, profile_id, context=context)
             res['value']['commission_account_id'] = \
                 c.commission_account_id and c.commission_account_id.id or False
             res['value']['commission_a'] = \

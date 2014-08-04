@@ -26,7 +26,7 @@ from openerp.osv import orm
 class easy_reconcile_advanced(orm.AbstractModel):
 
     _inherit = 'easy.reconcile.advanced'
-    
+
     def _base_columns(self, rec):
         """ Mandatory columns for move lines queries
         An extra column aliased as ``key`` should be defined
@@ -43,4 +43,4 @@ class easy_reconcile_advanced(orm.AbstractModel):
             'account_id',
             'move_id',
             'transaction_ref')
-        return ["account_move_line.%s" % col for col in aml_cols]    
+        return ["account_move_line.%s" % col for col in aml_cols]

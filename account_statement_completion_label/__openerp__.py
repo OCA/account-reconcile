@@ -37,13 +37,12 @@
     'website': 'http://www.akretion.com/',
     'depends': ['account_statement_base_completion'],
     'data': [
-           'partner_view.xml',
-           'statement_view.xml',
-           'security/ir.model.access.csv',
-           'security/ir_rule.xml',
+        'partner_view.xml',
+        'statement_view.xml',
+        'security/ir.model.access.csv',
+        'security/ir_rule.xml',
     ],
     'demo': [],
     'installable': True,
     'active': False,
 }
-

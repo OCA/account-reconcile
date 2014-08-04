@@ -44,7 +44,7 @@ Account Statement Regex Account Completion addon
     and update account to use in the bank statement line with the specified account.
 """,
     "data": ['statement_view.xml',
-              ],
+             ],
     "demo": [],
     "test": [],
     "active": False,

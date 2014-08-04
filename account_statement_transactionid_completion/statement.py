@@ -26,13 +26,14 @@ from openerp.addons.account_statement_base_completion.statement import ErrorTooM
 
 
 class AccountStatementCompletionRule(Model):
+
     """Add a rule based on transaction ID"""
 
     _inherit = "account.statement.completion.rule"
 
     def _get_functions(self, cr, uid, context=None):
         res = super(AccountStatementCompletionRule, self)._get_functions(
-                                                           cr, uid, context=context)
+            cr, uid, context=context)
         res += [
             ('get_from_transaction_id_and_so',
              'Match Sales Order using transaction ID'),
@@ -59,7 +60,8 @@ class AccountStatementCompletionRule(Model):
         so_obj = self.pool.get('sale.order')
         so_id = so_obj.search(cr,
                               uid,
-                              [('transaction_id', '=', st_line['transaction_id'])],
+                              [('transaction_id', '=',
+                                st_line['transaction_id'])],
                               context=context)
         if len(so_id) > 1:
             raise ErrorTooManyPartner(_('Line named "%s" (Ref:%s) was matched by more than '
@@ -70,11 +72,15 @@ class AccountStatementCompletionRule(Model):
             res['ref'] = so.name
             st_vals = st_obj.get_values_for_line(cr,
                                                  uid,
-                                                 profile_id=st_line['profile_id'],
-                                                 master_account_id=st_line['master_account_id'],
-                                                 partner_id=res.get('partner_id', False),
+                                                 profile_id=st_line[
+                                                     'profile_id'],
+                                                 master_account_id=st_line[
+                                                     'master_account_id'],
+                                                 partner_id=res.get(
+                                                     'partner_id', False),
                                                  line_type=st_line['type'],
-                                                 amount=st_line['amount'] if st_line['amount'] else 0.0,
+                                                 amount=st_line['amount'] if st_line[
+                                                     'amount'] else 0.0,
                                                  context=context)
             res.update(st_vals)
         return res

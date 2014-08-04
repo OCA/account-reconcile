@@ -40,10 +40,12 @@ _logger = logging.getLogger(__name__)
 
 
 class ErrorTooManyPartner(Exception):
+
     """
     New Exception definition that is raised when more than one partner is matched by
     the completion rule.
     """
+
     def __init__(self, value):
         self.value = value
 
@@ -55,6 +57,7 @@ class ErrorTooManyPartner(Exception):
 
 
 class AccountStatementProfil(orm.Model):
+
     """
     Extend the class to add rules per profile that will match at least the partner,
     but it could also be used to match other values as well.
@@ -100,7 +103,8 @@ class AccountStatementProfil(orm.Model):
         if context is None:
             context = {}
         if not calls:
-            calls = self._get_rules(cr, uid, line['profile_id'], context=context)
+            calls = self._get_rules(
+                cr, uid, line['profile_id'], context=context)
         rule_obj = self.pool.get('account.statement.completion.rule')
 
         for call in calls:
@@ -116,6 +120,7 @@ class AccountStatementProfil(orm.Model):
 
 
 class AccountStatementCompletionRule(orm.Model):
+
     """
     This will represent all the completion method that we can have to
     fullfill the bank statement lines. You'll be able to extend them in you own module
@@ -134,9 +139,12 @@ class AccountStatementCompletionRule(orm.Model):
         List of available methods for rules. Override this to add you own.
         """
         return [
-            ('get_from_ref_and_invoice', 'From line reference (based on customer invoice number)'),
-            ('get_from_ref_and_supplier_invoice', 'From line reference (based on supplier invoice number)'),
-            ('get_from_label_and_partner_field', 'From line label (based on partner field)'),
+            ('get_from_ref_and_invoice',
+             'From line reference (based on customer invoice number)'),
+            ('get_from_ref_and_supplier_invoice',
+             'From line reference (based on supplier invoice number)'),
+            ('get_from_label_and_partner_field',
+             'From line label (based on partner field)'),
             ('get_from_label_and_partner_name', 'From line label (based on partner name)')]
 
     def __get_functions(self, cr, uid, context=None):
@@ -272,7 +280,8 @@ class AccountStatementCompletionRule(orm.Model):
                                              [('bank_statement_label', '!=', False)])
             line_ids = context.get('line_ids', [])
             for partner in partner_obj.browse(cr, uid, partner_ids, context=context):
-                vals = '|'.join(re.escape(x.strip()) for x in partner.bank_statement_label.split(';'))
+                vals = '|'.join(re.escape(x.strip())
+                                for x in partner.bank_statement_label.split(';'))
                 or_regex = ".*%s.*" % vals
                 sql = ("SELECT id from account_bank_statement_line"
                        " WHERE id in %s"
@@ -292,11 +301,15 @@ class AccountStatementCompletionRule(orm.Model):
             res['partner_id'] = found_partner[0].id
             st_vals = st_obj.get_values_for_line(cr,
                                                  uid,
-                                                 profile_id=st_line['profile_id'],
-                                                 master_account_id=st_line['master_account_id'],
-                                                 partner_id=found_partner[0].id,
+                                                 profile_id=st_line[
+                                                     'profile_id'],
+                                                 master_account_id=st_line[
+                                                     'master_account_id'],
+                                                 partner_id=found_partner[
+                                                     0].id,
                                                  line_type=False,
-                                                 amount=st_line['amount'] if st_line['amount'] else 0.0,
+                                                 amount=st_line['amount'] if st_line[
+                                                     'amount'] else 0.0,
                                                  context=context)
             res.update(st_vals)
         return res
@@ -320,7 +333,8 @@ class AccountStatementCompletionRule(orm.Model):
         res = {}
         # We memoize allowed partner
         if not context.get('partner_memoizer'):
-            context['partner_memoizer'] = tuple(self.pool['res.partner'].search(cr, uid, []))
+            context['partner_memoizer'] = tuple(
+                self.pool['res.partner'].search(cr, uid, []))
         if not context['partner_memoizer']:
             return res
         st_obj = self.pool.get('account.bank.statement.line')
@@ -335,7 +349,8 @@ class AccountStatementCompletionRule(orm.Model):
                         SELECT id, regexp_matches(%s, regexp_replace(name,'([\.\^\$\*\+\?\(\)\[\{\\\|])', %s, 'g'), 'i') AS name_match FROM res_partner
                             WHERE id IN %s) AS res_patner_matcher
                     WHERE name_match IS NOT NULL"""
-        cr.execute(sql, (st_line['name'], r"\\\1", context['partner_memoizer']))
+        cr.execute(
+            sql, (st_line['name'], r"\\\1", context['partner_memoizer']))
         result = cr.fetchall()
         if not result:
             return res
@@ -347,13 +362,16 @@ class AccountStatementCompletionRule(orm.Model):
         st_vals = st_obj.get_values_for_line(cr,
                                              uid,
                                              profile_id=st_line['profile_id'],
-                                             master_account_id=st_line['master_account_id'],
+                                             master_account_id=st_line[
+                                                 'master_account_id'],
                                              partner_id=res['partner_id'],
                                              line_type=False,
-                                             amount=st_line['amount'] if st_line['amount'] else 0.0,
+                                             amount=st_line['amount'] if st_line[
+                                                 'amount'] else 0.0,
                                              context=context)
         res.update(st_vals)
         return res
+
 
 class AccountStatement(orm.Model):
     _inherit = "account.bank.statement"
@@ -364,17 +382,18 @@ class AccountStatement(orm.Model):
             line_without_account = line_obj.search(cr, uid, [
                 ['statement_id', '=', stat_id],
                 ['account_id', '=', False],
-                ], context=context)
+            ], context=context)
             if line_without_account:
                 stat = self.browse(cr, uid, stat_id, context=context)
                 raise orm.except_orm(_('User error'),
-                        _('You should fill all account on the line of the'
-                        ' statement %s')%stat.name)
+                                     _('You should fill all account on the line of the'
+                                       ' statement %s') % stat.name)
         return super(AccountStatement, self).button_confirm_bank(
-                                                cr, uid, ids, context=context)
+            cr, uid, ids, context=context)
 
 
 class AccountStatementLine(orm.Model):
+
     """
     Add sparse field on the statement line to allow to store all the
     bank infos that are given by a bank/office. You can then add you own in your
@@ -424,7 +443,8 @@ class AccountStatementLine(orm.Model):
         if line.get('already_completed'):
             return {}
         # Ask the rule
-        vals = profile_obj._find_values_from_rules(cr, uid, rules, line, context)
+        vals = profile_obj._find_values_from_rules(
+            cr, uid, rules, line, context)
         if vals:
             vals['id'] = line['id']
             return vals
@@ -434,15 +454,16 @@ class AccountStatementLine(orm.Model):
         """Return writeable by SQL columns"""
         statement_line_obj = self.pool['account.bank.statement.line']
         model_cols = statement_line_obj._columns
-        avail = [k for k, col in model_cols.iteritems() if not hasattr(col, '_fnct')]
+        avail = [
+            k for k, col in model_cols.iteritems() if not hasattr(col, '_fnct')]
         keys = [k for k in statement_store[0].keys() if k in avail]
         # add sparse fields..
         if include_serializable:
             for k, col in model_cols.iteritems():
                 if  k in statement_store[0].keys() and \
-                      isinstance(col, fields.sparse) and \
-                      col.serialization_field not in keys and \
-                      col._type == 'char':
+                        isinstance(col, fields.sparse) and \
+                        col.serialization_field not in keys and \
+                        col._type == 'char':
                     keys.append(col.serialization_field)
         keys.sort()
         return keys
@@ -472,7 +493,8 @@ class AccountStatementLine(orm.Model):
         """
         statement_line_obj = self.pool['account.bank.statement.line']
         model_cols = statement_line_obj._columns
-        sparse_fields = dict([(k, col) for k, col in model_cols.iteritems() if isinstance(col, fields.sparse) and col._type == 'char'])
+        sparse_fields = dict([(k, col) for k, col in model_cols.iteritems() if isinstance(
+            col, fields.sparse) and col._type == 'char'])
         values = []
         for statement in statement_store:
             to_json_k = set()
@@ -480,7 +502,8 @@ class AccountStatementLine(orm.Model):
             for k, col in sparse_fields.iteritems():
                 if k in st_copy:
                     to_json_k.add(col.serialization_field)
-                    serialized = st_copy.setdefault(col.serialization_field, {})
+                    serialized = st_copy.setdefault(
+                        col.serialization_field, {})
                     serialized[k] = st_copy[k]
             for k in to_json_k:
                 st_copy[k] = simplejson.dumps(st_copy[k])
@@ -493,13 +516,16 @@ class AccountStatementLine(orm.Model):
             does not exist"""
         statement_line_obj = self.pool['account.bank.statement.line']
         statement_line_obj.check_access_rule(cr, uid, [], 'create')
-        statement_line_obj.check_access_rights(cr, uid, 'create', raise_exception=True)
-        cols = self._get_available_columns(statement_store, include_serializable=True)
+        statement_line_obj.check_access_rights(
+            cr, uid, 'create', raise_exception=True)
+        cols = self._get_available_columns(
+            statement_store, include_serializable=True)
         statement_store = self._prepare_manyinsert(statement_store, cols)
         tmp_vals = (', '.join(cols), ', '.join(['%%(%s)s' % i for i in cols]))
         sql = "INSERT INTO account_bank_statement_line (%s) VALUES (%s);" % tmp_vals
         try:
-            cr.executemany(sql, tuple(self._serialize_sparse_fields(cols, statement_store)))
+            cr.executemany(
+                sql, tuple(self._serialize_sparse_fields(cols, statement_store)))
         except psycopg2.Error as sql_err:
             cr.rollback()
             raise osv.except_osv(_("ORM bypass error"),
@@ -526,6 +552,7 @@ class AccountStatementLine(orm.Model):
 
 
 class AccountBankStatement(orm.Model):
+
     """
     We add a basic button and stuff to support the auto-completion
     of the bank statement once line have been imported or manually fullfill.
@@ -556,11 +583,13 @@ class AccountBankStatement(orm.Model):
                         context=context)['completion_logs']
         log = log if log else ""
 
-        completion_date = datetime.datetime.now().strftime(DEFAULT_SERVER_DATETIME_FORMAT)
+        completion_date = datetime.datetime.now().strftime(
+            DEFAULT_SERVER_DATETIME_FORMAT)
         message = (_("%s Bank Statement ID %s has %s/%s lines completed by %s \n%s\n%s\n") %
-                   (completion_date, stat_id, number_imported, number_line, user_name, 
+                   (completion_date, stat_id, number_imported, number_line, user_name,
                     error_msg, log))
-        self.write(cr, uid, [stat_id], {'completion_logs': message}, context=context)
+        self.write(
+            cr, uid, [stat_id], {'completion_logs': message}, context=context)
 
         body = (_('Statement ID %s auto-completed for %s/%s lines completed') %
                 (stat_id, number_imported, number_line)),
@@ -581,14 +610,16 @@ class AccountBankStatement(orm.Model):
         profile_obj = self.pool.get('account.statement.profile')
         compl_lines = 0
         stat_line_obj.check_access_rule(cr, uid, [], 'create')
-        stat_line_obj.check_access_rights(cr, uid, 'create', raise_exception=True)
+        stat_line_obj.check_access_rights(
+            cr, uid, 'create', raise_exception=True)
         for stat in self.browse(cr, uid, ids, context=context):
             msg_lines = []
             ctx = context.copy()
             ctx['line_ids'] = tuple((x.id for x in stat.line_ids))
             b_profile = stat.profile_id
             rules = profile_obj._get_rules(cr, uid, b_profile, context=context)
-            profile_id = b_profile.id  # Only for perfo even it gains almost nothing
+            # Only for perfo even it gains almost nothing
+            profile_id = b_profile.id
             master_account_id = b_profile.receivable_account_id
             master_account_id = master_account_id.id if master_account_id else False
             res = False
@@ -606,17 +637,20 @@ class AccountBankStatement(orm.Model):
                 except Exception, exc:
                     msg_lines.append(repr(exc))
                     error_type, error_value, trbk = sys.exc_info()
-                    st = "Error: %s\nDescription: %s\nTraceback:" % (error_type.__name__, error_value)
+                    st = "Error: %s\nDescription: %s\nTraceback:" % (
+                        error_type.__name__, error_value)
                     st += ''.join(traceback.format_tb(trbk, 30))
                     _logger.error(st)
                 if res:
                     # stat_line_obj.write(cr, uid, [line.id], vals, context=ctx)
                     try:
-                        stat_line_obj._update_line(cr, uid, res, context=context)
+                        stat_line_obj._update_line(
+                            cr, uid, res, context=context)
                     except Exception as exc:
                         msg_lines.append(repr(exc))
                         error_type, error_value, trbk = sys.exc_info()
-                        st = "Error: %s\nDescription: %s\nTraceback:" % (error_type.__name__, error_value)
+                        st = "Error: %s\nDescription: %s\nTraceback:" % (
+                            error_type.__name__, error_value)
                         st += ''.join(traceback.format_tb(trbk, 30))
                         _logger.error(st)
                     # we can commit as it is not needed to be atomic

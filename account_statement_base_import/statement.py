@@ -46,7 +46,8 @@ class AccountStatementProfil(Model):
             help="Tic that box to automatically launch the completion "
                  "on each imported file using this profile."),
         'last_import_date': fields.datetime("Last Import Date"),
-        #  we remove deprecated as it floods logs in standard/warning level sob...
+        # we remove deprecated as it floods logs in standard/warning level
+        # sob...
         'rec_log': fields.text('log', readonly=True),  # Deprecated
         'import_type': fields.selection(
             __get_import_type_selection,
@@ -57,8 +58,8 @@ class AccountStatementProfil(Model):
     }
 
     _defaults = {
-                'import_type': 'generic_csvxls_so'
-            }
+        'import_type': 'generic_csvxls_so'
+    }
 
     def _write_extra_statement_lines(
             self, cr, uid, parser, result_row_list, profile, statement_id, context):
@@ -91,7 +92,7 @@ class AccountStatementProfil(Model):
                           context=context)
         return True
 
-    #Deprecated remove on V8
+    # Deprecated remove on V8
     def prepare_statetement_lines_vals(self, *args, **kwargs):
         return self.prepare_statement_lines_vals(*args, **kwargs)
 
@@ -121,11 +122,13 @@ class AccountStatementProfil(Model):
         else:
             # This is awfully slow...
             periods = self.pool.get('account.period').find(cr, uid,
-                                                           dt=values.get('date'),
+                                                           dt=values.get(
+                                                               'date'),
                                                            context=context)
             values['period_id'] = periods[0]
             period_memoizer[date] = periods[0]
-        values = statement_line_obj._add_missing_default_values(cr, uid, values, context)
+        values = statement_line_obj._add_missing_default_values(
+            cr, uid, values, context)
         return values
 
     def prepare_statement_vals(self, cr, uid, profile_id, result_row_list,
@@ -160,14 +163,14 @@ class AccountStatementProfil(Model):
         prof_obj = self.pool['account.statement.profile']
         if not profile_id:
             raise osv.except_osv(_("No Profile!"),
-             _("You must provide a valid profile to import a bank statement!"))
+                                 _("You must provide a valid profile to import a bank statement!"))
         prof = prof_obj.browse(cr, uid, profile_id, context=context)
 
         parser = new_bank_statement_parser(prof, ftype=ftype)
         res = []
         for result_row_list in parser.parse(file_stream):
             statement_id = self._statement_import(cr, uid, ids, prof, parser,
-                                    file_stream, ftype=ftype, context=context)
+                                                  file_stream, ftype=ftype, context=context)
             res.append(statement_id)
         return res
 
@@ -199,7 +202,8 @@ class AccountStatementProfil(Model):
                                      _("Column %s you try to import is not "
                                        "present in the bank statement line!") % col)
 
-        statement_vals = self.prepare_statement_vals(cr, uid, prof.id, result_row_list, parser, context)
+        statement_vals = self.prepare_statement_vals(
+            cr, uid, prof.id, result_row_list, parser, context)
         statement_id = statement_obj.create(cr, uid,
                                             statement_vals,
                                             context=context)
@@ -214,7 +218,8 @@ class AccountStatementProfil(Model):
                     context)
                 statement_store.append(values)
             # Hack to bypass ORM poor perfomance. Sob...
-            statement_line_obj._insert_lines(cr, uid, statement_store, context=context)
+            statement_line_obj._insert_lines(
+                cr, uid, statement_store, context=context)
 
             self._write_extra_statement_lines(
                 cr, uid, parser, result_row_list, prof, statement_id, context)
@@ -222,7 +227,8 @@ class AccountStatementProfil(Model):
             start_bal = statement_obj.read(
                 cr, uid, statement_id, ['balance_start'], context=context)
             start_bal = start_bal['balance_start']
-            statement_obj.write(cr, uid, [statement_id], {'balance_start': start_bal})
+            statement_obj.write(
+                cr, uid, [statement_id], {'balance_start': start_bal})
 
             attachment_data = {
                 'name': 'statement file',
@@ -235,7 +241,8 @@ class AccountStatementProfil(Model):
 
             # If user ask to launch completion at end of import, do it!
             if prof.launch_import_completion:
-                statement_obj.button_auto_completion(cr, uid, [statement_id], context)
+                statement_obj.button_auto_completion(
+                    cr, uid, [statement_id], context)
 
             # Write the needed log infos on profile
             self.write_logs_after_import(cr, uid, prof.id,
@@ -245,11 +252,12 @@ class AccountStatementProfil(Model):
 
         except Exception:
             error_type, error_value, trbk = sys.exc_info()
-            st = "Error: %s\nDescription: %s\nTraceback:" % (error_type.__name__, error_value)
+            st = "Error: %s\nDescription: %s\nTraceback:" % (
+                error_type.__name__, error_value)
             st += ''.join(traceback.format_tb(trbk, 30))
-            #TODO we should catch correctly the exception with a python
-            #Exception and only re-catch some special exception.
-            #For now we avoid re-catching error in debug mode
+            # TODO we should catch correctly the exception with a python
+            # Exception and only re-catch some special exception.
+            # For now we avoid re-catching error in debug mode
             if config['debug_mode']:
                 raise
             raise osv.except_osv(_("Statement import error"),
