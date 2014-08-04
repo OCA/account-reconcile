@@ -24,17 +24,17 @@
 
 from openerp.osv import fields, orm
 from tools.translate import _
+from openerp.addons.account_statement_base_completion.statement import \
+    ErrorTooManyPartner
 
-from openerp.addons.account_statement_base_completion.statement import ErrorTooManyPartner
 
-
-class account_statement_completion_rule(orm.Model):
+class AccountStatementCompletionRule(orm.Model):
 
     _name = "account.statement.completion.rule"
     _inherit = "account.statement.completion.rule"
 
     def _get_functions(self, cr, uid, context=None):
-        res = super(account_statement_completion_rule, self)._get_functions(
+        res = super(AccountStatementCompletionRule, self)._get_functions(
             cr, uid, context=context)
         res.append(
             ('get_from_ref_and_so', 'From line reference (based on SO number)')
@@ -60,14 +60,12 @@ class account_statement_completion_rule(orm.Model):
 
             ...}
         """
-        st_obj = self.pool.get('account.bank.statement.line')
+        st_obj = self.pool['account.bank.statement.line']
         res = {}
         if st_line:
             so_obj = self.pool.get('sale.order')
-            so_id = so_obj.search(cr,
-                                  uid,
-                                  [('name', '=', st_line['ref'])],
-                                  context=context)
+            so_id = so_obj.search(
+                cr, uid, [('name', '=', st_line['ref'])], context=context)
             if so_id:
                 if so_id and len(so_id) == 1:
                     so = so_obj.browse(cr, uid, so_id[0], context=context)
@@ -78,9 +76,7 @@ class account_statement_completion_rule(orm.Model):
                           'than one partner while looking on SO by ref.') %
                         (st_line['name'], st_line['ref']))
                 st_vals = st_obj.get_values_for_line(
-                    cr,
-                    uid,
-                    profile_id=st_line['profile_id'],
+                    cr, uid, profile_id=st_line['profile_id'],
                     master_account_id=st_line['master_account_id'],
                     partner_id=res.get('partner_id', False),
                     line_type='customer',
