@@ -21,10 +21,9 @@
 
 import tempfile
 import datetime
-
 from openerp.tools.translate import _
-from openerp.addons.account_statement_base_import.parser import BankStatementImportParser
-
+from openerp.addons.account_statement_base_import.parser import \
+    BankStatementImportParser
 try:
     import ofxparse
 except:
@@ -32,33 +31,25 @@ except:
 
 
 class OfxParser(BankStatementImportParser):
-
     """Class for defining parser for OFX file format."""
 
     @classmethod
     def parser_for(cls, parser_name):
-        """
-        Used by the new_bank_statement_parser class factory. Return true if
+        """Used by the new_bank_statement_parser class factory. Return true if
         the providen name is 'ofx_so'.
         """
         return parser_name == 'ofx_so'
 
     def _custom_format(self, *args, **kwargs):
-        """
-        No other work on data are needed in this parser.
-        """
+        """No other work on data are needed in this parser."""
         return True
 
     def _pre(self, *args, **kwargs):
-        """
-        No pre-treatment needed for this parser.
-        """
+        """No pre-treatment needed for this parser."""
         return True
 
     def _parse(self, *args, **kwargs):
-        """
-        Launch the parsing itself.
-        """
+        """Launch the parsing itself."""
         ofx_file = tempfile.NamedTemporaryFile()
         ofx_file.seek(0)
         ofx_file.write(self.filebuffer)
@@ -77,26 +68,15 @@ class OfxParser(BankStatementImportParser):
         return True
 
     def _validate(self, *args, **kwargs):
-        """
-        Nothing to do here. ofxparse trigger possible format errors.
-        """
+        """Nothing to do here. ofxparse trigger possible format errors."""
         return True
 
     def _post(self, *args, **kwargs):
-        """
-        Nothing is needed to do after parsing.
-        """
-        return True
-
-    def _post(self, *args, **kwargs):
-        """
-        Nothing to do.
-        """
+        """Nothing is needed to do after parsing."""
         return True
 
     def get_st_line_vals(self, line, *args, **kwargs):
-        """
-        This method must return a dict of vals that can be passed to create
+        """This method must return a dict of vals that can be passed to create
         method of statement line in order to record it. It is the
         responsibility of every parser to give this dict of vals, so each one
         can implement his own way of recording the lines.
