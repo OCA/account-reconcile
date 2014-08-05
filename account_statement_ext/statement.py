@@ -267,10 +267,10 @@ class AccountBankStatement(orm.Model):
     def _prepare_move(self, cr, uid, st_line, st_line_number, context=None):
         """Add the period_id from the statement line date to the move
         preparation. Originaly, it was taken from the statement period_id
-           :param browse_record st_line: account.bank.statement.line record \
-           to create the move from.
-           :param char st_line_number: will be used as the name of the \
-           generated account move
+           :param browse_record st_line: account.bank.statement.line record
+             to create the move from.
+           :param char st_line_number: will be used as the name of the
+             generated account move
            :return: dict of value to create() the account.move
         """
         if context is None:
@@ -290,20 +290,20 @@ class AccountBankStatement(orm.Model):
         """Add the period_id from the statement line date to the move
         preparation. Originaly, it was taken from the statement period_id
 
-           :param browse_record st_line: account.bank.statement.line record \
-           to create the move from.
-           :param int/long move_id: ID of the account.move to link the move \
-           line
+           :param browse_record st_line: account.bank.statement.line record
+             to create the move from.
+           :param int/long move_id: ID of the account.move to link the move
+             line
            :param float debit: debit amount of the move line
            :param float credit: credit amount of the move line
-           :param int/long currency_id: ID of currency of the move line to \
-           create
-           :param float amount_currency: amount of the debit/credit expressed \
-           in the currency_id
-           :param int/long account_id: ID of the account to use in the move \
-           line if different from the statement line account ID
-           :param int/long analytic_id: ID of analytic account to put on the \
-           move line
+           :param int/long currency_id: ID of currency of the move line to
+             create
+           :param float amount_currency: amount of the debit/credit expressed
+             in the currency_id
+           :param int/long account_id: ID of the account to use in the move
+             line if different from the statement line account ID
+           :param int/long analytic_id: ID of analytic account to put on the
+             move line
            :param int/long partner_id: ID of the partner to put on the move line
            :return: dict of value to create() the account.move.line
         """
@@ -330,8 +330,8 @@ class AccountBankStatement(orm.Model):
           the credit move line for the choosen partner_id
           => This will ease the reconciliation process with the bank as the
           partner will match the bank statement line
-        :param browse_record st_line: account.bank.statement.line record to \
-        create the move from.
+        :param browse_record st_line: account.bank.statement.line record to
+          create the move from.
         :return: int/long of the res.partner to use as counterpart
         """
         bank_partner_id = super(AccountBankStatement, self
@@ -348,8 +348,8 @@ class AccountBankStatement(orm.Model):
         the profile.
 
         :param: date: date of the statement used to compute the right period
-        :param: int/long: profile_id: the account.statement.profile ID from \
-        which to take the bank_statement_prefix for the name
+        :param: int/long: profile_id: the account.statement.profile ID from
+          which to take the bank_statement_prefix for the name
         :return: char: name of the bank statement (st_number)
         """
         year = self.pool['account.period'].browse(
@@ -483,8 +483,8 @@ class AccountBankStatement(orm.Model):
               If amount is negativ, the type supplier
         :param float: amount of the line
         :param int/long: partner_id the partner id
-        :return: type as string: the default type to use: 'customer' or \
-        'supplier'.
+        :return: type as string: the default type to use: 'customer' or
+          'supplier'.
         """
         s_line_type = self._compute_type_from_amount(cr, uid, amount)
         if partner_id:
@@ -517,10 +517,10 @@ class AccountBankStatement(orm.Model):
         :param int/long: account_receivable the  receivable account
         :param int/long: account_payable the payable account
         :param int/long: partner_id the partner id
-        :return: dict with [account_id as int/long,type as string]: the \
-        default account to be used by statement line as the counterpart of \
-        the journal account depending on the amount and the type as \
-        'customer' or 'supplier'.
+        :return: dict with [account_id as int/long,type as string]: the
+          default account to be used by statement line as the counterpart of
+          the journal account depending on the amount and the type as
+          'customer' or 'supplier'.
         """
         account_id = False
         ltype = self.get_type_for_counterpart(
@@ -656,8 +656,8 @@ class AccountBankStatementLine(orm.Model):
         :param int/long partner_id of the line
         :param char line_type: a value from: 'general', 'supplier', 'customer'
         :param float: amount of the line
-        :return: A dict of value that can be passed directly to the write \
-        method of the statement line:
+        :return: A dict of value that can be passed directly to the write
+          method of the statement line:
                      {'partner_id': value,
                       'account_id' : value,
                       'type' : value,

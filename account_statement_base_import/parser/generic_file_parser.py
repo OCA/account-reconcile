@@ -45,10 +45,10 @@ class GenericFileParser(FileParser):
         method of statement line in order to record it. It is the responsibility
         of every parser to give this dict of vals, so each one can implement his
         own way of recording the lines.
-            :param:  line: a dict of vals that represent a line of \
-            result_row_list
-            :return: dict of values to give to the create method of statement \
-            line, it MUST contain at least:
+            :param:  line: a dict of vals that represent a line of
+              result_row_list
+            :return: dict of values to give to the create method of statement
+              line, it MUST contain at least:
                 {
                     'name':value,
                     'date':value,

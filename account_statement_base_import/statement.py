@@ -70,8 +70,8 @@ class AccountStatementProfil(orm.Model):
             :param:    browse_record of the current parser
             :param:    result_row_list: [{'key':value}]
             :param:    profile: browserecord of account.statement.profile
-            :param:    statement_id: int/long of the current importing \
-            statement ID
+            :param:    statement_id: int/long of the current importing
+              statement ID
             :param:    context: global context
         """
         pass
@@ -100,11 +100,11 @@ class AccountStatementProfil(orm.Model):
         At least it fullfill the statement_id. Overide it to add your own
         completion if needed.
 
-        :param dict of vals from parser for account.bank.statement.line \
-        (called by parser.get_st_line_vals)
+        :param dict of vals from parser for account.bank.statement.line
+          (called by parser.get_st_line_vals)
         :param int/long statement_id: ID of the concerned account.bank.statement
-        :return: dict of vals that will be passed to create method of \
-        statement line.
+        :return: dict of vals that will be passed to create method of
+          statement line.
         """
         statement_line_obj = self.pool['account.bank.statement.line']
         values = parser_vals

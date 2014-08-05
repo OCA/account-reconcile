@@ -95,10 +95,10 @@ class AccountBankStatement(orm.Model):
         """Create the account move line from the statement line.
 
         :param int/long move_id: ID of the account.move
-        :param int/long st_line_id: ID of the account.bank.statement.line \
-        to create the move line from.
+        :param int/long st_line_id: ID of the account.bank.statement.line
+          to create the move line from.
         :param int/long company_currency_id: ID of the res.currency of the
-        company
+          company
         :return: ID of the account.move created
         """
         if context is None:

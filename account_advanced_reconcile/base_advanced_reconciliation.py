@@ -209,12 +209,11 @@ class easy_reconcile_advanced(orm.AbstractModel):
 
     def _search_opposites(self, cr, uid, rec, move_line, opposite_move_lines,
                           context=None):
-        """
-        Search the opposite move lines for a move line
+        """Search the opposite move lines for a move line
 
         :param dict move_line: the move line for which we search opposites
-        :param list opposite_move_lines: list of dict of move lines values, \
-        the move lines we want to search for
+        :param list opposite_move_lines: list of dict of move lines values,
+          the move lines we want to search for
         :return: list of matching lines
         """
         matchers = self._matchers(cr, uid, rec, move_line, context=context)

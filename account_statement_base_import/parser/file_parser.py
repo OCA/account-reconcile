@@ -44,12 +44,12 @@ class FileParser(BankStatementImportParser):
                  **kwargs):
         """
             :param char: parse_name: The name of the parser
-            :param char: ftype: extension of the file (could be csv, xls or \
-            xlsx)
-            :param dict: extra_fields: extra fields to add to the conversion \
-            dict. In the format {fieldname: fieldtype}
-            :param list: header : specify header fields if the csv file has no \
-            header
+            :param char: ftype: extension of the file (could be csv, xls or
+              xlsx)
+            :param dict: extra_fields: extra fields to add to the conversion
+              dict. In the format {fieldname: fieldtype}
+            :param list: header : specify header fields if the csv file has no
+              header
             """
         super(FileParser, self).__init__(parse_name, **kwargs)
         if ftype in ('csv', 'xls', 'xlsx'):

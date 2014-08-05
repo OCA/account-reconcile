@@ -133,8 +133,8 @@ class BankStatementImportParser(object):
         so each one can implement his own way of recording the lines.
 
         :param:  line: a dict of vals that represent a line of result_row_list
-        :return: dict of values to give to the create method of statement line,\
-        it MUST contain at least:
+        :return: dict of values to give to the create method of statement line,
+          it MUST contain at least:
             {
                 'name':value,
                 'date':value,

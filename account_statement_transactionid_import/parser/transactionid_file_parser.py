@@ -31,10 +31,10 @@ class TransactionIDFileParser(FileParser):
         """Add transaction_id in header keys
             :param char: profile: Reference to the profile
             :param char: ftype: extension of the file (could be csv or xls)
-            :param dict: extra_fields: extra fields to add to the conversion \
-            dict. In the format {fieldname: fieldtype}
-            :param list: header : specify header fields if the csv file has no \
-            header
+            :param dict: extra_fields: extra fields to add to the conversion
+              dict. In the format {fieldname: fieldtype}
+            :param list: header : specify header fields if the csv file has no
+              header
         """
         extra_fields = {'transaction_id': unicode}
         super(TransactionIDFileParser, self).__init__(
@@ -57,10 +57,10 @@ class TransactionIDFileParser(FileParser):
         method of statement line in order to record it. It is the responsibility
         of every parser to give this dict of vals, so each one can implement his
         own way of recording the lines.
-            :param:  line: a dict of vals that represent a line of \
-            result_row_\list
-            :return: dict of values to give to the create method of statement \
-            line, it MUST contain at least:
+            :param:  line: a dict of vals that represent a line of
+              result_row_list
+            :return: dict of values to give to the create method of statement
+              line, it MUST contain at least:
                 {
                     'name':value,
                     'date':value,
