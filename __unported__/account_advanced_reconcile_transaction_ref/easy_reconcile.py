@@ -36,4 +36,3 @@ class account_easy_reconcile_method(orm.Model):
              'Advanced. Partner and Transaction Ref. vs Ref.'),
         ]
         return methods
- 

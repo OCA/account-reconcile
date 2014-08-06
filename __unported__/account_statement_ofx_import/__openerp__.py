@@ -34,7 +34,7 @@
     },
     'description': """
     Allows to import OFX (Open Financial Exchange) statement files, using
-    *account_statement_base_import* generic inheritance mechanism to import 
+    *account_statement_base_import* generic inheritance mechanism to import
     statements.
 
     It requires ofxparse library to work.
@@ -46,4 +46,4 @@
     'images': [],
     'auto_install': False,
     'license': 'AGPL-3',
-}
+ }

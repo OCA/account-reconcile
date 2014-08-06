@@ -34,7 +34,7 @@ class wizard_cancel_statement(orm.TransientModel):
             'Show reconcile warning',
             help='This is a hidden field set with a default in the context '
             'to choose between two different warning messages in the view.'
-            ),
+        ),
     }
 
     def do_cancel_button(self, cr, uid, ids, context=None):

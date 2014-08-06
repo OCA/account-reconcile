@@ -2,7 +2,8 @@
 ##############################################################################
 #
 #    Author: Guewen Baconnier
-#    Copyright 2012 Camptocamp SA
+#    Contributor: Leonardo Pistone
+#    Copyright 2012-2014 Camptocamp SA
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -63,9 +64,9 @@ The base class to find the reconciliations is built to be as efficient as
 possible.
 
 So basically, if you have an invoice with 3 payments (one per month), the first
-month, it will partial reconcile the debit move line with the first payment, the second
-month, it will partial reconcile the debit move line with 2 first payments,
-the third month, it will make the full reconciliation.
+month, it will partial reconcile the debit move line with the first payment, the
+second month, it will partial reconcile the debit move line with 2 first
+payments, the third month, it will make the full reconciliation.
 
 This module is perfectly adapted for E-Commerce business where a big volume of
 move lines and so, reconciliations, are involved and payments often come from
@@ -73,11 +74,12 @@ many offices.
 
  """,
  'website': 'http://www.camptocamp.com',
- 'data': ['easy_reconcile_view.xml'],
+ 'data': ['easy_reconcile_view.xml',
+          'res_config_view.xml'],
  'test': [],
  'images': [],
  'installable': False,
  'auto_install': False,
  'license': 'AGPL-3',
  'application': True,
-}
+ }

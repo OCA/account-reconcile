@@ -5,7 +5,6 @@
     <record id="statement_importer_view_form" model="ir.ui.view">
         <field name="name">account.statement.profile.view</field>
         <field name="model">account.statement.profile</field>
-        <field name="type">form</field>
         <field name="arch" type="xml">
             <form string="Import statement">
                 <separator string="" colspan="4"/>
@@ -27,7 +26,6 @@
     <record id="statement_importer_view_tree" model="ir.ui.view">
         <field name="name">account.statement.profile.view</field>
         <field name="model">account.statement.profile</field>
-        <field name="type">tree</field>
         <field name="arch" type="xml">
             <tree string="Import statement">
                 <field name="name" />
@@ -76,7 +74,6 @@
         <field name="name">account.bank.statement.tree</field>
         <field name="model">account.bank.statement</field>
         <field name="inherit_id" ref="account.view_bank_statement_tree"/>
-        <field name="type">tree</field>
         <field name="arch" type="xml">
             <xpath expr="/tree/field[@name='name']" position="before">
                  <field name="id"/>
@@ -95,7 +92,6 @@
       <field name="name">account.bank.statement.form</field>
       <field name="model">account.bank.statement</field>
       <field name="inherit_id" ref="account.view_bank_statement_form"/>
-      <field name="type">form</field>
       <field name="arch" type="xml" >
 
           <!-- Add before the group : profile and related infos -->
