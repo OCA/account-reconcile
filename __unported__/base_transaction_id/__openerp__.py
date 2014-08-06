@@ -29,7 +29,7 @@
      'account',
      'sale',
      'stock'
-     ],
+ ],
  'description': """
  Adds transaction id to invoice and sale models and views.
  On Sales order, you can specify the transaction ID used
@@ -47,11 +47,11 @@
  'update_xml': [
      'invoice_view.xml',
      'sale_view.xml'
-     ],
+ ],
  'demo_xml': [],
  'test': [],
  'installable': False,
  'images': [],
  'auto_install': False,
  'license': 'AGPL-3',
-}
+ }

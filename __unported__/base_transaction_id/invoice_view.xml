@@ -5,7 +5,6 @@
             <field name="name">customer.invoice.transaction.inherit</field>
             <field name="model">account.invoice</field>
             <field name="inherit_id" ref="account.invoice_form"/>
-            <field name="type">form</field>
             <field name="arch" type="xml">
                 <notebook position="inside">
                     <page string="Transactions datas">
@@ -19,7 +18,6 @@
             <field name="name">account.invoice.tree.inherit</field>
             <field name="model">account.invoice</field>
             <field name="inherit_id" ref="account.invoice_tree"/>
-            <field name="type">form</field>
             <field name="arch" type="xml">
                 <field name="origin" position="after">
                     <field name="transaction_id" select="2"/>

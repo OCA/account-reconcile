@@ -19,7 +19,7 @@
 ##############################################################################
 
 from openerp.osv import orm
- 
+
 
 class easy_reconcile_advanced_transaction_ref(orm.TransientModel):
 
@@ -35,10 +35,10 @@ class easy_reconcile_advanced_transaction_ref(orm.TransientModel):
         return not (move_line.get('transaction_ref') and
                     move_line.get('partner_id'))
 
-    def _matchers(self, cr, uid, rec, move_line, context=None):     
+    def _matchers(self, cr, uid, rec, move_line, context=None):
         return (('partner_id', move_line['partner_id']),
                 ('ref', move_line['transaction_ref'].lower().strip()))
-  
+
     def _opposite_matchers(self, cr, uid, rec, move_line, context=None):
         yield ('partner_id', move_line['partner_id'])
         yield ('ref', (move_line['transaction_ref'] or '').lower().strip())

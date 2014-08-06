@@ -35,9 +35,9 @@ class SaleOrder(Model):
     }
 
     def _prepare_invoice(self, cr, uid, order, lines, context=None):
-        #we put the transaction id in the generated invoices
+        # we put the transaction id in the generated invoices
         invoice_vals = super(SaleOrder, self)._prepare_invoice(
-                cr, uid, order, lines, context=context)
+            cr, uid, order, lines, context=context)
         invoice_vals.update({
             'transaction_id': order.transaction_id})
         return invoice_vals

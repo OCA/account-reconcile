@@ -6,7 +6,6 @@
              <field name="name">account.statement.completion.rule.view (account_statement_regex_account_completion)</field>
              <field name="model">account.statement.completion.rule</field>
              <field name="inherit_id" ref="account_statement_base_completion.statement_st_completion_rule_view_form" />
-             <field name="type">form</field>
              <field name="arch" type="xml">
                 <field name="function_to_call" position="after">
                     <group colspan="2">

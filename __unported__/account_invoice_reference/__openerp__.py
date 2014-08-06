@@ -19,15 +19,15 @@
 #
 ##############################################################################
 
-{'name' : 'Invoices Reference',
- 'version' : '1.0',
- 'author' : 'Camptocamp',
+{'name': 'Invoices Reference',
+ 'version': '1.0',
+ 'author': 'Camptocamp',
  'maintainer': 'Camptocamp',
  'license': 'AGPL-3',
  'category': 'category',
  'complexity': "easy",
- 'depends' : ['account',
-              ],
+ 'depends': ['account',
+             ],
  'description': """
 Invoices Reference
 ==================
@@ -59,13 +59,15 @@ mandatory fields are:
 * Description
 * Internal Reference ("our reference")
 * External Reference ("customer or supplier reference")
-* Optionally, a technical transaction reference (credit card payment gateways, SEPA, ...)
+* Optionally, a technical transaction reference (credit card payment gateways,
+  SEPA, ...)
 
 Now, on the move lines:
 
 * Name
 * Reference
-* Optionally, a technical transaction reference (added by the module `base_transaction_id`)
+* Optionally, a technical transaction reference (added by the module
+  `base_transaction_id`)
 
 Let's see how the information will be organized with this module.
 
@@ -143,4 +145,4 @@ Information propagated to the move lines:
           ],
  'installable': False,
  'auto_install': False,
-}
+ }

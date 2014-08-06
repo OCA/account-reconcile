@@ -40,11 +40,11 @@
 Account Statement Regex Account Completion addon
 =========================
 
-- Add a completion method based on a specified regular expression
-    and update account to use in the bank statement line with the specified account.
+Add a completion method based on a specified regular expression and update
+account to use in the bank statement line with the specified account.
 """,
     "data": ['statement_view.xml',
-              ],
+             ],
     "demo": [],
     "test": [],
     "active": False,
@@ -53,4 +53,3 @@ Account Statement Regex Account Completion addon
     "auto_install": False,
     "application": False,
 }
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

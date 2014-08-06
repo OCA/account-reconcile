@@ -36,12 +36,15 @@ class CreditPartnerStatementImporter(orm.TransientModel):
         if context is None:
             context = {}
         res = {}
-        if (context.get('active_model', False) == 'account.statement.profile' and
-            context.get('active_ids', False)):
+        if (context.get('active_model', False) ==
+                'account.statement.profile' and
+                context.get('active_ids', False)):
             ids = context['active_ids']
-            assert len(ids) == 1, 'You cannot use this on more than one profile !'
+            assert len(
+                ids) == 1, 'You cannot use this on more than one profile !'
             res['profile_id'] = ids[0]
-            other_vals = self.onchange_profile_id(cr, uid, [], res['profile_id'], context=context)
+            other_vals = self.onchange_profile_id(
+                cr, uid, [], res['profile_id'], context=context)
             res.update(other_vals.get('value', {}))
         return res
 
@@ -55,8 +58,8 @@ class CreditPartnerStatementImporter(orm.TransientModel):
         'journal_id': fields.many2one('account.journal',
                                       'Financial journal to use transaction'),
         'file_name': fields.char('File Name', size=128),
-        'receivable_account_id': fields.many2one('account.account',
-                                                 'Force Receivable/Payable Account'),
+        'receivable_account_id': fields.many2one(
+            'account.account', 'Force Receivable/Payable Account'),
         'force_partner_on_bank': fields.boolean(
             'Force partner on bank move',
             help="Tic that box if you want to use the credit insitute partner "
@@ -71,22 +74,22 @@ class CreditPartnerStatementImporter(orm.TransientModel):
     def onchange_profile_id(self, cr, uid, ids, profile_id, context=None):
         res = {}
         if profile_id:
-            c = self.pool.get("account.statement.profile").browse(
-                    cr, uid, profile_id, context=context)
+            c = self.pool["account.statement.profile"].browse(
+                cr, uid, profile_id, context=context)
             res = {'value':
-                    {'partner_id': c.partner_id and c.partner_id.id or False,
-                     'journal_id': c.journal_id and c.journal_id.id or False,
-                     'receivable_account_id': c.receivable_account_id and c.receivable_account_id.id or False,
-                     'force_partner_on_bank': c.force_partner_on_bank,
-                     'balance_check': c.balance_check,
-                     }
-                }
+                   {'partner_id': c.partner_id and c.partner_id.id or False,
+                    'journal_id': c.journal_id and c.journal_id.id or False,
+                    'receivable_account_id': c.receivable_account_id.id,
+                    'force_partner_on_bank': c.force_partner_on_bank,
+                    'balance_check': c.balance_check,
+                    }
+                   }
         return res
 
     def _check_extension(self, filename):
         (__, ftype) = os.path.splitext(filename)
         if not ftype:
-            #We do not use osv exception we do not want to have it logged
+            # We do not use osv exception we do not want to have it logged
             raise Exception(_('Please use a file with an extention'))
         return ftype
 
@@ -99,18 +102,19 @@ class CreditPartnerStatementImporter(orm.TransientModel):
         ftype = self._check_extension(importer.file_name)
         context['file_name'] = importer.file_name
         sid = self.pool.get(
-                'account.statement.profile').multi_statement_import(
-                                            cr,
-                                            uid,
-                                            False,
-                                            importer.profile_id.id,
-                                            importer.input_statement,
-                                            ftype.replace('.', ''),
-                                            context=context
-                                        )
+            'account.statement.profile').multi_statement_import(
+            cr,
+            uid,
+            False,
+            importer.profile_id.id,
+            importer.input_statement,
+            ftype.replace('.', ''),
+            context=context
+        )
         model_obj = self.pool.get('ir.model.data')
         action_obj = self.pool.get('ir.actions.act_window')
-        action_id = model_obj.get_object_reference(cr, uid, 'account', 'action_bank_statement_tree')[1]
+        action_id = model_obj.get_object_reference(
+            cr, uid, 'account', 'action_bank_statement_tree')[1]
         res = action_obj.read(cr, uid, action_id)
         res['domain'] = res['domain'][:-1] + ",('id', 'in', %s)]" % sid
         return res

@@ -23,7 +23,8 @@ from openerp.osv import fields, orm
 from operator import itemgetter, attrgetter
 
 
-class easy_reconcile_base(orm.AbstractModel):
+class EasyReconcileBase(orm.AbstractModel):
+
     """Abstract Model for reconciliation methods"""
 
     _name = 'easy.reconcile.base'
@@ -87,7 +88,6 @@ class easy_reconcile_base(orm.AbstractModel):
         # which returns a list, we have to
         # accomodate with that
         params = [rec.account_id.id]
-
         if rec.partner_ids:
             where += " AND account_move_line.partner_id IN %s"
             params.append(tuple([l.id for l in rec.partner_ids]))
@@ -112,17 +112,16 @@ class easy_reconcile_base(orm.AbstractModel):
         sums = reduce(
             lambda line, memo:
                 dict((key, value + memo[key])
-                for key, value
-                in line.iteritems()
-                if key in keys), lines)
-
+                     for key, value
+                     in line.iteritems()
+                     if key in keys), lines)
         debit, credit = sums['debit'], sums['credit']
         writeoff_amount = round(debit - credit, precision)
         return bool(writeoff_limit >= abs(writeoff_amount)), debit, credit
 
     def _get_rec_date(self, cr, uid, rec, lines,
                       based_on='end_period_last_credit', context=None):
-        period_obj = self.pool.get('account.period')
+        period_obj = self.pool['account.period']
 
         def last_period(mlines):
             period_ids = [ml['period_id'] for ml in mlines]
@@ -153,7 +152,8 @@ class easy_reconcile_base(orm.AbstractModel):
         # when date is None
         return None
 
-    def _reconcile_lines(self, cr, uid, rec, lines, allow_partial=False, context=None):
+    def _reconcile_lines(self, cr, uid, rec, lines, allow_partial=False,
+                         context=None):
         """ Try to reconcile given lines
 
         :param list lines: list of dict of move lines, they must at least
@@ -168,26 +168,23 @@ class easy_reconcile_base(orm.AbstractModel):
         """
         if context is None:
             context = {}
-
         ml_obj = self.pool.get('account.move.line')
         writeoff = rec.write_off
-
         line_ids = [l['id'] for l in lines]
         below_writeoff, sum_debit, sum_credit = self._below_writeoff_limit(
             cr, uid, rec, lines, writeoff, context=context)
         date = self._get_rec_date(
             cr, uid, rec, lines, rec.date_base_on, context=context)
-
         rec_ctx = dict(context, date_p=date)
         if below_writeoff:
             if sum_credit < sum_debit:
                 writeoff_account_id = rec.account_profit_id.id
             else:
                 writeoff_account_id = rec.account_lost_id.id
-
             period_id = self.pool.get('account.period').find(
                 cr, uid, dt=date, context=context)[0]
-
+            if rec.analytic_account_id:
+                rec_ctx['analytic_id'] = rec.analytic_account_id.id
             ml_obj.reconcile(
                 cr, uid,
                 line_ids,
@@ -204,5 +201,4 @@ class easy_reconcile_base(orm.AbstractModel):
                 type='manual',
                 context=rec_ctx)
             return True, False
-
         return False, False
