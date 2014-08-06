@@ -86,7 +86,7 @@
           'security/ir_rule.xml'],
  'demo_xml': [],
  'test': ['test/test_profile_related_fields.yml'],
- 'installable': False,
+ 'installable': True,
  'images': [],
  'auto_install': False,
  'license': 'AGPL-3',

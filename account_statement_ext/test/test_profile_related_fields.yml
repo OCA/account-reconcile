@@ -8,7 +8,7 @@
     company_id: base.main_company
     partner_id: base.res_partner_1
     journal_id: account.check_journal
-    balance_check: True
+    control_balance_check: True
 -
   I create a second profile
 -
@@ -19,7 +19,7 @@
     company_id: base.main_company
     partner_id: base.res_partner_3
     journal_id: account.bank_journal
-    balance_check: True
+    control_balance_check: True
 -
   Now I create a statement.
 -
@@ -31,19 +31,19 @@
   Now I check that the related data come from the profile
 -
   !assert {model: account.bank.statement, id: statement_test1, string: Initial data should come from the profile}:
-    - balance_check is True
+    - control_balance_check is True
     - credit_partner_id.id == _ref('base.res_partner_1')
     - journal_id.id == _ref('account.check_journal')
 -
   Now I set the balance flag to False in the profile
 -
   !record {model: account.statement.profile, id: profile_test1}:
-    balance_check: False
+    control_balance_check: False
 -
   It should be false in the statement as well.
 -
   !assert {model: account.bank.statement, id: statement_test1, string: We should not check the balance}:
-    - balance_check is False
+    - control_balance_check is False
 -
   Now I change the journal in the profile
 -
@@ -73,6 +73,6 @@
   The statement should receive information from the new statement.
 -
   !assert {model: account.bank.statement, id: statement_test1, string: All information should be probagated from the new profile}:
-    - balance_check is True
+    - control_balance_check is True
     - credit_partner_id.id == _ref('base.res_partner_3')
     - journal_id.id == _ref('account.bank_journal')
