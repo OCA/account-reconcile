@@ -19,10 +19,10 @@
 #
 ##############################################################################
 
-from openerp.osv import orm, fields
+from openerp.osv import orm
 
 
-class account_move(orm.Model):
+class AccountMove(orm.Model):
     _inherit = 'account.move'
 
     def create(self, cr, uid, vals, context=None):
@@ -33,15 +33,16 @@ class account_move(orm.Model):
         if invoice:
             assert isinstance(invoice, orm.browse_record)
             invoice_obj = self.pool['account.invoice']
-            ref = invoice_obj._ref_from_invoice(cr, uid, invoice, context=context)
+            ref = invoice_obj._ref_from_invoice(
+                cr, uid, invoice, context=context)
             vals = vals.copy()
             vals['ref'] = ref
-        move_id = super(account_move, self).\
-            create(cr, uid, vals, context=context)
+        move_id = super(AccountMove, self).create(cr, uid, vals,
+                                                  context=context)
         return move_id
 
 
-class account_invoice(orm.Model):
+class AccountInvoice(orm.Model):
     _inherit = 'account.invoice'
 
     def _ref_from_invoice(self, cr, uid, invoice, context=None):
@@ -69,32 +70,32 @@ class account_invoice(orm.Model):
             cr.execute('UPDATE account_move_line SET ref=%s '
                        'WHERE move_id=%s AND (ref is null OR ref = \'\')',
                        (ref, move_id))
-            cr.execute('UPDATE account_analytic_line SET ref=%s '
-                       'FROM account_move_line '
-                       'WHERE account_move_line.move_id = %s '
-                       'AND account_analytic_line.move_id = account_move_line.id',
-                       (ref, move_id))
+            cr.execute(
+                'UPDATE account_analytic_line SET ref=%s '
+                'FROM account_move_line '
+                'WHERE account_move_line.move_id = %s '
+                'AND account_analytic_line.move_id = account_move_line.id',
+                (ref, move_id))
         return True
 
     def create(self, cr, uid, vals, context=None):
         if (vals.get('supplier_invoice_reference') and not
                 vals.get('reference')):
             vals['reference'] = vals['supplier_invoice_reference']
-        return super(account_invoice, self).create(cr, uid, vals,
-                                                   context=context)
+        return super(AccountInvoice, self).create(cr, uid, vals,
+                                                  context=context)
 
     def write(self, cr, uid, ids, vals, context=None):
         if vals.get('supplier_invoice_reference'):
             if isinstance(ids, (int, long)):
                 ids = [ids]
             for invoice in self.browse(cr, uid, ids, context=context):
-                local_vals = vals
                 if not invoice.reference:
                     locvals = vals.copy()
                     locvals['reference'] = vals['supplier_invoice_reference']
-                super(account_invoice, self).write(cr, uid, [invoice.id],
-                                                   locvals, context=context)
+                super(AccountInvoice, self).write(cr, uid, [invoice.id],
+                                                  locvals, context=context)
             return True
         else:
-            return super(account_invoice, self).write(cr, uid, ids, vals,
-                                                      context=context)
+            return super(AccountInvoice, self).write(cr, uid, ids, vals,
+                                                     context=context)

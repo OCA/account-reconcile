@@ -19,13 +19,11 @@
 #
 ##############################################################################
 
-from openerp.osv import fields, osv, orm
-from openerp.tools.translate import _
-from openerp.tools import DEFAULT_SERVER_DATETIME_FORMAT
+from openerp.osv import fields, orm
 from openerp.tools.translate import _
 
 
-class easy_reconcile_options(orm.AbstractModel):
+class EasyReconcileOptions(orm.AbstractModel):
     """Options of a reconciliation profile
 
     Columns shared by the configuration of methods
@@ -37,26 +35,31 @@ class easy_reconcile_options(orm.AbstractModel):
     _name = 'easy.reconcile.options'
 
     def _get_rec_base_date(self, cr, uid, context=None):
-        return [('end_period_last_credit', 'End of period of most recent credit'),
-                ('newest', 'Most recent move line'),
-                ('actual', 'Today'),
-                ('end_period', 'End of period of most recent move line'),
-                ('newest_credit', 'Date of most recent credit'),
-                ('newest_debit', 'Date of most recent debit')]
+        return [
+            ('end_period_last_credit', 'End of period of most recent credit'),
+            ('newest', 'Most recent move line'),
+            ('actual', 'Today'),
+            ('end_period', 'End of period of most recent move line'),
+            ('newest_credit', 'Date of most recent credit'),
+            ('newest_debit', 'Date of most recent debit')
+        ]
 
     _columns = {
-            'write_off': fields.float('Write off allowed'),
-            'account_lost_id': fields.many2one(
-                'account.account', 'Account Lost'),
-            'account_profit_id': fields.many2one(
-                'account.account', 'Account Profit'),
-            'journal_id': fields.many2one(
-                'account.journal', 'Journal'),
-            'date_base_on': fields.selection(
-                _get_rec_base_date,
-                required=True,
-                string='Date of reconciliation'),
-            'filter': fields.char('Filter', size=128),
+        'write_off': fields.float('Write off allowed'),
+        'account_lost_id': fields.many2one(
+            'account.account', 'Account Lost'),
+        'account_profit_id': fields.many2one(
+            'account.account', 'Account Profit'),
+        'journal_id': fields.many2one(
+            'account.journal', 'Journal'),
+        'date_base_on': fields.selection(
+            _get_rec_base_date,
+            required=True,
+            string='Date of reconciliation'),
+        'filter': fields.char('Filter', size=128),
+        'analytic_account_id': fields.many2one(
+            'account.analytic.account', 'Analytic Account',
+            help="Analytic account for the write-off"),
     }
 
     _defaults = {
@@ -65,44 +68,42 @@ class easy_reconcile_options(orm.AbstractModel):
     }
 
 
-class account_easy_reconcile_method(orm.Model):
-
+class AccountEasyReconcileMethod(orm.Model):
     _name = 'account.easy.reconcile.method'
     _description = 'reconcile method for account_easy_reconcile'
-
     _inherit = 'easy.reconcile.options'
-
     _order = 'sequence'
 
     def _get_all_rec_method(self, cr, uid, context=None):
         return [
             ('easy.reconcile.simple.name', 'Simple. Amount and Name'),
             ('easy.reconcile.simple.partner', 'Simple. Amount and Partner'),
-            ('easy.reconcile.simple.reference', 'Simple. Amount and Reference'),
-            ]
+            ('easy.reconcile.simple.reference',
+             'Simple. Amount and Reference'),
+        ]
 
     def _get_rec_method(self, cr, uid, context=None):
         return self._get_all_rec_method(cr, uid, context=None)
 
     _columns = {
-            'name': fields.selection(
-                _get_rec_method, 'Type', required=True),
-            'sequence': fields.integer(
-                'Sequence',
-                required=True,
-                help="The sequence field is used to order "
-                     "the reconcile method"),
-            'task_id': fields.many2one(
-                'account.easy.reconcile',
-                string='Task',
-                required=True,
-                ondelete='cascade'),
-            'company_id': fields.related('task_id','company_id',
-                                         relation='res.company',
-                                         type='many2one',
-                                         string='Company',
-                                         store=True,
-                                         readonly=True),
+        'name': fields.selection(
+            _get_rec_method, 'Type', required=True),
+        'sequence': fields.integer(
+            'Sequence',
+            required=True,
+            help="The sequence field is used to order "
+            "the reconcile method"),
+        'task_id': fields.many2one(
+            'account.easy.reconcile',
+            string='Task',
+            required=True,
+            ondelete='cascade'),
+        'company_id': fields.related('task_id', 'company_id',
+                                     relation='res.company',
+                                     type='many2one',
+                                     string='Company',
+                                     store=True,
+                                     readonly=True),
     }
 
     _defaults = {
@@ -127,7 +128,7 @@ class account_easy_reconcile_method(orm.Model):
         """)
 
 
-class account_easy_reconcile(orm.Model):
+class AccountEasyReconcile(orm.Model):
 
     _name = 'account.easy.reconcile'
     _description = 'account easy reconcile'
@@ -199,6 +200,8 @@ class account_easy_reconcile(orm.Model):
                                     rec_method.account_lost_id.id),
                 'account_profit_id': (rec_method.account_profit_id and
                                       rec_method.account_profit_id.id),
+                'analytic_account_id': (rec_method.analytic_account_id and
+                                        rec_method.analytic_account_id.id),
                 'journal_id': (rec_method.journal_id and
                                rec_method.journal_id.id),
                 'date_base_on': rec_method.date_base_on,
@@ -235,9 +238,9 @@ class account_easy_reconcile(orm.Model):
                 all_ml_partial_ids += ml_partial_ids
 
             reconcile_ids = find_reconcile_ids(
-                    'reconcile_id', all_ml_rec_ids)
+                'reconcile_id', all_ml_rec_ids)
             partial_ids = find_reconcile_ids(
-                    'reconcile_partial_id', all_ml_partial_ids)
+                'reconcile_partial_id', all_ml_partial_ids)
 
             self.pool.get('easy.reconcile.history').create(
                 cr,
@@ -254,11 +257,11 @@ class account_easy_reconcile(orm.Model):
         be called when there is no history on the reconciliation
         task.
         """
-        raise osv.except_osv(
-                _('Error'),
-                _('There is no history of reconciled '
-                  'items on the task: %s.') % rec.name)
-     
+        raise orm.except_orm(
+            _('Error'),
+            _('There is no history of reconciled '
+              'items on the task: %s.') % rec.name)
+
     def _open_move_line_list(sefl, cr, uid, move_line_ids, name, context=None):
         return {
             'name': name,
@@ -270,19 +273,15 @@ class account_easy_reconcile(orm.Model):
             'nodestroy': True,
             'target': 'current',
             'domain': unicode([('id', 'in', move_line_ids)]),
-            }
+        }
 
     def open_unreconcile(self, cr, uid, ids, context=None):
-        """ Open the view of move line with the unreconciled move lines
-        """
-
-        assert len(ids) == 1 , \
-                "You can only open entries from one profile at a time"
-
+        """ Open the view of move line with the unreconciled move lines"""
+        assert len(ids) == 1, \
+            "You can only open entries from one profile at a time"
         obj_move_line = self.pool.get('account.move.line')
-        res = {}
         for task in self.browse(cr, uid, ids, context=context):
-             line_ids = obj_move_line.search(
+            line_ids = obj_move_line.search(
                 cr, uid,
                 [('account_id', '=', task.account.id),
                  ('reconcile_id', '=', False),
@@ -290,26 +289,24 @@ class account_easy_reconcile(orm.Model):
                 context=context)
 
         name = _('Unreconciled items')
-        return self._open_move_line_list(cr, uid, line_ids, name, context=context)
+        return self._open_move_line_list(cr, uid, line_ids, name,
+                                         context=context)
 
     def open_partial_reconcile(self, cr, uid, ids, context=None):
-        """ Open the view of move line with the unreconciled move lines
-        """
-
-        assert len(ids) == 1 , \
-                "You can only open entries from one profile at a time"
-
+        """ Open the view of move line with the unreconciled move lines"""
+        assert len(ids) == 1, \
+            "You can only open entries from one profile at a time"
         obj_move_line = self.pool.get('account.move.line')
-        res = {}
         for task in self.browse(cr, uid, ids, context=context):
-             line_ids = obj_move_line.search(
+            line_ids = obj_move_line.search(
                 cr, uid,
                 [('account_id', '=', task.account.id),
                  ('reconcile_id', '=', False),
                  ('reconcile_partial_id', '!=', False)],
                 context=context)
         name = _('Partial reconciled items')
-        return self._open_move_line_list(cr, uid, line_ids, name, context=context)
+        return self._open_move_line_list(cr, uid, line_ids, name,
+                                         context=context)
 
     def last_history_reconcile(self, cr, uid, rec_id, context=None):
         """ Get the last history record for this reconciliation profile
@@ -317,7 +314,7 @@ class account_easy_reconcile(orm.Model):
         """
         if isinstance(rec_id, (tuple, list)):
             assert len(rec_id) == 1, \
-                    "Only 1 id expected"
+                "Only 1 id expected"
             rec_id = rec_id[0]
         rec = self.browse(cr, uid, rec_id, context=context)
         if not rec.last_history:
@@ -330,7 +327,7 @@ class account_easy_reconcile(orm.Model):
         """
         if isinstance(rec_id, (tuple, list)):
             assert len(rec_id) == 1, \
-                    "Only 1 id expected"
+                "Only 1 id expected"
             rec_id = rec_id[0]
         rec = self.browse(cr, uid, rec_id, context=context)
         if not rec.last_history:

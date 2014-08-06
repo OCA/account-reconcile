@@ -19,29 +19,16 @@
 #
 ##############################################################################
 
-from openerp.osv.orm import Model
-from openerp.osv import fields
+from openerp.osv import orm
 
 
-class AccountStatementProfil(Model):
+class AccountStatementProfil(orm.Model):
     _inherit = "account.statement.profile"
 
-    def get_import_type_selection(self, cr, uid, context=None):
-        """
-        Has to be inherited to add parser
-        """
-        res = super(AccountStatementProfil, self).get_import_type_selection(
-                cr, uid, context=context)
+    def _get_import_type_selection(self, cr, uid, context=None):
+        """Has to be inherited to add parser"""
+        res = super(AccountStatementProfil, self)._get_import_type_selection(
+            cr, uid, context=context)
         res.append(('generic_csvxls_transaction',
                     'Generic .csv/.xls based on SO transaction ID'))
         return res
-
-    _columns = {
-        'import_type': fields.selection(
-            get_import_type_selection,
-            'Type of import',
-            required=True,
-            help="Choose here the method by which you want to import "
-                 "bank statement for this profile."),
-
-    }

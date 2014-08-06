@@ -26,10 +26,12 @@
     'category': 'Generic Modules/Others',
     'license': 'AGPL-3',
     'description': """
-    Improve the basic rule "Match from statement line label (based on partner field 'Bank Statement Label')" provided by the
-    Bank statement base completion module. The goal is to match the label field from the bank statement line with a partner and 
-    an account.
-    For this, you have to create your record in the new class account.statement.label where you can link the label you want with a 
+    Improve the basic rule "Match from statement line label (based on partner
+    field 'Bank Statement Label')" provided by the Bank statement base
+    completion module. The goal is to match the label field from the bank
+    statement line with a partner and an account.
+    For this, you have to create your record in the new class
+    account.statement.label where you can link the label you want with a
     partner and an account.
 
     """,
@@ -37,13 +39,12 @@
     'website': 'http://www.akretion.com/',
     'depends': ['account_statement_base_completion'],
     'data': [
-           'partner_view.xml',
-           'statement_view.xml',
-           'security/ir.model.access.csv',
-           'security/ir_rule.xml',
+        'partner_view.xml',
+        'statement_view.xml',
+        'security/ir.model.access.csv',
+        'security/ir_rule.xml',
     ],
     'demo': [],
     'installable': False,
     'active': False,
 }
-

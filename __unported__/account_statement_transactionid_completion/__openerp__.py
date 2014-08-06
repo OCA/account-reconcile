@@ -28,7 +28,7 @@
  'depends': [
      'account_statement_base_completion',
      'base_transaction_id'
-     ],
+ ],
  'description': """
   Add a completion method based on transaction ID providen by the bank/office.
 
@@ -44,8 +44,8 @@
  'website': 'http://www.camptocamp.com',
  'init_xml': [],
  'update_xml': [
-    "statement_view.xml",
-    "data.xml",
+     "statement_view.xml",
+     "data.xml",
  ],
  'demo_xml': [],
  'test': [
@@ -58,4 +58,4 @@
  'images': [],
  'auto_install': True,
  'license': 'AGPL-3',
-}
+ }

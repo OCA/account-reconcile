@@ -22,19 +22,19 @@
 import base64
 import inspect
 import os
-
 from openerp.tests import common
 
 
-class test_coda_import(common.TransactionCase):
+class TestCodaImport(common.TransactionCase):
 
     def prepare(self):
         self.company_a = self.browse_ref('base.main_company')
         self.profile_obj = self.registry("account.statement.profile")
-        self.account_bank_statement_obj = self.registry("account.bank.statement")
-        # create the 2009 fiscal year since imported coda file reference statement lines in 2009
+        self.account_bank_statement_obj = self.registry(
+            "account.bank.statement")
+        # create the 2009 fiscal year since imported coda file reference
+        # statement lines in 2009
         self.fiscalyear_id = self._create_fiscalyear("2011", self.company_a.id)
-
         self.account_id = self.ref("account.a_recv")
         self.journal_id = self.ref("account.bank_journal")
         self.import_wizard_obj = self.registry('credit.statement.import')
@@ -71,15 +71,19 @@ class test_coda_import(common.TransactionCase):
                 'input_statement': base64.b64encode(content),
                 'file_name': os.path.basename(file_name),
             })
-            res = self.import_wizard_obj.import_statement(self.cr, self.uid, wizard_id)
-            statement_id = self.account_bank_statement_obj.search(self.cr, self.uid, eval(res['domain']))
-            return self.account_bank_statement_obj.browse(self.cr, self.uid, statement_id)[0]
+            res = self.import_wizard_obj.import_statement(
+                self.cr, self.uid, wizard_id)
+            statement_id = self.account_bank_statement_obj.search(
+                self.cr, self.uid, eval(res['domain']))
+            return self.account_bank_statement_obj.browse(
+                self.cr, self.uid, statement_id)[0]
 
     def test_simple_xls(self):
         """Test import from xls
         """
         self.prepare()
-        file_name = self._filename_to_abs_filename(os.path.join("..", "data", "statement.xls"))
+        file_name = self._filename_to_abs_filename(
+            os.path.join("..", "data", "statement.xls"))
         statement = self._import_file(file_name)
         self._validate_imported_satement(statement)
 
@@ -87,7 +91,8 @@ class test_coda_import(common.TransactionCase):
         """Test import from csv
         """
         self.prepare()
-        file_name = self._filename_to_abs_filename(os.path.join("..", "data", "statement.csv"))
+        file_name = self._filename_to_abs_filename(
+            os.path.join("..", "data", "statement.csv"))
         statement = self._import_file(file_name)
         self._validate_imported_satement(statement)
 

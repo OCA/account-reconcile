@@ -19,7 +19,7 @@
 ##############################################################################
 
 {'name': 'Advanced Reconcile Transaction Ref',
- 'description':  """
+ 'description': """
 Advanced reconciliation method for the module account_advanced_reconcile
 ========================================================================
 Reconcile rules with transaction_ref
@@ -32,9 +32,8 @@ Reconcile rules with transaction_ref
  'depends': ['account_advanced_reconcile'],
  'data': ['easy_reconcile_view.xml'],
  'demo': [],
- 'test': [], # To be ported or migrate to unit tests or scenarios
+ 'test': [],  # To be ported or migrate to unit tests or scenarios
  'auto_install': False,
  'installable': False,
  'images': []
-}
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+ }

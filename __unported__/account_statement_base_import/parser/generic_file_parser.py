@@ -18,32 +18,23 @@
 #
 ##############################################################################
 
-from openerp.tools.translate import _
-import base64
-import csv
-import tempfile
 import datetime
 from file_parser import FileParser
-try:
-    import xlrd
-except:
-    raise Exception(_('Please install python lib xlrd'))
 
 
 class GenericFileParser(FileParser):
-    """
-    Standard parser that use a define format in csv or xls to import into a
+    """Standard parser that use a define format in csv or xls to import into a
     bank statement. This is mostely an example of how to proceed to create a new
     parser, but will also be useful as it allow to import a basic flat file.
     """
 
     def __init__(self, parse_name, ftype='csv', **kwargs):
-        super(GenericFileParser, self).__init__(parse_name, ftype=ftype, **kwargs)
+        super(GenericFileParser, self).__init__(
+            parse_name, ftype=ftype, **kwargs)
 
     @classmethod
     def parser_for(cls, parser_name):
-        """
-        Used by the new_bank_statement_parser class factory. Return true if
+        """Used by the new_bank_statement_parser class factory. Return true if
         the providen name is generic_csvxls_so
         """
         return parser_name == 'generic_csvxls_so'
@@ -54,9 +45,10 @@ class GenericFileParser(FileParser):
         method of statement line in order to record it. It is the responsibility
         of every parser to give this dict of vals, so each one can implement his
         own way of recording the lines.
-            :param:  line: a dict of vals that represent a line of result_row_list
-            :return: dict of values to give to the create method of statement line,
-                     it MUST contain at least:
+            :param:  line: a dict of vals that represent a line of
+              result_row_list
+            :return: dict of values to give to the create method of statement
+              line, it MUST contain at least:
                 {
                     'name':value,
                     'date':value,
