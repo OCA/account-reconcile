@@ -35,6 +35,7 @@ import re
 
 
 class AccountStatementCompletionRule(Model):
+
     """Add a rule to complete account based on a regular expression"""
 
     _inherit = "account.statement.completion.rule"
@@ -43,12 +44,14 @@ class AccountStatementCompletionRule(Model):
         res = super(AccountStatementCompletionRule, self)._get_functions(
             cr, uid, context=context)
         res.append(('set_account',
-                    'Set account for line labels matching a regular expression'))
+                    'Set account for line labels matching a regular '
+                    'expression'))
         return res
 
     _columns = {
         'regex': fields.char('Regular Expression', size=128),
-        'account_id': fields.many2one('account.account', string="Account to set"),
+        'account_id': fields.many2one('account.account',
+                                      string="Account to set"),
     }
 
     def set_account(self, cr, uid, id, st_line, context=None):

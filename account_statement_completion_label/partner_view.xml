@@ -11,7 +11,6 @@
         <record id="bk_view_partner_form" model="ir.ui.view">
             <field name="name">account_bank_statement_import.view.partner.form</field>
             <field name="model">res.partner</field>
-            <field name="type">form</field>
             <field name="priority">20</field>
             <field name="inherit_id" ref="account_statement_base_completion.bk_view_partner_form"/>
             <field name="arch" type="xml">
@@ -23,7 +22,7 @@
                                 <field name="account_id"/>
                                 <field name="profile_id"/>
                             </tree>
-                        </field> 
+                        </field>
                     </group>
                 </field>
             </field>

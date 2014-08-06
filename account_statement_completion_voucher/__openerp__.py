@@ -28,14 +28,15 @@
  'depends': [
      'account_statement_base_completion',
      'account_voucher'
-     ],
+ ],
  'description': """
- This module is only needed when using account_statement_base_completion with voucher in order adapt the view correctly.
+ This module is only needed when using account_statement_base_completion with
+ voucher in order adapt the view correctly.
  """,
  'website': 'http://www.camptocamp.com',
  'init_xml': [],
  'update_xml': [
-    "statement_view.xml",
+     "statement_view.xml",
  ],
  'demo_xml': [],
  'test': [],
@@ -43,4 +44,4 @@
  'images': [],
  'auto_install': False,
  'license': 'AGPL-3',
-}
+ }

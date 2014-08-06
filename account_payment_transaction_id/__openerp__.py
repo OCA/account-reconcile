@@ -40,4 +40,4 @@ Needs `statement_voucher_killer`
  'test': [],
  'installable': True,
  'auto_install': True,
-}
+ }

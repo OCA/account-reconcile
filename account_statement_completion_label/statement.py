@@ -22,14 +22,16 @@
 
 from openerp.osv import fields, orm
 from collections import defaultdict
-from openerp.addons.account_statement_base_completion.statement import ErrorTooManyPartner
+from openerp.tools.translate import _
+from openerp.addons.account_statement_base_completion.statement import \
+    ErrorTooManyPartner
 
 
 class ErrorTooManyLabel(Exception):
+    """New Exception definition that is raised when more than one label is
+    matched by the completion rule.
     """
-    New Exception definition that is raised when more than one label is matched
-    by the completion rule.
-    """
+
     def __init__(self, value):
         self.value = value
 
@@ -38,8 +40,7 @@ class ErrorTooManyLabel(Exception):
 
 
 class AccountBankSatement(orm.Model):
-    """
-    We add a basic button and stuff to support the auto-completion
+    """We add a basic button and stuff to support the auto-completion
     of the bank statement once line have been imported or manually fullfill.
     """
     _inherit = "account.bank.statement"
@@ -60,8 +61,7 @@ class AccountStatementCompletionRule(orm.Model):
     _inherit = "account.statement.completion.rule"
 
     def get_from_label_and_partner_field(self, cr, uid, st_line, context=None):
-        """
-        Match the partner and the account based on the name field of the
+        """Match the partner and the account based on the name field of the
         statement line and the table account.statement.label.
         If more than one statement label matched, raise the ErrorTooManylabel
         error.
@@ -75,14 +75,14 @@ class AccountStatementCompletionRule(orm.Model):
 
             ...}
             """
-        st_obj = self.pool.get('account.bank.statement')
-        statement = st_obj.browse(cr, uid, st_line['statement_id'][0], 
+        st_obj = self.pool['account.bank.statement']
+        statement = st_obj.browse(cr, uid, st_line['statement_id'][0],
                                   context=context)
         res = {}
         if not context.get('label_memorizer'):
             context['label_memorizer'] = defaultdict(list)
             for line in statement.line_ids:
-                cr.execute(""" 
+                cr.execute("""
                     SELECT l.partner_id,
                            l.account_id
                     FROM account_statement_label as l,
@@ -99,14 +99,14 @@ class AccountStatementCompletionRule(orm.Model):
                         st_l.id = %s
                         """, (line.id,))
                 for partner, account in cr.fetchall():
-                    context['label_memorizer'][line.id].append({'partner_id': partner,
-                                                                'account_id': account})
+                    context['label_memorizer'][line.id].append(
+                        {'partner_id': partner, 'account_id': account})
         if st_line['id'] in context['label_memorizer']:
             label_info = context['label_memorizer'][st_line['id']]
             if len(label_info) > 1:
-                raise ErrorTooManyPartner(_('Line named "%s" (Ref:%s) was matched by '
-                                            'more than one statement label.') %
-                                          (st_line['name'], st_line['ref']))
+                raise ErrorTooManyPartner(
+                    _('Line named "%s" (Ref:%s) was matched by more than one '
+                      'statement label.') % (st_line['name'], st_line['ref']))
             if label_info[0]['partner_id']:
                 res['partner_id'] = label_info[0]['partner_id']
             res['account_id'] = label_info[0]['account_id']
@@ -118,14 +118,13 @@ class AccountStatementLabel(orm.Model):
     and a specific account
     """
     _name = "account.statement.label"
-
     _description = "Account Statement Label"
 
     _columns = {
         'partner_id': fields.many2one('res.partner', 'Partner'),
         'label': fields.char('Bank Statement Label', size=100),
         'account_id': fields.many2one('account.account', 'Account',
-                                      required = True,
+                                      required=True,
                                       help='Account corresponding to the label '
                                       'for a given partner'),
         'company_id': fields.related('account_id', 'company_id',
@@ -139,10 +138,9 @@ class AccountStatementLabel(orm.Model):
     }
 
     _defaults = {
-        'company_id': lambda s,cr,uid,c:
-            s.pool.get('res.company')._company_default_get(cr, uid,
-                                                           'account.statement.label',
-                                                           context=c),
+        'company_id': lambda s, cr, uid, c:
+            s.pool.get('res.company')._company_default_get(
+                cr, uid, 'account.statement.label', context=c),
     }
 
     _sql_constraints = [
