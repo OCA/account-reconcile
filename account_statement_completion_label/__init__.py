@@ -22,4 +22,3 @@
 
 from . import partner
 from . import statement
-
