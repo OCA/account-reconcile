@@ -118,4 +118,3 @@ class base_completion(common.TransactionCase):
                     self.partner_id, statement_line.partner_id['id'],
                     "Partner id should be empty after completion(partner_name: "
                     "%s, line_name: %s)" % (case.partner_name, case.line_label))
-
