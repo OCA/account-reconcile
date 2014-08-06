@@ -36,34 +36,38 @@ ACC_NUMBER = "BE38733040385372"
 class test_regex_account_completion(common.TransactionCase):
 
     def prepare(self):
-        self.account_bank_statement_obj = self.registry("account.bank.statement")
-        self.acc_bk_stmt_line_obj = self.registry("account.bank.statement.line")
+        self.st_obj = self.registry(
+            "account.bank.statement")
+        self.st_line_obj = self.registry(
+            "account.bank.statement.line")
         self.account_id = self.ref('account.a_expense')
         # create the completion rule
         rule_vals = {'function_to_call': 'set_account',
                      'regex': '^My statement',
                      'account_id': self.account_id}
-        completion_rule_id = self.registry("account.statement.completion.rule").create(self.cr, self.uid, rule_vals)
-
+        completion_rule_id = self.registry(
+            "account.statement.completion.rule").create(
+            self.cr, self.uid, rule_vals)
         # Create the profile
         journal_id = self.ref("account.bank_journal")
-        profile_id = self.registry("account.statement.profile").create(self.cr, self.uid, {
-            "name": "TEST",
-            "commission_account_id": self.ref("account.a_recv"),
-            "journal_id": journal_id,
-            "rule_ids": [(6, 0, [completion_rule_id])]})
-
+        profile_id = self.registry("account.statement.profile").create(
+            self.cr, self.uid, {
+                "name": "TEST",
+                "commission_account_id": self.ref("account.a_recv"),
+                "journal_id": journal_id,
+                "rule_ids": [(6, 0, [completion_rule_id])]
+            })
         # Create a bank statement
-        self.statement_id = self.account_bank_statement_obj.create(self.cr, self.uid, {
-            "balance_end_real": 0.0,
-            "balance_start": 0.0,
-            "date": time.strftime('%Y-%m-%d'),
-            "journal_id": journal_id,
-            "profile_id": profile_id
-        })
-
+        self.statement_id = self.st_obj.create(
+            self.cr, self.uid, {
+                "balance_end_real": 0.0,
+                "balance_start": 0.0,
+                "date": time.strftime('%Y-%m-%d'),
+                "journal_id": journal_id,
+                "profile_id": profile_id
+            })
         # Create two bank statement lines
-        self.statement_line1_id = self.acc_bk_stmt_line_obj.create(self.cr, self.uid, {
+        self.statement_line1_id = self.st_line_obj.create(self.cr, self.uid, {
             'amount': 1000.0,
             'name': 'My statement',
             'ref': 'My ref',
@@ -71,7 +75,7 @@ class test_regex_account_completion(common.TransactionCase):
             'partner_acc_number': ACC_NUMBER
         })
 
-        self.statement_line2_id = self.acc_bk_stmt_line_obj.create(self.cr, self.uid, {
+        self.statement_line2_id = self.st_line_obj.create(self.cr, self.uid, {
             'amount': 2000.0,
             'name': 'My second statement',
             'ref': 'My second ref',
@@ -83,9 +87,14 @@ class test_regex_account_completion(common.TransactionCase):
         """Test the automatic completion on account
         """
         self.prepare()
-        statement_obj = self.account_bank_statement_obj.browse(self.cr, self.uid, self.statement_id)
+        statement_obj = self.st_obj.browse(self.cr, self.uid, self.statement_id)
         statement_obj.button_auto_completion()
-        statement_line1 = self.acc_bk_stmt_line_obj.browse(self.cr, self.uid, self.statement_line1_id)
-        self.assertEquals(self.account_id, statement_line1.account_id.id, "The account should be the account of the completion")
-        statement_line2 = self.acc_bk_stmt_line_obj.browse(self.cr, self.uid, self.statement_line2_id)
-        self.assertNotEqual(self.account_id, statement_line2.account_id.id, "The account should be not the account of the completion")
+        statement_line1 = self.st_line_obj.browse(
+            self.cr, self.uid, self.statement_line1_id)
+        self.assertEquals(self.account_id, statement_line1.account_id.id,
+                          "The account should be the account of the completion")
+        statement_line2 = self.st_line_obj.browse(
+            self.cr, self.uid, self.statement_line2_id)
+        self.assertNotEqual(self.account_id, statement_line2.account_id.id,
+                            "The account should be not the account of the "
+                            "completion")
