@@ -110,9 +110,12 @@ class AccountStatementCompletionRule(Model):
         elif len(invoice_id) == 1:
             invoice = invoice_obj.browse(cr, uid, invoice_id[0],
                                          context=context)
-            # FIXME use only commercial_partner_id of invoice in 7.1
-            # this is for backward compatibility in 7.0 before
-            # the refactoring of res.partner
+            # if account_report_company is installed, the field to be
+            # used as partner is the commercial partner; otherwise,
+            # the basic partner must be used.
+            # 
+            # This is used to keep consistent behavior from the module
+            # account_statement_base_completion.
             if hasattr(invoice, 'commercial_partner_id'):
                 res['partner_id'] = invoice.commercial_partner_id.id
             else:
