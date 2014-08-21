@@ -420,7 +420,7 @@ class AccountBankStatement(orm.Model):
                     self.create_move_from_st_line(
                         cr, uid, st_line.id, company_currency_id,
                         st_line_number, context)
-                except (orm.except_orm, osv.except_osv), exc:
+                except (orm.except_orm, osv.except_osv) as exc:
                     msg = "Line ID %s with ref %s had following error: %s" % (
                         st_line.id, st_line.ref, exc.value)
                     errors_stack.append(msg)
