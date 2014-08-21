@@ -19,7 +19,7 @@
 #
 ##############################################################################
 import openerp.addons.account.account_bank_statement as stat_mod
-from openerp.osv import fields, orm
+from openerp.osv import fields, orm, osv
 from openerp.tools.translate import _
 
 
@@ -420,7 +420,7 @@ class AccountBankStatement(orm.Model):
                     self.create_move_from_st_line(
                         cr, uid, st_line.id, company_currency_id,
                         st_line_number, context)
-                except orm.except_orm, exc:
+                except (orm.except_orm, osv.except_osv) as exc:
                     msg = "Line ID %s with ref %s had following error: %s" % (
                         st_line.id, st_line.ref, exc.value)
                     errors_stack.append(msg)
@@ -606,7 +606,7 @@ class AccountBankStatementLine(orm.Model):
         local_context['account_period_prefer_normal'] = True
         try:
             periods = period_obj.find(cr, uid, dt=date, context=local_context)
-        except orm.except_orm:
+        except (orm.except_orm, osv.except_osv):
             # if no period defined, we are certainly at installation time
             return False
         return periods and periods[0] or False
