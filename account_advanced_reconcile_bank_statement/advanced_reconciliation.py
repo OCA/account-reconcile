@@ -71,9 +71,11 @@ class easy_reconcile_advanced_bank_statement(orm.TransientModel):
     # Re-defined for this particular rule; since the commission line is a
     # credit line inside of the target statement, it should also be considered
     # as an opposite to be reconciled.
+    # And also, given some are refunds, debit lines can be "credit".
     def _action_rec(self, cr, uid, rec, context=None):
         credit_lines = self._query_credit(cr, uid, rec, context=context)
         debit_lines = self._query_debit(cr, uid, rec, context=context)
-        return self._rec_auto_lines_advanced(
-                cr, uid, rec, credit_lines, credit_lines + debit_lines,
-                context=context)
+        return self._rec_auto_lines_advanced(cr, uid, rec,
+                                             credit_lines + debit_lines,
+                                             credit_lines + debit_lines,
+                                             context=context)
