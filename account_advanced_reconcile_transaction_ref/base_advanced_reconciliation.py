@@ -30,8 +30,6 @@ class EasyReconcileAdvanced(orm.AbstractModel):
         """ Mandatory columns for move lines queries
         An extra column aliased as ``key`` should be defined
         in each query."""
-        aml_cols = super(easy_reconcile_advanced, self).\
-            _base_columns(rec)
-        aml_cols += ['account_move_line.transaction_ref']
+        aml_cols = super(EasyReconcileAdvanced, self)._base_columns(rec)
+        aml_cols.append('account_move_line.transaction_ref')
         return aml_cols
-
