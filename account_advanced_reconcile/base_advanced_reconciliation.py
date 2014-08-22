@@ -23,6 +23,9 @@ import logging
 
 from itertools import product
 from openerp.osv import orm
+from openerp.tools.translate import _
+
+_logger = logging.getLogger(__name__)
 
 
 class easy_reconcile_advanced(orm.AbstractModel):
