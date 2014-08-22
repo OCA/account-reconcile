@@ -34,4 +34,3 @@ class account_easy_reconcile_method(orm.Model):
              'Advanced. Partner and Bank Statement'),
         ]
         return methods
-

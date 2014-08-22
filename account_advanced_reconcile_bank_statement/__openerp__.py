@@ -37,9 +37,8 @@ reconcile the commission with credit card imports).
  'depends': ['account_advanced_reconcile'],
  'data': ['easy_reconcile_view.xml'],
  'demo': [],
- 'test': [], # To be ported or migrate to unit tests or scenarios
+ 'test': [],  # To be ported or migrate to unit tests or scenarios
  'auto_install': False,
  'installable': True,
  'images': []
-}
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+ }
