@@ -265,7 +265,7 @@ class AccountEasyReconcile(orm.Model):
                      'date': fields.datetime.now(),
                      'reconcile_ids': [(4, rid) for rid in reconcile_ids],
                      'reconcile_partial_ids': [(4, rid) for rid in partial_ids],
-                    },
+                     },
                     context=context)
             finally:
                 if ctx['commit_every']:
