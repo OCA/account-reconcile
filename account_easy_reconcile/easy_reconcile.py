@@ -365,8 +365,11 @@ class AccountEasyReconcile(orm.Model):
 
         """
         def _get_date(reconcile):
-            return datetime.strptime(reconcile.last_history.date,
-                                     DEFAULT_SERVER_DATETIME_FORMAT)
+            if reconcile.last_history.date:
+                return datetime.strptime(reconcile.last_history.date,
+                                         DEFAULT_SERVER_DATETIME_FORMAT)
+            else:
+                return datetime.min
 
         ids = self.search(cr, uid, [], context=context)
         assert ids, "No easy reconcile available"
