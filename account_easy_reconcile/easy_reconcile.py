@@ -19,7 +19,9 @@
 #
 ##############################################################################
 
+from datetime import datetime
 from openerp.osv import fields, orm
+from openerp.tools import DEFAULT_SERVER_DATETIME_FORMAT
 from openerp.tools.translate import _
 from openerp import pooler
 
@@ -272,7 +274,7 @@ class AccountEasyReconcile(orm.Model):
         return True
 
     def _no_history(self, cr, uid, rec, context=None):
-        """ Raise an `osv.except_osv` error, supposed to
+        """ Raise an `orm.except_orm` error, supposed to
         be called when there is no history on the reconciliation
         task.
         """
@@ -352,3 +354,30 @@ class AccountEasyReconcile(orm.Model):
         if not rec.last_history:
             self._no_history(cr, uid, rec, context=context)
         return rec.last_history.open_partial()
+
+    def run_scheduler(self, cr, uid, run_all=None, context=None):
+        """ Launch the reconcile with the oldest run
+        This function is mostly here to be used with cron task
+
+        :param run_all: if set it will ingore lookup and launch
+                    all reconciliation
+        :returns: True in case of success or raises an exception
+
+        """
+        def _get_date(reconcile):
+            if reconcile.last_history.date:
+                return datetime.strptime(reconcile.last_history.date,
+                                         DEFAULT_SERVER_DATETIME_FORMAT)
+            else:
+                return datetime.min
+
+        ids = self.search(cr, uid, [], context=context)
+        assert ids, "No easy reconcile available"
+        if run_all:
+            self.run_reconcile(cr, uid, ids, context=context)
+            return True
+        reconciles = self.browse(cr, uid, ids, context=context)
+        reconciles.sort(key=_get_date)
+        older = reconciles[0]
+        self.run_reconcile(cr, uid, [older.id], context=context)
+        return True
