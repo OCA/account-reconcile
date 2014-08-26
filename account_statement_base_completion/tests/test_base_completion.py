@@ -65,8 +65,8 @@ class base_completion(common.TransactionCase):
 
     def test_name_completion(self):
         """Test complete partner_id from statement line label
-        Test the automatic completion of the partner_id based if the name of the
-        partner appears in the statement line label
+        Test the automatic completion of the partner_id based if the name of
+        the partner appears in the statement line label
         """
         self.completion_rule_id = self.ref(
             'account_statement_base_completion.'
@@ -89,7 +89,8 @@ class base_completion(common.TransactionCase):
 
         for case in NAMES_COMPLETION_CASES:
             self.partner_obj.write(
-                self.cr, self.uid, self.partner_id, {'name': case.partner_name})
+                self.cr, self.uid, self.partner_id, {'name': case.partner_name}
+            )
             statement_line_id = self.account_bank_statement_line_obj.create(
                 self.cr, self.uid, {
                     'amount': 1000.0,
@@ -116,5 +117,6 @@ class base_completion(common.TransactionCase):
             else:
                 self.assertNotEquals(
                     self.partner_id, statement_line.partner_id['id'],
-                    "Partner id should be empty after completion(partner_name: "
-                    "%s, line_name: %s)" % (case.partner_name, case.line_label))
+                    "Partner id should be empty after completion "
+                    "(partner_name: %s, line_name: %s)"
+                    % (case.partner_name, case.line_label))

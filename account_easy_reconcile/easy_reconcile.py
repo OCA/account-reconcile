@@ -259,14 +259,12 @@ class AccountEasyReconcile(orm.Model):
                 partial_ids = find_reconcile_ids(
                     new_cr, 'reconcile_partial_id', all_ml_partial_ids)
 
-                self.pool.get('easy.reconcile.history').create(
-                    new_cr, uid,
-                    {'easy_reconcile_id': rec.id,
-                     'date': fields.datetime.now(),
-                     'reconcile_ids': [(4, rid) for rid in reconcile_ids],
-                     'reconcile_partial_ids': [(4, rid) for rid in partial_ids],
-                     },
-                    context=context)
+                self.pool.get('easy.reconcile.history').create(new_cr, uid, {
+                    'easy_reconcile_id': rec.id,
+                    'date': fields.datetime.now(),
+                    'reconcile_ids': [(4, rid) for rid in reconcile_ids],
+                    'reconcile_partial_ids': [(4, rid) for rid in partial_ids],
+                }, context=context)
             finally:
                 if ctx['commit_every']:
                     new_cr.commit()

@@ -181,9 +181,9 @@ class FileParser(BankStatementImportParser):
                     except Exception as err:
                         raise except_orm(
                             _("Date format is not valid"),
-                            _("Please modify the cell formatting to date format"
-                              " for column: %s value: %s\n Please check the "
-                              "line with ref: %s\n \n Detail: %s") %
+                            _("Please modify the cell formatting to date "
+                              "format for column: %s value: %s\n Please check "
+                              "the line with ref: %s\n \n Detail: %s") %
                             (rule, line.get(rule, _('Missing')),
                              line.get('ref', line), repr(err)))
                 else:

@@ -62,8 +62,8 @@ class AccountStatementFromInvoiceLines(orm.TransientModel):
             elif (line.invoice and
                     line.invoice.currency_id.id != statement.currency.id):
                 amount = currency_obj.compute(
-                    cr, uid, line.invoice.currency_id.id, statement.currency.id,
-                    amount, context=ctx)
+                    cr, uid, line.invoice.currency_id.id,
+                    statement.currency.id, amount, context=ctx)
             context.update({'move_line_ids': [line.id],
                             'invoice_id': line.invoice.id})
             s_type = 'general'

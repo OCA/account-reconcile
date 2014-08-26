@@ -124,7 +124,9 @@ class AccountStatementCompletionRule(orm.Model):
     _order = "sequence asc"
 
     def _get_functions(self, cr, uid, context=None):
-        """List of available methods for rules. Override this to add you own."""
+        """List of available methods for rules.
+
+        Override this to add you own."""
         return [
             ('get_from_ref_and_invoice',
              'From line reference (based on customer invoice number)'),
@@ -225,8 +227,8 @@ class AccountStatementCompletionRule(orm.Model):
     # Should be private but data are initialised with no update XML
     def get_from_ref_and_invoice(self, cr, uid, line, context=None):
         """Match the partner based on the invoice number and the reference of
-        the statement line. Then, call the generic get_values_for_line method to
-        complete other values. If more than one partner matched, raise the
+        the statement line. Then, call the generic get_values_for_line method
+        to complete other values. If more than one partner matched, raise the
         ErrorTooManyPartner error.
 
         :param dict line: read of the concerned account.bank.statement.line
@@ -242,11 +244,11 @@ class AccountStatementCompletionRule(orm.Model):
     # Should be private but data are initialised with no update XML
     def get_from_label_and_partner_field(self, cr, uid, st_line, context=None):
         """
-        Match the partner based on the label field of the statement line
-        and the text defined in the 'bank_statement_label' field of the partner.
-        Remember that we can have values separated with ; Then, call the generic
-        get_values_for_line method to complete other values.
-        If more than one partner matched, raise the ErrorTooManyPartner error.
+        Match the partner based on the label field of the statement line and
+        the text defined in the 'bank_statement_label' field of the partner.
+        Remember that we can have values separated with ; Then, call the
+        generic get_values_for_line method to complete other values.  If more
+        than one partner matched, raise the ErrorTooManyPartner error.
 
         :param dict st_line: read of the concerned account.bank.statement.line
         :return:
@@ -303,10 +305,10 @@ class AccountStatementCompletionRule(orm.Model):
         return res
 
     def get_from_label_and_partner_name(self, cr, uid, st_line, context=None):
-        """Match the partner based on the label field of the statement line
-        and the name of the partner. Then, call the generic get_values_for_line
-        method to complete other values. If more than one partner matched, raise
-        the ErrorTooManyPartner error.
+        """Match the partner based on the label field of the statement line and
+        the name of the partner. Then, call the generic get_values_for_line
+        method to complete other values. If more than one partner matched,
+        raise the ErrorTooManyPartner error.
 
         :param dict st_line: read of the concerned account.bank.statement.line
         :return:
@@ -386,9 +388,9 @@ class AccountStatement(orm.Model):
 
 class AccountStatementLine(orm.Model):
     """
-    Add sparse field on the statement line to allow to store all the
-    bank infos that are given by a bank/office. You can then add you own in your
-    module. The idea here is to store all bank/office infos in the
+    Add sparse field on the statement line to allow to store all the bank infos
+    that are given by a bank/office. You can then add you own in your module.
+    The idea here is to store all bank/office infos in the
     additionnal_bank_fields serialized field when importing the file. If many
     values, add a tab in the bank statement line to store your specific one.
     Have a look in account_statement_base_import module to see how we've done
@@ -449,7 +451,8 @@ class AccountStatementLine(orm.Model):
         statement_line_obj = self.pool['account.bank.statement.line']
         model_cols = statement_line_obj._columns
         avail = [
-            k for k, col in model_cols.iteritems() if not hasattr(col, '_fnct')]
+            k for k, col in model_cols.iteritems() if not hasattr(col, '_fnct')
+        ]
         keys = [k for k in statement_store[0].keys() if k in avail]
         # add sparse fields..
         if include_serializable:
@@ -635,7 +638,8 @@ class AccountBankStatement(orm.Model):
                     st += ''.join(traceback.format_tb(trbk, 30))
                     _logger.error(st)
                 if res:
-                    # stat_line_obj.write(cr, uid, [line.id], vals, context=ctx)
+                    # stat_line_obj.write(cr, uid, [line.id], vals,
+                    #                     context=ctx)
                     try:
                         stat_line_obj._update_line(
                             cr, uid, res, context=context)

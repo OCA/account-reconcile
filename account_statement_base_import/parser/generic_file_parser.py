@@ -24,8 +24,9 @@ from file_parser import FileParser
 
 class GenericFileParser(FileParser):
     """Standard parser that use a define format in csv or xls to import into a
-    bank statement. This is mostely an example of how to proceed to create a new
-    parser, but will also be useful as it allow to import a basic flat file.
+    bank statement. This is mostely an example of how to proceed to create a
+    new parser, but will also be useful as it allow to import a basic flat
+    file.
     """
 
     def __init__(self, parse_name, ftype='csv', **kwargs):
@@ -42,9 +43,9 @@ class GenericFileParser(FileParser):
     def get_st_line_vals(self, line, *args, **kwargs):
         """
         This method must return a dict of vals that can be passed to create
-        method of statement line in order to record it. It is the responsibility
-        of every parser to give this dict of vals, so each one can implement his
-        own way of recording the lines.
+        method of statement line in order to record it. It is the
+        responsibility of every parser to give this dict of vals, so each one
+        can implement his own way of recording the lines.
             :param:  line: a dict of vals that represent a line of
               result_row_list
             :return: dict of values to give to the create method of statement

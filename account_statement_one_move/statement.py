@@ -65,7 +65,8 @@ class AccountBankStatement(orm.Model):
         })
         return res
 
-    def create_move_from_st_line(self, cr, uid, st_line_id, company_currency_id,
+    def create_move_from_st_line(self, cr, uid, st_line_id,
+                                 company_currency_id,
                                  st_line_number, context=None):
         if context is None:
             context = {}
