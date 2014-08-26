@@ -35,9 +35,9 @@
  the importation of different bank and offices that uses transactionID.
 
  This module allows you to import your bank transactions with a standard .csv
- or .xls file (you'll find samples in the 'data' folder). It respects the chosen
- profile (model provided by the account_statement_ext module) to generate the
- entries.
+ or .xls file (you'll find samples in the 'data' folder). It respects the
+ chosen profile (model provided by the account_statement_ext module) to
+ generate the entries.
 
  This module can handle a commission taken by the payment office and has the
  following format:
@@ -48,8 +48,8 @@
  * amount: amount paid in the currency of the journal used in the importation
    profile
  * commission_amount: amount of the comission for each line
- * label: the comunication given by the payment office, used as communication in
-   the generated entries.
+ * label: the comunication given by the payment office, used as communication
+   in the generated entries.
     """,
     'website': 'http://www.camptocamp.com',
     'installable': True,

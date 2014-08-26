@@ -39,8 +39,8 @@ origin, free reference) and above all, to understand which field will be
 copied in the reference field of the move and move lines.
 
 The approach here is to state simple rules with one concern: consistency.
-The reference of the move lines must be the number of the document at their very
-origin (number of a sales order, of an external document like a supplier
+The reference of the move lines must be the number of the document at their
+very origin (number of a sales order, of an external document like a supplier
 invoice, ...). The goal is for the accountant to be able to trace to the
 source document from a ledger).
 The description of a line should always be... well, a description. Not a number

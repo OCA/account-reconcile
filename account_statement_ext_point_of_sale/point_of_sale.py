@@ -82,7 +82,8 @@ if not hasattr(std_pos_session, '_prepare_bank_statement'):
                     cr, uid, [('type', '=', 'cash')], context=context)
                 if not cashids:
                     cashids = journal_proxy.search(
-                        cr, uid, [('journal_user', '=', True)], context=context)
+                        cr, uid, [('journal_user', '=', True)],
+                        context=context)
             jobj.write(
                 cr, uid, [pos_config.id], {'journal_ids': [(6, 0, cashids)]})
         pos_config = jobj.browse(cr, uid, config_id, context=context)

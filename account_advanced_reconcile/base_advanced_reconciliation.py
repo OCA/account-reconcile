@@ -186,7 +186,8 @@ class easy_reconcile_advanced(orm.AbstractModel):
         If all the matchers match for a move line and an opposite move line,
         they are candidate for a reconciliation.
         """
-        opp_matchers = self._opposite_matchers(cr, uid, rec, opposite_move_line,
+        opp_matchers = self._opposite_matchers(cr, uid, rec,
+                                               opposite_move_line,
                                                context=context)
         for matcher in matchers:
             try:

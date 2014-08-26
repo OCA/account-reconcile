@@ -54,9 +54,9 @@ class TransactionIDFileParser(FileParser):
 
     def get_st_line_vals(self, line, *args, **kwargs):
         """This method must return a dict of vals that can be passed to create
-        method of statement line in order to record it. It is the responsibility
-        of every parser to give this dict of vals, so each one can implement his
-        own way of recording the lines.
+        method of statement line in order to record it. It is the
+        responsibility of every parser to give this dict of vals, so each one
+        can implement his own way of recording the lines.
             :param:  line: a dict of vals that represent a line of
               result_row_list
             :return: dict of values to give to the create method of statement

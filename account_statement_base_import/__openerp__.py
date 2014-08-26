@@ -57,8 +57,8 @@
 
  The goal is here to populate the statement lines of a bank statement with the
  infos that the bank or office give you. Fell free to inherit from this module
- to add your own format. Then, if you need to complete data from there, add your
- own account_statement_*_completion module and implement the needed rules.
+ to add your own format. Then, if you need to complete data from there, add
+ your own account_statement_*_completion module and implement the needed rules.
  """,
  'website': 'http://www.camptocamp.com',
  'data': [

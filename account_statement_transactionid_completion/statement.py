@@ -151,7 +151,8 @@ class AccountBankStatement(Model):
 
            :param browse_record st_line: account.bank.statement.line record to
              create the move from.
-           :param int/long move_id: ID of the account.move to link the move line
+           :param int/long move_id: ID of the account.move to link the move
+             line
            :param float debit: debit amount of the move line
            :param float credit: credit amount of the move line
            :param int/long currency_id: ID of currency of the move line to
@@ -162,7 +163,8 @@ class AccountBankStatement(Model):
              line if different from the statement line account ID
            :param int/long analytic_id: ID of analytic account to put on the
              move line
-           :param int/long partner_id: ID of the partner to put on the move line
+           :param int/long partner_id: ID of the partner to put on the move
+             line
            :return: dict of value to create() the account.move.line
         """
         res = super(AccountBankStatement, self)._prepare_move_line_vals(
