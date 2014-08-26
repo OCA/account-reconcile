@@ -71,6 +71,7 @@ class EasyReconcileBase(orm.AbstractModel):
             'name',
             'partner_id',
             'account_id',
+            'reconcile_partial_id',
             'move_id')
         return ["account_move_line.%s" % col for col in aml_cols]
 
@@ -195,6 +196,20 @@ class EasyReconcileBase(orm.AbstractModel):
                 context=rec_ctx)
             return True, True
         elif allow_partial:
+            # Check if the group of move lines was already partially
+            # reconciled and if all the lines were the same, in such
+            # case, just skip the group and consider it as partially
+            # reconciled (no change).
+            if lines:
+                existing_partial_id = lines[0]['reconcile_partial_id']
+                if existing_partial_id:
+                    partial_line_ids = set(ml_obj.search(
+                        cr, uid,
+                        [('reconcile_partial_id', '=', existing_partial_id)],
+                        context=context))
+                    if set(line_ids) == partial_line_ids:
+                        return True, False
+
             ml_obj.reconcile_partial(
                 cr, uid,
                 line_ids,
