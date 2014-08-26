@@ -21,6 +21,7 @@
 
 from openerp.osv import fields, orm
 from openerp.tools.translate import _
+from openerp import pooler
 
 
 class EasyReconcileOptions(orm.AbstractModel):
@@ -208,7 +209,7 @@ class AccountEasyReconcile(orm.Model):
                 'filter': rec_method.filter}
 
     def run_reconcile(self, cr, uid, ids, context=None):
-        def find_reconcile_ids(fieldname, move_line_ids):
+        def find_reconcile_ids(cr, fieldname, move_line_ids):
             if not move_line_ids:
                 return []
             sql = ("SELECT DISTINCT " + fieldname +
@@ -219,37 +220,57 @@ class AccountEasyReconcile(orm.Model):
             res = cr.fetchall()
             return [row[0] for row in res]
 
+        # we use a new cursor to be able to commit the reconciliation
+        # often. We have to create it here and not later to avoid problems
+        # where the new cursor sees the lines as reconciles but the old one
+        # does not.
+        if context is None:
+            context = {}
+
         for rec in self.browse(cr, uid, ids, context=context):
-            all_ml_rec_ids = []
-            all_ml_partial_ids = []
+            ctx = context.copy()
+            ctx['commit_every'] = (
+                rec.account.company_id.reconciliation_commit_every
+            )
+            if ctx['commit_every']:
+                new_cr = pooler.get_db(cr.dbname).cursor()
+            else:
+                new_cr = cr
+            try:
+                all_ml_rec_ids = []
+                all_ml_partial_ids = []
 
-            for method in rec.reconcile_method:
-                rec_model = self.pool.get(method.name)
-                auto_rec_id = rec_model.create(
-                    cr, uid,
-                    self._prepare_run_transient(
-                        cr, uid, method, context=context),
+                for method in rec.reconcile_method:
+                    rec_model = self.pool.get(method.name)
+                    auto_rec_id = rec_model.create(
+                        new_cr, uid,
+                        self._prepare_run_transient(
+                            new_cr, uid, method, context=context),
+                        context=context)
+
+                    ml_rec_ids, ml_partial_ids = rec_model.automatic_reconcile(
+                        new_cr, uid, auto_rec_id, context=ctx)
+
+                    all_ml_rec_ids += ml_rec_ids
+                    all_ml_partial_ids += ml_partial_ids
+
+                reconcile_ids = find_reconcile_ids(
+                    new_cr, 'reconcile_id', all_ml_rec_ids)
+                partial_ids = find_reconcile_ids(
+                    new_cr, 'reconcile_partial_id', all_ml_partial_ids)
+
+                self.pool.get('easy.reconcile.history').create(
+                    new_cr, uid,
+                    {'easy_reconcile_id': rec.id,
+                     'date': fields.datetime.now(),
+                     'reconcile_ids': [(4, rid) for rid in reconcile_ids],
+                     'reconcile_partial_ids': [(4, rid) for rid in partial_ids],
+                     },
                     context=context)
-
-                ml_rec_ids, ml_partial_ids = rec_model.automatic_reconcile(
-                    cr, uid, auto_rec_id, context=context)
-
-                all_ml_rec_ids += ml_rec_ids
-                all_ml_partial_ids += ml_partial_ids
-
-            reconcile_ids = find_reconcile_ids(
-                'reconcile_id', all_ml_rec_ids)
-            partial_ids = find_reconcile_ids(
-                'reconcile_partial_id', all_ml_partial_ids)
-
-            self.pool.get('easy.reconcile.history').create(
-                cr,
-                uid,
-                {'easy_reconcile_id': rec.id,
-                 'date': fields.datetime.now(),
-                 'reconcile_ids': [(4, rid) for rid in reconcile_ids],
-                 'reconcile_partial_ids': [(4, rid) for rid in partial_ids]},
-                context=context)
+            finally:
+                if ctx['commit_every']:
+                    new_cr.commit()
+                    new_cr.close()
         return True
 
     def _no_history(self, cr, uid, rec, context=None):
