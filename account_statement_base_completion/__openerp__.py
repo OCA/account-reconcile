@@ -37,7 +37,8 @@
 
  Some basic rules are provided in this module:
 
- 1) Match from statement line label (based on partner field 'Bank Statement Label')
+ 1) Match from statement line label (based on partner field 'Bank Statement
+    Label')
  2) Match from statement line label (based on partner name)
  3) Match from statement line reference (based on Invoice number)
 
@@ -51,11 +52,13 @@
  Label'.  Using the pre-define rules, you will be able to match various
  labels for a partner.
 
- The reference of the line is always used by the reconciliation process. We're supposed to copy
- there (or write manually) the matching string. This can be: the order Number or an invoice number,
- or anything that will be found in the invoice accounting entry part to make the match.
+ The reference of the line is always used by the reconciliation process. We're
+ supposed to copy there (or write manually) the matching string. This can be:
+ the order Number or an invoice number, or anything that will be found in the
+ invoice accounting entry part to make the match.
 
- You can use it with  our account_advanced_reconcile module to automatize the reconciliation process.
+ You can use it with  our account_advanced_reconcile module to automatize the
+ reconciliation process.
 
 
  TODO: The rules that look for invoices to find out the partner should take
@@ -74,7 +77,7 @@
         'test/partner.yml',
         'test/invoice.yml',
         'test/supplier_invoice.yml',
-    'test/refund.yml',
+        'test/refund.yml',
         'test/completion_test.yml'
     ],
     'installable': True,
