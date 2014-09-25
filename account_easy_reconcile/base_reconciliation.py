@@ -80,7 +80,9 @@ class EasyReconcileBase(orm.AbstractModel):
 
     def _from(self, rec, *args, **kwargs):
         return ("FROM account_move_line "
-                "LEFT OUTER JOIN account_move_reconcile ON (account_move_line.reconcile_partial_id = account_move_reconcile.id)"
+                "LEFT OUTER JOIN account_move_reconcile ON "
+                "(account_move_line.reconcile_partial_id "
+                "= account_move_reconcile.id)"
                 )
 
     def _where(self, rec, *args, **kwargs):
