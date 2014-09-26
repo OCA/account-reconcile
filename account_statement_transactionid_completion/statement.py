@@ -110,7 +110,7 @@ class AccountStatementCompletionRule(Model):
         elif len(invoice_id) == 1:
             invoice = invoice_obj.browse(cr, uid, invoice_id[0],
                                          context=context)
-            res['partner_id'] = invoice.partner_id.id
+            res['partner_id'] = invoice.commercial_partner_id.id
             # we want the move to have the same ref than the found
             # invoice's move, thus it will be easier to link them for the
             # accountants
