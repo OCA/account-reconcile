@@ -53,8 +53,6 @@ class AccountBankStatement(orm.Model):
             })
         return res
 
-        return res
-
     def _prepare_move(self, cr, uid, st_line, st_line_number, context=None):
         res = super(AccountBankStatement, self).\
             _prepare_move(cr, uid, st_line, st_line_number, context=context)
