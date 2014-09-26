@@ -46,7 +46,7 @@ class FileParser(BankStatementImportParser):
             :param char: parse_name: The name of the parser
             :param char: ftype: extension of the file (could be csv, xls or
               xlsx)
-            :param dict: extra_fields: extra fields to add to the conversion
+            :param dict: extra_fields: extra fields to put into the conversion
               dict. In the format {fieldname: fieldtype}
             :param list: header : specify header fields if the csv file has no
               header
@@ -58,14 +58,7 @@ class FileParser(BankStatementImportParser):
             raise except_orm(
                 _('User Error'),
                 _('Invalid file type %s. Please use csv, xls or xlsx') % ftype)
-        self.conversion_dict = {
-            'ref': unicode,
-            'label': unicode,
-            'date': datetime.datetime,
-            'amount': float_or_zero,
-        }
-        if extra_fields:
-            self.conversion_dict.update(extra_fields)
+        self.conversion_dict = extra_fields
         self.keys_to_validate = self.conversion_dict.keys()
         self.fieldnames = header
         self._datemode = 0  # used only for xls documents,
