@@ -26,7 +26,8 @@
     'maintainer': 'Camptocamp',
     'category': 'Finance',
     'complexity': 'normal',
-    'depends': ['account_statement_ext'],
+    'depends': ['account_statement_ext',
+                'account_report_company'],
     'description': """
  The goal of this module is to improve the basic bank statement, help dealing
  with huge volume of reconciliation by providing basic rules to identify the
@@ -76,6 +77,7 @@
         'test/partner.yml',
         'test/invoice.yml',
         'test/supplier_invoice.yml',
+        'test/refund.yml',
         'test/completion_test.yml'
     ],
     'installable': True,

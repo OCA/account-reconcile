@@ -39,6 +39,15 @@
     date: '2013-12-19'
     amount: -65.0
 -
+  I create a statement line for a CR
+-
+  !record {model: account.bank.statement.line, id: statement_line_cr}:
+    name: Test autocompletion based on Customer Refund Number
+    statement_id: statement_test1
+    ref: CR0001
+    date: '2013-12-19'
+    amount: -210.0
+-
   I create a statement line for the Partner Name
 -
   !record {model: account.bank.statement.line, id: statement_line_partner_name}:
@@ -76,12 +85,18 @@
   !assert {model: account.bank.statement.line, id: statement_line_si, string: Check completion by SI number}:
     - partner_id.id == _ref("base.res_partner_17")
 -
-  Line 3. I check that the partner name has been recognised.
+  Line 3. I expect the Customer refund number to be recognised. It should be
+  the commercial partner, and not the regular partner.
+-
+  !assert {model: account.bank.statement.line, id: statement_line_cr, string: Check completion by CR number and commercial partner}:
+    - partner_id.id == _ref("base.res_partner_12")
+-
+  Line 4. I check that the partner name has been recognised.
 -
   !assert {model: account.bank.statement.line, id: statement_line_partner_name, string: Check completion by partner name}:
     - partner_id.name == 'Vauxoo'
 -
-  Line 4. I check that the partner special label has been recognised.
+  Line 5. I check that the partner special label has been recognised.
 -
   !assert {model: account.bank.statement.line, id: statement_line_partner_label, string: Check completion by partner label}:
     - partner_id.id == _ref("base.res_partner_6")
