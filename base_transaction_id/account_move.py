@@ -33,5 +33,5 @@ class account_move_line(orm.Model):
         if default is None:
             default = {}
         default['transaction_ref'] = False
-        return super(account_move_line, self).\
-            copy_data(cr, uid, id, default=default, context=context)
+        _super = super(account_move_line, self)
+        return _super.copy_data(cr, uid, id, default=default, context=context)

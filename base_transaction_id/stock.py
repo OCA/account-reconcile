@@ -19,24 +19,16 @@
 #
 ##############################################################################
 
-from openerp.osv.orm import Model
+from openerp.osv import orm
 
 
-class StockPicking(Model):
+class StockPicking(orm.Model):
     _inherit = "stock.picking"
 
-    def action_invoice_create(
-            self, cr, uid, ids, journal_id=False, group=False,
-            type='out_invoice', context=None):
-        res = super(StockPicking, self).action_invoice_create(
-                cr, uid, ids, journal_id, group, type, context)
-        for pick_id in res:
-            pick = self.browse(cr, uid, pick_id, context=context)
-            if pick.sale_id and pick.sale_id.transaction_id:
-                self.pool.get('account.invoice').write(
-                        cr,
-                        uid,
-                        res[pick_id],
-                        {'transaction_id': pick.sale_id.transaction_id},
-                        context=context)
-        return res
+    def _create_invoice_from_picking(self, cr, uid, picking, vals,
+                                     context=None):
+        """ Propagate the transaction ID from sale to invoice """
+        vals['transaction_id'] = picking.sale_id.transaction_id
+        _super = super(StockPicking, self)
+        return _super._create_invoice_from_picking(cr, uid, picking, vals,
+                                                   context=context)
