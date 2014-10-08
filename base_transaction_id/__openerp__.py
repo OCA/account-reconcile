@@ -43,12 +43,10 @@
  be able to find the partner when importing the bank statement.
  """,
  'website': 'http://www.openerp.com',
- 'init_xml': [],
- 'update_xml': [
+ 'data': [
      'invoice_view.xml',
      'sale_view.xml'
  ],
- 'demo_xml': [],
  'test': [],
  'installable': True,
  'images': [],
