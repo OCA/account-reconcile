@@ -26,10 +26,9 @@
  'category': 'Hidden/Dependency',
  'complexity': 'easy',
  'depends': [
-     'account',
-     'sale',
-     'stock'
-     ],
+     'stock_account',
+     'sale_stock',
+ ],
  'description': """
  Adds transaction id to invoice and sale models and views.
  On Sales order, you can specify the transaction ID used
@@ -43,12 +42,11 @@
  be able to find the partner when importing the bank statement.
  """,
  'website': 'http://www.openerp.com',
- 'init_xml': [],
- 'update_xml': [
+ 'data': [
      'invoice_view.xml',
-     'sale_view.xml'
-     ],
- 'demo_xml': [],
+     'sale_view.xml',
+     'account_move_line_view.xml',
+ ],
  'test': [],
  'installable': True,
  'images': [],
