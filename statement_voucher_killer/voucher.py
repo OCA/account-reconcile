@@ -102,7 +102,7 @@ class AccountPaymentPopulateStatement(orm.TransientModel):
         currency_obj = self.pool['res.currency']
         if context is None:
             context = {}
-        data = self.read(cr, uid, ids, [], context=context)[0]
+        data = self.read(cr, uid, ids, context=context)[0]
         line_ids = data['lines']
         if not line_ids:
             return {'type': 'ir.actions.act_window_close'}
@@ -117,7 +117,7 @@ class AccountPaymentPopulateStatement(orm.TransientModel):
                 line.amount_currency, context=ctx)
             if not line.move_line_id.id:
                 continue
-            context.update({'move_line_ids': [line.move_line_id.id]})
+            context = dict(context, move_line_ids=[line.move_line_id.id])
             vals = self._prepare_statement_line_vals(
                 cr, uid, line, -amount, statement, context=context)
             st_line_id = statement_line_obj.create(cr, uid, vals,
