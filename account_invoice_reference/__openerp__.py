@@ -143,6 +143,6 @@ Information propagated to the move lines:
           'test/in_refund_without_supplier_number.yml',
 
           ],
- 'installable': False,
+ 'installable': True,
  'auto_install': False,
  }
