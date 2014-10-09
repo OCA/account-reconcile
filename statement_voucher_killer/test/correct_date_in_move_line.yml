@@ -10,20 +10,22 @@
 -
   I create a statement line for a SO
 -
-  !record {model: account.bank.statement.line, id: statement_line_so}:
+  !record {model: account.bank.statement.line, id: statement_line_date}:
     name: Test autocompletion based on Sale Order Number
     statement_id: statement_test_date1
     ref: DATE1
+    account_id : account.a_sale
     date: '2014-12-20'
     amount: 1000.0
 -
   I confirm the bank statement
 -
   !python {model: account.bank.statement}: |
-    result = self.button_confirm_bank(cr, uid, [ref("statement_test_sale1")])
+    result = self.button_confirm_bank(cr, uid, [ref("statement_test_date1")])
 -
-  Now I can check that all is nice and shiny, line 1. I expect the Sale Order
-  Number to be recognised.
+  Now I can check that that the date in move line is equal to line date
 -
-  !assert {model: account.move.line, statement_id: statement_test_date1, string: Check date in move line}:
-      -  date == '2014-12-20'
+  !python {model: account.move.line}: |
+    line_ids = self.search(cr, uid, [('statement_id', '=', ref('statement_test_date1'))],limit=1)
+    line = self.browse(cr, uid, line_ids)[0]
+    assert line.date == '2014-12-20', "Date (2014-12-20) not equal to = %s" % line.date
