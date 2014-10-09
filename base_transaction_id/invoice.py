@@ -42,7 +42,7 @@ class AccountInvoice(models.Model):
             if invoice.transaction_id:
                 invoice_account_id = invoice.account_id.id
                 for line in move_lines:
-                    # tuple (0, 0, {values})
+                    # line is a tuple (0, 0, {values})
                     if invoice_account_id == line[2]['account_id']:
                         line[2]['transaction_ref'] = invoice.transaction_id
         return move_lines
