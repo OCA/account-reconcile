@@ -1,10 +1,26 @@
 -
+  In order to test the bank statement date , I first need to
+  create a profile
+-
+  !record {model: account.statement.profile, id: profile_test_date}:
+    name: Bank EUR Profile for check date
+    journal_id: account.bank_journal
+    commission_account_id: account.a_expense
+    company_id: base.main_company
+    balance_check: True
+    rule_ids:
+      - account_statement_base_completion.bank_statement_completion_rule_4
+      - account_statement_base_completion.bank_statement_completion_rule_5
+      - account_statement_base_completion.bank_statement_completion_rule_2
+      - account_statement_base_completion.bank_statement_completion_rule_3
+      - bank_statement_completion_rule_1
+-
   In order to test if the correct date is set in the bank statement 
   I create a bank statement
 -
   !record {model: account.bank.statement, id: statement_test_date1}:
     name: Statement for Date
-    journal_id: account.bank_journal
+    profile_id: profile_test_date
     company_id: base.main_company
     balance_end_real : 1000.0
 -
@@ -15,7 +31,7 @@
     statement_id: statement_test_date1
     ref: DATE1
     account_id : account.a_sale
-    date: '2014-12-20'
+    date:  !eval time.strftime('%Y-12-20')
     amount: 1000.0
 -
   I confirm the bank statement
@@ -28,4 +44,4 @@
   !python {model: account.move.line}: |
     line_ids = self.search(cr, uid, [('statement_id', '=', ref('statement_test_date1'))],limit=1)
     line = self.browse(cr, uid, line_ids)[0]
-    assert line.date == '2014-12-20', "Date (2014-12-20) not equal to = %s" % line.date
+    assert line.date == !eval time.strftime('%Y-12-20'), "Date (year-12-20) not equal to = %s" % line.date
