@@ -1,0 +1,29 @@
+-
+  In order to test if the correct date is set in the bank statement 
+  I create a bank statement
+-
+  !record {model: account.bank.statement, id: statement_test_date1}:
+    name: Statement for Date
+    journal_id: account.bank_journal
+    company_id: base.main_company
+    balance_end_real : 1000.0
+-
+  I create a statement line for a SO
+-
+  !record {model: account.bank.statement.line, id: statement_line_so}:
+    name: Test autocompletion based on Sale Order Number
+    statement_id: statement_test_date1
+    ref: DATE1
+    date: '2014-12-20'
+    amount: 1000.0
+-
+  I confirm the bank statement
+-
+  !python {model: account.bank.statement}: |
+    result = self.button_confirm_bank(cr, uid, [ref("statement_test_sale1")])
+-
+  Now I can check that all is nice and shiny, line 1. I expect the Sale Order
+  Number to be recognised.
+-
+  !assert {model: account.move.line, statement_id: statement_test_date1, string: Check date in move line}:
+      -  date == '2014-12-20'
