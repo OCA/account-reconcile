@@ -19,7 +19,7 @@
 #
 ##############################################################################
 
-{'name': 'Satement voucher killer',
+{'name': 'Statement voucher killer',
  'version': '1.0.0',
  'category': 'other',
  'description': """
