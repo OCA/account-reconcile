@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 ##############################################################################
 #
-#    Author: Guewen Baconnier
-#    Copyright 2014 Camptocamp SA
+#   Copyright (c) 2013 Camptocamp SA (http://www.camptocamp.com)
+#   @author Nicolas Bessi
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -18,20 +18,28 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-from openerp.osv import orm, fields
 
+{'name': 'Statement voucher killer',
+ 'version': '1.0.0',
+ 'category': 'other',
+ 'description': """
+Prevent voucher creation when importing lines into statement
+============================================================
 
-class account_move_line(orm.Model):
-    _inherit = 'account.move.line'
+When importing invoice or payment into a bank statement or a payment order,
+normally a draft voucher is created on the line. This module will disable this
+voucher creation. When importing payment line, date used to populate statement
+line will be take from imported line in this order:
 
-    _columns = {
-        'transaction_ref': fields.char('Transaction Ref.',
-                                       select=True),
-    }
+ * Date
+ * Maturity date
+ * Related statement date
 
-    def copy_data(self, cr, uid, id, default=None, context=None):
-        if default is None:
-            default = {}
-        default['transaction_ref'] = False
-        return super(account_move_line, self).\
-            copy_data(cr, uid, id, default=default, context=context)
+""",
+ 'author': 'Camptocamp',
+ 'website': 'http://www.camptocamp.com',
+ 'depends': ['account_voucher', 'account_payment'],
+ 'data': [],
+ 'test': [],
+ 'installable': True,
+ }

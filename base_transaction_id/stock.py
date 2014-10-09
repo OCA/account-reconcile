@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 ##############################################################################
 #
-#   Copyright (c) 2013 Camptocamp SA (http://www.camptocamp.com)
-#   @author Nicolas Bessi
+#    Author: Nicolas Bessi
+#    Copyright 2011-2012 Camptocamp SA
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -19,29 +19,16 @@
 #
 ##############################################################################
 
-{'name': 'Satement voucher killer',
- 'version': '1.0.0',
- 'category': 'other',
- 'description': """
-Prevent voucher creation when importing lines into statement
-============================================================
+from openerp.osv import orm
 
-When importing invoice or payment into a bank statement or a payment order,
-normally a draft voucher is created on the line. This module will disable this
-voucher creation. When importing payment line, date used to populate statement
-line will be take from imported line in this order:
 
- * Date
- * Maturity date
- * Related statement date
+class StockPicking(orm.Model):
+    _inherit = "stock.picking"
 
-""",
- 'author': 'Camptocamp',
- 'website': 'http://www.camptocamp.com',
- 'depends': ['account_voucher', 'account_payment'],
- 'data': [
-     'statement_view.xml',
- ],
- 'test': [],
- 'installable': False,
- }
+    def _create_invoice_from_picking(self, cr, uid, picking, vals,
+                                     context=None):
+        """ Propagate the transaction ID from sale to invoice """
+        vals['transaction_id'] = picking.sale_id.transaction_id
+        _super = super(StockPicking, self)
+        return _super._create_invoice_from_picking(cr, uid, picking, vals,
+                                                   context=context)

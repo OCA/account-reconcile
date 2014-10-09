@@ -19,17 +19,16 @@
 #
 ##############################################################################
 
-from openerp.osv.orm import Model
-from openerp.osv import fields
+from openerp.osv import orm, fields
 
 
-class AccountInvoice(Model):
-    _inherit = 'account.invoice'
+class SaleOrder(orm.Model):
+    _inherit = 'sale.order'
 
     _columns = {
         'transaction_id': fields.char(
-            'Transaction id',
-            select=1,
+            'Transaction ID',
+            required=False,
             help="Transaction id from the financial institute"),
     }
 
@@ -37,14 +36,13 @@ class AccountInvoice(Model):
         if default is None:
             default = {}
         default['transaction_id'] = False
-        return super(AccountInvoice, self).\
-            copy_data(cr, uid, id, default=default, context=context)
+        _super = super(SaleOrder, self)
+        return _super.copy_data(cr, uid, id, default=default, context=context)
 
-    def finalize_invoice_move_lines(self, cr, uid, invoice_browse, move_lines):
-        if invoice_browse.transaction_id:
-            invoice_account_id = invoice_browse.account_id.id
-            for line in move_lines:
-                # tuple (0, 0, {values})
-                if invoice_account_id == line[2]['account_id']:
-                    line[2]['transaction_ref'] = invoice_browse.transaction_id
-        return move_lines
+    def _prepare_invoice(self, cr, uid, order, lines, context=None):
+        """ Propagate the transaction_id from the sale order to the invoice """
+        _super = super(SaleOrder, self)
+        invoice_vals = _super._prepare_invoice(cr, uid, order, lines,
+                                               context=context)
+        invoice_vals['transaction_id'] = order.transaction_id
+        return invoice_vals

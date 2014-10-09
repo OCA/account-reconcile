@@ -61,15 +61,16 @@ class AccountStatementFromInvoiceLines(orm.TransientModel):
                     line.amount_currency, context=ctx)
             elif (line.invoice and
                     line.invoice.currency_id.id != statement.currency.id):
-                amount = currency_obj.compute(
-                    cr, uid, line.invoice.currency_id.id, statement.currency.id,
-                    amount, context=ctx)
+                amount = currency_obj.compute(cr, uid,
+                                              line.invoice.currency_id.id,
+                                              statement.currency.id,
+                                              amount, context=ctx)
             context.update({'move_line_ids': [line.id],
                             'invoice_id': line.invoice.id})
             s_type = 'general'
             if line.journal_id.type in ('sale', 'sale_refund'):
                 s_type = 'customer'
-            elif line.journal_id.type in ('purchase', 'purhcase_refund'):
+            elif line.journal_id.type in ('purchase', 'purchase_refund'):
                 s_type = 'supplier'
             vals = self._prepare_statement_line_vals(
                 cr, uid, line, s_type, statement_id, amount, context=context)
@@ -102,7 +103,7 @@ class AccountPaymentPopulateStatement(orm.TransientModel):
         currency_obj = self.pool['res.currency']
         if context is None:
             context = {}
-        data = self.read(cr, uid, ids, [], context=context)[0]
+        data = self.read(cr, uid, ids, context=context)[0]
         line_ids = data['lines']
         if not line_ids:
             return {'type': 'ir.actions.act_window_close'}
@@ -117,7 +118,7 @@ class AccountPaymentPopulateStatement(orm.TransientModel):
                 line.amount_currency, context=ctx)
             if not line.move_line_id.id:
                 continue
-            context.update({'move_line_ids': [line.move_line_id.id]})
+            context = dict(context, move_line_ids=[line.move_line_id.id])
             vals = self._prepare_statement_line_vals(
                 cr, uid, line, -amount, statement, context=context)
             st_line_id = statement_line_obj.create(cr, uid, vals,
