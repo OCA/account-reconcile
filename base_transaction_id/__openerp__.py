@@ -44,7 +44,8 @@
  'website': 'http://www.openerp.com',
  'data': [
      'invoice_view.xml',
-     'sale_view.xml'
+     'sale_view.xml',
+     'account_move_line_view.xml',
  ],
  'test': [],
  'installable': True,
