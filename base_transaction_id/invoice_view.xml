@@ -6,11 +6,9 @@
       <field name="model">account.invoice</field>
       <field name="inherit_id" ref="account.invoice_form"/>
       <field name="arch" type="xml">
-        <notebook position="inside">
-          <page string="Transactions datas">
-            <field name="transaction_id" select="2"/>
-          </page>
-        </notebook>
+        <field name="origin" position="after">
+            <field name="transaction_id"/>
+        </field>
       </field>
     </record>
 
@@ -20,7 +18,7 @@
       <field name="inherit_id" ref="account.invoice_tree"/>
       <field name="arch" type="xml">
         <field name="origin" position="after">
-          <field name="transaction_id" select="2"/>
+          <field name="transaction_id"/>
         </field>
       </field>
     </record>
