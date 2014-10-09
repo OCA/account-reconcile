@@ -26,9 +26,8 @@
  'category': 'Hidden/Dependency',
  'complexity': 'easy',
  'depends': [
-     'account',
-     'sale',
-     'stock'
+     'stock_account',
+     'sale_stock',
  ],
  'description': """
  Adds transaction id to invoice and sale models and views.
