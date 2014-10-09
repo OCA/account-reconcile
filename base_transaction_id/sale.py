@@ -34,6 +34,13 @@ class SaleOrder(Model):
             help="Transaction id from the financial institute"),
     }
 
+    def copy_data(self, cr, uid, id, default=None, context=None):
+        if default is None:
+            default = {}
+        default['transaction_id'] = False
+        _super = super(SaleOrder, self)
+        return _super.copy_data(cr, uid, id, default=default, context=context)
+
     def _prepare_invoice(self, cr, uid, order, lines, context=None):
         # we put the transaction id in the generated invoices
         invoice_vals = super(SaleOrder, self)._prepare_invoice(
