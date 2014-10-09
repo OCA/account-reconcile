@@ -38,6 +38,6 @@ Needs `statement_voucher_killer`
  'website': 'http://www.camptocamp.com',
  'data': [],
  'test': [],
- 'installable': False,
+ 'installable': True,
  'auto_install': True,
  }
