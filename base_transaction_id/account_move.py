@@ -35,3 +35,22 @@ class account_move_line(orm.Model):
         default['transaction_ref'] = False
         _super = super(account_move_line, self)
         return _super.copy_data(cr, uid, id, default=default, context=context)
+
+    def prepare_move_lines_for_reconciliation_widget(self, cr, uid, lines,
+                                                     target_currency=False,
+                                                     target_date=False,
+                                                     context=None):
+        _super = super(account_move_line, self)
+        prepare = _super.prepare_move_lines_for_reconciliation_widget
+        prepared_lines = []
+        for line in lines:
+            # The super method loop over the lines and returns a list of
+            # prepared lines. Here we'll have 1 line per call to super.
+            # If we called super on the whole list, we would need to
+            # browse again the lines, or match the 'lines' vs
+            # 'prepared_lines' to update the transaction_ref.
+            vals = prepare(cr, uid, [line], target_currency=target_currency,
+                           target_date=target_date, context=context)[0]
+            vals['transaction_ref'] = line.transaction_ref
+            prepared_lines.append(vals)
+        return prepared_lines
