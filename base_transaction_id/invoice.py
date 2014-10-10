@@ -38,6 +38,8 @@ class AccountInvoice(models.Model):
         The transaction id is written on the move lines only if the account is
         the same than the invoice's one.
         """
+        move_lines = super(AccountInvoice, self).finalize_invoice_move_lines(
+            move_lines)
         for invoice in self:
             if invoice.transaction_id:
                 invoice_account_id = invoice.account_id.id
