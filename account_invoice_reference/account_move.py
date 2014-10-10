@@ -88,6 +88,8 @@ class AccountInvoice(orm.Model):
 
     def write(self, cr, uid, ids, vals, context=None):
         if vals.get('supplier_invoice_number'):
+            if isinstance(ids, (int, long)):
+                ids = [ids]
             for invoice in self.browse(cr, uid, ids, context=context):
                 loc_vals = None
                 if not invoice.reference:
