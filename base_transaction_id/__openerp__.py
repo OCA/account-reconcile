@@ -26,6 +26,7 @@
  'category': 'Hidden/Dependency',
  'complexity': 'easy',
  'depends': [
+     'account',
      'stock_account',
      'sale_stock',
  ],
@@ -46,6 +47,7 @@
      'invoice_view.xml',
      'sale_view.xml',
      'account_move_line_view.xml',
+     'views/base_transaction_id.xml',
  ],
  'test': [],
  'installable': True,
