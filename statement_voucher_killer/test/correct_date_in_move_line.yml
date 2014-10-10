@@ -28,4 +28,4 @@
   !python {model: account.move.line}: |
     line_ids = self.search(cr, uid, [('statement_id', '=', ref('statement_test_date1'))],limit=1)
     line = self.browse(cr, uid, line_ids)[0]
-    assert line.date == !eval time.strftime('%Y-12-20'), "Date (year-12-20) not equal to = %s" % line.date
+    assert line.date == time.strftime('%Y-12-20'), "Date (year-12-20) not equal to = %s" % line.date
