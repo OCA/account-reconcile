@@ -19,64 +19,72 @@
 #
 ##############################################################################
 
-from openerp.osv import orm
+from openerp import models, api
 
 
-class AccountInvoice(orm.Model):
+class AccountInvoice(models.Model):
     _inherit = 'account.invoice'
 
-    def _ref_from_invoice(self, cr, uid, invoice, context=None):
-        if invoice.type in ('out_invoice', 'out_refund'):
-            return invoice.origin
-        elif invoice.type in ('in_invoice', 'in_refund'):
-            return invoice.supplier_invoice_number
+    @api.v8
+    def _ref_from_invoice(self):
+        self.ensure_one()
+        if self.type in ('out_invoice', 'out_refund'):
+            return self.origin
+        elif self.type in ('in_invoice', 'in_refund'):
+            return self.supplier_invoice_number
 
-    def action_number(self, cr, uid, ids, context=None):
+    @api.v7
+    def _ref_from_invoice(self, cr, uid, invoice, context=None):
+        return invoice._ref_from_invoice()
+
+    @api.multi
+    def action_number(self):
         # force the number of the invoice to be updated for the
         # subsequent browse
-        self.write(cr, uid, ids, {})
+        self.write({})
 
-        for invoice in self.browse(cr, uid, ids, context=context):
-            ref = self._ref_from_invoice(cr, uid, invoice, context=context)
+        for invoice in self:
+            ref = invoice._ref_from_invoice()
             if not ref:
                 ref = invoice.number
             move_id = invoice.move_id.id if invoice.move_id else False
 
-            self.write(cr, uid, ids, {'internal_number': invoice.number},
-                       context=context)
-            cr.execute('UPDATE account_move SET ref=%s '
-                       'WHERE id=%s AND (ref is null OR ref = \'\')',
+            invoice.write({'internal_number': invoice.number})
+
+            cr = self._cr
+            cr.execute("UPDATE account_move SET ref=%s "
+                       "WHERE id=%s AND (ref is null OR ref = '')",
                        (ref, move_id))
-            cr.execute('UPDATE account_move_line SET ref=%s '
-                       'WHERE move_id=%s AND (ref is null OR ref = \'\')',
+            cr.execute("UPDATE account_move_line SET ref=%s "
+                       "WHERE move_id=%s AND (ref is null OR ref = '')",
                        (ref, move_id))
             cr.execute(
-                'UPDATE account_analytic_line SET ref=%s '
-                'FROM account_move_line '
-                'WHERE account_move_line.move_id = %s '
-                'AND account_analytic_line.move_id = account_move_line.id',
+                "UPDATE account_analytic_line SET ref=%s "
+                "FROM account_move_line "
+                "WHERE account_move_line.move_id = %s "
+                "AND account_analytic_line.move_id = account_move_line.id",
                 (ref, move_id))
+            self.invalidate_cache()
         return True
 
-    def create(self, cr, uid, vals, context=None):
+    @api.model
+    @api.returns('self', lambda value: value.id)
+    def create(self, vals):
         if (vals.get('supplier_invoice_number') and not
                 vals.get('reference')):
             vals = vals.copy()
             vals['reference'] = vals['supplier_invoice_number']
-        return super(AccountInvoice, self).create(cr, uid, vals,
-                                                  context=context)
+        return super(AccountInvoice, self).create(vals)
 
-    def write(self, cr, uid, ids, vals, context=None):
+    @api.multi
+    def write(self, vals):
         if vals.get('supplier_invoice_number'):
-            for invoice in self.browse(cr, uid, ids, context=context):
+            for invoice in self:
                 loc_vals = None
                 if not invoice.reference:
                     loc_vals = vals.copy()
                     loc_vals['reference'] = vals['supplier_invoice_number']
-                super(AccountInvoice, self).write(cr, uid, [invoice.id],
-                                                  loc_vals or vals,
-                                                  context=context)
+                super(AccountInvoice, invoice).write(loc_vals or vals)
             return True
         else:
-            return super(AccountInvoice, self).write(cr, uid, ids, vals,
-                                                     context=context)
+            return super(AccountInvoice, self).write(vals)
