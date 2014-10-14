@@ -72,18 +72,21 @@ class AccountStatementFromInvoiceLines(orm.TransientModel):
             elif line.journal_id.type in ('purchase', 'purhcase_refund'):
                 s_type = 'supplier'
             vals = self._prepare_statement_line_vals(
-                cr, uid, line, s_type, statement, amount, context=context)
+                cr, uid, line, s_type, statement_id, amount, context=context)
             statement_line_obj.create(cr, uid, vals, context=context)
         return {'type': 'ir.actions.act_window_close'}
 
     def _prepare_statement_line_vals(self, cr, uid, move_line, s_type,
-                                     statement, amount, context=None):
+                                     statement_id, amount, context=None):
+        statement_obj = self.pool['account.bank.statement']
+        statement = statement_obj.browse(
+            cr, uid, statement_id, context=context)
         return {'name': move_line.name or '?',
                 'amount': amount,
                 'type': s_type,
                 'partner_id': move_line.partner_id.id,
                 'account_id': move_line.account_id.id,
-                'statement_id': statement.id,
+                'statement_id': statement_id,
                 'ref': move_line.ref,
                 'voucher_id': False,
                 'date': statement.date or time.strftime('%Y-%m-%d'),
