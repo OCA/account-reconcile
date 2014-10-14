@@ -78,6 +78,9 @@ class AccountStatementFromInvoiceLines(orm.TransientModel):
 
     def _prepare_statement_line_vals(self, cr, uid, move_line, s_type,
                                      statement_id, amount, context=None):
+        statement_obj = self.pool['account.bank.statement']
+        statement = statement_obj.browse(
+            cr, uid, statement_id, context=context)
         return {'name': move_line.name or '?',
                 'amount': amount,
                 'type': s_type,
@@ -86,7 +89,7 @@ class AccountStatementFromInvoiceLines(orm.TransientModel):
                 'statement_id': statement_id,
                 'ref': move_line.ref,
                 'voucher_id': False,
-                'date': time.strftime('%Y-%m-%d'),
+                'date': statement.date or time.strftime('%Y-%m-%d'),
                 }
 
 
