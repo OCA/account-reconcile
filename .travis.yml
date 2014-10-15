@@ -7,8 +7,11 @@ virtualenv:
   system_site_packages: true
 
 env:
-  - VERSION="7.0" ODOO_REPO="odoo/odoo" EXCLUDE="account_statement_ext_point_of_sale"
-  - VERSION="7.0" ODOO_REPO="OCA/OCB" EXCLUDE="account_statement_ext_point_of_sale"
+  - VERSION="7.0" ODOO_REPO="odoo/odoo" EXCLUDE="account_statement_ext_point_of_sale,statement_voucher_killer"
+  - VERSION="7.0" ODOO_REPO="OCA/OCB" EXCLUDE="account_statement_ext_point_of_sale,statement_voucher_killer"
+
+  - VERSION="7.0" ODOO_REPO="odoo/odoo" INCLUDE="statement_voucher_killer"
+  - VERSION="7.0" ODOO_REPO="OCA/OCB" INCLUDE="statement_voucher_killer"
 
 install:
   - git clone https://github.com/OCA/maintainer-quality-tools.git ${HOME}/maintainer-quality-tools

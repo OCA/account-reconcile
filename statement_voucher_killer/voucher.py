@@ -72,7 +72,7 @@ class AccountStatementFromInvoiceLines(orm.TransientModel):
             elif line.journal_id.type in ('purchase', 'purhcase_refund'):
                 s_type = 'supplier'
             vals = self._prepare_statement_line_vals(
-                cr, uid, line, s_type, statement_id, amount, context=context)
+                cr, uid, line, s_type, statement_id, amount, context=ctx)
             statement_line_obj.create(cr, uid, vals, context=context)
         return {'type': 'ir.actions.act_window_close'}
 
@@ -86,7 +86,7 @@ class AccountStatementFromInvoiceLines(orm.TransientModel):
                 'statement_id': statement_id,
                 'ref': move_line.ref,
                 'voucher_id': False,
-                'date': time.strftime('%Y-%m-%d'),
+                'date': context['date'],
                 }
 
 
@@ -111,7 +111,7 @@ class AccountPaymentPopulateStatement(orm.TransientModel):
         for line in line_obj.browse(cr, uid, line_ids, context=context):
             ctx = context.copy()
             # Last value_date earlier,but this field exists no more now
-            ctx['date'] = line.ml_maturity_date
+            ctx['date'] = line.date or statement.date
             amount = currency_obj.compute(
                 cr, uid, line.currency.id, statement.currency.id,
                 line.amount_currency, context=ctx)
@@ -119,7 +119,7 @@ class AccountPaymentPopulateStatement(orm.TransientModel):
                 continue
             context.update({'move_line_ids': [line.move_line_id.id]})
             vals = self._prepare_statement_line_vals(
-                cr, uid, line, -amount, statement, context=context)
+                cr, uid, line, -amount, statement, context=ctx)
             st_line_id = statement_line_obj.create(cr, uid, vals,
                                                    context=context)
             line_obj.write(
@@ -136,6 +136,5 @@ class AccountPaymentPopulateStatement(orm.TransientModel):
             'account_id': payment_line.move_line_id.account_id.id,
             'statement_id': statement.id,
             'ref': payment_line.communication,
-            'date': (payment_line.date or payment_line.ml_maturity_date or
-                     statement.date)
+            'date': context['date']
         }

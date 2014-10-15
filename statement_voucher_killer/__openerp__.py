@@ -42,6 +42,6 @@ line will be take from imported line in this order:
  'data': [
      'statement_view.xml',
  ],
- 'test': [],
+ 'test': ['test/correct_date_in_move_line.yml'],
  'installable': True,
  }
