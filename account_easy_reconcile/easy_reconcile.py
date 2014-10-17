@@ -167,10 +167,14 @@ class AccountEasyReconcile(orm.Model):
         # and return the wrong result.
         history_obj = self.pool['easy.reconcile.history']
         for reconcile_id in ids:
-            result[reconcile_id] = history_obj.search(
+            last_history = history_obj.search(
                 cr, uid, [('easy_reconcile_id', '=', reconcile_id)],
                 limit=1, order='date desc'
             )
+            if len(last_history) > 0:
+                result[reconcile_id] = last_history[0]
+            else:
+                result[reconcile_id] = False
         return result
 
     _columns = {
