@@ -20,7 +20,7 @@
 ##############################################################################
 
 {'name': 'Advanced Reconcile Bank Statement',
- 'description':  """
+ 'description': """
 Advanced reconciliation method for the module account_advanced_reconcile
 ========================================================================
 Reconcile rules with bank statement name.
