@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 ##############################################################################
 #
-#    Author: Nicolas Bessi
-#    Copyright 2011-2012 Camptocamp SA
+#    Author: Guewen Baconnier
+#    Copyright 2014 Camptocamp SA
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -18,25 +18,20 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
+from openerp.osv import orm, fields
 
-from openerp.osv.orm import Model
 
+class account_move_line(orm.Model):
+    _inherit = 'account.move.line'
 
-class StockPicking(Model):
-    _inherit = "stock.picking"
+    _columns = {
+        'transaction_ref': fields.char('Transaction Ref.',
+                                       select=True),
+    }
 
-    def action_invoice_create(
-            self, cr, uid, ids, journal_id=False, group=False,
-            type='out_invoice', context=None):
-        res = super(StockPicking, self).action_invoice_create(
-            cr, uid, ids, journal_id, group, type, context)
-        for pick_id in res:
-            pick = self.browse(cr, uid, pick_id, context=context)
-            if pick.sale_id and pick.sale_id.transaction_id:
-                self.pool.get('account.invoice').write(
-                    cr,
-                    uid,
-                    res[pick_id],
-                    {'transaction_id': pick.sale_id.transaction_id},
-                    context=context)
-        return res
+    def copy_data(self, cr, uid, id, default=None, context=None):
+        if default is None:
+            default = {}
+        default['transaction_ref'] = False
+        _super = super(account_move_line, self)
+        return _super.copy_data(cr, uid, id, default=default, context=context)

@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 ##############################################################################
 #
-#    Author: Guewen Baconnier
-#    Copyright 2014 Camptocamp SA
+#    Author: Nicolas Bessi
+#    Copyright 2011-2012 Camptocamp SA
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -18,20 +18,17 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-from openerp.osv import orm, fields
+
+from openerp.osv import orm
 
 
-class account_move_line(orm.Model):
-    _inherit = 'account.move.line'
+class StockPicking(orm.Model):
+    _inherit = "stock.picking"
 
-    _columns = {
-        'transaction_ref': fields.char('Transaction Ref.',
-                                       select=True),
-    }
-
-    def copy_data(self, cr, uid, id, default=None, context=None):
-        if default is None:
-            default = {}
-        default['transaction_ref'] = False
-        return super(account_move_line, self).\
-            copy_data(cr, uid, id, default=default, context=context)
+    def _create_invoice_from_picking(self, cr, uid, picking, vals,
+                                     context=None):
+        """ Propagate the transaction ID from sale to invoice """
+        vals['transaction_id'] = picking.sale_id.transaction_id
+        _super = super(StockPicking, self)
+        return _super._create_invoice_from_picking(cr, uid, picking, vals,
+                                                   context=context)
