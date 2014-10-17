@@ -165,13 +165,12 @@ class AccountEasyReconcile(orm.Model):
         # do a search() for retrieving the latest history line,
         # as a read() will badly split the list of ids with 'date desc'
         # and return the wrong result.
+        history_obj = self.pool['easy.reconcile.history']
         for reconcile_id in ids:
-            history_obj = self.pool['easy.reconcile.history']
-            last_history = history_obj.search(
+            result[reconcile_id] = history_obj.search(
                 cr, uid, [('easy_reconcile_id', '=', reconcile_id)],
                 limit=1, order='date desc'
             )
-            result[reconcile_id] = last_history
         return result
 
     _columns = {
