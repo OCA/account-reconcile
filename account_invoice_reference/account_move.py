@@ -79,22 +79,25 @@ class AccountInvoice(orm.Model):
         return True
 
     def create(self, cr, uid, vals, context=None):
-        if (vals.get('supplier_invoice_reference') and not
+        if (vals.get('supplier_invoice_number') and not
                 vals.get('reference')):
-            vals['reference'] = vals['supplier_invoice_reference']
+            vals = vals.copy()
+            vals['reference'] = vals['supplier_invoice_number']
         return super(AccountInvoice, self).create(cr, uid, vals,
                                                   context=context)
 
     def write(self, cr, uid, ids, vals, context=None):
-        if vals.get('supplier_invoice_reference'):
+        if vals.get('supplier_invoice_number'):
             if isinstance(ids, (int, long)):
                 ids = [ids]
             for invoice in self.browse(cr, uid, ids, context=context):
+                loc_vals = None
                 if not invoice.reference:
-                    locvals = vals.copy()
-                    locvals['reference'] = vals['supplier_invoice_reference']
+                    loc_vals = vals.copy()
+                    loc_vals['reference'] = vals['supplier_invoice_number']
                 super(AccountInvoice, self).write(cr, uid, [invoice.id],
-                                                  locvals, context=context)
+                                                  loc_vals or vals,
+                                                  context=context)
             return True
         else:
             return super(AccountInvoice, self).write(cr, uid, ids, vals,

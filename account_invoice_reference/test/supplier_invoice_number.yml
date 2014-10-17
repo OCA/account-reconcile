@@ -1,0 +1,47 @@
+-
+  In order to check if the reference is populated from the supplier_invoice_number
+  I create an invoice.
+-
+  !record {model: account.invoice, id: invoice_supplier_invoice_number, view: account.invoice_supplier_form}:
+    account_id: account.a_pay
+    check_total: 3000.0
+    company_id: base.main_company
+    currency_id: base.EUR
+    invoice_line:
+      - account_id: account.a_expense
+        name: '[PCSC234] PC Assemble SC234'
+        price_unit: 300.0
+        product_id: product.product_product_3
+        quantity: 10.0
+        uos_id: product.product_uom_unit
+    journal_id: account.expenses_journal
+    partner_id: base.res_partner_12
+    reference_type: none
+    supplier_invoice_number: ZZZ246
+    type: in_invoice
+-
+  Set again the type of the invoice (not set on the first one...)
+-
+  !record {model: account.invoice, id: invoice_supplier_invoice_number, view: account.invoice_supplier_form}:
+    type: in_invoice
+-
+  Ensure that the reference is the same than the supplier_invoice_number
+-
+  !assert {model: account.invoice, id: invoice_supplier_invoice_number}:
+    - reference == 'ZZZ246'
+-
+  In order to check if the supplier_invoice_number is copied to the supplier_invoice_number
+  when the reference is empty, I empty the reference
+-
+  !record {model: account.invoice, id: invoice_supplier_invoice_number, view: account.invoice_supplier_form}:
+    reference:
+-
+  And I write a new supplier_invoice_number
+-
+  !record {model: account.invoice, id: invoice_supplier_invoice_number, view: account.invoice_supplier_form}:
+    supplier_invoice_number: ABC789
+-
+  Ensure that the reference is the same than the supplier_invoice_number
+-
+  !assert {model: account.invoice, id: invoice_supplier_invoice_number}:
+    - reference == 'ABC789'

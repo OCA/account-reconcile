@@ -141,6 +141,7 @@ Information propagated to the move lines:
           'test/out_refund_without_origin.yml',
           'test/in_refund_with_supplier_number.yml',
           'test/in_refund_without_supplier_number.yml',
+          'test/supplier_invoice_number.yml',
 
           ],
  'installable': True,
