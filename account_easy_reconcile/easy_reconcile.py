@@ -171,10 +171,8 @@ class AccountEasyReconcile(orm.Model):
                 cr, uid, [('easy_reconcile_id', '=', reconcile_id)],
                 limit=1, order='date desc'
             )
-            if len(last_history) > 0:
-                result[reconcile_id] = last_history[0]
-            else:
-                result[reconcile_id] = False
+            result[reconcile_id] = len(last_history) \
+                and last_history[0] or False
         return result
 
     _columns = {
