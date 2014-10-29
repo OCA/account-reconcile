@@ -135,7 +135,7 @@ class AccountStatementProfil(orm.Model):
         """
         vals = {'profile_id': profile_id}
         vals.update(parser.get_st_vals())
-        if not vals.get('balance_start'):
+        if 'balance_start' not in vals.keys():
             # Get starting balance from journal balance if parser doesn't
             # fill this data, simulating the manual flow
             statement_obj = self.pool['account.bank.statement']
