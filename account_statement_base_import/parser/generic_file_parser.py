@@ -19,7 +19,7 @@
 ##############################################################################
 
 import datetime
-from file_parser import FileParser
+from .file_parser import FileParser
 from openerp.addons.account_statement_base_import.parser.file_parser import (
     float_or_zero
 )

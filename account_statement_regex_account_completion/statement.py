@@ -54,7 +54,7 @@ class AccountStatementCompletionRule(Model):
                                       string="Account to set"),
     }
 
-    def set_account(self, cr, uid, id, st_line, context=None):
+    def set_account(self, cr, uid, account_id, st_line, context=None):
         """
         If line name match regex, update account_id
         Then, call the generic st_line method to complete other values.
@@ -69,7 +69,7 @@ class AccountStatementCompletionRule(Model):
         name = st_line['name']
         res = {}
         if name:
-            rule = self.browse(cr, uid, id, context=context)
+            rule = self.browse(cr, uid, account_id, context=context)
             if re.match(rule.regex, name):
                 res['account_id'] = rule.account_id.id
         return res

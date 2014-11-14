@@ -20,5 +20,5 @@
 ###############################################################################
 """Wizard for asking the confirmation when some move is reconciled."""
 
-import cancel_statement  # noqa
-import cancel_statement_line  # noqa
+from . import cancel_statement  # noqa
+from . import cancel_statement_line  # noqa
