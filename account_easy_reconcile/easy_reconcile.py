@@ -27,6 +27,7 @@ from openerp import pooler
 
 
 class EasyReconcileOptions(orm.AbstractModel):
+
     """Options of a reconciliation profile
 
     Columns shared by the configuration of methods

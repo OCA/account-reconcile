@@ -28,6 +28,7 @@ from openerp.addons.account_statement_base_completion.statement import \
 
 
 class ErrorTooManyLabel(Exception):
+
     """New Exception definition that is raised when more than one label is
     matched by the completion rule.
     """
@@ -40,6 +41,7 @@ class ErrorTooManyLabel(Exception):
 
 
 class AccountBankSatement(orm.Model):
+
     """We add a basic button and stuff to support the auto-completion
     of the bank statement once line have been imported or manually fullfill.
     """
@@ -114,6 +116,7 @@ class AccountStatementCompletionRule(orm.Model):
 
 
 class AccountStatementLabel(orm.Model):
+
     """Create a new class to map an account statement label to a partner
     and a specific account
     """

@@ -19,7 +19,7 @@
 ##############################################################################
 
 import datetime
-from file_parser import FileParser
+from .file_parser import FileParser
 from openerp.addons.account_statement_base_import.parser.file_parser import (
     float_or_zero
 )
@@ -27,6 +27,7 @@ from openerp.tools import ustr
 
 
 class GenericFileParser(FileParser):
+
     """Standard parser that use a define format in csv or xls to import into a
     bank statement. This is mostely an example of how to proceed to create a
     new parser, but will also be useful as it allow to import a basic flat

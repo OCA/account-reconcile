@@ -31,6 +31,7 @@ except:
 
 
 class OfxParser(BankStatementImportParser):
+
     """Class for defining parser for OFX file format."""
 
     @classmethod

@@ -24,6 +24,7 @@ from openerp.tools.translate import _
 
 
 class EasyReconcileHistory(orm.Model):
+
     """ Store an history of the runs per profile
     Each history stores the list of reconciliations done"""
 

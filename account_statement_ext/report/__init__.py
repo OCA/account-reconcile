@@ -23,4 +23,4 @@
 #
 ##############################################################################
 
-import bank_statement_report
+from . import bank_statement_report

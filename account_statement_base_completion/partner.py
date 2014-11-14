@@ -23,6 +23,7 @@ from openerp.osv import orm, fields
 
 
 class ResPartner(orm.Model):
+
     """Add a bank label on the partner so that we can use it to match
     this partner when we found this in a statement line.
     """

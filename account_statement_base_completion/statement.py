@@ -40,6 +40,7 @@ _logger = logging.getLogger(__name__)
 
 
 class ErrorTooManyPartner(Exception):
+
     """ New Exception definition that is raised when more than one partner is
     matched by the completion rule.
     """
@@ -55,6 +56,7 @@ class ErrorTooManyPartner(Exception):
 
 
 class AccountStatementProfil(orm.Model):
+
     """Extend the class to add rules per profile that will match at least the
     partner, but it could also be used to match other values as well.
     """
@@ -112,6 +114,7 @@ class AccountStatementProfil(orm.Model):
 
 
 class AccountStatementCompletionRule(orm.Model):
+
     """This will represent all the completion method that we can have to
     fullfill the bank statement lines. You'll be able to extend them in you own
     module and choose those to apply for every statement profile.
@@ -381,6 +384,7 @@ class AccountStatement(orm.Model):
 
 
 class AccountStatementLine(orm.Model):
+
     """
     Add sparse field on the statement line to allow to store all the bank infos
     that are given by a bank/office. You can then add you own in your module.
@@ -547,6 +551,7 @@ class AccountStatementLine(orm.Model):
 
 
 class AccountBankStatement(orm.Model):
+
     """We add a basic button and stuff to support the auto-completion
     of the bank statement once line have been imported or manually fullfill.
     """
