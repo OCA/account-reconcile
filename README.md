@@ -13,7 +13,7 @@ __Version 8.0 and earlier :__
 * Provide methods for making automatic reconciliation in batch
 
 Other features can be found in those repository:
-* https://github.com/OCA/banking
+* https://github.com/OCA/bank-payment
 * https://github.com/OCA/bank-statement-import
 
 __Version 7.0 and earlier :__
