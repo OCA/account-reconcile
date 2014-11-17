@@ -12,6 +12,10 @@ __Version 8.0 and earlier :__
 * Completion of infos (partner, account, ref,...) in statements.
 * Provide methods for making automatic reconciliation in batch
 
+Other features can be found in those repository:
+* https://github.com/OCA/banking
+* https://github.com/OCA/bank-statement-import
+
 __Version 7.0 and earlier :__
 
 * Importing bank statements.
