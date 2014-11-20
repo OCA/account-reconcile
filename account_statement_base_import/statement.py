@@ -23,7 +23,7 @@ import traceback
 from openerp.tools.translate import _
 import datetime
 from openerp.osv import fields, orm
-from parser import new_bank_statement_parser
+from .parser import new_bank_statement_parser
 from openerp.tools.config import config
 
 

@@ -32,7 +32,7 @@ import os
 class CreditPartnerStatementImporter(orm.TransientModel):
     _name = "credit.statement.import"
 
-    def default_get(self, cr, uid, fields, context=None):
+    def default_get(self, cr, uid, field_list, context=None):
         if context is None:
             context = {}
         res = {}

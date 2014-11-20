@@ -19,7 +19,7 @@
 #
 ##############################################################################
 
-import statement
-import report
-import account
-import voucher
+from . import statement
+from . import report
+from . import account
+from . import voucher

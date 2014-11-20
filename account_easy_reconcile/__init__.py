@@ -19,8 +19,8 @@
 #
 ##############################################################################
 
-import easy_reconcile
-import base_reconciliation
-import simple_reconciliation
-import easy_reconcile_history
-import res_config
+from . import easy_reconcile
+from . import base_reconciliation
+from . import simple_reconciliation
+from . import easy_reconcile_history
+from . import res_config
