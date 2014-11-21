@@ -21,8 +21,8 @@ from openerp.tools.translate import _
 from openerp.osv.orm import except_orm
 import tempfile
 import datetime
-from parser import BankStatementImportParser
-from parser import UnicodeDictReader
+from .parser import BankStatementImportParser
+from .parser import UnicodeDictReader
 try:
     import xlrd
 except:

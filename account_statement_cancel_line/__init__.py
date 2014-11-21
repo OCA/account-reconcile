@@ -20,6 +20,6 @@
 ###############################################################################
 """Account Statement Cancel Line."""
 
-import statement  # noqa
-import statement_line  # noqa
-import wizard  # noqa
+from . import statement  # noqa
+from . import statement_line  # noqa
+from . import wizard  # noqa

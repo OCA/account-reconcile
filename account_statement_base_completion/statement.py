@@ -329,7 +329,7 @@ class AccountStatementCompletionRule(orm.Model):
         # to:
         #  http://www.postgresql.org/docs/9.0/static/functions-matching.html
         # in chapter 9.7.3.6. Limits and Compatibility
-        sql = """
+        sql = r"""
         SELECT id FROM (
             SELECT id,
                 regexp_matches(%s,

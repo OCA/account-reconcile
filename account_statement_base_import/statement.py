@@ -23,7 +23,7 @@ import traceback
 from openerp.tools.translate import _
 import datetime
 from openerp.osv import fields, orm
-from parser import new_bank_statement_parser
+from .parser import new_bank_statement_parser
 from openerp.tools.config import config
 
 
@@ -74,7 +74,6 @@ class AccountStatementProfil(orm.Model):
               statement ID
             :param:    context: global context
         """
-        pass
 
     def write_logs_after_import(self, cr, uid, ids, statement_id, num_lines,
                                 context):

@@ -447,7 +447,7 @@ class AccountBankStatement(orm.Model):
     def get_account_for_counterpart(self, cr, uid, amount, account_receivable,
                                     account_payable):
         """For backward compatibility."""
-        account_id, type = self.get_account_and_type_for_counterpart(
+        account_id, account_type = self.get_account_and_type_for_counterpart(
             cr, uid, amount, account_receivable, account_payable)
         return account_id
 
