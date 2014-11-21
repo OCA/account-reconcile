@@ -28,13 +28,10 @@
  'category': 'Hidden',
  'depends': ['base_transaction_id',
              'account_payment',
-             'statement_voucher_killer',
              ],
  'description': """
 Compatibility module between Account Payment and Base Transaction ID.
-
-Needs `statement_voucher_killer`
- """,
+""",
  'website': 'http://www.camptocamp.com',
  'data': [],
  'test': [],
