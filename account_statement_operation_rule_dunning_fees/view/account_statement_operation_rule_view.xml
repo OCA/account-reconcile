@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+  <data noupdate="0">
+
+    <record id="view_account_statement_operation_rule_form" model="ir.ui.view">
+      <field name="name">account.statement.operation.rule.form</field>
+      <field name="model">account.statement.operation.rule</field>
+      <field name="inherit_id" ref="account_statement_operation_rule.view_account_statement_operation_rule_form"/>
+      <field name="arch" type="xml">
+        <group name="amount" position="after">
+          <group name="dunning_fees" attrs="{'invisible': [('rule_type', '!=', 'dunning_fees')]}">
+            <label string="When the invoice line has Dunning Fees and the payment includes the fees or part of them."/>
+          </group>
+        </group>
+      </field>
+    </record>
+  </data>
+</openerp>
