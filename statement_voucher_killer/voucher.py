@@ -69,7 +69,7 @@ class AccountStatementFromInvoiceLines(orm.TransientModel):
             s_type = 'general'
             if line.journal_id.type in ('sale', 'sale_refund'):
                 s_type = 'customer'
-            elif line.journal_id.type in ('purchase', 'purhcase_refund'):
+            elif line.journal_id.type in ('purchase', 'purchase_refund'):
                 s_type = 'supplier'
             vals = self._prepare_statement_line_vals(
                 cr, uid, line, s_type, statement_id, amount, context=ctx)
