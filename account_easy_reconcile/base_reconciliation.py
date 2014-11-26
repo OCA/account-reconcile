@@ -123,7 +123,6 @@ class EasyReconcileBase(orm.AbstractModel):
                      if key in keys), lines)
         debit, credit = sums['debit'], sums['credit']
         writeoff_amount = round(debit - credit, precision)
-
         return bool(writeoff_limit <= abs(writeoff_amount)), debit, credit
 
     def _get_rec_date(self, cr, uid, rec, lines,
