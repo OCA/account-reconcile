@@ -54,22 +54,35 @@ class AccountStatementOperationRule(models.Model):
     )
 
     @api.multi
-    def _is_valid_balance(self, statement_line, move_lines, balance):
-        currency = (statement_line.currency_id or
-                    statement_line.statement_id.currency)
-        # FIXME: is_valid_balance must not work with multicurrency
+    def _balance_in_range(self, balance, currency):
         if currency.compare_amounts(balance, self.amount_min) == -1:
             return False
         if currency.compare_amounts(balance, self.amount_max) == 1:
             return False
         return True
 
+    @api.model
+    def _is_multicurrency(self, statement_line):
+        currency = (statement_line.currency_id or
+                    statement_line.statement_id.currency)
+        company_currency = statement_line.company_id.currency_id
+        return currency != company_currency
+
+    @api.multi
+    def _is_valid_balance(self, statement_line, move_lines, balance):
+        if self._is_multicurrency(statement_line):
+            return False
+        currency = (statement_line.currency_id or
+                    statement_line.statement_id.currency)
+        return self._balance_in_range(balance, currency)
+
     @api.multi
     def _is_valid_multicurrency(self, statement_line, move_lines, balance):
         # FIXME: surely wrong
-        if statement_line.currency_id == statement_line.company_id.currency_id:
-            # not multicurrency
+        if self._is_multicurrency(statement_line):
             return False
+        currency = (statement_line.currency_id or
+                    statement_line.statement_id.currency)
         amount_currency = statement_line.amount_currency
         for move_line in move_lines:
             if move_line.currency_id != statement_line.currency_id:
@@ -80,8 +93,7 @@ class AccountStatementOperationRule(models.Model):
         # amount in currency is the same, so the balance is
         # a difference due to currency rates
         if statement_line.currency_id.is_zero(amount_currency):
-            # FIXME: is_valid_balance must not work with multicurrency
-            return self._is_valid_balance(statement_line, move_lines, balance)
+            return self._balance_in_range(balance, currency)
         return False
 
     @api.multi
