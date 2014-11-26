@@ -113,6 +113,9 @@ class AccountStatementOperationRule(models.Model):
         balance = statement_line.amount
         for move_line in move_lines:
             balance += move_line.credit - move_line.debit
+        # TODO use is_zero
+        if not balance:
+            return self.browse()
 
         rules = self.search([])
         # return the first applicable rule
