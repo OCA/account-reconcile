@@ -20,7 +20,9 @@
 ##############################################################################
 
 
-def prepare_statement(test, difference):
+def prepare_statement(test, difference,
+                      statement_line_currency=None,
+                      move_line_currency=None):
     """ Prepare a bank statement line and a move line
 
     The difference is applied on the bank statement line relatively to
@@ -35,24 +37,33 @@ def prepare_statement(test, difference):
         'name': '/',
         'journal_id': test.ref('account.cash_journal')
     })
-    statement_line = statement_line_obj.create({
+    line_vals = {
         'name': '001',
         'amount': amount + difference,
         'statement_id': statement.id,
-    })
+    }
+    if statement_line_currency:
+        line_vals['currency_id'] = statement_line_currency.id
+    statement_line = statement_line_obj.create(line_vals)
     move = move_obj.create({
         'journal_id': test.ref('account.sales_journal')
     })
-    move_line = move_line_obj.create({
+    line_vals = {
         'move_id': move.id,
         'name': '001',
         'account_id': test.ref('account.a_recv'),
         'debit': amount,
-    })
-    move_line_obj.create({
+    }
+    if move_line_currency:
+        line_vals['currency_id'] = move_line_currency.id
+    move_line = move_line_obj.create(line_vals)
+    line_vals = {
         'move_id': move.id,
         'name': '001',
         'account_id': test.ref('account.a_sale'),
         'credit': amount,
-    })
+    }
+    if move_line_currency:
+        line_vals['currency_id'] = move_line_currency.id
+    move_line_obj.create(line_vals)
     return statement_line, move_line
