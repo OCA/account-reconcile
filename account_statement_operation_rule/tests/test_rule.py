@@ -21,6 +21,8 @@
 
 from openerp.tests import common
 
+from .common import prepare_statement
+
 
 class TestRule(common.TransactionCase):
 
@@ -77,107 +79,75 @@ class TestRule(common.TransactionCase):
             'sequence': 2,
         })
 
-    def _prepare_statement(self, difference):
-        amount = 100
-        statement_obj = self.env['account.bank.statement']
-        statement_line_obj = self.env['account.bank.statement.line']
-        move_obj = self.env['account.move']
-        move_line_obj = self.env['account.move.line']
-        statement = statement_obj.create({
-            'name': '/',
-            'journal_id': self.ref('account.cash_journal')
-        })
-        statement_line = statement_line_obj.create({
-            'name': '001',
-            'amount': amount + difference,
-            'statement_id': statement.id,
-        })
-        move = move_obj.create({
-            'journal_id': self.ref('account.sales_journal')
-        })
-        move_line = move_line_obj.create({
-            'move_id': move.id,
-            'name': '001',
-            'account_id': self.ref('account.a_recv'),
-            'debit': amount,
-        })
-        move_line_obj.create({
-            'move_id': move.id,
-            'name': '001',
-            'account_id': self.ref('account.a_sale'),
-            'credit': amount,
-        })
-        return statement_line, move_line
-
     def test_rule_round_1(self):
         """-0.5 => rule round 1"""
-        statement_line, move_line = self._prepare_statement(-0.5)
+        statement_line, move_line = prepare_statement(self, -0.5)
         rule = self.rule_obj.find_first_rule(statement_line, [move_line])
         self.assertEquals(rule, self.rule_round_1)
 
     def test_rule_round_1_limit(self):
         """-1 => rule round 1"""
-        statement_line, move_line = self._prepare_statement(-1)
+        statement_line, move_line = prepare_statement(self, -1)
         rule = self.rule_obj.find_first_rule(statement_line, [move_line])
         self.assertEquals(rule, self.rule_round_1)
 
     def test_rule_round_1_near_limit(self):
         """-1.0001 => rule round 1"""
-        statement_line, move_line = self._prepare_statement(-1.0001)
+        statement_line, move_line = prepare_statement(self, -1.0001)
         rule = self.rule_obj.find_first_rule(statement_line, [move_line])
         self.assertEquals(rule, self.rule_round_1)
 
     def test_rule_round_2(self):
         """-1.01 => rule round 2"""
-        statement_line, move_line = self._prepare_statement(-1.01)
+        statement_line, move_line = prepare_statement(self, -1.01)
         rule = self.rule_obj.find_first_rule(statement_line, [move_line])
         self.assertEquals(rule, self.rule_round_2)
 
     def test_rule_round_2_limit(self):
         """-2 => rule round 2"""
-        statement_line, move_line = self._prepare_statement(-2)
+        statement_line, move_line = prepare_statement(self, -2)
         rule = self.rule_obj.find_first_rule(statement_line, [move_line])
         self.assertEquals(rule, self.rule_round_2)
 
     def test_rule_round_3(self):
         """+1.5 => rule round 3"""
-        statement_line, move_line = self._prepare_statement(1.5)
+        statement_line, move_line = prepare_statement(self, 1.5)
         rule = self.rule_obj.find_first_rule(statement_line, [move_line])
         self.assertEquals(rule, self.rule_round_3)
 
     def test_rule_round_3_limit(self):
         """+2 => rule round 3"""
-        statement_line, move_line = self._prepare_statement(2)
+        statement_line, move_line = prepare_statement(self, 2)
         rule = self.rule_obj.find_first_rule(statement_line, [move_line])
         self.assertEquals(rule, self.rule_round_3)
 
     def test_rule_no_round_below(self):
         """-3 => no rule"""
-        statement_line, move_line = self._prepare_statement(-3)
+        statement_line, move_line = prepare_statement(self, -3)
         rule = self.rule_obj.find_first_rule(statement_line, [move_line])
         self.assertFalse(rule)
 
     def test_rule_no_round_above(self):
         """+3 => no rule"""
-        statement_line, move_line = self._prepare_statement(3)
+        statement_line, move_line = prepare_statement(self, 3)
         rule = self.rule_obj.find_first_rule(statement_line, [move_line])
         self.assertFalse(rule)
 
     def test_rule_no_round_zero(self):
         """0 => no rule"""
-        statement_line, move_line = self._prepare_statement(0)
+        statement_line, move_line = prepare_statement(self, 0)
         rule = self.rule_obj.find_first_rule(statement_line, [move_line])
         self.assertFalse(rule)
 
     def test_rule_no_round_near_zero(self):
         """0.0001 => no rule"""
-        statement_line, move_line = self._prepare_statement(0.0001)
+        statement_line, move_line = prepare_statement(self, 0.0001)
         rule = self.rule_obj.find_first_rule(statement_line, [move_line])
         self.assertFalse(rule)
 
     def test_operations(self):
         """test operations_for_reconciliation()"""
-        statement_line, move_line = self._prepare_statement(-0.5)
+        statement_line, move_line = prepare_statement(self, -0.5)
         ops = self.rule_obj.operations_for_reconciliation(statement_line.id,
                                                           move_line.ids)
         self.assertEquals(ops, self.operation_round_1)
