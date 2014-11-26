@@ -26,6 +26,7 @@
  'license': 'AGPL-3',
  'category': 'Accounting & Finance',
  'depends': ['account_statement_operation_rule',
+             # in https://github.com/OCA/account-financial-tools
              'account_credit_control_dunning_fees',
              ],
  'website': 'http://www.camptocamp.com',
