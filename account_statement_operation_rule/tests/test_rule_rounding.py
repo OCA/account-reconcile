@@ -19,15 +19,16 @@
 #
 ##############################################################################
 
+import unittest2
 from openerp.tests import common
 
 from .common import prepare_statement
 
 
-class TestRule(common.TransactionCase):
+class TestRuleRounding(common.TransactionCase):
 
     def setUp(self):
-        super(TestRule, self).setUp()
+        super(TestRuleRounding, self).setUp()
         self.operation_obj = self.env['account.statement.operation.template']
         self.rule_obj = self.env['account.statement.operation.rule']
         self.operation_round_1 = self.operation_obj.create({
@@ -151,3 +152,16 @@ class TestRule(common.TransactionCase):
         ops = self.rule_obj.operations_for_reconciliation(statement_line.id,
                                                           move_line.ids)
         self.assertEquals(ops, self.operation_round_1)
+
+    def test_multicurrency_lines(self):
+        """No rounding rules on multi-currency lines"""
+        currency = self.browse_ref('base.AED')
+        statement_line, move_line = prepare_statement(
+            self,
+            -0.5,
+            statement_line_currency=currency,
+            move_line_currency=currency
+        )
+        ops = self.rule_obj.operations_for_reconciliation(statement_line.id,
+                                                          move_line.ids)
+        self.assertFalse(ops)
