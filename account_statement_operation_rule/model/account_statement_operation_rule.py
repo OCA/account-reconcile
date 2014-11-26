@@ -53,13 +53,25 @@ class AccountStatementOperationRule(models.Model):
         help="If several rules match, the first one is used.",
     )
 
-    @api.multi
-    def _balance_in_range(self, balance, currency):
-        if currency.compare_amounts(balance, self.amount_min) == -1:
+    @staticmethod
+    def _between_with_bounds(low, value, high, currency):
+        """ Equivalent to a three way comparison: ``min <= value <= high``
+
+        The comparisons are done with the currency to use the correct
+        precision.
+        """
+        if currency.compare_amounts(value, low) == -1:
             return False
-        if currency.compare_amounts(balance, self.amount_max) == 1:
+        if currency.compare_amounts(value, high) == 1:
             return False
         return True
+
+    @api.multi
+    def _balance_in_range(self, balance, currency):
+        amount_min = self.amount_min
+        amount_max = self.amount_max
+        return self._between_with_bounds(amount_min, balance,
+                                         amount_max, currency)
 
     @api.model
     def _is_multicurrency(self, statement_line):
