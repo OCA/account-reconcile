@@ -55,8 +55,14 @@ class AccountStatementOperationRule(models.Model):
 
     @api.multi
     def _is_valid_balance(self, statement_line, move_lines, balance):
-        # TODO use float compare
-        return self.amount_min <= balance <= self.amount_max
+        currency = (statement_line.currency_id or
+                    statement_line.statement_id.currency)
+        # FIXME: is_valid_balance must not work with multicurrency
+        if currency.compare_amounts(balance, self.amount_min) == -1:
+            return False
+        if currency.compare_amounts(balance, self.amount_max) == 1:
+            return False
+        return True
 
     @api.multi
     def _is_valid_multicurrency(self, statement_line, move_lines, balance):
@@ -74,6 +80,7 @@ class AccountStatementOperationRule(models.Model):
         # amount in currency is the same, so the balance is
         # a difference due to currency rates
         if statement_line.currency_id.is_zero(amount_currency):
+            # FIXME: is_valid_balance must not work with multicurrency
             return self._is_valid_balance(statement_line, move_lines, balance)
         return False
 
@@ -113,8 +120,10 @@ class AccountStatementOperationRule(models.Model):
         balance = statement_line.amount
         for move_line in move_lines:
             balance += move_line.credit - move_line.debit
-        # TODO use is_zero
-        if not balance:
+
+        currency = (statement_line.currency_id or
+                    statement_line.statement_id.currency)
+        if currency.is_zero(balance):
             return self.browse()
 
         rules = self.search([])
