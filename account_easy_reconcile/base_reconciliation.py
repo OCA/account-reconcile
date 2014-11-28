@@ -222,18 +222,14 @@ class EasyReconcileBase(orm.AbstractModel):
             # lines to reconcile
             # it will do a full reconcile instead of a partial reconcile
             # and make a write-off for exchange
-            if rec.account_id.currency_id:
-                if sum_credit > sum_debit:
-                    writeoff_account_id = rec.income_exchange_account_id.id
-                else:
-                    writeoff_account_id = rec.expense_exchange_account_id.id
-                period_id = self.pool.get('account.period').find(
-                    cr, uid, dt=date, context=context)[0]
-                if rec.analytic_account_id:
-                    rec_ctx['analytic_id'] = rec.analytic_account_id.id
+            if sum_credit > sum_debit:
+                writeoff_account_id = rec.income_exchange_account_id.id
             else:
-                writeoff_account_id = False
-                period_id = False
+                writeoff_account_id = rec.expense_exchange_account_id.id
+            period_id = self.pool.get('account.period').find(
+                cr, uid, dt=date, context=context)[0]
+            if rec.analytic_account_id:
+                rec_ctx['analytic_id'] = rec.analytic_account_id.id
             ml_obj.reconcile_partial(
                 cr, uid,
                 line_ids,
