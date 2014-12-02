@@ -47,14 +47,6 @@ class EasyReconcileOptions(orm.AbstractModel):
             ('newest_debit', 'Date of most recent debit')
         ]
 
-    def _get_account_currency(self, cr, uid, ids, field_name, arg,
-                              context=None):
-        result = {}
-        for line in self.browse(cr, uid, ids, context=context):
-            # Always provide second currency
-            result[line.id] = bool(line.task_id.account.currency_id.id)
-        return result
-
     _columns = {
         'write_off': fields.float('Write off allowed'),
         'account_lost_id': fields.many2one(
@@ -71,11 +63,6 @@ class EasyReconcileOptions(orm.AbstractModel):
         'analytic_account_id': fields.many2one(
             'account.analytic.account', 'Analytic Account',
             help="Analytic account for the write-off"),
-        'account_has_currency': fields.function(
-            _get_account_currency,
-            type='boolean',
-            string='has currency',
-            help="Check if related account has currency."),
         'income_exchange_account_id': fields.many2one(
             'account.account', 'Gain Exchange Rate Account'),
         'expense_exchange_account_id': fields.many2one(
