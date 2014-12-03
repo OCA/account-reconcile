@@ -30,6 +30,7 @@
  'website': 'http://www.camptocamp.com',
  'data': ['view/account_statement_operation_rule.xml',
           'view/account_statement_operation_rule_view.xml',
+          'security/ir.model.access.csv',
           ],
  'installable': True,
  'auto_install': False,
