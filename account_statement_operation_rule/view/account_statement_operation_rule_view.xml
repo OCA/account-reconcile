@@ -17,7 +17,7 @@
             <group name="options">
               <field name="rule_type"/>
             </group>
-            <group name="amount" string="Balance" attrs="{'invisible': [('rule_type', 'not in', ('balance', 'currency'))]}">
+            <group name="amount" string="Balance" attrs="{'invisible': [('rule_type', 'not in', ('rounding', 'currency'))]}">
               <label for="amount" string="When the balance is between"/>
               <div>
                 <field name="amount_min" class="oe_inline" /> And
