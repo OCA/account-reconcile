@@ -49,13 +49,13 @@ class account_bank_statement_line(orm.Model):
         domain = _get_domain(cr, uid, st_line, excluded_ids=excluded_ids,
                              context=context)
         new_domain = []
-        for criterium in domain:
-            if len(criterium) == 3:
-                field, op, value = criterium
+        for criterion in domain:
+            if len(criterion) == 3:
+                field, op, value = criterion
                 if (field, op) == ('ref', '='):
                     new_domain += [
                         '|',
                         ('transaction_ref', '=', value),
                     ]
-            new_domain.append(criterium)
+            new_domain.append(criterion)
         return new_domain
