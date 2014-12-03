@@ -30,10 +30,10 @@ class AccountStatementOperationRule(models.Model):
 
     name = fields.Char()
     rule_type = fields.Selection(
-        selection=[('balance', 'Balance'),
+        selection=[('rounding', 'Roundings'),
                    ('currency', 'Currencies')],
         string='Type',
-        default='balance',
+        default='rounding',
         required=True,
     )
     operations = fields.Many2many(
@@ -126,7 +126,7 @@ class AccountStatementOperationRule(models.Model):
                         rule when called on multiple rules.
         """
         self.ensure_one()
-        if self.rule_type == 'balance':
+        if self.rule_type == 'rounding':
             return self._is_valid_balance(statement_line, move_lines, balance)
         elif self.rule_type == 'currency':
             return self._is_valid_multicurrency(statement_line,

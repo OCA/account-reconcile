@@ -40,7 +40,7 @@ class TestRule(common.TransactionCase):
         })
         self.rule_round_1 = self.rule_obj.create({
             'name': 'Rounding -1.0 to 0.0',
-            'rule_type': 'balance',
+            'rule_type': 'rounding',
             'operations': [(6, 0, (self.operation_round_1.id, ))],
             'amount_min': -1.0,
             'amount_max': 0,
@@ -56,7 +56,7 @@ class TestRule(common.TransactionCase):
         })
         self.rule_round_2 = self.rule_obj.create({
             'name': 'Rounding -1.0 to 0.0',
-            'rule_type': 'balance',
+            'rule_type': 'rounding',
             'operations': [(6, 0, (self.operation_round_2.id, ))],
             'amount_min': -2.0,
             'amount_max': -1.0,
@@ -72,7 +72,7 @@ class TestRule(common.TransactionCase):
         })
         self.rule_round_3 = self.rule_obj.create({
             'name': 'Rounding 0.0 to 2.0',
-            'rule_type': 'balance',
+            'rule_type': 'rounding',
             'operations': [(6, 0, (self.operation_round_3.id, ))],
             'amount_min': 0,
             'amount_max': 2,
