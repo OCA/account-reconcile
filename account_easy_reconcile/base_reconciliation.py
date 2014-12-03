@@ -226,7 +226,7 @@ class EasyReconcileBase(orm.AbstractModel):
                 writeoff_account_id = rec.income_exchange_account_id.id
             else:
                 writeoff_account_id = rec.expense_exchange_account_id.id
-            period_id = self.pool.get('account.period').find(
+            period_id = self.pool['account.period'].find(
                 cr, uid, dt=date, context=context)[0]
             if rec.analytic_account_id:
                 rec_ctx['analytic_id'] = rec.analytic_account_id.id
