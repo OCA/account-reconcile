@@ -75,8 +75,7 @@ class AccountStatementOperationRule(models.Model):
 
     @api.model
     def _is_multicurrency(self, statement_line):
-        currency = (statement_line.currency_id or
-                    statement_line.statement_id.currency)
+        currency = statement_line.currency_for_rules()
         company_currency = statement_line.company_id.currency_id
         return currency != company_currency
 
@@ -84,8 +83,7 @@ class AccountStatementOperationRule(models.Model):
     def _is_valid_balance(self, statement_line, move_lines, balance):
         if self._is_multicurrency(statement_line):
             return False
-        currency = (statement_line.currency_id or
-                    statement_line.statement_id.currency)
+        currency = statement_line.currency_for_rules()
         return self._balance_in_range(balance, currency)
 
     @api.multi
@@ -93,8 +91,7 @@ class AccountStatementOperationRule(models.Model):
         # FIXME: surely wrong
         if self._is_multicurrency(statement_line):
             return False
-        currency = (statement_line.currency_id or
-                    statement_line.statement_id.currency)
+        currency = statement_line.currency_for_rules()
         amount_currency = statement_line.amount_currency
         for move_line in move_lines:
             if move_line.currency_id != statement_line.currency_id:
@@ -145,8 +142,7 @@ class AccountStatementOperationRule(models.Model):
         for move_line in move_lines:
             balance += move_line.credit - move_line.debit
 
-        currency = (statement_line.currency_id or
-                    statement_line.statement_id.currency)
+        currency = statement_line.currency_for_rules()
         if currency.is_zero(balance):
             return self.browse()
 
