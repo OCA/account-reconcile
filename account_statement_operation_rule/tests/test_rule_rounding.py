@@ -19,7 +19,6 @@
 #
 ##############################################################################
 
-import unittest2
 from openerp.tests import common
 
 from .common import prepare_statement

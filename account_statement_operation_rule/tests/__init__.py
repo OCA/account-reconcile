@@ -20,3 +20,4 @@
 ##############################################################################
 
 from . import test_rule_rounding
+from . import test_rule_currency

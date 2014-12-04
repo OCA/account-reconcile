@@ -22,13 +22,15 @@
 
 def prepare_statement(test, difference,
                       statement_line_currency=None,
-                      move_line_currency=None):
+                      move_line_currency=None,
+                      amount_currency_difference=0):
     """ Prepare a bank statement line and a move line
 
     The difference is applied on the bank statement line relatively to
     the move line.
     """
     amount = 100
+    amount_currency = 120
     statement_obj = test.env['account.bank.statement']
     statement_line_obj = test.env['account.bank.statement.line']
     move_obj = test.env['account.move']
@@ -43,7 +45,11 @@ def prepare_statement(test, difference,
         'statement_id': statement.id,
     }
     if statement_line_currency:
-        line_vals['currency_id'] = statement_line_currency.id
+        line_vals.update({
+            'currency_id': statement_line_currency.id,
+            'amount_currency': amount_currency + amount_currency_difference,
+        })
+
     statement_line = statement_line_obj.create(line_vals)
     move = move_obj.create({
         'journal_id': test.ref('account.sales_journal')
@@ -55,7 +61,10 @@ def prepare_statement(test, difference,
         'debit': amount,
     }
     if move_line_currency:
-        line_vals['currency_id'] = move_line_currency.id
+        line_vals.update({
+            'currency_id': move_line_currency.id,
+            'amount_currency': amount_currency,
+        })
     move_line = move_line_obj.create(line_vals)
     line_vals = {
         'move_id': move.id,

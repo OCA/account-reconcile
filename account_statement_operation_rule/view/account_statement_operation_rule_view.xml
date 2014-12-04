@@ -23,9 +23,13 @@
                 <field name="amount_min" class="oe_inline" /> And
                 <field name="amount_max" class="oe_inline" />
               </div>
+              <label for="currencies" string="And the currency is one of" attrs="{'invisible': [('rule_type', '!=', 'currency')]}"/>
+              <div attrs="{'invisible': [('rule_type', '!=', 'currency')]}">
+                <field name="currencies" class="oe_inline" widget="many2many_tags"/>
+              </div>
             </group>
             <group name="operations">
-              <label string="Then the following operations will be applied:" colspan="2"/>
+              <label for="operations" string="Then the following operations will be applied:" colspan="2"/>
               <field name="operations" nolabel="1"/>
             </group>
           </sheet>
