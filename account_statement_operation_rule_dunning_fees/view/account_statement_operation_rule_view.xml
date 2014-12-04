@@ -7,9 +7,9 @@
       <field name="model">account.statement.operation.rule</field>
       <field name="inherit_id" ref="account_statement_operation_rule.view_account_statement_operation_rule_form"/>
       <field name="arch" type="xml">
-        <group name="amount" position="after">
+        <group name="rule" position="inside">
           <group name="dunning_fees" attrs="{'invisible': [('rule_type', '!=', 'dunning_fees')]}">
-            <label string="When the invoice line has Dunning Fees and the payment includes the fees or part of them."/>
+            <label string="This rule is applied when the invoice line has dunning fees and the payment includes the same amount of fees or a part of this amount."/>
           </group>
         </group>
       </field>
