@@ -48,6 +48,12 @@ class AccountStatementOperationRule(models.Model):
         string='Max. Amount',
         digits=dp.get_precision('Account'),
     )
+    currencies = fields.Many2many(
+        comodel_name='res.currency',
+        string='Currencies',
+        help="For 'Currencies' rules, you can choose for which currencies "
+             "the rule will be applicable.",
+    )
     sequence = fields.Integer(
         default=20,
         help="If several rules match, the first one is used.",
@@ -88,15 +94,24 @@ class AccountStatementOperationRule(models.Model):
 
     @api.multi
     def _is_valid_multicurrency(self, statement_line, move_lines, balance):
-        # FIXME: surely wrong
-        if self._is_multicurrency(statement_line):
+        """ Check if the multi-currency rule can be applied
+
+        The rule is applied if and only if:
+        * The currency is not company's one
+        * The currency of the statement line and all the lines is the same
+        * The balance of the amount currencies is 0
+        * The balance is between the bounds configured on the rule
+        """
+        if not self._is_multicurrency(statement_line):
             return False
         currency = statement_line.currency_for_rules()
+        if currency not in self.currencies:
+            return False
         amount_currency = statement_line.amount_currency
         for move_line in move_lines:
             if move_line.currency_id != statement_line.currency_id:
                 # use case not supported, no rule found
-                return self.browse()
+                return False
             amount_currency -= move_line.amount_currency
 
         # amount in currency is the same, so the balance is
