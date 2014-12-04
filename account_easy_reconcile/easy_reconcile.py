@@ -63,6 +63,11 @@ class EasyReconcileOptions(orm.AbstractModel):
         'analytic_account_id': fields.many2one(
             'account.analytic.account', 'Analytic Account',
             help="Analytic account for the write-off"),
+        'income_exchange_account_id': fields.many2one(
+            'account.account', 'Gain Exchange Rate Account'),
+        'expense_exchange_account_id': fields.many2one(
+            'account.account', 'Loss Exchange Rate Account'),
+
     }
 
     _defaults = {
@@ -210,6 +215,12 @@ class AccountEasyReconcile(orm.Model):
                                       rec_method.account_profit_id.id),
                 'analytic_account_id': (rec_method.analytic_account_id and
                                         rec_method.analytic_account_id.id),
+                'income_exchange_account_id':
+                (rec_method.income_exchange_account_id and
+                 rec_method.income_exchange_account_id.id),
+                'expense_exchange_account_id':
+                (rec_method.income_exchange_account_id and
+                 rec_method.income_exchange_account_id.id),
                 'journal_id': (rec_method.journal_id and
                                rec_method.journal_id.id),
                 'date_base_on': rec_method.date_base_on,

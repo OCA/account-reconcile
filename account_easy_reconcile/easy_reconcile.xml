@@ -129,6 +129,8 @@ The lines should have the same amount (with the write-off) and the same referenc
                 <field name="write_off"/>
                 <field name="account_lost_id" attrs="{'required':[('write_off','>',0)]}"/>
                 <field name="account_profit_id" attrs="{'required':[('write_off','>',0)]}"/>
+                <field name="income_exchange_account_id" groups="base.group_multi_currency"/>
+                <field name="expense_exchange_account_id" groups="base.group_multi_currency"/>
                 <field name="journal_id" attrs="{'required':[('write_off','>',0)]}"/>
                 <field name="analytic_account_id" groups="analytic.group_analytic_accounting"/>
                 <field name="date_base_on"/>
@@ -147,6 +149,8 @@ The lines should have the same amount (with the write-off) and the same referenc
                 <field name="write_off"/>
                 <field name="account_lost_id" attrs="{'required':[('write_off','>',0)]}"/>
                 <field name="account_profit_id" attrs="{'required':[('write_off','>',0)]}"/>
+                <field name="income_exchange_account_id" groups="base.group_multi_currency"/>
+                <field name="expense_exchange_account_id" groups="base.group_multi_currency"/>
                 <field name="journal_id" attrs="{'required':[('write_off','>',0)]}"/>
                 <field name="analytic_account_id" groups="analytic.group_analytic_accounting"/>
                 <field name="date_base_on"/>
