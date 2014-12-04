@@ -17,18 +17,20 @@
             <group name="options">
               <field name="rule_type"/>
             </group>
-            <group name="amount" string="Balance" attrs="{'invisible': [('rule_type', 'not in', ('rounding', 'currency'))]}">
-              <label for="amount" string="When the balance is between"/>
-              <div>
-                <field name="amount_min" class="oe_inline" /> And
-                <field name="amount_max" class="oe_inline" />
-              </div>
-              <label for="currencies" string="And the currency is one of" attrs="{'invisible': [('rule_type', '!=', 'currency')]}"/>
-              <div attrs="{'invisible': [('rule_type', '!=', 'currency')]}">
-                <field name="currencies" class="oe_inline" widget="many2many_tags"/>
-              </div>
+            <group name="rule" string="Rule">
+              <group name="amount" attrs="{'invisible': [('rule_type', 'not in', ('rounding', 'currency'))]}">
+                <label for="amount" string="When the balance is between"/>
+                <div>
+                  <field name="amount_min" class="oe_inline" /> And
+                  <field name="amount_max" class="oe_inline" />
+                </div>
+                <label for="currencies" string="And the currency is one of" attrs="{'invisible': [('rule_type', '!=', 'currency')]}"/>
+                <div attrs="{'invisible': [('rule_type', '!=', 'currency')]}">
+                  <field name="currencies" class="oe_inline" widget="many2many_tags"/>
+                </div>
+              </group>
             </group>
-            <group name="operations">
+            <group name="operations" string="Result">
               <label for="operations" string="Then the following operations will be applied:" colspan="2"/>
               <field name="operations" nolabel="1"/>
             </group>
