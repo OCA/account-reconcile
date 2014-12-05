@@ -1,8 +1,8 @@
-# -*- coding: utf-8 -*-
+# -*- encoding: utf-8 -*-
 ##############################################################################
 #
 #    account_statement_sale_order for OpenERP
-#    Copyright (C) 2013 Akretion Chafique DELLI <chafique.delli@akretion.com>
+#    Copyright (C) 2013-14 Akretion Chafique DELLI <chafique.delli@akretion.com>
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -19,28 +19,19 @@
 #
 ##############################################################################
 
-{'name': "Bank statement sale order",
- 'version': '1.0',
- 'author': 'Akretion',
- 'maintainer': 'Akretion',
- 'category': 'Finance',
- 'complexity': 'normal',
- 'depends': ['account_statement_base_import', 'sale'],
- 'description': """
-
- The goal of this module is to create a self-completion method fill: command, partner and receivable account
- of a bank statement line.
-
- """,
- 'website': 'http://www.akretion.com',
- 'init_xml': [],
- 'update_xml': [
-     'statement_view.xml',
- ],
- 'demo_xml': [],
- 'test': [],
- 'installable': True,
- 'images': [],
- 'auto_install': False,
- 'license': 'AGPL-3',
+{
+    'name': 'Bank Statement Sale Order',
+    'version': '0.1',
+    'category': 'Finance',
+    'license': 'AGPL-3',
+    'summary': '',
+    'description': """
+    The goal of this module is to create a self-completion method fill:
+    command, partner and receivable account of a bank statement line.
+    """,
+    'author': 'Akretion',
+    'website': 'http://www.akretion.com',
+    'depends': ['sale'],
+    'data': ['statement_view.xml'],
+    'installable': True,
 }

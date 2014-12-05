@@ -2,7 +2,7 @@
 ##############################################################################
 #
 #    account_statement_sale_order for OpenERP
-#    Copyright (C) 2013 Akretion Chafique DELLI <chafique.delli@akretion.com>
+#   Copyright (C) 2013-14 Akretion Chafique DELLI <chafique.delli@akretion.com>
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -19,5 +19,5 @@
 #
 ##############################################################################
 
-import statement
-import sale
+from . import statement
+from . import sale

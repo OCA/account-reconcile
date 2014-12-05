@@ -12,7 +12,7 @@
                  <field name="sale_ids" on_change="onchange_sale_ids(sale_ids)" widget="many2many_tags" context="{'only_partner_id': partner_id}"/>
              </xpath>
          </field>
-     </record>
+    </record>
 
     <record id="view_accounting_entries_unassigned_search" model="ir.ui.view">
             <field name="name">account.move.line.unassigned.search</field>
