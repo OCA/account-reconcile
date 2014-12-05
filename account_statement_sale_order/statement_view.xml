@@ -2,18 +2,6 @@
 <openerp>
 <data>
 
-    <record id="bank_statement_view_form3" model="ir.ui.view">
-         <field name="name">account_bank_statement_import_base.bank_statement.sale_order</field>
-         <field name="model">account.bank.statement</field>
-         <field name="inherit_id" ref="account_statement_base_completion.bank_statement_view_form2" />
-         <field name="type">form</field>
-         <field name="arch" type="xml">
-             <xpath expr="/form/sheet/notebook/page/field[@name='line_ids']/tree/field[@name='ref']" position="after">
-                 <field name="sale_ids" on_change="onchange_sale_ids(sale_ids)" widget="many2many_tags" context="{'only_partner_id': partner_id}"/>
-             </xpath>
-         </field>
-    </record>
-
     <record id="view_accounting_entries_unassigned_search" model="ir.ui.view">
             <field name="name">account.move.line.unassigned.search</field>
             <field name="model">account.move.line</field>

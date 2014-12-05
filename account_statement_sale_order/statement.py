@@ -83,7 +83,8 @@ class AccountBankStatement(orm.Model):
             ctx = context.copy()
         ctx['countrepart'] = True
         kwargs['context'] = ctx
-        return super(AccountBankStatement, self)._prepare_counterpart_move_line(*args, **kwargs)
+        return super(AccountBankStatement, self)._prepare_counterpart_move_line(
+            *args, **kwargs)
 
     def _prepare_move_line_vals(self, cr, uid, st_line, *args, **kwargs):
         res = super(AccountBankStatement, self)._prepare_move_line_vals(
