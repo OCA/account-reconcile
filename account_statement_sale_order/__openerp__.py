@@ -19,28 +19,27 @@
 #
 ##############################################################################
 
-{'name': "Bank statement sale order",
- 'version': '1.0',
- 'author': 'Akretion',
- 'maintainer': 'Akretion',
- 'category': 'Finance',
- 'complexity': 'normal',
- 'depends': ['account_statement_base_import', 'sale'],
- 'description': """
-
- The goal of this module is to create a self-completion method fill: command, partner and receivable account
- of a bank statement line.
-
- """,
- 'website': 'http://www.akretion.com',
- 'init_xml': [],
- 'update_xml': [
-     'statement_view.xml',
- ],
- 'demo_xml': [],
- 'test': [],
- 'installable': True,
- 'images': [],
- 'auto_install': False,
- 'license': 'AGPL-3',
+{
+    'name': "Bank statement sale order",
+    'version': '1.0',
+    'author': 'Akretion',
+    'maintainer': 'Akretion',
+    'category': 'Finance',
+    'complexity': 'normal',
+    'depends': ['account_statement_base_import', 'sale'],
+    'description': """
+    The goal of this module is to create a self-completion method fill:
+    command, partner and receivable account of a bank statement line.
+    """,
+    'website': 'http://www.akretion.com',
+    'init_xml': [],
+    'update_xml': [
+        'statement_view.xml',
+    ],
+    'demo_xml': [],
+    'test': [],
+    'installable': True,
+    'images': [],
+    'auto_install': False,
+    'license': 'AGPL-3',
 }
