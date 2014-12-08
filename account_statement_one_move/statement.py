@@ -184,6 +184,7 @@ class AccountBankStatement(orm.Model):
 
     def button_confirm_bank(self, cr, uid, ids, context=None):
         st_line_obj = self.pool['account.bank.statement.line']
+        move_obj = self.pool['account.move']
         if context is None:
             context = {}
         for st in self.browse(cr, uid, ids, context=context):
@@ -191,6 +192,9 @@ class AccountBankStatement(orm.Model):
                 cr, uid, ids, context=context)
             if st.profile_id.one_move and context.get('move_id', False):
                 move_id = context['move_id']
+                move = move_obj.browse(cr, uid, move_id, context=context)
+                self.create_move_transfer_lines(
+                    cr, uid, move, st, context=context)
                 self._valid_move(cr, uid, move_id, context=context)
                 lines_ids = [x.id for x in st.line_ids]
                 st_line_obj.write(cr, uid, lines_ids,
