@@ -7,18 +7,20 @@
         <field name="model">account.statement.profile</field>
         <field name="arch" type="xml">
             <form string="Import statement">
-                <separator string="" colspan="4"/>
-                <field name="name" select="1" />
-                <field name="partner_id" select="1"/>
-                <field name="company_id" select="1" groups="base.group_multi_company"/>
-                <field name="journal_id" select="1"/>
-                <field name="commission_account_id" />
-                <field name="commission_analytic_id" />
-                <field name="receivable_account_id" />
-                <field name="force_partner_on_bank"/>
-                <field name="balance_check"/>
-                <field name="bank_statement_prefix"/>
-                <field name="message_ids" widget="mail_thread" placeholder="Share a note..." colspan="4"/>
+                <group>
+	                <separator string="" colspan="4"/>
+	                <field name="name" select="1" />
+	                <field name="partner_id" select="1"/>
+	                <field name="company_id" select="1" groups="base.group_multi_company"/>
+	                <field name="journal_id" select="1"/>
+	                <field name="commission_account_id" />
+	                <field name="commission_analytic_id" />
+	                <field name="receivable_account_id" />
+	                <field name="force_partner_on_bank"/>
+	                <field name="control_balance_check"/>
+	                <field name="bank_statement_prefix"/>
+	                <field name="message_ids" widget="mail_thread" placeholder="Share a note..." colspan="4"/>
+	            </group>
             </form>
         </field>
     </record>
@@ -36,7 +38,7 @@
                 <field name="commission_analytic_id" />
                 <field name="receivable_account_id" />
                 <field name="force_partner_on_bank"/>
-                <field name="balance_check"/>
+                <field name="control_balance_check"/>
             </tree>
         </field>
     </record>
@@ -98,7 +100,7 @@
           <label for="name" position="before">
               <group>
                   <field name="profile_id" select="1" required="1" on_change="onchange_imp_config_id(profile_id)" widget="selection"/>
-                  <field name="balance_check" invisible="1"/>
+                  <field name="control_balance_check" invisible="1"/>
               </group>
           </label>
 
@@ -108,38 +110,18 @@
 
           <!-- Make balance visible or not depending on profile -->
           <field name="balance_start" position="attributes">
-              <attribute name="attrs">{'invisible':[('balance_check','=',False)]}</attribute>
+              <attribute name="attrs">{'invisible':[('control_balance_check','=',False)]}</attribute>
           </field>
           <field name="balance_end_real" position="attributes">
-              <attribute name="attrs">{'invisible':[('balance_check','=',False)]}</attribute>
+              <attribute name="attrs">{'invisible':[('control_balance_check','=',False)]}</attribute>
           </field>
           <field name="balance_end_real" position="after">
-               <field name="balance_end" widget="monetary" options='{"currency_field" : "currency"}' attrs="{'invisible':[('balance_check','=',False)]}"/>
+               <field name="balance_end" widget="monetary" options='{"currency_field" : "currency"}' attrs="{'invisible':[('control_balance_check','=',False)]}"/>
           </field>
 
           <xpath expr="//field[@name='line_ids']/tree/field[@name='sequence']" position="after">
               <field name="id" readonly="1" />
           </xpath>
-
-          <xpath expr="//field[@name='line_ids']/form//field[@name='date']" position="before">
-              <field name="id" readonly="1" />
-          </xpath>
-          <!-- Adapt onchange signature -->
-          <xpath expr="//field[@name='line_ids']/tree/field[@name='partner_id']" position="replace">
-              <field name="partner_id" on_change="onchange_partner_id(partner_id,parent.profile_id)" domain="['|',('parent_id','=',False),('is_company','=',True)]"/>
-          </xpath>
-
-          <xpath expr="//field[@name='line_ids']/form//field[@name='partner_id']" position="replace">
-             <field name="partner_id" on_change="onchange_partner_id(partner_id,parent.profile_id)" domain="['|',('parent_id','=',False),('is_company','=',True)]"/>
-          </xpath>
-          <xpath expr="//field[@name='line_ids']/form//field[@name='type']" position="replace">
-               <field name="type" on_change="onchange_type(partner_id, type, parent.profile_id)"/>
-          </xpath>
-          <!-- also set type hidden as it has no impact on reconciliation -->
-          <xpath expr="//field[@name='line_ids']/tree/field[@name='type']" position="replace">
-               <field name="type" on_change="onchange_type(partner_id, type, parent.profile_id)" invisible="1"/>
-          </xpath>
-
       </field>
   </record>
 
