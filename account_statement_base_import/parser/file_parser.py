@@ -41,7 +41,7 @@ class FileParser(BankStatementImportParser):
     """
 
     def __init__(self, parse_name, ftype='csv', extra_fields=None, header=None,
-                 **kwargs):
+                 dialect=None, **kwargs):
         """
             :param char: parse_name: The name of the parser
             :param char: ftype: extension of the file (could be csv, xls or
@@ -64,6 +64,7 @@ class FileParser(BankStatementImportParser):
         self._datemode = 0  # used only for xls documents,
         # 0 means Windows mode (1900 based dates).
         # Set in _parse_xls, from the contents of the file
+        self.dialect = dialect
 
     def _custom_format(self, *args, **kwargs):
         """No other work on data are needed in this parser."""
@@ -111,7 +112,8 @@ class FileParser(BankStatementImportParser):
         csv_file.write(self.filebuffer)
         csv_file.flush()
         with open(csv_file.name, 'rU') as fobj:
-            reader = UnicodeDictReader(fobj, fieldnames=self.fieldnames)
+            reader = UnicodeDictReader(fobj, fieldnames=self.fieldnames,
+                                       dialect=self.dialect)
             return list(reader)
 
     def _parse_xls(self):
