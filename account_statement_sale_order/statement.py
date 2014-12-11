@@ -49,7 +49,7 @@ class AccountStatementLine(orm.Model):
         method now to get the type to use.
         """
         if sale_ids and sale_ids[0][2]:
-            sale_obj = self.pool.get('sale.order')
+            sale_obj = self.pool['sale.order']
             sale_ids = sale_ids[0][2]
             sale = sale_obj.browse(cr, uid, sale_ids[0], context=context)
             res = self.onchange_partner_id(cr, uid, ids, sale.partner_id.id,
@@ -107,10 +107,10 @@ class AccountStatementCompletionRule(orm.Model):
 
             ...}
         """
-        st_obj = self.pool.get('account.bank.statement.line')
+        st_obj = self.pool['account.bank.statement.line']
         res = {}
         if st_line:
-            so_obj = self.pool.get('sale.order')
+            so_obj = self.pool['sale.order']
             so_id = so_obj.search(cr,
                                   uid,
                                   [('name', '=', st_line['ref'])],
@@ -136,7 +136,7 @@ class AccountStatementCompletionRule(orm.Model):
         return res
 
 
-class account_bank_statement(orm.Model):
+class AccountBankStatement(orm.Model):
     _inherit = "account.bank.statement"
 
     def _prepare_counterpart_move_line(self, *args, **kwargs):
@@ -147,11 +147,11 @@ class account_bank_statement(orm.Model):
             ctx = context.copy()
         ctx['countrepart'] = True
         kwargs['context'] = ctx
-        return super(account_bank_statement, self).\
+        return super(AccountBankStatement, self).\
             _prepare_counterpart_move_line(*args, **kwargs)
 
     def _prepare_move_line_vals(self, cr, uid, st_line, *args, **kwargs):
-        res = super(account_bank_statement, self)._prepare_move_line_vals(
+        res = super(AccountBankStatement, self)._prepare_move_line_vals(
             cr, uid, st_line, *args, **kwargs)
         if not kwargs.get('context', {}).get('countrepart'):
             res['sale_ids'] = [(6, 0, [sale.id for sale in st_line.sale_ids])]

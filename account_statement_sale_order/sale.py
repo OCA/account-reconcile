@@ -23,7 +23,7 @@
 from openerp.osv import orm
 
 
-class sale_order(orm.Model):
+class SaleOrder(orm.Model):
     _inherit = "sale.order"
 
     def _search(self, cr, user, args, offset=0, limit=None, order=None,
@@ -32,7 +32,7 @@ class sale_order(orm.Model):
             context = {}
         if context.get('only_partner_id'):
             args.append(('partner_id', '=', context['only_partner_id']))
-        res = super(sale_order, self)._search(
+        res = super(SaleOrder, self)._search(
             cr, user, args, offset=offset,
             limit=limit, order=order, context=context, count=count,
             access_rights_uid=access_rights_uid)

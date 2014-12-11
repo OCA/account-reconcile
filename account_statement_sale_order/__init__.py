@@ -19,5 +19,5 @@
 #
 ##############################################################################
 
-import statement
-import sale
+from . import statement
+from . import sale
