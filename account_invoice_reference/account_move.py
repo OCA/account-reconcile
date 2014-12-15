@@ -19,4 +19,24 @@
 #
 ##############################################################################
 
-from . import account_move
+from openerp.osv import orm
+
+
+class AccountMove(orm.Model):
+    _inherit = 'account.move'
+
+    def create(self, cr, uid, vals, context=None):
+        if context is None:
+            context = {}
+        # invoice from which the move is generated
+        invoice = context.get('invoice')
+        if invoice:
+            assert isinstance(invoice, orm.browse_record)
+            invoice_obj = self.pool['account.invoice']
+            ref = invoice_obj._ref_from_invoice(
+                cr, uid, invoice, context=context)
+            vals = vals.copy()
+            vals['ref'] = ref
+        move_id = super(AccountMove, self).create(cr, uid, vals,
+                                                  context=context)
+        return move_id
