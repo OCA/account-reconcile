@@ -167,7 +167,8 @@ class AccountStatementProfil(orm.Model):
             statement_id = self._statement_import(
                 cr, uid, ids, prof, parser, file_stream, ftype=ftype,
                 context=context)
-            res.append(statement_id)
+            if statement_id:
+                res.append(statement_id)
         return res
 
     def _statement_import(self, cr, uid, ids, prof, parser, file_stream,
