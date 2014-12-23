@@ -29,11 +29,16 @@ def UnicodeDictReader(utf8_data, **kwargs):
     pos = utf8_data.tell()
     sample_data = utf8_data.read(2048)
     utf8_data.seek(pos)
-    dialect = sniffer.sniff(sample_data, delimiters=',;\t')
+    if not kwargs.get('dialect'):
+        dialect = sniffer.sniff(sample_data, delimiters=',;\t')
+        del kwargs['dialect']
+    else:
+        dialect = kwargs.pop('dialect')
     csv_reader = csv.DictReader(utf8_data, dialect=dialect, **kwargs)
     for row in csv_reader:
-        yield dict([(key, unicode(value, 'utf-8')) for key, value in
-                    row.iteritems()])
+        yield dict([(unicode(key or '', 'utf-8'),
+                     unicode(value or '', 'utf-8'))
+                    for key, value in row.iteritems()])
 
 
 class BankStatementImportParser(object):
