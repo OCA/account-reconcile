@@ -65,6 +65,16 @@ class AccountStatementLine(orm.Model):
                                            'to belong to the same partner'))
         return True
 
+    def process_reconciliation(self, cr, uid, id, mv_line_dicts, *args, **kwargs):
+        if not kwargs.get('context', {}).get('balance_check'):
+            context = kwargs.get('context')
+            st_line = self.browse(cr, uid, id, context=context)
+            mv_line_dicts[0]['sale_ids'] = [
+                (6, 0, [sale.id for sale in st_line.sale_ids])
+                ]
+        super(AccountStatementLine, self).process_reconciliation(
+            cr, uid, id, mv_line_dicts, context=context)
+
     _constraints = [
         (_check_partner_id,
          'The sale orders chosen have to belong to the same partner',
@@ -75,20 +85,32 @@ class AccountStatementLine(orm.Model):
 class AccountBankStatement(orm.Model):
     _inherit = "account.bank.statement"
 
-    def _prepare_counterpart_move_line(self, *args, **kwargs):
+    def balance_check(self, *args, **kwargs):
         context = kwargs.get('context')
         if context is None:
             ctx = {}
         else:
             ctx = context.copy()
-        ctx['countrepart'] = True
+        ctx['balance_check'] = True
         kwargs['context'] = ctx
-        return super(AccountBankStatement, self)._prepare_counterpart_move_line(
+        return super(AccountBankStatement, self).balance_check(
             *args, **kwargs)
 
-    def _prepare_move_line_vals(self, cr, uid, st_line, *args, **kwargs):
-        res = super(AccountBankStatement, self)._prepare_move_line_vals(
-            cr, uid, st_line, *args, **kwargs)
-        if not kwargs.get('context', {}).get('countrepart'):
-            res['sale_ids'] = [(6, 0, [sale.id for sale in st_line.sale_ids])]
-        return res
+
+    #def _prepare_counterpart_move_line(self, *args, **kwargs):
+    #    context = kwargs.get('context')
+    #    if context is None:
+    #        ctx = {}
+    #    else:
+    #        ctx = context.copy()
+    #    ctx['countrepart'] = True
+    #    kwargs['context'] = ctx
+    #    return super(AccountBankStatement, self)._prepare_bank_move_line(
+    #        *args, **kwargs)
+    #
+    #def _prepare_move_line_vals(self, cr, uid, st_line, *args, **kwargs):
+    #    res = super(AccountBankStatement, self)._prepare_move_line_vals(
+    #        cr, uid, st_line, *args, **kwargs)
+    #    if not kwargs.get('context', {}).get('countrepart'):
+    #        res['sale_ids'] = [(6, 0, [sale.id for sale in st_line.sale_ids])]
+    #    return res
