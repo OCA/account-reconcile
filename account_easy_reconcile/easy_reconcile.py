@@ -139,6 +139,7 @@ class AccountEasyReconcileMethod(orm.Model):
 class AccountEasyReconcile(orm.Model):
 
     _name = 'account.easy.reconcile'
+    _inherit = ['mail.thread']
     _description = 'account easy reconcile'
 
     def _get_total_unrec(self, cr, uid, ids, name, arg, context=None):
@@ -283,6 +284,20 @@ class AccountEasyReconcile(orm.Model):
                     'reconcile_ids': [(4, rid) for rid in reconcile_ids],
                     'reconcile_partial_ids': [(4, rid) for rid in partial_ids],
                 }, context=context)
+            except Exception as e:
+                # In case of error, we log it in the mail thread,
+                # and create an empty history line; otherwise, the cron
+                # will just loop on this reconcile task.
+                message = "There was an error during reconciliation : %s" \
+                    % e.value
+                self.message_post(cr, uid, rec.id,
+                                  body=message, context=context)
+                self.pool.get('easy.reconcile.history').create(new_cr, uid, {
+                    'easy_reconcile_id': rec.id,
+                    'date': fields.datetime.now(),
+                    'reconcile_ids': [],
+                    'reconcile_partial_ids': [],
+                    })
             finally:
                 if ctx['commit_every']:
                     new_cr.commit()
