@@ -25,6 +25,9 @@ from openerp.tools import DEFAULT_SERVER_DATETIME_FORMAT
 from openerp.tools.translate import _
 from openerp import pooler
 
+import logging
+_logger = logging.getLogger(__name__)
+
 
 class EasyReconcileOptions(orm.AbstractModel):
     """Options of a reconciliation profile
@@ -285,13 +288,15 @@ class AccountEasyReconcile(orm.Model):
                     'reconcile_partial_ids': [(4, rid) for rid in partial_ids],
                 }, context=context)
             except Exception as e:
-                # In case of error, we log it in the mail thread,
-                # and create an empty history line; otherwise, the cron
-                # will just loop on this reconcile task.
+                # In case of error, we log it in the mail thread, log the
+                # stack trace and create an empty history line; otherwise,
+                # the cron will just loop on this reconcile task.
                 message = "There was an error during reconciliation : %s" \
                     % e.value
                 self.message_post(cr, uid, rec.id,
                                   body=message, context=context)
+                _logger.exception("The reconcile task %s had an exception: %s",
+                                  rec.name, e.value)
                 self.pool.get('easy.reconcile.history').create(new_cr, uid, {
                     'easy_reconcile_id': rec.id,
                     'date': fields.datetime.now(),
