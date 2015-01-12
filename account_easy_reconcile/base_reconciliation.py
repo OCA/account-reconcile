@@ -88,7 +88,8 @@ class EasyReconcileBase(orm.AbstractModel):
     def _where(self, rec, *args, **kwargs):
         where = ("WHERE account_move_line.account_id = %s "
                  "AND COALESCE(account_move_reconcile.type,'') <> 'manual' "
-                 "AND account_move_line.reconcile_id IS NULL ")
+                 "AND account_move_line.reconcile_id IS NULL "
+                 "AND account_move_line.state != 'draft' ")
         # it would be great to use dict for params
         # but as we use _where_calc in _get_filter
         # which returns a list, we have to
