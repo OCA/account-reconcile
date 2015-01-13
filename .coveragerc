@@ -3,6 +3,7 @@ include =
     */bank-statement-reconcile/*
 
 omit =
+    */test/*
     */tests/*
     *__init__.py
 

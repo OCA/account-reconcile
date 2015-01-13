@@ -24,7 +24,8 @@ class AccountStatementProfil(orm.Model):
         commission_analytic_id = profile.commission_analytic_id.id
         comm_values = {
             'name': 'IN ' + _('Commission line'),
-            'date': parser.get_st_vals().get('date') or datetime.datetime.now(),
+            'date': parser.get_st_vals().get('date') or
+            datetime.datetime.now(),
             'amount': global_commission_amount,
             'partner_id': partner_id,
             'type': 'general',
@@ -32,8 +33,8 @@ class AccountStatementProfil(orm.Model):
             'account_id': commission_account_id,
             'ref': 'commission',
             'analytic_account_id': commission_analytic_id,
-            # !! We set the already_completed so auto-completion will not update
-            # those values!
+            # !! We set the already_completed so auto-completion will not
+            # update those values!
             'already_completed': True,
         }
         st_obj = self.pool['account.bank.statement.line']

@@ -92,7 +92,7 @@ class AccountStatementCompletionRule(orm.Model):
                          ON
                             st_l.statement_id = s.id
                     WHERE
-                        st_l.name ~* l.label
+                        (st_l.name ~* l.label OR st_l.ref ~* l.label)
                     AND
                         l.profile_id = s.profile_id
                     AND
@@ -125,8 +125,8 @@ class AccountStatementLabel(orm.Model):
         'label': fields.char('Bank Statement Label', size=100),
         'account_id': fields.many2one('account.account', 'Account',
                                       required=True,
-                                      help='Account corresponding to the label '
-                                      'for a given partner'),
+                                      help='Account corresponding to the '
+                                      'label for a given partner'),
         'company_id': fields.related('account_id', 'company_id',
                                      type='many2one',
                                      relation='res.company',

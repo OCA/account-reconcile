@@ -18,7 +18,10 @@
 #
 ##############################################################################
 import datetime
-from account_statement_base_import.parser.file_parser import FileParser
+from openerp.tools import ustr
+from account_statement_base_import.parser.file_parser import (
+    FileParser, float_or_zero
+)
 
 
 class TransactionIDFileParser(FileParser):
@@ -36,14 +39,15 @@ class TransactionIDFileParser(FileParser):
             :param list: header : specify header fields if the csv file has no
               header
         """
-        extra_fields = {'transaction_id': unicode}
+        conversion_dict = {
+            'transaction_id': ustr,
+            'label': ustr,
+            'date': datetime.datetime,
+            'amount': float_or_zero,
+        }
         super(TransactionIDFileParser, self).__init__(
-            profile, extra_fields=extra_fields, ftype=ftype, header=header,
+            profile, extra_fields=conversion_dict, ftype=ftype, header=header,
             **kwargs)
-        # ref is replaced by transaction_id thus we delete it from check
-        self.keys_to_validate = [
-            k for k in self.keys_to_validate if k != 'ref']
-        del self.conversion_dict['ref']
 
     @classmethod
     def parser_for(cls, parser_name):
@@ -54,9 +58,9 @@ class TransactionIDFileParser(FileParser):
 
     def get_st_line_vals(self, line, *args, **kwargs):
         """This method must return a dict of vals that can be passed to create
-        method of statement line in order to record it. It is the responsibility
-        of every parser to give this dict of vals, so each one can implement his
-        own way of recording the lines.
+        method of statement line in order to record it. It is the
+        responsibility of every parser to give this dict of vals, so each one
+        can implement his own way of recording the lines.
             :param:  line: a dict of vals that represent a line of
               result_row_list
             :return: dict of values to give to the create method of statement

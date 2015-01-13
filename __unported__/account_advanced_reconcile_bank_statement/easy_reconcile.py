@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 ##############################################################################
 #
-#    Copyright 2012 Camptocamp SA (Guewen Baconnier)
-#    Copyright (C) 2010   Sébastien Beau
+#    Author: Matthieu Dietrich
+#    Copyright 2014 Camptocamp SA
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -19,8 +19,18 @@
 #
 ##############################################################################
 
-from . import easy_reconcile
-from . import base_reconciliation
-from . import simple_reconciliation
-from . import easy_reconcile_history
-from . import res_config
+from openerp.osv import orm
+
+
+class account_easy_reconcile_method(orm.Model):
+
+    _inherit = 'account.easy.reconcile.method'
+
+    def _get_all_rec_method(self, cr, uid, context=None):
+        methods = super(account_easy_reconcile_method, self).\
+            _get_all_rec_method(cr, uid, context=context)
+        methods += [
+            ('easy.reconcile.advanced.bank_statement',
+             'Advanced. Partner and Bank Statement'),
+        ]
+        return methods

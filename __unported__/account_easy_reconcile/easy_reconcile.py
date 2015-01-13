@@ -19,8 +19,14 @@
 #
 ##############################################################################
 
+from datetime import datetime
 from openerp.osv import fields, orm
+from openerp.tools import DEFAULT_SERVER_DATETIME_FORMAT
 from openerp.tools.translate import _
+from openerp import pooler
+
+import logging
+_logger = logging.getLogger(__name__)
 
 
 class EasyReconcileOptions(orm.AbstractModel):
@@ -60,6 +66,11 @@ class EasyReconcileOptions(orm.AbstractModel):
         'analytic_account_id': fields.many2one(
             'account.analytic.account', 'Analytic Account',
             help="Analytic account for the write-off"),
+        'income_exchange_account_id': fields.many2one(
+            'account.account', 'Gain Exchange Rate Account'),
+        'expense_exchange_account_id': fields.many2one(
+            'account.account', 'Loss Exchange Rate Account'),
+
     }
 
     _defaults = {
@@ -131,6 +142,7 @@ class AccountEasyReconcileMethod(orm.Model):
 class AccountEasyReconcile(orm.Model):
 
     _name = 'account.easy.reconcile'
+    _inherit = ['mail.thread']
     _description = 'account easy reconcile'
 
     def _get_total_unrec(self, cr, uid, ids, name, arg, context=None):
@@ -159,11 +171,16 @@ class AccountEasyReconcile(orm.Model):
 
     def _last_history(self, cr, uid, ids, name, args, context=None):
         result = {}
-        for history in self.browse(cr, uid, ids, context=context):
-            result[history.id] = False
-            if history.history_ids:
-                # history is sorted by date desc
-                result[history.id] = history.history_ids[0].id
+        # do a search() for retrieving the latest history line,
+        # as a read() will badly split the list of ids with 'date desc'
+        # and return the wrong result.
+        history_obj = self.pool['easy.reconcile.history']
+        for reconcile_id in ids:
+            last_history = history_obj.search(
+                cr, uid, [('easy_reconcile_id', '=', reconcile_id)],
+                limit=1, order='date desc', context=context
+            )
+            result[reconcile_id] = last_history[0] if last_history else False
         return result
 
     _columns = {
@@ -202,13 +219,19 @@ class AccountEasyReconcile(orm.Model):
                                       rec_method.account_profit_id.id),
                 'analytic_account_id': (rec_method.analytic_account_id and
                                         rec_method.analytic_account_id.id),
+                'income_exchange_account_id':
+                (rec_method.income_exchange_account_id and
+                 rec_method.income_exchange_account_id.id),
+                'expense_exchange_account_id':
+                (rec_method.income_exchange_account_id and
+                 rec_method.income_exchange_account_id.id),
                 'journal_id': (rec_method.journal_id and
                                rec_method.journal_id.id),
                 'date_base_on': rec_method.date_base_on,
                 'filter': rec_method.filter}
 
     def run_reconcile(self, cr, uid, ids, context=None):
-        def find_reconcile_ids(fieldname, move_line_ids):
+        def find_reconcile_ids(cr, fieldname, move_line_ids):
             if not move_line_ids:
                 return []
             sql = ("SELECT DISTINCT " + fieldname +
@@ -219,41 +242,75 @@ class AccountEasyReconcile(orm.Model):
             res = cr.fetchall()
             return [row[0] for row in res]
 
+        # we use a new cursor to be able to commit the reconciliation
+        # often. We have to create it here and not later to avoid problems
+        # where the new cursor sees the lines as reconciles but the old one
+        # does not.
+        if context is None:
+            context = {}
+
         for rec in self.browse(cr, uid, ids, context=context):
-            all_ml_rec_ids = []
-            all_ml_partial_ids = []
+            ctx = context.copy()
+            ctx['commit_every'] = (
+                rec.account.company_id.reconciliation_commit_every
+            )
+            if ctx['commit_every']:
+                new_cr = pooler.get_db(cr.dbname).cursor()
+            else:
+                new_cr = cr
+            try:
+                all_ml_rec_ids = []
+                all_ml_partial_ids = []
 
-            for method in rec.reconcile_method:
-                rec_model = self.pool.get(method.name)
-                auto_rec_id = rec_model.create(
-                    cr, uid,
-                    self._prepare_run_transient(
-                        cr, uid, method, context=context),
-                    context=context)
+                for method in rec.reconcile_method:
+                    rec_model = self.pool.get(method.name)
+                    auto_rec_id = rec_model.create(
+                        new_cr, uid,
+                        self._prepare_run_transient(
+                            new_cr, uid, method, context=context),
+                        context=context)
 
-                ml_rec_ids, ml_partial_ids = rec_model.automatic_reconcile(
-                    cr, uid, auto_rec_id, context=context)
+                    ml_rec_ids, ml_partial_ids = rec_model.automatic_reconcile(
+                        new_cr, uid, auto_rec_id, context=ctx)
 
-                all_ml_rec_ids += ml_rec_ids
-                all_ml_partial_ids += ml_partial_ids
+                    all_ml_rec_ids += ml_rec_ids
+                    all_ml_partial_ids += ml_partial_ids
 
-            reconcile_ids = find_reconcile_ids(
-                'reconcile_id', all_ml_rec_ids)
-            partial_ids = find_reconcile_ids(
-                'reconcile_partial_id', all_ml_partial_ids)
+                reconcile_ids = find_reconcile_ids(
+                    new_cr, 'reconcile_id', all_ml_rec_ids)
+                partial_ids = find_reconcile_ids(
+                    new_cr, 'reconcile_partial_id', all_ml_partial_ids)
 
-            self.pool.get('easy.reconcile.history').create(
-                cr,
-                uid,
-                {'easy_reconcile_id': rec.id,
-                 'date': fields.datetime.now(),
-                 'reconcile_ids': [(4, rid) for rid in reconcile_ids],
-                 'reconcile_partial_ids': [(4, rid) for rid in partial_ids]},
-                context=context)
+                self.pool.get('easy.reconcile.history').create(new_cr, uid, {
+                    'easy_reconcile_id': rec.id,
+                    'date': fields.datetime.now(),
+                    'reconcile_ids': [(4, rid) for rid in reconcile_ids],
+                    'reconcile_partial_ids': [(4, rid) for rid in partial_ids],
+                }, context=context)
+            except Exception as e:
+                # In case of error, we log it in the mail thread, log the
+                # stack trace and create an empty history line; otherwise,
+                # the cron will just loop on this reconcile task.
+                _logger.exception("The reconcile task %s had an exception: %s",
+                                  rec.name, e.value)
+                message = "There was an error during reconciliation : %s" \
+                    % e.value
+                self.message_post(cr, uid, rec.id,
+                                  body=message, context=context)
+                self.pool.get('easy.reconcile.history').create(new_cr, uid, {
+                    'easy_reconcile_id': rec.id,
+                    'date': fields.datetime.now(),
+                    'reconcile_ids': [],
+                    'reconcile_partial_ids': [],
+                    })
+            finally:
+                if ctx['commit_every']:
+                    new_cr.commit()
+                    new_cr.close()
         return True
 
     def _no_history(self, cr, uid, rec, context=None):
-        """ Raise an `osv.except_osv` error, supposed to
+        """ Raise an `orm.except_orm` error, supposed to
         be called when there is no history on the reconciliation
         task.
         """
@@ -333,3 +390,30 @@ class AccountEasyReconcile(orm.Model):
         if not rec.last_history:
             self._no_history(cr, uid, rec, context=context)
         return rec.last_history.open_partial()
+
+    def run_scheduler(self, cr, uid, run_all=None, context=None):
+        """ Launch the reconcile with the oldest run
+        This function is mostly here to be used with cron task
+
+        :param run_all: if set it will ingore lookup and launch
+                    all reconciliation
+        :returns: True in case of success or raises an exception
+
+        """
+        def _get_date(reconcile):
+            if reconcile.last_history.date:
+                return datetime.strptime(reconcile.last_history.date,
+                                         DEFAULT_SERVER_DATETIME_FORMAT)
+            else:
+                return datetime.min
+
+        ids = self.search(cr, uid, [], context=context)
+        assert ids, "No easy reconcile available"
+        if run_all:
+            self.run_reconcile(cr, uid, ids, context=context)
+            return True
+        reconciles = self.browse(cr, uid, ids, context=context)
+        reconciles.sort(key=_get_date)
+        older = reconciles[0]
+        self.run_reconcile(cr, uid, [older.id], context=context)
+        return True

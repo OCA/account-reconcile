@@ -31,9 +31,9 @@
         'account_statement_base_import'
     ],
     'description': """
-This module brings commission support to bank statement imports. It computes the
-sum of a commission field on each transaction and creates a statement entry for
-it.
+This module brings commission support to bank statement imports. It computes
+the sum of a commission field on each transaction and creates a statement
+entry for it.
 """,
     'website': 'http://www.camptocamp.com',
     'data': [

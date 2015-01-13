@@ -18,6 +18,6 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-import parser
-import wizard
-import statement
+from . import parser
+from . import wizard
+from . import statement

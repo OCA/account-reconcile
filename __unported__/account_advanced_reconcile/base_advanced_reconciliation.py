@@ -23,9 +23,7 @@ import logging
 
 from itertools import product
 from openerp.osv import orm
-from openerp import pooler
 from openerp.tools.translate import _
-
 
 _logger = logging.getLogger(__name__)
 
@@ -188,7 +186,8 @@ class easy_reconcile_advanced(orm.AbstractModel):
         If all the matchers match for a move line and an opposite move line,
         they are candidate for a reconciliation.
         """
-        opp_matchers = self._opposite_matchers(cr, uid, rec, opposite_move_line,
+        opp_matchers = self._opposite_matchers(cr, uid, rec,
+                                               opposite_move_line,
                                                context=context)
         for matcher in matchers:
             try:
@@ -222,29 +221,10 @@ class easy_reconcile_advanced(orm.AbstractModel):
                     cr, uid, rec, move_line, op, matchers, context=context)]
 
     def _action_rec(self, cr, uid, rec, context=None):
-        # we use a new cursor to be able to commit the reconciliation
-        # often. We have to create it here and not later to avoid problems
-        # where the new cursor sees the lines as reconciles but the old one
-        # does not.
-        if context is None:
-            context = {}
-        ctx = context.copy()
-        ctx['commit_every'] = (
-            rec.journal_id.company_id.reconciliation_commit_every
-        )
-        if ctx['commit_every']:
-            new_cr = pooler.get_db(cr.dbname).cursor()
-        else:
-            new_cr = cr
-        try:
-            credit_lines = self._query_credit(new_cr, uid, rec, context=ctx)
-            debit_lines = self._query_debit(new_cr, uid, rec, context=ctx)
-            result = self._rec_auto_lines_advanced(
-                new_cr, uid, rec, credit_lines, debit_lines, context=ctx)
-        finally:
-            if ctx['commit_every']:
-                new_cr.commit()
-                new_cr.close()
+        credit_lines = self._query_credit(cr, uid, rec, context=context)
+        debit_lines = self._query_debit(cr, uid, rec, context=context)
+        result = self._rec_auto_lines_advanced(
+            cr, uid, rec, credit_lines, debit_lines, context=context)
         return result
 
     def _skip_line(self, cr, uid, rec, move_line, context=None):

@@ -22,81 +22,102 @@
 from openerp.tests import common
 import time
 
-ACC_NUMBER = "BE38733040385372"
+ACC_NUMBER = " BE38 7330 4038 5372 "
 
 
 class bankaccount_completion(common.TransactionCase):
 
-    def prepare(self):
+    def setUp(self):
+        super(bankaccount_completion, self).setUp()
         self.company_a = self.browse_ref('base.main_company')
         self.profile_obj = self.registry("account.statement.profile")
-        self.st_obj = self.registry("account.bank.statement")
+        self.acc_bk_stmt = self.registry("account.bank.statement")
         self.st_line_obj = self.registry("account.bank.statement.line")
-        self.completion_rule_id = self.ref(
-            'account_statement_bankaccount_completion.'
-            'bank_statement_completion_rule_10')
-        self.journal_id = self.registry("ir.model.data").get_object_reference(
-            self.cr, self. uid, "account", "bank_journal")[1]
+        self.completion_rule_id = \
+            self.ref('account_statement_bankaccount_completion.'
+                     'bank_statement_completion_rule_10')
+        self.journal_id = self.ref("account.bank_journal")
         self.partner_id = self.ref('base.main_partner')
+        self.account_id = self.ref("account.a_recv")
+
         # Create the profile
-        self.account_id = self.registry("ir.model.data").get_object_reference(
-            self.cr, self.uid, "account", "a_recv")[1]
-        self.journal_id = self.registry("ir.model.data").get_object_reference(
-            self.cr, self. uid, "account", "bank_journal")[1]
         self.profile_id = self.profile_obj.create(self.cr, self.uid, {
             "name": "TEST",
             "commission_account_id": self.account_id,
             "journal_id": self.journal_id,
             "rule_ids": [(6, 0, [self.completion_rule_id])]})
-        # Create the completion rule
-
         # Create a bank statement
-        self.statement_id = self.st_obj.create(
-            self.cr, self.uid, {
-                "balance_end_real": 0.0,
+        vals = {"balance_end_real": 0.0,
                 "balance_start": 0.0,
                 "date": time.strftime('%Y-%m-%d'),
                 "journal_id": self.journal_id,
-                "profile_id": self.profile_id
-            })
-
-        # Create bank a statement line
-        self.statement_line_id = self.st_line_obj.create(self.cr, self.uid, {
-            'amount': 1000.0,
-            'name': 'EXT001',
-            'ref': 'My ref',
-            'statement_id': self.statement_id,
-            'partner_acc_number': ACC_NUMBER
-        })
+                "profile_id": self.profile_id,
+                }
+        self.statement_id = self.acc_bk_stmt.create(self.cr,
+                                                    self.uid,
+                                                    vals)
 
         # Add a bank account number to the partner
-        res_bank_obj = self.registry('res.partner.bank')
-        res_bank_obj.create(self.cr, self.uid, {
-                            "state": "bank",
-                            "company_id": self.company_a.id,
-                            "partner_id": self.partner_id,
-                            "acc_number": ACC_NUMBER,
-                            "footer": True,
-                            "bank_name": "Reserve"
-                            })
+        self.res_partner_bank_obj = self.registry('res.partner.bank')
+        vals = {"state": "bank",
+                "company_id": self.company_a.id,
+                "partner_id": self.partner_id,
+                "acc_number": ACC_NUMBER,
+                "footer": True,
+                "bank_name": "Reserve",
+                }
+        self.res_partner_bank_id = self.res_partner_bank_obj.create(self.cr,
+                                                                    self.uid,
+                                                                    vals)
 
     def test_00(self):
         """Test complete partner_id from bank account number
-
         Test the automatic completion of the partner_id based on the account
-        number associated to the
-        statement line
+        number associated to the statement line
         """
-        self.prepare()
-        statement_line = self.st_line_obj.browse(self.cr, self.uid,
-                                                 self.statement_line_id)
-        # before import, the
-        self.assertFalse(
-            statement_line.partner_id,
-            "Partner_id must be blank before completion")
-        statement_obj = self.st_obj.browse(self.cr, self.uid, self.statement_id)
-        statement_obj.button_auto_completion()
-        statement_line = self.st_line_obj.browse(self.cr, self.uid,
-                                                 self.statement_line_id)
-        self.assertEquals(self.partner_id, statement_line.partner_id[
-                          'id'], "Missing expected partner id after completion")
+        for bank_acc_number in [ACC_NUMBER, ACC_NUMBER.replace(" ", ""),
+                                ACC_NUMBER.replace(" ", "-")]:
+            # check the completion for well formatted and not well
+            # formatted account number
+            self.res_partner_bank_obj.write(self.cr,
+                                            self.uid,
+                                            self.res_partner_bank_id,
+                                            {"acc_number": bank_acc_number}
+                                            )
+            for acc_number in [ACC_NUMBER, ACC_NUMBER.replace(" ", ""),
+                               ACC_NUMBER.replace(" ", "-"),
+                               " BE38-7330 4038-5372 "]:
+                vals = {'amount': 1000.0,
+                        'name': 'EXT001',
+                        'ref': 'My ref',
+                        'statement_id': self.statement_id,
+                        'partner_acc_number': acc_number
+                        }
+                line_id = self.st_line_obj.create(self.cr, self.uid, vals)
+                line = self.st_line_obj.browse(self.cr, self.uid, line_id)
+                self.assertFalse(line.partner_id,
+                                 'Partner_id must be blank before completion')
+                statement_obj = self.acc_bk_stmt.browse(self.cr,
+                                                        self.uid,
+                                                        self.statement_id)
+                statement_obj.button_auto_completion()
+                line = self.st_line_obj.browse(self.cr, self.uid, line_id)
+                self.assertEquals(self.partner_id, line.partner_id['id'],
+                                  'Missing expected partner id after '
+                                  'completion')
+            vals = {'amount': 1000.0,
+                    'name': 'EXT001',
+                    'ref': 'My ref',
+                    'statement_id': self.statement_id,
+                    'partner_acc_number': 'BE38a7330.4038-5372.',
+                    }
+            line_id = self.st_line_obj.create(self.cr, self.uid, vals)
+            line = self.st_line_obj.browse(self.cr, self.uid, line_id)
+            self.assertFalse(line.partner_id,
+                             'Partner_id must be blank before completion')
+            statement_obj = self.acc_bk_stmt.browse(self.cr,
+                                                    self.uid,
+                                                    self.statement_id)
+            statement_obj.button_auto_completion()
+            line = self.st_line_obj.browse(self.cr, self.uid, line_id)
+            self.assertFalse(line.partner_id.id)

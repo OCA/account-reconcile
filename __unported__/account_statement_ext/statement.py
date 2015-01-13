@@ -19,7 +19,7 @@
 #
 ##############################################################################
 import openerp.addons.account.account_bank_statement as stat_mod
-from openerp.osv import fields, orm
+from openerp.osv import fields, orm, osv
 from openerp.tools.translate import _
 
 
@@ -52,8 +52,8 @@ class AccountStatementProfile(orm.Model):
         'name': fields.char('Name', required=True),
         'sequence': fields.integer(
             'Sequence',
-            help="Gives a sequence in lists, the first profile will be used as "
-                 "default"),
+            help="Gives a sequence in lists, the first profile will be used "
+                 "as default"),
         'partner_id': fields.many2one(
             'res.partner',
             'Bank/Payment Office partner',
@@ -144,7 +144,8 @@ class AccountBankStatement(orm.Model):
         profile_obj = self.pool['account.statement.profile']
         user = user_obj.browse(cr, uid, uid, context=context)
         profile_ids = profile_obj.search(
-            cr, uid, [('company_id', '=', user.company_id.id)], context=context)
+            cr, uid, [('company_id', '=', user.company_id.id)], context=context
+        )
         return profile_ids[0] if profile_ids else False
 
     def _get_statement_from_profile(self, cr, uid, profile_ids, context=None):
@@ -304,7 +305,8 @@ class AccountBankStatement(orm.Model):
              line if different from the statement line account ID
            :param int/long analytic_id: ID of analytic account to put on the
              move line
-           :param int/long partner_id: ID of the partner to put on the move line
+           :param int/long partner_id: ID of the partner to put on the move
+             line
            :return: dict of value to create() the account.move.line
         """
         if context is None:
@@ -420,7 +422,7 @@ class AccountBankStatement(orm.Model):
                     self.create_move_from_st_line(
                         cr, uid, st_line.id, company_currency_id,
                         st_line_number, context)
-                except orm.except_orm, exc:
+                except (orm.except_orm, osv.except_osv) as exc:
                     msg = "Line ID %s with ref %s had following error: %s" % (
                         st_line.id, st_line.ref, exc.value)
                     errors_stack.append(msg)
@@ -445,7 +447,7 @@ class AccountBankStatement(orm.Model):
     def get_account_for_counterpart(self, cr, uid, amount, account_receivable,
                                     account_payable):
         """For backward compatibility."""
-        account_id, type = self.get_account_and_type_for_counterpart(
+        account_id, account_type = self.get_account_and_type_for_counterpart(
             cr, uid, amount, account_receivable, account_payable)
         return account_id
 
@@ -496,10 +498,10 @@ class AccountBankStatement(orm.Model):
             self, cr, uid, amount, account_receivable, account_payable,
             partner_id=False):
         """
-        Give the amount, payable and receivable account (that can be found using
-        get_default_pay_receiv_accounts method) and receive the one to use. This
-        method should be use when there is no other way to know which one to
-        take. The rules are:
+        Give the amount, payable and receivable account (that can be found
+        using get_default_pay_receiv_accounts method) and receive the one to
+        use. This method should be use when there is no other way to know which
+        one to take. The rules are:
          - If the customer checkbox is checked on the found partner, type and
          account will be customer and receivable
          - If the supplier checkbox is checked on the found partner, type and
@@ -606,7 +608,7 @@ class AccountBankStatementLine(orm.Model):
         local_context['account_period_prefer_normal'] = True
         try:
             periods = period_obj.find(cr, uid, dt=date, context=local_context)
-        except orm.except_orm:
+        except (orm.except_orm, osv.except_osv):
             # if no period defined, we are certainly at installation time
             return False
         return periods and periods[0] or False
@@ -617,7 +619,8 @@ class AccountBankStatementLine(orm.Model):
     _columns = {
         # Set them as required + 64 char instead of 32
         'ref': fields.char('Reference', size=64, required=True),
-        'period_id': fields.many2one('account.period', 'Period', required=True),
+        'period_id': fields.many2one(
+            'account.period', 'Period', required=True),
     }
     _defaults = {
         'period_id': _get_period,
@@ -732,8 +735,8 @@ class AccountBankStatementLine(orm.Model):
                               'voucher_id': False}}
         return {'value': {'type': line_type}}
 
-    def onchange_type(self, cr, uid, line_id, partner_id, line_type, profile_id,
-                      context=None):
+    def onchange_type(self, cr, uid, line_id, partner_id, line_type,
+                      profile_id, context=None):
         """Keep the same features as in standard and call super. If an account
         is returned, call the method to compute line values.
         """

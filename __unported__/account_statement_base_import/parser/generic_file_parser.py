@@ -19,18 +19,31 @@
 ##############################################################################
 
 import datetime
-from file_parser import FileParser
+from .file_parser import FileParser
+from openerp.addons.account_statement_base_import.parser.file_parser import (
+    float_or_zero
+)
+from openerp.tools import ustr
 
 
 class GenericFileParser(FileParser):
     """Standard parser that use a define format in csv or xls to import into a
-    bank statement. This is mostely an example of how to proceed to create a new
-    parser, but will also be useful as it allow to import a basic flat file.
+    bank statement. This is mostely an example of how to proceed to create a
+    new parser, but will also be useful as it allow to import a basic flat
+    file.
     """
 
     def __init__(self, parse_name, ftype='csv', **kwargs):
+        conversion_dict = {
+            'ref': ustr,
+            'label': ustr,
+            'date': datetime.datetime,
+            'amount': float_or_zero,
+        }
         super(GenericFileParser, self).__init__(
-            parse_name, ftype=ftype, **kwargs)
+            parse_name, ftype=ftype,
+            extra_fields=conversion_dict,
+            **kwargs)
 
     @classmethod
     def parser_for(cls, parser_name):
@@ -42,9 +55,9 @@ class GenericFileParser(FileParser):
     def get_st_line_vals(self, line, *args, **kwargs):
         """
         This method must return a dict of vals that can be passed to create
-        method of statement line in order to record it. It is the responsibility
-        of every parser to give this dict of vals, so each one can implement his
-        own way of recording the lines.
+        method of statement line in order to record it. It is the
+        responsibility of every parser to give this dict of vals, so each one
+        can implement his own way of recording the lines.
             :param:  line: a dict of vals that represent a line of
               result_row_list
             :return: dict of values to give to the create method of statement

@@ -19,7 +19,7 @@
 #
 ##############################################################################
 
-from parser import new_bank_statement_parser
-from parser import BankStatementImportParser
-import file_parser
-import generic_file_parser
+from .parser import new_bank_statement_parser
+from .parser import BankStatementImportParser
+from . import file_parser
+from . import generic_file_parser
