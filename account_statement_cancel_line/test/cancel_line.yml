@@ -22,7 +22,7 @@
     name: line1
     statement_id: statement_test
     ref: ref1
-    date: '2014-01-20'
+    date: !eval "'%s-01-20' %(datetime.now().year)"
     amount: 100.0
 -
   I create a second statement line
@@ -31,7 +31,7 @@
     name: line2
     statement_id: statement_test
     ref: ref2
-    date: '2014-01-25'
+    date: !eval "'%s-01-25' %(datetime.now().year)"
     amount: 200.0
 -
   I check that the state of the statement is "Draft"
