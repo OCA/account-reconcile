@@ -23,7 +23,7 @@
     name: line11
     statement_id: statement_test_10
     ref: ref11
-    date: '2014-01-20'
+    date: !eval "'%s-01-20' %(datetime.now().year)"
     amount: 100.0
 -
   I create a second statement line
@@ -32,7 +32,7 @@
     name: line12
     statement_id: statement_test_10
     ref: ref12
-    date: '2014-01-25'
+    date: !eval "'%s-01-25' %(datetime.now().year)"
     amount: 200.0
 -
   Now I confirm only the first statement line
