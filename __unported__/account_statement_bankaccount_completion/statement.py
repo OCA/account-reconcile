@@ -23,8 +23,8 @@
 from openerp.tools.translate import _
 from openerp.osv.orm import Model
 from openerp.osv import fields
-from openerp.addons.account_statement_base_completion.statement import \
-    ErrorTooManyPartner
+from openerp.addons.account_statement_base_completion.statement \
+    import ErrorTooManyPartner
 
 
 class AccountStatementCompletionRule(Model):
@@ -54,21 +54,25 @@ class AccountStatementCompletionRule(Model):
         partner_acc_number = st_line['partner_acc_number']
         if not partner_acc_number:
             return {}
-        st_obj = self.pool.get('account.bank.statement.line')
+        st_obj = self.pool['account.bank.statement.line']
         res = {}
-        res_bank_obj = self.pool.get('res.partner.bank')
-        ids = res_bank_obj.search(cr,
-                                  uid,
-                                  [('acc_number', '=', partner_acc_number)],
-                                  context=context)
+        res_bank_obj = self.pool['res.partner.bank']
+        ids = res_bank_obj.search_by_acc_number(cr,
+                                                uid,
+                                                partner_acc_number,
+                                                context=context)
         if len(ids) > 1:
-            raise ErrorTooManyPartner(
-                _('Line named "%s" (Ref:%s) was matched by more than one '
-                  'partner for account number "%s".') %
-                (st_line['name'], st_line['ref'], partner_acc_number))
+            raise ErrorTooManyPartner(_('Line named "%s" (Ref:%s) was matched '
+                                        'by more than one partner for account '
+                                        'number "%s".') %
+                                      (st_line['name'],
+                                       st_line['ref'],
+                                       partner_acc_number))
         if len(ids) == 1:
-            partner = res_bank_obj.browse(
-                cr, uid, ids[0], context=context).partner_id
+            partner = res_bank_obj.browse(cr,
+                                          uid,
+                                          ids[0],
+                                          context=context).partner_id
             res['partner_id'] = partner.id
             st_vals = st_obj.get_values_for_line(
                 cr, uid, profile_id=st_line['profile_id'],

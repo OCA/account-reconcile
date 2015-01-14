@@ -158,7 +158,7 @@ msgstr "Erreur système"
 #. module: account_statement_base_completion
 #: field:account.bank.statement.line,already_completed:0
 msgid "Auto-Completed"
-msgstr "Auto-Completé"
+msgstr "Auto-Complété"
 
 #. module: account_statement_base_completion
 #: code:addons/account_statement_base_completion/statement.py:448
@@ -170,7 +170,7 @@ msgstr "Erreur de bypass de l'ORM"
 #. module: account_statement_base_completion
 #: field:account.statement.completion.rule,sequence:0
 msgid "Sequence"
-msgstr "SÃ©quence"
+msgstr "Séquence"
 
 #. module: account_statement_base_completion
 #: code:addons/account_statement_base_completion/statement.py:280
@@ -210,7 +210,7 @@ msgstr ""
 "Entrez les différentes descriptions/informations sur votre relevé bancaire "
 "séparées par un ';' Si l'une d'entre elles figure dans la ligne du "
 "relevé, le partenaire correspondant sera automatiquement retrouvé "
-"(A condition d'utiliser un règle de lettrage dans le profil)."
+"(à condition d'utiliser un règle de lettrage dans le profil)."
 
 #. module: account_statement_base_completion
 #: model:ir.model,name:account_statement_base_completion.model_res_partner

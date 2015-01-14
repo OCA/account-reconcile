@@ -19,4 +19,4 @@
 #
 ##############################################################################
 
-import transactionid_file_parser
+from . import transactionid_file_parser

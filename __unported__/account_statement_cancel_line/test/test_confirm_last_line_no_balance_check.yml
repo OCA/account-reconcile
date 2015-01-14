@@ -25,7 +25,7 @@
     name: line1
     statement_id: statement_test4
     ref: line1
-    date: '2014-01-20'
+    date: !eval "'%s-01-20' %(datetime.now().year)"
     amount: 10.0
 -
   Now I confirm the statement line

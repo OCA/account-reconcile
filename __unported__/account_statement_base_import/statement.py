@@ -23,7 +23,7 @@ import traceback
 from openerp.tools.translate import _
 import datetime
 from openerp.osv import fields, orm
-from parser import new_bank_statement_parser
+from .parser import new_bank_statement_parser
 from openerp.tools.config import config
 
 
@@ -74,13 +74,13 @@ class AccountStatementProfil(orm.Model):
               statement ID
             :param:    context: global context
         """
-        pass
 
     def write_logs_after_import(self, cr, uid, ids, statement_id, num_lines,
                                 context):
         """Write the log in the logger
 
-        :param int/long statement_id: ID of the concerned account.bank.statement
+        :param int/long statement_id: ID of the concerned
+          account.bank.statement
         :param int/long num_lines: Number of line that have been parsed
         :return: True
         """
@@ -102,7 +102,8 @@ class AccountStatementProfil(orm.Model):
 
         :param dict of vals from parser for account.bank.statement.line
           (called by parser.get_st_line_vals)
-        :param int/long statement_id: ID of the concerned account.bank.statement
+        :param int/long statement_id: ID of the concerned
+          account.bank.statement
         :return: dict of vals that will be passed to create method of
           statement line.
         """
@@ -133,7 +134,7 @@ class AccountStatementProfil(orm.Model):
         """
         vals = {'profile_id': profile_id}
         vals.update(parser.get_st_vals())
-        if not vals.get('balance_start'):
+        if vals.get('balance_start') is None:
             # Get starting balance from journal balance if parser doesn't
             # fill this data, simulating the manual flow
             statement_obj = self.pool['account.bank.statement']
@@ -173,8 +174,8 @@ class AccountStatementProfil(orm.Model):
                           ftype="csv", context=None):
         """Create a bank statement with the given profile and parser. It will
         fullfill the bank statement with the values of the file providen, but
-        will not complete data (like finding the partner, or the right account).
-        This will be done in a second step with the completion rules.
+        will not complete data (like finding the partner, or the right
+        account). This will be done in a second step with the completion rules.
 
         :param prof : The profile used to import the file
         :param parser: the parser

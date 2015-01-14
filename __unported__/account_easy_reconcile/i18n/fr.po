@@ -427,3 +427,25 @@ msgstr "easy.reconcile.simple.reference"
 #: model:ir.model,name:account_easy_reconcile.model_account_easy_reconcile
 msgid "account easy reconcile"
 msgstr "Lettrage automatisé"
+
+#. module: account_easy_reconcile
+#: field:account.easy.reconcile.method,expense_exchange_account_id:0
+#: field:easy.reconcile.base,expense_exchange_account_id:0
+#: field:easy.reconcile.options,expense_exchange_account_id:0
+#: field:easy.reconcile.simple,expense_exchange_account_id:0
+#: field:easy.reconcile.simple.name,expense_exchange_account_id:0
+#: field:easy.reconcile.simple.partner,expense_exchange_account_id:0
+#: field:easy.reconcile.simple.reference,expense_exchange_account_id:0
+msgid "Loss Exchange Rate Account"
+msgstr "Compte de perte de change"
+
+#. module: account_easy_reconcile
+#: field:account.easy.reconcile.method,income_exchange_account_id:0
+#: field:easy.reconcile.base,income_exchange_account_id:0
+#: field:easy.reconcile.options,income_exchange_account_id:0
+#: field:easy.reconcile.simple,income_exchange_account_id:0
+#: field:easy.reconcile.simple.name,income_exchange_account_id:0
+#: field:easy.reconcile.simple.partner,income_exchange_account_id:0
+#: field:easy.reconcile.simple.reference,income_exchange_account_id:0
+msgid "Gain Exchange Rate Account"
+msgstr "Compte de gain de change"

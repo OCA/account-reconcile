@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 ##############################################################################
 #
-#    Copyright 2012 Camptocamp SA (Guewen Baconnier)
-#    Copyright (C) 2010   Sébastien Beau
+#    Author: Matthieu Dietrich
+#    Copyright 2014 Camptocamp SA
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -19,8 +19,26 @@
 #
 ##############################################################################
 
-from . import easy_reconcile
-from . import base_reconciliation
-from . import simple_reconciliation
-from . import easy_reconcile_history
-from . import res_config
+{'name': 'Advanced Reconcile Bank Statement',
+ 'description': """
+Advanced reconciliation method for the module account_advanced_reconcile
+========================================================================
+Reconcile rules with bank statement name.
+
+This will reconcile multiple credit move lines (bank statements) with
+all the lines from a specific bank statement, debit or credit (to also
+reconcile the commission with credit card imports).
+
+""",
+ 'version': '1.0.0',
+ 'author': 'Camptocamp',
+ 'category': 'Finance',
+ 'website': 'http://www.camptocamp.com',
+ 'depends': ['account_advanced_reconcile'],
+ 'data': ['easy_reconcile_view.xml'],
+ 'demo': [],
+ 'test': [],
+ 'auto_install': False,
+ 'installable': True,
+ 'images': []
+ }

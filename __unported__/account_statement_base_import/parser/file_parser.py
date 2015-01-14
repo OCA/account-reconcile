@@ -21,8 +21,8 @@ from openerp.tools.translate import _
 from openerp.osv.orm import except_orm
 import tempfile
 import datetime
-from parser import BankStatementImportParser
-from parser import UnicodeDictReader
+from .parser import BankStatementImportParser
+from .parser import UnicodeDictReader
 try:
     import xlrd
 except:
@@ -41,12 +41,12 @@ class FileParser(BankStatementImportParser):
     """
 
     def __init__(self, parse_name, ftype='csv', extra_fields=None, header=None,
-                 **kwargs):
+                 dialect=None, **kwargs):
         """
             :param char: parse_name: The name of the parser
             :param char: ftype: extension of the file (could be csv, xls or
               xlsx)
-            :param dict: extra_fields: extra fields to add to the conversion
+            :param dict: extra_fields: extra fields to put into the conversion
               dict. In the format {fieldname: fieldtype}
             :param list: header : specify header fields if the csv file has no
               header
@@ -58,19 +58,13 @@ class FileParser(BankStatementImportParser):
             raise except_orm(
                 _('User Error'),
                 _('Invalid file type %s. Please use csv, xls or xlsx') % ftype)
-        self.conversion_dict = {
-            'ref': unicode,
-            'label': unicode,
-            'date': datetime.datetime,
-            'amount': float_or_zero,
-        }
-        if extra_fields:
-            self.conversion_dict.update(extra_fields)
+        self.conversion_dict = extra_fields
         self.keys_to_validate = self.conversion_dict.keys()
         self.fieldnames = header
         self._datemode = 0  # used only for xls documents,
         # 0 means Windows mode (1900 based dates).
         # Set in _parse_xls, from the contents of the file
+        self.dialect = dialect
 
     def _custom_format(self, *args, **kwargs):
         """No other work on data are needed in this parser."""
@@ -118,7 +112,8 @@ class FileParser(BankStatementImportParser):
         csv_file.write(self.filebuffer)
         csv_file.flush()
         with open(csv_file.name, 'rU') as fobj:
-            reader = UnicodeDictReader(fobj, fieldnames=self.fieldnames)
+            reader = UnicodeDictReader(fobj, fieldnames=self.fieldnames,
+                                       dialect=self.dialect)
             return list(reader)
 
     def _parse_xls(self):
@@ -181,9 +176,9 @@ class FileParser(BankStatementImportParser):
                     except Exception as err:
                         raise except_orm(
                             _("Date format is not valid"),
-                            _("Please modify the cell formatting to date format"
-                              " for column: %s value: %s\n Please check the "
-                              "line with ref: %s\n \n Detail: %s") %
+                            _("Please modify the cell formatting to date "
+                              "format for column: %s value: %s\n Please check "
+                              "the line with ref: %s\n \n Detail: %s") %
                             (rule, line.get(rule, _('Missing')),
                              line.get('ref', line), repr(err)))
                 else:

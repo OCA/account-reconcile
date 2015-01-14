@@ -64,8 +64,8 @@ The base class to find the reconciliations is built to be as efficient as
 possible.
 
 So basically, if you have an invoice with 3 payments (one per month), the first
-month, it will partial reconcile the debit move line with the first payment, the
-second month, it will partial reconcile the debit move line with 2 first
+month, it will partial reconcile the debit move line with the first payment,
+the second month, it will partial reconcile the debit move line with 2 first
 payments, the third month, it will make the full reconciliation.
 
 This module is perfectly adapted for E-Commerce business where a big volume of
@@ -75,7 +75,7 @@ many offices.
  """,
  'website': 'http://www.camptocamp.com',
  'data': ['easy_reconcile_view.xml',
-          'res_config_view.xml'],
+          ],
  'test': [],
  'images': [],
  'installable': False,

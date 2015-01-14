@@ -29,11 +29,16 @@ def UnicodeDictReader(utf8_data, **kwargs):
     pos = utf8_data.tell()
     sample_data = utf8_data.read(2048)
     utf8_data.seek(pos)
-    dialect = sniffer.sniff(sample_data, delimiters=',;\t')
+    if not kwargs.get('dialect'):
+        dialect = sniffer.sniff(sample_data, delimiters=',;\t')
+        del kwargs['dialect']
+    else:
+        dialect = kwargs.pop('dialect')
     csv_reader = csv.DictReader(utf8_data, dialect=dialect, **kwargs)
     for row in csv_reader:
-        yield dict([(key, unicode(value, 'utf-8')) for key, value in
-                    row.iteritems()])
+        yield dict([(unicode(key or '', 'utf-8'),
+                     unicode(value or '', 'utf-8'))
+                    for key, value in row.iteritems()])
 
 
 class BankStatementImportParser(object):
@@ -48,8 +53,8 @@ class BankStatementImportParser(object):
     def __init__(self, profile, *args, **kwargs):
         # The name of the parser as it will be called
         self.parser_name = profile.import_type
-        # The result as a list of row. One row per line of data in the file, but
-        # not the commission one !
+        # The result as a list of row. One row per line of data in the file,
+        # but not the commission one!
         self.result_row_list = None
         # The file buffer on which to work on
         self.filebuffer = None
@@ -128,9 +133,9 @@ class BankStatementImportParser(object):
 
     def get_st_line_vals(self, line, *args, **kwargs):
         """Implement a method in your parser that must return a dict of vals
-        that can be passed to create method of statement line in order to record
-        it. It is the responsibility of every parser to give this dict of vals,
-        so each one can implement his own way of recording the lines.
+        that can be passed to create method of statement line in order to
+        record it. It is the responsibility of every parser to give this dict
+        of vals, so each one can implement his own way of recording the lines.
 
         :param:  line: a dict of vals that represent a line of result_row_list
         :return: dict of values to give to the create method of statement line,

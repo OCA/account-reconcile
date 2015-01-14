@@ -20,7 +20,6 @@
 #
 ##############################################################################
 
-import easy_reconcile
-import base_advanced_reconciliation
-import advanced_reconciliation
-import res_config  # noqa
+from . import easy_reconcile
+from . import base_advanced_reconciliation
+from . import advanced_reconciliation
