@@ -21,9 +21,8 @@
 import datetime
 from openerp.tools import ustr
 from account_statement_base_import.parser.file_parser import (
-    FileParser, float_or_zero
+    FileParser
 )
-from openerp.osv import orm
 
 
 class AccountPartnerFileParser(FileParser):
