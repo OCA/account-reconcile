@@ -29,7 +29,7 @@
     statement_id: statement_transactionid_test1
     transaction_id: XXX66Z
     ref: 6
-    date: '2014-01-06'
+    date: !eval "'%s-01-06' %(datetime.now().year)"
     amount: 118.4
 -
   I run the auto complete
