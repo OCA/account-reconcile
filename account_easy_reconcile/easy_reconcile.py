@@ -70,12 +70,16 @@ class EasyReconcileOptions(orm.AbstractModel):
             'account.account', 'Gain Exchange Rate Account'),
         'expense_exchange_account_id': fields.many2one(
             'account.account', 'Loss Exchange Rate Account'),
+        'partial_reconcile': fields.boolean(
+            string="partial reconcile",
+            help='allow to remove partial reconcile')
 
     }
 
     _defaults = {
         'write_off': 0.,
         'date_base_on': 'end_period_last_credit',
+        'partial_reconcile': False,
     }
 
 
@@ -228,7 +232,9 @@ class AccountEasyReconcile(orm.Model):
                 'journal_id': (rec_method.journal_id and
                                rec_method.journal_id.id),
                 'date_base_on': rec_method.date_base_on,
-                'filter': rec_method.filter}
+                'filter': rec_method.filter,
+                'partial_reconcile': rec_method.partial_reconcile,
+                }
 
     def run_reconcile(self, cr, uid, ids, context=None):
         def find_reconcile_ids(cr, fieldname, move_line_ids):
@@ -319,7 +325,7 @@ class AccountEasyReconcile(orm.Model):
             _('There is no history of reconciled '
               'items on the task: %s.') % rec.name)
 
-    def _open_move_line_list(sefl, cr, uid, move_line_ids, name, context=None):
+    def _open_move_line_list(self, cr, uid, move_line_ids, name, context=None):
         return {
             'name': name,
             'view_mode': 'tree,form',

@@ -79,17 +79,20 @@ class EasyReconcileBase(orm.AbstractModel):
         return "SELECT %s" % ', '.join(self._base_columns(rec))
 
     def _from(self, rec, *args, **kwargs):
-        return ("FROM account_move_line "
-                "LEFT OUTER JOIN account_move_reconcile ON "
-                "(account_move_line.reconcile_partial_id "
-                "= account_move_reconcile.id)"
-                )
+        res = "FROM account_move_line "
+        if not rec.partial_reconcile:
+            res += ("LEFT OUTER JOIN account_move_reconcile ON "
+                    "(account_move_line.reconcile_partial_id "
+                    "= account_move_reconcile.id)")
+        return res
 
     def _where(self, rec, *args, **kwargs):
         where = ("WHERE account_move_line.account_id = %s "
-                 "AND COALESCE(account_move_reconcile.type,'') <> 'manual' "
                  "AND account_move_line.reconcile_id IS NULL "
                  "AND account_move_line.state != 'draft' ")
+        if not rec.partial_reconcile:
+            where += ("AND COALESCE(account_move_reconcile.type,'') "
+                      "<> 'manual' ")
         # it would be great to use dict for params
         # but as we use _where_calc in _get_filter
         # which returns a list, we have to
