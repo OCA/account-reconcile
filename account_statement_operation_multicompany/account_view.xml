@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+   Copyright (C) 2015 Akretion (http://www.akretion.com/)
+   @author: Alexis de Lattre <alexis.delattre@akretion.com>
+   The licence is in the file __openerp__.py
+-->
+
+<openerp>
+<data>
+
+<record id="view_account_statement_operation_template_form" model="ir.ui.view">
+    <field name="name">account.statement.operation.multicompany.form</field>
+    <field name="model">account.statement.operation.template</field>
+    <field name="inherit_id" ref="account.view_account_statement_operation_template_form"/>
+    <field name="arch" type="xml">
+        <field name="account_id" position="after">
+            <field name="company_id" groups="base.group_multi_company"/>
+        </field>
+    </field>
+</record>
+
+<record id="view_account_statement_operation_template_tree" model="ir.ui.view">
+    <field name="name">account.statement.operation.multicompany.tree</field>
+    <field name="model">account.statement.operation.template</field>
+    <field name="inherit_id" ref="account.view_account_statement_operation_template_tree"/>
+    <field name="arch" type="xml">
+        <field name="account_id" position="after">
+            <field name="analytic_account_id" groups="analytic.group_analytic_accounting"/>
+        </field>
+        <field name="amount_type" position="after">
+            <field name="company_id" groups="base.group_multi_company"/>
+        </field>
+    </field>
+</record>
+
+</data>
+</openerp>
