@@ -34,6 +34,7 @@ reconcile the commission with credit card imports).
  'author': 'Camptocamp',
  'category': 'Finance',
  'website': 'http://www.camptocamp.com',
+ 'license': 'AGPL-3',
  'depends': ['account_advanced_reconcile'],
  'data': ['easy_reconcile_view.xml'],
  'demo': [],
