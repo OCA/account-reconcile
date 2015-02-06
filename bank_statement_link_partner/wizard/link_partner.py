@@ -21,6 +21,7 @@
 ##############################################################################
 from openerp import api, models, fields
 
+
 def _update_partner_values(wizard, values):
     """
     Updates the new partner values with the values from the wizard
@@ -46,6 +47,7 @@ def _update_partner_values(wizard, values):
         if wizard[field]:
             values[field] = wizard[field]
     return values
+
 
 class LinkPartner(models.TransientModel):
     """Wizard to create partner using information in bank account."""
@@ -169,7 +171,6 @@ class LinkPartner(models.TransientModel):
                     'acc_number': bank_account_obj.acc_number or False,
                 })
         return super(LinkPartner, self).create(vals)
-
 
     @api.one
     def link_partner(self):
