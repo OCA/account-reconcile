@@ -1,0 +1,324 @@
+# Translation of OpenERP Server.
+# This file contains the translation of the following modules:
+# 	* account_statement_base_import
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: OpenERP Server 7.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2014-01-21 11:58+0000\n"
+"PO-Revision-Date: 2015-01-24 21:59+0100\n"
+"Last-Translator: Rudolf Schnapka <rs@techno-flex.de>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: de\n"
+"X-Generator: Poedit 1.5.4\n"
+
+#. module: account_statement_base_import
+#: view:credit.statement.import:0
+#: model:ir.actions.act_window,name:account_statement_base_import.statement_importer_action
+msgid "Import statement"
+msgstr "Kontoauszug-Import"
+
+#. module: account_statement_base_import
+#: view:account.statement.profile:0
+msgid "Historical Import Logs"
+msgstr "Vergangene Importprotokolle"
+
+#. module: account_statement_base_import
+#: model:ir.model,name:account_statement_base_import.model_credit_statement_import
+msgid "credit.statement.import"
+msgstr "credit.statement.import"
+
+#. module: account_statement_base_import
+#: field:credit.statement.import,input_statement:0
+msgid "Statement file"
+msgstr "Auszugsdatei"
+
+#. module: account_statement_base_import
+#: code:addons/account_statement_base_import/statement.py:168
+#, python-format
+msgid "Column %s you try to import is not present in the bank statement line!"
+msgstr ""
+"Die Spalte %s, die Sie versuchen zu importiren, stellt wohl keine "
+"Auszugszeile dar!"
+
+#. module: account_statement_base_import
+#: code:addons/account_statement_base_import/statement.py:162
+#, python-format
+msgid "Nothing to import"
+msgstr "Nichts zu importieren"
+
+#. module: account_statement_base_import
+#: field:credit.statement.import,journal_id:0
+msgid "Financial journal to use transaction"
+msgstr "Für Buchungen zu verwendendes Fibu-Journal"
+
+#. module: account_statement_base_import
+#: code:addons/account_statement_base_import/parser/file_parser.py:108
+#, python-format
+msgid "Column %s not present in file"
+msgstr "Spalte %s in Datei nicht vorhanden"
+
+#. module: account_statement_base_import
+#: view:account.statement.profile:0
+#: model:ir.ui.menu,name:account_statement_base_import.statement_importer_menu
+msgid "Import Bank Statement"
+msgstr "Importiere Bank-Auszug"
+
+#. module: account_statement_base_import
+#: code:addons/account_statement_base_import/parser/file_parser.py:54
+#, python-format
+msgid "User Error"
+msgstr "Anwenderfehler"
+
+#. module: account_statement_base_import
+#: code:addons/account_statement_base_import/statement.py:223
+#, python-format
+msgid "The statement cannot be created: %s"
+msgstr "Der Auszug kann nicht angelegt werden: %s"
+
+#. module: account_statement_base_import
+#: code:addons/account_statement_base_import/statement.py:167
+#, python-format
+msgid "Missing column!"
+msgstr "Fehlende Spalte!"
+
+#. module: account_statement_base_import
+#: code:addons/account_statement_base_import/parser/parser.py:150
+#, python-format
+msgid "No buffer file given."
+msgstr "Keine Pufferdatei angegeben."
+
+#. module: account_statement_base_import
+#: code:addons/account_statement_base_import/parser/file_parser.py:107
+#: code:addons/account_statement_base_import/parser/file_parser.py:171
+#: code:addons/account_statement_base_import/parser/file_parser.py:205
+#, python-format
+msgid "Invalid data"
+msgstr "Ungültige Daten"
+
+#. module: account_statement_base_import
+#: field:account.statement.profile,launch_import_completion:0
+msgid "Launch completion after import"
+msgstr "Finalisierung nach Import ausführen"
+
+#. module: account_statement_base_import
+#: field:credit.statement.import,partner_id:0
+msgid "Credit insitute partner"
+msgstr "Partner-Kreditunternehmen"
+
+#. module: account_statement_base_import
+#: view:account.statement.profile:0
+msgid "Import related infos"
+msgstr "Zugehörige Infos importieren"
+
+#. module: account_statement_base_import
+#: code:addons/account_statement_base_import/statement.py:163
+#, python-format
+msgid "The file is empty"
+msgstr "Die Datei ist leer"
+
+#. module: account_statement_base_import
+#: code:addons/account_statement_base_import/wizard/import_statement.py:90
+#, python-format
+msgid "Please use a file with an extention"
+msgstr "Verwenden Sie bitte eine Datei mit Namenserweiterung"
+
+#. module: account_statement_base_import
+#: code:addons/account_statement_base_import/parser/file_parser.py:172
+#: code:addons/account_statement_base_import/parser/file_parser.py:206
+#, python-format
+msgid ""
+"Value %s of column %s is not valid.\n"
+" Please check the line with ref %s:\n"
+" \n"
+" Detail: %s"
+msgstr ""
+"Wert %s der Spalte %s ist ungültig.\n"
+"Bitte prüfen Sie die Zeile mit Referenz %s.\n"
+"\n"
+"Details: %s"
+
+#. module: account_statement_base_import
+#: code:addons/account_statement_base_import/parser/file_parser.py:29
+#: code:addons/account_statement_base_import/parser/generic_file_parser.py:30
+#, python-format
+msgid "Please install python lib xlrd"
+msgstr "Bitte installieren Sie die Python-Bibliothek xlrd"
+
+#. module: account_statement_base_import
+#: code:addons/account_statement_base_import/parser/file_parser.py:160
+#, python-format
+msgid ""
+" It should be YYYY-MM-DD for column: %s value: %s \n"
+" \n"
+" \n"
+" Please check the line with ref: %s \n"
+" \n"
+" Detail: %s"
+msgstr ""
+"Es sollte JJJJ-MM-TT in der Spalte %s mit Wert %s heißen\n"
+"\n"
+"Prüfen Sie bitte die Zeile mit Ref. %s \n"
+"\n"
+"Details: %s"
+
+#. module: account_statement_base_import
+#: field:account.statement.profile,last_import_date:0
+msgid "Last Import Date"
+msgstr "Letztes Importdatum"
+
+#. module: account_statement_base_import
+#: model:ir.model,name:account_statement_base_import.model_account_statement_profile
+msgid "Statement Profile"
+msgstr "Auszugsprofil"
+
+#. module: account_statement_base_import
+#: code:addons/account_statement_base_import/statement.py:222
+#, python-format
+msgid "Statement import error"
+msgstr "Auszugsimport-Fehler"
+
+#. module: account_statement_base_import
+#: code:addons/account_statement_base_import/parser/file_parser.py:193
+#, python-format
+msgid ""
+"Please modify the cell formatting to date format for column: %s value: %s\n"
+" Please check the line with ref: %s\n"
+" \n"
+" Detail: %s"
+msgstr ""
+"Bitte stellen Sie die Zellformatierung der Spalte %s, Wert %s auf Datum um.\n"
+"Prüfen Sie bitte Zeile mit Referenz %s\n"
+"\n"
+"Details: %s"
+
+#. module: account_statement_base_import
+#: code:addons/account_statement_base_import/parser/file_parser.py:192
+#, python-format
+msgid "Date format is not valid"
+msgstr "Datumsformat ist nicht zulässig"
+
+#. module: account_statement_base_import
+#: field:account.statement.profile,import_type:0
+msgid "Type of import"
+msgstr "Art des Imports"
+
+#. module: account_statement_base_import
+#: help:account.statement.profile,launch_import_completion:0
+msgid ""
+"Tic that box to automatically launch the completion on each imported file "
+"using this profile."
+msgstr ""
+"Haken setzen, um automatisch die Finalisierung bei jeder Importdatei mit "
+"diesem Profil auszuführen."
+
+#. module: account_statement_base_import
+#: help:credit.statement.import,balance_check:0
+msgid ""
+"Tic that box if you want OpenERP to control the start/end balance before "
+"confirming a bank statement. If don't ticked, no balance control will be "
+"done."
+msgstr ""
+"Anhaken, wenn Sie Anfangs-/Endsalden des Auszugs vor dessen Freigabe prüfen "
+"möchten. Ohne wird keine Prüfung vorgenommen."
+
+#. module: account_statement_base_import
+#: code:addons/account_statement_base_import/statement.py:154
+#, python-format
+msgid "No Profile!"
+msgstr "Kein Profil!"
+
+#. module: account_statement_base_import
+#: code:addons/account_statement_base_import/parser/file_parser.py:159
+#, python-format
+msgid "Date format is not valid."
+msgstr "Datumsformat ist nicht zulässig."
+
+#. module: account_statement_base_import
+#: field:credit.statement.import,profile_id:0
+msgid "Import configuration parameter"
+msgstr "Import-Einstellungen"
+
+#. module: account_statement_base_import
+#: field:account.statement.profile,rec_log:0
+msgid "log"
+msgstr "log"
+
+#. module: account_statement_base_import
+#: view:credit.statement.import:0
+msgid "Import Parameters Summary"
+msgstr "Import-Einstellungs-Übersicht"
+
+#. module: account_statement_base_import
+#: field:credit.statement.import,balance_check:0
+msgid "Balance check"
+msgstr "Saldenprüfung"
+
+#. module: account_statement_base_import
+#: field:credit.statement.import,force_partner_on_bank:0
+msgid "Force partner on bank move"
+msgstr "Partner auf Bankbuchung erzwingen"
+
+#. module: account_statement_base_import
+#: field:credit.statement.import,file_name:0
+msgid "File Name"
+msgstr "Dateiname"
+
+#. module: account_statement_base_import
+#: code:addons/account_statement_base_import/parser/file_parser.py:55
+#, python-format
+msgid "Invalid file type %s. Please use csv or xls"
+msgstr "Ungültiger Dateityp %s. Bitte CSV oder XLS verwenden"
+
+#. module: account_statement_base_import
+#: code:addons/account_statement_base_import/statement.py:155
+#, python-format
+msgid "You must provide a valid profile to import a bank statement!"
+msgstr "Sie müssen ein gültiges Profil für den Import eines Auszugs stellen!"
+
+#. module: account_statement_base_import
+#: code:addons/account_statement_base_import/statement.py:83
+#, python-format
+msgid "Statement ID %s have been imported with %s lines."
+msgstr "Auszug %s wurde mit %s Zeilen importiert."
+
+#. module: account_statement_base_import
+#: field:credit.statement.import,receivable_account_id:0
+msgid "Force Receivable/Payable Account"
+msgstr "Forderungen-/Verbichkeitenkonto erzwingen"
+
+#. module: account_statement_base_import
+#: code:addons/account_statement_base_import/parser/file_parser.py:164
+#: code:addons/account_statement_base_import/parser/file_parser.py:174
+#: code:addons/account_statement_base_import/parser/file_parser.py:198
+#: code:addons/account_statement_base_import/parser/file_parser.py:208
+#, python-format
+msgid "Missing"
+msgstr "Fehlt"
+
+#. module: account_statement_base_import
+#: help:account.statement.profile,import_type:0
+msgid ""
+"Choose here the method by which you want to import bank statement for this "
+"profile."
+msgstr ""
+"Wählen Sie hier die Methode nach der Sie die Auszüge in diesem Profil "
+"importieren möchten."
+
+#. module: account_statement_base_import
+#: view:credit.statement.import:0
+msgid "Cancel"
+msgstr "Abbrechen"
+
+#. module: account_statement_base_import
+#: help:credit.statement.import,force_partner_on_bank:0
+msgid ""
+"Tic that box if you want to use the credit insitute partner in the "
+"counterpart of the treasury/banking move."
+msgstr ""
+"Setzen Sie diese Box, um das Partner-Kreditunternehmen in der Gegenbuchung "
+"der Bankbuchung einzusetzen."
