@@ -7,14 +7,14 @@ msgstr ""
 "Project-Id-Version: OpenERP Server 7.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-01-21 11:55+0000\n"
-"PO-Revision-Date: 2015-01-04 19:14+0100\n"
+"PO-Revision-Date: 2015-01-18 15:19+0100\n"
 "Last-Translator: Rudolf Schnapka <rs@techno-flex.de>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: \n"
 "X-Generator: Poedit 1.5.4\n"
+"Language: de\n"
 
 #. module: account_advanced_reconcile_transaction_ref
 #: field:easy.reconcile.advanced.transaction_ref,partner_ids:0
@@ -55,49 +55,49 @@ msgstr "Überweisungszweck"
 #. module: account_advanced_reconcile_transaction_ref
 #: field:easy.reconcile.advanced.transaction_ref,journal_id:0
 msgid "Journal"
-msgstr ""
+msgstr "Journal"
 
 #. module: account_advanced_reconcile_transaction_ref
 #: field:easy.reconcile.advanced.transaction_ref,account_profit_id:0
 msgid "Account Profit"
-msgstr ""
+msgstr "Erfolgskonto"
 
 #. module: account_advanced_reconcile_transaction_ref
 #: model:ir.model,name:account_advanced_reconcile_transaction_ref.model_account_bank_statement
 msgid "Bank Statement"
-msgstr ""
+msgstr "Kontoauszug"
 
 #. module: account_advanced_reconcile_transaction_ref
 #: field:easy.reconcile.advanced.transaction_ref,filter:0
 msgid "Filter"
-msgstr ""
+msgstr "Filter"
 
 #. module: account_advanced_reconcile_transaction_ref
 #: model:ir.model,name:account_advanced_reconcile_transaction_ref.model_account_easy_reconcile_method
 msgid "reconcile method for account_easy_reconcile"
-msgstr ""
+msgstr "Ausgleichsverfahren für account_easy_reconcile"
 
 #. module: account_advanced_reconcile_transaction_ref
 #: field:easy.reconcile.advanced.transaction_ref,date_base_on:0
 msgid "Date of reconciliation"
-msgstr ""
+msgstr "Ausgleichsdatum"
 
 #. module: account_advanced_reconcile_transaction_ref
 #: model:ir.model,name:account_advanced_reconcile_transaction_ref.model_account_move_line
 msgid "Journal Items"
-msgstr ""
+msgstr "Journalposten"
 
 #. module: account_advanced_reconcile_transaction_ref
 #: model:ir.model,name:account_advanced_reconcile_transaction_ref.model_easy_reconcile_advanced
 msgid "easy.reconcile.advanced"
-msgstr ""
+msgstr "easy.reconcile.advanced"
 
 #. module: account_advanced_reconcile_transaction_ref
 #: field:easy.reconcile.advanced.transaction_ref,account_lost_id:0
 msgid "Account Lost"
-msgstr ""
+msgstr "Verlustekonto"
 
 #. module: account_advanced_reconcile_transaction_ref
 #: field:easy.reconcile.advanced.transaction_ref,write_off:0
 msgid "Write off allowed"
-msgstr ""
+msgstr "Differenzausbuchung zulässig"
