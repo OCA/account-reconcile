@@ -128,10 +128,10 @@ class EasyReconcileBase(orm.AbstractModel):
 
     def _check_period_state(self, cr, uid, date, context=None):
         period_id = self.pool['account.period'].find(
-                cr, uid, dt=date, context=context)[0]
+            cr, uid, dt=date, context=context)[0]
         cr.execute("""
-            SELECT state 
-            FROM account_period 
+            SELECT state
+            FROM account_period
             WHERE id = %s
         """, (period_id,))
 
@@ -143,11 +143,11 @@ class EasyReconcileBase(orm.AbstractModel):
 
     def _get_open_period_date(self, cr, uid, date, context=None):
         cr.execute("""
-            SELECT date_start 
-            FROM account_period 
-            WHERE state = 'draft' 
-                AND date_start > %s 
-            ORDER BY date_start asc 
+            SELECT date_start
+            FROM account_period
+            WHERE state = 'draft'
+                AND date_start > %s
+            ORDER BY date_start asc
             LIMIT 1
         """, (date,))
 
@@ -161,7 +161,7 @@ class EasyReconcileBase(orm.AbstractModel):
                       based_on='end_period_last_credit', context=None):
         period_obj = self.pool['account.period']
         date = None
-        import pdb;pdb.set_trace()
+
         def last_period(mlines):
             period_ids = [ml['period_id'] for ml in mlines]
             periods = period_obj.browse(
@@ -178,7 +178,7 @@ class EasyReconcileBase(orm.AbstractModel):
             return [l for l in mlines if l['debit'] > 0]
 
         if based_on == 'end_period_last_credit':
-            data = last_period(credit(lines)).date_stop
+            date = last_period(credit(lines)).date_stop
         if based_on == 'end_period':
             date = last_period(lines).date_stop
         elif based_on == 'newest':
