@@ -19,7 +19,10 @@
 #
 ##############################################################################
 
+import logging
 from openerp.osv.orm import AbstractModel, TransientModel
+
+_logger = logging.getLogger(__name__)
 
 
 class EasyReconcileSimple(AbstractModel):
@@ -58,6 +61,11 @@ class EasyReconcileSimple(AbstractModel):
                     del lines[i]
                     break
             count += 1
+            if (context['commit_every'] and
+                    count % context['commit_every'] == 0):
+                cr.commit()
+                _logger.info("Commit the reconciliations after %d lines",
+                             count)
         return res, []  # empty list for partial, only full rec in "simple" rec
 
     def _simple_order(self, rec, *args, **kwargs):
