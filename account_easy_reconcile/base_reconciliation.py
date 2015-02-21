@@ -127,16 +127,10 @@ class EasyReconcileBase(orm.AbstractModel):
         return bool(writeoff_limit >= abs(writeoff_amount)), debit, credit
 
     def _check_period_state(self, cr, uid, date, context=None):
-        period_id = self.pool['account.period'].find(
-            cr, uid, dt=date, context=context)[0]
-        cr.execute("""
-            SELECT state
-            FROM account_period
-            WHERE id = %s
-        """, (period_id,))
-
-        state = cr.fetchall()[0][0]
-        if state == 'done':
+        period_obj = self.pool['account.period']
+        period_id = period_obj.find(cr, uid, dt=date, context=context)[0]
+        period = period_obj.browse(cr, uid, period_id, context=context)
+        if period.state == 'done':
             return False
         else:
             return True
