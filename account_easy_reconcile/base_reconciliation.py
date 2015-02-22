@@ -126,30 +126,35 @@ class EasyReconcileBase(orm.AbstractModel):
         writeoff_amount = round(debit - credit, precision)
         return bool(writeoff_limit >= abs(writeoff_amount)), debit, credit
 
-    def _check_period_state(self, cr, uid, date, context=None):
+    def _is_period_close(self, cr, uid, date, context=None):
         period_obj = self.pool['account.period']
         period_id = period_obj.find(cr, uid, dt=date, context=context)[0]
         period = period_obj.browse(cr, uid, period_id, context=context)
         if period.state == 'done':
-            return False
-        else:
             return True
+        else:
+            return False
 
     def _get_open_period_date(self, cr, uid, date, context=None):
-        cr.execute("""
-            SELECT date_start
-            FROM account_period
-            WHERE state = 'draft'
-                AND date_start > %s
-            ORDER BY date_start asc
-            LIMIT 1
-        """, (date,))
-
-        first_date_available = cr.fetchall()
-        if first_date_available:
-            return first_date_available[0][0]
+        if context is None:
+            context = {}
+        if context.get('company_id', False):
+            company_id = context['company_id']
         else:
-            return date
+            company_id = self.pool.get('res.users').\
+                browse(cr, uid, uid, context=context).company_id.id
+        period_obj = self.pool['account.period']
+        period_ids = period_obj.search(cr, uid, [
+            ['state', '=', 'draft'],
+            ['company_id', '=', company_id],
+            ], context=context, order='date_start')
+        if period_ids:
+            period = period_obj.browse(cr, uid, period_ids[0], context=context)
+            return period.date_start
+        else:
+            raise orm.except_orm(
+                _('Error'),
+                _('There is no open period for your company'))
 
     def _get_rec_date(self, cr, uid, rec, lines,
                       based_on='end_period_last_credit', context=None):
@@ -183,7 +188,7 @@ class EasyReconcileBase(orm.AbstractModel):
             date = last_date(debit(lines))['date']
 
         if date:
-            if not self._check_period_state(cr, uid, date, context=context):
+            if self._is_period_close(cr, uid, date, context=context):
                 date = self._get_open_period_date(
                     cr, uid, date, context=context)
         # reconcilation date will be today
