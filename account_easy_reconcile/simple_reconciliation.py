@@ -59,13 +59,14 @@ class EasyReconcileSimple(AbstractModel):
                 if reconciled:
                     res += [credit_line['id'], debit_line['id']]
                     del lines[i]
+                    count += 1
+                    if (context['commit_every'] and
+                            count % context['commit_every'] == 0):
+                        cr.commit()
+                        _logger.info(
+                            "Commit the reconciliations after %d lines",
+                            count)
                     break
-            count += 1
-            if (context['commit_every'] and
-                    count % context['commit_every'] == 0):
-                cr.commit()
-                _logger.info("Commit the reconciliations after %d lines",
-                             count)
         return res, []  # empty list for partial, only full rec in "simple" rec
 
     def _simple_order(self, rec, *args, **kwargs):
