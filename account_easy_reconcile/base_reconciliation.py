@@ -130,10 +130,7 @@ class EasyReconcileBase(orm.AbstractModel):
         period_obj = self.pool['account.period']
         period_id = period_obj.find(cr, uid, dt=date, context=context)[0]
         period = period_obj.browse(cr, uid, period_id, context=context)
-        if period.state == 'done':
-            return True
-        else:
-            return False
+        return period.state == 'done'
 
     def _get_open_period_date(self, cr, uid, date, context=None):
         if context is None:
