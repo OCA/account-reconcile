@@ -108,8 +108,8 @@ class AccountBankStatement(orm.Model):
         st_line = st_line_obj.browse(cr, uid, st_line_id, context=context)
         st = st_line.statement_id
         context.update({'date': st_line.date})
-        acc_cur = (((st_line.amount <= 0)
-                    and st.journal_id.default_debit_account_id) or
+        acc_cur = (((st_line.amount <= 0) and
+                    st.journal_id.default_debit_account_id) or
                    st_line.account_id)
         context.update({
             'res.currency.compute.account': acc_cur,
