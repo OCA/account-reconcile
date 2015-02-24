@@ -21,6 +21,7 @@
 
 from openerp.osv import fields, orm
 from operator import itemgetter, attrgetter
+from openerp.tools.translate import _
 
 
 class EasyReconcileBase(orm.AbstractModel):
