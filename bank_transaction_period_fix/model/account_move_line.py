@@ -28,13 +28,15 @@ class AccountMoveLine(orm.Model):
 
     def create(self, cr, uid, vals, context=None, check=True):
         """If requested, override period from date."""
-         ctx = context.copy() or {}
-         if (('override_period_from_date' in ctx or
-              'period_id' not in vals) and 'date' in vals):
-             period_model = self.pool['account.period']
-             period_ids = period_search
-            ## BE CAREFULL, ALSO CHECK COMPANY
-            vals['period_id'] = period_ids[0]
+        ctx = context.copy() or {}
+        if (('override_period_from_date' in ctx or
+               'period_id' not in vals) and 'date' in vals):
+            period_model = self.pool['account.period']
+            search_date = 'date' in vals and vals['date'] or None
+            period_ids = period_model.find(
+                cr, uid, dt=search_date, context=ctx)
+            if period_ids:
+                vals['period_id'] = period_ids[0]
         return super(AccountMoveLine, self).create(
             cr, uid, vals, context=context, check=check)
 
