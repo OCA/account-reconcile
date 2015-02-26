@@ -29,7 +29,7 @@ class AccountBankStatementLine(orm.Model):
     def process_reconciliation(
             self, cr, uid, id, mv_line_dicts, context=None):
         """Put marker in context to use period from date in move line."""
-        ctx = context.copy() or {}
+        ctx = context and context.copy() or {}
         ctx['override_period_from_date'] = True
         return super(AccountBankStatementLine, self).process_reconciliation(
             cr, uid, id, mv_line_dicts, context=ctx)
