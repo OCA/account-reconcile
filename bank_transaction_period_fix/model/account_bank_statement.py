@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Extend account.move.line to use date for period, when requested."""
+"""Extend account.bank.statement to use transaction date in moves."""
 ##############################################################################
 #
 #    Copyright (C) 2015 Therp BV - http://therp.nl.
@@ -22,22 +22,24 @@
 from openerp.osv import orm
 
 
-class AccountMoveLine(orm.Model):
-    """Extend account.move.line to use date for period, when requested."""
-    _inherit = 'account.move.line'
+class AccountBankStatement(orm.Model):
+    """Extend account.bank.statement to use transaction date in moves."""
+    _inherit = 'account.bank.statement'
 
-    def create(self, cr, uid, vals, context=None, check=True):
-        """If requested, override period from date."""
+    def _prepare_move(
+            self, cr, uid, st_line, st_line_number, context=None):
+        """Put marker in context to use period from date in move line."""
+        res = super(AccountBankStatement, self)._prepare_move(
+            cr, uid, st_line, st_line_number, context=context)
         context = context or {}
         if (('override_period_from_date' in context or
-               'period_id' not in vals) and 'date' in vals):
+               'period_id' not in res) and 'date' in res):
             period_model = self.pool['account.period']
-            search_date = 'date' in vals and vals['date'] or None
+            search_date = 'date' in res and res['date'] or None
             period_ids = period_model.find(
                 cr, uid, dt=search_date, context=context)
             if period_ids:
-                vals['period_id'] = period_ids[0]
-        return super(AccountMoveLine, self).create(
-            cr, uid, vals, context=context, check=check)
+                res['period_id'] = period_ids[0]
+        return res
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
