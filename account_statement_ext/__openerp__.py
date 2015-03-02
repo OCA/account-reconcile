@@ -21,7 +21,7 @@
 
 {'name': "Bank statement extension and profiles",
  'version': '1.1',
- 'author': 'Camptocamp',
+ 'author': "Camptocamp,Odoo Community Association (OCA)",
  'maintainer': 'Camptocamp',
  'category': 'Finance',
  'complexity': 'normal', #easy, normal, expert

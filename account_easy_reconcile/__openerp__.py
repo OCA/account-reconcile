@@ -25,7 +25,7 @@
     "depends" : ["account",
                  "base_scheduler_creator"
                 ],
-    "author" : "Akretion,Camptocamp",
+    "author" : "Akretion,Camptocamp,Odoo Community Association (OCA)",
     "description": """
 Easy Reconcile
 ==============
