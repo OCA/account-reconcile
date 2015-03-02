@@ -35,7 +35,7 @@
     partner and an account.
 
     """,
-    'author': 'Akretion',
+    'author': "Akretion,Odoo Community Association (OCA)",
     'website': 'http://www.akretion.com/',
     'depends': ['account_statement_base_completion'],
     'data': [

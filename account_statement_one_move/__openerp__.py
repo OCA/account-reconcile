@@ -32,7 +32,7 @@
     example, you won't have a move for each line.
 
     """,
-    'author': 'Akretion',
+    'author': "Akretion,Odoo Community Association (OCA)",
     'website': 'http://www.akretion.com/',
     'depends': ['account_statement_ext'],
     'data': [

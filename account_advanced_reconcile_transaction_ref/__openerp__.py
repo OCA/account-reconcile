@@ -26,7 +26,7 @@ Reconcile rules with transaction_ref
 
 """,
  'version': '1.0.1',
- 'author': 'Camptocamp',
+ 'author': "Camptocamp,Odoo Community Association (OCA)",
  'category': 'Finance',
  'website': 'http://www.camptocamp.com',
  'depends': ['account_advanced_reconcile'],

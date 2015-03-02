@@ -31,7 +31,7 @@ reconcile the commission with credit card imports).
 
 """,
  'version': '1.0.0',
- 'author': 'Camptocamp',
+ 'author': "Camptocamp,Odoo Community Association (OCA)",
  'category': 'Finance',
  'website': 'http://www.camptocamp.com',
  'depends': ['account_advanced_reconcile'],

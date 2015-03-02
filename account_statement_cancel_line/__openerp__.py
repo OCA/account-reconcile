@@ -23,7 +23,7 @@
 {
     'name': "Account Statement Cancel Line",
     'version': '0.3',
-    'author': 'Camptocamp',
+    'author': "Camptocamp,Odoo Community Association (OCA)",
     'maintainer': 'Camptocamp',
     'category': 'Finance',
     'complexity': 'normal',

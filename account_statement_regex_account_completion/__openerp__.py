@@ -30,7 +30,7 @@
 {
     "name": "Account Statement Regex Account Completion addon",
     "version": "0.1",
-    "author": "ACSONE SA/NV",
+    "author": "ACSONE SA/NV,Odoo Community Association (OCA)",
     "category": "Other",
     "website": "http://www.acsone.eu",
     "depends": ["account_statement_base_completion",

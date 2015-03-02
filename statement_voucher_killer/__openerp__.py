@@ -36,7 +36,7 @@ line will be take from imported line in this order:
  * Related statement date
 
 """,
- 'author': 'Camptocamp',
+ 'author': "Camptocamp,Odoo Community Association (OCA)",
  'website': 'http://www.camptocamp.com',
  'depends': ['account_voucher', 'account_payment'],
  'data': [

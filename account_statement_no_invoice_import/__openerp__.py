@@ -28,7 +28,7 @@
     'description': """
     Module that remove the 'Import invoices' button on bank statement
     """,
-    'author': 'Akretion',
+    'author': "Akretion,Odoo Community Association (OCA)",
     'website': 'http://www.akretion.com/',
     'depends': [
         'account_voucher',

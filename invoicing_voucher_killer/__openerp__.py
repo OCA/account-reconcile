@@ -27,7 +27,7 @@ Prevent the usage of voucher from invoices
 ##########################################
 This add-on will disable "Register Payment" button
 """,
- 'author': 'Camptocamp',
+ 'author': "Camptocamp,Odoo Community Association (OCA)",
  'website': 'http://www.camptocamp.com',
  'depends': ['account_voucher'],
  'data': ['invoice_data.xml',
