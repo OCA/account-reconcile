@@ -21,7 +21,7 @@
 
 {'name': "Bank statement base import",
  'version': '1.2',
- 'author': 'Camptocamp',
+ 'author': "Camptocamp,Odoo Community Association (OCA)",
  'maintainer': 'Camptocamp',
  'category': 'Finance',
  'complexity': 'normal',

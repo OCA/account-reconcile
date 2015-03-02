@@ -23,7 +23,7 @@
     "name": "Easy Reconcile",
     "version": "1.3.1",
     "depends": ["account"],
-    "author": "Akretion,Camptocamp",
+    "author": "Akretion,Camptocamp,Odoo Community Association (OCA)",
     "description": """
 Easy Reconcile
 ==============

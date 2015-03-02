@@ -27,7 +27,7 @@
     'category': 'Accounting & Finance',
     'license': 'AGPL-3',
     'summary': 'Fix multi-company issue on Statement Operation Templates',
-    'author': 'Akretion',
+    'author': "Akretion,Odoo Community Association (OCA)",
     'website': 'http://www.akretion.com',
     'depends': ['account'],
     'data': [

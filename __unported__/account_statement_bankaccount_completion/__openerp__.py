@@ -21,7 +21,7 @@
 
 {'name': "Bank statement completion from bank account number",
  'version': '1.0.1',
- 'author': 'ACSONE SA/NV',
+ 'author': "ACSONE SA/NV,Odoo Community Association (OCA)",
  'maintainer': 'ACSONE SA/NV',
  'category': 'Finance',
  'complexity': 'normal',

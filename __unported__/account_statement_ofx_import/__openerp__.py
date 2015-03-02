@@ -22,7 +22,7 @@
 
 {'name': "Bank statement OFX import",
     'version': '1.0.1',
-    'author': 'Servicios Tecnológicos Avanzados - Pedro M. Baeza',
+    'author': "Servicios Tecnológicos Avanzados - Pedro M. Baeza,Odoo Community Association (OCA)",
     'maintainer': 'Pedro M. Baeza',
     'category': 'Finance',
     'complexity': 'normal',

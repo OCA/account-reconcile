@@ -21,7 +21,7 @@
 
 {'name': "Bank statement extension and profiles for Point of Sale",
  'version': '1.0.0',
- 'author': 'Camptocamp',
+ 'author': "Camptocamp,Odoo Community Association (OCA)",
  'maintainer': 'Camptocamp',
  'category': 'Point Of Sale',
  'complexity': 'normal',

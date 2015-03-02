@@ -21,7 +21,7 @@
 
 {'name': "Bank statement extension with voucher",
  'version': '1.0',
- 'author': 'Camptocamp',
+ 'author': "Camptocamp,Odoo Community Association (OCA)",
  'maintainer': 'Camptocamp',
  'category': 'Finance',
  'complexity': 'normal',
