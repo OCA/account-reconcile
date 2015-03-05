@@ -73,6 +73,7 @@ class LinkPartner(models.TransientModel):
         string='Statement line',
         comodel_name='account.bank.statement.line',
         required=True,
+        ondelete='cascade',
     )
     amount = fields.Float(
         readonly=True,
