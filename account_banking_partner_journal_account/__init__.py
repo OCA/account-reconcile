@@ -1,6 +1,7 @@
+# -*- coding: utf-8 -*-
 ##############################################################################
 #
-#    Copyright (C) 2015 Therp BV (<http://therp.nl>)
+#    Copyright (C) 2015 Therp BV (<http://therp.nl>) / BAS Solutions
 #    All Rights Reserved
 #
 #    This program is free software: you can redistribute it and/or modify
