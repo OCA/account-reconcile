@@ -3,9 +3,11 @@
 -->
 <openerp>
     <data>
-        <template id="assets_backend" name="account assets" inherit_id="web.assets_backend">
+        <template id="assets_backend" name="account assets"
+            inherit_id="web.assets_backend">
             <xpath expr="." position="inside">
-                <script type="text/javascript" src="/account_banking_partner_journal_account/static/src/js/account_widgets.js"></script>
+                <script type="text/javascript"
+                    src="/account_banking_partner_journal_account/static/src/js/account_widgets.js"></script>
             </xpath>
         </template>
     </data>

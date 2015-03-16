@@ -19,8 +19,6 @@
 ##############################################################################
 
 from openerp.osv import orm, fields
-#from openerp.osv import osv
-#from openerp.osv import fields
 
 
 class ResPartner(orm.Model):
@@ -64,20 +62,30 @@ class ResPartner(orm.Model):
             cr, uid, ids, context=context)
         for partner in self.browse(cr, uid, ids, context=context):
             if partner.property_account_receivable_bank_id:
-                res[partner.id] = partner.property_account_receivable_bank_id.id
+                res[partner.id
+                    ] = partner.property_account_receivable_bank_id.id
         return res
-        
+
+
 class account_bank_statement_line(orm.Model):
     _inherit = 'account.bank.statement.line'
-    
-    def get_statement_line_for_reconciliation(self, cr, uid, st_line, context=None):
-        data = super(account_bank_statement_line, self).get_statement_line_for_reconciliation(
+
+    def get_statement_line_for_reconciliation(self, cr, uid, st_line,
+                                              context=None):
+        data = super(account_bank_statement_line,
+                     self).get_statement_line_for_reconciliation(
             cr, uid, st_line, context=context)
         data['account_id'] = False
         if data and data.get('partner_id'):
-            if data['amount'] <= 0 and st_line.partner_id.property_account_payable_bank_id:
-                data['account_id'] = [st_line.partner_id.property_account_payable_bank_id.id, st_line.partner_id.property_account_payable_bank_id.name_get()[-1][-1]]
-            elif data['amount'] > 0 and st_line.partner_id.property_account_receivable_bank_id:
-                data['account_id'] = [st_line.partner_id.property_account_receivable_bank_id.id, st_line.partner_id.property_account_receivable_bank_id.name_get()[-1][-1]]
+            if data['amount'] <= 0 and \
+               st_line.partner_id.property_account_payable_bank_id:
+                data['account_id'] = [
+                    st_line.partner_id.property_account_payable_bank_id.id,
+                    st_line.partner_id.property_account_payable_bank_id.name_get()[-1][-1]]
+            elif data['amount'] > 0 and \
+                    st_line.partner_id.property_account_receivable_bank_id:
+                data['account_id'] = [
+                    st_line.partner_id.property_account_receivable_bank_id.id,
+                    st_line.partner_id.property_account_receivable_bank_id.name_get()[-1][-1]]
         return data
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
