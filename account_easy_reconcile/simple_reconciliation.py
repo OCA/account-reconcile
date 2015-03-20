@@ -19,7 +19,10 @@
 #
 ##############################################################################
 
+import logging
 from openerp.osv.orm import AbstractModel, TransientModel
+
+_logger = logging.getLogger(__name__)
 
 
 class EasyReconcileSimple(AbstractModel):
@@ -34,6 +37,7 @@ class EasyReconcileSimple(AbstractModel):
         if self._key_field is None:
             raise ValueError("_key_field has to be defined")
         count = 0
+        commit_count = 0
         res = []
         while (count < len(lines)):
             for i in xrange(count + 1, len(lines)):
@@ -54,8 +58,15 @@ class EasyReconcileSimple(AbstractModel):
                     cr, uid, rec, [credit_line, debit_line],
                     allow_partial=False, context=context)
                 if reconciled:
+                    commit_count += 1
                     res += [credit_line['id'], debit_line['id']]
                     del lines[i]
+                    if (context['commit_every'] and
+                            commit_count % context['commit_every'] == 0):
+                        cr.commit()
+                        _logger.info(
+                            "Commit the reconciliations after %d lines",
+                            count)
                     break
             count += 1
         return res, []  # empty list for partial, only full rec in "simple" rec
