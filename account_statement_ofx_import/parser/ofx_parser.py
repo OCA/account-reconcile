@@ -24,10 +24,6 @@ import datetime
 from openerp.tools.translate import _
 from openerp.addons.account_statement_base_import.parser import \
     BankStatementImportParser
-try:
-    import ofxparse
-except:
-    raise Exception(_('Please install python lib ofxparse'))
 
 
 class OfxParser(BankStatementImportParser):
@@ -50,6 +46,10 @@ class OfxParser(BankStatementImportParser):
 
     def _parse(self, *args, **kwargs):
         """Launch the parsing itself."""
+        try:
+            import ofxparse
+        except:
+            raise Exception(_('Please install python lib ofxparse'))
         ofx_file = tempfile.NamedTemporaryFile()
         ofx_file.seek(0)
         ofx_file.write(self.filebuffer)
