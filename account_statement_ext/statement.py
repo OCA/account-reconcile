@@ -670,7 +670,7 @@ class AccountBankStatementLine(orm.Model):
         res = {}
         obj_partner = self.pool.get('res.partner')
         obj_stat = self.pool.get('account.bank.statement')
-        receiv_account = pay_account = account_id = False
+        receiv_account = pay_account = False
         # If profile has a receivable_account_id, we return it in any case
         if master_account_id:
             res['account_id'] = master_account_id
@@ -736,7 +736,7 @@ class AccountBankStatementLine(orm.Model):
         return {'value': {'type': line_type}}
 
     def onchange_type(self, cr, uid, line_id, partner_id, line_type,
-                      profile_id, context=None):
+                      profile_id=None, context=None):
         """Keep the same features as in standard and call super. If an account
         is returned, call the method to compute line values.
         """
