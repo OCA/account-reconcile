@@ -722,13 +722,21 @@ class AccountBankStatementLine(orm.Model):
         Moreover, we now call the get_account_and_type_for_counterpart method
         now to get the type to use.
         """
+        if not context:
+            context = {}
+
         obj_stat = self.pool['account.bank.statement']
         if not partner_id:
             return {}
         line_type = obj_stat.get_type_for_counterpart(
             cr, uid, 0.0, partner_id=partner_id)
+
+        # Better to pass profile_id as part of context
+        context['statement_profile_id'] = profile_id
         res_type = self.onchange_type(
-            cr, uid, ids, partner_id, line_type, profile_id, context=context)
+            cr, uid, ids, partner_id, line_type, context=context)
+        del context['statement_profile_id']
+
         if res_type['value'] and res_type['value'].get('account_id', False):
             return {'value': {'type': line_type,
                               'account_id': res_type['value']['account_id'],
@@ -740,6 +748,13 @@ class AccountBankStatementLine(orm.Model):
         """Keep the same features as in standard and call super. If an account
         is returned, call the method to compute line values.
         """
+        if not context:
+            context = {}
+
+        # Sometimes profile_id cannot be passed as argument
+        if profile_id is None:
+            profile_id = context.get('statement_profile_id', None)
+
         res = super(AccountBankStatementLine, self
                     ).onchange_type(cr, uid, line_id, partner_id,
                                     line_type, context=context)
