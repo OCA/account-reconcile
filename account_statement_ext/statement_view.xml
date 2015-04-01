@@ -126,11 +126,11 @@
           </xpath>
           <!-- Adapt onchange signature -->
           <xpath expr="//field[@name='line_ids']/tree/field[@name='partner_id']" position="replace">
-              <field name="partner_id" on_change="onchange_partner_id(partner_id,parent.profile_id)" domain="['|',('parent_id','=',False),('is_company','=',True)]"/>
+              <field name="partner_id" on_change="onchange_partner_id_with_profile_id(partner_id,parent.profile_id)" domain="['|',('parent_id','=',False),('is_company','=',True)]"/>
           </xpath>
 
           <xpath expr="//field[@name='line_ids']/form//field[@name='partner_id']" position="replace">
-             <field name="partner_id" on_change="onchange_partner_id(partner_id,parent.profile_id)" domain="['|',('parent_id','=',False),('is_company','=',True)]"/>
+             <field name="partner_id" on_change="onchange_partner_id_with_profile_id(partner_id,parent.profile_id)" domain="['|',('parent_id','=',False),('is_company','=',True)]"/>
           </xpath>
           <xpath expr="//field[@name='line_ids']/form//field[@name='type']" position="replace">
                <field name="type" on_change="onchange_type_with_profile_id(partner_id, type, parent.profile_id)"/>
