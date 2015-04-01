@@ -743,8 +743,11 @@ class AccountBankStatementLine(orm.Model):
                               'voucher_id': False}}
         return {'value': {'type': line_type}}
 
-    def onchange_type(self, cr, uid, line_id, partner_id, line_type,
-                      profile_id=None, context=None):
+    def onchange_type(self, cr, uid, line_id, partner_id, line_type, context=None):
+        return self.onchange_type_with_profile_id(cr, uid, line_id, partner_id, line_type, context=context)
+
+    def onchange_type_with_profile_id(self, cr, uid, line_id, partner_id, line_type,
+                                      profile_id=None, context=None):
         """Keep the same features as in standard and call super. If an account
         is returned, call the method to compute line values.
         """
