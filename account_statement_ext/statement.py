@@ -728,7 +728,7 @@ class AccountBankStatementLine(orm.Model):
         line_type = obj_stat.get_type_for_counterpart(
             cr, uid, 0.0, partner_id=partner_id)
         res_type = self.onchange_type(
-            cr, uid, ids, partner_id, line_type, profile_id, context=context)
+            cr, uid, ids, partner_id, line_type, profile_id=profile_id, context=context)
         if res_type['value'] and res_type['value'].get('account_id', False):
             return {'value': {'type': line_type,
                               'account_id': res_type['value']['account_id'],
