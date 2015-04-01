@@ -234,7 +234,7 @@ class EasyReconcileBase(orm.AbstractModel):
             ml_obj.reconcile_partial(
                 cr, uid,
                 line_ids,
-                type='manual',
+                type='auto',
                 writeoff_acc_id=writeoff_account_id,
                 writeoff_period_id=period_id,
                 writeoff_journal_id=rec.journal_id.id,
