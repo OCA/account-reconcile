@@ -714,8 +714,12 @@ class AccountBankStatementLine(orm.Model):
         res['type'] = line_type if line_type else comp_line_type
         return res
 
-    def onchange_partner_id(self, cr, uid, ids, partner_id, profile_id=None,
+    def onchange_partner_id(self, cr, uid, ids, partner_id,
                             context=None):
+        return self.onchange_partner_id_with_profile_id(cr, uid, ids, partner_id, context=context)
+
+    def onchange_partner_id_with_profile_id(self, cr, uid, ids, partner_id, profile_id=None,
+                                            context=None):
         """
         Override of the basic method as we need to pass the profile_id in the
         on_change_type call.
