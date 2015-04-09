@@ -1,5 +1,4 @@
-# -*- encoding: utf-8 -*-
-"""Import python modules."""
+"""Import unit tests."""
 ##############################################################################
 #
 #    Copyright (C) 2015 Therp BV - http://therp.nl.
@@ -8,8 +7,6 @@
 #    WARNING: This program as such is intended to be used by professional
 #    programmers who take the whole responsability of assessing all potential
 #    consequences resulting from its eventual inadequacies and bugs
-#    End users who are looking for a ready-to-use solution with commercial
-#    garantees and support are strongly adviced to contract EduSense BV
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as published
@@ -25,6 +22,6 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-from . import model
+from . import test_reconciliation
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
