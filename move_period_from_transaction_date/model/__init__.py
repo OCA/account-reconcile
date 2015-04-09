@@ -8,8 +8,6 @@
 #    WARNING: This program as such is intended to be used by professional
 #    programmers who take the whole responsability of assessing all potential
 #    consequences resulting from its eventual inadequacies and bugs
-#    End users who are looking for a ready-to-use solution with commercial
-#    garantees and support are strongly adviced to contract EduSense BV
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as published

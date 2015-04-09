@@ -19,7 +19,7 @@
 #
 ##############################################################################
 {
-    'name': 'Account banking fix to use transaction date to determine period',
+    'name': 'Use bank transaction (line) date to determine move period',
     'version': '1.0',
     'author': 'Therp BV',
     'category': 'Banking addons',
@@ -27,7 +27,7 @@
     'depends': [
         'account',
     ],
-    'website': 'https://github.com/OCA/bank-statement-import',
+    'website': 'https://github.com/OCA/bank-statement-reconcile',
     'data': [],
     'test': [],
     'installable': True,
