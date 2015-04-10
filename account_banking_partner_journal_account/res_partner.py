@@ -77,15 +77,14 @@ class account_bank_statement_line(orm.Model):
             cr, uid, st_line, context=context)
         data['account_id'] = False
         if data and data.get('partner_id'):
+            pay_bank = st_line.partner_id.property_account_payable_bank_id
+            rec_bank = st_line.partner_id.property_account_receivable_bank_id
             if data['amount'] <= 0 and \
                st_line.partner_id.property_account_payable_bank_id:
-                data['account_id'] = [
-                    st_line.partner_id.property_account_payable_bank_id.id,
-                    st_line.partner_id.property_account_payable_bank_id.name_get()[-1][-1]]
+                data['account_id'] = [pay_bank.id, pay_bank.name_get()[-1][-1]]
+
             elif data['amount'] > 0 and \
                     st_line.partner_id.property_account_receivable_bank_id:
-                data['account_id'] = [
-                    st_line.partner_id.property_account_receivable_bank_id.id,
-                    st_line.partner_id.property_account_receivable_bank_id.name_get()[-1][-1]]
+                data['account_id'] = [rec_bank.id, rec_bank.name_get()[-1][-1]]
         return data
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
