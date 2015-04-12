@@ -25,6 +25,7 @@
 from openerp.tests.common import TransactionCase
 import time
 
+
 class TestReconciliation(TransactionCase):
     """Tests to make sure that transactions take period from statement line."""
 

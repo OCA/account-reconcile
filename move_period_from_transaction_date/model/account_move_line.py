@@ -30,7 +30,7 @@ class AccountMoveLine(orm.Model):
         """If requested, override period from date."""
         context = context or {}
         if (('override_period_from_date' in context or
-               'period_id' not in vals) and 'date' in vals):
+             'period_id' not in vals) and 'date' in vals):
             period_model = self.pool['account.period']
             search_date = 'date' in vals and vals['date'] or None
             period_ids = period_model.find(
