@@ -33,7 +33,7 @@ class AccountBankStatement(orm.Model):
             cr, uid, st_line, st_line_number, context=context)
         context = context or {}
         if (('override_period_from_date' in context or
-               'period_id' not in res) and 'date' in res):
+             'period_id' not in res) and 'date' in res):
             period_model = self.pool['account.period']
             search_date = 'date' in res and res['date'] or None
             period_ids = period_model.find(
