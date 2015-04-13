@@ -32,7 +32,7 @@ class AccountMoveLine(orm.Model):
         if (('override_period_from_date' in context or
              'period_id' not in vals) and 'date' in vals):
             period_model = self.pool['account.period']
-            search_date = 'date' in vals and vals['date'] or None
+            search_date = vals.get('date')
             period_ids = period_model.find(
                 cr, uid, dt=search_date, context=context)
             if period_ids:

@@ -27,11 +27,11 @@ class AccountBankStatementLine(orm.Model):
     _inherit = 'account.bank.statement.line'
 
     def process_reconciliation(
-            self, cr, uid, id, mv_line_dicts, context=None):
+            self, cr, uid, statement_line_id, mv_line_dicts, context=None):
         """Put marker in context to use period from date in move line."""
         ctx = context and context.copy() or {}
         ctx['override_period_from_date'] = True
         return super(AccountBankStatementLine, self).process_reconciliation(
-            cr, uid, id, mv_line_dicts, context=ctx)
+            cr, uid, statement_line_id, mv_line_dicts, context=ctx)
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
