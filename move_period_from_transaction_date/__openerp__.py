@@ -21,9 +21,8 @@
 {
     'name': 'Use bank transaction (line) date to determine move period',
     'version': '1.0',
-    'author': 'Therp BV',
+    'author': 'Therp BV, Odoo Community Association (OCA)',
     'category': 'Banking addons',
-    'complexity': 'easy',
     'depends': [
         'account',
     ],
