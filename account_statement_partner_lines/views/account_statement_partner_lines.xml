@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <template id="assets_backend" name="account_statement_partner_lines assets" inherit_id="web.assets_backend">
+            <xpath expr="." position="inside">
+                <script type="text/javascript" src="/account_statement_partner_lines/static/src/js/account_widget.js"></script>
+            </xpath>
+        </template>
+    </data>
+</openerp>
