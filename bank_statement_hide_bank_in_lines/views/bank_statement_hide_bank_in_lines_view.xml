@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+
+        <record model="ir.ui.view" id="view_bank_statement_hide_bank_form">
+            <field name="name">account.bank.statement.hide.bank.form</field>
+            <field name="model">account.bank.statement</field>
+            <field name="inherit_id" ref="account.view_bank_statement_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='bank_account_id']" position="attributes">
+                    <attribute name="groups">bank_statement_hide_bank_in_lines.group_no_bank_in_statement</attribute>
+                </xpath>
+
+            </field>
+        </record>
+
+	
+    </data>
+</openerp>

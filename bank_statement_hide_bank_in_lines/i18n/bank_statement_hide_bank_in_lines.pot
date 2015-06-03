@@ -1,0 +1,27 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* bank_statement_hide_bank_in_lines
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 8.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-06-03 09:35+0000\n"
+"PO-Revision-Date: 2015-06-03 09:35+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: bank_statement_hide_bank_in_lines
+#: model:res.groups,name:bank_statement_hide_bank_in_lines.group_no_bank_in_statement
+msgid "Show bank in account bank statement lines"
+msgstr ""
+
+#. module: bank_statement_hide_bank_in_lines
+#: view:account.bank.statement:bank_statement_hide_bank_in_lines.view_bank_statement_hide_bank_form
+msgid "bank_statement_hide_bank_in_lines.group_no_bank_in_statement"
+msgstr ""
+
