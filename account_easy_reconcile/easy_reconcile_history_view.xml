@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data noupdate="0">
+
+    <record id="view_easy_reconcile_history_search" model="ir.ui.view">
+        <field name="name">easy.reconcile.history.search</field>
+        <field name="model">easy.reconcile.history</field>
+        <field name="arch" type="xml">
+            <search string="Automatic Easy Reconcile History">
+                <filter icon="terp-go-today" string="Today"
+                    domain="[('date','&lt;', time.strftime('%%Y-%%m-%%d 23:59:59')), ('date','&gt;=', time.strftime('%%Y-%%m-%%d 00:00:00'))]"
+                    help="Todays' Reconcilations" />
+                <filter icon="terp-go-week" string="7 Days"
+                    help="Reconciliations of last 7 days"
+                    domain="[('date','&lt;', time.strftime('%%Y-%%m-%%d 23:59:59')),('date','&gt;=',(datetime.date.today()-datetime.timedelta(days=7)).strftime('%%Y-%%m-%%d 00:00:00'))]"
+                />
+
+                <separator orientation="vertical"/>
+                <field name="easy_reconcile_id"/>
+                <field name="date"/>
+
+                <newline/>
+                <group expand="0" string="Group By...">
+                    <filter string="Reconciliation Profile"
+                        icon="terp-stock_effects-object-colorize"
+                        domain="[]" context="{'group_by': 'easy_reconcile_id'}"/>
+                    <filter string="Date" icon="terp-go-month" domain="[]"
+                        context="{'group_by': 'date'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="easy_reconcile_history_form" model="ir.ui.view">
+        <field name="name">easy.reconcile.history.form</field>
+        <field name="model">easy.reconcile.history</field>
+        <field name="arch" type="xml">
+            <form string="Automatic Easy Reconcile History" version="7.0">
+                <header>
+                    <button name="open_reconcile"
+                        string="Go to reconciled items"
+                        icon="STOCK_JUMP_TO" type="object"/>
+                    <button name="open_partial"
+                        string="Go to partially reconciled items"
+                        icon="STOCK_JUMP_TO" type="object"/>
+                </header>
+                <sheet>
+                    <group>
+                        <field name="easy_reconcile_id"/>
+                        <field name="date"/>
+                        <field name="company_id" groups="base.group_multi_company"/>
+                    </group>
+                    <group col="2">
+                        <separator colspan="2" string="Reconciliations"/>
+                        <field name="reconcile_ids" nolabel="1"/>
+                    </group>
+                    <group col="2">
+                        <separator colspan="2" string="Partial Reconciliations"/>
+                        <field name="reconcile_partial_ids" nolabel="1"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="easy_reconcile_history_tree" model="ir.ui.view">
+        <field name="name">easy.reconcile.history.tree</field>
+        <field name="model">easy.reconcile.history</field>
+        <field name="arch" type="xml">
+            <tree string="Automatic Easy Reconcile History">
+                <field name="easy_reconcile_id"/>
+                <field name="date"/>
+                <button icon="STOCK_JUMP_TO" name="open_reconcile"
+                    string="Go to reconciled items" type="object"/>
+                <button icon="STOCK_JUMP_TO" name="open_partial"
+                    string="Go to partially reconciled items" type="object"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_easy_reconcile_history" model="ir.actions.act_window">
+        <field name="name">Easy Automatic Reconcile History</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">easy.reconcile.history</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <act_window
+      context="{'search_default_easy_reconcile_id': [active_id], 'default_easy_reconcile_id': active_id}"
+      id="act_easy_reconcile_to_history"
+      name="History Details"
+      groups=""
+      res_model="easy.reconcile.history"
+      src_model="account.easy.reconcile"/>
+
+    </data>
+</openerp>

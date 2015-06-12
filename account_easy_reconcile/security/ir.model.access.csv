@@ -1,0 +1,9 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_easy_reconcile_options_acc_user,easy.reconcile.options,model_easy_reconcile_options,account.group_account_user,1,0,0,0
+access_account_easy_reconcile_method_acc_user,account.easy.reconcile.method,model_account_easy_reconcile_method,account.group_account_user,1,0,0,0
+access_account_easy_reconcile_acc_user,account.easy.reconcile,model_account_easy_reconcile,account.group_account_user,1,1,0,0
+access_easy_reconcile_options_acc_mgr,easy.reconcile.options,model_easy_reconcile_options,account.group_account_user,1,0,0,0
+access_account_easy_reconcile_method_acc_mgr,account.easy.reconcile.method,model_account_easy_reconcile_method,account.group_account_user,1,1,1,1
+access_account_easy_reconcile_acc_mgr,account.easy.reconcile,model_account_easy_reconcile,account.group_account_user,1,1,1,1
+access_easy_reconcile_history_acc_user,easy.reconcile.history,model_easy_reconcile_history,account.group_account_user,1,1,1,0
+access_easy_reconcile_history_acc_mgr,easy.reconcile.history,model_easy_reconcile_history,account.group_account_manager,1,1,1,1
