@@ -3,6 +3,7 @@
 #
 #    Copyright 2012-2013 Camptocamp SA (Guewen Baconnier)
 #    Copyright (C) 2010   Sébastien Beau
+#    Copyright 2015 Camptocamp SA (Damien Crier)
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -19,11 +20,11 @@
 #
 ##############################################################################
 
-from openerp.osv import fields, orm
+from openerp import models, api, fields
 from operator import itemgetter, attrgetter
 
 
-class EasyReconcileBase(orm.AbstractModel):
+class EasyReconcileBase(models.AbstractModel):
 
     """Abstract Model for reconciliation methods"""
 
@@ -31,33 +32,35 @@ class EasyReconcileBase(orm.AbstractModel):
 
     _inherit = 'easy.reconcile.options'
 
-    _columns = {
-        'account_id': fields.many2one(
-            'account.account', 'Account', required=True),
-        'partner_ids': fields.many2many(
-            'res.partner', string="Restrict on partners"),
-        # other columns are inherited from easy.reconcile.options
-    }
+    account_id = fields.Many2one(
+        'account.account',
+        string='Account',
+        required=True
+    )
+    partner_ids = fields.Many2many(
+        comodel_name='res.partner',
+        string='Restrict on partners',
+    )
+    # other fields are inherited from easy.reconcile.options
 
-    def automatic_reconcile(self, cr, uid, ids, context=None):
+    @api.multi
+    def automatic_reconcile(self):
         """ Reconciliation method called from the view.
 
         :return: list of reconciled ids, list of partially reconciled items
         """
-        if isinstance(ids, (int, long)):
-            ids = [ids]
-        assert len(ids) == 1, "Has to be called on one id"
-        rec = self.browse(cr, uid, ids[0], context=context)
-        return self._action_rec(cr, uid, rec, context=context)
+        self.ensure_one()
+        return self._action_rec()
 
-    def _action_rec(self, cr, uid, rec, context=None):
+    @api.multi
+    def _action_rec(self):
         """ Must be inherited to implement the reconciliation
 
         :return: list of reconciled ids
         """
         raise NotImplementedError
 
-    def _base_columns(self, rec):
+    def _base_columns(self):
         """ Mandatory columns for move lines queries
         An extra column aliased as ``key`` should be defined
         in each query."""
@@ -75,17 +78,17 @@ class EasyReconcileBase(orm.AbstractModel):
             'move_id')
         return ["account_move_line.%s" % col for col in aml_cols]
 
-    def _select(self, rec, *args, **kwargs):
-        return "SELECT %s" % ', '.join(self._base_columns(rec))
+    def _select(self, *args, **kwargs):
+        return "SELECT %s" % ', '.join(self._base_columns())
 
-    def _from(self, rec, *args, **kwargs):
+    def _from(self, *args, **kwargs):
         return ("FROM account_move_line "
                 "LEFT OUTER JOIN account_move_reconcile ON "
                 "(account_move_line.reconcile_partial_id "
                 "= account_move_reconcile.id)"
                 )
 
-    def _where(self, rec, *args, **kwargs):
+    def _where(self, *args, **kwargs):
         where = ("WHERE account_move_line.account_id = %s "
                  "AND COALESCE(account_move_reconcile.type,'') <> 'manual' "
                  "AND account_move_line.reconcile_id IS NULL ")
@@ -93,27 +96,27 @@ class EasyReconcileBase(orm.AbstractModel):
         # but as we use _where_calc in _get_filter
         # which returns a list, we have to
         # accomodate with that
-        params = [rec.account_id.id]
-        if rec.partner_ids:
+        params = [self.account_id.id]
+        if self.partner_ids:
             where += " AND account_move_line.partner_id IN %s"
-            params.append(tuple([l.id for l in rec.partner_ids]))
+            params.append(tuple([l.id for l in self.partner_ids]))
         return where, params
 
-    def _get_filter(self, cr, uid, rec, context):
+    def _get_filter(self):
         ml_obj = self.pool.get('account.move.line')
         where = ''
         params = []
-        if rec.filter:
+        if self.filter:
             dummy, where, params = ml_obj._where_calc(
-                cr, uid, eval(rec.filter), context=context).get_sql()
+                eval(self.filter)).get_sql()
             if where:
                 where = " AND %s" % where
         return where, params
 
-    def _below_writeoff_limit(self, cr, uid, rec, lines,
-                              writeoff_limit, context=None):
-        precision = self.pool.get('decimal.precision').precision_get(
-            cr, uid, 'Account')
+    @api.multi
+    def _below_writeoff_limit(self, lines, writeoff_limit):
+        self.ensure_one()
+        precision = self.pool.get('decimal.precision').precision_get('Account')
         keys = ('debit', 'credit')
         sums = reduce(
             lambda line, memo:
@@ -125,15 +128,13 @@ class EasyReconcileBase(orm.AbstractModel):
         writeoff_amount = round(debit - credit, precision)
         return bool(writeoff_limit >= abs(writeoff_amount)), debit, credit
 
-    def _get_rec_date(self, cr, uid, rec, lines,
-                      based_on='end_period_last_credit', context=None):
-        period_obj = self.pool['account.period']
+    @api.multi
+    def _get_rec_date(self, lines, based_on='end_period_last_credit'):
+        self.ensure_one()
 
         def last_period(mlines):
             period_ids = [ml['period_id'] for ml in mlines]
-            periods = period_obj.browse(
-                cr, uid, period_ids, context=context)
-            return max(periods, key=attrgetter('date_stop'))
+            return max(period_ids, key=attrgetter('date_stop'))
 
         def last_date(mlines):
             return max(mlines, key=itemgetter('date'))
@@ -158,8 +159,8 @@ class EasyReconcileBase(orm.AbstractModel):
         # when date is None
         return None
 
-    def _reconcile_lines(self, cr, uid, rec, lines, allow_partial=False,
-                         context=None):
+    @api.multi
+    def _reconcile_lines(self, lines, allow_partial=False):
         """ Try to reconcile given lines
 
         :param list lines: list of dict of move lines, they must at least
@@ -172,33 +173,30 @@ class EasyReconcileBase(orm.AbstractModel):
                  the second is wether the reconciliation is full (True)
                  or partial (False)
         """
-        if context is None:
-            context = {}
-        ml_obj = self.pool.get('account.move.line')
-        writeoff = rec.write_off
+        self.ensure_one()
+        ml_obj = self.env['account.move.line']
+        writeoff = self.write_off
         line_ids = [l['id'] for l in lines]
         below_writeoff, sum_debit, sum_credit = self._below_writeoff_limit(
-            cr, uid, rec, lines, writeoff, context=context)
-        date = self._get_rec_date(
-            cr, uid, rec, lines, rec.date_base_on, context=context)
-        rec_ctx = dict(context, date_p=date)
+            lines, writeoff
+        )
+        date = self._get_rec_date(lines, self.date_base_on)
+        rec_ctx = dict(self.env.context or {}, date_p=date)
         if below_writeoff:
             if sum_credit > sum_debit:
-                writeoff_account_id = rec.account_profit_id.id
+                writeoff_account_id = self.account_profit_id.id
             else:
-                writeoff_account_id = rec.account_lost_id.id
-            period_id = self.pool.get('account.period').find(
-                cr, uid, dt=date, context=context)[0]
-            if rec.analytic_account_id:
-                rec_ctx['analytic_id'] = rec.analytic_account_id.id
-            ml_obj.reconcile(
-                cr, uid,
+                writeoff_account_id = self.account_lost_id.id
+            period_id = self.env['account.period'].find(dt=date)[0]
+            if self.analytic_account_id:
+                rec_ctx['analytic_id'] = self.analytic_account_id.id
+            ml_obj.with_context(rec_ctx).reconcile(
                 line_ids,
                 type='auto',
                 writeoff_acc_id=writeoff_account_id,
                 writeoff_period_id=period_id,
-                writeoff_journal_id=rec.journal_id.id,
-                context=rec_ctx)
+                writeoff_journal_id=self.journal_id.id
+                )
             return True, True
         elif allow_partial:
             # Check if the group of move lines was already partially
@@ -209,9 +207,8 @@ class EasyReconcileBase(orm.AbstractModel):
                 existing_partial_id = lines[0]['reconcile_partial_id']
                 if existing_partial_id:
                     partial_line_ids = set(ml_obj.search(
-                        cr, uid,
                         [('reconcile_partial_id', '=', existing_partial_id)],
-                        context=context))
+                        ))
                     if set(line_ids) == partial_line_ids:
                         return True, False
 
@@ -223,20 +220,18 @@ class EasyReconcileBase(orm.AbstractModel):
             # it will do a full reconcile instead of a partial reconcile
             # and make a write-off for exchange
             if sum_credit > sum_debit:
-                writeoff_account_id = rec.income_exchange_account_id.id
+                writeoff_account_id = self.income_exchange_account_id.id
             else:
-                writeoff_account_id = rec.expense_exchange_account_id.id
-            period_id = self.pool['account.period'].find(
-                cr, uid, dt=date, context=context)[0]
-            if rec.analytic_account_id:
-                rec_ctx['analytic_id'] = rec.analytic_account_id.id
-            ml_obj.reconcile_partial(
-                cr, uid,
+                writeoff_account_id = self.expense_exchange_account_id.id
+            period_id = self.env['account.period'].find(dt=date)[0]
+            if self.analytic_account_id:
+                rec_ctx['analytic_id'] = self.analytic_account_id.id
+            ml_obj.with_context(rec_ctx).reconcile_partial(
                 line_ids,
                 type='manual',
                 writeoff_acc_id=writeoff_account_id,
                 writeoff_period_id=period_id,
-                writeoff_journal_id=rec.journal_id.id,
-                context=rec_ctx)
+                writeoff_journal_id=self.journal_id.id,
+                )
             return True, False
         return False, False

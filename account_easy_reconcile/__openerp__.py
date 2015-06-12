@@ -3,6 +3,7 @@
 #
 #    Copyright 2012 Camptocamp SA (Guewen Baconnier)
 #    Copyright (C) 2010   Sébastien Beau
+#    Copyright 2015 Camptocamp SA (Damien Crier)
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -54,7 +55,6 @@ allows multiple lines and partial.
 """,
     "website": "http://www.akretion.com/",
     "category": "Finance",
-    "demo_xml": [],
     "data": ["easy_reconcile.xml",
              "easy_reconcile_history_view.xml",
              "security/ir_rule.xml",
@@ -63,6 +63,6 @@ allows multiple lines and partial.
              ],
     'license': 'AGPL-3',
     "auto_install": False,
-    'installable': False,
+    'installable': True,
 
 }

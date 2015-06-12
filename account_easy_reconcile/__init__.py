@@ -3,6 +3,7 @@
 #
 #    Copyright 2012 Camptocamp SA (Guewen Baconnier)
 #    Copyright (C) 2010   Sébastien Beau
+#    Copyright 2015 Camptocamp SA (Damien Crier)
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
