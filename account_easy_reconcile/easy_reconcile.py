@@ -22,8 +22,7 @@
 
 from datetime import datetime
 from openerp import models, api, fields, _
-from openerp.tools import DEFAULT_SERVER_DATETIME_FORMAT
-from openerp.exceptions import except_orm
+from openerp.exceptions import Warning
 from openerp import sql_db
 
 # from openerp import pooler
@@ -65,16 +64,16 @@ class EasyReconcileOptions(models.AbstractModel):
                                     required=True,
                                     string='Date of reconciliation',
                                     default='end_period_last_credit')
-    filter = fields.Char(string='Filter', size=128)
+    filter = fields.Char(string='Filter')
     analytic_account_id = fields.Many2one('account.analytic.account',
                                           string='Analytic_account',
-                                          help="Analytic account"
+                                          help="Analytic account "
                                           "for the write-off")
     income_exchange_account_id = fields.Many2one('account.account',
-                                                 string='Gain Exchange'
+                                                 string='Gain Exchange '
                                                  'Rate Account')
     expense_exchange_account_id = fields.Many2one('account.account',
-                                                  string='Loss Exchange'
+                                                  string='Loss Exchange '
                                                   'Rate Account')
 
 
@@ -116,23 +115,6 @@ class AccountEasyReconcileMethod(models.Model):
                                  readonly=True
                                  )
 
-#     def init(self, cr):
-#         """ Migration stuff
-#
-#         Name is not anymore methods names but the name
-#         of the model which does the reconciliation
-#         """
-#         cr.execute("""
-#         UPDATE account_easy_reconcile_method
-#         SET name = 'easy.reconcile.simple.partner'
-#         WHERE name = 'action_rec_auto_partner'
-#         """)
-#         cr.execute("""
-#         UPDATE account_easy_reconcile_method
-#         SET name = 'easy.reconcile.simple.name'
-#         WHERE name = 'action_rec_auto_name'
-#         """)
-
 
 class AccountEasyReconcile(models.Model):
 
@@ -144,21 +126,21 @@ class AccountEasyReconcile(models.Model):
     @api.depends('account')
     def _get_total_unrec(self):
         obj_move_line = self.env['account.move.line']
-        self.unreconciled_count = len(obj_move_line.search(
+        self.unreconciled_count = obj_move_line.search_count(
             [('account_id', '=', self.account.id),
              ('reconcile_id', '=', False),
              ('reconcile_partial_id', '=', False)],
-            ))
+            )
 
     @api.one
     @api.depends('account')
     def _get_partial_rec(self):
         obj_move_line = self.env['account.move.line']
-        self.reconciled_partial_count = len(obj_move_line.search(
+        self.reconciled_partial_count = obj_move_line.search_count(
             [('account_id', '=', self.account.id),
              ('reconcile_id', '=', False),
              ('reconcile_partial_id', '!=', False)],
-            ))
+            )
 
     @api.one
     @api.depends('history_ids')
@@ -171,9 +153,9 @@ class AccountEasyReconcile(models.Model):
             [('easy_reconcile_id', '=', self.id)],
             limit=1, order='date desc'
             )
-        self.last_history = last_history_rs[0] if last_history_rs else False
+        self.last_history = last_history_rs or False
 
-    name = fields.Char(string='Name', size=32, required=True)
+    name = fields.Char(string='Name', required=True)
     account = fields.Many2one('account.account',
                               string='Account',
                               required=True,
@@ -197,7 +179,6 @@ class AccountEasyReconcile(models.Model):
     last_history = fields.Many2one('easy.reconcile.history',
                                    string='readonly=True',
                                    compute='_last_history',
-                                   readonly=True
                                    )
     company_id = fields.Many2one('res.company', string='Company')
 
@@ -205,20 +186,14 @@ class AccountEasyReconcile(models.Model):
     def _prepare_run_transient(self, rec_method):
         return {'account_id': rec_method.task_id.account.id,
                 'write_off': rec_method.write_off,
-                'account_lost_id': (rec_method.account_lost_id and
-                                    rec_method.account_lost_id.id),
-                'account_profit_id': (rec_method.account_profit_id and
-                                      rec_method.account_profit_id.id),
-                'analytic_account_id': (rec_method.analytic_account_id and
-                                        rec_method.analytic_account_id.id),
+                'account_lost_id': (rec_method.account_lost_id.id),
+                'account_profit_id': (rec_method.account_profit_id.id),
+                'analytic_account_id': (rec_method.analytic_account_id.id),
                 'income_exchange_account_id':
-                (rec_method.income_exchange_account_id and
-                 rec_method.income_exchange_account_id.id),
+                (rec_method.income_exchange_account_id.id),
                 'expense_exchange_account_id':
-                (rec_method.income_exchange_account_id and
-                 rec_method.income_exchange_account_id.id),
-                'journal_id': (rec_method.journal_id and
-                               rec_method.journal_id.id),
+                (rec_method.income_exchange_account_id.id),
+                'journal_id': (rec_method.journal_id.id),
                 'date_base_on': rec_method.date_base_on,
                 'filter': rec_method.filter}
 
@@ -305,7 +280,7 @@ class AccountEasyReconcile(models.Model):
                     self.env['easy.reconcile.history'].create(
                         {
                             'easy_reconcile_id': rec.id,
-                            'date': fields.datetime.now(),
+                            'date': fields.Datetime.now(),
                             'reconcile_ids': [],
                             'reconcile_partial_ids': [],
                         }
@@ -315,8 +290,6 @@ class AccountEasyReconcile(models.Model):
                         new_cr.commit()
                         new_cr.close()
 
-#                     self.env.cr.close()
-
         return True
 
     @api.model
@@ -325,10 +298,10 @@ class AccountEasyReconcile(models.Model):
         be called when there is no history on the reconciliation
         task.
         """
-        raise except_orm(
-            _('Error'),
+        raise Warning(
             _('There is no history of reconciled '
-              'items on the task: %s.') % rec.name)
+              'items on the task: %s.') % rec.name
+        )
 
     @api.model
     def _open_move_line_list(self, move_line_ids, name):
@@ -349,52 +322,42 @@ class AccountEasyReconcile(models.Model):
         """ Open the view of move line with the unreconciled move lines"""
         self.ensure_one()
         obj_move_line = self.env['account.move.line']
-        line_ids = obj_move_line.search(
+        lines = obj_move_line.search(
             [('account_id', '=', self.account.id),
              ('reconcile_id', '=', False),
              ('reconcile_partial_id', '=', False)])
         name = _('Unreconciled items')
-        return self._open_move_line_list(line_ids and line_ids.ids or [], name)
+        return self._open_move_line_list(lines.ids or [], name)
 
     @api.multi
     def open_partial_reconcile(self):
         """ Open the view of move line with the unreconciled move lines"""
         self.ensure_one()
         obj_move_line = self.env['account.move.line']
-        line_ids = obj_move_line.search(
+        lines = obj_move_line.search(
             [('account_id', '=', self.account.id),
              ('reconcile_id', '=', False),
              ('reconcile_partial_id', '!=', False)])
         name = _('Partial reconciled items')
-        return self._open_move_line_list(line_ids and line_ids.ids or [], name)
+        return self._open_move_line_list(lines.ids or [], name)
 
-    @api.model
-    def last_history_reconcile(self, rec_id):
+    @api.multi
+    def last_history_reconcile(self):
         """ Get the last history record for this reconciliation profile
         and return the action which opens move lines reconciled
         """
-        if isinstance(rec_id, (tuple, list)):
-            assert len(rec_id) == 1, \
-                "Only 1 id expected"
-            rec_id = rec_id[0]
-        rec = self.browse(rec_id)
-        if not rec.last_history:
-            self._no_history(rec)
-        return rec.last_history.open_reconcile()
+        if not self.last_history:
+            self._no_history()
+        return self.last_history.open_reconcile()
 
-    @api.model
-    def last_history_partial(self, rec_id):
+    @api.multi
+    def last_history_partial(self):
         """ Get the last history record for this reconciliation profile
         and return the action which opens move lines reconciled
         """
-        if isinstance(rec_id, (tuple, list)):
-            assert len(rec_id) == 1, \
-                "Only 1 id expected"
-            rec_id = rec_id[0]
-        rec = self.browse(rec_id)
-        if not rec.last_history:
-            self._no_history(rec)
-        return rec.last_history.open_partial()
+        if not self.last_history:
+            self._no_history()
+        return self.last_history.open_partial()
 
     @api.model
     def run_scheduler(self, run_all=None):
@@ -408,8 +371,7 @@ class AccountEasyReconcile(models.Model):
         """
         def _get_date(reconcile):
             if reconcile.last_history.date:
-                return datetime.strptime(reconcile.last_history.date,
-                                         DEFAULT_SERVER_DATETIME_FORMAT)
+                return fields.Datetime.from_string(reconcile.last_history.date)
             else:
                 return datetime.min
 

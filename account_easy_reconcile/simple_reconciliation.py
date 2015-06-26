@@ -65,6 +65,7 @@ class EasyReconcileSimple(models.AbstractModel):
             count += 1
         return res, []  # empty list for partial, only full rec in "simple" rec
 
+    @api.multi
     def _simple_order(self, *args, **kwargs):
         return "ORDER BY account_move_line.%s" % self._key_field
 
