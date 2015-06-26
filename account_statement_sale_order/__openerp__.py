@@ -1,8 +1,8 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    account_statement_sale_order for OpenERP
-#    Copyright (C) 2013-14 Akretion Chafique DELLI <chafique.delli@akretion.com>
+#    Copyright (C) 2013-14 Akretion
+#    @author Chafique DELLI <chafique.delli@akretion.com>
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -29,7 +29,7 @@
     The goal of this module is to create a self-completion method fill:
     command, partner and receivable account of a bank statement line.
     """,
-    'author': 'Akretion',
+    'author': 'Akretion, Odoo Community Association (OCA)',
     'website': 'http://www.akretion.com',
     'depends': ['sale'],
     'data': ['statement_view.xml'],
