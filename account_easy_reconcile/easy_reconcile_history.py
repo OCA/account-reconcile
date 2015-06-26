@@ -38,13 +38,13 @@ class EasyReconcileHistory(models.Model):
         for reconcile in self.reconcile_ids:
             move_lines = reconcile.mapped('line_id')
             move_line_ids.extend(move_lines.ids)
-        self.reconcile_line_ids = (6, 0, move_line_ids)
+        self.reconcile_line_ids = move_line_ids
 
         move_line_ids = []
         for reconcile in self.reconcile_partial_ids:
             move_lines = reconcile.mapped('line_partial_ids')
             move_line_ids.extend(move_lines.ids)
-        self.partial_line_ids = (6, 0, move_line_ids)
+        self.partial_line_ids = move_line_ids
 
     easy_reconcile_id = fields.Many2one(
         'account.easy.reconcile',
@@ -73,7 +73,7 @@ class EasyReconcileHistory(models.Model):
     )
     partial_line_ids = fields.Many2many(
         comodel_name='account.move.line',
-        relation='account_move_line_history_rel',
+        relation='account_move_line_history_partial_rel',
         string='Partially Reconciled Items',
         multi='lines',
         _compute='_reconcile_line_ids'
@@ -96,14 +96,19 @@ class EasyReconcileHistory(models.Model):
         """
         assert rec_type in ('full', 'partial'), \
             "rec_type must be 'full' or 'partial'"
-        history = self
+        move_line_ids = []
         if rec_type == 'full':
-            field = 'reconcile_line_ids'
+            move_line_ids = []
+            for reconcile in self.reconcile_ids:
+                move_lines = reconcile.mapped('line_id')
+                move_line_ids.extend(move_lines.ids)
             name = _('Reconciliations')
         else:
-            field = 'partial_line_ids'
+            move_line_ids = []
+            for reconcile in self.reconcile_partial_ids:
+                move_lines = reconcile.mapped('line_partial_ids')
+                move_line_ids.extend(move_lines.ids)
             name = _('Partial Reconciliations')
-        move_line_ids = history.mapped(field).ids
         return {
             'name': name,
             'view_mode': 'tree,form',
