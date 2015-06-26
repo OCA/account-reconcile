@@ -36,15 +36,14 @@ class EasyReconcileHistory(models.Model):
     def _reconcile_line_ids(self):
         move_line_ids = []
         for reconcile in self.reconcile_ids:
-            move_line_ids += [line.id
-                              for line
-                              in reconcile.line_id]
+            move_lines = reconcile.mapped('line_id')
+            move_line_ids.extend(move_lines.ids)
         self.reconcile_line_ids = move_line_ids
+
         move_line_ids = []
         for reconcile in self.reconcile_partial_ids:
-            move_line_ids += [line.id
-                              for line
-                              in reconcile.line_partial_ids]
+            move_lines = reconcile.mapped('line_partial_ids')
+            move_line_ids.extend(move_lines.ids)
         self.partial_line_ids = move_line_ids
 
     easy_reconcile_id = fields.Many2one(
@@ -69,15 +68,13 @@ class EasyReconcileHistory(models.Model):
         comodel_name='account.move.line',
         relation='account_move_line_history_rel',
         string='Reconciled Items',
-        readonly=True,
         multi='lines',
         _compute='_reconcile_line_ids'
     )
     partial_line_ids = fields.Many2many(
         comodel_name='account.move.line',
-        relation='account_move_line_history_rel',
+        relation='account_move_line_history_partial_rel',
         string='Partially Reconciled Items',
-        readonly=True,
         multi='lines',
         _compute='_reconcile_line_ids'
     )
@@ -99,14 +96,19 @@ class EasyReconcileHistory(models.Model):
         """
         assert rec_type in ('full', 'partial'), \
             "rec_type must be 'full' or 'partial'"
-        history = self
+        move_line_ids = []
         if rec_type == 'full':
-            field = 'reconcile_line_ids'
+            move_line_ids = []
+            for reconcile in self.reconcile_ids:
+                move_lines = reconcile.mapped('line_id')
+                move_line_ids.extend(move_lines.ids)
             name = _('Reconciliations')
         else:
-            field = 'partial_line_ids'
+            move_line_ids = []
+            for reconcile in self.reconcile_partial_ids:
+                move_lines = reconcile.mapped('line_partial_ids')
+                move_line_ids.extend(move_lines.ids)
             name = _('Partial Reconciliations')
-        move_line_ids = [line.id for line in getattr(history, field)]
         return {
             'name': name,
             'view_mode': 'tree,form',
@@ -119,6 +121,7 @@ class EasyReconcileHistory(models.Model):
             'domain': unicode([('id', 'in', move_line_ids)]),
         }
 
+    @api.multi
     def open_reconcile(self):
         """ For an history record, open the view of move line
         with the reconciled move lines
@@ -130,7 +133,7 @@ class EasyReconcileHistory(models.Model):
         self.ensure_one()
         return self._open_move_lines(rec_type='full')
 
-    @api.model
+    @api.multi
     def open_partial(self):
         """ For an history record, open the view of move line
         with the partially reconciled move lines

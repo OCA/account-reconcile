@@ -78,9 +78,11 @@ class EasyReconcileBase(models.AbstractModel):
             'move_id')
         return ["account_move_line.%s" % col for col in aml_cols]
 
+    @api.multi
     def _select(self, *args, **kwargs):
         return "SELECT %s" % ', '.join(self._base_columns())
 
+    @api.multi
     def _from(self, *args, **kwargs):
         return ("FROM account_move_line "
                 "LEFT OUTER JOIN account_move_reconcile ON "
@@ -88,6 +90,7 @@ class EasyReconcileBase(models.AbstractModel):
                 "= account_move_reconcile.id)"
                 )
 
+    @api.multi
     def _where(self, *args, **kwargs):
         where = ("WHERE account_move_line.account_id = %s "
                  "AND COALESCE(account_move_reconcile.type,'') <> 'manual' "
@@ -102,8 +105,9 @@ class EasyReconcileBase(models.AbstractModel):
             params.append(tuple([l.id for l in self.partner_ids]))
         return where, params
 
+    @api.multi
     def _get_filter(self):
-        ml_obj = self.pool.get('account.move.line')
+        ml_obj = self.env['account.move.line']
         where = ''
         params = []
         if self.filter:
@@ -116,7 +120,7 @@ class EasyReconcileBase(models.AbstractModel):
     @api.multi
     def _below_writeoff_limit(self, lines, writeoff_limit):
         self.ensure_one()
-        precision = self.pool.get('decimal.precision').precision_get('Account')
+        precision = self.env['decimal.precision'].precision_get('Account')
         keys = ('debit', 'credit')
         sums = reduce(
             lambda line, memo:
@@ -134,7 +138,8 @@ class EasyReconcileBase(models.AbstractModel):
 
         def last_period(mlines):
             period_ids = [ml['period_id'] for ml in mlines]
-            return max(period_ids, key=attrgetter('date_stop'))
+            periods = self.env['account.period'].browse(period_ids)
+            return max(periods, key=attrgetter('date_stop'))
 
         def last_date(mlines):
             return max(mlines, key=itemgetter('date'))
@@ -175,13 +180,12 @@ class EasyReconcileBase(models.AbstractModel):
         """
         self.ensure_one()
         ml_obj = self.env['account.move.line']
-        writeoff = self.write_off
         line_ids = [l['id'] for l in lines]
         below_writeoff, sum_debit, sum_credit = self._below_writeoff_limit(
-            lines, writeoff
+            lines, self.write_off
         )
         date = self._get_rec_date(lines, self.date_base_on)
-        rec_ctx = dict(self.env.context or {}, date_p=date)
+        rec_ctx = dict(self.env.context, date_p=date)
         if below_writeoff:
             if sum_credit > sum_debit:
                 writeoff_account_id = self.account_profit_id.id
@@ -190,11 +194,11 @@ class EasyReconcileBase(models.AbstractModel):
             period_id = self.env['account.period'].find(dt=date)[0]
             if self.analytic_account_id:
                 rec_ctx['analytic_id'] = self.analytic_account_id.id
-            ml_obj.with_context(rec_ctx).reconcile(
-                line_ids,
+            line_rs = ml_obj.browse(line_ids)
+            line_rs.with_context(rec_ctx).reconcile(
                 type='auto',
                 writeoff_acc_id=writeoff_account_id,
-                writeoff_period_id=period_id,
+                writeoff_period_id=period_id.id,
                 writeoff_journal_id=self.journal_id.id
                 )
             return True, True
@@ -226,12 +230,12 @@ class EasyReconcileBase(models.AbstractModel):
             period_id = self.env['account.period'].find(dt=date)[0]
             if self.analytic_account_id:
                 rec_ctx['analytic_id'] = self.analytic_account_id.id
-            ml_obj.with_context(rec_ctx).reconcile_partial(
-                line_ids,
+            line_rs = ml_obj.browse(line_ids)
+            line_rs.with_context(rec_ctx).reconcile(
                 type='manual',
                 writeoff_acc_id=writeoff_account_id,
-                writeoff_period_id=period_id,
-                writeoff_journal_id=self.journal_id.id,
+                writeoff_period_id=period_id.id,
+                writeoff_journal_id=self.journal_id.id
                 )
             return True, False
         return False, False

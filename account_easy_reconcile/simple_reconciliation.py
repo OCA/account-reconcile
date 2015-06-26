@@ -54,7 +54,6 @@ class EasyReconcileSimple(models.AbstractModel):
                 if not check:
                     continue
                 reconciled, dummy = self._reconcile_lines(
-                    self,
                     [credit_line, debit_line],
                     allow_partial=False
                     )
@@ -65,6 +64,7 @@ class EasyReconcileSimple(models.AbstractModel):
             count += 1
         return res, []  # empty list for partial, only full rec in "simple" rec
 
+    @api.multi
     def _simple_order(self, *args, **kwargs):
         return "ORDER BY account_move_line.%s" % self._key_field
 
