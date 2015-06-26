@@ -38,13 +38,13 @@ class EasyReconcileHistory(models.Model):
         for reconcile in self.reconcile_ids:
             move_lines = reconcile.mapped('line_id')
             move_line_ids.extend(move_lines.ids)
-        self.reconcile_line_ids = move_line_ids
+        self.reconcile_line_ids = (6, 0, move_line_ids)
 
         move_line_ids = []
         for reconcile in self.reconcile_partial_ids:
             move_lines = reconcile.mapped('line_partial_ids')
             move_line_ids.extend(move_lines.ids)
-        self.partial_line_ids = move_line_ids
+        self.partial_line_ids = (6, 0, move_line_ids)
 
     easy_reconcile_id = fields.Many2one(
         'account.easy.reconcile',

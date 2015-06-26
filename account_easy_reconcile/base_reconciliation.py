@@ -138,7 +138,8 @@ class EasyReconcileBase(models.AbstractModel):
 
         def last_period(mlines):
             period_ids = [ml['period_id'] for ml in mlines]
-            return max(period_ids, key=attrgetter('date_stop'))
+            periods = self.env['account.period'].browse(period_ids)
+            return max(periods, key=attrgetter('date_stop'))
 
         def last_date(mlines):
             return max(mlines, key=itemgetter('date'))
@@ -193,11 +194,11 @@ class EasyReconcileBase(models.AbstractModel):
             period_id = self.env['account.period'].find(dt=date)[0]
             if self.analytic_account_id:
                 rec_ctx['analytic_id'] = self.analytic_account_id.id
-            ml_obj.with_context(rec_ctx).reconcile(
-                line_ids,
+            line_rs = ml_obj.browse(line_ids)
+            line_rs.with_context(rec_ctx).reconcile(
                 type='auto',
                 writeoff_acc_id=writeoff_account_id,
-                writeoff_period_id=period_id,
+                writeoff_period_id=period_id.id,
                 writeoff_journal_id=self.journal_id.id
                 )
             return True, True
@@ -229,12 +230,12 @@ class EasyReconcileBase(models.AbstractModel):
             period_id = self.env['account.period'].find(dt=date)[0]
             if self.analytic_account_id:
                 rec_ctx['analytic_id'] = self.analytic_account_id.id
-            ml_obj.with_context(rec_ctx).reconcile_partial(
-                line_ids,
+            line_rs = ml_obj.browse(line_ids)
+            line_rs.with_context(rec_ctx).reconcile(
                 type='manual',
                 writeoff_acc_id=writeoff_account_id,
-                writeoff_period_id=period_id,
-                writeoff_journal_id=self.journal_id.id,
+                writeoff_period_id=period_id.id,
+                writeoff_journal_id=self.journal_id.id
                 )
             return True, False
         return False, False

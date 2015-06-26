@@ -54,7 +54,6 @@ class EasyReconcileSimple(models.AbstractModel):
                 if not check:
                     continue
                 reconciled, dummy = self._reconcile_lines(
-                    self,
                     [credit_line, debit_line],
                     allow_partial=False
                     )
