@@ -1,8 +1,7 @@
-# -*- coding: utf-8 -*-
+# -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    account_statement_sale_order for OpenERP
-#   Copyright (C) 2013-14 Akretion Chafique DELLI <chafique.delli@akretion.com>
+#    Copyright (C) 2013-14 Akretion (<http://www.akretion.com>).
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -19,5 +18,14 @@
 #
 ##############################################################################
 
-from . import statement
-from . import sale
+{
+    'name': 'Account Bank Statement Sale Order',
+    'version': '1.0',
+    'category': 'Finance',
+    'author': 'Akretion, Odoo Community Association (OCA)',
+    'website': 'http://www.akretion.com',
+    'license': 'AGPL-3',
+    'depends': ['sale'],
+    'data': ['statement_view.xml'],
+    'installable': True,
+}

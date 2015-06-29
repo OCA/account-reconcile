@@ -1,9 +1,7 @@
 # -*- coding: utf-8 -*-
 ###############################################################################
 #
-#   account_bank_statement_sale_order for OpenERP
 #   Copyright (C) 2013 Akretion (http://www.akretion.com).
-#   @author Sébastien BEAU <sebastien.beau@akretion.com>
 #
 #   This program is free software: you can redistribute it and/or modify
 #   it under the terms of the GNU Affero General Public License as
@@ -24,17 +22,19 @@ from openerp.osv import orm
 
 
 class SaleOrder(orm.Model):
-    _inherit = "sale.order"
+    _inherit = 'sale.order'
 
-    def _search(self, cr, user, args, offset=0, limit=None, order=None, context=None, count=False, access_rights_uid=None):
+    def _search(self, cr, user, args, offset=0, limit=None, order=None,
+                context=None, count=False, access_rights_uid=None):
         if context is None:
             context = {}
         if context.get('only_partner_id'):
             args.append(('partner_id', '=', context['only_partner_id']))
-        res = super(SaleOrder, self)._search(cr, user,
-                                             args,
-                                             offset=offset, limit=limit,
-                                             order=order, context=context,
-                                             count=count,
-                                             access_rights_uid=access_rights_uid)
+        res = super(SaleOrder, self)._search(
+            cr, user,
+            args,
+            offset=offset, limit=limit,
+            order=order, context=context,
+            count=count,
+            access_rights_uid=access_rights_uid)
         return res

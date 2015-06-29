@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
 ##############################################################################
 #
-#    account_statement_sale_order for OpenERP
-#    Copyright (C) 2013-14 Akretion Chafique DELLI <chafique.delli@akretion.com>
+#    Copyright (C) 2013-14 Akretion (<http://www.akretion.com>).
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -65,7 +64,8 @@ class AccountStatementLine(orm.Model):
                                            'to belong to the same partner'))
         return True
 
-    def process_reconciliation(self, cr, uid, id, mv_line_dicts, *args, **kwargs):
+    def process_reconciliation(self, cr, uid, id, mv_line_dicts, *args,
+                               **kwargs):
         if not kwargs.get('context', {}).get('balance_check'):
             context = kwargs.get('context')
             st_line = self.browse(cr, uid, id, context=context)
@@ -95,22 +95,3 @@ class AccountBankStatement(orm.Model):
         kwargs['context'] = ctx
         return super(AccountBankStatement, self).balance_check(
             *args, **kwargs)
-
-
-    #def _prepare_counterpart_move_line(self, *args, **kwargs):
-    #    context = kwargs.get('context')
-    #    if context is None:
-    #        ctx = {}
-    #    else:
-    #        ctx = context.copy()
-    #    ctx['countrepart'] = True
-    #    kwargs['context'] = ctx
-    #    return super(AccountBankStatement, self)._prepare_bank_move_line(
-    #        *args, **kwargs)
-    #
-    #def _prepare_move_line_vals(self, cr, uid, st_line, *args, **kwargs):
-    #    res = super(AccountBankStatement, self)._prepare_move_line_vals(
-    #        cr, uid, st_line, *args, **kwargs)
-    #    if not kwargs.get('context', {}).get('countrepart'):
-    #        res['sale_ids'] = [(6, 0, [sale.id for sale in st_line.sale_ids])]
-    #    return res
