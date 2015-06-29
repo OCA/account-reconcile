@@ -14,5 +14,15 @@
             </field>
     </record>
 
+    <record id="view_bank_statement_form2" model="ir.ui.view">
+        <field name="model">account.bank.statement</field>
+        <field name="inherit_id" ref="account.view_bank_statement_form2"></field>
+        <field name="arch" type="xml">
+             <xpath expr="//field[@name='line_ids']/tree/field[@name='partner_id']" position="after">
+                <field name="sale_ids"/>
+            </xpath>
+         </field>
+    </record>
+
 </data>
 </openerp>
