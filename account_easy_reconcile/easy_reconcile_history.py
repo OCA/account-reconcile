@@ -40,11 +40,11 @@ class EasyReconcileHistory(models.Model):
             move_line_ids.extend(move_lines.ids)
         self.reconcile_line_ids = move_line_ids
 
-        move_line_ids = []
-        for reconcile in self.reconcile_partial_ids:
-            move_lines = reconcile.mapped('line_partial_ids')
-            move_line_ids.extend(move_lines.ids)
-        self.partial_line_ids = move_line_ids
+        move_line_ids2 = []
+        for reconcile2 in self.reconcile_partial_ids:
+            move_lines2 = reconcile2.mapped('line_partial_ids')
+            move_line_ids2.extend(move_lines2.ids)
+        self.partial_line_ids = move_line_ids2
 
     easy_reconcile_id = fields.Many2one(
         'account.easy.reconcile',
@@ -68,14 +68,12 @@ class EasyReconcileHistory(models.Model):
         comodel_name='account.move.line',
         relation='account_move_line_history_rel',
         string='Reconciled Items',
-        multi='lines',
         _compute='_reconcile_line_ids'
     )
     partial_line_ids = fields.Many2many(
         comodel_name='account.move.line',
         relation='account_move_line_history_partial_rel',
         string='Partially Reconciled Items',
-        multi='lines',
         _compute='_reconcile_line_ids'
     )
     company_id = fields.Many2one(
@@ -86,6 +84,7 @@ class EasyReconcileHistory(models.Model):
         related='easy_reconcile_id.company_id'
     )
 
+    @api.multi
     def _open_move_lines(self, rec_type='full'):
         """ For an history record, open the view of move line with
         the reconciled or partially reconciled move lines

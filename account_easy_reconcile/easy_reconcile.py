@@ -292,15 +292,16 @@ class AccountEasyReconcile(models.Model):
 
         return True
 
-    @api.model
-    def _no_history(self, rec):
+#     @api.model
+#     def _no_history(self, rec):
+    def _no_history(self):
         """ Raise an `orm.except_orm` error, supposed to
         be called when there is no history on the reconciliation
         task.
         """
         raise Warning(
             _('There is no history of reconciled '
-              'items on the task: %s.') % rec.name
+              'items on the task: %s.') % self.name
         )
 
     @api.model
