@@ -4,10 +4,17 @@
 Module name
 ===========
 
+By default, a bank statement in Odoo has its own period, and this period
+will be assigned to all the moves generated from the bank statement lines,
+regardless of their effective dates.
+
+The desirability of this behaviour depends on the jurisdiction and may be
+illegal.
+
 This module was written to make sure that when reconciliation moves are
-generated for a bank transaction, that the period for the moves is determined
-from the transaction (bank statement line), and not from the bank statement
-period.
+generated for a bank transaction, the period for the moves is determined from
+the transaction (bank statement line) date, and not taken from the bank
+statement.
 
 Contributors
 ------------

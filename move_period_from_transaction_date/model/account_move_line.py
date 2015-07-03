@@ -3,7 +3,6 @@
 ##############################################################################
 #
 #    Copyright (C) 2015 Therp BV - http://therp.nl.
-#    All Rights Reserved
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -19,18 +18,16 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-from openerp.osv import orm
+from openerp import models, api
 
 
-class AccountMoveLine(orm.Model):
+class AccountMoveLine(models.Model):
     """Extend account.move.line to use date for period, when requested."""
     _inherit = 'account.move.line'
 
-    def create(self, cr, uid, vals, context=None, check=True):
+    @api.model
+    def create(self, vals, check=True):
         """If requested, override period from date."""
-        if (context or {}).get('force_period_id'):
-            vals['period_id'] = context['force_period_id']
-        return super(AccountMoveLine, self).create(
-            cr, uid, vals, context=context, check=check)
-
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+        if self.env.context.get('force_period_id'):
+            vals['period_id'] = self.env.context['force_period_id']
+        return super(AccountMoveLine, self).create(vals, check=check)

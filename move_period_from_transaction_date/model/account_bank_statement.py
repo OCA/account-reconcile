@@ -3,7 +3,6 @@
 ##############################################################################
 #
 #    Copyright (C) 2015 Therp BV - http://therp.nl.
-#    All Rights Reserved
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -19,20 +18,18 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-from openerp.osv import orm
+from openerp import models, api
 
 
-class AccountBankStatement(orm.Model):
+class AccountBankStatement(models.Model):
     """Extend account.bank.statement to use transaction date in moves."""
     _inherit = 'account.bank.statement'
 
-    def _prepare_move(
-            self, cr, uid, st_line, st_line_number, context=None):
+    @api.model
+    def _prepare_move(self, st_line, st_line_number):
         """If requested, override period from date."""
         res = super(AccountBankStatement, self)._prepare_move(
-            cr, uid, st_line, st_line_number, context=context)
-        if (context or {}).get('force_period_id'):
-            res['period_id'] = context['force_period_id']
+            st_line, st_line_number)
+        if self.env.context.get('force_period_id'):
+            res['period_id'] = self.env.context['force_period_id']
         return res
-
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

@@ -3,11 +3,6 @@
 ##############################################################################
 #
 #    Copyright (C) 2015 Therp BV - http://therp.nl.
-#    All Rights Reserved
-#
-#    WARNING: This program as such is intended to be used by professional
-#    programmers who take the whole responsability of assessing all potential
-#    consequences resulting from its eventual inadequacies and bugs
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as published
@@ -24,5 +19,3 @@
 #
 ##############################################################################
 from . import model
-
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

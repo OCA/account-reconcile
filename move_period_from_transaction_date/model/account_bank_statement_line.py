@@ -33,6 +33,6 @@ class AccountBankStatementLine(models.Model):
         if periods:
             return super(AccountBankStatementLine,
                          self.with_context(force_period_id=periods[0].id)).\
-                         process_reconciliation(mv_line_dicts)
+                process_reconciliation(mv_line_dicts)
         return super(AccountBankStatementLine, self).process_reconciliation(
             mv_line_dicts)
