@@ -3,7 +3,6 @@
 ##############################################################################
 #
 #    Copyright (C) 2015 Therp BV - http://therp.nl.
-#    All Rights Reserved
 #
 #    WARNING: This program as such is intended to be used by professional
 #    programmers who take the whole responsability of assessing all potential
@@ -26,5 +25,3 @@
 from . import account_bank_statement_line
 from . import account_bank_statement
 from . import account_move_line
-
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
