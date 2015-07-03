@@ -52,8 +52,6 @@ class TestReconciliation(TransactionCase):
             cr, uid, 'base', 'USD')[1]
         bank_journal_usd_id = data_model.get_object_reference(
             cr, uid, 'account', 'bank_journal_usd')[1]
-        account_usd_id = data_model.get_object_reference(
-            cr, uid, 'account', 'usd_bnk')[1]
         # Get other models from registry:
         period_model = self.registry('account.period')
         account_invoice_model = self.registry('account.invoice')
@@ -122,10 +120,9 @@ class TestReconciliation(TransactionCase):
         # Period in move line for bank transaction, and for move should equal
         # period from transaction:
         for move_line in move_line_ids:
-            if move_line.account_id.id == account_usd_id:
-                self.assertEquals(
-                    move_line.period_id.id, test_period_id)
-                self.assertEquals(
-                    move_line.move_id.period_id.id, test_period_id)
+            self.assertEquals(
+                move_line.period_id.id, test_period_id)
+            self.assertEquals(
+                move_line.move_id.period_id.id, test_period_id)
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
