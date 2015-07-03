@@ -23,6 +23,7 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
+from . import account_bank_statement_line
 from . import account_bank_statement
 from . import account_bank_statement_line
 from . import account_move_line

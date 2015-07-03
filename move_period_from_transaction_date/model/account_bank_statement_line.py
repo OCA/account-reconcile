@@ -3,7 +3,6 @@
 ##############################################################################
 #
 #    Copyright (C) 2015 Therp BV - http://therp.nl.
-#    All Rights Reserved
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -19,19 +18,21 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-from openerp.osv import orm
+from openerp import models, api
 
 
-class AccountBankStatementLine(orm.Model):
+class AccountBankStatementLine(models.Model):
     """Extend account.bank.statement.line to use transaction date in moves."""
     _inherit = 'account.bank.statement.line'
 
-    def process_reconciliation(
-            self, cr, uid, statement_line_id, mv_line_dicts, context=None):
-        """Put marker in context to use period from date in move line."""
-        ctx = context and context.copy() or {}
-        ctx['override_period_from_date'] = True
+    @api.one
+    def process_reconciliation(self, mv_line_dicts):
+        """ Retrieve the period derived from the statement line and store in
+        the context for further use """
+        periods = self.env['account.period'].find(dt=self.date)
+        if periods:
+            return super(AccountBankStatementLine,
+                         self.with_context(force_period_id=periods[0].id)).\
+                         process_reconciliation(mv_line_dicts)
         return super(AccountBankStatementLine, self).process_reconciliation(
-            cr, uid, statement_line_id, mv_line_dicts, context=ctx)
-
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+            mv_line_dicts)

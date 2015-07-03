@@ -28,18 +28,11 @@ class AccountBankStatement(orm.Model):
 
     def _prepare_move(
             self, cr, uid, st_line, st_line_number, context=None):
-        """Put marker in context to use period from date in move line."""
+        """If requested, override period from date."""
         res = super(AccountBankStatement, self)._prepare_move(
             cr, uid, st_line, st_line_number, context=context)
-        context = context or {}
-        if (('override_period_from_date' in context or
-             'period_id' not in res) and 'date' in res):
-            period_model = self.pool['account.period']
-            search_date = 'date' in res and res['date'] or None
-            period_ids = period_model.find(
-                cr, uid, dt=search_date, context=context)
-            if period_ids:
-                res['period_id'] = period_ids[0]
+        if (context or {}).get('force_period_id'):
+            res['period_id'] = context['force_period_id']
         return res
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
