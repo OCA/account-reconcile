@@ -86,6 +86,7 @@ class EasyReconcileHistory(models.Model):
         related='easy_reconcile_id.company_id'
     )
 
+    @api.multi
     def _open_move_lines(self, rec_type='full'):
         """ For an history record, open the view of move line with
         the reconciled or partially reconciled move lines
