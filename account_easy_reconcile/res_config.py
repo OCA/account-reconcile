@@ -1,9 +1,8 @@
 # -*- coding: utf-8 -*-
 ##############################################################################
 #
-#    Author: Leonardo Pistone
-#    Copyright 2014 Camptocamp SA
-#    Copyright 2015 Camptocamp SA (Damien Crier)
+#    Author: Leonardo Pistone, Damien Crier
+#    Copyright 2014, 2015 Camptocamp SA
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -30,7 +29,7 @@ class AccountConfigSettings(models.TransientModel):
         related="company_id.reconciliation_commit_every",
         string="How often to commit when performing automatic "
         "reconciliation.",
-        help="""Leave zero to commit only at the end of the process."""
+        help="Leave zero to commit only at the end of the process."
     )
 
     @api.multi

@@ -1,9 +1,8 @@
 # -*- coding: utf-8 -*-
 ##############################################################################
 #
-#    Copyright 2012-2013 Camptocamp SA (Guewen Baconnier)
+#    Copyright 2012-2013, 2015 Camptocamp SA (Guewen Baconnier, Damien Crier)
 #    Copyright (C) 2010   Sébastien Beau
-#    Copyright 2015 Camptocamp SA (Damien Crier)
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -32,7 +31,7 @@ class EasyReconcileSimple(models.AbstractModel):
     # field name used as key for matching the move lines
     _key_field = None
 
-    @api.model
+    @api.multi
     def rec_auto_lines_simple(self, lines):
         if self._key_field is None:
             raise ValueError("_key_field has to be defined")
@@ -70,7 +69,7 @@ class EasyReconcileSimple(models.AbstractModel):
 
     def _action_rec(self):
         """Match only 2 move lines, do not allow partial reconcile"""
-        select = self._select(self)
+        select = self._select()
         select += ", account_move_line.%s " % self._key_field
         where, params = self._where()
         where += " AND account_move_line.%s IS NOT NULL " % self._key_field

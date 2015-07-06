@@ -1,9 +1,8 @@
 # -*- coding: utf-8 -*-
 ##############################################################################
 #
-#    Copyright 2012-2013 Camptocamp SA (Guewen Baconnier)
+#    Copyright 2012-2013, 2015 Camptocamp SA (Guewen Baconnier, Damien Crier)
 #    Copyright (C) 2010   Sébastien Beau
-#    Copyright 2015 Camptocamp SA (Damien Crier)
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -21,6 +20,7 @@
 ##############################################################################
 
 from openerp import models, api, fields
+from openerp.tools.safe_eval import safe_eval
 from operator import itemgetter, attrgetter
 
 
@@ -112,7 +112,7 @@ class EasyReconcileBase(models.AbstractModel):
         params = []
         if self.filter:
             dummy, where, params = ml_obj._where_calc(
-                eval(self.filter)).get_sql()
+                safe_eval(self.filter)).get_sql()
             if where:
                 where = " AND %s" % where
         return where, params

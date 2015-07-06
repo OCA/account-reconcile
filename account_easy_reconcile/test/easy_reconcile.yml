@@ -1,0 +1,116 @@
+-
+  In order to test Confirm Draft Invoice wizard I create an invoice and confirm it with this wizard
+-
+  !record {model: account.invoice, id: account_invoice_state2}:
+    account_id: account.a_recv
+    company_id: base.main_company
+    currency_id: base.EUR
+    invoice_line:
+      - account_id: account.a_sale
+        name: '[PCSC234] PC Assemble SC234'
+        price_unit: 1000.0
+        quantity: 1.0
+        product_id: product.product_product_3
+        uos_id: product.product_uom_unit
+    journal_id: account.bank_journal
+    partner_id: base.res_partner_12
+    reference_type: none
+-
+  I called the "Confirm Draft Invoices" wizard
+-
+  !record {model: account.invoice.confirm, id: account_invoice_confirm_0}:
+    {}
+-
+  I clicked on Confirm Invoices Button
+-
+  !python {model: account.invoice.confirm}: |
+    self.invoice_confirm(cr, uid, [ref("account_invoice_confirm_0")], {"lang": 'en_US',
+      "tz": False, "active_model": "account.invoice", "active_ids": [ref("account_invoice_state2")],
+      "type": "out_invoice", "active_id": ref("account_invoice_state2"), })
+-
+  I check that customer invoice state is "Open"
+-
+  !assert {model: account.invoice, id: account_invoice_state2}:
+    - state == 'open'
+
+
+-
+  In order to test Bank Statement feature of account I create a bank statement line and confirm it and check it's move created
+-
+  I select the period and journal for the bank statement
+-
+  !python {model: account.bank.statement}: |
+    import time
+    journal = self._default_journal_id(cr, uid, {'lang': u'en_US', 'tz': False, 'active_model': 'ir.ui.menu',
+      'journal_type': 'bank', 'period_id': time.strftime('%m'), 'active_ids': [ref('account.menu_bank_statement_tree')], 'active_id': ref('account.menu_bank_statement_tree')})
+    assert journal, 'Journal has not been selected'
+-
+  I create a bank statement with Opening and Closing balance 0.
+-
+  !record {model: account.bank.statement, id: account_bank_statement_0}:
+    balance_end_real: 0.0
+    balance_start: 0.0
+    date: !eval time.strftime('%Y-%m-%d')
+    journal_id: account.bank_journal
+-
+  I create bank statement line
+-
+  !python {model: account.bank.statement.line}: |
+    vals = {
+        'amount': 1000.0,
+        'partner_id': ref('base.res_partner_12'),
+        'statement_id': ref('account_bank_statement_0'),
+        'name': 'EXT001'
+    }
+    
+    line_id = self.create(cr, uid, vals)
+    assert line_id, "Account bank statement line has not been created"
+
+-
+  We process the reconciliation of the invoice line
+-
+  !python {model: account.bank.statement}: |
+    line_id = None
+    invoice = self.pool.get('account.invoice').browse(cr, uid, ref("account_invoice_state2"))
+    for l in invoice.move_id.line_id:
+        if l.account_id.id == ref('account.a_recv'):
+            line_id = l
+            break
+    statement = self.browse(cr, uid, ref("account_bank_statement_0"))
+    for statement_line in statement.line_ids:
+        self.pool.get('account.bank.statement.line').process_reconciliation(
+            cr, uid, statement_line.id,
+            [
+                {
+                    'counterpart_move_line_id': line_id.id,
+                    'credit': 1000.0,
+                    'debit': 0.0,
+                    'name': line_id.name
+                }
+            ]
+        )
+-
+  We unreconcile previous reconciliation so we can create an easy reconcile record to reconcile invoice
+-
+  !python {model: account.move.line}: |
+    lines_to_unreconcile = self.search(cr, uid, [('reconcile_ref', '!=', False), ('statement_id', '=', ref("account_bank_statement_0"))])
+    self._remove_move_reconcile(cr, uid, lines_to_unreconcile)
+
+-
+  We create the easy reconcile record
+-
+  !record {model: account.easy.reconcile, id: account_easy_reconcile_0}:
+    name: 'easy reconcile 1'
+    account: account.a_recv
+    reconcile_method:
+      - name: 'easy.reconcile.simple.partner'
+-
+  We call the automatic reconcilation method
+-
+  !python {model: account.easy.reconcile}: |
+    self.run_reconcile(cr, uid, [ref('account_easy_reconcile_0')])
+-
+  I check that customer invoice state is "Paid"
+-
+  !assert {model: account.invoice, id: account_invoice_state2}:
+    - state == 'paid'

@@ -1,9 +1,8 @@
 # -*- coding: utf-8 -*-
 ##############################################################################
 #
-#    Copyright 2012 Camptocamp SA (Guewen Baconnier)
+#    Copyright 2012, 2015 Camptocamp SA (Guewen Baconnier, Damien Crier)
 #    Copyright (C) 2010   Sébastien Beau
-#    Copyright 2015 Camptocamp SA (Damien Crier)
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -22,7 +21,7 @@
 
 {
     "name": "Easy Reconcile",
-    "version": "1.3.1",
+    "version": "8.0.1.3.1",
     "depends": ["account"],
     "author": "Akretion,Camptocamp,Odoo Community Association (OCA)",
     "website": "http://www.akretion.com/",
@@ -32,6 +31,8 @@
              "security/ir_rule.xml",
              "security/ir.model.access.csv",
              "res_config_view.xml",
+             ],
+    "test": ['test/easy_reconcile.yml',
              ],
     'license': 'AGPL-3',
     "auto_install": False,
