@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-"""Extend account.move.line to use date for period, when requested."""
 ##############################################################################
 #
 #    Copyright (C) 2015 Therp BV - http://therp.nl.

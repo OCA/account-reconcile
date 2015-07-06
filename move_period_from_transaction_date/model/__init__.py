@@ -1,5 +1,4 @@
-# -*- encoding: utf-8 -*-
-"""Import python modules extending orm models."""
+# -*- coding: utf-8 -*-
 ##############################################################################
 #
 #    Copyright (C) 2015 Therp BV - http://therp.nl.

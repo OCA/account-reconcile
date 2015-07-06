@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-"""Extend account.bank.statement.line to use transaction date in moves."""
 ##############################################################################
 #
 #    Copyright (C) 2015 Therp BV - http://therp.nl.

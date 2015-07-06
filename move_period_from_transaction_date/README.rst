@@ -1,8 +1,8 @@
 .. image:: https://img.shields.io/badge/licence-AGPL--3-blue.svg
     :alt: License: AGPL-3
 
-Module name
-===========
+Use bank transaction date to determine move period
+==================================================
 
 By default, a bank statement in Odoo has its own period, and this period
 will be assigned to all the moves generated from the bank statement lines,

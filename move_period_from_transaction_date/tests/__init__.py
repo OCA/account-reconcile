@@ -1,8 +1,6 @@
-"""Import unit tests."""
 ##############################################################################
 #
 #    Copyright (C) 2015 Therp BV - http://therp.nl.
-#    All Rights Reserved
 #
 #    WARNING: This program as such is intended to be used by professional
 #    programmers who take the whole responsability of assessing all potential
@@ -23,5 +21,3 @@
 #
 ##############################################################################
 from . import test_reconciliation
-
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
