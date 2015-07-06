@@ -55,24 +55,24 @@ class testReconcileHistory(common.TransactionCase):
 
     def test_open_full_empty(self):
         res = self.rec_history_obj._open_move_lines(
-                self.cr, self.uid, [self.rec_history], 'full')
+            self.cr, self.uid, [self.rec_history], 'full')
         self.assertEqual(unicode([('id', 'in', [])]), res.get(
             'domain', []))
 
     def test_open_full_empty_from_method(self):
         res = self.rec_history_obj.open_reconcile(
-                self.cr, self.uid, [self.rec_history])
+            self.cr, self.uid, [self.rec_history])
         self.assertEqual(unicode([('id', 'in', [])]), res.get(
             'domain', []))
 
     def test_open_partial_empty(self):
         res = self.rec_history_obj._open_move_lines(
-                self.cr, self.uid, [self.rec_history], 'partial')
+            self.cr, self.uid, [self.rec_history], 'partial')
         self.assertEqual(unicode([('id', 'in', [])]), res.get(
             'domain', []))
 
     def test_open_partial_empty_from_method(self):
         res = self.rec_history_obj.open_partial(
-                self.cr, self.uid, [self.rec_history])
+            self.cr, self.uid, [self.rec_history])
         self.assertEqual(unicode([('id', 'in', [])]), res.get(
             'domain', []))

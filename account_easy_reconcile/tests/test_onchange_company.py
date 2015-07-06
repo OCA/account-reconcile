@@ -40,8 +40,14 @@ class testOnChange(common.TransactionCase):
             )
 
     def test_retrieve_analytic_account(self):
-        sec_company_commit = self.company_obj.browse(self.cr, self.uid, self.sec_company).reconciliation_commit_every
-        main_company_commit = self.company_obj.browse(self.cr, self.uid, self.main_company).reconciliation_commit_every
+        sec_company_commit = self.company_obj.browse(
+            self.cr,
+            self.uid,
+            self.sec_company).reconciliation_commit_every
+        main_company_commit = self.company_obj.browse(
+            self.cr,
+            self.uid,
+            self.main_company).reconciliation_commit_every
 
         res1 = self.acc_setting_obj.onchange_company_id(
             self.cr, self.uid, [], self.sec_company)

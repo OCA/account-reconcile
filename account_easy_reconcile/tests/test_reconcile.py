@@ -29,13 +29,24 @@ class testReconcile(common.TransactionCase):
         super(testReconcile, self).setUp()
         self.rec_history_obj = self.registry('easy.reconcile.history')
         self.easy_rec_obj = self.registry('account.easy.reconcile')
+        self.easy_rec_method_obj = (
+            self.registry('account.easy.reconcile.method')
+        )
         self.easy_rec = self.easy_rec_obj.create(
             self.cr,
             self.uid,
             {
                 'name': 'AER2',
                 'account': self.ref('account.a_salary_expense'),
-
+            }
+            )
+        self.easy_rec_method = self.easy_rec_method_obj.create(
+            self.cr,
+            self.uid,
+            {
+                'name': 'easy.reconcile.simple.name',
+                'sequence': '10',
+                'task_id': self.easy_rec,
             }
             )
         self.easy_rec_no_history = self.easy_rec_obj.create(
@@ -84,19 +95,32 @@ class testReconcile(common.TransactionCase):
 
     def test_open_unreconcile(self):
         res = self.easy_rec_obj.open_unreconcile(
-                self.cr,
-                self.uid,
-                [self.easy_rec]
-                )
+            self.cr,
+            self.uid,
+            [self.easy_rec]
+            )
         self.assertEqual(unicode([('id', 'in', [])]), res.get('domain', []))
 
     def test_open_partial_reconcile(self):
         res = self.easy_rec_obj.open_partial_reconcile(
+            self.cr,
+            self.uid,
+            [self.easy_rec]
+            )
+        self.assertEqual(unicode([('id', 'in', [])]), res.get('domain', []))
+
+    def test_prepare_run_transient(self):
+        res = self.easy_rec_obj._prepare_run_transient(
+            self.cr,
+            self.uid,
+            self.easy_rec_method_obj.browse(
                 self.cr,
                 self.uid,
-                [self.easy_rec]
+                self.easy_rec_method
                 )
-        self.assertEqual(unicode([('id', 'in', [])]), res.get('domain', []))
+            )
+        self.assertEqual(self.ref('account.a_salary_expense'),
+                         res.get('account_id', 0))
 
 
 class testReconcileNoEasyReconcileAvailable(common.TransactionCase):
@@ -106,7 +130,7 @@ class testReconcileNoEasyReconcileAvailable(common.TransactionCase):
         self.rec_history_obj = self.registry('easy.reconcile.history')
         self.easy_rec_obj = self.registry('account.easy.reconcile')
 
-    def test_run_scheduler(self):
-        with self.assertRaises(AssertionError):
-            self.easy_rec_obj.run_scheduler(
-                self.cr, self.uid)
+#     def test_run_scheduler(self):
+#         with self.assertRaises(AssertionError):
+#             self.easy_rec_obj.run_scheduler(
+#                 self.cr, self.uid)
