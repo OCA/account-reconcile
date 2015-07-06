@@ -33,8 +33,6 @@
              "security/ir.model.access.csv",
              "res_config_view.xml",
              ],
-    "test": ['test/easy_reconcile.yml',
-             ],
     'license': 'AGPL-3',
     "auto_install": False,
     'installable': True,

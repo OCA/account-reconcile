@@ -22,3 +22,4 @@
 from . import test_onchange_company
 from . import test_reconcile_history
 from . import test_reconcile
+from . import test_scenario_reconcile
