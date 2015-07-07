@@ -18,23 +18,23 @@
 #
 ###############################################################################
 
-from openerp.osv import orm
+from openerp import models, api
 
 
-class SaleOrder(orm.Model):
+class SaleOrder(models.Model):
     _inherit = 'sale.order'
 
-    def _search(self, cr, user, args, offset=0, limit=None, order=None,
-                context=None, count=False, access_rights_uid=None):
-        if context is None:
-            context = {}
-        if context.get('only_partner_id'):
-            args.append(('partner_id', '=', context['only_partner_id']))
+    @api.model
+    def _search(self, args, offset=0, limit=None, order=None, count=False,
+                access_rights_uid=None):
+        if self._context is None:
+            self._context = {}
+        if self._context.get('only_partner_id'):
+            args.append(('partner_id', '=', self._context['only_partner_id']))
         res = super(SaleOrder, self)._search(
-            cr, user,
             args,
             offset=offset, limit=limit,
-            order=order, context=context,
+            order=order,
             count=count,
             access_rights_uid=access_rights_uid)
         return res

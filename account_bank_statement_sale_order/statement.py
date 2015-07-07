@@ -18,79 +18,71 @@
 #
 ##############################################################################
 
-from openerp.tools.translate import _
-from openerp.osv import orm, fields
+from openerp import models, api, fields, _
+from openerp.exceptions import Warning
 
 
-class AccountStatementLine(orm.Model):
-    _inherit = "account.bank.statement.line"
+class AccountStatementLine(models.Model):
+    _inherit = 'account.bank.statement.line'
 
-    _columns = {
-        'sale_ids': fields.many2many('sale.order', string='Sale Orders',)
+    sale_ids = fields.Many2many('sale.order', string='Sale Orders')
 
-    }
-
-    def _update_line(self, cr, uid, vals, context=None):
+    @api.model
+    def _update_line(self, vals):
         if 'sale_ids' in vals:
             line_id = vals.pop('id')
-            self.write(cr, uid, line_id, vals, context=context)
+            self.write(line_id, vals)
         else:
-            super(AccountStatementLine, self)._update_line(
-                cr, uid, vals, context=context)
+            super(AccountStatementLine, self)._update_line(vals)
 
-    def onchange_sale_ids(self, cr, uid, ids, sale_ids, context=None):
+    @api.onchange('sale_ids')
+    def onchange_sale_ids(self):
         """
         Override of the basic method as we need to pass the profile_id
         in the on_change_type call.
         Moreover, we now call the get_account_and_type_for_counterpart method
         now to get the type to use.
         """
-        if sale_ids and sale_ids[0][2]:
-            sale_obj = self.pool['sale.order']
-            sale_ids = sale_ids[0][2]
-            sale = sale_obj.browse(cr, uid, sale_ids[0], context=context)
-            res = self.onchange_partner_id(
-                cr, uid, ids, sale.partner_id.id, context=context)
+        if self.sale_ids and self.sale_ids[0][2]:
+            sale_obj = self.env['sale.order']
+            sale_ids = self.sale_ids[0][2]
+            sale = sale_obj.browse(sale_ids[0])
+            res = self.onchange_partner_id(sale.partner_id.id)
             res['value'].update({'partner_id': sale.partner_id.id})
             return res
         return {}
 
-    def _check_partner_id(self, cr, uid, ids, context=None):
-        for line in self.browse(cr, uid, ids, context=context):
+    @api.multi
+    @api.constrains('sale_ids')
+    def _check_partner_id(self):
+        for line in self:
             for sale_id in line.sale_ids:
                 if sale_id.partner_id != line.sale_ids[0].partner_id:
-                    raise orm.except_orm(_('Error on the line %s !') % line.id,
-                                         _('The sale orders chosen have '
-                                           'to belong to the same partner'))
+                    raise Warning(_('Error on the line %s !') % line.id,
+                                  _('The sale orders chosen have to belong '
+                                    'to the same partner'))
         return True
 
-    def process_reconciliation(self, cr, uid, id, mv_line_dicts, *args,
-                               **kwargs):
+    @api.model
+    def process_reconciliation(self, mv_line_dicts, *args, **kwargs):
         if not kwargs.get('context', {}).get('balance_check'):
-            context = kwargs.get('context')
-            st_line = self.browse(cr, uid, id, context=context)
+            self._context = kwargs.get('context')
             mv_line_dicts[0]['sale_ids'] = [
-                (6, 0, [sale.id for sale in st_line.sale_ids])
-                ]
-        super(AccountStatementLine, self).process_reconciliation(
-            cr, uid, id, mv_line_dicts, context=context)
-
-    _constraints = [
-        (_check_partner_id,
-         'The sale orders chosen have to belong to the same partner',
-         ['sale_ids']),
-    ]
+                (6, 0, [sale.id for sale in self.sale_ids])
+            ]
+        super(AccountStatementLine, self).process_reconciliation(mv_line_dicts)
 
 
-class AccountBankStatement(orm.Model):
-    _inherit = "account.bank.statement"
+class AccountBankStatement(models.Model):
+    _inherit = 'account.bank.statement'
 
+    @api.model
     def balance_check(self, *args, **kwargs):
-        context = kwargs.get('context')
-        if context is None:
+        self._context = kwargs.get('context')
+        if self._context is None:
             ctx = {}
         else:
-            ctx = context.copy()
+            ctx = self._context.copy()
         ctx['balance_check'] = True
         kwargs['context'] = ctx
         return super(AccountBankStatement, self).balance_check(
