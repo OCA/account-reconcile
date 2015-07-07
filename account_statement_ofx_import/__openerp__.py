@@ -41,7 +41,7 @@
     It requires ofxparse library to work.
     """,
     'website': 'http://www.serviciosbaeza.com',
-    'data': [],
+    'data': ['statement_view.xml'],
     'test': [],
     'installable': True,
     'images': [],

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+<data>
+
+    <record id="statement_importer_ofx_view_form" model="ir.ui.view">
+        <field name="name">account.statement.profile.ofx.view</field>
+        <field name="model">account.statement.profile</field>
+        <field name="inherit_id" ref="account_statement_base_import.statement_importer_view_form"/>
+        <field name="arch" type="xml">
+            <field name="bank_statement_prefix" position="after">
+
+                <field name="ofx_parser_label"
+                       attrs="{'invisible': [('import_type','!=', 'ofx_so')]}"/>
+                <field name="ofx_parser_ref"
+                        attrs="{'invisible': [('import_type','!=', 'ofx_so')]}"/>
+
+            </field>
+        </field>
+    </record>
+
+</data>
+</openerp>

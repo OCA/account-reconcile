@@ -19,11 +19,22 @@
 #
 ##############################################################################
 from openerp.tools.translate import _
-from openerp.osv import orm
+from openerp.osv import orm, fields
 
 
 class AccountStatementProfil(orm.Model):
     _inherit = "account.statement.profile"
+
+    _columns = {
+        'ofx_parser_label': fields.char('OFX parser Label field',
+                                        required=True),
+        'ofx_parser_ref': fields.char('OFX parser Ref field', required=True),
+    }
+
+    _defaults = {
+        'ofx_parser_label':  'payee',
+        'ofx_parser_ref':  'type',
+    }
 
     def _get_import_type_selection(self, cr, uid, context=None):
         """Inherited from parent to add parser."""

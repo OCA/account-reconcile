@@ -61,8 +61,8 @@ class OfxParser(BankStatementImportParser):
             res.append({
                 'date': transaction.date,
                 'amount': transaction.amount,
-                'ref': transaction.type,
-                'label': transaction.payee,
+                'ref': getattr(transaction, self.profile.ofx_parser_ref),
+                'label': getattr(transaction, self.profile.ofx_parser_label),
             })
         self.result_row_list = res
         return True
