@@ -1,47 +1,25 @@
 .. image:: https://img.shields.io/badge/licence-AGPL--3-blue.svg
     :alt: License: AGPL-3
 
-Module name
-===========
+Bank Statement hide Bank in lines
+=================================
 
 This module was written to add a group to be able to hide/show the field 'bank_account_id' in the bank statement lines
-
-Installation
-============
-
-To install this module, you need to:
-
-* install it
-
-Configuration
-=============
-
-To configure this module, you need to:
-
-* nothing
 
 Usage
 =====
 
-To use this module, you need to:
+To see the field 'bank_account_id' in the bank statement lines, check group "Show bank in account bank statement lines" in the user form.
 
-* if you want a user to see the field 'bank_account_id' in the bank statement lines, check group "Show bank in account bank statement lines" in the user form
-
-For further information, please visit:
-
-* https://www.odoo.com/forum/help-1
-
-Known issues / Roadmap
-======================
 
 
 Bug Tracker
 ===========
 
-Bugs are tracked on `GitHub Issues <https://github.com/OCA/{project_repo}/issues>`_.
+Bugs are tracked on `GitHub Issues <https://github.com/OCA/bank-statement-reconcile/issues>`_.
 In case of trouble, please check there if your issue has already been reported.
 If you spotted it first, help us smashing it by providing a detailed and welcomed feedback
-`here <https://github.com/OCA/{project_repo}/issues/new?body=module:%20{module_name}%0Aversion:%20{version}%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
+`here <https://github.com/OCA/bank-statement-reconcile/issues/new?body=module:%20bank_statement_hide_bank_in_lines%0Aversion:%208.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
 
 
 Credits
@@ -67,4 +45,3 @@ mission is to support the collaborative development of Odoo features and
 promote its widespread use.
 
 To contribute to this module, please visit http://odoo-community.org.
-
