@@ -35,7 +35,7 @@ class account_statement_from_invoice_lines(models.TransientModel):
         """
         super(account_statement_from_invoice_lines, self).populate_statement()
         bank_statement_obj = self.env['account.bank.statement']
-        statement_id = self._context.get('statement_id', False)
+        statement_id = self._context.get('statement_id')
 
         if statement_id:
             statement = bank_statement_obj.browse(statement_id)
