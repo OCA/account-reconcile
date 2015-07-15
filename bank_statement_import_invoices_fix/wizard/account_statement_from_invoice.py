@@ -31,7 +31,7 @@ class account_statement_from_invoice_lines(models.TransientModel):
         """
         Inverse data from account_move_line
         bank_statement_line.name = line.ref
-        bank_statement_line.ref = name.name
+        bank_statement_line.ref = line.name
         """
         super(account_statement_from_invoice_lines, self).populate_statement()
         bank_statement_obj = self.env['account.bank.statement']
