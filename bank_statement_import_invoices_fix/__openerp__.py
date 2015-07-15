@@ -20,6 +20,7 @@
 ##############################################################################
 {
     "name": "Bank statement import invoices fix",
+    "summary": "Inverts communication an reference fields",
     "version": "1.0",
     "depends": ['base', 'account'],
     "author": "Camptocamp,Odoo Community Association (OCA)",
