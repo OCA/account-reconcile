@@ -64,9 +64,8 @@ class AccountStatementLine(models.Model):
         return True
 
     @api.model
-    def process_reconciliation(self, mv_line_dicts, *args, **kwargs):
-        if not kwargs.get('context', {}).get('balance_check'):
-            self._context = kwargs.get('context')
+    def process_reconciliation(self, mv_line_dicts):
+        if not self._context.get('balance_check'):
             mv_line_dicts[0]['sale_ids'] = [
                 (6, 0, [sale.id for sale in self.sale_ids])
             ]
@@ -77,13 +76,12 @@ class AccountBankStatement(models.Model):
     _inherit = 'account.bank.statement'
 
     @api.model
-    def balance_check(self, *args, **kwargs):
-        self._context = kwargs.get('context')
+    def balance_check(self, st_id, journal_type='bank'):
         if self._context is None:
             ctx = {}
         else:
             ctx = self._context.copy()
         ctx['balance_check'] = True
-        kwargs['context'] = ctx
+        self = self.with_context(ctx)
         return super(AccountBankStatement, self).balance_check(
-            *args, **kwargs)
+            st_id, journal_type=journal_type)

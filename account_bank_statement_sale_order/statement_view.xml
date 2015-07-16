@@ -19,7 +19,7 @@
         <field name="inherit_id" ref="account.view_bank_statement_form2"></field>
         <field name="arch" type="xml">
              <xpath expr="//field[@name='line_ids']/tree/field[@name='partner_id']" position="after">
-                <field name="sale_ids"/>
+                <field name="sale_ids" context="{'only_partner_id': partner_id}"/>
             </xpath>
          </field>
     </record>
