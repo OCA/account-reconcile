@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+        <record id="group_reconcile_different_partners" model="res.groups">
+            <field name="name">Reconcile move lines from different partners</field>
+            <field name="category_id" ref="base.module_category_hidden" />
+        </record>
+    </data>
+    <data noupdate="1">
+        <record id="account.group_account_manager" model="res.groups">
+            <field name="implied_ids" eval="[(4, ref('account_reconcile_different_partners.group_reconcile_different_partners'), False)]" />
+        </record>
+    </data>
+</openerp>
