@@ -705,7 +705,7 @@ class AccountBankStatementLine(orm.Model):
         # If no value, look on the default company property
         if not pay_account or not receiv_account:
             receiv_account, pay_account = obj_stat.\
-                get_default_pay_receiv_accounts(cr, uid, context=None)
+                get_default_pay_receiv_accounts(cr, uid, context=context)
         account_id, comp_line_type = obj_stat.\
             get_account_and_type_for_counterpart(
                 cr, uid, amount, receiv_account, pay_account,
