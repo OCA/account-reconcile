@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+        <record id="view_bank_statement_form" model="ir.ui.view">
+            <field name="model">account.bank.statement</field>
+            <field name="inherit_id" ref="account.view_bank_statement_form" />
+            <field name="arch" type="xml">
+                <field name="journal_entry_id" position="after">
+                    <button type="object" confirm="Are you sure you want to unreconcile this line?" name="cancel" string="Cancel" icon="gtk-cancel" attrs="{'invisible': [('journal_entry_id', '=', False)]}" />
+                </field>
+            </field>
+        </record>
+    </data>
+</openerp>
