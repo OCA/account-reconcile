@@ -46,7 +46,12 @@ class TestAccountReconcileDifferentPartners(TransactionCase):
             ],
             'journal_id': self.env['account.journal'].search([])[:1].id,
         }
-        print [group.name for group in self.env.user.groups_id]
+        # add admin to our group
+        self.env.user.write({
+            'groups_id': [(4, self.env.ref(
+                'account_reconcile_different_partners.'
+                'group_reconcile_different_partners'))],
+        })
         # this should work
         self.env['account.move'].create(move_data).line_id.reconcile()
         with self.assertRaises(exceptions.ValidationError):
