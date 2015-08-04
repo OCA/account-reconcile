@@ -46,6 +46,7 @@ class TestAccountReconcileDifferentPartners(TransactionCase):
             ],
             'journal_id': self.env['account.journal'].search([])[:1].id,
         }
+        print [group.name for group in self.env.user.groups_id]
         # this should work
         self.env['account.move'].create(move_data).line_id.reconcile()
         with self.assertRaises(exceptions.ValidationError):
