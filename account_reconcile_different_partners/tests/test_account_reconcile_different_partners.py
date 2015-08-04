@@ -50,7 +50,7 @@ class TestAccountReconcileDifferentPartners(TransactionCase):
         self.env.user.write({
             'groups_id': [(4, self.env.ref(
                 'account_reconcile_different_partners.'
-                'group_reconcile_different_partners'))],
+                'group_reconcile_different_partners').id)],
         })
         # this should work
         self.env['account.move'].create(move_data).line_id.reconcile()
