@@ -18,7 +18,7 @@
 #
 ##############################################################################
 from decimal import Decimal
-from openerp import models, fields, api
+from openerp import models, api
 from openerp.tools.float_utils import float_repr
 
 
