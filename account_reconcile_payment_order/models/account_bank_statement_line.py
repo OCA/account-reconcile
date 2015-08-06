@@ -57,7 +57,7 @@ class AccountBankStatementLine(models.Model):
         order = orders[0]
         return self.env['account.move.line']\
             .prepare_move_lines_for_reconciliation_widget(
-                order._get_transfer_move_lines())
+                list(set(order._get_transfer_move_lines())))
 
     @api.model
     def get_reconciliation_proposition(self, this, excluded_ids=None):
