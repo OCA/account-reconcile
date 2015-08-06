@@ -6,16 +6,16 @@ from openerp import api, models
 
 class AccountMassReconcileMethod(models.Model):
 
-    _inherit = 'account.easy.reconcile.method'
+    _inherit = 'account.mass.reconcile.method'
 
     @api.model
     def _get_all_rec_method(self):
         _super = super(AccountMassReconcileMethod, self)
         methods = _super._get_all_rec_method()
         methods += [
-            ('easy.reconcile.advanced.transaction_ref',
+            ('mass.reconcile.advanced.transaction_ref',
              'Advanced. Partner and Transaction Ref.'),
-            ('easy.reconcile.advanced.trans_ref_vs_ref',
+            ('mass.reconcile.advanced.trans_ref_vs_ref',
              'Advanced. Partner and Transaction Ref. vs Ref.'),
         ]
         return methods
