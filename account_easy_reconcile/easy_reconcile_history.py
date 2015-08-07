@@ -1,9 +1,8 @@
 # -*- coding: utf-8 -*-
 ##############################################################################
 #
-#    Author: Guewen Baconnier
-#    Copyright 2012 Camptocamp SA
-#    Copyright 2015 Camptocamp SA (Damien Crier)
+#    Author: Guewen Baconnier, Damien Crier
+#    Copyright 2012, 2015 Camptocamp SA
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -33,7 +32,7 @@ class EasyReconcileHistory(models.Model):
 
     @api.one
     @api.depends('reconcile_ids', 'reconcile_partial_ids')
-    def _reconcile_line_ids(self):
+    def _get_reconcile_line_ids(self):
         move_line_ids = []
         for reconcile in self.reconcile_ids:
             move_lines = reconcile.mapped('line_id')
@@ -68,13 +67,13 @@ class EasyReconcileHistory(models.Model):
         comodel_name='account.move.line',
         relation='account_move_line_history_rel',
         string='Reconciled Items',
-        _compute='_reconcile_line_ids'
+        compute='_get_reconcile_line_ids'
     )
     partial_line_ids = fields.Many2many(
         comodel_name='account.move.line',
         relation='account_move_line_history_partial_rel',
         string='Partially Reconciled Items',
-        _compute='_reconcile_line_ids'
+        compute='_get_reconcile_line_ids'
     )
     company_id = fields.Many2one(
         'res.company',

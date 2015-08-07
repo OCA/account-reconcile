@@ -1,9 +1,8 @@
 # -*- coding: utf-8 -*-
 ##############################################################################
 #
-#    Copyright 2012-2013 Camptocamp SA (Guewen Baconnier)
+#    Copyright 2012-2013, 2015 Camptocamp SA (Guewen Baconnier, Damien Crier)
 #    Copyright (C) 2010   Sébastien Beau
-#    Copyright 2015 Camptocamp SA (Damien Crier)
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -24,8 +23,6 @@ from datetime import datetime
 from openerp import models, api, fields, _
 from openerp.exceptions import Warning
 from openerp import sql_db
-
-# from openerp import pooler
 
 import logging
 _logger = logging.getLogger(__name__)
@@ -177,7 +174,7 @@ class AccountEasyReconcile(models.Model):
                                   readonly=True
                                   )
     last_history = fields.Many2one('easy.reconcile.history',
-                                   string='readonly=True',
+                                   string='Last history', readonly=True,
                                    compute='_last_history',
                                    )
     company_id = fields.Many2one('res.company', string='Company')
@@ -253,7 +250,7 @@ class AccountEasyReconcile(models.Model):
                 self.env['easy.reconcile.history'].create(
                     {
                         'easy_reconcile_id': rec.id,
-                        'date': fields.datetime.now(),
+                        'date': fields.Datetime.now(),
                         'reconcile_ids': [
                             (4, rid) for rid in reconcile_ids
                             ],
@@ -269,7 +266,7 @@ class AccountEasyReconcile(models.Model):
                     "The reconcile task %s had an exception: %s",
                     rec.name, e.message
                 )
-                message = "There was an error during reconciliation : %s" \
+                message = _("There was an error during reconciliation : %s") \
                     % e.message
                 rec.message_post(body=message)
                 self.env['easy.reconcile.history'].create(
@@ -287,8 +284,7 @@ class AccountEasyReconcile(models.Model):
 
         return True
 
-#     @api.model
-#     def _no_history(self, rec):
+    @api.multi
     def _no_history(self):
         """ Raise an `orm.except_orm` error, supposed to
         be called when there is no history on the reconciliation
@@ -327,7 +323,8 @@ class AccountEasyReconcile(models.Model):
 
     @api.multi
     def open_partial_reconcile(self):
-        """ Open the view of move line with the unreconciled move lines"""
+        """ Open the view of move line with the partially
+        reconciled move lines"""
         self.ensure_one()
         obj_move_line = self.env['account.move.line']
         lines = obj_move_line.search(
