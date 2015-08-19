@@ -19,11 +19,13 @@
 ##############################################################################
 {
     "name": "Reconcile payment orders",
-    "version": "1.0",
-    "author": "Therp BV,Odoo Community Association (OCA)",
+    "version": "8.0.1.0.0",
+    "author": "Therp BV,"
+              "Serv. Tecnol. Avanzados - Pedro M. Baeza,"
+              "Odoo Community Association (OCA)",
     "license": "AGPL-3",
     "category": "Accounting & Finance",
-    "summary": "Automatically reconcile all lines from sent payment orders",
+    "summary": "Automatically reconcile all lines from payment orders",
     "depends": [
         'account_banking_payment_transfer',
     ],
