@@ -35,7 +35,7 @@ class AccountBankStatementLine(models.Model):
                 select order_id, sum(amount_currency) as amount
                 from payment_line
                 join payment_order o on o.id=order_id
-                where o.state = 'sent'
+                where o.state in ('sent', 'done')
                 group by order_id)
             select order_id from order_sums where amount = %s''',
             (Decimal(float_repr(abs(this.amount), digits)),))
@@ -55,9 +55,14 @@ class AccountBankStatementLine(models.Model):
     def get_reconcile_lines_from_order(self, this, orders, excluded_ids=None):
         """return lines to reconcile our statement line with"""
         order = orders[0]
+        if order.state == 'sent':
+            move_lines_list = list(set(order._get_transfer_move_lines()))
+        else:
+            move_lines = order.line_ids.mapped('move_line_id').filtered(
+                lambda x: not x.reconcile_id)
+            move_lines_list = [x for x in move_lines]
         return self.env['account.move.line']\
-            .prepare_move_lines_for_reconciliation_widget(
-                list(set(order._get_transfer_move_lines())))
+            .prepare_move_lines_for_reconciliation_widget(move_lines_list)
 
     @api.model
     def get_reconciliation_proposition(self, this, excluded_ids=None):
