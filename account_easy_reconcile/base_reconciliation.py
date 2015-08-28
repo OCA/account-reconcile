@@ -34,8 +34,6 @@ class EasyReconcileBase(orm.AbstractModel):
     _columns = {
         'account_id': fields.many2one(
             'account.account', 'Account', required=True),
-        'partner_ids': fields.many2many(
-            'res.partner', string="Restrict on partners"),
         # other columns are inherited from easy.reconcile.options
     }
 
