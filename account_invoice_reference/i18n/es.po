@@ -1,33 +1,22 @@
-# Spanish translation for banking-addons
-# Copyright (c) 2014 Rosetta Contributors and Canonical Ltd 2014
-# This file is distributed under the same license as the banking-addons package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2014.
-#
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# * account_invoice_reference
+# 
+# Translators:
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2014
 msgid ""
 msgstr ""
-"Project-Id-Version: banking-addons\n"
-"Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
-"POT-Creation-Date: 2014-01-24 14:43+0000\n"
-"PO-Revision-Date: 2014-06-05 22:14+0000\n"
-"Last-Translator: Pedro Manuel Baeza <pedro.baeza@gmail.com>\n"
-"Language-Team: Spanish <es@li.org>\n"
+"Project-Id-Version: bank-statement-reconcile (8.0)\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-08-19 18:08+0000\n"
+"PO-Revision-Date: 2015-07-22 06:47+0000\n"
+"Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
+"Language-Team: Spanish (http://www.transifex.com/oca/OCA-bank-statement-reconcile-8-0/language/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2014-06-06 06:36+0000\n"
-"X-Generator: Launchpad (build 17031)\n"
-
-#. module: account_invoice_reference
-#: view:account.invoice:0
-msgid "Enter the reference in the Supplier Invoice Number field"
-msgstr ""
-"Introducir la referencia en el campo en el campo del nº de factura de "
-"proveedor"
-
-#. module: account_invoice_reference
-#: view:account.invoice:0
-msgid "{'invisible': [('reference_type', '=', 'none')]}"
-msgstr "{'invisible': [('reference_type', '=', 'none')]}"
+"Content-Transfer-Encoding: \n"
+"Language: es\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. module: account_invoice_reference
 #: model:ir.model,name:account_invoice_reference.model_account_move
@@ -35,11 +24,21 @@ msgid "Account Entry"
 msgstr "Asiento contable"
 
 #. module: account_invoice_reference
-#: view:account.invoice:0
+#: view:account.invoice:account_invoice_reference.invoice_form
 msgid "Customer Reference"
 msgstr "Referencia cliente"
+
+#. module: account_invoice_reference
+#: view:account.invoice:account_invoice_reference.invoice_supplier_form
+msgid "Enter the reference in the Supplier Invoice Number field"
+msgstr "Introducir la referencia en el campo en el campo del nº de factura de proveedor"
 
 #. module: account_invoice_reference
 #: model:ir.model,name:account_invoice_reference.model_account_invoice
 msgid "Invoice"
 msgstr "Factura"
+
+#. module: account_invoice_reference
+#: view:account.invoice:account_invoice_reference.invoice_supplier_form
+msgid "{'invisible': [('reference_type', '=', 'none')]}"
+msgstr "{'invisible': [('reference_type', '=', 'none')]}"
