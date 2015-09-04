@@ -20,6 +20,7 @@
 ##############################################################################
 
 from openerp import models, api, fields
+from openerp.tools.safe_eval import safe_eval
 from operator import itemgetter, attrgetter
 
 
@@ -111,7 +112,7 @@ class EasyReconcileBase(models.AbstractModel):
         params = []
         if self.filter:
             dummy, where, params = ml_obj._where_calc(
-                eval(self.filter)).get_sql()
+                safe_eval(self.filter)).get_sql()
             if where:
                 where = " AND %s" % where
         return where, params
