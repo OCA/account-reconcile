@@ -96,16 +96,11 @@ class EasyReconcileHistory(models.Model):
             "rec_type must be 'full' or 'partial'"
         move_line_ids = []
         if rec_type == 'full':
-            move_line_ids = []
-            for reconcile in self.reconcile_ids:
-                move_lines = reconcile.mapped('line_id')
-                move_line_ids.extend(move_lines.ids)
+            move_line_ids = self.mapped('reconcile_ids.line_id').ids
             name = _('Reconciliations')
         else:
-            move_line_ids = []
-            for reconcile in self.reconcile_partial_ids:
-                move_lines = reconcile.mapped('line_partial_ids')
-                move_line_ids.extend(move_lines.ids)
+            move_line_ids = self.mapped(
+                'reconcile_partial_ids.line_partial_ids').ids
             name = _('Partial Reconciliations')
         return {
             'name': name,
