@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+        <record id="view_bank_statement_form" model="ir.ui.view">
+            <field name="model">account.bank.statement</field>
+            <field name="inherit_id" ref="account.view_bank_statement_form" />
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='line_ids']//field[@name='partner_id']" position="after">
+                    <field name="prepared_account_id" attrs="{'readonly': [('journal_entry_id', '!=', False)]}" />
+                    <field name="prepared_analytic_account_id" attrs="{'readonly': [('journal_entry_id', '!=', False)]}" />
+                </xpath>
+            </field>
+        </record>
+        <record id="view_bank_statement_form2" model="ir.ui.view">
+            <field name="model">account.bank.statement</field>
+            <field name="inherit_id" ref="account.view_bank_statement_form2" />
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='line_ids']//field[@name='partner_id']" position="after">
+                    <field name="prepared_account_id" />
+                    <field name="prepared_analytic_account_id" />
+                </xpath>
+            </field>
+        </record>
+    </data>
+</openerp>
