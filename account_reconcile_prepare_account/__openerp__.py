@@ -25,7 +25,7 @@
     "category": "Banking addons",
     "summary": "Assign bank transactions to accounts before reconciliation",
     "depends": [
-        'account_bank_statement_import',
+        'account',
     ],
     "data": [
         "views/account_bank_statement.xml",
