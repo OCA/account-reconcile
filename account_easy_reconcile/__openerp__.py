@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 ##############################################################################
 #
-#    Copyright 2012 Camptocamp SA (Guewen Baconnier)
+#    Copyright 2012, 2015 Camptocamp SA (Guewen Baconnier, Damien Crier)
 #    Copyright (C) 2010   Sébastien Beau
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -19,8 +19,23 @@
 #
 ##############################################################################
 
-from . import easy_reconcile
-from . import base_reconciliation
-from . import simple_reconciliation
-from . import easy_reconcile_history
-from . import res_config
+{
+    "name": "Easy Reconcile",
+    "version": "1.3.1",
+    "depends": ["account"],
+    "author": "Akretion,Camptocamp,Odoo Community Association (OCA)",
+    "website": "http://www.akretion.com/",
+    "category": "Finance",
+    "data": ["easy_reconcile.xml",
+             "easy_reconcile_history_view.xml",
+             "security/ir_rule.xml",
+             "security/ir.model.access.csv",
+             "res_config_view.xml",
+             ],
+    "test": ['test/easy_reconcile.yml',
+             ],
+    'license': 'AGPL-3',
+    "auto_install": False,
+    'installable': True,
+
+}
