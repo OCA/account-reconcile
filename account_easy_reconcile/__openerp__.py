@@ -21,7 +21,7 @@
 
 {
     "name": "Easy Reconcile",
-    "version": "1.3.1",
+    "version": "8.0.1.3.1",
     "depends": ["account"],
     "author": "Akretion,Camptocamp,Odoo Community Association (OCA)",
     "website": "http://www.akretion.com/",
