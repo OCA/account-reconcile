@@ -1,6 +1,8 @@
 .. image:: https://img.shields.io/badge/licence-AGPL--3-blue.svg
+    :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
     :alt: License: AGPL-3
 
+==============
 Easy Reconcile
 ==============
 
@@ -26,6 +28,16 @@ You may be interested to install also the
 ``account_advanced_reconciliation`` module.
 This latter add more complex reconciliations,
 allows multiple lines and partial.
+
+Usage
+=====
+
+Go to 'Invoicing/Periodic Processing/Reconciliation/Easy Automatic Reconcile' to start a
+new easy reconcile.
+
+.. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas
+   :alt: Try me on Runbot
+   :target: https://runbot.odoo-community.org/runbot/98/8.0
 
 
 Bug Tracker
@@ -73,4 +85,3 @@ mission is to support the collaborative development of Odoo features and
 promote its widespread use.
 
 To contribute to this module, please visit http://odoo-community.org.
-
