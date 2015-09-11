@@ -28,10 +28,16 @@ class AccountInvoice(models.Model):
     @api.v8
     def _ref_from_invoice(self):
         self.ensure_one()
-        if self.type in ('out_invoice', 'out_refund'):
-            return self.origin
-        elif self.type in ('in_invoice', 'in_refund'):
-            return self.supplier_invoice_number
+
+        def preferred_ref():
+            if self.type in ('out_invoice', 'out_refund'):
+                return self.origin
+            elif self.type in ('in_invoice', 'in_refund'):
+                return self.supplier_invoice_number
+            else:
+                return None
+
+        return preferred_ref() or self.number
 
     @api.v7
     def _ref_from_invoice(self, cr, uid, invoice, context=None):
@@ -45,8 +51,6 @@ class AccountInvoice(models.Model):
 
         for invoice in self:
             ref = invoice._ref_from_invoice()
-            if not ref:
-                ref = invoice.number
             move_id = invoice.move_id.id if invoice.move_id else False
 
             invoice.write({'internal_number': invoice.number})
