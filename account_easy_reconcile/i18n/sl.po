@@ -3,25 +3,24 @@
 # * account_easy_reconcile
 # 
 # Translators:
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2014
 msgid ""
 msgstr ""
 "Project-Id-Version: bank-statement-reconcile (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-09-11 12:09+0000\n"
 "PO-Revision-Date: 2015-09-10 11:31+0000\n"
-"Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
-"Language-Team: Spanish (http://www.transifex.com/oca/OCA-bank-statement-reconcile-8-0/language/es/)\n"
+"Last-Translator: <>\n"
+"Language-Team: Slovenian (http://www.transifex.com/oca/OCA-bank-statement-reconcile-8-0/language/sl/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Language: es\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Language: sl\n"
+"Plural-Forms: nplurals=4; plural=(n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n%100==4 ? 2 : 3);\n"
 
 #. module: account_easy_reconcile
 #: view:easy.reconcile.history:account_easy_reconcile.view_easy_reconcile_history_search
 msgid "7 Days"
-msgstr "7 días"
+msgstr ""
 
 #. module: account_easy_reconcile
 #: model:ir.actions.act_window,help:account_easy_reconcile.action_account_easy_reconcile
@@ -35,7 +34,7 @@ msgid ""
 "            be run sequentially to match the entries between them.\n"
 "          </p>\n"
 "        "
-msgstr "<p class=\"oe_view_nocontent_create\">\nPulse para añadir un pefil de conciliación.\n</p><p>\nUn perfil de conciliación especifica, para una cuenta, como\nlos apuntes deben ser conciliados.\nPuede seleccionar uno o varios métodos de conciliación que\nserán ejecutados secuencialmente para casar los apuntes\nentre ellos.\n</p>\n        "
+msgstr ""
 
 #. module: account_easy_reconcile
 #: field:account.easy.reconcile,account:0
@@ -45,7 +44,7 @@ msgstr "<p class=\"oe_view_nocontent_create\">\nPulse para añadir un pefil de c
 #: field:easy.reconcile.simple.partner,account_id:0
 #: field:easy.reconcile.simple.reference,account_id:0
 msgid "Account"
-msgstr "Cuenta"
+msgstr ""
 
 #. module: account_easy_reconcile
 #: field:account.easy.reconcile.method,account_lost_id:0
@@ -56,7 +55,7 @@ msgstr "Cuenta"
 #: field:easy.reconcile.simple.partner,account_lost_id:0
 #: field:easy.reconcile.simple.reference,account_lost_id:0
 msgid "Account Lost"
-msgstr "Cuenta de pérdidas"
+msgstr ""
 
 #. module: account_easy_reconcile
 #: field:account.easy.reconcile.method,account_profit_id:0
@@ -67,7 +66,7 @@ msgstr "Cuenta de pérdidas"
 #: field:easy.reconcile.simple.partner,account_profit_id:0
 #: field:easy.reconcile.simple.reference,account_profit_id:0
 msgid "Account Profit"
-msgstr "Cuenta de ganancias"
+msgstr ""
 
 #. module: account_easy_reconcile
 #: help:account.easy.reconcile.method,analytic_account_id:0
@@ -95,7 +94,7 @@ msgstr ""
 #: view:account.easy.reconcile:account_easy_reconcile.account_easy_reconcile_form
 #: view:account.easy.reconcile:account_easy_reconcile.account_easy_reconcile_tree
 msgid "Automatic Easy Reconcile"
-msgstr "Conciliación automática sencilla"
+msgstr ""
 
 #. module: account_easy_reconcile
 #: view:account.easy.reconcile:account_easy_reconcile.account_easy_reconcile_form
@@ -103,13 +102,13 @@ msgstr "Conciliación automática sencilla"
 #: view:easy.reconcile.history:account_easy_reconcile.easy_reconcile_history_tree
 #: view:easy.reconcile.history:account_easy_reconcile.view_easy_reconcile_history_search
 msgid "Automatic Easy Reconcile History"
-msgstr "Historial de conciliación automática sencilla"
+msgstr ""
 
 #. module: account_easy_reconcile
 #: view:account.easy.reconcile.method:account_easy_reconcile.account_easy_reconcile_method_form
 #: view:account.easy.reconcile.method:account_easy_reconcile.account_easy_reconcile_method_tree
 msgid "Automatic Easy Reconcile Method"
-msgstr "Método de conciliación automática sencilla"
+msgstr ""
 
 #. module: account_easy_reconcile
 #: model:ir.model,name:account_easy_reconcile.model_res_company
@@ -121,12 +120,12 @@ msgstr ""
 #: field:account.easy.reconcile.method,company_id:0
 #: field:easy.reconcile.history,company_id:0
 msgid "Company"
-msgstr "Compañía"
+msgstr "Družba"
 
 #. module: account_easy_reconcile
 #: view:account.easy.reconcile:account_easy_reconcile.account_easy_reconcile_form
 msgid "Configuration"
-msgstr "Configuración"
+msgstr ""
 
 #. module: account_easy_reconcile
 #: field:account.easy.reconcile,create_uid:0
@@ -151,7 +150,7 @@ msgstr ""
 #. module: account_easy_reconcile
 #: view:easy.reconcile.history:account_easy_reconcile.view_easy_reconcile_history_search
 msgid "Date"
-msgstr "Fecha"
+msgstr ""
 
 #. module: account_easy_reconcile
 #: field:account.easy.reconcile.method,date_base_on:0
@@ -162,7 +161,7 @@ msgstr "Fecha"
 #: field:easy.reconcile.simple.partner,date_base_on:0
 #: field:easy.reconcile.simple.reference,date_base_on:0
 msgid "Date of reconciliation"
-msgstr "Fecha de conciliación"
+msgstr ""
 
 #. module: account_easy_reconcile
 #: help:account.easy.reconcile,message_last_post:0
@@ -173,24 +172,24 @@ msgstr ""
 #: view:account.easy.reconcile:account_easy_reconcile.account_easy_reconcile_form
 #: view:account.easy.reconcile:account_easy_reconcile.account_easy_reconcile_tree
 msgid "Display items partially reconciled on the last run"
-msgstr "Mostrar elementos conciliados parcialmente en la última ejecucción"
+msgstr ""
 
 #. module: account_easy_reconcile
 #: view:account.easy.reconcile:account_easy_reconcile.account_easy_reconcile_form
 #: view:account.easy.reconcile:account_easy_reconcile.account_easy_reconcile_tree
 msgid "Display items reconciled on the last run"
-msgstr "Mostrar elementos conciliados en la última ejecucción"
+msgstr ""
 
 #. module: account_easy_reconcile
 #: model:ir.actions.act_window,name:account_easy_reconcile.action_account_easy_reconcile
 #: model:ir.ui.menu,name:account_easy_reconcile.menu_easy_reconcile
 msgid "Easy Automatic Reconcile"
-msgstr "Conciliación automática simple"
+msgstr ""
 
 #. module: account_easy_reconcile
 #: model:ir.actions.act_window,name:account_easy_reconcile.action_easy_reconcile_history
 msgid "Easy Automatic Reconcile History"
-msgstr "Historial de la conciliación automática sencilla"
+msgstr ""
 
 #. module: account_easy_reconcile
 #: field:account.easy.reconcile.method,filter:0
@@ -200,7 +199,7 @@ msgstr "Historial de la conciliación automática sencilla"
 #: field:easy.reconcile.simple.partner,filter:0
 #: field:easy.reconcile.simple.reference,filter:0
 msgid "Filter"
-msgstr "Filtro"
+msgstr ""
 
 #. module: account_easy_reconcile
 #: field:account.easy.reconcile,message_follower_ids:0
@@ -228,14 +227,14 @@ msgstr ""
 #: view:easy.reconcile.history:account_easy_reconcile.easy_reconcile_history_form
 #: view:easy.reconcile.history:account_easy_reconcile.easy_reconcile_history_tree
 msgid "Go to partially reconciled items"
-msgstr "Ir a los elementos parcialmente conciliados"
+msgstr ""
 
 #. module: account_easy_reconcile
 #: view:account.easy.reconcile:account_easy_reconcile.account_easy_reconcile_form
 #: view:easy.reconcile.history:account_easy_reconcile.easy_reconcile_history_form
 #: view:easy.reconcile.history:account_easy_reconcile.easy_reconcile_history_tree
 msgid "Go to reconciled items"
-msgstr "Ir a los elementos conciliados"
+msgstr ""
 
 #. module: account_easy_reconcile
 #: view:account.easy.reconcile:account_easy_reconcile.account_easy_reconcile_form
@@ -245,18 +244,18 @@ msgstr ""
 #. module: account_easy_reconcile
 #: view:easy.reconcile.history:account_easy_reconcile.view_easy_reconcile_history_search
 msgid "Group By..."
-msgstr "Agrupar por..."
+msgstr ""
 
 #. module: account_easy_reconcile
 #: view:account.easy.reconcile:account_easy_reconcile.account_easy_reconcile_form
 #: field:account.easy.reconcile,history_ids:0
 msgid "History"
-msgstr "Historial"
+msgstr ""
 
 #. module: account_easy_reconcile
 #: model:ir.actions.act_window,name:account_easy_reconcile.act_easy_reconcile_to_history
 msgid "History Details"
-msgstr "Detalles del historial"
+msgstr ""
 
 #. module: account_easy_reconcile
 #: help:account.easy.reconcile,message_summary:0
@@ -288,7 +287,7 @@ msgstr ""
 #. module: account_easy_reconcile
 #: view:account.easy.reconcile:account_easy_reconcile.account_easy_reconcile_form
 msgid "Information"
-msgstr "Información"
+msgstr ""
 
 #. module: account_easy_reconcile
 #: field:account.easy.reconcile,message_is_follower:0
@@ -304,7 +303,7 @@ msgstr ""
 #: field:easy.reconcile.simple.partner,journal_id:0
 #: field:easy.reconcile.simple.reference,journal_id:0
 msgid "Journal"
-msgstr "Diario"
+msgstr ""
 
 #. module: account_easy_reconcile
 #: field:account.easy.reconcile,message_last_post:0
@@ -353,7 +352,7 @@ msgid ""
 "Match one debit line vs one credit line. Do not allow partial "
 "reconciliation. The lines should have the same amount (with the write-off) "
 "and the same name to be reconciled."
-msgstr "Casa una línea del debe con una línea del haber. No permite conciliación parcial. Las líneas deben tener el mismo importe (con el desajuste) y el mismo nombre para ser conciliadas."
+msgstr ""
 
 #. module: account_easy_reconcile
 #: view:account.easy.reconcile:account_easy_reconcile.account_easy_reconcile_form
@@ -361,7 +360,7 @@ msgid ""
 "Match one debit line vs one credit line. Do not allow partial "
 "reconciliation. The lines should have the same amount (with the write-off) "
 "and the same partner to be reconciled."
-msgstr "Casa una línea del debe con una línea del haber. No permite conciliación parcial. Las líneas deben tener el mismo importe (con el desajuste) y la misma empresa para ser conciliadas."
+msgstr ""
 
 #. module: account_easy_reconcile
 #: view:account.easy.reconcile:account_easy_reconcile.account_easy_reconcile_form
@@ -369,7 +368,7 @@ msgid ""
 "Match one debit line vs one credit line. Do not allow partial "
 "reconciliation. The lines should have the same amount (with the write-off) "
 "and the same reference to be reconciled."
-msgstr "Casa una línea del debe con una línea del haber. No permite conciliación parcial. Las líneas deben tener el mismo importe (con el desajuste) y la misma referencia para ser conciliadas."
+msgstr ""
 
 #. module: account_easy_reconcile
 #: field:account.easy.reconcile,message_ids:0
@@ -384,12 +383,12 @@ msgstr ""
 #. module: account_easy_reconcile
 #: field:account.easy.reconcile,reconcile_method:0
 msgid "Method"
-msgstr "Método"
+msgstr ""
 
 #. module: account_easy_reconcile
 #: field:account.easy.reconcile,name:0
 msgid "Name"
-msgstr "Nombre"
+msgstr ""
 
 #. module: account_easy_reconcile
 #: view:account.config.settings:account_easy_reconcile.view_account_config
@@ -403,7 +402,7 @@ msgstr ""
 #: field:easy.reconcile.history,reconcile_partial_ids:0
 #, python-format
 msgid "Partial Reconciliations"
-msgstr "Conciliaciones parciales"
+msgstr ""
 
 #. module: account_easy_reconcile
 #: code:addons/account_easy_reconcile/easy_reconcile.py:334
@@ -414,34 +413,34 @@ msgstr ""
 #. module: account_easy_reconcile
 #: view:account.easy.reconcile:account_easy_reconcile.account_easy_reconcile_form
 msgid "Profile Information"
-msgstr "Información del perfil"
+msgstr ""
 
 #. module: account_easy_reconcile
 #: field:easy.reconcile.history,easy_reconcile_id:0
 msgid "Reconcile Profile"
-msgstr "Perfil de conciliación"
+msgstr ""
 
 #. module: account_easy_reconcile
 #: view:account.config.settings:account_easy_reconcile.view_account_config
 msgid "Reconciliation"
-msgstr ""
+msgstr "Uskladitev"
 
 #. module: account_easy_reconcile
 #: view:easy.reconcile.history:account_easy_reconcile.view_easy_reconcile_history_search
 msgid "Reconciliation Profile"
-msgstr "Perfil de conciliación"
+msgstr ""
 
 #. module: account_easy_reconcile
 #: code:addons/account_easy_reconcile/easy_reconcile_history.py:100
 #: view:easy.reconcile.history:account_easy_reconcile.easy_reconcile_history_form
 #, python-format
 msgid "Reconciliations"
-msgstr "Conciliaciones"
+msgstr ""
 
 #. module: account_easy_reconcile
 #: view:easy.reconcile.history:account_easy_reconcile.view_easy_reconcile_history_search
 msgid "Reconciliations of last 7 days"
-msgstr "Conciliaciones de los últimos 7 días"
+msgstr ""
 
 #. module: account_easy_reconcile
 #: field:easy.reconcile.base,partner_ids:0
@@ -450,42 +449,42 @@ msgstr "Conciliaciones de los últimos 7 días"
 #: field:easy.reconcile.simple.partner,partner_ids:0
 #: field:easy.reconcile.simple.reference,partner_ids:0
 msgid "Restrict on partners"
-msgstr "Restringir en las empresas"
+msgstr ""
 
 #. module: account_easy_reconcile
 #: field:easy.reconcile.history,date:0
 msgid "Run date"
-msgstr "Fecha ejecucción"
+msgstr ""
 
 #. module: account_easy_reconcile
 #: field:account.easy.reconcile.method,sequence:0
 msgid "Sequence"
-msgstr "Secuencia"
+msgstr ""
 
 #. module: account_easy_reconcile
 #: view:account.easy.reconcile:account_easy_reconcile.account_easy_reconcile_form
 msgid "Simple. Amount and Name"
-msgstr "Simple. Cantidad y nombre"
+msgstr ""
 
 #. module: account_easy_reconcile
 #: view:account.easy.reconcile:account_easy_reconcile.account_easy_reconcile_form
 msgid "Simple. Amount and Partner"
-msgstr "Simple. Cantidad y empresa"
+msgstr ""
 
 #. module: account_easy_reconcile
 #: view:account.easy.reconcile:account_easy_reconcile.account_easy_reconcile_form
 msgid "Simple. Amount and Reference"
-msgstr "Simple. Cantidad y referencia"
+msgstr ""
 
 #. module: account_easy_reconcile
 #: view:account.easy.reconcile:account_easy_reconcile.account_easy_reconcile_tree
 msgid "Start Auto Reconcilation"
-msgstr "Iniciar conciliación automática"
+msgstr ""
 
 #. module: account_easy_reconcile
 #: view:account.easy.reconcile:account_easy_reconcile.account_easy_reconcile_form
 msgid "Start Auto Reconciliation"
-msgstr "Iniciar auto-conciliación"
+msgstr ""
 
 #. module: account_easy_reconcile
 #: field:account.easy.reconcile,message_summary:0
@@ -495,18 +494,18 @@ msgstr ""
 #. module: account_easy_reconcile
 #: field:account.easy.reconcile.method,task_id:0
 msgid "Task"
-msgstr "Tarea"
+msgstr ""
 
 #. module: account_easy_reconcile
 #: help:account.easy.reconcile.method,sequence:0
 msgid "The sequence field is used to order the reconcile method"
-msgstr "El campo de secuencia se usa para ordenar los métodos de conciliación"
+msgstr ""
 
 #. module: account_easy_reconcile
 #: code:addons/account_easy_reconcile/easy_reconcile.py:294
 #, python-format
 msgid "There is no history of reconciled items on the task: %s."
-msgstr "No hay histórico de elementos conciliados en la tarea: %s"
+msgstr ""
 
 #. module: account_easy_reconcile
 #: code:addons/account_easy_reconcile/easy_reconcile.py:269
@@ -517,17 +516,17 @@ msgstr ""
 #. module: account_easy_reconcile
 #: view:easy.reconcile.history:account_easy_reconcile.view_easy_reconcile_history_search
 msgid "Today"
-msgstr "Hoy"
+msgstr ""
 
 #. module: account_easy_reconcile
 #: view:easy.reconcile.history:account_easy_reconcile.view_easy_reconcile_history_search
 msgid "Todays' Reconcilations"
-msgstr "Conciliaciones de hoy"
+msgstr ""
 
 #. module: account_easy_reconcile
 #: field:account.easy.reconcile.method,name:0
 msgid "Type"
-msgstr "Tipo"
+msgstr ""
 
 #. module: account_easy_reconcile
 #: field:account.easy.reconcile,message_unread:0
@@ -549,12 +548,12 @@ msgstr ""
 #: field:easy.reconcile.simple.partner,write_off:0
 #: field:easy.reconcile.simple.reference,write_off:0
 msgid "Write off allowed"
-msgstr "Desajuste permitido"
+msgstr ""
 
 #. module: account_easy_reconcile
 #: model:ir.model,name:account_easy_reconcile.model_account_easy_reconcile
 msgid "account easy reconcile"
-msgstr "account easy reconcile"
+msgstr ""
 
 #. module: account_easy_reconcile
 #: view:account.config.settings:account_easy_reconcile.view_account_config
@@ -564,4 +563,4 @@ msgstr ""
 #. module: account_easy_reconcile
 #: model:ir.model,name:account_easy_reconcile.model_account_easy_reconcile_method
 msgid "reconcile method for account_easy_reconcile"
-msgstr "Método de conciliación para account_easy_reconcile"
+msgstr ""
