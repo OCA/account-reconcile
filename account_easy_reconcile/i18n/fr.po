@@ -1,55 +1,26 @@
-# Translation of OpenERP Server.
+# Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* account_easy_reconcile
-#
+# * account_easy_reconcile
+# 
+# Translators:
 msgid ""
 msgstr ""
-"Project-Id-Version: OpenERP Server 6.1\n"
+"Project-Id-Version: bank-statement-reconcile (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-01-21 11:55+0000\n"
-"PO-Revision-Date: 2014-03-21 15:25+0000\n"
-"Last-Translator: Guewen Baconnier @ Camptocamp <Unknown>\n"
-"Language-Team: \n"
+"POT-Creation-Date: 2015-09-11 12:09+0000\n"
+"PO-Revision-Date: 2015-09-10 11:31+0000\n"
+"Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
+"Language-Team: French (http://www.transifex.com/oca/OCA-bank-statement-reconcile-8-0/language/fr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2014-05-22 06:49+0000\n"
-"X-Generator: Launchpad (build 17017)\n"
-"Language: \n"
+"Content-Transfer-Encoding: \n"
+"Language: fr\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
 #. module: account_easy_reconcile
-#: code:addons/account_easy_reconcile/easy_reconcile_history.py:101
-#: field:easy.reconcile.history,reconcile_ids:0
-#, python-format
-msgid "Reconciliations"
-msgstr "Lettrages"
-
-#. module: account_easy_reconcile
-#: view:account.easy.reconcile:0
-#: view:easy.reconcile.history:0
-msgid "Automatic Easy Reconcile History"
-msgstr "Historique des lettrages automatisés"
-
-#. module: account_easy_reconcile
-#: view:account.easy.reconcile:0
-msgid "Information"
-msgstr "Information"
-
-#. module: account_easy_reconcile
-#: view:account.easy.reconcile:0
-#: view:easy.reconcile.history:0
-msgid "Go to partially reconciled items"
-msgstr "Voir les entrées partiellement lettrées"
-
-#. module: account_easy_reconcile
-#: help:account.easy.reconcile.method,sequence:0
-msgid "The sequence field is used to order the reconcile method"
-msgstr "La séquence détermine l'ordre des méthodes de lettrage"
-
-#. module: account_easy_reconcile
-#: model:ir.model,name:account_easy_reconcile.model_easy_reconcile_history
-msgid "easy.reconcile.history"
-msgstr "easy.reconcile.history"
+#: view:easy.reconcile.history:account_easy_reconcile.view_easy_reconcile_history_search
+msgid "7 Days"
+msgstr "7 jours"
 
 #. module: account_easy_reconcile
 #: model:ir.actions.act_window,help:account_easy_reconcile.action_account_easy_reconcile
@@ -63,175 +34,7 @@ msgid ""
 "            be run sequentially to match the entries between them.\n"
 "          </p>\n"
 "        "
-msgstr ""
-"<p class=\"oe_view_nocontent_create\">\n"
-"            Cliquez pour ajouter un profil de lettrage.\n"
-"          </p><p>\n"
-"            Un profil de lettrage spécifie, pour un compte, comment\n"
-"            les écritures doivent être lettrées.\n"
-"            Vous pouvez sélectionner une ou plusieurs méthodes de lettrage\n"
-"            qui seront lancées successivement pour identifier les écritures\n"
-"            devant être lettrées.          </p>\n"
-"        "
-
-#. module: account_easy_reconcile
-#: model:ir.model,name:account_easy_reconcile.model_easy_reconcile_options
-msgid "easy.reconcile.options"
-msgstr "lettrage automatisé.options"
-
-#. module: account_easy_reconcile
-#: view:easy.reconcile.history:0
-msgid "Group By..."
-msgstr "Grouper par..."
-
-#. module: account_easy_reconcile
-#: field:account.easy.reconcile,unreconciled_count:0
-msgid "Unreconciled Items"
-msgstr "Écritures non lettrées"
-
-#. module: account_easy_reconcile
-#: model:ir.model,name:account_easy_reconcile.model_easy_reconcile_base
-msgid "easy.reconcile.base"
-msgstr "easy.reconcile.base"
-
-#. module: account_easy_reconcile
-#: field:easy.reconcile.history,reconcile_line_ids:0
-msgid "Reconciled Items"
-msgstr "Écritures lettrées"
-
-#. module: account_easy_reconcile
-#: field:account.easy.reconcile,reconcile_method:0
-msgid "Method"
-msgstr "Méthode"
-
-#. module: account_easy_reconcile
-#: view:easy.reconcile.history:0
-msgid "7 Days"
-msgstr "7 jours"
-
-#. module: account_easy_reconcile
-#: model:ir.actions.act_window,name:account_easy_reconcile.action_easy_reconcile_history
-msgid "Easy Automatic Reconcile History"
-msgstr "Lettrage automatisé"
-
-#. module: account_easy_reconcile
-#: field:easy.reconcile.history,date:0
-msgid "Run date"
-msgstr "Date de lancement"
-
-#. module: account_easy_reconcile
-#: view:account.easy.reconcile:0
-msgid ""
-"Match one debit line vs one credit line. Do not allow partial "
-"reconciliation. The lines should have the same amount (with the write-off) "
-"and the same reference to be reconciled."
-msgstr ""
-"Lettre un débit avec un crédit ayant le même montant et la même référence. "
-"Le lettrage ne peut être partiel (écriture d'ajustement en cas d'écart)."
-
-#. module: account_easy_reconcile
-#: model:ir.actions.act_window,name:account_easy_reconcile.act_easy_reconcile_to_history
-msgid "History Details"
-msgstr "Détails de l'historique"
-
-#. module: account_easy_reconcile
-#: view:account.easy.reconcile:0
-msgid "Display items reconciled on the last run"
-msgstr "Voir les entrées lettrées au dernier lettrage"
-
-#. module: account_easy_reconcile
-#: field:account.easy.reconcile.method,name:0
-msgid "Type"
-msgstr "Type"
-
-#. module: account_easy_reconcile
-#: field:account.easy.reconcile,company_id:0
-#: field:account.easy.reconcile.method,company_id:0
-#: field:easy.reconcile.history,company_id:0
-msgid "Company"
-msgstr ""
-
-#. module: account_easy_reconcile
-#: field:account.easy.reconcile.method,account_profit_id:0
-#: field:easy.reconcile.base,account_profit_id:0
-#: field:easy.reconcile.options,account_profit_id:0
-#: field:easy.reconcile.simple,account_profit_id:0
-#: field:easy.reconcile.simple.name,account_profit_id:0
-#: field:easy.reconcile.simple.partner,account_profit_id:0
-#: field:easy.reconcile.simple.reference,account_profit_id:0
-msgid "Account Profit"
-msgstr "Compte de profits"
-
-#. module: account_easy_reconcile
-#: view:easy.reconcile.history:0
-msgid "Todays' Reconcilations"
-msgstr "Lettrages du jour"
-
-#. module: account_easy_reconcile
-#: view:account.easy.reconcile:0
-msgid "Simple. Amount and Name"
-msgstr "Simple. Montant et description"
-
-#. module: account_easy_reconcile
-#: field:easy.reconcile.base,partner_ids:0
-#: field:easy.reconcile.simple,partner_ids:0
-#: field:easy.reconcile.simple.name,partner_ids:0
-#: field:easy.reconcile.simple.partner,partner_ids:0
-#: field:easy.reconcile.simple.reference,partner_ids:0
-msgid "Restrict on partners"
-msgstr "Filtrer sur des partenaires"
-
-#. module: account_easy_reconcile
-#: model:ir.actions.act_window,name:account_easy_reconcile.action_account_easy_reconcile
-#: model:ir.ui.menu,name:account_easy_reconcile.menu_easy_reconcile
-msgid "Easy Automatic Reconcile"
-msgstr "Lettrage automatisé"
-
-#. module: account_easy_reconcile
-#: view:easy.reconcile.history:0
-msgid "Today"
-msgstr "Aujourd'hui"
-
-#. module: account_easy_reconcile
-#: view:easy.reconcile.history:0
-msgid "Date"
-msgstr "Date"
-
-#. module: account_easy_reconcile
-#: field:account.easy.reconcile,last_history:0
-msgid "Last History"
-msgstr "Dernier historique"
-
-#. module: account_easy_reconcile
-#: view:account.easy.reconcile:0
-msgid "Configuration"
-msgstr "Configuration"
-
-#. module: account_easy_reconcile
-#: field:easy.reconcile.history,partial_line_ids:0
-msgid "Partially Reconciled Items"
-msgstr "Écritures partiellement lettrées"
-
-#. module: account_easy_reconcile
-#: model:ir.model,name:account_easy_reconcile.model_easy_reconcile_simple_partner
-msgid "easy.reconcile.simple.partner"
-msgstr "easy.reconcile.simple.partner"
-
-#. module: account_easy_reconcile
-#: field:account.easy.reconcile.method,write_off:0
-#: field:easy.reconcile.base,write_off:0
-#: field:easy.reconcile.options,write_off:0
-#: field:easy.reconcile.simple,write_off:0
-#: field:easy.reconcile.simple.name,write_off:0
-#: field:easy.reconcile.simple.partner,write_off:0
-#: field:easy.reconcile.simple.reference,write_off:0
-msgid "Write off allowed"
-msgstr "Écart autorisé"
-
-#. module: account_easy_reconcile
-#: view:account.easy.reconcile:0
-msgid "Automatic Easy Reconcile"
-msgstr "Lettrage automatisé"
+msgstr "<p class=\"oe_view_nocontent_create\">\n            Cliquez pour ajouter un profil de lettrage.\n          </p><p>\n            Un profil de lettrage spécifie, pour un compte, comment\n            les écritures doivent être lettrées.\n            Vous pouvez sélectionner une ou plusieurs méthodes de lettrage\n            qui seront lancées successivement pour identifier les écritures\n            devant être lettrées.          </p>\n        "
 
 #. module: account_easy_reconcile
 #: field:account.easy.reconcile,account:0
@@ -242,89 +45,6 @@ msgstr "Lettrage automatisé"
 #: field:easy.reconcile.simple.reference,account_id:0
 msgid "Account"
 msgstr "Compte"
-
-#. module: account_easy_reconcile
-#: field:account.easy.reconcile.method,task_id:0
-msgid "Task"
-msgstr "Tâche"
-
-#. module: account_easy_reconcile
-#: field:account.easy.reconcile,name:0
-msgid "Name"
-msgstr "Nom"
-
-#. module: account_easy_reconcile
-#: view:account.easy.reconcile:0
-msgid "Simple. Amount and Partner"
-msgstr "Simple. Montant et partenaire"
-
-#. module: account_easy_reconcile
-#: view:account.easy.reconcile:0
-msgid "Start Auto Reconcilation"
-msgstr "Lancer le lettrage automatisé"
-
-#. module: account_easy_reconcile
-#: model:ir.model,name:account_easy_reconcile.model_easy_reconcile_simple_name
-msgid "easy.reconcile.simple.name"
-msgstr "easy.reconcile.simple.name"
-
-#. module: account_easy_reconcile
-#: field:account.easy.reconcile.method,filter:0
-#: field:easy.reconcile.base,filter:0
-#: field:easy.reconcile.options,filter:0
-#: field:easy.reconcile.simple,filter:0
-#: field:easy.reconcile.simple.name,filter:0
-#: field:easy.reconcile.simple.partner,filter:0
-#: field:easy.reconcile.simple.reference,filter:0
-msgid "Filter"
-msgstr "Filtre"
-
-#. module: account_easy_reconcile
-#: view:account.easy.reconcile:0
-msgid ""
-"Match one debit line vs one credit line. Do not allow partial "
-"reconciliation. The lines should have the same amount (with the write-off) "
-"and the same partner to be reconciled."
-msgstr ""
-"Lettre un débit avec un crédit ayant le même montant et le même partenaire. "
-"Le lettrage ne peut être partiel (écriture d'ajustement en cas d'écart)."
-
-#. module: account_easy_reconcile
-#: field:easy.reconcile.history,easy_reconcile_id:0
-msgid "Reconcile Profile"
-msgstr "Profil de réconciliation"
-
-#. module: account_easy_reconcile
-#: model:ir.model,name:account_easy_reconcile.model_account_easy_reconcile_method
-msgid "reconcile method for account_easy_reconcile"
-msgstr "Méthode de lettrage"
-
-#. module: account_easy_reconcile
-#: view:account.easy.reconcile:0
-msgid "Start Auto Reconciliation"
-msgstr "Lancer le lettrage automatisé"
-
-#. module: account_easy_reconcile
-#: code:addons/account_easy_reconcile/easy_reconcile.py:233
-#, python-format
-msgid "Error"
-msgstr "Erreur"
-
-#. module: account_easy_reconcile
-#: code:addons/account_easy_reconcile/easy_reconcile.py:258
-#, python-format
-msgid "There is no history of reconciled items on the task: %s."
-msgstr "Il n'y a pas d'historique d'écritures lettrées sur la tâche: %s."
-
-#. module: account_easy_reconcile
-#: view:account.easy.reconcile:0
-msgid ""
-"Match one debit line vs one credit line. Do not allow partial "
-"reconciliation. The lines should have the same amount (with the write-off) "
-"and the same name to be reconciled."
-msgstr ""
-"Lettre un débit avec un crédit ayant le même montant et la même description. "
-"Le lettrage ne peut être partiel (écriture d'ajustement en cas d'écart)."
 
 #. module: account_easy_reconcile
 #: field:account.easy.reconcile.method,account_lost_id:0
@@ -338,56 +58,99 @@ msgid "Account Lost"
 msgstr "Compte de pertes"
 
 #. module: account_easy_reconcile
-#: view:easy.reconcile.history:0
-msgid "Reconciliation Profile"
-msgstr "Profil de réconciliation"
+#: field:account.easy.reconcile.method,account_profit_id:0
+#: field:easy.reconcile.base,account_profit_id:0
+#: field:easy.reconcile.options,account_profit_id:0
+#: field:easy.reconcile.simple,account_profit_id:0
+#: field:easy.reconcile.simple.name,account_profit_id:0
+#: field:easy.reconcile.simple.partner,account_profit_id:0
+#: field:easy.reconcile.simple.reference,account_profit_id:0
+msgid "Account Profit"
+msgstr "Compte de profits"
 
 #. module: account_easy_reconcile
-#: view:account.easy.reconcile:0
-#: field:account.easy.reconcile,history_ids:0
-msgid "History"
-msgstr "Historique"
+#: help:account.easy.reconcile.method,analytic_account_id:0
+#: help:easy.reconcile.base,analytic_account_id:0
+#: help:easy.reconcile.options,analytic_account_id:0
+#: help:easy.reconcile.simple,analytic_account_id:0
+#: help:easy.reconcile.simple.name,analytic_account_id:0
+#: help:easy.reconcile.simple.partner,analytic_account_id:0
+#: help:easy.reconcile.simple.reference,analytic_account_id:0
+msgid "Analytic account for the write-off"
+msgstr ""
 
 #. module: account_easy_reconcile
-#: view:account.easy.reconcile:0
-#: view:easy.reconcile.history:0
-msgid "Go to reconciled items"
-msgstr "Voir les entrées lettrées"
+#: field:account.easy.reconcile.method,analytic_account_id:0
+#: field:easy.reconcile.base,analytic_account_id:0
+#: field:easy.reconcile.options,analytic_account_id:0
+#: field:easy.reconcile.simple,analytic_account_id:0
+#: field:easy.reconcile.simple.name,analytic_account_id:0
+#: field:easy.reconcile.simple.partner,analytic_account_id:0
+#: field:easy.reconcile.simple.reference,analytic_account_id:0
+msgid "Analytic_account"
+msgstr ""
 
 #. module: account_easy_reconcile
-#: view:account.easy.reconcile:0
-msgid "Profile Information"
-msgstr "Information sur le profil"
+#: view:account.easy.reconcile:account_easy_reconcile.account_easy_reconcile_form
+#: view:account.easy.reconcile:account_easy_reconcile.account_easy_reconcile_tree
+msgid "Automatic Easy Reconcile"
+msgstr "Lettrage automatisé"
 
 #. module: account_easy_reconcile
-#: view:account.easy.reconcile.method:0
+#: view:account.easy.reconcile:account_easy_reconcile.account_easy_reconcile_form
+#: view:easy.reconcile.history:account_easy_reconcile.easy_reconcile_history_form
+#: view:easy.reconcile.history:account_easy_reconcile.easy_reconcile_history_tree
+#: view:easy.reconcile.history:account_easy_reconcile.view_easy_reconcile_history_search
+msgid "Automatic Easy Reconcile History"
+msgstr "Historique des lettrages automatisés"
+
+#. module: account_easy_reconcile
+#: view:account.easy.reconcile.method:account_easy_reconcile.account_easy_reconcile_method_form
+#: view:account.easy.reconcile.method:account_easy_reconcile.account_easy_reconcile_method_tree
 msgid "Automatic Easy Reconcile Method"
 msgstr "Méthode de lettrage automatisé"
 
 #. module: account_easy_reconcile
-#: view:account.easy.reconcile:0
-msgid "Simple. Amount and Reference"
-msgstr "Simple. Montant et référence"
+#: model:ir.model,name:account_easy_reconcile.model_res_company
+msgid "Companies"
+msgstr ""
 
 #. module: account_easy_reconcile
-#: view:account.easy.reconcile:0
-msgid "Display items partially reconciled on the last run"
-msgstr "Afficher les entrées partiellement lettrées au dernier lettrage"
+#: field:account.easy.reconcile,company_id:0
+#: field:account.easy.reconcile.method,company_id:0
+#: field:easy.reconcile.history,company_id:0
+msgid "Company"
+msgstr "Société"
 
 #. module: account_easy_reconcile
-#: field:account.easy.reconcile.method,sequence:0
-msgid "Sequence"
-msgstr "Séquence"
+#: view:account.easy.reconcile:account_easy_reconcile.account_easy_reconcile_form
+msgid "Configuration"
+msgstr "Configuration"
 
 #. module: account_easy_reconcile
-#: model:ir.model,name:account_easy_reconcile.model_easy_reconcile_simple
-msgid "easy.reconcile.simple"
-msgstr "easy.reconcile.simple"
+#: field:account.easy.reconcile,create_uid:0
+#: field:account.easy.reconcile.method,create_uid:0
+#: field:easy.reconcile.history,create_uid:0
+#: field:easy.reconcile.simple.name,create_uid:0
+#: field:easy.reconcile.simple.partner,create_uid:0
+#: field:easy.reconcile.simple.reference,create_uid:0
+msgid "Created by"
+msgstr ""
 
 #. module: account_easy_reconcile
-#: view:easy.reconcile.history:0
-msgid "Reconciliations of last 7 days"
-msgstr "Lettrages des 7 derniers jours"
+#: field:account.easy.reconcile,create_date:0
+#: field:account.easy.reconcile.method,create_date:0
+#: field:easy.reconcile.history,create_date:0
+#: field:easy.reconcile.simple.name,create_date:0
+#: field:easy.reconcile.simple.partner,create_date:0
+#: field:easy.reconcile.simple.reference,create_date:0
+msgid "Created on"
+msgstr ""
+
+#. module: account_easy_reconcile
+#: view:easy.reconcile.history:account_easy_reconcile.view_easy_reconcile_history_search
+msgid "Date"
+msgstr "Date"
 
 #. module: account_easy_reconcile
 #: field:account.easy.reconcile.method,date_base_on:0
@@ -401,11 +164,135 @@ msgid "Date of reconciliation"
 msgstr "Date de lettrage"
 
 #. module: account_easy_reconcile
-#: code:addons/account_easy_reconcile/easy_reconcile_history.py:104
-#: field:easy.reconcile.history,reconcile_partial_ids:0
-#, python-format
-msgid "Partial Reconciliations"
-msgstr "Lettrages partiels"
+#: help:account.easy.reconcile,message_last_post:0
+msgid "Date of the last message posted on the record."
+msgstr ""
+
+#. module: account_easy_reconcile
+#: view:account.easy.reconcile:account_easy_reconcile.account_easy_reconcile_form
+#: view:account.easy.reconcile:account_easy_reconcile.account_easy_reconcile_tree
+msgid "Display items partially reconciled on the last run"
+msgstr "Afficher les entrées partiellement lettrées au dernier lettrage"
+
+#. module: account_easy_reconcile
+#: view:account.easy.reconcile:account_easy_reconcile.account_easy_reconcile_form
+#: view:account.easy.reconcile:account_easy_reconcile.account_easy_reconcile_tree
+msgid "Display items reconciled on the last run"
+msgstr "Voir les entrées lettrées au dernier lettrage"
+
+#. module: account_easy_reconcile
+#: model:ir.actions.act_window,name:account_easy_reconcile.action_account_easy_reconcile
+#: model:ir.ui.menu,name:account_easy_reconcile.menu_easy_reconcile
+msgid "Easy Automatic Reconcile"
+msgstr "Lettrage automatisé"
+
+#. module: account_easy_reconcile
+#: model:ir.actions.act_window,name:account_easy_reconcile.action_easy_reconcile_history
+msgid "Easy Automatic Reconcile History"
+msgstr "Lettrage automatisé"
+
+#. module: account_easy_reconcile
+#: field:account.easy.reconcile.method,filter:0
+#: field:easy.reconcile.base,filter:0 field:easy.reconcile.options,filter:0
+#: field:easy.reconcile.simple,filter:0
+#: field:easy.reconcile.simple.name,filter:0
+#: field:easy.reconcile.simple.partner,filter:0
+#: field:easy.reconcile.simple.reference,filter:0
+msgid "Filter"
+msgstr "Filtre"
+
+#. module: account_easy_reconcile
+#: field:account.easy.reconcile,message_follower_ids:0
+msgid "Followers"
+msgstr ""
+
+#. module: account_easy_reconcile
+#: field:account.easy.reconcile.method,income_exchange_account_id:0
+#: field:easy.reconcile.base,income_exchange_account_id:0
+#: field:easy.reconcile.options,income_exchange_account_id:0
+#: field:easy.reconcile.simple,income_exchange_account_id:0
+#: field:easy.reconcile.simple.name,income_exchange_account_id:0
+#: field:easy.reconcile.simple.partner,income_exchange_account_id:0
+#: field:easy.reconcile.simple.reference,income_exchange_account_id:0
+msgid "Gain Exchange Rate Account"
+msgstr "Compte de gain de change"
+
+#. module: account_easy_reconcile
+#: view:account.easy.reconcile:account_easy_reconcile.account_easy_reconcile_form
+msgid "Go to partial reconciled items"
+msgstr ""
+
+#. module: account_easy_reconcile
+#: view:account.easy.reconcile:account_easy_reconcile.account_easy_reconcile_form
+#: view:easy.reconcile.history:account_easy_reconcile.easy_reconcile_history_form
+#: view:easy.reconcile.history:account_easy_reconcile.easy_reconcile_history_tree
+msgid "Go to partially reconciled items"
+msgstr "Voir les entrées partiellement lettrées"
+
+#. module: account_easy_reconcile
+#: view:account.easy.reconcile:account_easy_reconcile.account_easy_reconcile_form
+#: view:easy.reconcile.history:account_easy_reconcile.easy_reconcile_history_form
+#: view:easy.reconcile.history:account_easy_reconcile.easy_reconcile_history_tree
+msgid "Go to reconciled items"
+msgstr "Voir les entrées lettrées"
+
+#. module: account_easy_reconcile
+#: view:account.easy.reconcile:account_easy_reconcile.account_easy_reconcile_form
+msgid "Go to unreconciled items"
+msgstr ""
+
+#. module: account_easy_reconcile
+#: view:easy.reconcile.history:account_easy_reconcile.view_easy_reconcile_history_search
+msgid "Group By..."
+msgstr "Grouper par..."
+
+#. module: account_easy_reconcile
+#: view:account.easy.reconcile:account_easy_reconcile.account_easy_reconcile_form
+#: field:account.easy.reconcile,history_ids:0
+msgid "History"
+msgstr "Historique"
+
+#. module: account_easy_reconcile
+#: model:ir.actions.act_window,name:account_easy_reconcile.act_easy_reconcile_to_history
+msgid "History Details"
+msgstr "Détails de l'historique"
+
+#. module: account_easy_reconcile
+#: help:account.easy.reconcile,message_summary:0
+msgid ""
+"Holds the Chatter summary (number of messages, ...). This summary is "
+"directly in html format in order to be inserted in kanban views."
+msgstr ""
+
+#. module: account_easy_reconcile
+#: field:res.company,reconciliation_commit_every:0
+msgid "How often to commit when performing automatic reconciliation."
+msgstr ""
+
+#. module: account_easy_reconcile
+#: field:account.easy.reconcile,id:0 field:account.easy.reconcile.method,id:0
+#: field:easy.reconcile.base,id:0 field:easy.reconcile.history,id:0
+#: field:easy.reconcile.options,id:0 field:easy.reconcile.simple,id:0
+#: field:easy.reconcile.simple.name,id:0
+#: field:easy.reconcile.simple.partner,id:0
+#: field:easy.reconcile.simple.reference,id:0
+msgid "ID"
+msgstr ""
+
+#. module: account_easy_reconcile
+#: help:account.easy.reconcile,message_unread:0
+msgid "If checked new messages require your attention."
+msgstr ""
+
+#. module: account_easy_reconcile
+#: view:account.easy.reconcile:account_easy_reconcile.account_easy_reconcile_form
+msgid "Information"
+msgstr "Information"
+
+#. module: account_easy_reconcile
+#: field:account.easy.reconcile,message_is_follower:0
+msgid "Is a Follower"
+msgstr ""
 
 #. module: account_easy_reconcile
 #: field:account.easy.reconcile.method,journal_id:0
@@ -419,14 +306,34 @@ msgid "Journal"
 msgstr "Journal"
 
 #. module: account_easy_reconcile
-#: model:ir.model,name:account_easy_reconcile.model_easy_reconcile_simple_reference
-msgid "easy.reconcile.simple.reference"
-msgstr "easy.reconcile.simple.reference"
+#: field:account.easy.reconcile,message_last_post:0
+msgid "Last Message Date"
+msgstr ""
 
 #. module: account_easy_reconcile
-#: model:ir.model,name:account_easy_reconcile.model_account_easy_reconcile
-msgid "account easy reconcile"
-msgstr "Lettrage automatisé"
+#: field:account.easy.reconcile,write_uid:0
+#: field:account.easy.reconcile.method,write_uid:0
+#: field:easy.reconcile.history,write_uid:0
+#: field:easy.reconcile.simple.name,write_uid:0
+#: field:easy.reconcile.simple.partner,write_uid:0
+#: field:easy.reconcile.simple.reference,write_uid:0
+msgid "Last Updated by"
+msgstr ""
+
+#. module: account_easy_reconcile
+#: field:account.easy.reconcile,write_date:0
+#: field:account.easy.reconcile.method,write_date:0
+#: field:easy.reconcile.history,write_date:0
+#: field:easy.reconcile.simple.name,write_date:0
+#: field:easy.reconcile.simple.partner,write_date:0
+#: field:easy.reconcile.simple.reference,write_date:0
+msgid "Last Updated on"
+msgstr ""
+
+#. module: account_easy_reconcile
+#: help:res.company,reconciliation_commit_every:0
+msgid "Leave zero to commit only at the end of the process."
+msgstr ""
 
 #. module: account_easy_reconcile
 #: field:account.easy.reconcile.method,expense_exchange_account_id:0
@@ -440,12 +347,220 @@ msgid "Loss Exchange Rate Account"
 msgstr "Compte de perte de change"
 
 #. module: account_easy_reconcile
-#: field:account.easy.reconcile.method,income_exchange_account_id:0
-#: field:easy.reconcile.base,income_exchange_account_id:0
-#: field:easy.reconcile.options,income_exchange_account_id:0
-#: field:easy.reconcile.simple,income_exchange_account_id:0
-#: field:easy.reconcile.simple.name,income_exchange_account_id:0
-#: field:easy.reconcile.simple.partner,income_exchange_account_id:0
-#: field:easy.reconcile.simple.reference,income_exchange_account_id:0
-msgid "Gain Exchange Rate Account"
-msgstr "Compte de gain de change"
+#: view:account.easy.reconcile:account_easy_reconcile.account_easy_reconcile_form
+msgid ""
+"Match one debit line vs one credit line. Do not allow partial "
+"reconciliation. The lines should have the same amount (with the write-off) "
+"and the same name to be reconciled."
+msgstr "Lettre un débit avec un crédit ayant le même montant et la même description. Le lettrage ne peut être partiel (écriture d'ajustement en cas d'écart)."
+
+#. module: account_easy_reconcile
+#: view:account.easy.reconcile:account_easy_reconcile.account_easy_reconcile_form
+msgid ""
+"Match one debit line vs one credit line. Do not allow partial "
+"reconciliation. The lines should have the same amount (with the write-off) "
+"and the same partner to be reconciled."
+msgstr "Lettre un débit avec un crédit ayant le même montant et le même partenaire. Le lettrage ne peut être partiel (écriture d'ajustement en cas d'écart)."
+
+#. module: account_easy_reconcile
+#: view:account.easy.reconcile:account_easy_reconcile.account_easy_reconcile_form
+msgid ""
+"Match one debit line vs one credit line. Do not allow partial "
+"reconciliation. The lines should have the same amount (with the write-off) "
+"and the same reference to be reconciled."
+msgstr "Lettre un débit avec un crédit ayant le même montant et la même référence. Le lettrage ne peut être partiel (écriture d'ajustement en cas d'écart)."
+
+#. module: account_easy_reconcile
+#: field:account.easy.reconcile,message_ids:0
+msgid "Messages"
+msgstr ""
+
+#. module: account_easy_reconcile
+#: help:account.easy.reconcile,message_ids:0
+msgid "Messages and communication history"
+msgstr ""
+
+#. module: account_easy_reconcile
+#: field:account.easy.reconcile,reconcile_method:0
+msgid "Method"
+msgstr "Méthode"
+
+#. module: account_easy_reconcile
+#: field:account.easy.reconcile,name:0
+msgid "Name"
+msgstr "Nom"
+
+#. module: account_easy_reconcile
+#: view:account.config.settings:account_easy_reconcile.view_account_config
+msgid "Options"
+msgstr ""
+
+#. module: account_easy_reconcile
+#: code:addons/account_easy_reconcile/easy_reconcile_history.py:104
+#: view:easy.reconcile.history:account_easy_reconcile.easy_reconcile_history_form
+#: field:easy.reconcile.history,reconcile_ids:0
+#: field:easy.reconcile.history,reconcile_partial_ids:0
+#, python-format
+msgid "Partial Reconciliations"
+msgstr "Lettrages partiels"
+
+#. module: account_easy_reconcile
+#: code:addons/account_easy_reconcile/easy_reconcile.py:334
+#, python-format
+msgid "Partial reconciled items"
+msgstr ""
+
+#. module: account_easy_reconcile
+#: view:account.easy.reconcile:account_easy_reconcile.account_easy_reconcile_form
+msgid "Profile Information"
+msgstr "Information sur le profil"
+
+#. module: account_easy_reconcile
+#: field:easy.reconcile.history,easy_reconcile_id:0
+msgid "Reconcile Profile"
+msgstr "Profil de réconciliation"
+
+#. module: account_easy_reconcile
+#: view:account.config.settings:account_easy_reconcile.view_account_config
+msgid "Reconciliation"
+msgstr ""
+
+#. module: account_easy_reconcile
+#: view:easy.reconcile.history:account_easy_reconcile.view_easy_reconcile_history_search
+msgid "Reconciliation Profile"
+msgstr "Profil de réconciliation"
+
+#. module: account_easy_reconcile
+#: code:addons/account_easy_reconcile/easy_reconcile_history.py:100
+#: view:easy.reconcile.history:account_easy_reconcile.easy_reconcile_history_form
+#, python-format
+msgid "Reconciliations"
+msgstr "Lettrages"
+
+#. module: account_easy_reconcile
+#: view:easy.reconcile.history:account_easy_reconcile.view_easy_reconcile_history_search
+msgid "Reconciliations of last 7 days"
+msgstr "Lettrages des 7 derniers jours"
+
+#. module: account_easy_reconcile
+#: field:easy.reconcile.base,partner_ids:0
+#: field:easy.reconcile.simple,partner_ids:0
+#: field:easy.reconcile.simple.name,partner_ids:0
+#: field:easy.reconcile.simple.partner,partner_ids:0
+#: field:easy.reconcile.simple.reference,partner_ids:0
+msgid "Restrict on partners"
+msgstr "Filtrer sur des partenaires"
+
+#. module: account_easy_reconcile
+#: field:easy.reconcile.history,date:0
+msgid "Run date"
+msgstr "Date de lancement"
+
+#. module: account_easy_reconcile
+#: field:account.easy.reconcile.method,sequence:0
+msgid "Sequence"
+msgstr "Séquence"
+
+#. module: account_easy_reconcile
+#: view:account.easy.reconcile:account_easy_reconcile.account_easy_reconcile_form
+msgid "Simple. Amount and Name"
+msgstr "Simple. Montant et description"
+
+#. module: account_easy_reconcile
+#: view:account.easy.reconcile:account_easy_reconcile.account_easy_reconcile_form
+msgid "Simple. Amount and Partner"
+msgstr "Simple. Montant et partenaire"
+
+#. module: account_easy_reconcile
+#: view:account.easy.reconcile:account_easy_reconcile.account_easy_reconcile_form
+msgid "Simple. Amount and Reference"
+msgstr "Simple. Montant et référence"
+
+#. module: account_easy_reconcile
+#: view:account.easy.reconcile:account_easy_reconcile.account_easy_reconcile_tree
+msgid "Start Auto Reconcilation"
+msgstr "Lancer le lettrage automatisé"
+
+#. module: account_easy_reconcile
+#: view:account.easy.reconcile:account_easy_reconcile.account_easy_reconcile_form
+msgid "Start Auto Reconciliation"
+msgstr "Lancer le lettrage automatisé"
+
+#. module: account_easy_reconcile
+#: field:account.easy.reconcile,message_summary:0
+msgid "Summary"
+msgstr ""
+
+#. module: account_easy_reconcile
+#: field:account.easy.reconcile.method,task_id:0
+msgid "Task"
+msgstr "Tâche"
+
+#. module: account_easy_reconcile
+#: help:account.easy.reconcile.method,sequence:0
+msgid "The sequence field is used to order the reconcile method"
+msgstr "La séquence détermine l'ordre des méthodes de lettrage"
+
+#. module: account_easy_reconcile
+#: code:addons/account_easy_reconcile/easy_reconcile.py:294
+#, python-format
+msgid "There is no history of reconciled items on the task: %s."
+msgstr "Il n'y a pas d'historique d'écritures lettrées sur la tâche: %s."
+
+#. module: account_easy_reconcile
+#: code:addons/account_easy_reconcile/easy_reconcile.py:269
+#, python-format
+msgid "There was an error during reconciliation : %s"
+msgstr ""
+
+#. module: account_easy_reconcile
+#: view:easy.reconcile.history:account_easy_reconcile.view_easy_reconcile_history_search
+msgid "Today"
+msgstr "Aujourd'hui"
+
+#. module: account_easy_reconcile
+#: view:easy.reconcile.history:account_easy_reconcile.view_easy_reconcile_history_search
+msgid "Todays' Reconcilations"
+msgstr "Lettrages du jour"
+
+#. module: account_easy_reconcile
+#: field:account.easy.reconcile.method,name:0
+msgid "Type"
+msgstr "Type"
+
+#. module: account_easy_reconcile
+#: field:account.easy.reconcile,message_unread:0
+msgid "Unread Messages"
+msgstr ""
+
+#. module: account_easy_reconcile
+#: code:addons/account_easy_reconcile/easy_reconcile.py:321
+#, python-format
+msgid "Unreconciled items"
+msgstr ""
+
+#. module: account_easy_reconcile
+#: field:account.easy.reconcile.method,write_off:0
+#: field:easy.reconcile.base,write_off:0
+#: field:easy.reconcile.options,write_off:0
+#: field:easy.reconcile.simple,write_off:0
+#: field:easy.reconcile.simple.name,write_off:0
+#: field:easy.reconcile.simple.partner,write_off:0
+#: field:easy.reconcile.simple.reference,write_off:0
+msgid "Write off allowed"
+msgstr "Écart autorisé"
+
+#. module: account_easy_reconcile
+#: model:ir.model,name:account_easy_reconcile.model_account_easy_reconcile
+msgid "account easy reconcile"
+msgstr "Lettrage automatisé"
+
+#. module: account_easy_reconcile
+#: view:account.config.settings:account_easy_reconcile.view_account_config
+msgid "eInvoicing & Payments"
+msgstr ""
+
+#. module: account_easy_reconcile
+#: model:ir.model,name:account_easy_reconcile.model_account_easy_reconcile_method
+msgid "reconcile method for account_easy_reconcile"
+msgstr "Méthode de lettrage"
