@@ -3,13 +3,14 @@
 # * account_easy_reconcile
 # 
 # Translators:
+# Matjaž Mozetič <m.mozetic@matmoz.si>, 2015
 msgid ""
 msgstr ""
 "Project-Id-Version: bank-statement-reconcile (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-09-11 12:09+0000\n"
-"PO-Revision-Date: 2015-09-10 11:31+0000\n"
-"Last-Translator: <>\n"
+"POT-Creation-Date: 2015-09-23 15:49+0000\n"
+"PO-Revision-Date: 2015-09-29 05:22+0000\n"
+"Last-Translator: Matjaž Mozetič <m.mozetic@matmoz.si>\n"
 "Language-Team: Slovenian (http://www.transifex.com/oca/OCA-bank-statement-reconcile-8-0/language/sl/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -20,7 +21,7 @@ msgstr ""
 #. module: account_easy_reconcile
 #: view:easy.reconcile.history:account_easy_reconcile.view_easy_reconcile_history_search
 msgid "7 Days"
-msgstr ""
+msgstr "7 dni"
 
 #. module: account_easy_reconcile
 #: model:ir.actions.act_window,help:account_easy_reconcile.action_account_easy_reconcile
@@ -34,7 +35,7 @@ msgid ""
 "            be run sequentially to match the entries between them.\n"
 "          </p>\n"
 "        "
-msgstr ""
+msgstr "<p class=\"oe_view_nocontent_create\">\n            Dodaj profil za uskladitev kontov.\n          </p><p>\n            Uskladitveni profil določa, kako naj se\n            vnosi konta usklajujejo.\n            Izberete lahko eno ali več usklajevalnih metod, ki bodo\n            zagnane zapovrstjo za medsebojno primerjavo vnosov.\n          </p>\n        "
 
 #. module: account_easy_reconcile
 #: field:account.easy.reconcile,account:0
@@ -44,7 +45,7 @@ msgstr ""
 #: field:easy.reconcile.simple.partner,account_id:0
 #: field:easy.reconcile.simple.reference,account_id:0
 msgid "Account"
-msgstr ""
+msgstr "Konto"
 
 #. module: account_easy_reconcile
 #: field:account.easy.reconcile.method,account_lost_id:0
@@ -55,7 +56,7 @@ msgstr ""
 #: field:easy.reconcile.simple.partner,account_lost_id:0
 #: field:easy.reconcile.simple.reference,account_lost_id:0
 msgid "Account Lost"
-msgstr ""
+msgstr "Konto izgube"
 
 #. module: account_easy_reconcile
 #: field:account.easy.reconcile.method,account_profit_id:0
@@ -66,7 +67,7 @@ msgstr ""
 #: field:easy.reconcile.simple.partner,account_profit_id:0
 #: field:easy.reconcile.simple.reference,account_profit_id:0
 msgid "Account Profit"
-msgstr ""
+msgstr "Konto dobička"
 
 #. module: account_easy_reconcile
 #: help:account.easy.reconcile.method,analytic_account_id:0
@@ -77,7 +78,7 @@ msgstr ""
 #: help:easy.reconcile.simple.partner,analytic_account_id:0
 #: help:easy.reconcile.simple.reference,analytic_account_id:0
 msgid "Analytic account for the write-off"
-msgstr ""
+msgstr "Konto odpisov"
 
 #. module: account_easy_reconcile
 #: field:account.easy.reconcile.method,analytic_account_id:0
@@ -88,13 +89,13 @@ msgstr ""
 #: field:easy.reconcile.simple.partner,analytic_account_id:0
 #: field:easy.reconcile.simple.reference,analytic_account_id:0
 msgid "Analytic_account"
-msgstr ""
+msgstr "Analitični konto"
 
 #. module: account_easy_reconcile
 #: view:account.easy.reconcile:account_easy_reconcile.account_easy_reconcile_form
 #: view:account.easy.reconcile:account_easy_reconcile.account_easy_reconcile_tree
 msgid "Automatic Easy Reconcile"
-msgstr ""
+msgstr "Samodejno preprosto usklajevanje"
 
 #. module: account_easy_reconcile
 #: view:account.easy.reconcile:account_easy_reconcile.account_easy_reconcile_form
@@ -102,18 +103,18 @@ msgstr ""
 #: view:easy.reconcile.history:account_easy_reconcile.easy_reconcile_history_tree
 #: view:easy.reconcile.history:account_easy_reconcile.view_easy_reconcile_history_search
 msgid "Automatic Easy Reconcile History"
-msgstr ""
+msgstr "Zgodovina samodejnih preprostih usklajevanj"
 
 #. module: account_easy_reconcile
 #: view:account.easy.reconcile.method:account_easy_reconcile.account_easy_reconcile_method_form
 #: view:account.easy.reconcile.method:account_easy_reconcile.account_easy_reconcile_method_tree
 msgid "Automatic Easy Reconcile Method"
-msgstr ""
+msgstr "Metoda samodejne preproste uskladitve"
 
 #. module: account_easy_reconcile
 #: model:ir.model,name:account_easy_reconcile.model_res_company
 msgid "Companies"
-msgstr ""
+msgstr "Družbe"
 
 #. module: account_easy_reconcile
 #: field:account.easy.reconcile,company_id:0
@@ -125,7 +126,7 @@ msgstr "Družba"
 #. module: account_easy_reconcile
 #: view:account.easy.reconcile:account_easy_reconcile.account_easy_reconcile_form
 msgid "Configuration"
-msgstr ""
+msgstr "Nastavitve"
 
 #. module: account_easy_reconcile
 #: field:account.easy.reconcile,create_uid:0
@@ -135,7 +136,7 @@ msgstr ""
 #: field:easy.reconcile.simple.partner,create_uid:0
 #: field:easy.reconcile.simple.reference,create_uid:0
 msgid "Created by"
-msgstr ""
+msgstr "Ustvaril"
 
 #. module: account_easy_reconcile
 #: field:account.easy.reconcile,create_date:0
@@ -145,12 +146,12 @@ msgstr ""
 #: field:easy.reconcile.simple.partner,create_date:0
 #: field:easy.reconcile.simple.reference,create_date:0
 msgid "Created on"
-msgstr ""
+msgstr "Ustvarjeno"
 
 #. module: account_easy_reconcile
 #: view:easy.reconcile.history:account_easy_reconcile.view_easy_reconcile_history_search
 msgid "Date"
-msgstr ""
+msgstr "Datum"
 
 #. module: account_easy_reconcile
 #: field:account.easy.reconcile.method,date_base_on:0
@@ -161,35 +162,35 @@ msgstr ""
 #: field:easy.reconcile.simple.partner,date_base_on:0
 #: field:easy.reconcile.simple.reference,date_base_on:0
 msgid "Date of reconciliation"
-msgstr ""
+msgstr "Datum uskladitve"
 
 #. module: account_easy_reconcile
 #: help:account.easy.reconcile,message_last_post:0
 msgid "Date of the last message posted on the record."
-msgstr ""
+msgstr "Datum zadnjega objavljenega sporočila na zapisu."
 
 #. module: account_easy_reconcile
 #: view:account.easy.reconcile:account_easy_reconcile.account_easy_reconcile_form
 #: view:account.easy.reconcile:account_easy_reconcile.account_easy_reconcile_tree
 msgid "Display items partially reconciled on the last run"
-msgstr ""
+msgstr "Prikaz delno usklajenih postavk po zadnjem zagonu"
 
 #. module: account_easy_reconcile
 #: view:account.easy.reconcile:account_easy_reconcile.account_easy_reconcile_form
 #: view:account.easy.reconcile:account_easy_reconcile.account_easy_reconcile_tree
 msgid "Display items reconciled on the last run"
-msgstr ""
+msgstr "Prikaz usklajenih postavk po zadnjem zagonu"
 
 #. module: account_easy_reconcile
 #: model:ir.actions.act_window,name:account_easy_reconcile.action_account_easy_reconcile
 #: model:ir.ui.menu,name:account_easy_reconcile.menu_easy_reconcile
 msgid "Easy Automatic Reconcile"
-msgstr ""
+msgstr "Samodejno preprosto usklajevanje"
 
 #. module: account_easy_reconcile
 #: model:ir.actions.act_window,name:account_easy_reconcile.action_easy_reconcile_history
 msgid "Easy Automatic Reconcile History"
-msgstr ""
+msgstr "Zgodovina samodejnih preprostih usklajevanj"
 
 #. module: account_easy_reconcile
 #: field:account.easy.reconcile.method,filter:0
@@ -199,12 +200,12 @@ msgstr ""
 #: field:easy.reconcile.simple.partner,filter:0
 #: field:easy.reconcile.simple.reference,filter:0
 msgid "Filter"
-msgstr ""
+msgstr "Filter"
 
 #. module: account_easy_reconcile
 #: field:account.easy.reconcile,message_follower_ids:0
 msgid "Followers"
-msgstr ""
+msgstr "Sledilci"
 
 #. module: account_easy_reconcile
 #: field:account.easy.reconcile.method,income_exchange_account_id:0
@@ -215,59 +216,59 @@ msgstr ""
 #: field:easy.reconcile.simple.partner,income_exchange_account_id:0
 #: field:easy.reconcile.simple.reference,income_exchange_account_id:0
 msgid "Gain Exchange Rate Account"
-msgstr ""
+msgstr "Konto menjalnega tečaja dobička"
 
 #. module: account_easy_reconcile
 #: view:account.easy.reconcile:account_easy_reconcile.account_easy_reconcile_form
 msgid "Go to partial reconciled items"
-msgstr ""
+msgstr "Pojdi na delno usklajene postavke"
 
 #. module: account_easy_reconcile
 #: view:account.easy.reconcile:account_easy_reconcile.account_easy_reconcile_form
 #: view:easy.reconcile.history:account_easy_reconcile.easy_reconcile_history_form
 #: view:easy.reconcile.history:account_easy_reconcile.easy_reconcile_history_tree
 msgid "Go to partially reconciled items"
-msgstr ""
+msgstr "Pojdi na delno usklajene postavke"
 
 #. module: account_easy_reconcile
 #: view:account.easy.reconcile:account_easy_reconcile.account_easy_reconcile_form
 #: view:easy.reconcile.history:account_easy_reconcile.easy_reconcile_history_form
 #: view:easy.reconcile.history:account_easy_reconcile.easy_reconcile_history_tree
 msgid "Go to reconciled items"
-msgstr ""
+msgstr "Pojdi na usklajene postavke"
 
 #. module: account_easy_reconcile
 #: view:account.easy.reconcile:account_easy_reconcile.account_easy_reconcile_form
 msgid "Go to unreconciled items"
-msgstr ""
+msgstr "Pojdi na neusklajene postavke"
 
 #. module: account_easy_reconcile
 #: view:easy.reconcile.history:account_easy_reconcile.view_easy_reconcile_history_search
 msgid "Group By..."
-msgstr ""
+msgstr "Združi po..."
 
 #. module: account_easy_reconcile
 #: view:account.easy.reconcile:account_easy_reconcile.account_easy_reconcile_form
 #: field:account.easy.reconcile,history_ids:0
 msgid "History"
-msgstr ""
+msgstr "Zgodovina"
 
 #. module: account_easy_reconcile
 #: model:ir.actions.act_window,name:account_easy_reconcile.act_easy_reconcile_to_history
 msgid "History Details"
-msgstr ""
+msgstr "Podrobnosti o zgodovini"
 
 #. module: account_easy_reconcile
 #: help:account.easy.reconcile,message_summary:0
 msgid ""
 "Holds the Chatter summary (number of messages, ...). This summary is "
 "directly in html format in order to be inserted in kanban views."
-msgstr ""
+msgstr "Povzetek sporočanja (število sporočil, ...) neposredno v html formatu, da se lahko vstavlja v kanban prikaze."
 
 #. module: account_easy_reconcile
 #: field:res.company,reconciliation_commit_every:0
 msgid "How often to commit when performing automatic reconciliation."
-msgstr ""
+msgstr "Pogostost knjiženja ob samodejnem usklajevanju."
 
 #. module: account_easy_reconcile
 #: field:account.easy.reconcile,id:0 field:account.easy.reconcile.method,id:0
@@ -277,22 +278,22 @@ msgstr ""
 #: field:easy.reconcile.simple.partner,id:0
 #: field:easy.reconcile.simple.reference,id:0
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: account_easy_reconcile
 #: help:account.easy.reconcile,message_unread:0
 msgid "If checked new messages require your attention."
-msgstr ""
+msgstr "Označeno pomeni, da nova sporočila zahtevajo vašo pozornost."
 
 #. module: account_easy_reconcile
 #: view:account.easy.reconcile:account_easy_reconcile.account_easy_reconcile_form
 msgid "Information"
-msgstr ""
+msgstr "Informacije"
 
 #. module: account_easy_reconcile
 #: field:account.easy.reconcile,message_is_follower:0
 msgid "Is a Follower"
-msgstr ""
+msgstr "Je sledilec"
 
 #. module: account_easy_reconcile
 #: field:account.easy.reconcile.method,journal_id:0
@@ -303,12 +304,12 @@ msgstr ""
 #: field:easy.reconcile.simple.partner,journal_id:0
 #: field:easy.reconcile.simple.reference,journal_id:0
 msgid "Journal"
-msgstr ""
+msgstr "Dnevnik"
 
 #. module: account_easy_reconcile
 #: field:account.easy.reconcile,message_last_post:0
 msgid "Last Message Date"
-msgstr ""
+msgstr "Datum zadnjega sporočila"
 
 #. module: account_easy_reconcile
 #: field:account.easy.reconcile,write_uid:0
@@ -318,7 +319,7 @@ msgstr ""
 #: field:easy.reconcile.simple.partner,write_uid:0
 #: field:easy.reconcile.simple.reference,write_uid:0
 msgid "Last Updated by"
-msgstr ""
+msgstr "Zadnji posodobil"
 
 #. module: account_easy_reconcile
 #: field:account.easy.reconcile,write_date:0
@@ -328,12 +329,12 @@ msgstr ""
 #: field:easy.reconcile.simple.partner,write_date:0
 #: field:easy.reconcile.simple.reference,write_date:0
 msgid "Last Updated on"
-msgstr ""
+msgstr "Zadnjič posodobljeno"
 
 #. module: account_easy_reconcile
 #: help:res.company,reconciliation_commit_every:0
 msgid "Leave zero to commit only at the end of the process."
-msgstr ""
+msgstr "Za knjiženje le ob koncu procesa pustite prazno."
 
 #. module: account_easy_reconcile
 #: field:account.easy.reconcile.method,expense_exchange_account_id:0
@@ -344,7 +345,7 @@ msgstr ""
 #: field:easy.reconcile.simple.partner,expense_exchange_account_id:0
 #: field:easy.reconcile.simple.reference,expense_exchange_account_id:0
 msgid "Loss Exchange Rate Account"
-msgstr ""
+msgstr "Konto menjalnega tečaja izgube"
 
 #. module: account_easy_reconcile
 #: view:account.easy.reconcile:account_easy_reconcile.account_easy_reconcile_form
@@ -352,7 +353,7 @@ msgid ""
 "Match one debit line vs one credit line. Do not allow partial "
 "reconciliation. The lines should have the same amount (with the write-off) "
 "and the same name to be reconciled."
-msgstr ""
+msgstr "Primerjanje ene postavke v breme z eno postavko v dobro. Ne dovoli delnega usklajevanja.  Da bi se lahko uskladile, morajo imeti postavke isti znesek (z odpisom) in isti naziv."
 
 #. module: account_easy_reconcile
 #: view:account.easy.reconcile:account_easy_reconcile.account_easy_reconcile_form
@@ -360,7 +361,7 @@ msgid ""
 "Match one debit line vs one credit line. Do not allow partial "
 "reconciliation. The lines should have the same amount (with the write-off) "
 "and the same partner to be reconciled."
-msgstr ""
+msgstr "Primerjanje ene postavke v breme z eno postavko v dobro. Ne dovoli delnega usklajevanja.  Da bi se lahko uskladile, morajo imeti postavke isti znesek (z odpisom) in istega partnerja."
 
 #. module: account_easy_reconcile
 #: view:account.easy.reconcile:account_easy_reconcile.account_easy_reconcile_form
@@ -368,32 +369,32 @@ msgid ""
 "Match one debit line vs one credit line. Do not allow partial "
 "reconciliation. The lines should have the same amount (with the write-off) "
 "and the same reference to be reconciled."
-msgstr ""
+msgstr "Primerjanje ene postavke v breme z eno postavko v dobro. Ne dovoli delnega usklajevanja.  Da bi se lahko uskladile, morajo imeti postavke isti znesek (z odpisom) in isti sklic."
 
 #. module: account_easy_reconcile
 #: field:account.easy.reconcile,message_ids:0
 msgid "Messages"
-msgstr ""
+msgstr "Sporočila"
 
 #. module: account_easy_reconcile
 #: help:account.easy.reconcile,message_ids:0
 msgid "Messages and communication history"
-msgstr ""
+msgstr "Kronologija sporočil in komunikacij"
 
 #. module: account_easy_reconcile
 #: field:account.easy.reconcile,reconcile_method:0
 msgid "Method"
-msgstr ""
+msgstr "Metoda"
 
 #. module: account_easy_reconcile
 #: field:account.easy.reconcile,name:0
 msgid "Name"
-msgstr ""
+msgstr "Naziv"
 
 #. module: account_easy_reconcile
 #: view:account.config.settings:account_easy_reconcile.view_account_config
 msgid "Options"
-msgstr ""
+msgstr "Opcije"
 
 #. module: account_easy_reconcile
 #: code:addons/account_easy_reconcile/easy_reconcile_history.py:104
@@ -402,23 +403,23 @@ msgstr ""
 #: field:easy.reconcile.history,reconcile_partial_ids:0
 #, python-format
 msgid "Partial Reconciliations"
-msgstr ""
+msgstr "Delne uskladitve"
 
 #. module: account_easy_reconcile
 #: code:addons/account_easy_reconcile/easy_reconcile.py:334
 #, python-format
 msgid "Partial reconciled items"
-msgstr ""
+msgstr "Delno usklajene postavke"
 
 #. module: account_easy_reconcile
 #: view:account.easy.reconcile:account_easy_reconcile.account_easy_reconcile_form
 msgid "Profile Information"
-msgstr ""
+msgstr "Podatki o profilu"
 
 #. module: account_easy_reconcile
 #: field:easy.reconcile.history,easy_reconcile_id:0
 msgid "Reconcile Profile"
-msgstr ""
+msgstr "Usklajevalni profil"
 
 #. module: account_easy_reconcile
 #: view:account.config.settings:account_easy_reconcile.view_account_config
@@ -428,19 +429,19 @@ msgstr "Uskladitev"
 #. module: account_easy_reconcile
 #: view:easy.reconcile.history:account_easy_reconcile.view_easy_reconcile_history_search
 msgid "Reconciliation Profile"
-msgstr ""
+msgstr "Usklajevalni profil"
 
 #. module: account_easy_reconcile
 #: code:addons/account_easy_reconcile/easy_reconcile_history.py:100
 #: view:easy.reconcile.history:account_easy_reconcile.easy_reconcile_history_form
 #, python-format
 msgid "Reconciliations"
-msgstr ""
+msgstr "Uskladitve"
 
 #. module: account_easy_reconcile
 #: view:easy.reconcile.history:account_easy_reconcile.view_easy_reconcile_history_search
 msgid "Reconciliations of last 7 days"
-msgstr ""
+msgstr "Uskladitve v zadnjih 7 dneh"
 
 #. module: account_easy_reconcile
 #: field:easy.reconcile.base,partner_ids:0
@@ -449,95 +450,95 @@ msgstr ""
 #: field:easy.reconcile.simple.partner,partner_ids:0
 #: field:easy.reconcile.simple.reference,partner_ids:0
 msgid "Restrict on partners"
-msgstr ""
+msgstr "Omejitev na partnerjih"
 
 #. module: account_easy_reconcile
 #: field:easy.reconcile.history,date:0
 msgid "Run date"
-msgstr ""
+msgstr "Datum zagona"
 
 #. module: account_easy_reconcile
 #: field:account.easy.reconcile.method,sequence:0
 msgid "Sequence"
-msgstr ""
+msgstr "Zaporedje"
 
 #. module: account_easy_reconcile
 #: view:account.easy.reconcile:account_easy_reconcile.account_easy_reconcile_form
 msgid "Simple. Amount and Name"
-msgstr ""
+msgstr "Preprosto. Znesek in naziv"
 
 #. module: account_easy_reconcile
 #: view:account.easy.reconcile:account_easy_reconcile.account_easy_reconcile_form
 msgid "Simple. Amount and Partner"
-msgstr ""
+msgstr "Preprosto. Znesek in partner"
 
 #. module: account_easy_reconcile
 #: view:account.easy.reconcile:account_easy_reconcile.account_easy_reconcile_form
 msgid "Simple. Amount and Reference"
-msgstr ""
+msgstr "Preprosto. Znesek in sklic"
 
 #. module: account_easy_reconcile
 #: view:account.easy.reconcile:account_easy_reconcile.account_easy_reconcile_tree
 msgid "Start Auto Reconcilation"
-msgstr ""
+msgstr "Zagon samodejnega usklajevanja"
 
 #. module: account_easy_reconcile
 #: view:account.easy.reconcile:account_easy_reconcile.account_easy_reconcile_form
 msgid "Start Auto Reconciliation"
-msgstr ""
+msgstr "Zagon samodejnega usklajevanja"
 
 #. module: account_easy_reconcile
 #: field:account.easy.reconcile,message_summary:0
 msgid "Summary"
-msgstr ""
+msgstr "Povzetek"
 
 #. module: account_easy_reconcile
 #: field:account.easy.reconcile.method,task_id:0
 msgid "Task"
-msgstr ""
+msgstr "Opravilo"
 
 #. module: account_easy_reconcile
 #: help:account.easy.reconcile.method,sequence:0
 msgid "The sequence field is used to order the reconcile method"
-msgstr ""
+msgstr "Polje zaporedja za razporejanje metod usklajevanja"
 
 #. module: account_easy_reconcile
 #: code:addons/account_easy_reconcile/easy_reconcile.py:294
 #, python-format
 msgid "There is no history of reconciled items on the task: %s."
-msgstr ""
+msgstr "Usklajene postavke na opravilu: %s nimajo zgodovine."
 
 #. module: account_easy_reconcile
 #: code:addons/account_easy_reconcile/easy_reconcile.py:269
 #, python-format
 msgid "There was an error during reconciliation : %s"
-msgstr ""
+msgstr "Napaka med usklajevanjem: %s"
 
 #. module: account_easy_reconcile
 #: view:easy.reconcile.history:account_easy_reconcile.view_easy_reconcile_history_search
 msgid "Today"
-msgstr ""
+msgstr "Danes"
 
 #. module: account_easy_reconcile
 #: view:easy.reconcile.history:account_easy_reconcile.view_easy_reconcile_history_search
 msgid "Todays' Reconcilations"
-msgstr ""
+msgstr "Današnja usklajevanja"
 
 #. module: account_easy_reconcile
 #: field:account.easy.reconcile.method,name:0
 msgid "Type"
-msgstr ""
+msgstr "Tip"
 
 #. module: account_easy_reconcile
 #: field:account.easy.reconcile,message_unread:0
 msgid "Unread Messages"
-msgstr ""
+msgstr "Neprebrana sporočila"
 
 #. module: account_easy_reconcile
 #: code:addons/account_easy_reconcile/easy_reconcile.py:321
 #, python-format
 msgid "Unreconciled items"
-msgstr ""
+msgstr "Neusklajene postavke"
 
 #. module: account_easy_reconcile
 #: field:account.easy.reconcile.method,write_off:0
@@ -548,19 +549,19 @@ msgstr ""
 #: field:easy.reconcile.simple.partner,write_off:0
 #: field:easy.reconcile.simple.reference,write_off:0
 msgid "Write off allowed"
-msgstr ""
+msgstr "Dovoljen odpis"
 
 #. module: account_easy_reconcile
 #: model:ir.model,name:account_easy_reconcile.model_account_easy_reconcile
 msgid "account easy reconcile"
-msgstr ""
+msgstr "preprosto usklajevanje konta"
 
 #. module: account_easy_reconcile
 #: view:account.config.settings:account_easy_reconcile.view_account_config
 msgid "eInvoicing & Payments"
-msgstr ""
+msgstr "Obračun in plačila"
 
 #. module: account_easy_reconcile
 #: model:ir.model,name:account_easy_reconcile.model_account_easy_reconcile_method
 msgid "reconcile method for account_easy_reconcile"
-msgstr ""
+msgstr "metoda usklajevanja za preprosto usklajevanje konta"
