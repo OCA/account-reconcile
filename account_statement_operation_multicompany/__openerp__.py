@@ -23,7 +23,7 @@
 
 {
     'name': 'Account Statement Operation Multi-company',
-    'version': '0.2',
+    'version': '8.0.0.2.0',
     'category': 'Accounting & Finance',
     'license': 'AGPL-3',
     'summary': 'Fix multi-company issue on Statement Operation Templates',
