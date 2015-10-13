@@ -1,0 +1,98 @@
+# Spanish translation for banking-addons
+# Copyright (c) 2014 Rosetta Contributors and Canonical Ltd 2014
+# This file is distributed under the same license as the banking-addons package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2014.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: banking-addons\n"
+"Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
+"POT-Creation-Date: 2014-01-21 11:54+0000\n"
+"PO-Revision-Date: 2014-06-05 22:30+0000\n"
+"Last-Translator: Pedro Manuel Baeza <pedro.baeza@gmail.com>\n"
+"Language-Team: Spanish <es@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Launchpad-Export-Date: 2014-06-06 06:36+0000\n"
+"X-Generator: Launchpad (build 17031)\n"
+
+#. module: account_advanced_reconcile
+#: field:easy.reconcile.advanced,partner_ids:0
+#: field:easy.reconcile.advanced.ref,partner_ids:0
+msgid "Restrict on partners"
+msgstr "Restringir a las empresas"
+
+#. module: account_advanced_reconcile
+#: field:easy.reconcile.advanced,account_id:0
+#: field:easy.reconcile.advanced.ref,account_id:0
+msgid "Account"
+msgstr "Cuenta"
+
+#. module: account_advanced_reconcile
+#: model:ir.model,name:account_advanced_reconcile.model_account_easy_reconcile_method
+msgid "reconcile method for account_easy_reconcile"
+msgstr "método de conciliación para account_easy_reconcile"
+
+#. module: account_advanced_reconcile
+#: field:easy.reconcile.advanced,journal_id:0
+#: field:easy.reconcile.advanced.ref,journal_id:0
+msgid "Journal"
+msgstr "Diario"
+
+#. module: account_advanced_reconcile
+#: field:easy.reconcile.advanced,account_profit_id:0
+#: field:easy.reconcile.advanced.ref,account_profit_id:0
+msgid "Account Profit"
+msgstr "Cuenta de ganancias"
+
+#. module: account_advanced_reconcile
+#: view:account.easy.reconcile:0
+msgid ""
+"Match multiple debit vs multiple credit entries. Allow partial "
+"reconciliation. The lines should have the partner, the credit entry ref. is "
+"matched vs the debit entry ref. or name."
+msgstr ""
+"Casa múltiples líneas del debe con múltiples líneas del haber. Permite "
+"conciliación parcial. Las líneas deben tener la empresa, la referencia de la "
+"línea del haber se casa contra la referencia de la línea del debe o el "
+"nombre."
+
+#. module: account_advanced_reconcile
+#: field:easy.reconcile.advanced,filter:0
+#: field:easy.reconcile.advanced.ref,filter:0
+msgid "Filter"
+msgstr "Filtro"
+
+#. module: account_advanced_reconcile
+#: view:account.easy.reconcile:0
+msgid "Advanced. Partner and Ref"
+msgstr "Avanzado. Empresa y referencia"
+
+#. module: account_advanced_reconcile
+#: field:easy.reconcile.advanced,date_base_on:0
+#: field:easy.reconcile.advanced.ref,date_base_on:0
+msgid "Date of reconciliation"
+msgstr "Fecha de conciliación"
+
+#. module: account_advanced_reconcile
+#: model:ir.model,name:account_advanced_reconcile.model_easy_reconcile_advanced
+msgid "easy.reconcile.advanced"
+msgstr "easy.reconcile.advanced"
+
+#. module: account_advanced_reconcile
+#: field:easy.reconcile.advanced,account_lost_id:0
+#: field:easy.reconcile.advanced.ref,account_lost_id:0
+msgid "Account Lost"
+msgstr "Cuenta de pérdidas"
+
+#. module: account_advanced_reconcile
+#: model:ir.model,name:account_advanced_reconcile.model_easy_reconcile_advanced_ref
+msgid "easy.reconcile.advanced.ref"
+msgstr "easy.reconcile.advanced.ref"
+
+#. module: account_advanced_reconcile
+#: field:easy.reconcile.advanced,write_off:0
+#: field:easy.reconcile.advanced.ref,write_off:0
+msgid "Write off allowed"
+msgstr "Desajuste permitido"
