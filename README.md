@@ -39,26 +39,26 @@ Unported addons
 ---------------
 addon | version | summary
 --- | --- | ---
-[account_advanced_reconcile](__unported__/account_advanced_reconcile/) | 1.0 (unported) | Advanced Reconcile
-[account_advanced_reconcile_bank_statement](__unported__/account_advanced_reconcile_bank_statement/) | 1.0.0 (unported) | Advanced Reconcile Bank Statement
-[account_advanced_reconcile_transaction_ref](__unported__/account_advanced_reconcile_transaction_ref/) | 1.0.1 (unported) | Advanced Reconcile Transaction Ref
-[account_payment_transaction_id](__unported__/account_payment_transaction_id/) | 1.0 (unported) | Account Payment - Transaction ID
-[account_statement_bankaccount_completion](__unported__/account_statement_bankaccount_completion/) | 1.0.1 (unported) | Bank statement completion from bank account number
-[account_statement_base_completion](__unported__/account_statement_base_completion/) | 1.0.3 (unported) | Bank statement base completion
-[account_statement_base_import](__unported__/account_statement_base_import/) | 1.2 (unported) | Bank statement base import
-[account_statement_cancel_line](__unported__/account_statement_cancel_line/) | 0.3 (unported) | Account Statement Cancel Line
-[account_statement_commission](__unported__/account_statement_commission/) | 1.0 (unported) | Bank statement import - commissions
-[account_statement_completion_label](__unported__/account_statement_completion_label/) | 0.1 (unported) | Bank statement completion from label
-[account_statement_completion_voucher](__unported__/account_statement_completion_voucher/) | 1.0 (unported) | Bank statement extension with voucher
-[account_statement_ext](__unported__/account_statement_ext/) | 1.3.6 (unported) | Bank statement extension and profiles
-[account_statement_ext_point_of_sale](__unported__/account_statement_ext_point_of_sale/) | 1.0.0 (unported) | Bank statement extension and profiles for Point of Sale
-[account_statement_ext_voucher](__unported__/account_statement_ext_voucher/) | 1.0 (unported) | Bank statement extension with voucher
-[account_statement_no_invoice_import](__unported__/account_statement_no_invoice_import/) | 0.1 (unported) | account bank statement no invoice import
-[account_statement_ofx_import](__unported__/account_statement_ofx_import/) | 1.0.1 (unported) | Bank statement OFX import
-[account_statement_one_move](__unported__/account_statement_one_move/) | 0.1 (unported) | Bank statement one move
-[account_statement_regex_account_completion](__unported__/account_statement_regex_account_completion/) | 0.1 (unported) | Account Statement Regex Account Completion addon
-[account_statement_so_completion](__unported__/account_statement_so_completion/) | 0.1 (unported) | Bank statement Sale Order completion
-[account_statement_transactionid_completion](__unported__/account_statement_transactionid_completion/) | 1.0 (unported) | Bank statement completion from transaction ID
-[account_statement_transactionid_import](__unported__/account_statement_transactionid_import/) | 1.0 (unported) | Bank statement transactionID import
+[account_advanced_reconcile](account_advanced_reconcile/) | 1.0 (unported) | Advanced Reconcile
+[account_advanced_reconcile_bank_statement](account_advanced_reconcile_bank_statement/) | 1.0.0 (unported) | Advanced Reconcile Bank Statement
+[account_advanced_reconcile_transaction_ref](account_advanced_reconcile_transaction_ref/) | 1.0.1 (unported) | Advanced Reconcile Transaction Ref
+[account_payment_transaction_id](account_payment_transaction_id/) | 1.0 (unported) | Account Payment - Transaction ID
+[account_statement_bankaccount_completion](account_statement_bankaccount_completion/) | 1.0.1 (unported) | Bank statement completion from bank account number
+[account_statement_base_completion](account_statement_base_completion/) | 1.0.3 (unported) | Bank statement base completion
+[account_statement_base_import](account_statement_base_import/) | 1.2 (unported) | Bank statement base import
+[account_statement_cancel_line](account_statement_cancel_line/) | 0.3 (unported) | Account Statement Cancel Line
+[account_statement_commission](account_statement_commission/) | 1.0 (unported) | Bank statement import - commissions
+[account_statement_completion_label](account_statement_completion_label/) | 0.1 (unported) | Bank statement completion from label
+[account_statement_completion_voucher](account_statement_completion_voucher/) | 1.0 (unported) | Bank statement extension with voucher
+[account_statement_ext](account_statement_ext/) | 1.3.6 (unported) | Bank statement extension and profiles
+[account_statement_ext_point_of_sale](account_statement_ext_point_of_sale/) | 1.0.0 (unported) | Bank statement extension and profiles for Point of Sale
+[account_statement_ext_voucher](account_statement_ext_voucher/) | 1.0 (unported) | Bank statement extension with voucher
+[account_statement_no_invoice_import](account_statement_no_invoice_import/) | 0.1 (unported) | account bank statement no invoice import
+[account_statement_ofx_import](account_statement_ofx_import/) | 1.0.1 (unported) | Bank statement OFX import
+[account_statement_one_move](account_statement_one_move/) | 0.1 (unported) | Bank statement one move
+[account_statement_regex_account_completion](account_statement_regex_account_completion/) | 0.1 (unported) | Account Statement Regex Account Completion addon
+[account_statement_so_completion](account_statement_so_completion/) | 0.1 (unported) | Bank statement Sale Order completion
+[account_statement_transactionid_completion](account_statement_transactionid_completion/) | 1.0 (unported) | Bank statement completion from transaction ID
+[account_statement_transactionid_import](account_statement_transactionid_import/) | 1.0 (unported) | Bank statement transactionID import
 
 [//]: # (end addons)
