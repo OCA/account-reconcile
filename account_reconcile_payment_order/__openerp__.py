@@ -30,6 +30,6 @@
         'account_banking_payment_transfer',
     ],
     "auto_install": False,
-    "installable": True,
+    'installable': False,
     "application": False,
 }

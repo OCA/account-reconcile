@@ -28,7 +28,7 @@
     'website': 'https://github.com/OCA/bank-statement-reconcile',
     'data': [],
     'test': [],
-    'installable': True,
+    'installable': False,
     'images': [],
     'auto_install': False,
     'license': 'AGPL-3',

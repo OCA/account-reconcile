@@ -34,5 +34,5 @@
         'account_view.xml',
         'security/rule.xml',
         ],
-    'installable': True,
+    'installable': False,
 }

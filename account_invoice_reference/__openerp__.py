@@ -144,6 +144,6 @@ Information propagated to the move lines:
           'test/supplier_invoice_number.yml',
 
           ],
- 'installable': True,
+ 'installable': False,
  'auto_install': False,
  }
