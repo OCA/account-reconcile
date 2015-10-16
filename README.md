@@ -24,6 +24,12 @@ __Version 7.0 and earlier :__
 
 
 [//]: # (addons)
+Available addons
+----------------
+addon | version | summary
+--- | --- | ---
+[base_transaction_id](base_transaction_id/) | 9.0.1.0.0 | Base transaction id for financial institutes
+
 Unported addons
 ---------------
 addon | version | summary
@@ -54,6 +60,5 @@ addon | version | summary
 [account_statement_so_completion](account_statement_so_completion/) | 0.1 (unported) | Bank statement Sale Order completion
 [account_statement_transactionid_completion](account_statement_transactionid_completion/) | 1.0 (unported) | Bank statement completion from transaction ID
 [account_statement_transactionid_import](account_statement_transactionid_import/) | 1.0 (unported) | Bank statement transactionID import
-[base_transaction_id](base_transaction_id/) | 8.0.1.0.0 (unported) | Base transaction id for financial institutes
 
 [//]: # (end addons)
