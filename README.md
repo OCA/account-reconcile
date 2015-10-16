@@ -4,10 +4,10 @@
 Odoo modules for statements tasks (completion, reconciliation)
 ==============================================================
 
-***Important notice: since version 9.0, the import feature has moved here: https://github.com/OCA/bank-statement-import***
+***Important notice: since version 8.0, the import feature has moved here: https://github.com/OCA/bank-statement-import***
 
 
-__Version 9.0 and earlier :__
+__Version 8.0 and earlier :__
 
 * Completion of infos (partner, account, ref,...) in statements.
 * Provide methods for making automatic reconciliation in batch
