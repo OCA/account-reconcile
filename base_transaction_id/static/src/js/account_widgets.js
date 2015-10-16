@@ -1,11 +1,14 @@
-openerp.base_transaction_id = function (instance) {
+odoo.define('base_transaction_id.base_transaction_id', function (require) {
 
-    instance.web.account.bankStatementReconciliationLine.include({
-        decorateMoveLine: function(line, currency_id) {
-            this._super(line, currency_id);
+    var AccountReconciliation = require('account.reconciliation');
+
+    AccountReconciliation.bankStatementReconciliation.include({
+        decorateMoveLine: function(line) {
+            this._super(line);
             if (line.transaction_ref) {
                 line.q_label += ' (' + line.transaction_ref + ')';
             }
         },
     });
-};
+
+});
