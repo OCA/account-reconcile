@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
-##############################################################################
 #
-#    Author: Nicolas Bessi
-#    Copyright 2011-2012 Camptocamp SA
+#    Author: Nicolas Bessi, Yannick Vaucher
+#    Copyright 2011-2015 Camptocamp SA
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -17,8 +16,6 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-##############################################################################
-
 from openerp import models, fields, api
 
 

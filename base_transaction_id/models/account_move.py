@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-##############################################################################
 #
 #    Author: Guewen Baconnier
 #    Copyright 2014 Camptocamp SA
@@ -17,40 +16,46 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-##############################################################################
-from openerp.osv import orm, fields
+from openerp import models, fields, api
+from openerp.osv import expression
 
 
-class account_move_line(orm.Model):
+class AccountMoveLine(models.Model):
     _inherit = 'account.move.line'
 
-    _columns = {
-        'transaction_ref': fields.char('Transaction Ref.',
-                                       select=True),
-    }
+    transaction_ref = fields.Char(
+        'Transaction Ref.',
+        index=True,
+        copy=False
+    )
 
-    def copy_data(self, cr, uid, id, default=None, context=None):
-        if default is None:
-            default = {}
-        default['transaction_ref'] = False
-        _super = super(account_move_line, self)
-        return _super.copy_data(cr, uid, id, default=default, context=context)
-
-    def prepare_move_lines_for_reconciliation_widget(self, cr, uid, lines,
+    @api.multi
+    def prepare_move_lines_for_reconciliation_widget(self,
                                                      target_currency=False,
-                                                     target_date=False,
-                                                     context=None):
-        _super = super(account_move_line, self)
-        prepare = _super.prepare_move_lines_for_reconciliation_widget
+                                                     target_date=False):
         prepared_lines = []
-        for line in lines:
+        for line in self:
+            _super = super(AccountMoveLine, line)
             # The super method loop over the lines and returns a list of
             # prepared lines. Here we'll have 1 line per call to super.
             # If we called super on the whole list, we would need to
             # browse again the lines, or match the 'lines' vs
             # 'prepared_lines' to update the transaction_ref.
-            vals = prepare(cr, uid, [line], target_currency=target_currency,
-                           target_date=target_date, context=context)[0]
+            vals = _super.prepare_move_lines_for_reconciliation_widget(
+                target_currency=target_currency,
+                target_date=target_date)[0]
             vals['transaction_ref'] = line.transaction_ref
             prepared_lines.append(vals)
         return prepared_lines
+
+    @api.model
+    def domain_move_lines_for_reconciliation(self, excluded_ids=None,
+                                             str=False):
+        """ Add transaction_ref in search of move lines"""
+        _super = super(AccountMoveLine, self)
+        _get_domain = _super.domain_move_lines_for_reconciliation
+        domain = _get_domain(excluded_ids=excluded_ids, str=str)
+        if not str and str != '/':
+            return domain
+        domain_trans_ref = [('transaction_ref', 'ilike', str)]
+        return expression.OR([domain, domain_trans_ref])
