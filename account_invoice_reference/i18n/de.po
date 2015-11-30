@@ -1,0 +1,44 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# * account_invoice_reference
+# 
+# Translators:
+# Rudolf Schnapka <rs@techno-flex.de>, 2015
+msgid ""
+msgstr ""
+"Project-Id-Version: bank-statement-reconcile (8.0)\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-10-14 09:25+0000\n"
+"PO-Revision-Date: 2015-11-25 08:40+0000\n"
+"Last-Translator: Rudolf Schnapka <rs@techno-flex.de>\n"
+"Language-Team: German (http://www.transifex.com/oca/OCA-bank-statement-reconcile-8-0/language/de/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Language: de\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. module: account_invoice_reference
+#: model:ir.model,name:account_invoice_reference.model_account_move
+msgid "Account Entry"
+msgstr "Kontoposten"
+
+#. module: account_invoice_reference
+#: view:account.invoice:account_invoice_reference.invoice_form
+msgid "Customer Reference"
+msgstr "Kundenreferenz"
+
+#. module: account_invoice_reference
+#: view:account.invoice:account_invoice_reference.invoice_supplier_form
+msgid "Enter the reference in the Supplier Invoice Number field"
+msgstr "Geben Sie die Referenz im Feld Lieferantenrechnungsnummer an"
+
+#. module: account_invoice_reference
+#: model:ir.model,name:account_invoice_reference.model_account_invoice
+msgid "Invoice"
+msgstr "Rechnung"
+
+#. module: account_invoice_reference
+#: view:account.invoice:account_invoice_reference.invoice_supplier_form
+msgid "{'invisible': [('reference_type', '=', 'none')]}"
+msgstr ""
