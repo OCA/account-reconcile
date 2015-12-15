@@ -21,7 +21,7 @@
 ##############################################################################
 
 {'name': "Advanced Reconcile",
- 'summary': "Reconcile: with multiple lines / partial / with writeoff",
+ 'summary': "Reconcile: with multiple lines / partial / with writeoffs",
  'version': '1.0',
  'author': "Camptocamp,Odoo Community Association (OCA)",
  'maintainer': 'Camptocamp',
