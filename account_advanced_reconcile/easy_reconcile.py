@@ -19,16 +19,17 @@
 #
 ##############################################################################
 
-from openerp.osv import orm
+from openerp import models, api
 
 
-class account_easy_reconcile_method(orm.Model):
+class account_easy_reconcile_method(models.Model):
 
     _inherit = 'account.easy.reconcile.method'
 
-    def _get_all_rec_method(self, cr, uid, context=None):
+    @api.model
+    def _get_all_rec_method(self):
         methods = super(account_easy_reconcile_method, self).\
-            _get_all_rec_method(cr, uid, context=context)
+            _get_all_rec_method()
         methods += [
             ('easy.reconcile.advanced.ref',
              'Advanced. Partner and Ref.'),
