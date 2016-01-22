@@ -19,41 +19,26 @@
 #
 ##############################################################################
 
-from openerp.osv import orm, fields
+from openerp import api, fields, models
 
 
-class AccountConfigSettings(orm.TransientModel):
+class AccountConfigSettings(models.TransientModel):
     _inherit = 'account.config.settings'
 
-    _columns = {
-        'reconciliation_commit_every': fields.related(
-            'company_id',
-            'reconciliation_commit_every',
-            type='integer',
-            string='How often to commit when performing automatic '
-            'reconciliation.',
-            help="""Leave zero to commit only at the end of the process."""),
-    }
+    reconciliation_commit_every = fields.Integer(
+            related='company_id.reconciliation_commit_every')
 
-    def onchange_company_id(self, cr, uid, ids, company_id, context=None):
-        company_obj = self.pool['res.company']
-
-        result = super(AccountConfigSettings, self).onchange_company_id(
-            cr, uid, ids, company_id, context=None)
-
-        if company_id:
-            company = company_obj.browse(cr, uid, company_id, context=context)
-            result['value']['reconciliation_commit_every'] = (
-                company.reconciliation_commit_every
-            )
-        return result
+    @api.one
+    @api.depends('company_id')
+    def _company_onchange(self):
+        self.reconciliation_commit_every = \
+            self.company_id.reconciliation_commit_every
 
 
-class Company(orm.Model):
+class Company(models.Model):
     _inherit = "res.company"
-    _columns = {
-        'reconciliation_commit_every': fields.integer(
+
+    reconciliation_commit_every = fields.Integer(
             string='How often to commit when performing automatic '
             'reconciliation.',
-            help="""Leave zero to commit only at the end of the process."""),
-    }
+            help="""Leave zero to commit only at the end of the process.""")

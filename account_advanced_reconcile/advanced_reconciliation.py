@@ -19,15 +19,16 @@
 #
 ##############################################################################
 
-from openerp.osv import orm
+from openerp import models, api
 
 
-class easy_reconcile_advanced_ref(orm.TransientModel):
+class easy_reconcile_advanced_ref(models.TransientModel):
 
     _name = 'easy.reconcile.advanced.ref'
     _inherit = 'easy.reconcile.advanced'
 
-    def _skip_line(self, cr, uid, rec, move_line, context=None):
+    @api.model
+    def _skip_line(self, move_line):
         """
         When True is returned on some conditions, the credit move line
         will be skipped for reconciliation. Can be inherited to
@@ -35,7 +36,8 @@ class easy_reconcile_advanced_ref(orm.TransientModel):
         """
         return not (move_line.get('ref') and move_line.get('partner_id'))
 
-    def _matchers(self, cr, uid, rec, move_line, context=None):
+    @api.model
+    def _matchers(self, move_line):
         """
         Return the values used as matchers to find the opposite lines
 
@@ -75,7 +77,8 @@ class easy_reconcile_advanced_ref(orm.TransientModel):
         return (('partner_id', move_line['partner_id']),
                 ('ref', move_line['ref'].lower().strip()))
 
-    def _opposite_matchers(self, cr, uid, rec, move_line, context=None):
+    @api.model
+    def _opposite_matchers(self, move_line):
         """
         Return the values of the opposite line used as matchers
         so the line is matched
