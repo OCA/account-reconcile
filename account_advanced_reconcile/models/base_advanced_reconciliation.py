@@ -162,7 +162,7 @@ class EasyReconcileAdvanced(models.AbstractModel):
         if not isinstance(omvalue, (list, tuple)):
             omvalue = omvalue,
         return EasyReconcileAdvanced._compare_matcher_values(mkey, mvalue,
-                                                               omvalue)
+                                                             omvalue)
 
     @api.model
     def _compare_opposite(self, move_line, opposite_move_line, matchers):
