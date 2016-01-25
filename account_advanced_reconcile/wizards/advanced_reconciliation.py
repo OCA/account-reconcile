@@ -4,7 +4,7 @@
 from openerp import models, api
 
 
-class easy_reconcile_advanced_ref(models.TransientModel):
+class EasyReconcileAdvancedRef(models.TransientModel):
 
     _name = 'easy.reconcile.advanced.ref'
     _inherit = 'easy.reconcile.advanced'

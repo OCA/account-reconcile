@@ -8,7 +8,7 @@ class AccountConfigSettings(models.TransientModel):
     _inherit = 'account.config.settings'
 
     reconciliation_commit_every = fields.Integer(
-            related='company_id.reconciliation_commit_every')
+        related='company_id.reconciliation_commit_every')
 
     @api.one
     @api.depends('company_id')
@@ -21,6 +21,5 @@ class Company(models.Model):
     _inherit = "res.company"
 
     reconciliation_commit_every = fields.Integer(
-            string='How often to commit when performing automatic '
-            'reconciliation.',
-            help="""Leave zero to commit only at the end of the process.""")
+        string='How often to commit when performing automatic reconciliation.',
+        help="""Leave zero to commit only at the end of the process.""")

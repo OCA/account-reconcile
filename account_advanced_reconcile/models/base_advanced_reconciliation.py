@@ -10,7 +10,7 @@ from openerp.tools.translate import _
 _logger = logging.getLogger(__name__)
 
 
-class easy_reconcile_advanced(models.AbstractModel):
+class EasyReconcileAdvanced(models.AbstractModel):
     _name = 'easy.reconcile.advanced'
     _inherit = 'easy.reconcile.base'
 
@@ -143,7 +143,7 @@ class easy_reconcile_advanced(models.AbstractModel):
         for value, ovalue in product(values, opposite_values):
             # we do not need to compare all values, if one matches
             # we are done
-            if easy_reconcile_advanced._compare_values(key, value, ovalue):
+            if EasyReconcileAdvanced._compare_values(key, value, ovalue):
                 return True
         return False
 
@@ -161,7 +161,7 @@ class easy_reconcile_advanced(models.AbstractModel):
             mvalue = mvalue,
         if not isinstance(omvalue, (list, tuple)):
             omvalue = omvalue,
-        return easy_reconcile_advanced._compare_matcher_values(mkey, mvalue,
+        return EasyReconcileAdvanced._compare_matcher_values(mkey, mvalue,
                                                                omvalue)
 
     @api.model
@@ -260,7 +260,6 @@ class easy_reconcile_advanced(models.AbstractModel):
                 reconciled_ids += reconcile_group_ids
             elif reconciled:
                 partial_reconciled_ids += reconcile_group_ids
-
 
             if (
                 'commit_every' in self.env.context.keys() and
