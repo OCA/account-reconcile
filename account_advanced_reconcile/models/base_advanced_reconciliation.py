@@ -260,14 +260,12 @@ class EasyReconcileAdvanced(models.AbstractModel):
                 reconciled_ids += reconcile_group_ids
             elif reconciled:
                 partial_reconciled_ids += reconcile_group_ids
-
-            if (
-                'commit_every' in self.env.context.keys() and
+            if ('commit_every' in self.env.context.keys() and
                 self.env.context['commit_every'] and
-                group_count % self.env.context['commit_every'] == 0
-            ):
-                self.env.cr.commit()
-                _logger.info("Commit the reconciliations after %d groups",
-                             group_count)
+                    group_count % self.env.context['commit_every'] == 0):
+                    self.env.cr.commit()
+                    _logger.info("Commit the reconciliations after %d groups",
+                                 group_count)
+
         _logger.info("Reconciliation is over")
         return reconciled_ids, partial_reconciled_ids
