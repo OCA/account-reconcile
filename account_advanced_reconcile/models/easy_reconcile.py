@@ -4,13 +4,13 @@
 from openerp import models, api
 
 
-class account_easy_reconcile_method(models.Model):
+class AccountEasyReconcileMethod(models.Model):
 
     _inherit = 'account.easy.reconcile.method'
 
     @api.model
     def _get_all_rec_method(self):
-        methods = super(account_easy_reconcile_method, self).\
+        methods = super(AccountEasyReconcileMethod, self).\
             _get_all_rec_method()
         methods += [
             ('easy.reconcile.advanced.ref',

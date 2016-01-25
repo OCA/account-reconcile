@@ -13,8 +13,8 @@
     "depends": ['account_easy_reconcile'],
     "license": "AGPL-3",
     "data": [
-      "views/easy_reconcile_view.xml",
-      "wizards/res_config_view.xml"
+        "views/easy_reconcile_view.xml",
+        "wizards/res_config_view.xml"
     ],
     "installable": True,
 }
