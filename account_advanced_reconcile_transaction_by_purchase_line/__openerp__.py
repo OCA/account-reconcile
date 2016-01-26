@@ -1,40 +1,21 @@
 # -*- coding: utf-8 -*-
-##############################################################################
-#
-#    Author: Romain Deheele. Copyright Camptocamp SA
-#
-#    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU Affero General Public License as
-#    published by the Free Software Foundation, either version 3 of the
-#    License, or (at your option) any later version.
-#
-#    This program is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU Affero General Public License for more details.
-#
-#    You should have received a copy of the GNU Affero General Public License
-#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#
-##############################################################################
+# © 2015 Eficent Business and IT Consulting Services S.L. (www.eficent.com)
+# License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 
-{'name': 'Advanced Reconcile Transaction by Purchase Line',
- 'description': """
-Advanced reconciliation method for the module account_advanced_reconcile
-========================================================================
-Reconcile rules with transaction_ref
-
-""",
- 'version': '1.0.1',
- 'author': "Camptocamp,Odoo Community Association (OCA)",
- 'category': 'Finance',
- 'website': 'http://www.camptocamp.com',
- 'depends': ['account_advanced_reconcile',
-             'account_move_line_purchase_info'],
- 'data': ['easy_reconcile_view.xml'],
- 'demo': [],
- 'test': [],  # To be ported or migrate to unit tests or scenarios
- 'auto_install': False,
- 'installable': True,
- 'images': []
- }
+{
+    "name": "Account Advanced Reconcile Transaction by Purchase Line",
+    "summary": "Allows to reconcile based on the PO line",
+    "version": "8.0.1.0.0",
+    "author": "Eficent Business and IT Consulting Services S.L., "
+              "Odoo Community Association (OCA)",
+    "website": "http://www.eficent.com",
+    "category": "Generic",
+    "depends": ["account_advanced_reconcile",
+                "account_move_line_purchase_info"
+    ],
+    "license": "AGPL-3",
+    "data": [
+        "views/easy_reconcile_view.xml",
+    ],
+    'installable': True,
+}
