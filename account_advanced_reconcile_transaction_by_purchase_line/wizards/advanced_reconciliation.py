@@ -1,22 +1,6 @@
 # -*- coding: utf-8 -*-
-##############################################################################
-#
-#    Author: Romain Deheele. Copyright Camptocamp SA
-#
-#    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU Affero General Public License as
-#    published by the Free Software Foundation, either version 3 of the
-#    License, or (at your option) any later version.
-#
-#    This program is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU Affero General Public License for more details.
-#
-#    You should have received a copy of the GNU Affero General Public License
-#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#
-##############################################################################
+# © 2015 Eficent Business and IT Consulting Services S.L. (www.eficent.com)
+# License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 
 from openerp import models, api
 
@@ -34,7 +18,7 @@ class EasyReconcileAdvancedTransactionByPurchaseLine(models.TransientModel):
         skip on some conditions. ie: ref or partner_id is empty.
         """
         return not move_line.get('partner_id') and move_line.get(
-                'product_id') and move_line.get('purchase_line_id')
+            'product_id') and move_line.get('purchase_line_id')
 
     @api.model
     def _matchers(self, move_line):
