@@ -12,7 +12,7 @@
     "category": "Generic",
     "depends": ["account_advanced_reconcile",
                 "account_move_line_purchase_info"
-    ],
+                ],
     "license": "AGPL-3",
     "data": [
         "views/easy_reconcile_view.xml",

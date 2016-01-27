@@ -18,7 +18,7 @@ class EasyReconcileAdvancedTransactionByPurchaseLine(models.TransientModel):
         skip on some conditions. ie: ref or partner_id is empty.
         """
         return not move_line.get('partner_id') and move_line.get(
-                'product_id') and move_line.get('purchase_line_id')
+            'product_id') and move_line.get('purchase_line_id')
 
     @api.model
     def _matchers(self, move_line):
