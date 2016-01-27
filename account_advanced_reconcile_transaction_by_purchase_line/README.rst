@@ -16,10 +16,10 @@ Usage
 =====
 
 * Go to 'Invoicing / Periodic Processing / Reconciliation / Easy Automatic
-Reconciliation'.
+  Reconciliation'.
 
 * Create a new reconciliation profile, and select a new configuration entry
-with type 'Advanced. GR/IR Key as partner, product, purchase order line.'.
+  with type 'Advanced. GR/IR Key as partner, product, purchase order line.'.
 
 .. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas
    :alt: Try me on Runbot
