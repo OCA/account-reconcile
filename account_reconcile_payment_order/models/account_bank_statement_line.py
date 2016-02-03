@@ -40,15 +40,10 @@ class AccountBankStatementLine(models.Model):
             select order_id from order_sums where amount = %s''',
             (Decimal(float_repr(abs(this.amount), digits)),))
         order_ids = [i for i, in self.env.cr.fetchall()]
-        # verify that this ids are accessible to the user and from the
-        # right bank account if applicable
+        # verify that this ids are accessible to the user
         domain = [
             ('id', 'in', order_ids),
         ]
-        if this.bank_account_id.acc_number:
-            domain.append(
-                ('mode.bank_id.acc_number', '=',
-                 this.bank_account_id.acc_number))
         return self.env['payment.order'].search(domain)
 
     @api.model
