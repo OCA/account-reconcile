@@ -32,6 +32,7 @@ addon | version | summary
 [account_easy_reconcile](account_easy_reconcile/) | 8.0.1.3.1 | Easy Reconcile
 [account_invoice_reference](account_invoice_reference/) | 8.0.1.0.1 | Invoices Reference
 [account_reconcile_payment_order](account_reconcile_payment_order/) | 8.0.1.0.0 | Automatically reconcile all lines from payment orders
+[account_reconcile_prepare_account](account_reconcile_prepare_account/) | 8.0.1.0.0 | Assign bank transactions to accounts before reconciliation
 [account_statement_operation_multicompany](account_statement_operation_multicompany/) | 8.0.0.2.0 | Fix multi-company issue on Statement Operation Templates
 [base_transaction_id](base_transaction_id/) | 8.0.1.0.0 | Base transaction id for financial institutes
 
