@@ -1,0 +1,43 @@
+# Translation of OpenERP Server.
+# This file contains the translation of the following modules:
+# 	* account_invoice_reference
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 9.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-03-09 14:51+0100\n"
+"PO-Revision-Date: 2016-03-09 14:53+0100\n"
+"Language-Team: rs@techno-flex.de\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 1.8.4\n"
+"Last-Translator: rs@techno-flex.de\n"
+"Language: de\n"
+
+#. module: account_invoice_reference
+#: view:account.invoice:0
+msgid "Enter the reference in the Supplier Invoice Number field"
+msgstr "Erfassen Sie die Referenz im Rechnungsnummern-Feld der Eingangsrechnung"
+
+#. module: account_invoice_reference
+#: view:account.invoice:0
+msgid "{'invisible': [('reference_type', '=', 'none')]}"
+msgstr ""
+
+#. module: account_invoice_reference
+#: model:ir.model,name:account_invoice_reference.model_account_move
+msgid "Account Entry"
+msgstr "Kontenbuchung"
+
+#. module: account_invoice_reference
+#: view:account.invoice:0
+msgid "Customer Reference"
+msgstr "Kundenreferenz"
+
+#. module: account_invoice_reference
+#: model:ir.model,name:account_invoice_reference.model_account_invoice
+msgid "Invoice"
+msgstr "Rechnung"
