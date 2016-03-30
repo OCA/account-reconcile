@@ -47,7 +47,6 @@ addon | version | summary
 [account_statement_ext_point_of_sale](account_statement_ext_point_of_sale/) | 1.0.0 (unported) | Bank statement extension and profiles for Point of Sale
 [account_statement_ext_voucher](account_statement_ext_voucher/) | 1.0 (unported) | Bank statement extension with voucher
 [account_statement_no_invoice_import](account_statement_no_invoice_import/) | 0.1 (unported) | account bank statement no invoice import
-[account_statement_ofx_import](account_statement_ofx_import/) | 1.0.1 (unported) | Bank statement OFX import
 [account_statement_one_move](account_statement_one_move/) | 0.1 (unported) | Bank statement one move
 [account_statement_operation_multicompany](account_statement_operation_multicompany/) | 8.0.0.2.0 (unported) | Fix multi-company issue on Statement Operation Templates
 [account_statement_regex_account_completion](account_statement_regex_account_completion/) | 0.1 (unported) | Account Statement Regex Account Completion addon
