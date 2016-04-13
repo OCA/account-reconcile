@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+  <data noupdate="1">
+    <record id="mass_reconcile_rule" model="ir.rule">
+      <field name="name">Mass reconcile multi-company</field>
+      <field name="model_id" ref="model_account_mass_reconcile"/>
+      <field name="global" eval="True"/>
+      <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'child_of', [user.company_id.id])]</field>
+    </record>
+
+    <record id="mass_reconcile_history_rule" model="ir.rule">
+      <field name="name">Mass reconcile history multi-company</field>
+      <field name="model_id" ref="model_mass_reconcile_history"/>
+      <field name="global" eval="True"/>
+      <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'child_of', [user.company_id.id])]</field>
+    </record>
+
+    <record id="mass_reconcile_method_rule" model="ir.rule">
+      <field name="name">Mass reconcile method multi-company</field>
+      <field name="model_id" ref="model_account_mass_reconcile_method"/>
+      <field name="global" eval="True"/>
+      <field name="domain_force">['|', ('company_id', '=', False), ('company_id', 'child_of', [user.company_id.id])]</field>
+    </record>
+  </data>
+</openerp>
