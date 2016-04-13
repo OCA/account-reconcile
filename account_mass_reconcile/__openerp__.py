@@ -16,8 +16,6 @@
              "security/ir.model.access.csv",
              "views/res_config_view.xml",
              ],
-    "test": ['test/mass_reconcile.yml',
-             ],
     'license': 'AGPL-3',
     "auto_install": False,
     'installable': True,

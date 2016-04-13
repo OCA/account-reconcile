@@ -116,25 +116,6 @@ The lines should have the partner, the credit entry ref. is matched vs the debit
 
     <!-- account.mass.reconcile.method view -->
 
-    <record id="account_mass_reconcile_method_form" model="ir.ui.view">
-        <field name="name">account.mass.reconcile.method.form</field>
-        <field name="priority">20</field>
-        <field name="model">account.mass.reconcile.method</field>
-        <field name="arch" type="xml">
-            <form string="Automatic Mass Reconcile Method">
-                <field name="sequence" widget="handle"/>
-                <field name="name"/>
-                <field name="write_off"/>
-                <field name="account_lost_id" attrs="{'required':[('write_off','>',0)]}"/>
-                <field name="account_profit_id" attrs="{'required':[('write_off','>',0)]}"/>
-                <field name="income_exchange_account_id" groups="base.group_multi_currency"/>
-                <field name="expense_exchange_account_id" groups="base.group_multi_currency"/>
-                <field name="journal_id" attrs="{'required':[('write_off','>',0)]}"/>
-                <field name="date_base_on"/>
-            </form>
-        </field>
-    </record>
-
     <record id="account_mass_reconcile_method_tree" model="ir.ui.view">
         <field name="name">account.mass.reconcile.method.tree</field>
         <field name="priority">20</field>

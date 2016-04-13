@@ -2,7 +2,7 @@
 # © 2014-2016 Camptocamp SA (Leonardo Pistone, Damien Crier, Matthieu Dietrich)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from openerp import models, api, fields
+from openerp import models, fields
 
 
 class AccountConfigSettings(models.TransientModel):
@@ -14,20 +14,6 @@ class AccountConfigSettings(models.TransientModel):
         "reconciliation.",
         help="Leave zero to commit only at the end of the process."
     )
-
-    @api.multi
-    def onchange_company_id(self, company_id):
-
-        result = super(AccountConfigSettings, self).onchange_company_id(
-            company_id
-        )
-
-        if company_id:
-            company = self.env['res.company'].browse(company_id)
-            result['value']['reconciliation_commit_every'] = (
-                company.reconciliation_commit_every
-            )
-        return result
 
 
 class Company(models.Model):
