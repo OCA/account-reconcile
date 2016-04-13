@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_account_config" model="ir.ui.view">
+      <field name="name">account settings</field>
+      <field name="model">account.config.settings</field>
+      <field name="inherit_id" ref="account.view_account_config_settings"/>
+      <field name="arch" type="xml">
+        <group name="bank_cash" position="after">
+          <separator string="Reconciliation"/>
+          <group>
+            <label for="id" string="Options"/>
+            <div name="reconciliation_config">
+              <div>
+                <label for="reconciliation_commit_every"/>
+                <field name="reconciliation_commit_every" class="oe_inline"/>
+              </div>
+            </div>
+          </group>
+        </group>
+      </field>
+    </record>
+</odoo>
