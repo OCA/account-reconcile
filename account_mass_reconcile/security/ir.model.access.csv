@@ -1,0 +1,9 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_mass_reconcile_options_acc_user,mass.reconcile.options,model_mass_reconcile_options,account.group_account_user,1,0,0,0
+access_account_mass_reconcile_method_acc_user,account.mass.reconcile.method,model_account_mass_reconcile_method,account.group_account_user,1,0,0,0
+access_account_mass_reconcile_acc_user,account.mass.reconcile,model_account_mass_reconcile,account.group_account_user,1,1,0,0
+access_mass_reconcile_options_acc_mgr,mass.reconcile.options,model_mass_reconcile_options,account.group_account_manager,1,0,0,0
+access_account_mass_reconcile_method_acc_mgr,account.mass.reconcile.method,model_account_mass_reconcile_method,account.group_account_manager,1,1,1,1
+access_account_mass_reconcile_acc_mgr,account.mass.reconcile,model_account_mass_reconcile,account.group_account_manager,1,1,1,1
+access_mass_reconcile_history_acc_user,mass.reconcile.history,model_mass_reconcile_history,account.group_account_user,1,1,1,0
+access_mass_reconcile_history_acc_mgr,mass.reconcile.history,model_mass_reconcile_history,account.group_account_manager,1,1,1,1
