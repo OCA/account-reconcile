@@ -72,7 +72,7 @@ class TestScenarioReconcile(common.TransactionCase):
             {
                 'balance_end_real': 0.0,
                 'balance_start': 0.0,
-                'date': fields.Datetime.now(),
+                'date': fields.Date.today(),
                 'journal_id': self.ref('account.bank_journal'),
                 'line_ids': [
                     (0, 0, {
@@ -169,7 +169,7 @@ class TestScenarioReconcile(common.TransactionCase):
             {
                 'balance_end_real': 0.0,
                 'balance_start': 0.0,
-                'date': fields.Datetime.now(),
+                'date': fields.Date.today(),
                 'journal_id': self.ref('account.bank_journal_usd'),
                 'currency_id': self.ref('base.USD'),
                 'line_ids': [
