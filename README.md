@@ -34,6 +34,8 @@ addon | version | summary
 [account_reconcile_payment_order](account_reconcile_payment_order/) | 8.0.1.0.0 | Automatically reconcile all lines from payment orders
 [account_reconcile_prepare_account](account_reconcile_prepare_account/) | 8.0.1.0.0 | Assign bank transactions to accounts before reconciliation
 [account_statement_operation_multicompany](account_statement_operation_multicompany/) | 8.0.0.2.0 | Fix multi-company issue on Statement Operation Templates
+[account_statement_operation_rule](account_statement_operation_rule/) | 8.0.1.0.0 | Bank Statement Operation Rules
+[account_statement_operation_rule_dunning_fees](account_statement_operation_rule_dunning_fees/) | 8.0.1.0.0 | Bank Statement Operation Rules with Dunning Fees
 [base_transaction_id](base_transaction_id/) | 8.0.1.0.0 | Base transaction id for financial institutes
 
 Unported addons
