@@ -1,0 +1,162 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# * account_statement_operation_rule
+# 
+# Translators:
+# Matjaž Mozetič <m.mozetic@matmoz.si>, 2016
+msgid ""
+msgstr ""
+"Project-Id-Version: bank-statement-reconcile (8.0)\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-04-20 02:39+0000\n"
+"PO-Revision-Date: 2016-04-20 05:32+0000\n"
+"Last-Translator: Matjaž Mozetič <m.mozetic@matmoz.si>\n"
+"Language-Team: Slovenian (http://www.transifex.com/oca/OCA-bank-statement-reconcile-8-0/language/sl/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Language: sl\n"
+"Plural-Forms: nplurals=4; plural=(n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n%100==4 ? 2 : 3);\n"
+
+#. module: account_statement_operation_rule
+#: model:ir.actions.act_window,help:account_statement_operation_rule.action_account_statement_operation_rule
+msgid ""
+"<p class=\"oe_view_nocontent_create\">\n"
+"          Click to create a statement operation rule.\n"
+"          </p><p>\n"
+"          Those can be used to automatically create a move line when reconciling\n"
+"          your bank statements.\n"
+"        </p>\n"
+"      "
+msgstr "<p class=\"oe_view_nocontent_create\">\n          Dodaj pravilo za operacije na izpiskih.\n          </p><p>\n          Uporabijo se lahko za samodejno ustvarjanje postavk premikov ob usklajevanju\n          bančnih izpiskov.\n        </p>\n      "
+
+#. module: account_statement_operation_rule
+#: view:account.statement.operation.rule:account_statement_operation_rule.view_account_statement_operation_rule_form
+msgid "And"
+msgstr "in"
+
+#. module: account_statement_operation_rule
+#: view:account.statement.operation.rule:account_statement_operation_rule.view_account_statement_operation_rule_form
+msgid "And the currency is one of"
+msgstr "in je valuta ena izmed"
+
+#. module: account_statement_operation_rule
+#: model:ir.model,name:account_statement_operation_rule.model_account_bank_statement_line
+msgid "Bank Statement Line"
+msgstr "Postavka bančnega izpiska"
+
+#. module: account_statement_operation_rule
+#: field:account.statement.operation.rule,create_uid:0
+msgid "Created by"
+msgstr "Ustvaril"
+
+#. module: account_statement_operation_rule
+#: field:account.statement.operation.rule,create_date:0
+msgid "Created on"
+msgstr "Ustvarjeno"
+
+#. module: account_statement_operation_rule
+#: field:account.statement.operation.rule,currencies:0
+#: selection:account.statement.operation.rule,rule_type:0
+msgid "Currencies"
+msgstr "Valute"
+
+#. module: account_statement_operation_rule
+#: selection:account.statement.operation.rule,rule_type:0
+msgid "Dunning Fees"
+msgstr "Provizije pri izterjavi"
+
+#. module: account_statement_operation_rule
+#: help:account.statement.operation.rule,currencies:0
+msgid ""
+"For 'Currencies' rules, you can choose for which currencies the rule will be"
+" applicable."
+msgstr "Pri pravilih 'valut' lahko izberete, na katere valute se pravilo nanaša."
+
+#. module: account_statement_operation_rule
+#: field:account.statement.operation.rule,id:0
+msgid "ID"
+msgstr "ID"
+
+#. module: account_statement_operation_rule
+#: help:account.statement.operation.rule,sequence:0
+msgid "If several rules match, the first one is used."
+msgstr "Če se ujema več pravil, se uporabi prvo."
+
+#. module: account_statement_operation_rule
+#: field:account.statement.operation.rule,write_uid:0
+msgid "Last Updated by"
+msgstr "Zadnji posodobil"
+
+#. module: account_statement_operation_rule
+#: field:account.statement.operation.rule,write_date:0
+msgid "Last Updated on"
+msgstr "Zadnjič posodobljeno"
+
+#. module: account_statement_operation_rule
+#: field:account.statement.operation.rule,amount_max:0
+msgid "Max. Amount"
+msgstr "Maks. znesek"
+
+#. module: account_statement_operation_rule
+#: field:account.statement.operation.rule,amount_min:0
+msgid "Min. Amount"
+msgstr "Min. znesek"
+
+#. module: account_statement_operation_rule
+#: field:account.statement.operation.rule,name:0
+msgid "Name"
+msgstr "Naziv"
+
+#. module: account_statement_operation_rule
+#: field:account.statement.operation.rule,operations:0
+msgid "Operations"
+msgstr "Operacije"
+
+#. module: account_statement_operation_rule
+#: view:account.statement.operation.rule:account_statement_operation_rule.view_account_statement_operation_rule_form
+msgid "Result"
+msgstr "Rezultat"
+
+#. module: account_statement_operation_rule
+#: selection:account.statement.operation.rule,rule_type:0
+msgid "Roundings"
+msgstr "Zaokroževanja"
+
+#. module: account_statement_operation_rule
+#: view:account.statement.operation.rule:account_statement_operation_rule.view_account_statement_operation_rule_form
+msgid "Rule"
+msgstr "Pravilo"
+
+#. module: account_statement_operation_rule
+#: field:account.statement.operation.rule,sequence:0
+msgid "Sequence"
+msgstr "Zaporedje"
+
+#. module: account_statement_operation_rule
+#: view:account.statement.operation.rule:account_statement_operation_rule.view_account_statement_operation_rule_form
+msgid "Statement Operation Rule"
+msgstr "Pravilo operacij z izpiski"
+
+#. module: account_statement_operation_rule
+#: view:account.statement.operation.rule:account_statement_operation_rule.view_account_statement_operation_rule_search
+#: view:account.statement.operation.rule:account_statement_operation_rule.view_account_statement_operation_rule_tree
+#: model:ir.actions.act_window,name:account_statement_operation_rule.action_account_statement_operation_rule
+#: model:ir.ui.menu,name:account_statement_operation_rule.menu_action_account_statement_operation_rule
+msgid "Statement Operation Rules"
+msgstr "Pravilo operacij z izpiski"
+
+#. module: account_statement_operation_rule
+#: view:account.statement.operation.rule:account_statement_operation_rule.view_account_statement_operation_rule_form
+msgid "Then the following operations will be applied:"
+msgstr "se izvedejo naslednje operacije"
+
+#. module: account_statement_operation_rule
+#: field:account.statement.operation.rule,rule_type:0
+msgid "Type"
+msgstr "Tip"
+
+#. module: account_statement_operation_rule
+#: view:account.statement.operation.rule:account_statement_operation_rule.view_account_statement_operation_rule_form
+msgid "When the balance is between"
+msgstr "Ko je stanje med"
