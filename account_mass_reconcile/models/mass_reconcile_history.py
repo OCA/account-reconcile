@@ -13,14 +13,13 @@ class MassReconcileHistory(models.Model):
     _rec_name = 'mass_reconcile_id'
     _order = 'date DESC'
 
-    @api.one
+    @api.multi
     @api.depends('reconcile_ids')
     def _get_reconcile_line_ids(self):
-        move_line_ids = []
-        for reconcile in self.reconcile_ids:
-            move_lines = reconcile.mapped('reconciled_line_ids')
-            move_line_ids.extend(move_lines.ids)
-        self.reconcile_line_ids = move_line_ids
+        for rec in self:
+            rec.reconcile_line_ids = rec.mapped(
+                'reconcile_ids.reconciled_line_ids'
+            ).ids
 
     mass_reconcile_id = fields.Many2one(
         'account.mass.reconcile',

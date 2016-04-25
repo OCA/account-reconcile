@@ -5,7 +5,7 @@
 
 {
     "name": "Mass Reconcile",
-    "version": "9.0.1.3.1",
+    "version": "9.0.1.0.0",
     "depends": ["account", "account_full_reconcile"],
     "author": "Akretion,Camptocamp,Odoo Community Association (OCA)",
     "website": "http://www.akretion.com/",

@@ -97,26 +97,28 @@ class AccountMassReconcile(models.Model):
     _inherit = ['mail.thread']
     _description = 'account mass reconcile'
 
-    @api.one
+    @api.multi
     @api.depends('account')
     def _get_total_unrec(self):
         obj_move_line = self.env['account.move.line']
-        self.unreconciled_count = obj_move_line.search_count(
-            [('account_id', '=', self.account.id),
-             ('reconciled', '=', False)])
+        for rec in self:
+            rec.unreconciled_count = obj_move_line.search_count(
+                [('account_id', '=', rec.account.id),
+                 ('reconciled', '=', False)])
 
-    @api.one
+    @api.multi
     @api.depends('history_ids')
     def _last_history(self):
         # do a search() for retrieving the latest history line,
         # as a read() will badly split the list of ids with 'date desc'
         # and return the wrong result.
         history_obj = self.env['mass.reconcile.history']
-        last_history_rs = history_obj.search(
-            [('mass_reconcile_id', '=', self.id)],
-            limit=1, order='date desc'
-            )
-        self.last_history = last_history_rs or False
+        for rec in self:
+            last_history_rs = history_obj.search(
+                [('mass_reconcile_id', '=', rec.id)],
+                limit=1, order='date desc'
+                )
+            rec.last_history = last_history_rs or False
 
     name = fields.Char(string='Name', required=True)
     account = fields.Many2one('account.account',
