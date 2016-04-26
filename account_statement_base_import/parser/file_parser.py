@@ -18,11 +18,10 @@
 #
 ##############################################################################
 from openerp.tools.translate import _
-from openerp.osv.orm import except_orm
+from openerp.exceptions import UserError
 import tempfile
 import datetime
-from .parser import BankStatementImportParser
-from .parser import UnicodeDictReader
+from .parser import AccountMoveImportParser, UnicodeDictReader
 try:
     import xlrd
 except:
@@ -35,7 +34,7 @@ def float_or_zero(val):
     return float(val) if val else 0.0
 
 
-class FileParser(BankStatementImportParser):
+class FileParser(AccountMoveImportParser):
     """Generic abstract class for defining parser for .csv, .xls or .xlsx file
     format.
     """
@@ -55,8 +54,7 @@ class FileParser(BankStatementImportParser):
         if ftype in ('csv', 'xls', 'xlsx'):
             self.ftype = ftype[0:3]
         else:
-            raise except_orm(
-                _('User Error'),
+            raise UserError(
                 _('Invalid file type %s. Please use csv, xls or xlsx') % ftype)
         self.conversion_dict = extra_fields
         self.keys_to_validate = self.conversion_dict.keys()
@@ -96,8 +94,7 @@ class FileParser(BankStatementImportParser):
             parsed_cols = self.result_row_list[0].keys()
             for col in self.keys_to_validate:
                 if col not in parsed_cols:
-                    raise except_orm(_('Invalid data'),
-                                     _('Column %s not present in file') % col)
+                    raise UserError(_('Column %s not present in file') % col)
         return True
 
     def _post(self, *args, **kwargs):
@@ -143,9 +140,9 @@ class FileParser(BankStatementImportParser):
                         line[rule] = datetime.datetime.strptime(date_string,
                                                                 '%Y-%m-%d')
                     except ValueError as err:
-                        raise except_orm(
-                            _("Date format is not valid."),
-                            _(" It should be YYYY-MM-DD for column: %s"
+                        raise UserError(
+                            _("Date format is not valid."
+                              " It should be YYYY-MM-DD for column: %s"
                               " value: %s \n \n \n Please check the line with "
                               "ref: %s \n \n Detail: %s") %
                             (rule, line.get(rule, _('Missing')),
@@ -154,8 +151,7 @@ class FileParser(BankStatementImportParser):
                     try:
                         line[rule] = conversion_rules[rule](line[rule])
                     except Exception as err:
-                        raise except_orm(
-                            _('Invalid data'),
+                        raise UserError(
                             _("Value %s of column %s is not valid.\n Please "
                               "check the line with ref %s:\n \n Detail: %s") %
                             (line.get(rule, _('Missing')), rule,
@@ -174,9 +170,9 @@ class FileParser(BankStatementImportParser):
                                                        self._datemode)
                         line[rule] = datetime.datetime(*t_tuple)
                     except Exception as err:
-                        raise except_orm(
-                            _("Date format is not valid"),
-                            _("Please modify the cell formatting to date "
+                        raise UserError(
+                            _("Date format is not valid. "
+                              "Please modify the cell formatting to date "
                               "format for column: %s value: %s\n Please check "
                               "the line with ref: %s\n \n Detail: %s") %
                             (rule, line.get(rule, _('Missing')),
@@ -185,8 +181,7 @@ class FileParser(BankStatementImportParser):
                     try:
                         line[rule] = conversion_rules[rule](line[rule])
                     except Exception as err:
-                        raise except_orm(
-                            _('Invalid data'),
+                        raise UserError(
                             _("Value %s of column %s is not valid.\n Please "
                               "check the line with ref %s:\n \n Detail: %s") %
                             (line.get(rule, _('Missing')), rule,

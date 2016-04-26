@@ -26,8 +26,7 @@
  'category': 'Finance',
  'complexity': 'normal',
  'depends': [
-     'account_statement_ext',
-     'account_statement_base_completion'
+     'account'
  ],
  'description': """
  This module brings basic methods and fields on bank statement to deal with
@@ -62,11 +61,14 @@
  """,
  'website': 'http://www.camptocamp.com',
  'data': [
+     "data/completion_rule_data.xml",
      "wizard/import_statement_view.xml",
-     "statement_view.xml",
+     "views/account_move_view.xml",
+     "views/journal_view.xml",
+     "views/partner_view.xml",
  ],
  'test': [],
- 'installable': False,
+ 'installable': True,
  'images': [],
  'auto_install': False,
  'license': 'AGPL-3',

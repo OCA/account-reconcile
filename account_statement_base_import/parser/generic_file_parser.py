@@ -52,7 +52,7 @@ class GenericFileParser(FileParser):
         """
         return parser_name == 'generic_csvxls_so'
 
-    def get_st_line_vals(self, line, *args, **kwargs):
+    def get_move_line_vals(self, line, *args, **kwargs):
         """
         This method must return a dict of vals that can be passed to create
         method of statement line in order to record it. It is the
@@ -70,10 +70,10 @@ class GenericFileParser(FileParser):
                     'label':value,
                 }
         """
+        amount = line.get('amount', 0.0)
         return {
             'name': line.get('label', line.get('ref', '/')),
-            'date': line.get('date', datetime.datetime.now().date()),
-            'amount': line.get('amount', 0.0),
-            'ref': line.get('ref', '/'),
-            'label': line.get('label', ''),
+            'date_maturity': line.get('date', datetime.datetime.now().date()),
+            'credit': amount > 0.0 and amount or 0.0,
+            'debit': amount < 0.0 and amount or 0.0,
         }

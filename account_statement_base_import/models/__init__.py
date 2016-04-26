@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
 ##############################################################################
 #
-#    Author: Nicolas Bessi, Joel Grand-Guillaume
+#    Author: Joel Grand-Guillaume
 #    Copyright 2011-2012 Camptocamp SA
+#    Copyright 2013 Savoir-faire Linux (<http://www.savoirfairelinux.com>)
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -18,8 +19,6 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-
-from .parser import new_move_parser
-from .parser import AccountMoveImportParser
-from . import file_parser
-from . import generic_file_parser
+from . import account_journal
+from . import account_move
+from . import partner

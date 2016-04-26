@@ -20,8 +20,10 @@
 #
 #
 
+from . import test_base_completion
 from . import test_base_import
 
 checks = [
+    test_base_completion,
     test_base_import
 ]

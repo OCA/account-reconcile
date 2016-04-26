@@ -20,4 +20,4 @@
 ##############################################################################
 from . import parser
 from . import wizard
-from . import statement
+from . import models

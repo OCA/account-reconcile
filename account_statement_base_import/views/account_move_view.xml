@@ -1,0 +1,20 @@
+<odoo>
+    <record id="view_move_importer_form" model="ir.ui.view">
+        <field name="name">account.move.view</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_move_form"/>
+        <field name="arch" type="xml">
+            <button name="button_cancel" position="after">
+                <button name="button_auto_completion" string="Auto Completion" states='draft' type="object" class="oe_highlight" groups="account.group_account_invoice"/>
+            </button>
+            <xpath expr="/form/sheet/notebook/page/field[@name='line_ids']/tree/field[@name='credit']" position="after">
+                <field name="already_completed"/>
+            </xpath>
+            <xpath expr="/form/sheet/notebook" position="inside">
+                <page string="Completion Logs" attrs="{'invisible':[('completion_logs','=',False)]}">
+                    <field name="completion_logs" colspan="4" nolabel="1" attrs="{'invisible':[('completion_logs','=',False)]}"/>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>
