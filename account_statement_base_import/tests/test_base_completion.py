@@ -19,8 +19,9 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 #
+from openerp import fields, tools
+from openerp.modules import get_module_resource
 from openerp.tests import common
-import time
 from collections import namedtuple
 
 name_completion_case = namedtuple(
@@ -51,17 +52,17 @@ class base_completion(common.TransactionCase):
 
     def setUp(self):
         super(base_completion, self).setUp()
+        tools.convert_file(self.cr, 'account',
+                           get_module_resource('account', 'test',
+                                               'account_minimal_test.xml'),
+                           {}, 'init', False, 'test')
+        self.account_move_obj = self.env["account.move"]
+        self.account_move_line_obj = \
+            self.env["account.move.line"]
         self.company_a = self.browse_ref('base.main_company')
-        self.profile_obj = self.registry("account.statement.profile")
-        self.partner_obj = self.registry("res.partner")
-        self.account_bank_statement_obj = self.registry(
-            "account.bank.statement")
-        self.account_bank_statement_line_obj = self.registry(
-            "account.bank.statement.line")
-        self.journal_id = self.ref("account.bank_journal")
-        self.partner_id = self.ref('base.main_partner')
+        self.journal = self.browse_ref("account.bank_journal")
+        self.partner = self.browse_ref("base.res_partner_12")
         self.account_id = self.ref("account.a_recv")
-        self.partner_id = self.ref("base.res_partner_12")
 
     def test_name_completion(self):
         """Test complete partner_id from statement line label
@@ -69,54 +70,44 @@ class base_completion(common.TransactionCase):
         the partner appears in the statement line label
         """
         self.completion_rule_id = self.ref(
-            'account_statement_base_completion.'
-            'bank_statement_completion_rule_3')
+            'account_statement_base_import.bank_statement_completion_rule_3')
         # Create the profile
-        self.profile_id = self.profile_obj.create(self.cr, self.uid, {
-            "name": "TEST",
-            "commission_account_id": self.account_id,
-            "journal_id": self.journal_id,
-            "rule_ids": [(6, 0, [self.completion_rule_id])]})
+        self.journal.write({
+            'used_for_import': True,
+            'partner_id': self.partner.id,
+            'commission_account_id': self.account_id,
+            'receivable_account_id': self.account_id,
+            'rule_ids': [(6, 0, [self.completion_rule_id])]
+        })
         # Create a bank statement
-        self.statement_id = self.account_bank_statement_obj.create(
-            self.cr, self.uid, {
-                "balance_end_real": 0.0,
-                "balance_start": 0.0,
-                "date": time.strftime('%Y-%m-%d'),
-                "journal_id": self.journal_id,
-                "profile_id": self.profile_id
-            })
+        self.move = self.account_move_obj.create({
+            "date": fields.Date.today(),
+            "journal_id": self.journal.id
+        })
 
         for case in NAMES_COMPLETION_CASES:
-            self.partner_obj.write(
-                self.cr, self.uid, self.partner_id, {'name': case.partner_name}
-            )
-            statement_line_id = self.account_bank_statement_line_obj.create(
-                self.cr, self.uid, {
-                    'amount': 1000.0,
-                    'name': case.line_label,
-                    'ref': 'My ref',
-                    'statement_id': self.statement_id,
-                })
-            statement_line = self.account_bank_statement_line_obj.browse(
-                self.cr, self.uid, statement_line_id)
+            self.partner.write({'name': case.partner_name})
+            self.move_line = self.account_move_line_obj.with_context(
+                check_move_validity=False
+            ).create({
+                'account_id': self.account_id,
+                'credit': 1000.0,
+                'name': case.line_label,
+                'move_id': self.move.id,
+            })
             self.assertFalse(
-                statement_line.partner_id,
+                self.move_line.partner_id,
                 "Partner_id must be blank before completion")
-            statement_obj = self.account_bank_statement_obj.browse(
-                self.cr, self.uid, self.statement_id)
-            statement_obj.button_auto_completion()
-            statement_line = self.account_bank_statement_line_obj.browse(
-                self.cr, self.uid, statement_line_id)
+            self.move.button_auto_completion()
             if case.should_match:
                 self.assertEquals(
-                    self.partner_id, statement_line.partner_id['id'],
+                    self.partner, self.move_line.partner_id,
                     "Missing expected partner id after completion "
                     "(partner_name: %s, line_name: %s)" %
                     (case.partner_name, case.line_label))
             else:
                 self.assertNotEquals(
-                    self.partner_id, statement_line.partner_id['id'],
+                    self.partner, self.move_line.partner_id,
                     "Partner id should be empty after completion "
                     "(partner_name: %s, line_name: %s)"
                     % (case.partner_name, case.line_label))

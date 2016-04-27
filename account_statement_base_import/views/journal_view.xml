@@ -11,14 +11,14 @@
             <notebook position="inside">
                 <page string="Import related infos" attrs="{'invisible': [('used_for_import', '=', False)]}">
                     <group>
-                        <field name="launch_import_completion"/>
+                        <field name="launch_import_completion" attrs="{'required': ['used_for_import', '=', True]}"/>
                         <field name="last_import_date" readonly="1"/>
-                        <field name="import_type"/>
+                        <field name="import_type" attrs="{'required': ['used_for_import', '=', True]}"/>
                     </group>
                     <group>
-                        <field name="commission_account_id"/>
-                        <field name="receivable_account_id"/>
-                        <field name="partner_id"/>
+                        <field name="commission_account_id" attrs="{'required': ['used_for_import', '=', True]}"/>
+                        <field name="receivable_account_id" attrs="{'required': ['used_for_import', '=', True]}"/>
+                        <field name="partner_id" attrs="{'required': ['used_for_import', '=', True]}"/>
                     </group>
                     <group>
                         <button name="%(account_statement_base_import.move_importer_action)d"

@@ -12,17 +12,14 @@
   I create a customer refund to be found by the completion.
 -
   !record {model: account.invoice, id: refund_for_completion_1}:
-    account_id: account.a_pay
     company_id: base.main_company
     currency_id: base.EUR
-    internal_number: CR0001
-    invoice_line:
-      - account_id: account.a_expense
-        name: '[PCSC234] PC Assemble SC234'
+    invoice_line_ids:
+      - name: '[PCSC234] PC Assemble SC234'
         price_unit: 210.0
         quantity: 1.0
         product_id: product.product_product_3
-        uos_id: product.product_uom_unit
+        uom_id: product.product_uom_unit
     journal_id: account.expenses_journal
     partner_id: res_partner_12_child
     type: 'out_refund'
@@ -37,7 +34,9 @@
   !assert {model: account.invoice, id: refund_for_completion_1}:
     - state == 'open'
 -
-  I check that it is given the number "CR0001"
+  I check that it is given the number "RTEXJ/%Y/0001"
 -
-  !assert {model: account.invoice, id: refund_for_completion_1, string: Check CI number}:
-    - number == 'CR0001'
+  !python {model: account.invoice}: |
+    import datetime as dt
+    invoice = model.browse(cr, uid, ref('refund_for_completion_1'), context)
+    assert invoice.number == dt.date.today().strftime('RTEXJ/%Y/0001')

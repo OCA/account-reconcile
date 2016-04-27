@@ -84,11 +84,21 @@ class CreditPartnerStatementImporter(models.TransientModel):
     @api.multi
     def import_statement(self):
         """This Function import credit card agency statement"""
+        moves = self.env['account.move']
         for importer in self:
             journal = importer.journal_id
             ftype = self._check_extension(importer.file_name)
-            journal.with_context(
+            moves |= journal.with_context(
                 file_name=importer.file_name).multi_move_import(
                 importer.input_statement,
                 ftype.replace('.', '')
             )
+        xmlid = ('account', 'action_move_journal_line')
+        action = self.env['ir.actions.act_window'].for_xml_id(*xmlid)
+        if len(moves) > 1:
+            action['domain'] = [('id', 'in', moves.ids)]
+        else:
+            ref = self.env.ref('account.view_move_form')
+            action['views'] = [(ref.id, 'form')]
+            action['res_id'] = moves.id if moves else False
+        return action

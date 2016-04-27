@@ -1,23 +1,7 @@
 # -*- coding: utf-8 -*-
-##############################################################################
-#
-#    Author: Joel Grand-Guillaume
-#    Copyright 2011-2012 Camptocamp SA
-#
-#    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU Affero General Public License as
-#    published by the Free Software Foundation, either version 3 of the
-#    License, or (at your option) any later version.
-#
-#    This program is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU Affero General Public License for more details.
-#
-#    You should have received a copy of the GNU Affero General Public License
-#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#
-##############################################################################
+# © 2011-2016 Camptocamp SA
+#             Joel Grand-Guillaume, Nicolas Bessi, Matthieu Dietrich
+# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 import sys
 import traceback
 import os
@@ -223,10 +207,10 @@ class AccountJournal(models.Model):
         if filename:
             (filename, __) = os.path.splitext(filename)
         parser = new_move_parser(self, ftype=ftype, move_ref=filename)
-        res = []
+        res = self.env['account.move']
         for result_row_list in parser.parse(file_stream):
             move = self._move_import(parser, file_stream, ftype=ftype)
-            res.append(move)
+            res |= move
         return res
 
     def _move_import(self, parser, file_stream, ftype="csv"):

@@ -1,23 +1,7 @@
 # -*- coding: utf-8 -*-
-##############################################################################
-#
-#    Author: Nicolas Bessi, Joel Grand-Guillaume
-#    Copyright 2011-2012 Camptocamp SA
-#
-#    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU Affero General Public License as
-#    published by the Free Software Foundation, either version 3 of the
-#    License, or (at your option) any later version.
-#
-#    This program is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU Affero General Public License for more details.
-#
-#    You should have received a copy of the GNU Affero General Public License
-#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#
-##############################################################################
+# © 2011-2016 Camptocamp SA
+#             Joel Grand-Guillaume, Nicolas Bessi, Matthieu Dietrich
+# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 # TODO replace customer supplier by package constant
 import traceback
 import sys
@@ -65,7 +49,9 @@ class AccountMoveCompletionRule(models.Model):
         Override this to add you own."""
         return [
             ('get_from_name_and_invoice',
-             'From line name (based on invoice reference)'),
+             'From line name (based on customer invoice number)'),
+            ('get_from_name_and_supplier_invoice',
+             'From line name (based on supplier invoice number)'),
             ('get_from_name_and_partner_field',
              'From line name (based on partner field)'),
             ('get_from_name_and_partner_name',
@@ -90,6 +76,62 @@ class AccountMoveCompletionRule(models.Model):
         __get_functions,
         string='Method')
 
+    def _find_invoice(self, line, inv_type):
+        """Find invoice related to statement line"""
+        inv_obj = self.env['account.invoice']
+        if inv_type == 'supplier':
+            type_domain = ('in_invoice', 'in_refund')
+            number_field = 'reference'
+        elif inv_type == 'customer':
+            type_domain = ('out_invoice', 'out_refund')
+            number_field = 'number'
+        else:
+            raise ValidationError(
+                _('Invalid invoice type for completion: %') % inv_type)
+
+        invoices = inv_obj.search([(number_field, '=', line.name.strip()),
+                                   ('type', 'in', type_domain)])
+        if invoices:
+            if len(invoices) == 1:
+                invoice = invoices[0]
+            else:
+                raise ErrorTooManyPartner(
+                    _('Line named "%s" was matched by more than one '
+                      'partner while looking on %s invoices') %
+                    (line.name, inv_type))
+            return invoice
+        return False
+
+    def _from_invoice(self, line, inv_type):
+        """Populate statement line values"""
+        if inv_type not in ('supplier', 'customer'):
+            raise ValidationError(
+                _('Invalid invoice type for completion: %') %
+                inv_type)
+        res = {}
+        invoice = self._find_invoice(line, inv_type)
+        if invoice:
+            partner_id = invoice.commercial_partner_id.id
+            res = {'partner_id': partner_id}
+        return res
+
+    # Should be private but data are initialised with no update XML
+    def get_from_name_and_supplier_invoice(self, line):
+        """Match the partner based on the invoice number and the reference of
+        the statement line. Then, call the generic get_values_for_line method
+        to complete other values. If more than one partner matched, raise the
+        ErrorTooManyPartner error.
+
+        :param dict line: read of the concerned account.bank.statement.line
+        :return:
+            A dict of value that can be passed directly to the write method of
+            the statement line or {}
+           {'partner_id': value,
+            'account_id': value,
+            ...}
+        """
+        return self._from_invoice(line, 'supplier')
+
     # Should be private but data are initialised with no update XML
     def get_from_name_and_invoice(self, line):
         """Match the partner based on the invoice number and the reference of
@@ -105,20 +147,7 @@ class AccountMoveCompletionRule(models.Model):
             'account_id': value,
             ...}
         """
-        res = {}
-        inv_obj = self.env['account.invoice']
-        invoices = inv_obj.search([('name', '=', line.name.strip())])
-        if invoices:
-            if len(invoices) == 1:
-                invoice = invoices[0]
-                partner_id = invoice.commercial_partner_id.id
-                res = {'partner_id': partner_id}
-            else:
-                raise ErrorTooManyPartner(
-                    _('Line named "%s" (Ref:%s) was matched by more than one '
-                      'partner while looking on invoices') %
-                    (line.name))
-        return res
+        return self._from_invoice(line, 'customer')
 
     # Should be private but data are initialised with no update XML
     def get_from_name_and_partner_field(self, line):
@@ -140,7 +169,7 @@ class AccountMoveCompletionRule(models.Model):
             """
         res = {}
         partner_obj = self.env['res.partner']
-        or_regex = ".*; *%s *;.*" % line.name
+        or_regex = ".*;? *%s *;?.*" % line.name
         sql = ("SELECT id from res_partner"
                " WHERE bank_statement_label ~* %s")
         self.env.cr.execute(sql, (or_regex, ))
