@@ -32,15 +32,16 @@ class CreditPartnerStatementImporter(models.TransientModel):
 
     @api.model
     def default_get(self, fields):
-        context = self.env.context.copy()
+        ctx = self._context
         res = {}
-        if (context.get('active_model', False) == 'account.journal' and
-                context.get('active_ids', False)):
-            ids = context['active_ids']
+        if (ctx.get('active_model', False) == 'account.journal' and
+                ctx.get('active_ids', False)):
+            ids = ctx['active_ids']
             assert len(ids) == 1, \
-                'You cannot use this on more than one profile !'
+                'You cannot use this on more than one journal !'
             res['journal_id'] = ids[0]
-            self.onchange_journal_id(res['journal_id'])
+            values = self.onchange_journal_id(res['journal_id'])
+            res.update(values.get('value', {}))
         return res
 
     journal_id = fields.Many2one(
@@ -52,7 +53,7 @@ class CreditPartnerStatementImporter(models.TransientModel):
         required=True)
     partner_id = fields.Many2one(
         comodel_name='res.partner',
-        string='Credit insitute partner')
+        string='Credit institute partner')
     file_name = fields.Char('File Name', size=128)
     receivable_account_id = fields.Many2one(
         comodel_name='account.account',
@@ -65,10 +66,13 @@ class CreditPartnerStatementImporter(models.TransientModel):
     def onchange_journal_id(self, journal_id):
         if journal_id:
             journal = self.env['account.journal'].browse(journal_id)
-        for importer in self:
-            importer.partner_id = journal.partner_id.id
-            importer.receivable_account_id = journal.receivable_account_id.id
-            importer.commission_account_id = journal.commission_account_id.id
+            return {
+                'value': {
+                    'partner_id': journal.partner_id.id,
+                    'receivable_account_id': journal.receivable_account_id.id,
+                    'commission_account_id': journal.commission_account_id.id,
+                }
+            }
 
     def _check_extension(self, filename):
         (__, ftype) = os.path.splitext(filename)

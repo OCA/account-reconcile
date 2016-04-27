@@ -20,6 +20,7 @@
 ##############################################################################
 import sys
 import traceback
+import os
 from openerp import _, api, fields, models
 from ..parser.parser import new_move_parser
 from openerp.exceptions import UserError, ValidationError
@@ -37,6 +38,9 @@ class AccountJournal(models.Model):
     def __get_import_type_selection(self):
         """ Call method which can be inherited """
         return self._get_import_type_selection()
+
+    used_for_import = fields.Boolean(
+        string="Journal used for import")
 
     commission_account_id = fields.Many2one(
         comodel_name='account.account',
@@ -173,7 +177,7 @@ class AccountJournal(models.Model):
 
     def prepare_move_line_vals(self, parser_vals, move):
         """Hook to build the values of a line from the parser returned values.
-        At least it fullfill the statement_id. Overide it to add your own
+        At least it fullfill the basic values. Overide it to add your own
         completion if needed.
 
         :param dict of vals from parser for account.bank.statement.line
@@ -186,6 +190,8 @@ class AccountJournal(models.Model):
         move_line_obj = self.env['account.move.line']
         values = parser_vals
         values['company_id'] = self.company_id.id
+        values['currency_id'] = self.currency_id.id
+        values['company_currency_id'] = self.company_id.currency_id.id
         values['journal_id'] = self.id
         values['move_id'] = move.id
         if values['credit'] > 0.0:
@@ -199,7 +205,8 @@ class AccountJournal(models.Model):
         """Hook to build the values of the statement from the parser and
         the profile.
         """
-        vals = {'journal_id': self.id}
+        vals = {'journal_id': self.id,
+                'currency_id': self.currency_id.id}
         vals.update(parser.get_move_vals())
         return vals
 
@@ -212,7 +219,10 @@ class AccountJournal(models.Model):
         :param char: ftype represent the file exstension (csv by default)
         :return: list: list of ids of the created account.bank.statemênt
         """
-        parser = new_move_parser(self, ftype=ftype)
+        filename = self._context.get('file_name', None)
+        if filename:
+            (filename, __) = os.path.splitext(filename)
+        parser = new_move_parser(self, ftype=ftype, move_ref=filename)
         res = []
         for result_row_list in parser.parse(file_stream):
             move = self._move_import(parser, file_stream, ftype=ftype)

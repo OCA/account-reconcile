@@ -61,6 +61,7 @@
  """,
  'website': 'http://www.camptocamp.com',
  'data': [
+     "security/ir.model.access.csv",
      "data/completion_rule_data.xml",
      "wizard/import_statement_view.xml",
      "views/account_move_view.xml",

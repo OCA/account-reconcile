@@ -35,7 +35,6 @@ class GenericFileParser(FileParser):
 
     def __init__(self, parse_name, ftype='csv', **kwargs):
         conversion_dict = {
-            'ref': ustr,
             'label': ustr,
             'date': datetime.datetime,
             'amount': float_or_zero,
@@ -64,10 +63,9 @@ class GenericFileParser(FileParser):
               line, it MUST contain at least:
                 {
                     'name':value,
-                    'date':value,
-                    'amount':value,
-                    'ref':value,
-                    'label':value,
+                    'date_maturity':value,
+                    'credit':value,
+                    'debit':value
                 }
         """
         amount = line.get('amount', 0.0)

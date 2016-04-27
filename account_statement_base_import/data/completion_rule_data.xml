@@ -14,9 +14,9 @@
      </record>
 
      <record id="bank_statement_completion_rule_4" model="account.move.completion.rule">
-          <field name="name">Match from line reference (based on Invoice reference)</field>
+          <field name="name">Match from line label (based on Invoice reference)</field>
           <field name="sequence">40</field>
-          <field name="function_to_call">get_from_ref_and_invoice</field>
+          <field name="function_to_call">get_from_name_and_invoice</field>
       </record>
 
 </odoo>

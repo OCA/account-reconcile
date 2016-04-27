@@ -40,7 +40,7 @@ class FileParser(AccountMoveImportParser):
     """
 
     def __init__(self, parse_name, ftype='csv', extra_fields=None, header=None,
-                 dialect=None, **kwargs):
+                 dialect=None, move_ref=None, **kwargs):
         """
             :param char: parse_name: The name of the parser
             :param char: ftype: extension of the file (could be csv, xls or
@@ -63,6 +63,7 @@ class FileParser(AccountMoveImportParser):
         # 0 means Windows mode (1900 based dates).
         # Set in _parse_xls, from the contents of the file
         self.dialect = dialect
+        self.move_ref = move_ref
 
     def _custom_format(self, *args, **kwargs):
         """No other work on data are needed in this parser."""

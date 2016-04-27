@@ -5,11 +5,14 @@
         <field name="model">account.journal</field>
         <field name="inherit_id" ref="account.view_account_journal_form"/>
         <field name="arch" type="xml">
+            <field name="loss_account_id" position="after">
+                <field name="used_for_import"/>
+            </field>
             <notebook position="inside">
-                <page string="Import related infos">
+                <page string="Import related infos" attrs="{'invisible': [('used_for_import', '=', False)]}">
                     <group>
                         <field name="launch_import_completion"/>
-                        <field name="last_import_date"/>
+                        <field name="last_import_date" readonly="1"/>
                         <field name="import_type"/>
                     </group>
                     <group>
@@ -18,7 +21,7 @@
                         <field name="partner_id"/>
                     </group>
                     <group>
-                        <button name="%(account_statement_base_import.statement_importer_action)d"
+                        <button name="%(account_statement_base_import.move_importer_action)d"
                                 string="Import Bank Statement"
                                 type="action" icon="gtk-ok"
                                 colspan = "2"/>

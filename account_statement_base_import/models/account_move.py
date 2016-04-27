@@ -64,8 +64,8 @@ class AccountMoveCompletionRule(models.Model):
 
         Override this to add you own."""
         return [
-            ('get_from_ref_and_invoice',
-             'From line reference (based on invoice reference)'),
+            ('get_from_name_and_invoice',
+             'From line name (based on invoice reference)'),
             ('get_from_name_and_partner_field',
              'From line name (based on partner field)'),
             ('get_from_name_and_partner_name',
@@ -91,7 +91,7 @@ class AccountMoveCompletionRule(models.Model):
         string='Method')
 
     # Should be private but data are initialised with no update XML
-    def get_from_ref_and_invoice(self, line):
+    def get_from_name_and_invoice(self, line):
         """Match the partner based on the invoice number and the reference of
         the statement line. Then, call the generic get_values_for_line method
         to complete other values. If more than one partner matched, raise the
@@ -107,8 +107,7 @@ class AccountMoveCompletionRule(models.Model):
         """
         res = {}
         inv_obj = self.env['account.invoice']
-
-        invoices = inv_obj.search([('reference', '=', line.ref.strip())])
+        invoices = inv_obj.search([('name', '=', line.name.strip())])
         if invoices:
             if len(invoices) == 1:
                 invoice = invoices[0]
@@ -118,7 +117,7 @@ class AccountMoveCompletionRule(models.Model):
                 raise ErrorTooManyPartner(
                     _('Line named "%s" (Ref:%s) was matched by more than one '
                       'partner while looking on invoices') %
-                    (line.name, line.ref))
+                    (line.name))
         return res
 
     # Should be private but data are initialised with no update XML

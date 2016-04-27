@@ -61,7 +61,7 @@ class AccountMoveImportParser(object):
         self.journal = journal
         self.move_date = None
         self.move_name = None
-        self.move_ref= None
+        self.move_ref = None
 
     @classmethod
     def parser_for(cls, parser_name):
