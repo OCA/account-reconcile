@@ -73,10 +73,7 @@ class base_completion(common.TransactionCase):
             'account_statement_base_import.bank_statement_completion_rule_3')
         # Create the profile
         self.journal.write({
-            'used_for_import': True,
-            'partner_id': self.partner.id,
-            'commission_account_id': self.account_id,
-            'receivable_account_id': self.account_id,
+            'used_for_completion': True,
             'rule_ids': [(6, 0, [self.completion_rule_id])]
         })
         # Create a bank statement
