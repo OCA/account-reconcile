@@ -22,6 +22,7 @@
 import base64
 import inspect
 import os
+from operator import attrgetter
 from openerp.tests import common
 from openerp import tools
 from openerp.modules import get_module_resource
@@ -87,8 +88,9 @@ class TestCodaImport(common.TransactionCase):
     def _validate_imported_move(self, move):
         self.assertEqual("/", move.name)
         self.assertEqual(5, len(move.line_ids))
-        move_line = move.line_ids[4]
+        move_line = sorted(move.line_ids,
+                           key=attrgetter('date_maturity'))[2]
         # common infos
-        self.assertEqual(move_line.date_maturity, "2011-03-02")
-        self.assertEqual(move_line.credit, 189.0)
-        self.assertEqual(move_line.name, "label b")
+        self.assertEqual(move_line.date_maturity, "2011-03-07")
+        self.assertEqual(move_line.credit, 118.4)
+        self.assertEqual(move_line.name, "label a")

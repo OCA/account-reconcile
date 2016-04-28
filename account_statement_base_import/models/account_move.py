@@ -177,9 +177,9 @@ class AccountMoveCompletionRule(models.Model):
         partners = partner_obj.browse([x[0] for x in partner_ids])
         if partners:
             if len(partners) > 1:
-                msg = (_('Line named "%s" (Ref:%s) was matched by more than '
+                msg = (_('Line named "%s" was matched by more than '
                          'one partner while looking on partner label: %s') %
-                        (line.name, line.ref,
+                        (line.name,
                          ','.join([x.name for x in partners])))
                 raise ErrorTooManyPartner(msg)
             res['partner_id'] = partners[0].id
@@ -223,9 +223,9 @@ class AccountMoveCompletionRule(models.Model):
         if result:
             if len(result) > 1:
                 raise ErrorTooManyPartner(
-                    _('Line named "%s" (Ref:%s) was matched by more than one '
+                    _('Line named "%s" was matched by more than one '
                       'partner while looking on partner by name') %
-                    (line.name, line.ref))
+                    line.name)
             res['partner_id'] = result[0][0]
         return res
 
