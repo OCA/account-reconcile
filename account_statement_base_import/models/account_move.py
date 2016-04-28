@@ -319,10 +319,6 @@ class AccountMoveLine(models.Model):
     def _update_line(self, vals):
         """ Do raw update into database because ORM is awfully slow
             when cheking security.
-        TODO / WARM: sparse fields are skipped by the method. IOW, if your
-        completion rule update an sparse field, the updated value will never
-        be stored in the database. It would be safer to call the update method
-        from the ORM for records updating this kind of fields.
         """
         cols = self._get_available_columns([vals])
         vals = self._prepare_insert(vals, cols)

@@ -48,10 +48,10 @@ NAMES_COMPLETION_CASES = [
 ]
 
 
-class base_completion(common.TransactionCase):
+class BaseCompletion(common.TransactionCase):
 
     def setUp(self):
-        super(base_completion, self).setUp()
+        super(BaseCompletion, self).setUp()
         tools.convert_file(self.cr, 'account',
                            get_module_resource('account', 'test',
                                                'account_minimal_test.xml'),

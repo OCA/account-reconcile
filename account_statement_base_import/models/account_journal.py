@@ -132,7 +132,9 @@ class AccountJournal(models.Model):
                 'account_id': commission_account_id,
                 'already_completed': True,
             }
-            move_line_obj.with_context(check_move_validity=False).create(comm_values)
+            move_line_obj.with_context(
+                check_move_validity=False
+            ).create(comm_values)
         # Counterpart line
         if total_amount > 0.0:
             receivable_account_id = self.receivable_account_id.id or False
