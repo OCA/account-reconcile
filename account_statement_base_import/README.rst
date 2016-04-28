@@ -18,8 +18,8 @@ The main change is that, in order to import financial data, this information
 is now imported directly as a Journal Entry.
 
 Most of the information present in the "statement profile" is now located in
-the account journal (with an added boolean parameter which allows to use
-this journal for importation).
+the account journal (with 2 boolean parameters which allows to use
+this journal for importation and/or auto-completion).
 
 Financial data can be imported using a standard .csv or .xls file (you'll find
 it in the 'data' folder). It respects the journal to pass the entries.
@@ -59,8 +59,6 @@ both.
 
 Known issues / Roadmap
 ======================
-
-* ...
 
 Bug Tracker
 ===========

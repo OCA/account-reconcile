@@ -344,6 +344,9 @@ class AccountMove(models.Model):
     _name = 'account.move'
     _inherit = ['account.move', 'mail.thread']
 
+    used_for_completion = fields.Boolean(
+        related='journal_id.used_for_completion',
+        readonly=True)
     completion_logs = fields.Text(string='Completion Log', readonly=True)
 
     def write_completion_log(self, error_msg, number_imported):

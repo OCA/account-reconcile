@@ -41,11 +41,6 @@ class AccountJournal(models.Model):
     last_import_date = fields.Datetime(
         string="Last Import Date")
 
-    launch_import_completion = fields.Boolean(
-        string="Launch completion after import",
-        help="Tic that box to automatically launch the completion "
-        "on each imported file using this profile.")
-
     partner_id = fields.Many2one(
         comodel_name='res.partner',
         string='Bank/Payment Office partner',
@@ -60,10 +55,18 @@ class AccountJournal(models.Model):
         "debit/credit account (eg. an intermediat bank account "
         "instead of default debitors).")
 
+    used_for_completion = fields.Boolean(
+        string="Journal used for completion")
+
     rule_ids = fields.Many2many(
         comodel_name='account.move.completion.rule',
         string='Auto-completion rules',
         rel='as_rul_st_prof_rel')
+
+    launch_import_completion = fields.Boolean(
+        string="Launch completion after import",
+        help="Tic that box to automatically launch the completion "
+        "on each imported file using this profile.")
 
     def _get_rules(self):
         # We need to respect the sequence order
