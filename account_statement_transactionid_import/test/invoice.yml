@@ -1,0 +1,25 @@
+-
+  I create a new invoice with transaction ID
+-
+  !record {model: account.invoice, id: invoice_with_transaction_id}:
+    company_id: base.main_company
+    currency_id: base.EUR
+    partner_id: base.res_partner_2
+    transaction_id: XXX77Z
+    invoice_line_ids:
+      - name: '[PCSC234] PC Assemble SC234'
+        price_unit: 450.0
+        quantity: 1.0
+        product_id: product.product_product_3
+        uom_id: product.product_uom_unit
+    journal_id: account.bank_journal
+    reference_type: none
+-
+  I confirm the Invoice
+-
+  !workflow {model: account.invoice, action: invoice_open, ref: invoice_with_transaction_id}
+-
+  I check that the invoice state is "Open"
+-
+  !assert {model: account.invoice, id: invoice_with_transaction_id}:
+    - state == 'open'

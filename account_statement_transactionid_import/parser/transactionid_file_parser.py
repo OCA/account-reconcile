@@ -19,7 +19,7 @@
 ##############################################################################
 import datetime
 from openerp.tools import ustr
-from account_statement_base_import.parser.file_parser import (
+from openerp.addons.account_statement_base_import.parser.file_parser import (
     FileParser, float_or_zero
 )
 
@@ -40,10 +40,11 @@ class TransactionIDFileParser(FileParser):
               header
         """
         conversion_dict = {
-            'transaction_id': ustr,
+            'transaction_ref': ustr,
             'label': ustr,
             'date': datetime.datetime,
             'amount': float_or_zero,
+            'commission_amount': float_or_zero,
         }
         super(TransactionIDFileParser, self).__init__(
             profile, extra_fields=conversion_dict, ftype=ftype, header=header,
@@ -56,7 +57,7 @@ class TransactionIDFileParser(FileParser):
         """
         return parser_name == 'generic_csvxls_transaction'
 
-    def get_st_line_vals(self, line, *args, **kwargs):
+    def get_move_line_vals(self, line, *args, **kwargs):
         """This method must return a dict of vals that can be passed to create
         method of statement line in order to record it. It is the
         responsibility of every parser to give this dict of vals, so each one
@@ -76,12 +77,11 @@ class TransactionIDFileParser(FileParser):
         In this generic parser, the commission is given for every line, so we
         store it for each one.
         """
+        amount = line.get('amount', 0.0)
         return {
-            'name': line.get('label', line.get('ref', '/')),
-            'date': line.get('date', datetime.datetime.now().date()),
-            'amount': line.get('amount', 0.0),
-            'ref': line.get('transaction_id', '/'),
-            'label': line.get('label', ''),
-            'transaction_id': line.get('transaction_id', '/'),
-            'commission_amount': line.get('commission_amount', 0.0)
+            'name': line.get('label', '/'),
+            'date_maturity': line.get('date', datetime.datetime.now().date()),
+            'credit': amount > 0.0 and amount or 0.0,
+            'debit': amount < 0.0 and amount or 0.0,
+            'transaction_ref': line.get('transaction_ref', '/'),
         }

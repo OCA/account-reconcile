@@ -28,7 +28,7 @@
     'complexity': 'normal',
     'depends': [
         'account_statement_base_import',
-        'account_statement_transactionid_completion'
+        'base_transaction_id'
     ],
     'description': """
  This module brings generic methods and fields on bank statement to deal with
@@ -51,8 +51,15 @@
  * label: the comunication given by the payment office, used as communication
    in the generated entries.
     """,
+    'data': ['data/completion_rule_data.xml'],
+    'test': [
+        'test/sale.yml',
+        'test/completion_transactionid_test.yml',
+        'test/invoice.yml',
+        'test/completion_invoice_transactionid_test.yml',
+    ],
     'website': 'http://www.camptocamp.com',
-    'installable': False,
+    'installable': True,
     'auto_install': False,
     'license': 'AGPL-3',
 }
