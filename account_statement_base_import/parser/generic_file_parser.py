@@ -70,7 +70,7 @@ class GenericFileParser(FileParser):
         """
         amount = line.get('amount', 0.0)
         return {
-            'name': line.get('label', line.get('ref', '/')),
+            'name': line.get('label', '/'),
             'date_maturity': line.get('date', datetime.datetime.now().date()),
             'credit': amount > 0.0 and amount or 0.0,
             'debit': amount < 0.0 and amount or 0.0,
