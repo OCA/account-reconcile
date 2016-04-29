@@ -21,7 +21,7 @@
 
 {
     'name': "Bank statement transactionID import",
-    'version': '1.0',
+    'version': '9.0.1.0.0',
     'author': "Camptocamp,Odoo Community Association (OCA)",
     'maintainer': 'Camptocamp',
     'category': 'Finance',
@@ -30,28 +30,9 @@
         'account_statement_base_import',
         'base_transaction_id'
     ],
-    'description': """
- This module brings generic methods and fields on bank statement to deal with
- the importation of different bank and offices that uses transactionID.
-
- This module allows you to import your bank transactions with a standard .csv
- or .xls file (you'll find samples in the 'data' folder). It respects the
- chosen profile (model provided by the account_statement_ext module) to
- generate the entries.
-
- This module can handle a commission taken by the payment office and has the
- following format:
-
- * transaction_id: the transaction ID given by the bank/office. It is used as
-   reference in the generated entries and is useful for reconciliation process
- * date: date of the payment
- * amount: amount paid in the currency of the journal used in the importation
-   profile
- * commission_amount: amount of the comission for each line
- * label: the comunication given by the payment office, used as communication
-   in the generated entries.
-    """,
-    'data': ['data/completion_rule_data.xml'],
+    'data': [
+        'data/completion_rule_data.xml'
+    ],
     'test': [
         'test/sale.yml',
         'test/completion_transactionid_test.yml',
