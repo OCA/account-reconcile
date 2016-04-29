@@ -33,14 +33,16 @@ class GenericFileParser(FileParser):
     file.
     """
 
-    def __init__(self, parse_name, ftype='csv', **kwargs):
+    def __init__(self, journal, ftype='csv', **kwargs):
         conversion_dict = {
             'label': ustr,
             'date': datetime.datetime,
             'amount': float_or_zero,
         }
+        # set self.env for later ORM searches
+        self.env = journal.env
         super(GenericFileParser, self).__init__(
-            parse_name, ftype=ftype,
+            journal, ftype=ftype,
             extra_fields=conversion_dict,
             **kwargs)
 
@@ -68,10 +70,27 @@ class GenericFileParser(FileParser):
                     'debit':value
                 }
         """
+        account_obj = self.env['account.account']
+        partner_obj = self.env['res.partner']
+        account_id = False
+        partner_id = False
+
+        if line.get('account'):
+            accounts = account_obj.search([('code', '=', line['account'])])
+            if len(accounts) == 1:
+                account_id = accounts[0].id
+
+        if line.get('partner'):
+            partners = partner_obj.search([('name', '=', line['partner'])])
+            if len(partners) == 1:
+                partner_id = partners[0].id
+
         amount = line.get('amount', 0.0)
         return {
             'name': line.get('label', '/'),
             'date_maturity': line.get('date', datetime.datetime.now().date()),
             'credit': amount > 0.0 and amount or 0.0,
             'debit': amount < 0.0 and amount or 0.0,
+            'account_id': account_id,
+            'partner_id': partner_id,
         }

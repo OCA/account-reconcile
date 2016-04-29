@@ -39,7 +39,7 @@ class FileParser(AccountMoveImportParser):
     format.
     """
 
-    def __init__(self, parse_name, ftype='csv', extra_fields=None, header=None,
+    def __init__(self, journal, ftype='csv', extra_fields=None, header=None,
                  dialect=None, move_ref=None, **kwargs):
         """
             :param char: parse_name: The name of the parser
@@ -50,7 +50,7 @@ class FileParser(AccountMoveImportParser):
             :param list: header : specify header fields if the csv file has no
               header
             """
-        super(FileParser, self).__init__(parse_name, **kwargs)
+        super(FileParser, self).__init__(journal, **kwargs)
         if ftype in ('csv', 'xls', 'xlsx'):
             self.ftype = ftype[0:3]
         else:
