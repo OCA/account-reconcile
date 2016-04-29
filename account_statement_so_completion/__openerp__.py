@@ -28,7 +28,7 @@
  'maintainer': 'Camptocamp',
  'category': 'Finance',
  'complexity': 'easy',
- 'depends': ['account_statement_base_completion', 'sale'],
+ 'depends': ['account_statement_base_import', 'sale'],
  'description': """
  This module improve the module account_statement_base_completion to add
  support for completion rules based on Sale Orders. This was initially part of
@@ -41,12 +41,12 @@
 """,
  'website': 'http://www.camptocamp.com',
  'data': [
-     'data.xml',
+     'data/completion_rule_data.xml',
  ],
  'test': [
      'test/completion_so_test.yml'],
- 'installable': False,
+ 'installable': True,
  'images': [],
- 'auto_install': True,
+ 'auto_install': False,
  'license': 'AGPL-3',
  }

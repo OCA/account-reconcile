@@ -22,27 +22,25 @@
 #                                                                             #
 ###############################################################################
 
-from openerp.osv import orm
-from tools.translate import _
-from openerp.addons.account_statement_base_completion.statement import \
-    ErrorTooManyPartner
+from openerp import _, models
+from openerp.addons.account_statement_base_import.models.account_move \
+    import ErrorTooManyPartner
 
 
-class AccountStatementCompletionRule(orm.Model):
+class AccountMoveCompletionRule(models.Model):
 
-    _name = "account.statement.completion.rule"
-    _inherit = "account.statement.completion.rule"
+    _name = "account.move.completion.rule"
+    _inherit = "account.move.completion.rule"
 
-    def _get_functions(self, cr, uid, context=None):
-        res = super(AccountStatementCompletionRule, self)._get_functions(
-            cr, uid, context=context)
+    def _get_functions(self):
+        res = super(AccountMoveCompletionRule, self)._get_functions()
         res.append(
-            ('get_from_ref_and_so', 'From line reference (based on SO number)')
+            ('get_from_name_and_so', 'From line name (based on SO number)')
         )
         return res
 
     # Should be private but data are initialised with no update XML
-    def get_from_ref_and_so(self, cr, uid, st_line, context=None):
+    def get_from_name_and_so(self, line):
         """
         Match the partner based on the SO number and the reference of the
         statement line. Then, call the generic get_values_for_line method to
@@ -60,27 +58,14 @@ class AccountStatementCompletionRule(orm.Model):
 
             ...}
         """
-        st_obj = self.pool['account.bank.statement.line']
         res = {}
-        if st_line:
-            so_obj = self.pool.get('sale.order')
-            so_id = so_obj.search(
-                cr, uid, [('name', '=', st_line['ref'])], context=context)
-            if so_id:
-                if so_id and len(so_id) == 1:
-                    so = so_obj.browse(cr, uid, so_id[0], context=context)
-                    res['partner_id'] = so.partner_id.id
-                elif so_id and len(so_id) > 1:
-                    raise ErrorTooManyPartner(
-                        _('Line named "%s" (Ref:%s) was matched by more '
-                          'than one partner while looking on SO by ref.') %
-                        (st_line['name'], st_line['ref']))
-                st_vals = st_obj.get_values_for_line(
-                    cr, uid, profile_id=st_line['profile_id'],
-                    master_account_id=st_line['master_account_id'],
-                    partner_id=res.get('partner_id', False),
-                    line_type='customer',
-                    amount=st_line['amount'] if st_line['amount'] else 0.0,
-                    context=context)
-                res.update(st_vals)
+        so_obj = self.env['sale.order']
+        orders = so_obj.search([('name', '=', line.name)])
+        if len(orders) > 1:
+            raise ErrorTooManyPartner(
+                _('Line named "%s"  was matched by more '
+                  'than one partner while looking on SO by ref.') %
+                line.name)
+        if len(orders) == 1:
+            res['partner_id'] = orders[0].partner_id.id
         return res
