@@ -20,7 +20,7 @@
 #
 
 {'name': "Bank statement completion from bank account number",
- 'version': '1.0.1',
+ 'version': '9.0.1.0.0',
  'author': "ACSONE SA/NV,Odoo Community Association (OCA)",
  'maintainer': 'ACSONE SA/NV',
  'category': 'Finance',
@@ -28,15 +28,6 @@
  'depends': [
      'account_statement_base_import',
  ],
- 'description': """
-  Add a completion method based on the partner bank account number
-  provided by the bank/office.
-
-  Completion will look in the partner with that bank account number
-  to match the partner, then it will fill in the bank statement line
-  with it to ease the reconciliation.
-
- """,
  'website': 'http://www.acsone.eu',
  'data': [
      "data/completion_rule_data.xml",

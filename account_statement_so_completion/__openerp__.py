@@ -23,22 +23,12 @@
 ###############################################################################
 
 {'name': "Bank statement Sale Order completion",
- 'version': '0.1',
+ 'version': '9.0.1.0.0',
  'author': "Camptocamp,Odoo Community Association (OCA)",
  'maintainer': 'Camptocamp',
  'category': 'Finance',
  'complexity': 'easy',
  'depends': ['account_statement_base_import', 'sale'],
- 'description': """
- This module improve the module account_statement_base_completion to add
- support for completion rules based on Sale Orders. This was initially part of
- the module account_statement_base_completion, but is now separate to keep
- dependencies separate.
-
- This module provides the following rule:
-
-  1) Match from statement line reference (based on SO number)
-""",
  'website': 'http://www.camptocamp.com',
  'data': [
      'data/completion_rule_data.xml',
