@@ -39,7 +39,7 @@ class CreditPartnerStatementImporter(models.TransientModel):
     partner_id = fields.Many2one(
         comodel_name='res.partner',
         string='Credit institute partner')
-    file_name = fields.Char('File Name', size=128)
+    file_name = fields.Char()
     receivable_account_id = fields.Many2one(
         comodel_name='account.account',
         string='Force Receivable/Payable Account')
@@ -59,8 +59,10 @@ class CreditPartnerStatementImporter(models.TransientModel):
                 }
             }
 
-    def _check_extension(self, filename):
-        (__, ftype) = os.path.splitext(filename)
+    @api.multi
+    def _check_extension(self):
+        self.ensure_one()
+        (__, ftype) = os.path.splitext(self.file_name)
         if not ftype:
             # We do not use osv exception we do not want to have it logged
             raise Exception(_('Please use a file with an extension'))
@@ -72,7 +74,7 @@ class CreditPartnerStatementImporter(models.TransientModel):
         moves = self.env['account.move']
         for importer in self:
             journal = importer.journal_id
-            ftype = self._check_extension(importer.file_name)
+            ftype = importer._check_extension()
             moves |= journal.with_context(
                 file_name=importer.file_name).multi_move_import(
                 importer.input_statement,

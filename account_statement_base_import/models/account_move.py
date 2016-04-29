@@ -248,7 +248,7 @@ class AccountMoveLine(models.Model):
         help="When this checkbox is ticked, the auto-completion "
         "process/button will ignore this line.")
 
-    def _get_line_values_from_rules(self, line, rules):
+    def _get_line_values_from_rules(self, rules):
         """We'll try to find out the values related to the line based on rules
         setted on the profile.. We will ignore line for which already_completed
         is ticked.
@@ -260,12 +260,13 @@ class AccountMoveLine(models.Model):
             'account_id': 489L}}
         """
         journal_obj = self.env['account.journal']
-        if not line.already_completed:
-            # Ask the rule
-            vals = journal_obj._find_values_from_rules(rules, line)
-            if vals:
-                vals['id'] = line['id']
-                return vals
+        for line in self:
+            if not line.already_completed:
+                # Ask the rule
+                vals = journal_obj._find_values_from_rules(rules, line)
+                if vals:
+                    vals['id'] = line['id']
+                    return vals
         return {}
 
     def _get_available_columns(self, move_store):
@@ -386,8 +387,7 @@ class AccountMove(models.Model):
             res = False
             for line in move.line_ids:
                 try:
-                    res = move_line_obj._get_line_values_from_rules(
-                        line, rules)
+                    res = line._get_line_values_from_rules(rules)
                     if res:
                         compl_lines += 1
                 except ErrorTooManyPartner, exc:

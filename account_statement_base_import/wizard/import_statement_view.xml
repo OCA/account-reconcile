@@ -14,11 +14,10 @@
                     <field name="receivable_account_id" readonly="1"/>
                     <field name="commission_account_id" readonly="1"/>
                 </group>
-                <separator string="" colspan="4"/>
-                <group colspan="4" col="6">
+                <footer>
+                    <button  icon="gtk-ok" name="import_statement" string="Import statement" type="object" class="oe_highlight"/>
                     <button  icon="gtk-cancel" special="cancel" string="Cancel"/>
-                    <button  icon="gtk-ok" name="import_statement" string="Import statement" type="object"/>
-                </group>
+                </footer>
             </form>
         </field>
     </record>

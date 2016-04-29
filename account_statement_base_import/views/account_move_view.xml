@@ -15,7 +15,7 @@
                         groups="account.group_account_invoice"
                         attrs="{'invisible': ['|', ('used_for_completion','=',False), ('state','not in', ['draft'])]}"/>
             </button>
-            <xpath expr="/form/sheet/notebook/page/field[@name='line_ids']/tree/field[@name='credit']" position="after">
+            <xpath expr="//field[@name='line_ids']/tree/field[@name='credit']" position="after">
                 <field name="already_completed"/>
             </xpath>
             <xpath expr="/form/sheet/notebook" position="inside">
