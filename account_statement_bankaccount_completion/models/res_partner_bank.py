@@ -17,26 +17,24 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 #
-from openerp.osv.orm import Model
+from openerp import api, models
 
 
-class res_partner_bank(Model):
+class ResPartnerBank(models.Model):
     _inherit = 'res.partner.bank'
 
-    def search_by_acc_number(self, cr, uid, acc_number, context=None):
+    @api.multi
+    def search_by_acc_number(self, acc_number):
         '''
         Try to find the Account Number using a 'like' operator to avoid
         problems with the input mask used to store the value.
         '''
         # first try with an exact match
-        ids = self.search(cr,
-                          uid,
-                          [('acc_number', '=', acc_number)],
-                          context=context)
-        if ids:
-            return ids
+        banks = self.search([('acc_number', '=', acc_number)])
+        if banks:
+            return banks
 
-        cr.execute("""
+        self.env.cr.execute("""
             SELECT
                 id
             FROM
@@ -47,6 +45,5 @@ class res_partner_bank(Model):
                 regexp_replace(%s,'([^[:alnum:]])', '','g')
         """, (acc_number,))
         # apply security constraints by using the orm
-        return self.search(cr, uid,
-                           [('id', 'in', [r[0] for r in cr.fetchall()])],
-                           context=context)
+        return self.search(
+            [('id', 'in', [r[0] for r in self.env.cr.fetchall()])])

@@ -26,7 +26,7 @@
  'category': 'Finance',
  'complexity': 'normal',
  'depends': [
-     'account_statement_base_completion',
+     'account_statement_base_import',
  ],
  'description': """
   Add a completion method based on the partner bank account number
@@ -39,10 +39,10 @@
  """,
  'website': 'http://www.acsone.eu',
  'data': [
-     "data.xml",
+     "data/completion_rule_data.xml",
  ],
  'demo': [],
- 'installable': False,
+ 'installable': True,
  'auto_install': False,
  'license': 'AGPL-3',
  }
