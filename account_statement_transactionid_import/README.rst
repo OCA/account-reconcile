@@ -15,11 +15,6 @@ base_transaction_id.
    :alt: Try me on Runbot
    :target: https://runbot.odoo-community.org/runbot/98/9.0
 
-Known issues / Roadmap
-======================
-
-* ...
-
 Bug Tracker
 ===========
 

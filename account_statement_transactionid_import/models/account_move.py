@@ -19,7 +19,7 @@
 #
 ##############################################################################
 
-from openerp import _, fields, models
+from openerp import _, models
 from openerp.addons.account_statement_base_import.models.account_move import \
     ErrorTooManyPartner
 
