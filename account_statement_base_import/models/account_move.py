@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
+# © 2011 Akretion
 # © 2011-2016 Camptocamp SA
-#             Joel Grand-Guillaume, Nicolas Bessi, Matthieu Dietrich
-# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
-# TODO replace customer supplier by package constant
+# © 2013 Savoir-faire Linux
+# © 2014 ACSONE SA/NV
+# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html)
 import traceback
 import sys
 import logging
@@ -66,8 +67,7 @@ class AccountMoveCompletionRule(models.Model):
         string='Sequence',
         help="Lower means parsed first.")
     name = fields.Char(
-        string='Name',
-        size=128)
+        string='Name')
     journal_ids = fields.Many2many(
         comodel_name='account.journal',
         rel='as_rul_st_prof_rel',
@@ -93,13 +93,12 @@ class AccountMoveCompletionRule(models.Model):
                                    ('type', 'in', type_domain)])
         if invoices:
             if len(invoices) == 1:
-                invoice = invoices[0]
+                return invoices
             else:
                 raise ErrorTooManyPartner(
                     _('Line named "%s" was matched by more than one '
                       'partner while looking on %s invoices') %
                     (line.name, inv_type))
-            return invoice
         return False
 
     def _from_invoice(self, line, inv_type):
