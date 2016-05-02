@@ -1,0 +1,97 @@
+# Translation of OpenERP Server.
+# This file contains the translation of the following modules:
+#	* account_mass_reconcile_transaction_ref
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: OpenERP Server 7.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2014-01-21 11:55+0000\n"
+"PO-Revision-Date: 2014-01-21 11:55+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: account_mass_reconcile_transaction_ref
+#: field:mass.reconcile.advanced.transaction_ref,partner_ids:0
+msgid "Restrict on partners"
+msgstr ""
+
+#. module: account_mass_reconcile_transaction_ref
+#: field:mass.reconcile.advanced.transaction_ref,account_id:0
+msgid "Account"
+msgstr ""
+
+#. module: account_mass_reconcile_transaction_ref
+#: view:account.mass.reconcile:0
+msgid "Advanced. Partner and Transaction Ref"
+msgstr ""
+
+#. module: account_mass_reconcile_transaction_ref
+#: view:account.mass.reconcile:0
+msgid "Match multiple debit vs multiple credit entries. Allow partial reconciliation. The lines should have the partner, the credit entry transaction ref. is matched vs the debit entry transaction ref. or name."
+msgstr ""
+
+#. module: account_mass_reconcile_transaction_ref
+#: model:ir.model,name:account_mass_reconcile_transaction_ref.model_easy_reconcile_advanced_transaction_ref
+msgid "mass.reconcile.advanced.transaction_ref"
+msgstr ""
+
+#. module: account_mass_reconcile_transaction_ref
+#: field:account.move.line,transaction_ref:0
+msgid "Transaction Ref."
+msgstr ""
+
+#. module: account_mass_reconcile_transaction_ref
+#: field:mass.reconcile.advanced.transaction_ref,journal_id:0
+msgid "Journal"
+msgstr ""
+
+#. module: account_mass_reconcile_transaction_ref
+#: field:mass.reconcile.advanced.transaction_ref,account_profit_id:0
+msgid "Account Profit"
+msgstr ""
+
+#. module: account_mass_reconcile_transaction_ref
+#: model:ir.model,name:account_mass_reconcile_transaction_ref.model_account_move
+msgid "Account Move"
+msgstr ""
+
+#. module: account_mass_reconcile_transaction_ref
+#: field:mass.reconcile.advanced.transaction_ref,filter:0
+msgid "Filter"
+msgstr ""
+
+#. module: account_mass_reconcile_transaction_ref
+#: model:ir.model,name:account_mass_reconcile_transaction_ref.model_account_mass_reconcile_method
+msgid "reconcile method for account_mass_reconcile"
+msgstr ""
+
+#. module: account_mass_reconcile_transaction_ref
+#: field:mass.reconcile.advanced.transaction_ref,date_base_on:0
+msgid "Date of reconciliation"
+msgstr ""
+
+#. module: account_mass_reconcile_transaction_ref
+#: model:ir.model,name:account_mass_reconcile_transaction_ref.model_account_move_line
+msgid "Journal Items"
+msgstr ""
+
+#. module: account_mass_reconcile_transaction_ref
+#: model:ir.model,name:account_mass_reconcile_transaction_ref.model_easy_reconcile_advanced
+msgid "mass.reconcile.advanced"
+msgstr ""
+
+#. module: account_mass_reconcile_transaction_ref
+#: field:mass.reconcile.advanced.transaction_ref,account_lost_id:0
+msgid "Account Lost"
+msgstr ""
+
+#. module: account_mass_reconcile_transaction_ref
+#: field:mass.reconcile.advanced.transaction_ref,write_off:0
+msgid "Write off allowed"
+msgstr ""
+
