@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_mass_reconcile_form" model="ir.ui.view">
+        <field name="name">account.mass.reconcile.form</field>
+        <field name="model">account.mass.reconcile</field>
+        <field name="inherit_id" ref="account_mass_reconcile.account_mass_reconcile_form"/>
+        <field name="arch" type="xml">
+            <page name="information" position="inside">
+            <group colspan="2" col="2">
+                <separator colspan="4" string="Advanced. Partner and Transaction Ref"/>
+                <label string="Match multiple debit vs multiple credit entries. Allow partial reconciliation.
+The lines should have the partner, the credit entry transaction ref. is matched vs the debit entry transaction ref." colspan="4"/>
+            </group>
+            <group colspan="2" col="2">
+                <separator colspan="4" string="Advanced. Partner and Transaction Ref. vs Ref."/>
+                <label string="Match multiple debit vs multiple credit entries. Allow partial reconciliation.
+The lines should have the partner, the credit entry reference is matched vs the debit entry transaction reference." colspan="4"/>
+            </group>
+            </page>
+        </field>
+    </record>
+</odoo>
