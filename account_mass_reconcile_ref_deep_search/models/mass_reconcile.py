@@ -13,7 +13,7 @@ class AccountMassReconcileMethod(models.Model):
         _super = super(AccountMassReconcileMethod, self)
         methods = _super.get_all_rec_method()
         methods += [
-            ('easy.reconcile.advanced.ref.deep.search',
+            ('mass.reconcile.advanced.ref.deep.search',
              'Advanced. Partner and Ref. Deep Search'),
         ]
         return methods
