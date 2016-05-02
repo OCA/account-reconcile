@@ -1,23 +1,9 @@
 # -*- coding: utf-8 -*-
-##############################################################################
-#
-#    Copyright Camptocamp SA
-#    Author Joel Grand-Guillaume
-#    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU General Public License as published by
-#    the Free Software Foundation, either version 3 of the License, or
-#    (at your option) any later version.
-#
-#    This program is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU General Public License for more details.
-#
-#    You should have received a copy of the GNU General Public License
-#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#
-##############################################################################
-
+# © 2011 Akretion
+# © 2011-2016 Camptocamp SA
+# © 2013 Savoir-faire Linux
+# © 2014 ACSONE SA/NV
+# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html)
 import datetime
 from .file_parser import FileParser
 from openerp.addons.account_statement_base_import.parser.file_parser import (
@@ -33,15 +19,16 @@ class GenericFileParser(FileParser):
     file.
     """
 
-    def __init__(self, parse_name, ftype='csv', **kwargs):
+    def __init__(self, journal, ftype='csv', **kwargs):
         conversion_dict = {
-            'ref': ustr,
             'label': ustr,
             'date': datetime.datetime,
             'amount': float_or_zero,
         }
+        # set self.env for later ORM searches
+        self.env = journal.env
         super(GenericFileParser, self).__init__(
-            parse_name, ftype=ftype,
+            journal, ftype=ftype,
             extra_fields=conversion_dict,
             **kwargs)
 
@@ -52,7 +39,7 @@ class GenericFileParser(FileParser):
         """
         return parser_name == 'generic_csvxls_so'
 
-    def get_st_line_vals(self, line, *args, **kwargs):
+    def get_move_line_vals(self, line, *args, **kwargs):
         """
         This method must return a dict of vals that can be passed to create
         method of statement line in order to record it. It is the
@@ -64,16 +51,32 @@ class GenericFileParser(FileParser):
               line, it MUST contain at least:
                 {
                     'name':value,
-                    'date':value,
-                    'amount':value,
-                    'ref':value,
-                    'label':value,
+                    'date_maturity':value,
+                    'credit':value,
+                    'debit':value
                 }
         """
+        account_obj = self.env['account.account']
+        partner_obj = self.env['res.partner']
+        account_id = False
+        partner_id = False
+
+        if line.get('account'):
+            accounts = account_obj.search([('code', '=', line['account'])])
+            if len(accounts) == 1:
+                account_id = accounts[0].id
+
+        if line.get('partner'):
+            partners = partner_obj.search([('name', '=', line['partner'])])
+            if len(partners) == 1:
+                partner_id = partners[0].id
+
+        amount = line.get('amount', 0.0)
         return {
-            'name': line.get('label', line.get('ref', '/')),
-            'date': line.get('date', datetime.datetime.now().date()),
-            'amount': line.get('amount', 0.0),
-            'ref': line.get('ref', '/'),
-            'label': line.get('label', ''),
+            'name': line.get('label', '/'),
+            'date_maturity': line.get('date', datetime.datetime.now().date()),
+            'credit': amount > 0.0 and amount or 0.0,
+            'debit': amount < 0.0 and amount or 0.0,
+            'account_id': account_id,
+            'partner_id': partner_id,
         }

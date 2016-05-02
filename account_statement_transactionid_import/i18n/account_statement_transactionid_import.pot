@@ -1,5 +1,6 @@
 # Translation of OpenERP Server.
 # This file contains the translation of the following modules:
+#   * account_statement_transactionid_import
 #
 msgid ""
 msgstr ""
@@ -15,7 +16,12 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: account_statement_transactionid_import
-#: model:ir.model,name:account_statement_transactionid_import.model_account_statement_profile
-msgid "Statement Profile"
+#: code:addons/account_statement_transactionid_import/account_move.py:65
+#, python-format
+msgid "Line named \"%s\" was matched by more than one partner."
 msgstr ""
 
+#. module: account_statement_transactionid_import
+#: model:ir.model,name:account_statement_transactionid_import.model_account_move_completion_rule
+msgid "account.move.completion.rule"
+msgstr ""
