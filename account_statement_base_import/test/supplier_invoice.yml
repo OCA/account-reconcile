@@ -1,0 +1,42 @@
+-
+  I import account minimal data
+-
+  !python {model: account.invoice}: |
+    openerp.tools.convert_file(cr,
+                               'account',
+                               openerp.modules.get_module_resource(
+                                   'account',
+                                   'demo',
+                                   'account_invoice_demo.yml'),
+                               {}, 'init', False, 'test')
+-
+  I check that my invoice is a supplier invoice
+-
+  !assert {model: account.invoice, id: account.demo_invoice_0, string: Check invoice type}:
+    - type == 'in_invoice'
+-
+  I add a reference to an existing supplier invoce
+-
+  !python {model: account.invoice}: |
+    self.write(cr, uid, ref('account.demo_invoice_0'), {
+      'reference': 'T2S12345'
+    })
+-
+  I check a second time that my invoice is still a supplier invoice
+-
+  !assert {model: account.invoice, id: account.demo_invoice_0, string: Check invoice type 2}:
+    - type == 'in_invoice'
+-
+  Now I confirm it
+-
+  !workflow {model: account.invoice, action: invoice_open, ref: account.demo_invoice_0}
+-
+  I check that the supplier number is there
+-
+  !assert {model: account.invoice, id: account.demo_invoice_0, string: Check supplier number}:
+    - reference == 'T2S12345'
+-
+  I check a third time that my invoice is still a supplier invoice
+-
+  !assert {model: account.invoice, id: account.demo_invoice_0, string: Check invoice type 3}:
+    - type == 'in_invoice'
