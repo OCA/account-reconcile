@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+
+    <record id="bank_statement_completion_rule_10" model="account.move.completion.rule">
+        <field name="name">Match from bank account number (Normal or IBAN))</field>
+        <field name="sequence">10</field>
+        <field name="function_to_call">get_from_bank_account</field>
+    </record>
+    
+</odoo>

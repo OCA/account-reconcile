@@ -1,25 +1,9 @@
 # -*- coding: utf-8 -*-
-##############################################################################
-#
-#    Copyright Camptocamp SA
-#    Author Joel Grand-Guillaume
-#    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU General Public License as published by
-#    the Free Software Foundation, either version 3 of the License, or
-#    (at your option) any later version.
-#
-#    This program is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU General Public License for more details.
-#
-#    You should have received a copy of the GNU General Public License
-#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#
-##############################################################################
+# © 2011-2016 Camptocamp SA
+# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html)
 import datetime
 from openerp.tools import ustr
-from account_statement_base_import.parser.file_parser import (
+from openerp.addons.account_statement_base_import.parser.file_parser import (
     FileParser, float_or_zero
 )
 
@@ -40,10 +24,11 @@ class TransactionIDFileParser(FileParser):
               header
         """
         conversion_dict = {
-            'transaction_id': ustr,
+            'transaction_ref': ustr,
             'label': ustr,
             'date': datetime.datetime,
             'amount': float_or_zero,
+            'commission_amount': float_or_zero,
         }
         super(TransactionIDFileParser, self).__init__(
             profile, extra_fields=conversion_dict, ftype=ftype, header=header,
@@ -56,7 +41,7 @@ class TransactionIDFileParser(FileParser):
         """
         return parser_name == 'generic_csvxls_transaction'
 
-    def get_st_line_vals(self, line, *args, **kwargs):
+    def get_move_line_vals(self, line, *args, **kwargs):
         """This method must return a dict of vals that can be passed to create
         method of statement line in order to record it. It is the
         responsibility of every parser to give this dict of vals, so each one
@@ -76,12 +61,11 @@ class TransactionIDFileParser(FileParser):
         In this generic parser, the commission is given for every line, so we
         store it for each one.
         """
+        amount = line.get('amount', 0.0)
         return {
-            'name': line.get('label', line.get('ref', '/')),
-            'date': line.get('date', datetime.datetime.now().date()),
-            'amount': line.get('amount', 0.0),
-            'ref': line.get('transaction_id', '/'),
-            'label': line.get('label', ''),
-            'transaction_id': line.get('transaction_id', '/'),
-            'commission_amount': line.get('commission_amount', 0.0)
+            'name': line.get('label', '/'),
+            'date_maturity': line.get('date', datetime.datetime.now().date()),
+            'credit': amount > 0.0 and amount or 0.0,
+            'debit': amount < 0.0 and amount or 0.0,
+            'transaction_ref': line.get('transaction_ref', '/'),
         }

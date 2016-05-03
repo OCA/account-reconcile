@@ -1,44 +1,59 @@
 -
+  I import account minimal data
+-
+  !python {model: account.invoice}: |
+    openerp.tools.convert_file(cr,
+                               'account',
+                               openerp.modules.get_module_resource(
+                                   'account',
+                                   'test',
+                                   'account_minimal_test.xml'),
+                               {}, 'init', False, 'test')
+-
   In order to test the banking framework for Sale Orders, I first need to
   create a profile
 -
-  !record {model: account.statement.profile, id: profile_test_so}:
-    name: Bank EUR Profile for SO
-    journal_id: account.bank_journal
-    commission_account_id: account.a_expense
-    company_id: base.main_company
-    balance_check: True
+  !record {model: account.journal, id: account.bank_journal}:
+    used_for_completion: True
     rule_ids:
-      - account_statement_base_completion.bank_statement_completion_rule_4
-      - account_statement_base_completion.bank_statement_completion_rule_5
-      - account_statement_base_completion.bank_statement_completion_rule_2
-      - account_statement_base_completion.bank_statement_completion_rule_3
+      - account_statement_base_import.bank_statement_completion_rule_4
+      - account_statement_base_import.bank_statement_completion_rule_5
+      - account_statement_base_import.bank_statement_completion_rule_2
+      - account_statement_base_import.bank_statement_completion_rule_3
       - bank_statement_completion_rule_1
 -
   Now I create a statement. I create statment lines separately because I need
   to find each one by XML id
 -
-  !record {model: account.bank.statement, id: statement_test_sale1}:
+  !record {model: account.move, id: move_test_sale1}:
     name: Statement for SO
-    profile_id: profile_test_so
+    journal_id: account.bank_journal
     company_id: base.main_company
 -
-  I create a statement line for a SO
+  I create a move line for a SO
 -
-  !record {model: account.bank.statement.line, id: statement_line_so}:
-    name: Test autocompletion based on Sale Order Number
-    statement_id: statement_test_sale1
-    ref: SO007
-    date: '2013-12-20'
-    amount: 14981.0
+  !record {model: account.move.line, id: move_line_so}:
+    name: SO007
+    account_id: account.a_sale
+    move_id: move_test_sale1
+    date_maturity: '2013-12-20'
+    credit: 0.0
+-
+  and add the correct name
+-
+  !python {model: account.move.line}: |
+    context['check_move_validity'] = False
+    model.write(cr, uid, [ref('move_line_so')],
+                {'credit': 14981.0},
+                context)
 -
   I run the auto complete
 -
-  !python {model: account.bank.statement}: |
-    result = self.button_auto_completion(cr, uid, [ref("statement_test_sale1")])
+  !python {model: account.move}: |
+    result = self.button_auto_completion(cr, uid, [ref("move_test_sale1")])
 -
   Now I can check that all is nice and shiny, line 1. I expect the Sale Order
   Number to be recognised.
 -
-  !assert {model: account.bank.statement.line, id: statement_line_so, string: Check completion by SO number}:
-    - partner_id.name == u'Luminous Technologies'
+  !assert {model: account.move.line, id: move_line_so, string: Check completion by SO number}:
+    - partner_id.name == u'China Export'
