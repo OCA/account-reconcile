@@ -28,17 +28,16 @@ Available addons
 ----------------
 addon | version | summary
 --- | --- | ---
+[account_mass_reconcile](account_mass_reconcile/) | 9.0.1.0.0 | Mass Reconcile
 [base_transaction_id](base_transaction_id/) | 9.0.1.0.0 | Base transaction id for financial institutes
 
 Unported addons
 ---------------
 addon | version | summary
 --- | --- | ---
-[account_advanced_reconcile](account_advanced_reconcile/) | 1.0 (unported) | Advanced Reconcile
 [account_advanced_reconcile_bank_statement](account_advanced_reconcile_bank_statement/) | 1.0.0 (unported) | Advanced Reconcile Bank Statement
 [account_advanced_reconcile_transaction_ref](account_advanced_reconcile_transaction_ref/) | 1.0.1 (unported) | Advanced Reconcile Transaction Ref
 [account_bank_statement_period_from_line_date](account_bank_statement_period_from_line_date/) | 8.0.1.0.0 (unported) | Use bank transaction (line) date to determine move period
-[account_easy_reconcile](account_easy_reconcile/) | 8.0.1.3.1 (unported) | Easy Reconcile
 [account_invoice_reference](account_invoice_reference/) | 8.0.1.0.1 (unported) | Invoices Reference
 [account_payment_transaction_id](account_payment_transaction_id/) | 1.0 (unported) | Account Payment - Transaction ID
 [account_reconcile_payment_order](account_reconcile_payment_order/) | 8.0.1.0.0 (unported) | Automatically reconcile all lines from payment orders
