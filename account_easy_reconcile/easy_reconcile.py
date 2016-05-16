@@ -189,7 +189,7 @@ class AccountEasyReconcile(models.Model):
                 'income_exchange_account_id':
                 (rec_method.income_exchange_account_id.id),
                 'expense_exchange_account_id':
-                (rec_method.income_exchange_account_id.id),
+                (rec_method.expense_exchange_account_id.id),
                 'journal_id': (rec_method.journal_id.id),
                 'date_base_on': rec_method.date_base_on,
                 'filter': rec_method.filter}
