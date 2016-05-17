@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<openerp>
-  <data noupdate="0">
-
-    <record id="view_account_statement_operation_rule_form" model="ir.ui.view">
-      <field name="name">account.statement.operation.rule.form</field>
-      <field name="model">account.statement.operation.rule</field>
+<odoo>
+    <!-- Account operation rule form view -->
+    <record id="view_account_operation_rule_form" model="ir.ui.view">
+      <field name="name">account.operation.rule.form</field>
+      <field name="model">account.operation.rule</field>
       <field name="arch" type="xml">
         <form string="Statement Operation Rule">
           <sheet>
@@ -38,9 +37,11 @@
         </form>
       </field>
     </record>
-    <record id="view_account_statement_operation_rule_tree" model="ir.ui.view">
-      <field name="name">account.statement.operation.rule.tree</field>
-      <field name="model">account.statement.operation.rule</field>
+
+    <!-- Account operation rule tree view -->
+    <record id="view_account_operation_rule_tree" model="ir.ui.view">
+      <field name="name">account.operation.rule.tree</field>
+      <field name="model">account.operation.rule</field>
       <field name="arch" type="xml">
         <tree string="Statement Operation Rules">
           <field name="sequence" widget="handle"/>
@@ -52,9 +53,11 @@
         </tree>
       </field>
     </record>
-    <record id="view_account_statement_operation_rule_search" model="ir.ui.view">
-      <field name="name">account.statement.operation.rule.search</field>
-      <field name="model">account.statement.operation.rule</field>
+
+    <!-- Account operation rule search view -->
+    <record id="view_account_operation_rule_search" model="ir.ui.view">
+      <field name="name">account.operation.rule.search</field>
+      <field name="model">account.operation.rule</field>
       <field name="arch" type="xml">
         <search string="Statement Operation Rules">
           <field name="name"/>
@@ -65,25 +68,38 @@
         </search>
       </field>
     </record>
-    <record id="action_account_statement_operation_rule" model="ir.actions.act_window">
-      <field name="name">Statement Operation Rules</field>
-      <field name="res_model">account.statement.operation.rule</field>
+
+    <!-- Account operation rule action -->
+    <record id="action_account_operation_rule" model="ir.actions.act_window">
+      <field name="name">Reconciliation Rules</field>
+      <field name="res_model">account.operation.rule</field>
       <field name="view_type">form</field>
       <field name="view_mode">tree,form</field>
-      <field name="search_view_id" ref="view_account_statement_operation_rule_search"/>
+      <field name="search_view_id" ref="view_account_operation_rule_search"/>
       <field name="help" type="html">
         <p class="oe_view_nocontent_create">
-          Click to create a statement operation rule.
+          Click to create a reconciliation rule.
           </p><p>
           Those can be used to automatically create a move line when reconciling
           your bank statements.
         </p>
       </field>
     </record>
-    <menuitem action="action_account_statement_operation_rule"
-      id="menu_action_account_statement_operation_rule"
-      parent="account.menu_configuration_misc"
-      name="Statement Operation Rules"
-      sequence="22"/>
-  </data>
-</openerp>
+
+    <!-- Add operation rule link in Bank card menu in Accounting Dashboard -->
+    <record id="account_journal_dashboard_kanban_view" model="ir.ui.view">
+      <field name="name">account.journal.dashboard.kanban.inherit</field>
+      <field name="model">account.journal</field>
+      <field name="inherit_id" ref="account.account_journal_dashboard_kanban_view"/>
+      <field name="arch" type="xml">
+        <xpath expr="//a[contains(@context, 'action_account_operation_template')]/parent::div" position="after">
+          <div>
+            <a type="object" name="open_reconciliation_rules" groups="account.group_account_manager">
+              Reconciliation Rules
+            </a>
+          </div>
+        </xpath>
+      </field>
+    </record>
+
+</odoo>

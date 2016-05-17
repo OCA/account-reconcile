@@ -28,10 +28,10 @@ Currencies
 Configuration
 -------------
 
-As this module aims to automatize the ``Statement Operation Templates``,
+As this module aims to automatize the ``Reconciliation Models``,
 you first want to ensure that you have at least one operation configured.
-You can find them in ``Invoicing > Configuration > Miscellaneous >
-Statement Operation Templates``. An example of a common operation is:
+You can find them in ``Invoicing > Dashboard > Bank card > More
+> Reconciliation Models``. An example of a common operation is:
 
 =================== ========================== ======= ========
 Account             Amount Type                Amount  Label
@@ -40,7 +40,7 @@ Depends of the l10n Percentage of open balance 100.0 % Rounding
 =================== ========================== ======= ========
 
 The configuration of the rules themselves happens in ``Invoicing >
-Configuration > Miscellaneous > Statement Operation Rules``. Refer to
+Dashboard > Bank card > More > Reconciliation Rules``. Refer to
 the description of the types of rules above in case of doubt. The form
 is divided in 2 parts: **Rule** and **Result**. The rule part is where
 you will set the conditions and the result part is what operations will
@@ -68,13 +68,13 @@ Usage
 When you use the *Reconcile* button of a bank statement, Odoo
 automatically proposes you matching journal entries for each statement
 line.  This module automatically adds journal entries generated from the
-*Statement Operation Templates* if a rule matches with the current
+*Reconciliation Models* if a rule matches with the current
 situation, so there is nothing special to do once the rules are
 configured.
 
 .. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas
    :alt: Try me on Runbot
-   :target: https://runbot.odoo-community.org/runbot/98/8.0
+   :target: https://runbot.odoo-community.org/runbot/98/9.0
 
 Credits
 =======
@@ -83,6 +83,7 @@ Contributors
 ------------
 
 * Guewen Baconnier <guewen.baconnier@camptocamp.com>
+* Cyril Gaudin <cyril.gaudin@camptocamp.com>
 
 Maintainer
 ----------

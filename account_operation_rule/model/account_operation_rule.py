@@ -1,30 +1,14 @@
 # -*- coding: utf-8 -*-
-##############################################################################
-#
-#    Author: Guewen Baconnier
-#    Copyright 2014 Camptocamp SA
-#
-#    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU Affero General Public License as
-#    published by the Free Software Foundation, either version 3 of the
-#    License, or (at your option) any later version.
-#
-#    This program is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU Affero General Public License for more details.
-#
-#    You should have received a copy of the GNU Affero General Public License
-#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#
-##############################################################################
+# Author: Guewen Baconnier
+# © 2014-2016 Camptocamp SA
+# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
 from openerp import models, fields, api
 from openerp.addons import decimal_precision as dp
 
 
-class AccountStatementOperationRule(models.Model):
-    _name = 'account.statement.operation.rule'
+class AccountOperationRule(models.Model):
+    _name = 'account.operation.rule'
 
     _order = 'sequence ASC, id ASC'
 
@@ -37,8 +21,7 @@ class AccountStatementOperationRule(models.Model):
         required=True,
     )
     operations = fields.Many2many(
-        comodel_name='account.statement.operation.template',
-        relation='account_statement_oper_rule_rel',
+        comodel_name='account.operation.template',
     )
     amount_min = fields.Float(
         string='Min. Amount',
@@ -86,7 +69,7 @@ class AccountStatementOperationRule(models.Model):
         return currency != company_currency
 
     @api.multi
-    def _is_valid_balance(self, statement_line, move_lines, balance):
+    def _is_valid_balance(self, statement_line, balance):
         if self._is_multicurrency(statement_line):
             return False
         currency = statement_line.currency_for_rules()
@@ -139,7 +122,7 @@ class AccountStatementOperationRule(models.Model):
         """
         self.ensure_one()
         if self.rule_type == 'rounding':
-            return self._is_valid_balance(statement_line, move_lines, balance)
+            return self._is_valid_balance(statement_line, balance)
         elif self.rule_type == 'currency':
             return self._is_valid_multicurrency(statement_line,
                                                 move_lines,
@@ -169,10 +152,10 @@ class AccountStatementOperationRule(models.Model):
         return self.browse()
 
     @api.model
-    @api.returns('account.statement.operation.template')
+    @api.returns('account.operation.template')
     def operations_for_reconciliation(self, statement_line_id, move_line_ids):
         """ Find the rule for the current reconciliation and returns the
-        ``account.statement.operation.template`` of the found rule.
+        ``account.operation.template`` of the found rule.
 
         Called from the javascript reconciliation view.
 
