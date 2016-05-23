@@ -32,6 +32,18 @@ odoo.define('account_operation_rule', function (require) {
             var deferred = this._super();
             deferred.done(this.operation_rules());
             return deferred;
+        },
+
+        /**
+         * Check operation rules when user adds a move line manually.
+         */
+        selectMoveLine: function (mv_line) {
+            this._super(mv_line);
+            var balance = this.get("balance");
+            if ( balance && balance != 0 ) {
+                this.operation_rules();
+            }
+
         }
     });
 });
