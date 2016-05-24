@@ -11,11 +11,11 @@ class AccountMoveCompletionRule(models.Model):
 
     _inherit = "account.move.completion.rule"
 
-    def _get_functions(self):
-        res = super(AccountMoveCompletionRule, self)._get_functions()
-        res.append(('get_from_bank_account',
-                    'From bank account number (Normal or IBAN)'))
-        return res
+    function_to_call = fields.Selection(
+        selection_add=[
+            ('get_from_bank_account',
+             'From bank account number (Normal or IBAN)')
+        ])
 
     def get_from_bank_account(self, line):
         """

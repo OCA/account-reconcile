@@ -17,18 +17,18 @@ msgstr ""
 "X-Launchpad-Export-Date: 2014-06-06 06:36+0000\n"
 "X-Generator: Launchpad (build 17031)\n"
 
-#. module: account_statement_bankaccount_completion
+#. module: account_move_bankaccount_import
 #: help:account.bank.statement.line,partner_acc_number:0
 msgid "Account number of the partner"
 msgstr "Número de cuenta de la empresa"
 
-#. module: account_statement_bankaccount_completion
-#: model:ir.model,name:account_statement_bankaccount_completion.model_account_bank_statement_line
+#. module: account_move_bankaccount_import
+#: model:ir.model,name:account_move_bankaccount_import.model_account_bank_statement_line
 msgid "Bank Statement Line"
 msgstr "Línea de extracto bancario"
 
-#. module: account_statement_bankaccount_completion
-#: code:addons/account_statement_bankaccount_completion/statement.py:68
+#. module: account_move_bankaccount_import
+#: code:addons/account_move_bankaccount_import/statement.py:68
 #, python-format
 msgid ""
 "Line named \"%s\" (Ref:%s) was matched by more than one partner for account "
@@ -37,12 +37,12 @@ msgstr ""
 "La línea llamada \"%s\" (Ref: %s) fue casada con más de una empresa al "
 "buscar el nº de cuenta \"%s\"."
 
-#. module: account_statement_bankaccount_completion
+#. module: account_move_bankaccount_import
 #: field:account.bank.statement.line,partner_acc_number:0
 msgid "Account Number"
 msgstr "Número de cuenta"
 
-#. module: account_statement_bankaccount_completion
-#: model:ir.model,name:account_statement_bankaccount_completion.model_account_statement_completion_rule
+#. module: account_move_bankaccount_import
+#: model:ir.model,name:account_move_bankaccount_import.model_account_statement_completion_rule
 msgid "account.statement.completion.rule"
 msgstr "account.statement.completion.rule"

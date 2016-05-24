@@ -23,7 +23,7 @@ class BankAccountCompletion(common.TransactionCase):
             )
         self.company_a = self.browse_ref('base.main_company')
         self.completion_rule_id = \
-            self.ref('account_statement_bankaccount_completion.'
+            self.ref('account_move_bankaccount_import.'
                      'bank_statement_completion_rule_10')
         self.journal = self.browse_ref("account.bank_journal")
         self.partner = self.browse_ref('base.main_partner')

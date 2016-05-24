@@ -17,13 +17,13 @@ msgstr ""
 "X-Launchpad-Export-Date: 2014-06-06 06:36+0000\n"
 "X-Generator: Launchpad (build 17031)\n"
 
-#. module: account_statement_transactionid
-#: code:addons/account_statement_transactionid/account_move.py:65
+#. module: account_move_transactionid_import
+#: code:addons/account_move_transactionid_import/account_move.py:65
 #, python-format
 msgid "Line named \"%s\" (Ref:%s) was matched by more than one partner."
 msgstr "La línea llamada \"%s\" (Ref: %s) se casó con más de una empresa."
 
-#. module: account_statement_transactionid
-#: model:ir.model,name:account_statement_transactionid.model_account_move_completion_rule
+#. module: account_move_transactionid_import
+#: model:ir.model,name:account_move_transactionid_import.model_account_move_completion_rule
 msgid "account.move.completion.rule"
 msgstr "account.move.completion.rule"
