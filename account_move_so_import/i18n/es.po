@@ -17,8 +17,8 @@ msgstr ""
 "X-Launchpad-Export-Date: 2014-06-06 06:36+0000\n"
 "X-Generator: Launchpad (build 17031)\n"
 
-#. module: account_statement_so_completion
-#: code:addons/account_statement_so_completion/statement.py:77
+#. module: account_move_so_import
+#: code:addons/account_move_so_import/statement.py:77
 #, python-format
 msgid ""
 "Line named \"%s\" (Ref:%s) was matched by more than one partner while "
@@ -27,7 +27,7 @@ msgstr ""
 "La línea llamada \"%s\" (Ref: %s) se casó con más de una empresa al buscar "
 "por referencia de pedido."
 
-#. module: account_statement_so_completion
-#: model:ir.model,name:account_statement_so_completion.model_account_statement_completion_rule
+#. module: account_move_so_import
+#: model:ir.model,name:account_move_so_import.model_account_statement_completion_rule
 msgid "account.statement.completion.rule"
 msgstr "account.statement.completion.rule"

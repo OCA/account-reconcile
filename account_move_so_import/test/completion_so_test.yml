@@ -16,10 +16,10 @@
   !record {model: account.journal, id: account.bank_journal}:
     used_for_completion: True
     rule_ids:
-      - account_statement_base_import.bank_statement_completion_rule_4
-      - account_statement_base_import.bank_statement_completion_rule_5
-      - account_statement_base_import.bank_statement_completion_rule_2
-      - account_statement_base_import.bank_statement_completion_rule_3
+      - account_move_base_import.bank_statement_completion_rule_4
+      - account_move_base_import.bank_statement_completion_rule_5
+      - account_move_base_import.bank_statement_completion_rule_2
+      - account_move_base_import.bank_statement_completion_rule_3
       - bank_statement_completion_rule_1
 -
   Now I create a statement. I create statment lines separately because I need
