@@ -17,14 +17,6 @@ class AccountJournal(models.Model):
     _name = 'account.journal'
     _inherit = ['account.journal', 'mail.thread']
 
-    def _get_import_type_selection(self):
-        """This is the method to be inherited for adding the parser"""
-        return [('generic_csvxls_so', 'Generic .csv/.xls based on SO Name')]
-
-    def __get_import_type_selection(self):
-        """ Call method which can be inherited """
-        return self._get_import_type_selection()
-
     used_for_import = fields.Boolean(
         string="Journal used for import")
 
@@ -33,7 +25,7 @@ class AccountJournal(models.Model):
         string='Commission account')
 
     import_type = fields.Selection(
-        __get_import_type_selection,
+        [('generic_csvxls_so', 'Generic .csv/.xls based on SO Name')],
         string='Type of import',
         default='generic_csvxls_so',
         required=True,
