@@ -9,7 +9,7 @@
     'category': 'Finance',
     'complexity': 'normal',
     'depends': [
-        'account_statement_base_import',
+        'account_move_base_import',
         'base_transaction_id'
     ],
     'data': [

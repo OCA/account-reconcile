@@ -8,7 +8,7 @@
     'maintainer': 'Camptocamp',
     'category': 'Finance',
     'complexity': 'easy',
-    'depends': ['account_statement_base_import', 'sale'],
+    'depends': ['account_move_base_import', 'sale'],
     'website': 'http://www.camptocamp.com',
     'data': [
         'data/completion_rule_data.xml',

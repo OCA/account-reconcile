@@ -236,7 +236,7 @@ class AccountMoveLine(models.Model):
     The idea here is to store all bank/office infos in the
     additionnal_bank_fields serialized field when importing the file. If many
     values, add a tab in the bank statement line to store your specific one.
-    Have a look in account_statement_base_import module to see how we've done
+    Have a look in account_move_base_import module to see how we've done
     it.
     """
     _inherit = "account.move.line"

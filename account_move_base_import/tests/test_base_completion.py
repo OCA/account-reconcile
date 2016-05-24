@@ -55,7 +55,7 @@ class BaseCompletion(common.TransactionCase):
         the partner appears in the statement line label
         """
         self.completion_rule_id = self.ref(
-            'account_statement_base_import.bank_statement_completion_rule_3')
+            'account_move_base_import.bank_statement_completion_rule_3')
         # Create the profile
         self.journal.write({
             'used_for_completion': True,
