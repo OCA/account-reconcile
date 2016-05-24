@@ -1,0 +1,5 @@
+-
+  I fill in the field Bank Statement Label in a Partner
+-
+  !record {model: res.partner, id: base.res_partner_4}:
+    bank_statement_label: XXX66Z
