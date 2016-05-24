@@ -1,0 +1,122 @@
+-
+  In order to test the banking framework, I first need to create a journal
+-
+  !record {model: account.journal, id: account.bank_journal}:
+    used_for_completion: True
+    rule_ids:
+      - bank_statement_completion_rule_4
+      - bank_statement_completion_rule_2
+      - bank_statement_completion_rule_3
+      - bank_statement_completion_rule_5
+-
+  Now I create a statement. I create statment lines separately because I need
+  to find each one by XML id
+-
+  !record {model: account.move, id: move_test1}:
+    name: Move 2
+    journal_id: account.bank_journal
+    company_id: base.main_company
+-
+  I create a move line for a CI
+-
+  !record {model: account.move.line, id: move_line_ci}:
+    name: \
+    account_id: account.a_sale
+    move_id: move_test1
+    date_maturity: '2013-12-20'
+    credit: 0.0
+-
+  I create a move line for a SI
+-
+  !record {model: account.move.line, id: move_line_si}:
+    name: \
+    account_id: account.a_expense
+    move_id: move_test1
+    date_maturity: '2013-12-19'
+    debit: 0.0
+-
+  I create a move line for a CR
+-
+  !record {model: account.move.line, id: move_line_cr}:
+    name: \
+    account_id: account.a_expense
+    move_id: move_test1
+    date_maturity: '2013-12-19'
+    debit: 0.0
+-
+  I create a move line for the Partner Name
+-
+  !record {model: account.move.line, id: move_line_partner_name}:
+    name: Test autocompletion based on Partner Name Camptocamp
+    account_id: account.a_sale
+    move_id: move_test1
+    date_maturity: '2013-12-17'
+    credit: 0.0
+-
+  I create a move line for the Partner Label
+-
+  !record {model: account.move.line, id: move_line_partner_label}:
+    name: XXX66Z
+    account_id: account.a_sale
+    move_id: move_test1
+    date_maturity: '2013-12-24'
+    debit: 0.0
+-
+  and add the correct name
+-
+  !python {model: account.move.line}: |
+    import datetime as dt
+    context['check_move_validity'] = False
+    model.write(cr, uid, [ref('move_line_ci')],
+                {'name': dt.date.today().strftime('TBNK/%Y/0001'),
+                 'credit': 210.0},
+                context)
+    model.write(cr, uid, [ref('move_line_si')],
+                {'name': 'T2S12345',
+                 'debit': 65.0},
+                context)
+    model.write(cr, uid, [ref('move_line_cr')],
+                {'name': dt.date.today().strftime('RTEXJ/%Y/0001'),
+                 'debit': 210.0},
+                context)
+    model.write(cr, uid, [ref('move_line_partner_name')],
+                {'credit': 600.0},
+                context)
+    model.write(cr, uid, [ref('move_line_partner_label')],
+                {'debit': 932.4},
+                context)
+-
+  I run the auto complete
+-
+  !python {model: account.move}: |
+    result = self.button_auto_completion(cr, uid, [ref("move_test1")])
+-
+  Now I can check that all is nice and shiny, line 1. I expect the Customer
+  Invoice Number to be recognised.
+  I Use _ref, because ref conflicts with the field ref of the statement line
+-
+  !assert {model: account.move.line, id: move_line_ci, string: Check completion by CI number}:
+    - partner_id.id == _ref("base.res_partner_12")
+-
+  Line 2. I expect the Supplier invoice number to be recognised. The supplier
+  invoice was created by the account module demo data, and we confirmed it
+  here.
+-
+  !assert {model: account.move.line, id: move_line_si, string: Check completion by SI number}:
+    - partner_id.id == _ref("base.res_partner_12")
+-
+  Line 3. I expect the Customer refund number to be recognised. It should be
+  the commercial partner, and not the regular partner.
+-
+  !assert {model: account.move.line, id: move_line_cr, string: Check completion by CR number and commercial partner}:
+    - partner_id.id == _ref("base.res_partner_12")
+-
+  Line 4. I check that the partner name has been recognised.
+-
+  !assert {model: account.move.line, id: move_line_partner_name, string: Check completion by partner name}:
+    - partner_id.name == 'Camptocamp'
+-
+  Line 5. I check that the partner special label has been recognised.
+-
+  !assert {model: account.move.line, id: move_line_partner_label, string: Check completion by partner label}:
+    - partner_id.id == _ref("base.res_partner_4")

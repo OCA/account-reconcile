@@ -1,0 +1,42 @@
+-
+  I import account minimal data
+-
+  !python {model: account.invoice}: |
+    openerp.tools.convert_file(cr,
+                               'account',
+                               openerp.modules.get_module_resource(
+                                   'account',
+                                   'test',
+                                   'account_minimal_test.xml'),
+                               {}, 'init', False, 'test')
+-
+  I create a customer Invoice to be found by the completion.
+-
+  !record {model: account.invoice, id: invoice_for_completion_1}:
+    company_id: base.main_company
+    currency_id: base.EUR
+    invoice_line_ids:
+      - name: '[PCSC234] PC Assemble SC234'
+        price_unit: 210.0
+        quantity: 1.0
+        product_id: product.product_product_3
+        uom_id: product.product_uom_unit
+    journal_id: account.bank_journal
+    partner_id: base.res_partner_12
+    reference_type: none
+-
+  I confirm the Invoice
+-
+  !workflow {model: account.invoice, action: invoice_open, ref: invoice_for_completion_1}
+-
+  I check that the invoice state is "Open"
+-
+  !assert {model: account.invoice, id: invoice_for_completion_1}:
+    - state == 'open'
+-
+  I check that it is given the number "TBNK/%Y/0001"
+-
+  !python {model: account.invoice}: |
+    import datetime as dt
+    invoice = model.browse(cr, uid, ref('invoice_for_completion_1'), context)
+    assert invoice.number == dt.date.today().strftime('TBNK/%Y/0001')
