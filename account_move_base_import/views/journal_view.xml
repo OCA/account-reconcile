@@ -24,7 +24,7 @@
                         <field name="partner_id" attrs="{'required': [('used_for_import', '=', True)]}"/>
                     </group>
                     <group>
-                        <button name="%(account_statement_base_import.move_importer_action)d"
+                        <button name="%(account_move_base_import.move_importer_action)d"
                                 string="Import Bank Statement"
                                 type="action" icon="gtk-ok"
                                 colspan = "2"/>

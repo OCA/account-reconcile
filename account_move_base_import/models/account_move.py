@@ -44,25 +44,6 @@ class AccountMoveCompletionRule(models.Model):
     _name = "account.move.completion.rule"
     _order = "sequence asc"
 
-    def _get_functions(self):
-        """List of available methods for rules.
-
-        Override this to add you own."""
-        return [
-            ('get_from_name_and_invoice',
-             'From line name (based on customer invoice number)'),
-            ('get_from_name_and_supplier_invoice',
-             'From line name (based on supplier invoice number)'),
-            ('get_from_name_and_partner_field',
-             'From line name (based on partner field)'),
-            ('get_from_name_and_partner_name',
-             'From line name (based on partner name)')
-        ]
-
-    def __get_functions(self):
-        """ Call method which can be inherited """
-        return self._get_functions()
-
     sequence = fields.Integer(
         string='Sequence',
         help="Lower means parsed first.")
@@ -72,9 +53,16 @@ class AccountMoveCompletionRule(models.Model):
         comodel_name='account.journal',
         rel='as_rul_st_prof_rel',
         string='Related journals')
-    function_to_call = fields.Selection(
-        __get_functions,
-        string='Method')
+    function_to_call = fields.Selection([
+        ('get_from_name_and_invoice',
+            'From line name (based on customer invoice number)'),
+        ('get_from_name_and_supplier_invoice',
+            'From line name (based on supplier invoice number)'),
+        ('get_from_name_and_partner_field',
+            'From line name (based on partner field)'),
+        ('get_from_name_and_partner_name',
+            'From line name (based on partner name)')
+        ], string='Method')
 
     def _find_invoice(self, line, inv_type):
         """Find invoice related to statement line"""
