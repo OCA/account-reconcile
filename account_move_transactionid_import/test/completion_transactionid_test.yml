@@ -5,10 +5,10 @@
     used_for_completion: True
     rule_ids:
       - bank_statement_completion_rule_4
-      - account_statement_base_import.bank_statement_completion_rule_4
-      - account_statement_base_import.bank_statement_completion_rule_5
-      - account_statement_base_import.bank_statement_completion_rule_2
-      - account_statement_base_import.bank_statement_completion_rule_3
+      - account_move_base_import.bank_statement_completion_rule_4
+      - account_move_base_import.bank_statement_completion_rule_5
+      - account_move_base_import.bank_statement_completion_rule_2
+      - account_move_base_import.bank_statement_completion_rule_3
 -
   Now I create a move. I create statment lines separately because I need
   to find each one by XML id
