@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # © 2011-2016 Camptocamp SA
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html)
-from openerp import _, models
+from openerp import _, fields, models
 from openerp.addons.account_move_base_import.models.account_move import \
     ErrorTooManyPartner
 
@@ -11,15 +11,13 @@ class AccountMoveCompletionRule(models.Model):
 
     _inherit = "account.move.completion.rule"
 
-    def _get_functions(self):
-        res = super(AccountMoveCompletionRule, self)._get_functions()
-        res += [
+    function_to_call = fields.Selection(
+        selection_add=[
             ('get_from_transaction_ref_and_so',
              'Match Sales Order using transaction ref'),
             ('get_from_transaction_ref_and_invoice',
-             'Match Invoice using transaction ref'),
-        ]
-        return res
+             'Match Invoice using transaction ref')
+        ])
 
     def get_from_transaction_ref_and_so(self, line):
         """
