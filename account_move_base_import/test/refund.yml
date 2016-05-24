@@ -1,0 +1,42 @@
+-
+  I create a "child" partner, to use in the invoice
+  (and have a different commercial_partner_id than itself)
+-
+  !record {model: res.partner, id: res_partner_12_child}:
+    name: Child Partner
+    supplier: False
+    customer: True
+    is_company: False
+    parent_id: base.res_partner_12
+-
+  I create a customer refund to be found by the completion.
+-
+  !record {model: account.invoice, id: refund_for_completion_1}:
+    company_id: base.main_company
+    currency_id: base.EUR
+    invoice_line_ids:
+      - name: '[PCSC234] PC Assemble SC234'
+        price_unit: 210.0
+        quantity: 1.0
+        product_id: product.product_product_3
+        uom_id: product.product_uom_unit
+    journal_id: account.expenses_journal
+    partner_id: res_partner_12_child
+    type: 'out_refund'
+    reference_type: none
+-
+  I confirm the refund
+-
+  !workflow {model: account.invoice, action: invoice_open, ref: refund_for_completion_1}
+-
+  I check that the refund state is "Open"
+-
+  !assert {model: account.invoice, id: refund_for_completion_1}:
+    - state == 'open'
+-
+  I check that it is given the number "RTEXJ/%Y/0001"
+-
+  !python {model: account.invoice}: |
+    import datetime as dt
+    invoice = model.browse(cr, uid, ref('refund_for_completion_1'), context)
+    assert invoice.number == dt.date.today().strftime('RTEXJ/%Y/0001')
