@@ -1,0 +1,21 @@
+-
+  I import account minimal data
+-
+  !python {model: account.invoice}: |
+    openerp.tools.convert_file(cr,
+                               'account',
+                               openerp.modules.get_module_resource(
+                                   'account',
+                                   'test',
+                                   'account_minimal_test.xml'),
+                               {}, 'init', False, 'test')
+-
+  I create a new Sale Order with transaction ID
+-
+  !record {model: sale.order, id: so_with_transaction_id}:
+    partner_id: base.res_partner_2
+    note: Invoice after delivery
+    transaction_id: XXX66Z
+    order_line: 
+      - product_id: product.product_product_7
+        product_uom_qty: 8
