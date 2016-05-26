@@ -46,7 +46,7 @@
         <field name="name">account.move.completion.rule.view</field>
         <field name="model">account.move.completion.rule</field>
         <field name="arch" type="xml">
-            <tree string="Statement Completion Rule">
+            <tree string="Move Completion Rule">
                 <field name="sequence"/>
                 <field name="name" select="1" />
                 <field name="journal_ids" />
