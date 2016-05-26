@@ -99,7 +99,8 @@ class AccountMoveCompletionRule(models.Model):
         invoice = self._find_invoice(line, inv_type)
         if invoice:
             partner_id = invoice.commercial_partner_id.id
-            res = {'partner_id': partner_id}
+            res = {'partner_id': partner_id,
+                   'account_id': invoice.account_id.id}
         return res
 
     # Should be private but data are initialised with no update XML
