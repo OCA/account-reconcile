@@ -19,13 +19,13 @@
                         <field name="import_type" attrs="{'required': [('used_for_import', '=', True)]}"/>
                     </group>
                     <group>
-                        <field name="commission_account_id" attrs="{'required': [('used_for_import', '=', True)]}"/>
+                        <field name="commission_account_id"/>
                         <field name="receivable_account_id" attrs="{'required': [('used_for_import', '=', True)]}"/>
-                        <field name="partner_id" attrs="{'required': [('used_for_import', '=', True)]}"/>
+                        <field name="partner_id"/>
                     </group>
                     <group>
                         <button name="%(account_move_base_import.move_importer_action)d"
-                                string="Import Bank Statement"
+                                string="Import batch file"
                                 type="action" icon="gtk-ok"
                                 colspan = "2"/>
                     </group>
