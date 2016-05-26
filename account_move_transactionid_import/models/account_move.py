@@ -71,4 +71,5 @@ class AccountMoveCompletionRule(models.Model):
         elif len(invoices) == 1:
             invoice = invoices[0]
             res['partner_id'] = invoice.commercial_partner_id.id
+            res['account_id'] = invoice.account_id.id
         return res
