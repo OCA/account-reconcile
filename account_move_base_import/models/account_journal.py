@@ -44,10 +44,9 @@ class AccountJournal(models.Model):
 
     receivable_account_id = fields.Many2one(
         comodel_name='account.account',
-        string='Force Receivable/Payable Account',
-        help="Choose a receivable account to force the default "
-        "debit/credit account (eg. an intermediat bank account "
-        "instead of default debitors).")
+        string='Receivable/Payable Account',
+        help="Choose a receivable/payable account to use as the default "
+        "debit/credit account.")
 
     used_for_completion = fields.Boolean(
         string="Journal used for completion")
@@ -114,35 +113,49 @@ class AccountJournal(models.Model):
         total_amount += global_commission_amount
         partner_id = self.partner_id.id
         # Commission line
-        if global_commission_amount < 0.0:
-            commission_account_id = self.commission_account_id.id
-            comm_values = {
-                'name': _('Commission line'),
-                'date_maturity': parser.get_move_vals().get('date') or
-                fields.Date.today(),
-                'debit': -global_commission_amount,
-                'partner_id': partner_id,
-                'move_id': move.id,
-                'account_id': commission_account_id,
-                'already_completed': True,
-            }
-            move_line_obj.with_context(
-                check_move_validity=False
-            ).create(comm_values)
+        if global_commission_amount > 0.0:
+            raise UserError(_('Commission amount should not be positive.'))
+        elif global_commission_amount < 0.0:
+            if not self.commission_account_id:
+                raise UserError(
+                    _('No commission account is set on the journal.'))
+            else:
+                commission_account_id = self.commission_account_id.id
+                comm_values = {
+                    'name': _('Commission line'),
+                    'date_maturity': parser.get_move_vals().get('date') or
+                    fields.Date.today(),
+                    'debit': -global_commission_amount,
+                    'partner_id': partner_id,
+                    'move_id': move.id,
+                    'account_id': commission_account_id,
+                    'already_completed': True,
+                }
+                move_line_obj.with_context(
+                    check_move_validity=False
+                ).create(comm_values)
+
         # Counterpart line
         if total_amount > 0.0:
-            receivable_account_id = self.receivable_account_id.id or False
-            counterpart_values = {
-                'name': _('Counterpart line'),
-                'date_maturity': parser.get_move_vals().get('date') or
-                fields.Date.today(),
-                'debit': total_amount,
-                'partner_id': partner_id,
-                'move_id': move.id,
-                'account_id': receivable_account_id,
-                'already_completed': True,
-            }
-            move_line_obj.create(counterpart_values)
+            account_id = self.default_debit_account_id.id
+            credit = 0.0
+            debit = total_amount
+        else:
+            account_id = self.default_credit_account_id.id
+            credit = -total_amount
+            debit = 0.0
+        counterpart_values = {
+            'name': _('/'),
+            'date_maturity': parser.get_move_vals().get('date') or
+            fields.Date.today(),
+            'credit': credit,
+            'debit': debit,
+            'partner_id': partner_id,
+            'move_id': move.id,
+            'account_id': account_id,
+            'already_completed': True,
+        }
+        move_line_obj.create(counterpart_values)
 
     @api.multi
     def write_logs_after_import(self, move, num_lines):
@@ -177,10 +190,7 @@ class AccountJournal(models.Model):
         values['company_currency_id'] = self.company_id.currency_id.id
         values['journal_id'] = self.id
         values['move_id'] = move.id
-        if values['credit'] > 0.0:
-            values['account_id'] = self.default_credit_account_id.id
-        else:
-            values['account_id'] = self.default_debit_account_id.id
+        values['account_id'] = self.receivable_account_id.id
         values = move_line_obj._add_missing_default_values(values)
         return values
 
@@ -263,6 +273,9 @@ class AccountJournal(models.Model):
                 move.button_auto_completion()
             # Write the needed log infos on profile
             self.write_logs_after_import(move, len(result_row_list))
+        except UserError:
+            # "Clean" exception, raise as such
+            raise
         except Exception:
             error_type, error_value, trbk = sys.exc_info()
             st = "Error: %s\nDescription: %s\nTraceback:" % (
