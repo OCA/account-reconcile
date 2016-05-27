@@ -2,12 +2,12 @@
    :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
    :alt: License: AGPL-3
 
-====================================
-Bank statement transaction ID import
-====================================
+===================================
+Journal Entry transaction ID import
+===================================
 
 This module extends the functionality of
-account_statement_base_import, in order to add both importation
+account_move_base_import, in order to add both importation
 and auto-completion for the "transaction_ref" field added in
 base_transaction_id.
 
