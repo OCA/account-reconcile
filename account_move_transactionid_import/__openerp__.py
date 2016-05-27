@@ -2,7 +2,7 @@
 # © 2011-2016 Camptocamp SA
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html)
 {
-    'name': "Bank statement transactionID import",
+    'name': "Journal Entry transactionID import",
     'version': '9.0.1.0.0',
     'author': "Camptocamp,Odoo Community Association (OCA)",
     'maintainer': 'Camptocamp',
