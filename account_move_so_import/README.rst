@@ -2,11 +2,11 @@
    :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
    :alt: License: AGPL-3
 
-====================================
-Bank statement Sale Order completion
-====================================
+===================================
+Journal Entry Sale Order completion
+===================================
 
-This module extends the functionality of account_statement_base_import
+This module extends the functionality of account_move_base_import
 to add support for completion rules based on Sale Orders. This was initially
 part of the module account_statement_base_completion, but is now separate to
 keep dependencies separate.
