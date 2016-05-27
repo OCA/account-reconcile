@@ -2,7 +2,7 @@
 # © 2013 ACSONE SA/NV
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html)
 {
-    'name': "Bank statement completion from bank account number",
+    'name': "Journal Entry completion from bank account number",
     'version': '9.0.1.0.0',
     'author': "ACSONE SA/NV,Odoo Community Association (OCA)",
     'maintainer': 'ACSONE SA/NV',

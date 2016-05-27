@@ -2,17 +2,17 @@
    :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
    :alt: License: AGPL-3
 
-==================================================
-Bank statement completion from bank account number
-==================================================
+=================================================
+Journal Entry completion from bank account number
+=================================================
 
-This module extends the functionality of account_statement_base_import
+This module extends the functionality of account_move_base_import
 to add a completion method based on the partner bank account number
 provided by the bank/office.
 
 Completion will look in the partner with that bank account number
-to match the partner, then it will fill in the bank statement line
-with it to ease the reconciliation.
+to match the partner, then it will fill in the journal item with
+it to ease the reconciliation.
 
 .. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas
    :alt: Try me on Runbot

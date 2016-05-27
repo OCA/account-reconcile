@@ -2,9 +2,9 @@
    :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
    :alt: License: AGPL-3
 
-=============================
-Account statement base import
-=============================
+========================
+Account move base import
+========================
 
 This module is a grouping of 7.0/8.0 modules, used to import accounting files
 and completing them automatically:
