@@ -15,7 +15,7 @@
                     <field name="commission_account_id" readonly="1"/>
                 </group>
                 <footer>
-                    <button  icon="gtk-ok" name="import_statement" string="Import statement" type="object" class="oe_highlight"/>
+                    <button  icon="gtk-ok" name="import_statement" string="Import file" type="object" class="oe_highlight"/>
                     <button  icon="gtk-cancel" special="cancel" string="Cancel"/>
                 </footer>
             </form>
@@ -23,7 +23,7 @@
     </record>
 
     <record id="move_importer_action" model="ir.actions.act_window">
-        <field name="name">Import Move</field>
+        <field name="name">Import Batch File</field>
         <field name="res_model">credit.statement.import</field>
         <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
@@ -31,5 +31,5 @@
         <field name="target">new</field>
     </record>
 
-    <menuitem id="move_importer_menu" name="Import Bank Statement" action="move_importer_action" parent="account.menu_finance_entries"/>
+    <menuitem id="move_importer_menu" name="Import Batch File" action="move_importer_action" parent="account.menu_finance_entries"/>
 </odoo>

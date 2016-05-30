@@ -60,6 +60,8 @@ both.
 Known issues / Roadmap
 ======================
 
+* As for now, the module does not handle multicurrency imports.
+
 Bug Tracker
 ===========
 
