@@ -51,7 +51,7 @@ class AccountMoveCompletionRule(models.Model):
         string='Name')
     journal_ids = fields.Many2many(
         comodel_name='account.journal',
-        rel='as_rul_st_prof_rel',
+        relation='account_journal_completion_rule_rel',
         string='Related journals')
     function_to_call = fields.Selection([
         ('get_from_name_and_invoice',

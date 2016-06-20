@@ -54,7 +54,7 @@ class AccountJournal(models.Model):
     rule_ids = fields.Many2many(
         comodel_name='account.move.completion.rule',
         string='Auto-completion rules',
-        rel='as_rul_st_prof_rel')
+        relation='account_journal_completion_rule_rel')
 
     launch_import_completion = fields.Boolean(
         string="Launch completion after import",
