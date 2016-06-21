@@ -13,13 +13,13 @@ class AccountMoveCompletionRule(models.Model):
 
     function_to_call = fields.Selection(
         selection_add=[
-            ('get_from_transaction_ref_and_so',
-             'Match Sales Order using transaction ref'),
-            ('get_from_transaction_ref_and_invoice',
-             'Match Invoice using transaction ref')
+            ('get_from_transaction_id_and_so',
+             'Match Sales Order using transaction ID'),
+            ('get_from_transaction_id_and_invoice',
+             'Match Invoice using transaction ID')
         ])
 
-    def get_from_transaction_ref_and_so(self, line):
+    def get_from_transaction_id_and_so(self, line):
         """
         Match the partner based on the transaction ID field of the SO.
         Then, call the generic st_line method to complete other values.
@@ -35,7 +35,7 @@ class AccountMoveCompletionRule(models.Model):
             """
         res = {}
         so_obj = self.env['sale.order']
-        sales = so_obj.search([('transaction_id', '=', line.transaction_ref)])
+        sales = so_obj.search([('transaction_id', '=', line.transaction_id)])
         if len(sales) > 1:
             raise ErrorTooManyPartner(
                 _('Line named "%s" was matched by more than '
@@ -45,7 +45,7 @@ class AccountMoveCompletionRule(models.Model):
             res['partner_id'] = sale.partner_id.id
         return res
 
-    def get_from_transaction_ref_and_invoice(self, line):
+    def get_from_transaction_id_and_invoice(self, line):
         """Match the partner based on the transaction ID field of the invoice.
         Then, call the generic st_line method to complete other values.
 
@@ -63,7 +63,7 @@ class AccountMoveCompletionRule(models.Model):
         res = {}
         invoice_obj = self.env['account.invoice']
         invoices = invoice_obj.search(
-            [('transaction_id', '=', line.transaction_ref)])
+            [('transaction_id', '=', line.transaction_id)])
         if len(invoices) > 1:
             raise ErrorTooManyPartner(
                 _('Line named "%s" was matched by more than '
