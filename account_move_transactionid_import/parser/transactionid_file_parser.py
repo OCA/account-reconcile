@@ -24,7 +24,7 @@ class TransactionIDFileParser(FileParser):
               header
         """
         conversion_dict = {
-            'transaction_ref': ustr,
+            'transaction_id': ustr,
             'label': ustr,
             'date': datetime.datetime,
             'amount': float_or_zero,
@@ -67,5 +67,5 @@ class TransactionIDFileParser(FileParser):
             'date_maturity': line.get('date', datetime.datetime.now().date()),
             'credit': amount > 0.0 and amount or 0.0,
             'debit': amount < 0.0 and amount or 0.0,
-            'transaction_ref': line.get('transaction_ref', '/'),
+            'transaction_ref': line.get('transaction_id', '/'),
         }
