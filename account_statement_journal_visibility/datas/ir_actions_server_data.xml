@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- © 2016 OpenSynergy Indonesia
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html). -->
+
+<openerp>
+<data>
+
+<record id="bank_statement_action" model="ir.actions.server">
+    <field name="name">Bank Statement</field>
+    <field name="condition">True</field>
+    <field name="type">ir.actions.server</field>
+    <field name="model_id" ref="model_account_bank_statement" />
+    <field name="state">code</field>
+    <field name="code">
+waction = env.ref("account.action_bank_statement_tree")
+bs = waction.read()[0]
+dom = bs['domain'][:-1][1:]
+journal_ids = env.user.mapped("bank_statement_allowed_journal_ids.id")
+dom = "['&amp;'," + dom + ", ('journal_id','in',%s)]" % str(journal_ids)
+bs['domain'] = dom
+action = bs
+    </field>
+</record>
+
+<record id="account.menu_bank_statement_tree" model="ir.ui.menu">
+    <field name="name">Bank Statement</field>
+    <field name="action" eval="'ir.actions.server,' + str(ref('account_statement_journal_visibility.bank_statement_action'))"/>
+</record>
+
+
+<record id="cash_register_action" model="ir.actions.server">
+    <field name="name">Cash Register</field>
+    <field name="condition">True</field>
+    <field name="type">ir.actions.server</field>
+    <field name="model_id" ref="model_account_bank_statement" />
+    <field name="state">code</field>
+    <field name="code">
+waction = env.ref("account.action_view_bank_statement_tree")
+bs = waction.read()[0]
+dom = bs['domain'][:-1][1:]
+journal_ids = env.user.mapped("cash_register_allowed_journal_ids.id")
+dom = "['&amp;'," + dom + ", ('journal_id','in',%s)]" % str(journal_ids)
+bs['domain'] = dom
+action = bs
+    </field>
+</record>
+
+<record id="account.journal_cash_move_lines" model="ir.ui.menu">
+    <field name="name">Cash Register</field>
+    <field name="action" eval="'ir.actions.server,' + str(ref('account_statement_journal_visibility.cash_register_action'))"/>
+</record>
+</data>
+</openerp>
