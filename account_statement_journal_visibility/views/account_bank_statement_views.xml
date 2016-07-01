@@ -4,17 +4,6 @@
 
 <openerp>
 <data>
-
-<record id="account_bank_statement_tree" model="ir.ui.view">
-    <field name="name">account.bank.statement tree</field>
-    <field name="model">account.bank.statement</field>
-    <field name="inherit_id" ref="account.view_bank_statement_tree"/>
-    <field name="arch" type="xml">
-        <data>
-        </data>
-    </field>
-</record>
-
 <record id="account_bank_statement_form_2" model="ir.ui.view">
     <field name="name">account.bank.statement form 2</field>
     <field name="model">account.bank.statement</field>

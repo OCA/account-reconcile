@@ -9,27 +9,6 @@ from openerp.tools import ustr
 class AccountBankStatement(models.Model):
     _inherit = "account.bank.statement"
 
-    @api.multi
-    def _compute_journal_visibility(self):
-        for statement in self:
-            journal = statement.journal_id
-            if not journal.bank_statement_allowed_group_ids:
-                self.custom_journal_visibility = False
-            else:
-                self.custom_journal_visibility = True
-                groups = journal.bank_statement_allowed_group_ids
-                self.bank_statement_allowed_user_ids = \
-                    groups.mapped("users")
-
-    custom_journal_visibility = fields.Boolean(
-        string="Custom Journal Visibility",
-        compute="_compute_journal_visibility",
-    )
-    bank_statement_allowed_user_ids = fields.Many2many(
-        string="Allowed User",
-        comodel_name="res.users",
-        compute="_compute_journal_visibility",
-    )
     journal_id = fields.Many2one(
         default=False,
     )
