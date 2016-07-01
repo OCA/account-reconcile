@@ -27,9 +27,11 @@ class AccountBankStatement(models.Model):
         if view_id not in [view_bs.id, view_cr.id]:
             return res
 
+        obj_journal = self.env["account.journal"]
         if view_id == view_bs.id:
             journal_ids = self.env.user.mapped(
                 "bank_statement_allowed_journal_ids.id")
+            obj_journal.search([("id", "in", journal_ids)])
             domain_extra = "('id', 'in', %s)" % (str(journal_ids))
         elif view_id == view_cr.id:
             journal_ids = self.env.user.mapped(
