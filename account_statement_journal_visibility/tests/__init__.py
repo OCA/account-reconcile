@@ -2,4 +2,4 @@
 # © 2016 OpenSynergy Indonesia
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-from . import models, tests
+from . import test_account_statement
