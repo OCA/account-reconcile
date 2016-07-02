@@ -1,0 +1,135 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# * account_mass_reconcile_ref_deep_search
+# 
+# Translators:
+# OCA Transbot <transbot@odoo-community.org>, 2016
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 9.0c\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-03-28 01:41+0000\n"
+"PO-Revision-Date: 2017-03-28 01:41+0000\n"
+"Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2016\n"
+"Language-Team: Macedonian (https://www.transifex.com/oca/teams/23907/mk/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Language: mk\n"
+"Plural-Forms: nplurals=2; plural=(n % 10 == 1 && n % 100 != 11) ? 0 : 1;\n"
+
+#. module: account_mass_reconcile_ref_deep_search
+#: code:addons/account_mass_reconcile_ref_deep_search/models/advanced_reconciliation.py:51
+#, python-format
+msgid ""
+"A matcher %s is compared with a matcher %s, the _matchers and "
+"_opposite_matchers are probably wrong"
+msgstr ""
+
+#. module: account_mass_reconcile_ref_deep_search
+#: model:ir.model.fields,field_description:account_mass_reconcile_ref_deep_search.field_mass_reconcile_advanced_ref_deep_search_account_id
+msgid "Account"
+msgstr ""
+
+#. module: account_mass_reconcile_ref_deep_search
+#: model:ir.model.fields,field_description:account_mass_reconcile_ref_deep_search.field_mass_reconcile_advanced_ref_deep_search_account_lost_id
+msgid "Account Lost"
+msgstr ""
+
+#. module: account_mass_reconcile_ref_deep_search
+#: model:ir.model.fields,field_description:account_mass_reconcile_ref_deep_search.field_mass_reconcile_advanced_ref_deep_search_account_profit_id
+msgid "Account Profit"
+msgstr ""
+
+#. module: account_mass_reconcile_ref_deep_search
+#: model:ir.ui.view,arch_db:account_mass_reconcile_ref_deep_search.view_mass_reconcile_form
+msgid "Advanced. Partner and Ref Deep Search"
+msgstr ""
+
+#. module: account_mass_reconcile_ref_deep_search
+#: model:ir.model.fields,field_description:account_mass_reconcile_ref_deep_search.field_mass_reconcile_advanced_ref_deep_search_create_uid
+msgid "Created by"
+msgstr "Креирано од"
+
+#. module: account_mass_reconcile_ref_deep_search
+#: model:ir.model.fields,field_description:account_mass_reconcile_ref_deep_search.field_mass_reconcile_advanced_ref_deep_search_create_date
+msgid "Created on"
+msgstr "Креирано на"
+
+#. module: account_mass_reconcile_ref_deep_search
+#: model:ir.model.fields,field_description:account_mass_reconcile_ref_deep_search.field_mass_reconcile_advanced_ref_deep_search_date_base_on
+msgid "Date of reconciliation"
+msgstr ""
+
+#. module: account_mass_reconcile_ref_deep_search
+#: model:ir.model.fields,field_description:account_mass_reconcile_ref_deep_search.field_mass_reconcile_advanced_ref_deep_search_display_name
+msgid "Display Name"
+msgstr "Прикажи име"
+
+#. module: account_mass_reconcile_ref_deep_search
+#: model:ir.model.fields,field_description:account_mass_reconcile_ref_deep_search.field_mass_reconcile_advanced_ref_deep_search_filter
+msgid "Filter"
+msgstr ""
+
+#. module: account_mass_reconcile_ref_deep_search
+#: model:ir.model.fields,field_description:account_mass_reconcile_ref_deep_search.field_mass_reconcile_advanced_ref_deep_search_income_exchange_account_id
+msgid "Gain Exchange Rate Account"
+msgstr ""
+
+#. module: account_mass_reconcile_ref_deep_search
+#: model:ir.model.fields,field_description:account_mass_reconcile_ref_deep_search.field_mass_reconcile_advanced_ref_deep_search_id
+msgid "ID"
+msgstr "ID"
+
+#. module: account_mass_reconcile_ref_deep_search
+#: model:ir.model.fields,field_description:account_mass_reconcile_ref_deep_search.field_mass_reconcile_advanced_ref_deep_search_journal_id
+msgid "Journal"
+msgstr "Дневник"
+
+#. module: account_mass_reconcile_ref_deep_search
+#: model:ir.model.fields,field_description:account_mass_reconcile_ref_deep_search.field_mass_reconcile_advanced_ref_deep_search___last_update
+msgid "Last Modified on"
+msgstr "Последна промена на"
+
+#. module: account_mass_reconcile_ref_deep_search
+#: model:ir.model.fields,field_description:account_mass_reconcile_ref_deep_search.field_mass_reconcile_advanced_ref_deep_search_write_uid
+msgid "Last Updated by"
+msgstr "Последно ажурирање од"
+
+#. module: account_mass_reconcile_ref_deep_search
+#: model:ir.model.fields,field_description:account_mass_reconcile_ref_deep_search.field_mass_reconcile_advanced_ref_deep_search_write_date
+msgid "Last Updated on"
+msgstr "Последно ажурирање на"
+
+#. module: account_mass_reconcile_ref_deep_search
+#: model:ir.model.fields,field_description:account_mass_reconcile_ref_deep_search.field_mass_reconcile_advanced_ref_deep_search_expense_exchange_account_id
+msgid "Loss Exchange Rate Account"
+msgstr ""
+
+#. module: account_mass_reconcile_ref_deep_search
+#: model:ir.ui.view,arch_db:account_mass_reconcile_ref_deep_search.view_mass_reconcile_form
+msgid ""
+"Match multiple debit vs multiple credit entries. Allow partial "
+"reconciliation.                             The lines should have the "
+"partner, the credit entry ref is searched inside the debit entry ref."
+msgstr ""
+
+#. module: account_mass_reconcile_ref_deep_search
+#: model:ir.model.fields,field_description:account_mass_reconcile_ref_deep_search.field_mass_reconcile_advanced_ref_deep_search_partner_ids
+msgid "Restrict on partners"
+msgstr ""
+
+#. module: account_mass_reconcile_ref_deep_search
+#: model:ir.model.fields,field_description:account_mass_reconcile_ref_deep_search.field_mass_reconcile_advanced_ref_deep_search_write_off
+msgid "Write off allowed"
+msgstr ""
+
+#. module: account_mass_reconcile_ref_deep_search
+#: model:ir.model,name:account_mass_reconcile_ref_deep_search.model_mass_reconcile_advanced_ref_deep_search
+msgid "mass.reconcile.advanced.ref.deep.search"
+msgstr ""
+
+#. module: account_mass_reconcile_ref_deep_search
+#: model:ir.model,name:account_mass_reconcile_ref_deep_search.model_account_mass_reconcile_method
+msgid "reconcile method for account_mass_reconcile"
+msgstr ""
