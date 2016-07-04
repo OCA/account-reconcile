@@ -39,6 +39,7 @@ Contributors
 ------------
 
 * Laurent Mignon <laurent.mignon@acsone.eu>
+* Matthieu Dietrich <matthieu.dietrich@gmail.com>
 
 Maintainer
 ----------
