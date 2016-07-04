@@ -29,8 +29,8 @@ class AccountJournal(models.Model):
         string='Type of import',
         default='generic_csvxls_so',
         required=True,
-        help="Choose here the method by which you want to import bank "
-        "statement for this profile.")
+        help="Choose here the method by which you want to import account "
+        "moves for this journal.")
 
     last_import_date = fields.Datetime(
         string="Last Import Date")
@@ -59,7 +59,7 @@ class AccountJournal(models.Model):
     launch_import_completion = fields.Boolean(
         string="Launch completion after import",
         help="Tic that box to automatically launch the completion "
-        "on each imported file using this profile.")
+        "on each imported file using this journal.")
 
     def _get_rules(self):
         # We need to respect the sequence order
@@ -190,7 +190,8 @@ class AccountJournal(models.Model):
         values['company_currency_id'] = self.company_id.currency_id.id
         values['journal_id'] = self.id
         values['move_id'] = move.id
-        values['account_id'] = self.receivable_account_id.id
+        if not values.get('account_id', False):
+            values['account_id'] = self.receivable_account_id.id
         values = move_line_obj._add_missing_default_values(values)
         return values
 
