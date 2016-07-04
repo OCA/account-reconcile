@@ -11,7 +11,7 @@ class AccountMassReconcileMethod(models.Model):
     @api.model
     def _get_all_rec_method(self):
         _super = super(AccountMassReconcileMethod, self)
-        methods = _super.get_all_rec_method()
+        methods = _super._get_all_rec_method()
         methods += [
             ('mass.reconcile.advanced.ref.deep.search',
              'Advanced. Partner and Ref. Deep Search'),
