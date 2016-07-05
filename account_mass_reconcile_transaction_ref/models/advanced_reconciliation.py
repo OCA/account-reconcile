@@ -6,7 +6,7 @@ from openerp import api, models
 
 class MassReconcileAdvancedTransactionRef(models.TransientModel):
 
-    _name = 'mass.reconcile.advanced.transaction.ref'
+    _name = 'mass.reconcile.advanced.transaction_ref'
     _inherit = 'mass.reconcile.advanced'
 
     @api.multi
