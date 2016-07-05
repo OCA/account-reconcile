@@ -153,6 +153,7 @@ class AccountJournal(models.Model):
             'partner_id': partner_id,
             'move_id': move.id,
             'account_id': account_id,
+            'amount_residual': total_amount,
             'already_completed': True,
         }
         move_line_obj.create(counterpart_values)
