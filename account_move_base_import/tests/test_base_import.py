@@ -34,6 +34,7 @@ class TestCodaImport(common.TransactionCase):
             'partner_id': self.partner.id,
             'commission_account_id': self.account_id,
             'receivable_account_id': self.account_id,
+            'create_counterpart': True,
         })
 
     def _filename_to_abs_filename(self, file_name):

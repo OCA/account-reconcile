@@ -22,6 +22,8 @@
                         <field name="commission_account_id"/>
                         <field name="receivable_account_id" attrs="{'required': [('used_for_import', '=', True)]}"/>
                         <field name="partner_id"/>
+                        <field name="create_counterpart"/>
+                        <field name="split_counterpart" attrs="{'invisible': [('create_counterpart', '=', False)]}"/>
                     </group>
                     <group>
                         <button name="%(account_move_base_import.move_importer_action)d"
