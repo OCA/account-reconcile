@@ -61,6 +61,16 @@ class AccountJournal(models.Model):
         help="Tic that box to automatically launch the completion "
         "on each imported file using this journal.")
 
+    create_counterpart = fields.Boolean(
+        string="Create Counterpart",
+        help="Tick that box to automatically create the move counterpart",
+        default=True)
+
+    split_counterpart = fields.Boolean(
+        string="Split Counterpart",
+        help="Two counterparts will be automatically created : one for "
+             "the refunds and one for the payments")
+
     def _get_rules(self):
         # We need to respect the sequence order
         return sorted(self.rule_ids, key=attrgetter('sequence'))
@@ -89,6 +99,65 @@ class AccountJournal(models.Model):
         return None
 
     @api.multi
+    def _prepare_counterpart_line(self, move, amount, date):
+        if amount > 0.0:
+            account_id = self.default_debit_account_id.id
+            credit = 0.0
+            debit = amount
+        else:
+            account_id = self.default_credit_account_id.id
+            credit = -amount
+            debit = 0.0
+        counterpart_values = {
+            'name': _('/'),
+            'date_maturity': date,
+            'credit': credit,
+            'debit': debit,
+            'partner_id': self.partner_id.id,
+            'move_id': move.id,
+            'account_id': account_id,
+            'already_completed': True,
+            'journal_id': self.id,
+            'company_id': self.company_id.id,
+            'currency_id': self.currency_id.id,
+            'company_currency_id': self.company_id.currency_id.id,
+            'amount_residual': amount,
+        }
+        return counterpart_values
+
+    @api.multi
+    def _create_counterpart(self, parser, move):
+        move_line_obj = self.env['account.move.line']
+        refund = 0.0
+        payment = 0.0
+        transfer_lines = []
+        for move_line in move.line_ids:
+            refund -= move_line.debit
+            payment += move_line.credit
+        if self.split_counterpart:
+            if refund:
+                transfer_lines.append(refund)
+            if payment:
+                transfer_lines.append(payment)
+        else:
+            total_amount = refund + payment
+            if total_amount:
+                transfer_lines.append(total_amount)
+        counterpart_date = parser.get_move_vals().get('date') or \
+            fields.Date.today()
+        transfer_line_count = len(transfer_lines)
+        check_move_validity = False
+        for amount in transfer_lines:
+            transfer_line_count -= 1
+            if not transfer_line_count:
+                check_move_validity = True
+            vals = self._prepare_counterpart_line(move, amount,
+                                                  counterpart_date)
+            move_line_obj.with_context(
+                check_move_validity=check_move_validity
+            ).create(vals)
+
+    @api.multi
     def _write_extra_move_lines(self, parser, move):
         """Insert extra lines after the main statement lines.
 
@@ -104,13 +173,9 @@ class AccountJournal(models.Model):
         """
         move_line_obj = self.env['account.move.line']
         global_commission_amount = 0
-        total_amount = 0
         for row in parser.result_row_list:
             global_commission_amount += float(
                 row.get('commission_amount', '0.0'))
-            total_amount += float(
-                row.get('amount', '0.0'))
-        total_amount += global_commission_amount
         partner_id = self.partner_id.id
         # Commission line
         if global_commission_amount > 0.0:
@@ -134,29 +199,6 @@ class AccountJournal(models.Model):
                 move_line_obj.with_context(
                     check_move_validity=False
                 ).create(comm_values)
-
-        # Counterpart line
-        if total_amount > 0.0:
-            account_id = self.default_debit_account_id.id
-            credit = 0.0
-            debit = total_amount
-        else:
-            account_id = self.default_credit_account_id.id
-            credit = -total_amount
-            debit = 0.0
-        counterpart_values = {
-            'name': _('/'),
-            'date_maturity': parser.get_move_vals().get('date') or
-            fields.Date.today(),
-            'credit': credit,
-            'debit': debit,
-            'partner_id': partner_id,
-            'move_id': move.id,
-            'account_id': account_id,
-            'amount_residual': total_amount,
-            'already_completed': True,
-        }
-        move_line_obj.create(counterpart_values)
 
     @api.multi
     def write_logs_after_import(self, move, num_lines):
@@ -262,6 +304,8 @@ class AccountJournal(models.Model):
             # Hack to bypass ORM poor perfomance. Sob...
             move_line_obj._insert_lines(move_store)
             self._write_extra_move_lines(parser, move)
+            if self.create_counterpart:
+                self._create_counterpart(parser, move)
             attachment_data = {
                 'name': 'statement file',
                 'datas': file_stream,
