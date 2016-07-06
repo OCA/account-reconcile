@@ -48,6 +48,7 @@ class AccountMoveImportParser(object):
         self.move_date = None
         self.move_name = None
         self.move_ref = None
+        self.support_multi_moves = None
 
     @classmethod
     def parser_for(cls, parser_name):
@@ -147,10 +148,16 @@ class AccountMoveImportParser(object):
             raise Exception(_('No buffer file given.'))
         self._format(*args, **kwargs)
         self._pre(*args, **kwargs)
-        self._parse(*args, **kwargs)
-        self._validate(*args, **kwargs)
-        self._post(*args, **kwargs)
-        yield self.result_row_list
+        if self.support_multi_moves:
+            while self._parse(*args, **kwargs):
+                self._validate(*args, **kwargs)
+                self._post(*args, **kwargs)
+                yield self.result_row_list
+        else:
+            self._parse(*args, **kwargs)
+            self._validate(*args, **kwargs)
+            self._post(*args, **kwargs)
+            yield self.result_row_list
 
 
 def itersubclasses(cls, _seen=None):
