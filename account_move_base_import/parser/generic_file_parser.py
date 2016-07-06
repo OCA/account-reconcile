@@ -76,7 +76,7 @@ class GenericFileParser(FileParser):
             'name': line.get('label', '/'),
             'date_maturity': line.get('date', datetime.datetime.now().date()),
             'credit': amount > 0.0 and amount or 0.0,
-            'debit': amount < 0.0 and amount or 0.0,
+            'debit': amount < 0.0 and -amount or 0.0,
             'account_id': account_id,
             'partner_id': partner_id,
         }
