@@ -303,6 +303,7 @@ class AccountJournal(models.Model):
                 move_store.append(values)
             # Hack to bypass ORM poor perfomance. Sob...
             move_line_obj._insert_lines(move_store)
+            self.env.invalidate_all()
             self._write_extra_move_lines(parser, move)
             if self.create_counterpart:
                 self._create_counterpart(parser, move)
