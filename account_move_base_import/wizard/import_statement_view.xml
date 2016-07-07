@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="move_importer_view" model="ir.ui.view">
+        <field name="name">credit.statement.import.config.view</field>
+        <field name="model">credit.statement.import</field>
+        <field name="arch" type="xml">
+            <form string="Import move">
+                <group colspan="4" >
+                    <field name="journal_id" on_change="onchange_journal_id(journal_id)" domain="[('used_for_import', '=', True)]"/>
+                    <field name="input_statement" filename="file_name" colspan="2"/>
+                    <field name="file_name" colspan="2" invisible="1"/>
+                    <separator string="Import Parameters Summary" colspan="4"/>
+                    <field name="partner_id" readonly="1"/>
+                    <field name="receivable_account_id" readonly="1"/>
+                    <field name="commission_account_id" readonly="1"/>
+                </group>
+                <footer>
+                    <button  icon="gtk-ok" name="import_statement" string="Import file" type="object" class="oe_highlight"/>
+                    <button  icon="gtk-cancel" special="cancel" string="Cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="move_importer_action" model="ir.actions.act_window">
+        <field name="name">Import Batch File</field>
+        <field name="res_model">credit.statement.import</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="move_importer_view"/>
+        <field name="target">new</field>
+    </record>
+
+    <menuitem id="move_importer_menu" name="Import Batch File" action="move_importer_action" parent="account.menu_finance_entries"/>
+</odoo>

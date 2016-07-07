@@ -1,0 +1,59 @@
+-
+  I import account minimal data
+-
+  !python {model: account.invoice}: |
+    openerp.tools.convert_file(cr,
+                               'account',
+                               openerp.modules.get_module_resource(
+                                   'account',
+                                   'test',
+                                   'account_minimal_test.xml'),
+                               {}, 'init', False, 'test')
+-
+  In order to test the banking framework for Sale Orders, I first need to
+  create a profile
+-
+  !record {model: account.journal, id: account.bank_journal}:
+    used_for_completion: True
+    rule_ids:
+      - account_move_base_import.bank_statement_completion_rule_4
+      - account_move_base_import.bank_statement_completion_rule_5
+      - account_move_base_import.bank_statement_completion_rule_2
+      - account_move_base_import.bank_statement_completion_rule_3
+      - bank_statement_completion_rule_1
+-
+  Now I create a statement. I create statment lines separately because I need
+  to find each one by XML id
+-
+  !record {model: account.move, id: move_test_sale1}:
+    name: Statement for SO
+    journal_id: account.bank_journal
+    company_id: base.main_company
+-
+  I create a move line for a SO
+-
+  !record {model: account.move.line, id: move_line_so}:
+    name: SO007
+    account_id: account.a_sale
+    move_id: move_test_sale1
+    date_maturity: '2013-12-20'
+    credit: 0.0
+-
+  and add the correct name
+-
+  !python {model: account.move.line}: |
+    context['check_move_validity'] = False
+    model.write(cr, uid, [ref('move_line_so')],
+                {'credit': 14981.0},
+                context)
+-
+  I run the auto complete
+-
+  !python {model: account.move}: |
+    result = self.button_auto_completion(cr, uid, [ref("move_test_sale1")])
+-
+  Now I can check that all is nice and shiny, line 1. I expect the Sale Order
+  Number to be recognised.
+-
+  !assert {model: account.move.line, id: move_line_so, string: Check completion by SO number}:
+    - partner_id.name == u'China Export'

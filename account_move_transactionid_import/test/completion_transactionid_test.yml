@@ -1,0 +1,48 @@
+-
+  In order to test the banking framework, I first need to create a journal
+-
+  !record {model: account.journal, id: account.bank_journal}:
+    used_for_completion: True
+    rule_ids:
+      - bank_statement_completion_rule_4
+      - account_move_base_import.bank_statement_completion_rule_4
+      - account_move_base_import.bank_statement_completion_rule_5
+      - account_move_base_import.bank_statement_completion_rule_2
+      - account_move_base_import.bank_statement_completion_rule_3
+-
+  Now I create a move. I create statment lines separately because I need
+  to find each one by XML id
+-
+  !record {model: account.move, id: move_transactionid_test1}:
+    name: Move with transaction ID
+    journal_id: account.bank_journal
+    company_id: base.main_company
+-
+  I create a move line for a SO with transaction ID
+-
+  !record {model: account.move.line, id: move_line_transactionid}:
+    name: Test autocompletion based on SO with transaction ID
+    account_id: account.a_sale
+    move_id: move_transactionid_test1
+    transaction_ref: XXX66Z
+    date_maturity: !eval "'%s-01-06' %(datetime.now().year)"
+    credit: 0.0
+-
+  and add the correct amount
+-
+  !python {model: account.move.line}: |
+    context['check_move_validity'] = False
+    model.write(cr, uid, [ref('move_line_transactionid')],
+                {'credit': 118.4},
+                context)
+-
+  I run the auto complete
+-
+  !python {model: account.move}: |
+    result = self.button_auto_completion(cr, uid, [ref("move_transactionid_test1")])
+-
+  Now I can check that all is nice and shiny, line 1. I expect the SO has been
+  recognised from the transaction ID.
+-
+  !assert {model: account.move.line, id: move_line_transactionid, string: Check completion by SO transaction ID}:
+    - partner_id.name == u'Agrolait'
