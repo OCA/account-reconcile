@@ -3,20 +3,20 @@
 # * account_move_base_import
 # 
 # Translators:
-# OCA Transbot <transbot@odoo-community.org>, 2016
+# Bole <bole@dajmi5.com>, 2016
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 9.0c\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-07-08 02:45+0000\n"
 "PO-Revision-Date: 2016-07-08 02:45+0000\n"
-"Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2016\n"
-"Language-Team: Spanish (https://www.transifex.com/oca/teams/23907/es/)\n"
+"Last-Translator: Bole <bole@dajmi5.com>, 2016\n"
+"Language-Team: Croatian (Croatia) (https://www.transifex.com/oca/teams/23907/hr_HR/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Language: es\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Language: hr_HR\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
 
 #. module: account_move_base_import
 #: code:addons/account_move_base_import/models/account_move.py:351
@@ -36,7 +36,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_journal_message_needaction
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_move_message_needaction
 msgid "Action Needed"
-msgstr ""
+msgstr "Potrebna akcija"
 
 #. module: account_move_base_import
 #: model:ir.ui.view,arch_db:account_move_base_import.view_move_importer_form
@@ -76,7 +76,7 @@ msgstr ""
 #. module: account_move_base_import
 #: model:ir.ui.view,arch_db:account_move_base_import.move_importer_view
 msgid "Cancel"
-msgstr "Cancelar"
+msgstr ""
 
 #. module: account_move_base_import
 #: model:ir.model.fields,help:account_move_base_import.field_account_journal_receivable_account_id
@@ -96,7 +96,7 @@ msgstr ""
 #: code:addons/account_move_base_import/parser/file_parser.py:85
 #, python-format
 msgid "Column %s not present in file"
-msgstr "La columna %s no está presente en el archivo"
+msgstr ""
 
 #. module: account_move_base_import
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_journal_commission_account_id
@@ -135,13 +135,13 @@ msgstr ""
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_move_completion_rule_create_uid
 #: model:ir.model.fields,field_description:account_move_base_import.field_credit_statement_import_create_uid
 msgid "Created by"
-msgstr ""
+msgstr "Kreirao"
 
 #. module: account_move_base_import
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_move_completion_rule_create_date
 #: model:ir.model.fields,field_description:account_move_base_import.field_credit_statement_import_create_date
 msgid "Created on"
-msgstr ""
+msgstr "Kreirano"
 
 #. module: account_move_base_import
 #: model:ir.model.fields,field_description:account_move_base_import.field_credit_statement_import_partner_id
@@ -174,13 +174,13 @@ msgstr ""
 #: model:ir.model.fields,help:account_move_base_import.field_account_journal_message_last_post
 #: model:ir.model.fields,help:account_move_base_import.field_account_move_message_last_post
 msgid "Date of the last message posted on the record."
-msgstr ""
+msgstr "Datum zadnje poruke na zapisu"
 
 #. module: account_move_base_import
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_move_completion_rule_display_name
 #: model:ir.model.fields,field_description:account_move_base_import.field_credit_statement_import_display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Naziv"
 
 #. module: account_move_base_import
 #: model:ir.model.fields,help:account_move_base_import.field_res_partner_bank_statement_label
@@ -200,7 +200,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_journal_message_follower_ids
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_move_message_follower_ids
 msgid "Followers"
-msgstr ""
+msgstr "Pratitelji"
 
 #. module: account_move_base_import
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_journal_message_channel_ids
@@ -217,7 +217,7 @@ msgstr ""
 #. module: account_move_base_import
 #: model:ir.model.fields,field_description:account_move_base_import.field_credit_statement_import_receivable_account_id
 msgid "Force Receivable/Payable Account"
-msgstr "Forzar cuenta a cobrar/a pagar"
+msgstr ""
 
 #. module: account_move_base_import
 #: selection:account.move.completion.rule,function_to_call:0
@@ -263,7 +263,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_move_completion_rule_id
 #: model:ir.model.fields,field_description:account_move_base_import.field_credit_statement_import_id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: account_move_base_import
 #: model:ir.model.fields,help:account_move_base_import.field_account_journal_message_unread
@@ -286,7 +286,7 @@ msgstr ""
 #. module: account_move_base_import
 #: model:ir.ui.view,arch_db:account_move_base_import.move_importer_view
 msgid "Import Parameters Summary"
-msgstr "Resumen de parámetros de importación"
+msgstr ""
 
 #. module: account_move_base_import
 #: model:ir.ui.view,arch_db:account_move_base_import.journal_importer_view_form
@@ -296,7 +296,7 @@ msgstr ""
 #. module: account_move_base_import
 #: model:ir.model.fields,field_description:account_move_base_import.field_credit_statement_import_journal_id
 msgid "Import configuration parameter"
-msgstr "Parámetros de configuración de la importación"
+msgstr ""
 
 #. module: account_move_base_import
 #: model:ir.ui.view,arch_db:account_move_base_import.move_importer_view
@@ -311,7 +311,7 @@ msgstr ""
 #. module: account_move_base_import
 #: model:ir.ui.view,arch_db:account_move_base_import.journal_importer_view_form
 msgid "Import related infos"
-msgstr "Importar información relacionada"
+msgstr ""
 
 #. module: account_move_base_import
 #: code:addons/account_move_base_import/parser/file_parser.py:45
@@ -330,17 +330,17 @@ msgstr ""
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_journal_message_is_follower
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_move_message_is_follower
 msgid "Is Follower"
-msgstr ""
+msgstr "Je pratitelj"
 
 #. module: account_move_base_import
 #: model:ir.model,name:account_move_base_import.model_account_journal
 msgid "Journal"
-msgstr ""
+msgstr "Dnevnik"
 
 #. module: account_move_base_import
 #: model:ir.model,name:account_move_base_import.model_account_move_line
 msgid "Journal Item"
-msgstr ""
+msgstr "Stavka devnika"
 
 #. module: account_move_base_import
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_journal_used_for_completion
@@ -356,19 +356,19 @@ msgstr ""
 #. module: account_move_base_import
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_journal_last_import_date
 msgid "Last Import Date"
-msgstr "Última fecha de importación"
+msgstr ""
 
 #. module: account_move_base_import
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_journal_message_last_post
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_move_message_last_post
 msgid "Last Message Date"
-msgstr ""
+msgstr "Datum zadnje poruke"
 
 #. module: account_move_base_import
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_move_completion_rule___last_update
 #: model:ir.model.fields,field_description:account_move_base_import.field_credit_statement_import___last_update
 msgid "Last Modified on"
-msgstr ""
+msgstr "Zadnja izmjena"
 
 #. module: account_move_base_import
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_move_completion_rule_write_uid
@@ -385,7 +385,7 @@ msgstr ""
 #. module: account_move_base_import
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_journal_launch_import_completion
 msgid "Launch completion after import"
-msgstr "Lanzar el completado después de la importación"
+msgstr ""
 
 #. module: account_move_base_import
 #: code:addons/account_move_base_import/models/account_move.py:87
@@ -430,12 +430,12 @@ msgstr ""
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_journal_message_ids
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_move_message_ids
 msgid "Messages"
-msgstr ""
+msgstr "Poruke"
 
 #. module: account_move_base_import
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_move_completion_rule_function_to_call
 msgid "Method"
-msgstr ""
+msgstr "Metoda"
 
 #. module: account_move_base_import
 #: code:addons/account_move_base_import/parser/file_parser.py:136
@@ -444,7 +444,7 @@ msgstr ""
 #: code:addons/account_move_base_import/parser/file_parser.py:175
 #, python-format
 msgid "Missing"
-msgstr "Ausente"
+msgstr ""
 
 #. module: account_move_base_import
 #: code:addons/account_move_base_import/models/account_journal.py:293
@@ -471,13 +471,13 @@ msgstr ""
 #. module: account_move_base_import
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_move_completion_rule_name
 msgid "Name"
-msgstr ""
+msgstr "Naziv"
 
 #. module: account_move_base_import
 #: code:addons/account_move_base_import/parser/parser.py:148
 #, python-format
 msgid "No buffer file given."
-msgstr "No se ha proporcionado ningún búfer de archivo."
+msgstr ""
 
 #. module: account_move_base_import
 #: code:addons/account_move_base_import/models/account_journal.py:186
@@ -495,7 +495,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_journal_message_needaction_counter
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_move_message_needaction_counter
 msgid "Number of Actions"
-msgstr ""
+msgstr "Broj radnji"
 
 #. module: account_move_base_import
 #: model:ir.model.fields,help:account_move_base_import.field_account_journal_message_needaction_counter
@@ -525,7 +525,7 @@ msgstr ""
 #: code:addons/account_move_base_import/parser/file_parser.py:15
 #, python-format
 msgid "Please install python lib xlrd"
-msgstr "Por favor instale la librería de Python xlrd"
+msgstr ""
 
 #. module: account_move_base_import
 #: code:addons/account_move_base_import/wizard/import_statement.py:68
@@ -575,7 +575,7 @@ msgstr ""
 #. module: account_move_base_import
 #: model:ir.model.fields,field_description:account_move_base_import.field_credit_statement_import_input_statement
 msgid "Statement file"
-msgstr "Archivo de extracto"
+msgstr ""
 
 #. module: account_move_base_import
 #: code:addons/account_move_base_import/models/account_journal.py:332
@@ -605,7 +605,7 @@ msgstr ""
 #. module: account_move_base_import
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_journal_import_type
 msgid "Type of import"
-msgstr "Tipo de importación"
+msgstr ""
 
 #. module: account_move_base_import
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_journal_message_unread
@@ -629,11 +629,6 @@ msgid ""
 " \n"
 " Detail: %s"
 msgstr ""
-"El valor %s de la columna %s no es válido.\n"
-"\n"
-"Compruebe por favor la línea con referencia %s\n"
-" \n"
-"Detalles: %s"
 
 #. module: account_move_base_import
 #: model:ir.model.fields,help:account_move_base_import.field_account_move_line_already_completed
@@ -650,4 +645,4 @@ msgstr ""
 #. module: account_move_base_import
 #: model:ir.model,name:account_move_base_import.model_credit_statement_import
 msgid "credit.statement.import"
-msgstr "credit.statement.import"
+msgstr ""
