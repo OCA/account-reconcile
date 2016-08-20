@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bank-statement-reconcile (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-04-20 02:39+0000\n"
-"PO-Revision-Date: 2016-04-20 05:32+0000\n"
+"POT-Creation-Date: 2016-08-15 18:23+0000\n"
+"PO-Revision-Date: 2016-08-16 07:58+0000\n"
 "Last-Translator: Matjaž Mozetič <m.mozetic@matmoz.si>\n"
 "Language-Team: Slovenian (http://www.transifex.com/oca/OCA-bank-statement-reconcile-8-0/language/sl/)\n"
 "MIME-Version: 1.0\n"
@@ -62,6 +62,11 @@ msgid "Currencies"
 msgstr "Valute"
 
 #. module: account_statement_operation_rule
+#: field:account.statement.operation.rule,display_name:0
+msgid "Display Name"
+msgstr "Prikazni naziv"
+
+#. module: account_statement_operation_rule
 #: selection:account.statement.operation.rule,rule_type:0
 msgid "Dunning Fees"
 msgstr "Provizije pri izterjavi"
@@ -82,6 +87,11 @@ msgstr "ID"
 #: help:account.statement.operation.rule,sequence:0
 msgid "If several rules match, the first one is used."
 msgstr "Če se ujema več pravil, se uporabi prvo."
+
+#. module: account_statement_operation_rule
+#: field:account.statement.operation.rule,__last_update:0
+msgid "Last Modified on"
+msgstr "Zadnjič spremenjeno"
 
 #. module: account_statement_operation_rule
 #: field:account.statement.operation.rule,write_uid:0
