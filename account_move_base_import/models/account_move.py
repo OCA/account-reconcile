@@ -414,5 +414,8 @@ class AccountMove(models.Model):
                     if not compl_lines % 500:
                         self.env.cr.commit()
             msg = u'\n'.join(msg_lines)
-            self.write_completion_log(msg, compl_lines)
+            move.write_completion_log(msg, compl_lines)
+            if journal.autovalidate_completed_move and \
+                    all([l.already_completed for l in move.line_ids]):
+                move.post()
         return True

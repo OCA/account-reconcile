@@ -84,6 +84,8 @@ class CreditPartnerStatementImporter(models.TransientModel):
         action = self.env['ir.actions.act_window'].for_xml_id(*xmlid)
         if len(moves) > 1:
             action['domain'] = [('id', 'in', moves.ids)]
+            if journal.autovalidate_completed_move:
+                action['context'] = {'group_by': 'state'}
         else:
             ref = self.env.ref('account.view_move_form')
             action['views'] = [(ref.id, 'form')]

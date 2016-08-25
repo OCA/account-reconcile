@@ -71,6 +71,11 @@ class AccountJournal(models.Model):
         help="Two counterparts will be automatically created : one for "
              "the refunds and one for the payments")
 
+    autovalidate_completed_move = fields.Boolean(
+        string="Validated fully completed moves",
+        help="Tic that box to automatically validate the move after the "
+        "completion")
+
     def _get_rules(self):
         # We need to respect the sequence order
         return sorted(self.rule_ids, key=attrgetter('sequence'))
@@ -118,7 +123,6 @@ class AccountJournal(models.Model):
             'account_id': account_id,
             'already_completed': True,
             'journal_id': self.id,
-            'company_id': self.company_id.id,
             'currency_id': self.currency_id.id,
             'company_currency_id': self.company_id.currency_id.id,
             'amount_residual': amount,
