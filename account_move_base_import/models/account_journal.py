@@ -58,7 +58,7 @@ class AccountJournal(models.Model):
 
     launch_import_completion = fields.Boolean(
         string="Launch completion after import",
-        help="Tic that box to automatically launch the completion "
+        help="Tick that box to automatically launch the completion "
         "on each imported file using this journal.")
 
     create_counterpart = fields.Boolean(
@@ -72,9 +72,9 @@ class AccountJournal(models.Model):
              "the refunds and one for the payments")
 
     autovalidate_completed_move = fields.Boolean(
-        string="Validated fully completed moves",
-        help="Tic that box to automatically validate the move after the "
-        "completion")
+        string="Validate fully completed moves",
+        help="Tick that box to automatically validate the journal entries "
+             "after the completion")
 
     def _get_rules(self):
         # We need to respect the sequence order

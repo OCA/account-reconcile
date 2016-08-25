@@ -18,6 +18,7 @@
         "views/account_move_view.xml",
         "views/journal_view.xml",
         "views/partner_view.xml",
+        "wizard/autocomplete_move_view.xml",
     ],
     'test': [
         'test/partner.yml',
