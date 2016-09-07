@@ -75,7 +75,7 @@ class AccountMoveCompletionRule(models.Model):
             number_field = 'number'
         else:
             raise ValidationError(
-                _('Invalid invoice type for completion: %') % inv_type)
+                _('Invalid invoice type for completion: %s') % inv_type)
 
         invoices = inv_obj.search([(number_field, '=', line.name.strip()),
                                    ('type', 'in', type_domain)])
@@ -93,7 +93,7 @@ class AccountMoveCompletionRule(models.Model):
         """Populate statement line values"""
         if inv_type not in ('supplier', 'customer'):
             raise ValidationError(
-                _('Invalid invoice type for completion: %') %
+                _('Invalid invoice type for completion: %s') %
                 inv_type)
         res = {}
         invoice = self._find_invoice(line, inv_type)
@@ -302,8 +302,8 @@ class AccountMoveLine(models.Model):
             self.env.cr.executemany(sql, tuple(move_store))
         except psycopg2.Error as sql_err:
             self.env.cr.rollback()
-            raise ValidationError(_("ORM bypass error"),
-                                  sql_err.pgerror)
+            raise ValidationError(
+                _("ORM bypass error: %s") % sql_err.pgerror)
 
     def _update_line(self, vals):
         """ Do raw update into database because ORM is awfully slow
@@ -318,8 +318,8 @@ class AccountMoveLine(models.Model):
             self.env.cr.execute(sql, vals)
         except psycopg2.Error as sql_err:
             self.env.cr.rollback()
-            raise ValidationError(_("ORM bypass error"),
-                                  sql_err.pgerror)
+            raise ValidationError(
+                _("ORM bypass error: %s") % sql_err.pgerror)
 
 
 class AccountMove(models.Model):
