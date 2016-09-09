@@ -118,7 +118,6 @@ class AccountJournal(models.Model):
             'account_id': account_id,
             'already_completed': True,
             'journal_id': self.id,
-            'company_id': self.company_id.id,
             'currency_id': self.currency_id.id,
             'company_currency_id': self.company_id.currency_id.id,
             'amount_residual': amount,
