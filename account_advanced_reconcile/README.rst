@@ -78,7 +78,7 @@ Contributors
 ------------
 * Guewen Baconnier <guewen.baconnier@camptocamp.com>
 * Leonardo Pistone <leonardo.pistone@camptocamp.com>
-* Jordi Ballester <jordi.ballester@eficent.com>
+* Jordi Ballester Alomar <jordi.ballester@eficent.com>
 
 
 Maintainer
