@@ -1,36 +1,33 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-#	* account_statement_operation_rule
-#
+# * account_statement_operation_rule
+# 
+# Translators:
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 8.0\n"
+"Project-Id-Version: bank-statement-reconcile (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-03-16 14:46+0000\n"
-"PO-Revision-Date: 2015-03-16 14:46+0000\n"
-"Last-Translator: <>\n"
-"Language-Team: \n"
+"POT-Creation-Date: 2016-08-20 05:55+0000\n"
+"PO-Revision-Date: 2016-09-16 21:46+0000\n"
+"Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
+"Language-Team: French (http://www.transifex.com/oca/OCA-bank-statement-reconcile-8-0/language/fr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
+"Language: fr\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
 #. module: account_statement_operation_rule
 #: model:ir.actions.act_window,help:account_statement_operation_rule.action_account_statement_operation_rule
-msgid "<p class=\"oe_view_nocontent_create\">\n"
+msgid ""
+"<p class=\"oe_view_nocontent_create\">\n"
 "          Click to create a statement operation rule.\n"
 "          </p><p>\n"
 "          Those can be used to automatically create a move line when reconciling\n"
 "          your bank statements.\n"
 "        </p>\n"
 "      "
-msgstr "<p class=\"oe_view_nocontent_create\">\n"
-"          Cliquer pour créer une nouvelle règle d'opération relevé.\n"
-"          </p><p>\n"
-"          Elles peuvent être utilisées pour automatiser la création de lignes "
-"          quand vous réconciliez des relevés bancaires."
-"        </p>\n"
-"      "
+msgstr "<p class=\"oe_view_nocontent_create\">\n          Cliquer pour créer une nouvelle règle d'opération relevé.\n          </p><p>\n          Elles peuvent être utilisées pour automatiser la création de lignes           quand vous réconciliez des relevés bancaires.        </p>\n      "
 
 #. module: account_statement_operation_rule
 #: view:account.statement.operation.rule:account_statement_operation_rule.view_account_statement_operation_rule_form
@@ -50,12 +47,12 @@ msgstr "Ligne de relevé bancaire"
 #. module: account_statement_operation_rule
 #: field:account.statement.operation.rule,create_uid:0
 msgid "Created by"
-msgstr ""
+msgstr "Créé par"
 
 #. module: account_statement_operation_rule
 #: field:account.statement.operation.rule,create_date:0
 msgid "Created on"
-msgstr ""
+msgstr "Date"
 
 #. module: account_statement_operation_rule
 #: field:account.statement.operation.rule,currencies:0
@@ -64,14 +61,26 @@ msgid "Currencies"
 msgstr "Devises"
 
 #. module: account_statement_operation_rule
+#: field:account.statement.operation.rule,display_name:0
+msgid "Display Name"
+msgstr "Nom à afficher"
+
+#. module: account_statement_operation_rule
+#: selection:account.statement.operation.rule,rule_type:0
+msgid "Dunning Fees"
+msgstr ""
+
+#. module: account_statement_operation_rule
 #: help:account.statement.operation.rule,currencies:0
-msgid "For 'Currencies' rules, you can choose for which currencies the rule will be applicable."
+msgid ""
+"For 'Currencies' rules, you can choose for which currencies the rule will be"
+" applicable."
 msgstr "Pour les règles 'Devises', vous pouvez sélectionner les devises pour lesquelles la règle s'applique."
 
 #. module: account_statement_operation_rule
 #: field:account.statement.operation.rule,id:0
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: account_statement_operation_rule
 #: help:account.statement.operation.rule,sequence:0
@@ -79,14 +88,19 @@ msgid "If several rules match, the first one is used."
 msgstr "Si plusieurs règles correspondent, la première est utilisée."
 
 #. module: account_statement_operation_rule
+#: field:account.statement.operation.rule,__last_update:0
+msgid "Last Modified on"
+msgstr "Dernière modification le"
+
+#. module: account_statement_operation_rule
 #: field:account.statement.operation.rule,write_uid:0
 msgid "Last Updated by"
-msgstr ""
+msgstr "Dernière mise à jour par"
 
 #. module: account_statement_operation_rule
 #: field:account.statement.operation.rule,write_date:0
 msgid "Last Updated on"
-msgstr ""
+msgstr "Dernière mise à jour le"
 
 #. module: account_statement_operation_rule
 #: field:account.statement.operation.rule,amount_max:0
@@ -155,4 +169,3 @@ msgstr "Type"
 #: view:account.statement.operation.rule:account_statement_operation_rule.view_account_statement_operation_rule_form
 msgid "When the balance is between"
 msgstr "Quand la balance est entre"
-

@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bank-statement-reconcile (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-09-11 12:09+0000\n"
-"PO-Revision-Date: 2015-09-10 11:31+0000\n"
+"POT-Creation-Date: 2016-08-20 05:55+0000\n"
+"PO-Revision-Date: 2016-09-16 21:45+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
 "Language-Team: Spanish (http://www.transifex.com/oca/OCA-bank-statement-reconcile-8-0/language/es/)\n"
 "MIME-Version: 1.0\n"
@@ -136,7 +136,7 @@ msgstr "Configuración"
 #: field:easy.reconcile.simple.partner,create_uid:0
 #: field:easy.reconcile.simple.reference,create_uid:0
 msgid "Created by"
-msgstr ""
+msgstr "Creado por"
 
 #. module: account_easy_reconcile
 #: field:account.easy.reconcile,create_date:0
@@ -146,7 +146,7 @@ msgstr ""
 #: field:easy.reconcile.simple.partner,create_date:0
 #: field:easy.reconcile.simple.reference,create_date:0
 msgid "Created on"
-msgstr ""
+msgstr "Creado en"
 
 #. module: account_easy_reconcile
 #: view:easy.reconcile.history:account_easy_reconcile.view_easy_reconcile_history_search
@@ -168,6 +168,19 @@ msgstr "Fecha de conciliación"
 #: help:account.easy.reconcile,message_last_post:0
 msgid "Date of the last message posted on the record."
 msgstr ""
+
+#. module: account_easy_reconcile
+#: field:account.easy.reconcile,display_name:0
+#: field:account.easy.reconcile.method,display_name:0
+#: field:easy.reconcile.base,display_name:0
+#: field:easy.reconcile.history,display_name:0
+#: field:easy.reconcile.options,display_name:0
+#: field:easy.reconcile.simple,display_name:0
+#: field:easy.reconcile.simple.name,display_name:0
+#: field:easy.reconcile.simple.partner,display_name:0
+#: field:easy.reconcile.simple.reference,display_name:0
+msgid "Display Name"
+msgstr "Nombre mostrado"
 
 #. module: account_easy_reconcile
 #: view:account.easy.reconcile:account_easy_reconcile.account_easy_reconcile_form
@@ -266,6 +279,7 @@ msgid ""
 msgstr ""
 
 #. module: account_easy_reconcile
+#: field:account.config.settings,reconciliation_commit_every:0
 #: field:res.company,reconciliation_commit_every:0
 msgid "How often to commit when performing automatic reconciliation."
 msgstr ""
@@ -278,7 +292,7 @@ msgstr ""
 #: field:easy.reconcile.simple.partner,id:0
 #: field:easy.reconcile.simple.reference,id:0
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: account_easy_reconcile
 #: help:account.easy.reconcile,message_unread:0
@@ -312,6 +326,19 @@ msgid "Last Message Date"
 msgstr ""
 
 #. module: account_easy_reconcile
+#: field:account.easy.reconcile,__last_update:0
+#: field:account.easy.reconcile.method,__last_update:0
+#: field:easy.reconcile.base,__last_update:0
+#: field:easy.reconcile.history,__last_update:0
+#: field:easy.reconcile.options,__last_update:0
+#: field:easy.reconcile.simple,__last_update:0
+#: field:easy.reconcile.simple.name,__last_update:0
+#: field:easy.reconcile.simple.partner,__last_update:0
+#: field:easy.reconcile.simple.reference,__last_update:0
+msgid "Last Modified on"
+msgstr "Última modificación el"
+
+#. module: account_easy_reconcile
 #: field:account.easy.reconcile,write_uid:0
 #: field:account.easy.reconcile.method,write_uid:0
 #: field:easy.reconcile.history,write_uid:0
@@ -319,7 +346,7 @@ msgstr ""
 #: field:easy.reconcile.simple.partner,write_uid:0
 #: field:easy.reconcile.simple.reference,write_uid:0
 msgid "Last Updated by"
-msgstr ""
+msgstr "Última actualización por"
 
 #. module: account_easy_reconcile
 #: field:account.easy.reconcile,write_date:0
@@ -329,9 +356,15 @@ msgstr ""
 #: field:easy.reconcile.simple.partner,write_date:0
 #: field:easy.reconcile.simple.reference,write_date:0
 msgid "Last Updated on"
+msgstr "Última actualización el"
+
+#. module: account_easy_reconcile
+#: field:account.easy.reconcile,last_history:0
+msgid "Last history"
 msgstr ""
 
 #. module: account_easy_reconcile
+#: help:account.config.settings,reconciliation_commit_every:0
 #: help:res.company,reconciliation_commit_every:0
 msgid "Leave zero to commit only at the end of the process."
 msgstr ""
@@ -412,6 +445,12 @@ msgid "Partial reconciled items"
 msgstr ""
 
 #. module: account_easy_reconcile
+#: field:account.easy.reconcile,reconciled_partial_count:0
+#: field:easy.reconcile.history,partial_line_ids:0
+msgid "Partially Reconciled Items"
+msgstr ""
+
+#. module: account_easy_reconcile
 #: view:account.easy.reconcile:account_easy_reconcile.account_easy_reconcile_form
 msgid "Profile Information"
 msgstr "Información del perfil"
@@ -420,6 +459,11 @@ msgstr "Información del perfil"
 #: field:easy.reconcile.history,easy_reconcile_id:0
 msgid "Reconcile Profile"
 msgstr "Perfil de conciliación"
+
+#. module: account_easy_reconcile
+#: field:easy.reconcile.history,reconcile_line_ids:0
+msgid "Reconciled Items"
+msgstr ""
 
 #. module: account_easy_reconcile
 #: view:account.config.settings:account_easy_reconcile.view_account_config
@@ -532,6 +576,11 @@ msgstr "Tipo"
 #. module: account_easy_reconcile
 #: field:account.easy.reconcile,message_unread:0
 msgid "Unread Messages"
+msgstr ""
+
+#. module: account_easy_reconcile
+#: field:account.easy.reconcile,unreconciled_count:0
+msgid "Unreconciled Items"
 msgstr ""
 
 #. module: account_easy_reconcile

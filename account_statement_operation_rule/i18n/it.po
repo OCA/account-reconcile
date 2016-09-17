@@ -7,9 +7,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bank-statement-reconcile (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-04-20 02:39+0000\n"
-"PO-Revision-Date: 2016-04-19 11:45+0000\n"
-"Last-Translator: <>\n"
+"POT-Creation-Date: 2016-08-20 05:55+0000\n"
+"PO-Revision-Date: 2016-09-09 12:25+0000\n"
+"Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
 "Language-Team: Italian (http://www.transifex.com/oca/OCA-bank-statement-reconcile-8-0/language/it/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -47,18 +47,23 @@ msgstr "Linea estratto conto"
 #. module: account_statement_operation_rule
 #: field:account.statement.operation.rule,create_uid:0
 msgid "Created by"
-msgstr ""
+msgstr "Creato da"
 
 #. module: account_statement_operation_rule
 #: field:account.statement.operation.rule,create_date:0
 msgid "Created on"
-msgstr ""
+msgstr "Creato il"
 
 #. module: account_statement_operation_rule
 #: field:account.statement.operation.rule,currencies:0
 #: selection:account.statement.operation.rule,rule_type:0
 msgid "Currencies"
 msgstr ""
+
+#. module: account_statement_operation_rule
+#: field:account.statement.operation.rule,display_name:0
+msgid "Display Name"
+msgstr "Nome da visualizzare"
 
 #. module: account_statement_operation_rule
 #: selection:account.statement.operation.rule,rule_type:0
@@ -75,7 +80,7 @@ msgstr ""
 #. module: account_statement_operation_rule
 #: field:account.statement.operation.rule,id:0
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: account_statement_operation_rule
 #: help:account.statement.operation.rule,sequence:0
@@ -83,14 +88,19 @@ msgid "If several rules match, the first one is used."
 msgstr ""
 
 #. module: account_statement_operation_rule
+#: field:account.statement.operation.rule,__last_update:0
+msgid "Last Modified on"
+msgstr "Ultima modifica il"
+
+#. module: account_statement_operation_rule
 #: field:account.statement.operation.rule,write_uid:0
 msgid "Last Updated by"
-msgstr ""
+msgstr "Ultimo aggiornamento di"
 
 #. module: account_statement_operation_rule
 #: field:account.statement.operation.rule,write_date:0
 msgid "Last Updated on"
-msgstr ""
+msgstr "Ultimo aggiornamento il"
 
 #. module: account_statement_operation_rule
 #: field:account.statement.operation.rule,amount_max:0
