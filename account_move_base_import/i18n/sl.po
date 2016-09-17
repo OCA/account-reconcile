@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 9.0c\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-07-08 02:45+0000\n"
-"PO-Revision-Date: 2016-07-08 02:45+0000\n"
+"POT-Creation-Date: 2016-09-12 11:12+0000\n"
+"PO-Revision-Date: 2016-09-12 11:12+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2016\n"
 "Language-Team: Slovenian (https://www.transifex.com/oca/teams/23907/sl/)\n"
 "MIME-Version: 1.0\n"
@@ -180,7 +180,7 @@ msgstr "Datum zadnjega objavljenega sporočila na zapisu."
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_move_completion_rule_display_name
 #: model:ir.model.fields,field_description:account_move_base_import.field_credit_statement_import_display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Prikazni naziv"
 
 #. module: account_move_base_import
 #: model:ir.model.fields,help:account_move_base_import.field_res_partner_bank_statement_label
@@ -323,7 +323,7 @@ msgstr ""
 #: code:addons/account_move_base_import/models/account_move.py:78
 #: code:addons/account_move_base_import/models/account_move.py:96
 #, python-format
-msgid "Invalid invoice type for completion: %"
+msgid "Invalid invoice type for completion: %s"
 msgstr ""
 
 #. module: account_move_base_import
@@ -368,7 +368,7 @@ msgstr "Datum zadnjega sporočila"
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_move_completion_rule___last_update
 #: model:ir.model.fields,field_description:account_move_base_import.field_credit_statement_import___last_update
 msgid "Last Modified on"
-msgstr ""
+msgstr "Zadnjič spremenjeno"
 
 #. module: account_move_base_import
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_move_completion_rule_write_uid
@@ -510,16 +510,16 @@ msgid "Number of unread messages"
 msgstr ""
 
 #. module: account_move_base_import
-#: code:addons/account_move_base_import/models/account_move.py:305
-#: code:addons/account_move_base_import/models/account_move.py:321
+#: code:addons/account_move_base_import/models/account_move.py:306
+#: code:addons/account_move_base_import/models/account_move.py:322
 #, python-format
-msgid "ORM bypass error"
+msgid "ORM bypass error: %s"
 msgstr ""
 
 #. module: account_move_base_import
 #: model:ir.model,name:account_move_base_import.model_res_partner
 msgid "Partner"
-msgstr ""
+msgstr "Partner"
 
 #. module: account_move_base_import
 #: code:addons/account_move_base_import/parser/file_parser.py:15
@@ -580,7 +580,7 @@ msgstr ""
 #. module: account_move_base_import
 #: code:addons/account_move_base_import/models/account_journal.py:332
 #, python-format
-msgid "Statement import errorThe statement cannot be created: %s"
+msgid "Statement import error The statement cannot be created: %s"
 msgstr ""
 
 #. module: account_move_base_import

@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bank-statement-reconcile (9.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-05-04 02:53+0000\n"
-"PO-Revision-Date: 2016-05-03 07:10+0000\n"
+"POT-Creation-Date: 2016-09-12 11:12+0000\n"
+"PO-Revision-Date: 2016-09-16 21:45+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
 "Language-Team: Slovenian (http://www.transifex.com/oca/OCA-bank-statement-reconcile-9-0/language/sl/)\n"
 "MIME-Version: 1.0\n"
@@ -187,7 +187,7 @@ msgstr "Datum zadnjega objavljenega sporočila na zapisu."
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_partner_display_name
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_reference_display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Prikazni naziv"
 
 #. module: account_mass_reconcile
 #: model:ir.ui.view,arch_db:account_mass_reconcile.account_mass_reconcile_tree
@@ -346,7 +346,7 @@ msgstr "Datum zadnjega sporočila"
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_partner___last_update
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_reference___last_update
 msgid "Last Modified on"
-msgstr ""
+msgstr "Zadnjič spremenjeno"
 
 #. module: account_mass_reconcile
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile_method_write_uid

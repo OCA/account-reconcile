@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bank-statement-reconcile (9.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-05-04 02:53+0000\n"
-"PO-Revision-Date: 2016-05-03 07:10+0000\n"
+"POT-Creation-Date: 2016-09-12 11:12+0000\n"
+"PO-Revision-Date: 2016-09-16 21:46+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
 "Language-Team: French (http://www.transifex.com/oca/OCA-bank-statement-reconcile-9-0/language/fr/)\n"
 "MIME-Version: 1.0\n"
@@ -137,7 +137,7 @@ msgstr "Configuration"
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_partner_create_uid
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_reference_create_uid
 msgid "Created by"
-msgstr ""
+msgstr "Créé par"
 
 #. module: account_mass_reconcile
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile_create_date
@@ -148,7 +148,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_partner_create_date
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_reference_create_date
 msgid "Created on"
-msgstr ""
+msgstr "Date"
 
 #. module: account_mass_reconcile
 #: model:ir.ui.view,arch_db:account_mass_reconcile.view_mass_reconcile_history_search
@@ -186,7 +186,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_partner_display_name
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_reference_display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Nom à afficher"
 
 #. module: account_mass_reconcile
 #: model:ir.ui.view,arch_db:account_mass_reconcile.account_mass_reconcile_tree
@@ -292,7 +292,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_partner_id
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_reference_id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: account_mass_reconcile
 #: model:ir.model.fields,help:account_mass_reconcile.field_account_mass_reconcile_message_unread
@@ -345,7 +345,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_partner___last_update
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_reference___last_update
 msgid "Last Modified on"
-msgstr ""
+msgstr "Dernière modification le"
 
 #. module: account_mass_reconcile
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile_method_write_uid
@@ -356,7 +356,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_partner_write_uid
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_reference_write_uid
 msgid "Last Updated by"
-msgstr ""
+msgstr "Dernière mise à jour par"
 
 #. module: account_mass_reconcile
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile_method_write_date
@@ -367,7 +367,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_partner_write_date
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_reference_write_date
 msgid "Last Updated on"
-msgstr ""
+msgstr "Dernière mise à jour le"
 
 #. module: account_mass_reconcile
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile_last_history
