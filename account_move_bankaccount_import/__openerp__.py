@@ -17,7 +17,7 @@
         "data/completion_rule_data.xml",
     ],
     'demo': [],
-    'installable': True,
+    'installable': False,
     'auto_install': False,
     'license': 'AGPL-3',
 }
