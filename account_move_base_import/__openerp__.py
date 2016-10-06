@@ -26,7 +26,7 @@
         'test/refund.yml',
         'test/completion_test.yml'
     ],
-    'installable': True,
+    'installable': False,
     'auto_install': False,
     'license': 'AGPL-3',
 }
