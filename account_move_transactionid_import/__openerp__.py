@@ -22,7 +22,7 @@
         'test/completion_invoice_transactionid_test.yml',
     ],
     'website': 'http://www.camptocamp.com',
-    'installable': True,
+    'installable': False,
     'auto_install': False,
     'license': 'AGPL-3',
 }
