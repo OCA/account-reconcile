@@ -7,9 +7,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bank-statement-reconcile (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-04-20 02:39+0000\n"
-"PO-Revision-Date: 2016-04-19 11:45+0000\n"
-"Last-Translator: <>\n"
+"POT-Creation-Date: 2016-09-17 06:16+0000\n"
+"PO-Revision-Date: 2016-10-04 09:43+0000\n"
+"Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
 "Language-Team: German (http://www.transifex.com/oca/OCA-bank-statement-reconcile-8-0/language/de/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -61,6 +61,11 @@ msgid "Currencies"
 msgstr ""
 
 #. module: account_statement_operation_rule
+#: field:account.statement.operation.rule,display_name:0
+msgid "Display Name"
+msgstr "Anzeigename"
+
+#. module: account_statement_operation_rule
 #: selection:account.statement.operation.rule,rule_type:0
 msgid "Dunning Fees"
 msgstr ""
@@ -81,6 +86,11 @@ msgstr "ID"
 #: help:account.statement.operation.rule,sequence:0
 msgid "If several rules match, the first one is used."
 msgstr ""
+
+#. module: account_statement_operation_rule
+#: field:account.statement.operation.rule,__last_update:0
+msgid "Last Modified on"
+msgstr "Zuletzt geändert am"
 
 #. module: account_statement_operation_rule
 #: field:account.statement.operation.rule,write_uid:0
