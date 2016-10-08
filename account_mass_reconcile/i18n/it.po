@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bank-statement-reconcile (9.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-09-12 11:12+0000\n"
+"POT-Creation-Date: 2016-09-28 11:33+0000\n"
 "PO-Revision-Date: 2016-05-03 07:10+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: Italian (http://www.transifex.com/oca/OCA-bank-statement-reconcile-9-0/language/it/)\n"
@@ -121,7 +121,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile_method_company_id
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_history_company_id
 msgid "Company"
-msgstr ""
+msgstr "Azienda"
 
 #. module: account_mass_reconcile
 #: model:ir.ui.view,arch_db:account_mass_reconcile.account_mass_reconcile_form
@@ -325,7 +325,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_partner_journal_id
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_reference_journal_id
 msgid "Journal"
-msgstr ""
+msgstr "Sezionale"
 
 #. module: account_mass_reconcile
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile_message_last_post
@@ -557,7 +557,7 @@ msgstr ""
 #. module: account_mass_reconcile
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile_method_task_id
 msgid "Task"
-msgstr ""
+msgstr "Attività"
 
 #. module: account_mass_reconcile
 #: model:ir.model.fields,help:account_mass_reconcile.field_account_mass_reconcile_method_sequence
@@ -589,7 +589,7 @@ msgstr ""
 #. module: account_mass_reconcile
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile_method_name
 msgid "Type"
-msgstr ""
+msgstr "Tipo"
 
 #. module: account_mass_reconcile
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile_message_unread
