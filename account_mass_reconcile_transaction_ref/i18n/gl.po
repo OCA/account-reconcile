@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 9.0c\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-09-12 11:12+0000\n"
-"PO-Revision-Date: 2016-09-12 11:12+0000\n"
+"POT-Creation-Date: 2017-09-13 02:48+0000\n"
+"PO-Revision-Date: 2017-09-13 02:48+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2016\n"
 "Language-Team: Galician (https://www.transifex.com/oca/teams/23907/gl/)\n"
 "MIME-Version: 1.0\n"
@@ -92,13 +92,13 @@ msgstr "ID"
 #: model:ir.model.fields,field_description:account_mass_reconcile_transaction_ref.field_mass_reconcile_advanced_transaction_ref_journal_id
 #: model:ir.model.fields,field_description:account_mass_reconcile_transaction_ref.field_mass_reconcile_advanced_transaction_ref_vs_ref_journal_id
 msgid "Journal"
-msgstr ""
+msgstr "Diario"
 
 #. module: account_mass_reconcile_transaction_ref
 #: model:ir.model.fields,field_description:account_mass_reconcile_transaction_ref.field_mass_reconcile_advanced_transaction_ref___last_update
 #: model:ir.model.fields,field_description:account_mass_reconcile_transaction_ref.field_mass_reconcile_advanced_transaction_ref_vs_ref___last_update
 msgid "Last Modified on"
-msgstr ""
+msgstr "Última modificación"
 
 #. module: account_mass_reconcile_transaction_ref
 #: model:ir.model.fields,field_description:account_mass_reconcile_transaction_ref.field_mass_reconcile_advanced_transaction_ref_vs_ref_write_uid
