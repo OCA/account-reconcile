@@ -334,7 +334,8 @@ class AccountMove(models.Model):
         readonly=True)
     completion_logs = fields.Text(string='Completion Log', readonly=True)
     partner_id = fields.Many2one(related=False, compute='_compute_partner_id')
-    import_partner_id = fields.Many2one('res.partner', string="Partner from import")
+    import_partner_id = fields.Many2one('res.partner',
+                                        string="Partner from import")
 
     @api.depends('line_ids.partner_id', 'import_partner_id')
     def _compute_partner_id(self):
