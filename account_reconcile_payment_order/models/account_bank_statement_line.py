@@ -50,6 +50,9 @@ class AccountBankStatementLine(models.Model):
     def get_reconcile_lines_from_order(self, this, orders, excluded_ids=None):
         """return lines to reconcile our statement line with"""
         order = orders[0]
+        target_currency = (
+            this.currency_id or this.journal_id.currency or
+            this.journal_id.company_id.currency_id)
         if order.state == 'sent':
             move_lines_list = list(set(order._get_transfer_move_lines()))
         else:
@@ -57,7 +60,9 @@ class AccountBankStatementLine(models.Model):
                 lambda x: not x.reconcile_id)
             move_lines_list = [x for x in move_lines]
         return self.env['account.move.line']\
-            .prepare_move_lines_for_reconciliation_widget(move_lines_list)
+            .prepare_move_lines_for_reconciliation_widget(
+                move_lines_list, target_currency=target_currency,
+                target_date=this.date)
 
     @api.model
     def get_reconciliation_proposition(self, this, excluded_ids=None):
