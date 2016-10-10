@@ -19,7 +19,7 @@
 ##############################################################################
 {
     "name": "Reconcile payment orders",
-    "version": "8.0.1.0.0",
+    "version": "8.0.1.0.1",
     "author": "Therp BV,"
               "Serv. Tecnol. Avanzados - Pedro M. Baeza,"
               "Odoo Community Association (OCA)",
