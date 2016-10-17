@@ -333,6 +333,17 @@ class AccountMove(models.Model):
         related='journal_id.used_for_completion',
         readonly=True)
     completion_logs = fields.Text(string='Completion Log', readonly=True)
+    partner_id = fields.Many2one(related=False, compute='_compute_partner_id')
+    import_partner_id = fields.Many2one('res.partner',
+                                        string="Partner from import")
+
+    @api.depends('line_ids.partner_id', 'import_partner_id')
+    def _compute_partner_id(self):
+        for move in self:
+            if move.import_partner_id:
+                move.partner_id = move.import_partner_id
+            elif move.line_ids:
+                move.partner_id = move.line_ids[0].partner_id
 
     def write_completion_log(self, error_msg, number_imported):
         """Write the log in the completion_logs field of the bank statement to
