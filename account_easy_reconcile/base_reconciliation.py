@@ -38,7 +38,7 @@ class EasyReconcileBase(models.AbstractModel):
         required=True
     )
     partner_ids = fields.Many2many(
-        comodel_name='res.partner',
+        comodel_name='res.partner', relation='easy_reconcile_base_res_partner_rel',
         string='Restrict on partners',
     )
     # other fields are inherited from easy.reconcile.options
