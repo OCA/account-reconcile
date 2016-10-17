@@ -243,7 +243,8 @@ class AccountJournal(models.Model):
         the profile.
         """
         vals = {'journal_id': self.id,
-                'currency_id': self.currency_id.id}
+                'currency_id': self.currency_id.id,
+                'import_partner_id': self.partner_id.id}
         vals.update(parser.get_move_vals())
         return vals
 
