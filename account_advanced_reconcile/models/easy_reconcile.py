@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-##############################################################################
+#
 #
 #    Author: Guewen Baconnier
 #    Copyright 2012 Camptocamp SA
@@ -17,18 +17,17 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-##############################################################################
+#
+from openerp import models, api
 
-from openerp.osv import orm
 
-
-class account_easy_reconcile_method(orm.Model):
-
+class AccountEasyReconcileMethod(models.Model):
     _inherit = 'account.easy.reconcile.method'
 
-    def _get_all_rec_method(self, cr, uid, context=None):
-        methods = super(account_easy_reconcile_method, self).\
-            _get_all_rec_method(cr, uid, context=context)
+    @api.multi
+    def _get_all_rec_method(self):
+        methods = super(AccountEasyReconcileMethod, self
+                        )._get_all_rec_method()
         methods += [
             ('easy.reconcile.advanced.ref',
              'Advanced. Partner and Ref.'),

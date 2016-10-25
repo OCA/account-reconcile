@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
-##############################################################################
+#
 #
 #    Author: Guewen Baconnier
-#    Copyright 2012 Camptocamp SA
+#    Copyright 2012-2015 Camptocamp SA
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -17,17 +17,17 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-##############################################################################
+#
+from openerp import models, api
 
-from openerp.osv import orm
 
-
-class easy_reconcile_advanced_ref(orm.TransientModel):
+class EasyReconcileAdvancedRef(models.TransientModel):
 
     _name = 'easy.reconcile.advanced.ref'
     _inherit = 'easy.reconcile.advanced'
 
-    def _skip_line(self, cr, uid, rec, move_line, context=None):
+    @api.multi
+    def _skip_line(self, move_line):
         """
         When True is returned on some conditions, the credit move line
         will be skipped for reconciliation. Can be inherited to
@@ -35,7 +35,8 @@ class easy_reconcile_advanced_ref(orm.TransientModel):
         """
         return not (move_line.get('ref') and move_line.get('partner_id'))
 
-    def _matchers(self, cr, uid, rec, move_line, context=None):
+    @api.multi
+    def _matchers(self, move_line):
         """
         Return the values used as matchers to find the opposite lines
 
@@ -75,7 +76,8 @@ class easy_reconcile_advanced_ref(orm.TransientModel):
         return (('partner_id', move_line['partner_id']),
                 ('ref', move_line['ref'].lower().strip()))
 
-    def _opposite_matchers(self, cr, uid, rec, move_line, context=None):
+    @api.multi
+    def _opposite_matchers(self, move_line):
         """
         Return the values of the opposite line used as matchers
         so the line is matched

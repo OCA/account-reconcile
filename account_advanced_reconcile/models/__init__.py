@@ -20,22 +20,6 @@
 #
 ##############################################################################
 
-{'name': "Advanced Reconcile",
- 'summary': "Reconcile: with multiple lines / partial / with writeoffs",
- 'version': '1.0',
- 'author': "Camptocamp,Odoo Community Association (OCA)",
- 'maintainer': 'Camptocamp',
- 'category': 'Finance',
- 'complexity': 'normal',
- 'depends': ['account_easy_reconcile',
-             ],
- 'website': 'http://www.camptocamp.com',
- 'data': ['easy_reconcile_view.xml',
-          ],
- 'test': [],
- 'images': [],
- 'installable': True,
- 'auto_install': False,
- 'license': 'AGPL-3',
- 'application': True,
- }
+from . import easy_reconcile
+from . import base_advanced_reconciliation
+from . import advanced_reconciliation

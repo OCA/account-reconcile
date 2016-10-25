@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
-##############################################################################
+#
 #
 #    Author: Guewen Baconnier
 #    Contributor: Leonardo Pistone
-#    Copyright 2012-2014 Camptocamp SA
+#    Copyright 2012-2015 Camptocamp SA
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -18,43 +18,46 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-##############################################################################
+#
 import logging
 
 from itertools import product
-from openerp.osv import orm
+from openerp import models, api
 from openerp.tools.translate import _
 
 _logger = logging.getLogger(__name__)
 
 
-class easy_reconcile_advanced(orm.AbstractModel):
+class EasyReconcileAdvanced(models.AbstractModel):
     _name = 'easy.reconcile.advanced'
     _inherit = 'easy.reconcile.base'
 
-    def _query_debit(self, cr, uid, rec, context=None):
+    @api.multi
+    def _query_debit(self):
         """Select all move (debit>0) as candidate. """
-        select = self._select(rec)
-        sql_from = self._from(rec)
-        where, params = self._where(rec)
+        select = self._select()
+        sql_from = self._from()
+        where, params = self._where()
         where += " AND account_move_line.debit > 0 "
-        where2, params2 = self._get_filter(cr, uid, rec, context=context)
+        where2, params2 = self._get_filter()
         query = ' '.join((select, sql_from, where, where2))
-        cr.execute(query, params + params2)
-        return cr.dictfetchall()
+        self.env.cr.execute(query, params + params2)
+        return self.env.cr.dictfetchall()
 
-    def _query_credit(self, cr, uid, rec, context=None):
+    @api.multi
+    def _query_credit(self):
         """Select all move (credit>0) as candidate. """
-        select = self._select(rec)
-        sql_from = self._from(rec)
-        where, params = self._where(rec)
+        select = self._select()
+        sql_from = self._from()
+        where, params = self._where()
         where += " AND account_move_line.credit > 0 "
-        where2, params2 = self._get_filter(cr, uid, rec, context=context)
+        where2, params2 = self._get_filter()
         query = ' '.join((select, sql_from, where, where2))
-        cr.execute(query, params + params2)
-        return cr.dictfetchall()
+        self.env.cr.execute(query, params + params2)
+        return self.env.cr.dictfetchall()
 
-    def _matchers(self, cr, uid, rec, move_line, context=None):
+    @api.multi
+    def _matchers(self, move_line):
         """
         Return the values used as matchers to find the opposite lines
 
@@ -93,7 +96,8 @@ class easy_reconcile_advanced(orm.AbstractModel):
         """
         raise NotImplementedError
 
-    def _opposite_matchers(self, cr, uid, rec, move_line, context=None):
+    @api.multi
+    def _opposite_matchers(self, move_line):
         """
         Return the values of the opposite line used as matchers
         so the line is matched
@@ -157,7 +161,7 @@ class easy_reconcile_advanced(orm.AbstractModel):
         for value, ovalue in product(values, opposite_values):
             # we do not need to compare all values, if one matches
             # we are done
-            if easy_reconcile_advanced._compare_values(key, value, ovalue):
+            if EasyReconcileAdvanced._compare_values(key, value, ovalue):
                 return True
         return False
 
@@ -175,20 +179,18 @@ class easy_reconcile_advanced(orm.AbstractModel):
             mvalue = mvalue,
         if not isinstance(omvalue, (list, tuple)):
             omvalue = omvalue,
-        return easy_reconcile_advanced._compare_matcher_values(mkey, mvalue,
-                                                               omvalue)
+        return EasyReconcileAdvanced._compare_matcher_values(
+            mkey, mvalue, omvalue)
 
-    def _compare_opposite(self, cr, uid, rec, move_line, opposite_move_line,
-                          matchers, context=None):
+    @api.multi
+    def _compare_opposite(self, move_line, opposite_move_line, matchers):
         """ Iterate over the matchers of the move lines vs opposite move lines
         and if they all match, return True.
 
         If all the matchers match for a move line and an opposite move line,
         they are candidate for a reconciliation.
         """
-        opp_matchers = self._opposite_matchers(cr, uid, rec,
-                                               opposite_move_line,
-                                               context=context)
+        opp_matchers = self._opposite_matchers(opposite_move_line)
         for matcher in matchers:
             try:
                 opp_matcher = opp_matchers.next()
@@ -206,8 +208,8 @@ class easy_reconcile_advanced(orm.AbstractModel):
 
         return True
 
-    def _search_opposites(self, cr, uid, rec, move_line, opposite_move_lines,
-                          context=None):
+    @api.multi
+    def _search_opposites(self, move_line, opposite_move_lines):
         """Search the opposite move lines for a move line
 
         :param dict move_line: the move line for which we search opposites
@@ -215,19 +217,19 @@ class easy_reconcile_advanced(orm.AbstractModel):
           the move lines we want to search for
         :return: list of matching lines
         """
-        matchers = self._matchers(cr, uid, rec, move_line, context=context)
+        matchers = self._matchers(move_line)
         return [op for op in opposite_move_lines if
-                self._compare_opposite(
-                    cr, uid, rec, move_line, op, matchers, context=context)]
+                self._compare_opposite(move_line, op, matchers)]
 
-    def _action_rec(self, cr, uid, rec, context=None):
-        credit_lines = self._query_credit(cr, uid, rec, context=context)
-        debit_lines = self._query_debit(cr, uid, rec, context=context)
-        result = self._rec_auto_lines_advanced(
-            cr, uid, rec, credit_lines, debit_lines, context=context)
+    @api.multi
+    def _action_rec(self):
+        credit_lines = self._query_credit()
+        debit_lines = self._query_debit()
+        result = self._rec_auto_lines_advanced(credit_lines, debit_lines)
         return result
 
-    def _skip_line(self, cr, uid, rec, move_line, context=None):
+    @api.multi
+    def _skip_line(self, move_line):
         """
         When True is returned on some conditions, the credit move line
         will be skipped for reconciliation. Can be inherited to
@@ -235,8 +237,8 @@ class easy_reconcile_advanced(orm.AbstractModel):
         """
         return False
 
-    def _rec_auto_lines_advanced(self, cr, uid, rec, credit_lines, debit_lines,
-                                 context=None):
+    @api.multi
+    def _rec_auto_lines_advanced(self, credit_lines, debit_lines):
         """ Advanced reconciliation main loop """
         reconciled_ids = []
         partial_reconciled_ids = []
@@ -246,10 +248,9 @@ class easy_reconcile_advanced(orm.AbstractModel):
             if idx % 50 == 0:
                 _logger.info("... %d/%d credit lines inspected ...", idx,
                              len(credit_lines))
-            if self._skip_line(cr, uid, rec, credit_line, context=context):
+            if self._skip_line(credit_line):
                 continue
-            opposite_lines = self._search_opposites(
-                cr, uid, rec, credit_line, debit_lines, context=context)
+            opposite_lines = self._search_opposites(credit_line, debit_lines)
             if not opposite_lines:
                 continue
             opposite_ids = [l['id'] for l in opposite_lines]
@@ -272,15 +273,15 @@ class easy_reconcile_advanced(orm.AbstractModel):
                           reconcile_group_ids)
             group_lines = [lines_by_id[lid] for lid in reconcile_group_ids]
             reconciled, full = self._reconcile_lines(
-                cr, uid, rec, group_lines, allow_partial=True, context=context)
+                group_lines, allow_partial=True)
             if reconciled and full:
                 reconciled_ids += reconcile_group_ids
             elif reconciled:
                 partial_reconciled_ids += reconcile_group_ids
 
-            if (context['commit_every'] and
-                    group_count % context['commit_every'] == 0):
-                cr.commit()
+            if (self.env.context.get('commit_every') and
+                    group_count % self.env.context['commit_every'] == 0):
+                self.env.cr.commit()
                 _logger.info("Commit the reconciliations after %d groups",
                              group_count)
         _logger.info("Reconciliation is over")
