@@ -22,7 +22,7 @@
 
 {'name': "Advanced Reconcile",
  'summary': "Reconcile: with multiple lines / partial / with writeoffs",
- 'version': '1.0',
+ 'version': '8.0.1.0.0',
  'author': "Camptocamp,Odoo Community Association (OCA)",
  'maintainer': 'Camptocamp',
  'category': 'Finance',
