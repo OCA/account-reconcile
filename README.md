@@ -28,7 +28,7 @@ Available addons
 ----------------
 addon | version | summary
 --- | --- | ---
-[account_advanced_reconcile](account_advanced_reconcile/) | 1.0 | Reconcile: with multiple lines / partial / with writeoffs
+[account_advanced_reconcile](account_advanced_reconcile/) | 8.0.1.0.0 | Reconcile: with multiple lines / partial / with writeoffs
 [account_bank_statement_period_from_line_date](account_bank_statement_period_from_line_date/) | 8.0.1.0.0 | Use bank transaction (line) date to determine move period
 [account_easy_reconcile](account_easy_reconcile/) | 8.0.1.3.1 | Easy Reconcile
 [account_invoice_reference](account_invoice_reference/) | 8.0.1.0.1 | Invoices Reference
