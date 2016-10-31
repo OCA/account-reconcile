@@ -29,6 +29,7 @@
                     </group>
                     <group>
                         <field name="commission_account_id" />
+                        <field name="commission_analytic_account_id" />
                         <field
                             name="receivable_account_id"
                             attrs="{'required': [('used_for_import', '=', True)]}"
