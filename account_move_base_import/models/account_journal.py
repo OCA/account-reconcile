@@ -76,6 +76,12 @@ class AccountJournal(models.Model):
         "the refunds and one for the payments",
     )
 
+    commission_analytic_account_id = fields.Many2one(
+        comodel_name="account.analytic.account",
+        string="Commission Analytic Account",
+        help="Choose an analytic account to be used on the commission line.",
+    )
+
     def _prepare_counterpart_line(self, move, amount, date):
         if amount > 0.0:
             account_id = self.default_debit_account_id.id
@@ -179,6 +185,10 @@ class AccountJournal(models.Model):
                         comm_values["debit"], company_currency
                     )
                     comm_values["currency_id"] = currency.id
+                if self.commission_analytic_account_id:
+                    comm_values.update(
+                        {"analytic_account_id": self.commission_analytic_account_id.id}
+                    )
                 move_line_obj.with_context(check_move_validity=False).create(
                     comm_values
                 )
