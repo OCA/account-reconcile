@@ -252,6 +252,16 @@ class AccountJournal(models.Model):
         vals.update(parser.get_move_vals())
         return vals
 
+    def _get_attachment_datas(self, moves, file_stream, ftype):
+        attachment_data = {
+            'name': 'statement file',
+            'datas': file_stream,
+            'datas_fname': "%s.%s" % (fields.Date.today(), ftype),
+            'res_model': 'account.move',
+            'res_id': moves[0].id
+        }
+        return attachment_data
+
     def multi_move_import(self, file_stream, ftype="csv"):
         """Create multiple bank statements from values given by the parser for
         the given profile.
@@ -262,6 +272,7 @@ class AccountJournal(models.Model):
         :return: list: list of ids of the created account.bank.statemênt
         """
         filename = self._context.get('file_name', None)
+        attachment_obj = self.env['ir.attachment']
         if filename:
             (filename, __) = os.path.splitext(filename)
         parser = new_move_parser(self, ftype=ftype, move_ref=filename)
@@ -269,6 +280,11 @@ class AccountJournal(models.Model):
         for result_row_list in parser.parse(file_stream):
             move = self._move_import(parser, file_stream, ftype=ftype)
             res |= move
+        if res:
+            attachment_vals = self._get_attachment_datas(
+                res, file_stream,ftype)
+            if attachment_vals:
+                attachment_obj.create(attachment_vals)
         return res
 
     def _move_import(self, parser, file_stream, ftype="csv"):
@@ -285,7 +301,6 @@ class AccountJournal(models.Model):
         """
         move_obj = self.env['account.move']
         move_line_obj = self.env['account.move.line']
-        attachment_obj = self.env['ir.attachment']
         result_row_list = parser.result_row_list
         # Check all key are present in account.bank.statement.line!!
         if not result_row_list:
@@ -312,14 +327,6 @@ class AccountJournal(models.Model):
             self._write_extra_move_lines(parser, move)
             if self.create_counterpart:
                 self._create_counterpart(parser, move)
-            attachment_data = {
-                'name': 'statement file',
-                'datas': file_stream,
-                'datas_fname': "%s.%s" % (fields.Date.today(), ftype),
-                'res_model': 'account.move',
-                'res_id': move.id,
-            }
-            attachment_obj.create(attachment_data)
             # If user ask to launch completion at end of import, do it!
             if self.launch_import_completion:
                 move.button_auto_completion()
