@@ -8,9 +8,7 @@
  'category': 'Hidden/Dependency',
  'complexity': 'easy',
  'depends': [
-     'account',
-     'stock_account',
-     'sale_stock',
+     'sale',
  ],
  'website': 'http://www.openerp.com',
  'data': [
