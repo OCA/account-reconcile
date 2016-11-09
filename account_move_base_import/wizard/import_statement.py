@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# © 2011 Akretion
+# © 2011-2016 Akretion
 # © 2011-2016 Camptocamp SA
 # © 2013 Savoir-faire Linux
 # © 2014 ACSONE SA/NV
@@ -8,25 +8,26 @@
 Wizard to import financial institute date in bank statement
 """
 
-from openerp import _, api, fields, models
+from odoo import _, api, fields, models
+from odoo.exceptions import UserError
 import os
 
 
 class CreditPartnerStatementImporter(models.TransientModel):
     _name = "credit.statement.import"
+    _description = 'Import Batch File wizard'
 
     @api.model
     def default_get(self, fields):
         ctx = self._context
         res = {}
-        if (ctx.get('active_model', False) == 'account.journal' and
-                ctx.get('active_ids', False)):
+        if (
+                ctx.get('active_model') == 'account.journal' and
+                ctx.get('active_ids')):
             ids = ctx['active_ids']
             assert len(ids) == 1, \
                 'You cannot use this on more than one journal !'
             res['journal_id'] = ids[0]
-            values = self.onchange_journal_id(res['journal_id'])
-            res.update(values.get('value', {}))
         return res
 
     journal_id = fields.Many2one(
@@ -38,34 +39,21 @@ class CreditPartnerStatementImporter(models.TransientModel):
         required=True)
     partner_id = fields.Many2one(
         comodel_name='res.partner',
-        string='Credit institute partner')
+        related='journal_id.partner_id', readonly=True)
     file_name = fields.Char()
     receivable_account_id = fields.Many2one(
         comodel_name='account.account',
-        string='Force Receivable/Payable Account')
+        related='journal_id.receivable_account_id', readonly=True)
     commission_account_id = fields.Many2one(
         comodel_name='account.account',
-        string='Commission account')
-
-    @api.multi
-    def onchange_journal_id(self, journal_id):
-        if journal_id:
-            journal = self.env['account.journal'].browse(journal_id)
-            return {
-                'value': {
-                    'partner_id': journal.partner_id.id,
-                    'receivable_account_id': journal.receivable_account_id.id,
-                    'commission_account_id': journal.commission_account_id.id,
-                }
-            }
+        related='journal_id.commission_account_id', readonly=True)
 
     @api.multi
     def _check_extension(self):
         self.ensure_one()
         (__, ftype) = os.path.splitext(self.file_name)
         if not ftype:
-            # We do not use osv exception we do not want to have it logged
-            raise Exception(_('Please use a file with an extension'))
+            raise UserError(_('Please use a file with an extension'))
         return ftype
 
     @api.multi

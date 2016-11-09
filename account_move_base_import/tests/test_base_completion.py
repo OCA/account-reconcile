@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
-# © 2011 Akretion
+# © 2011-2016 Akretion
 # © 2011-2016 Camptocamp SA
 # © 2013 Savoir-faire Linux
 # © 2014 ACSONE SA/NV
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html)
-from openerp import fields, tools
-from openerp.modules import get_module_resource
-from openerp.tests import common
+from odoo import fields, tools
+from odoo.modules import get_module_resource
+from odoo.tests import common
 from collections import namedtuple
 
 name_completion_case = namedtuple(
