@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 # © 2014 Guewen Baconnier (Camptocamp)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
-from openerp import models, fields, api
-from openerp.osv import expression
+from odoo import models, fields, api
+from odoo.osv import expression
 
 
 class AccountMoveLine(models.Model):

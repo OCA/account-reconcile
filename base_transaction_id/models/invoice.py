@@ -2,7 +2,7 @@
 # © 2011-2012 Nicolas Bessi (Camptocamp)
 # © 2012-2015 Yannick Vaucher (Camptocamp)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
-from openerp import models, fields, api
+from odoo import models, fields, api
 
 
 class AccountInvoice(models.Model):
