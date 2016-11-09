@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# © 2011 Akretion
+# © 2011-2016 Akretion
 # © 2011-2016 Camptocamp SA
 # © 2013 Savoir-faire Linux
 # © 2014 ACSONE SA/NV
@@ -8,9 +8,9 @@ import base64
 import inspect
 import os
 from operator import attrgetter
-from openerp.tests import common
-from openerp import tools
-from openerp.modules import get_module_resource
+from odoo.tests import common
+from odoo import tools
+from odoo.modules import get_module_resource
 
 
 class TestCodaImport(common.TransactionCase):
