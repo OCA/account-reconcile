@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# © 2011 Akretion
+# © 2011-2016 Akretion
 # © 2011-2016 Camptocamp SA
 # © 2013 Savoir-faire Linux
 # © 2014 ACSONE SA/NV
@@ -7,9 +7,9 @@
 import sys
 import traceback
 import os
-from openerp import _, api, fields, models
+from odoo import _, api, fields, models
 from ..parser.parser import new_move_parser
-from openerp.exceptions import UserError, ValidationError
+from odoo.exceptions import UserError, ValidationError
 from operator import attrgetter
 
 
@@ -289,10 +289,11 @@ class AccountJournal(models.Model):
                               "The file is empty"))
         parsed_cols = parser.get_move_line_vals(result_row_list[0]).keys()
         for col in parsed_cols:
-            if col not in move_line_obj._columns:
+            print dir(move_line_obj)
+            if col not in move_line_obj._fields:
                 raise UserError(
                     _("Missing column! Column %s you try to import is not "
-                      "present in the bank statement line!") % col)
+                      "present in the move line!") % col)
         move_vals = self.prepare_move_vals(result_row_list, parser)
         move = move_obj.create(move_vals)
         try:
