@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <record id="view_move_importer_form" model="ir.ui.view">
         <field name="name">account.move.view</field>
@@ -56,9 +57,8 @@
     </record>
 
     <record id="action_move_completion_rule_tree" model="ir.actions.act_window">
-        <field name="name">Move Completion Rule</field>
+        <field name="name">Move Completion Rules</field>
         <field name="res_model">account.move.completion.rule</field>
-        <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
     </record>
 
