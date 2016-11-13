@@ -266,7 +266,6 @@ class AccountMoveLine(models.Model):
         ]
         keys = [k for k in move_store[0].keys() if k in avail]
         keys.sort()
-        print "keys==================", keys
         return keys
 
     def _prepare_insert(self, move, cols):
@@ -276,9 +275,7 @@ class AccountMoveLine(models.Model):
         move_copy = move
         for k, col in move_copy.iteritems():
             if k in cols:
-                print "DIR self._fields[k]=", dir(self._fields[k])
-                move_copy[k] = self._fields[k]._symbol_set[1](col)
-                print "move_copy[k]==========", move_copy[k]
+                move_copy[k] = self._fields[k].convert_to_column(col, None)
         return move_copy
 
     def _prepare_manyinsert(self, move_store, cols):
