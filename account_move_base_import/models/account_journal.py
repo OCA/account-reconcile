@@ -289,7 +289,6 @@ class AccountJournal(models.Model):
                               "The file is empty"))
         parsed_cols = parser.get_move_line_vals(result_row_list[0]).keys()
         for col in parsed_cols:
-            print dir(move_line_obj)
             if col not in move_line_obj._fields:
                 raise UserError(
                     _("Missing column! Column %s you try to import is not "
