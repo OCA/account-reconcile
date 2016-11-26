@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 9.0c\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-09-12 11:12+0000\n"
-"PO-Revision-Date: 2016-09-12 11:12+0000\n"
+"POT-Creation-Date: 2016-11-03 10:40+0000\n"
+"PO-Revision-Date: 2016-11-03 10:40+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2016\n"
 "Language-Team: Catalan (https://www.transifex.com/oca/teams/23907/ca/)\n"
 "MIME-Version: 1.0\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. module: account_move_base_import
-#: code:addons/account_move_base_import/models/account_move.py:351
+#: code:addons/account_move_base_import/models/account_move.py:362
 #, python-format
 msgid ""
 "%s Account Move %s has %s/%s lines completed by %s \n"
@@ -30,7 +30,7 @@ msgstr ""
 #. module: account_move_base_import
 #: model:ir.model,name:account_move_base_import.model_account_move
 msgid "Account Entry"
-msgstr ""
+msgstr "Assentament comptable"
 
 #. module: account_move_base_import
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_journal_message_needaction
@@ -447,7 +447,7 @@ msgid "Missing"
 msgstr ""
 
 #. module: account_move_base_import
-#: code:addons/account_move_base_import/models/account_journal.py:293
+#: code:addons/account_move_base_import/models/account_journal.py:294
 #, python-format
 msgid ""
 "Missing column! Column %s you try to import is not present in the bank "
@@ -486,7 +486,7 @@ msgid "No commission account is set on the journal."
 msgstr ""
 
 #. module: account_move_base_import
-#: code:addons/account_move_base_import/models/account_journal.py:287
+#: code:addons/account_move_base_import/models/account_journal.py:288
 #, python-format
 msgid "Nothing to import: The file is empty"
 msgstr ""
@@ -519,6 +519,11 @@ msgstr ""
 #. module: account_move_base_import
 #: model:ir.model,name:account_move_base_import.model_res_partner
 msgid "Partner"
+msgstr ""
+
+#. module: account_move_base_import
+#: model:ir.model.fields,field_description:account_move_base_import.field_account_move_import_partner_id
+msgid "Partner from import"
 msgstr ""
 
 #. module: account_move_base_import
@@ -567,7 +572,7 @@ msgid "Split Counterpart"
 msgstr ""
 
 #. module: account_move_base_import
-#: code:addons/account_move_base_import/models/account_move.py:357
+#: code:addons/account_move_base_import/models/account_move.py:368
 #, python-format
 msgid "Statement ID %s auto-completed for %s/%s lines completed"
 msgstr ""
@@ -578,7 +583,7 @@ msgid "Statement file"
 msgstr ""
 
 #. module: account_move_base_import
-#: code:addons/account_move_base_import/models/account_journal.py:332
+#: code:addons/account_move_base_import/models/account_journal.py:333
 #, python-format
 msgid "Statement import error The statement cannot be created: %s"
 msgstr ""

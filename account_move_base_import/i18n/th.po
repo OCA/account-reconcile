@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 9.0c\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-09-12 11:12+0000\n"
-"PO-Revision-Date: 2016-09-12 11:12+0000\n"
+"POT-Creation-Date: 2016-11-03 10:40+0000\n"
+"PO-Revision-Date: 2016-11-03 10:40+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2016\n"
 "Language-Team: Thai (https://www.transifex.com/oca/teams/23907/th/)\n"
 "MIME-Version: 1.0\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0;\n"
 
 #. module: account_move_base_import
-#: code:addons/account_move_base_import/models/account_move.py:351
+#: code:addons/account_move_base_import/models/account_move.py:362
 #, python-format
 msgid ""
 "%s Account Move %s has %s/%s lines completed by %s \n"
@@ -135,13 +135,13 @@ msgstr ""
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_move_completion_rule_create_uid
 #: model:ir.model.fields,field_description:account_move_base_import.field_credit_statement_import_create_uid
 msgid "Created by"
-msgstr ""
+msgstr "สร้างโดย"
 
 #. module: account_move_base_import
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_move_completion_rule_create_date
 #: model:ir.model.fields,field_description:account_move_base_import.field_credit_statement_import_create_date
 msgid "Created on"
-msgstr ""
+msgstr "สร้างเมื่อ"
 
 #. module: account_move_base_import
 #: model:ir.model.fields,field_description:account_move_base_import.field_credit_statement_import_partner_id
@@ -174,13 +174,13 @@ msgstr ""
 #: model:ir.model.fields,help:account_move_base_import.field_account_journal_message_last_post
 #: model:ir.model.fields,help:account_move_base_import.field_account_move_message_last_post
 msgid "Date of the last message posted on the record."
-msgstr ""
+msgstr "วันที่ข้อความล่าสุดโพสต์ในระเบียน"
 
 #. module: account_move_base_import
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_move_completion_rule_display_name
 #: model:ir.model.fields,field_description:account_move_base_import.field_credit_statement_import_display_name
 msgid "Display Name"
-msgstr ""
+msgstr "ชื่อที่ใช้แสดง"
 
 #. module: account_move_base_import
 #: model:ir.model.fields,help:account_move_base_import.field_res_partner_bank_statement_label
@@ -200,7 +200,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_journal_message_follower_ids
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_move_message_follower_ids
 msgid "Followers"
-msgstr ""
+msgstr "ผู้ติดตาม"
 
 #. module: account_move_base_import
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_journal_message_channel_ids
@@ -263,13 +263,13 @@ msgstr ""
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_move_completion_rule_id
 #: model:ir.model.fields,field_description:account_move_base_import.field_credit_statement_import_id
 msgid "ID"
-msgstr ""
+msgstr "รหัส"
 
 #. module: account_move_base_import
 #: model:ir.model.fields,help:account_move_base_import.field_account_journal_message_unread
 #: model:ir.model.fields,help:account_move_base_import.field_account_move_message_unread
 msgid "If checked new messages require your attention."
-msgstr ""
+msgstr "ถ้าเลือก ข้อความใหม่จะต้องการความสนใจจากคุณ"
 
 #. module: account_move_base_import
 #: model:ir.model.fields,help:account_move_base_import.field_account_journal_message_needaction
@@ -362,25 +362,25 @@ msgstr ""
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_journal_message_last_post
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_move_message_last_post
 msgid "Last Message Date"
-msgstr ""
+msgstr "วันที่ข้อความล่าสุด"
 
 #. module: account_move_base_import
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_move_completion_rule___last_update
 #: model:ir.model.fields,field_description:account_move_base_import.field_credit_statement_import___last_update
 msgid "Last Modified on"
-msgstr ""
+msgstr "แก้ไขครั้งสุดท้ายเมื่อ"
 
 #. module: account_move_base_import
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_move_completion_rule_write_uid
 #: model:ir.model.fields,field_description:account_move_base_import.field_credit_statement_import_write_uid
 msgid "Last Updated by"
-msgstr ""
+msgstr "อัพเดทครั้งสุดท้ายโดย"
 
 #. module: account_move_base_import
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_move_completion_rule_write_date
 #: model:ir.model.fields,field_description:account_move_base_import.field_credit_statement_import_write_date
 msgid "Last Updated on"
-msgstr ""
+msgstr "อัพเดทครั้งสุดท้ายเมื่อ"
 
 #. module: account_move_base_import
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_journal_launch_import_completion
@@ -430,7 +430,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_journal_message_ids
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_move_message_ids
 msgid "Messages"
-msgstr ""
+msgstr "ข้อความ"
 
 #. module: account_move_base_import
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_move_completion_rule_function_to_call
@@ -447,7 +447,7 @@ msgid "Missing"
 msgstr ""
 
 #. module: account_move_base_import
-#: code:addons/account_move_base_import/models/account_journal.py:293
+#: code:addons/account_move_base_import/models/account_journal.py:294
 #, python-format
 msgid ""
 "Missing column! Column %s you try to import is not present in the bank "
@@ -471,7 +471,7 @@ msgstr ""
 #. module: account_move_base_import
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_move_completion_rule_name
 msgid "Name"
-msgstr ""
+msgstr "ชื่อ"
 
 #. module: account_move_base_import
 #: code:addons/account_move_base_import/parser/parser.py:148
@@ -486,7 +486,7 @@ msgid "No commission account is set on the journal."
 msgstr ""
 
 #. module: account_move_base_import
-#: code:addons/account_move_base_import/models/account_journal.py:287
+#: code:addons/account_move_base_import/models/account_journal.py:288
 #, python-format
 msgid "Nothing to import: The file is empty"
 msgstr ""
@@ -519,6 +519,11 @@ msgstr ""
 #. module: account_move_base_import
 #: model:ir.model,name:account_move_base_import.model_res_partner
 msgid "Partner"
+msgstr ""
+
+#. module: account_move_base_import
+#: model:ir.model.fields,field_description:account_move_base_import.field_account_move_import_partner_id
+msgid "Partner from import"
 msgstr ""
 
 #. module: account_move_base_import
@@ -559,7 +564,7 @@ msgstr ""
 #. module: account_move_base_import
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_move_completion_rule_sequence
 msgid "Sequence"
-msgstr ""
+msgstr "กำหนดเลขที่เอกสาร"
 
 #. module: account_move_base_import
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_journal_split_counterpart
@@ -567,7 +572,7 @@ msgid "Split Counterpart"
 msgstr ""
 
 #. module: account_move_base_import
-#: code:addons/account_move_base_import/models/account_move.py:357
+#: code:addons/account_move_base_import/models/account_move.py:368
 #, python-format
 msgid "Statement ID %s auto-completed for %s/%s lines completed"
 msgstr ""
@@ -578,7 +583,7 @@ msgid "Statement file"
 msgstr ""
 
 #. module: account_move_base_import
-#: code:addons/account_move_base_import/models/account_journal.py:332
+#: code:addons/account_move_base_import/models/account_journal.py:333
 #, python-format
 msgid "Statement import error The statement cannot be created: %s"
 msgstr ""
@@ -611,7 +616,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_journal_message_unread
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_move_message_unread
 msgid "Unread Messages"
-msgstr ""
+msgstr "ข้อความที่ยังไม่ได้อ่าน"
 
 #. module: account_move_base_import
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_journal_message_unread_counter

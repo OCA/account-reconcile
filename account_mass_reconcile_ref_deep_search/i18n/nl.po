@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 9.0c\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-09-28 11:33+0000\n"
-"PO-Revision-Date: 2016-09-28 11:33+0000\n"
+"POT-Creation-Date: 2016-11-03 10:40+0000\n"
+"PO-Revision-Date: 2016-11-03 10:40+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2016\n"
 "Language-Team: Dutch (https://www.transifex.com/oca/teams/23907/nl/)\n"
 "MIME-Version: 1.0\n"
@@ -49,12 +49,12 @@ msgstr ""
 #. module: account_mass_reconcile_ref_deep_search
 #: model:ir.model.fields,field_description:account_mass_reconcile_ref_deep_search.field_mass_reconcile_advanced_ref_deep_search_create_uid
 msgid "Created by"
-msgstr ""
+msgstr "Aangemaakt door"
 
 #. module: account_mass_reconcile_ref_deep_search
 #: model:ir.model.fields,field_description:account_mass_reconcile_ref_deep_search.field_mass_reconcile_advanced_ref_deep_search_create_date
 msgid "Created on"
-msgstr ""
+msgstr "Aangemaakt op"
 
 #. module: account_mass_reconcile_ref_deep_search
 #: model:ir.model.fields,field_description:account_mass_reconcile_ref_deep_search.field_mass_reconcile_advanced_ref_deep_search_date_base_on
@@ -79,7 +79,7 @@ msgstr ""
 #. module: account_mass_reconcile_ref_deep_search
 #: model:ir.model.fields,field_description:account_mass_reconcile_ref_deep_search.field_mass_reconcile_advanced_ref_deep_search_id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: account_mass_reconcile_ref_deep_search
 #: model:ir.model.fields,field_description:account_mass_reconcile_ref_deep_search.field_mass_reconcile_advanced_ref_deep_search_journal_id
@@ -94,12 +94,12 @@ msgstr "Laatst bijgewerkt op"
 #. module: account_mass_reconcile_ref_deep_search
 #: model:ir.model.fields,field_description:account_mass_reconcile_ref_deep_search.field_mass_reconcile_advanced_ref_deep_search_write_uid
 msgid "Last Updated by"
-msgstr ""
+msgstr "Laatst bijgewerkt door"
 
 #. module: account_mass_reconcile_ref_deep_search
 #: model:ir.model.fields,field_description:account_mass_reconcile_ref_deep_search.field_mass_reconcile_advanced_ref_deep_search_write_date
 msgid "Last Updated on"
-msgstr ""
+msgstr "Laatst bijgewerkt op"
 
 #. module: account_mass_reconcile_ref_deep_search
 #: model:ir.model.fields,field_description:account_mass_reconcile_ref_deep_search.field_mass_reconcile_advanced_ref_deep_search_expense_exchange_account_id
