@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bank-statement-reconcile (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-09-17 06:16+0000\n"
-"PO-Revision-Date: 2016-10-04 09:42+0000\n"
+"POT-Creation-Date: 2016-10-27 02:42+0000\n"
+"PO-Revision-Date: 2016-11-25 14:55+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
 "Language-Team: Portuguese (Brazil) (http://www.transifex.com/oca/OCA-bank-statement-reconcile-8-0/language/pt_BR/)\n"
 "MIME-Version: 1.0\n"
@@ -120,12 +120,12 @@ msgstr ""
 #: field:account.easy.reconcile.method,company_id:0
 #: field:easy.reconcile.history,company_id:0
 msgid "Company"
-msgstr ""
+msgstr "Empresa"
 
 #. module: account_easy_reconcile
 #: view:account.easy.reconcile:account_easy_reconcile.account_easy_reconcile_form
 msgid "Configuration"
-msgstr ""
+msgstr "Configuração"
 
 #. module: account_easy_reconcile
 #: field:account.easy.reconcile,create_uid:0
@@ -150,7 +150,7 @@ msgstr "Criado em"
 #. module: account_easy_reconcile
 #: view:easy.reconcile.history:account_easy_reconcile.view_easy_reconcile_history_search
 msgid "Date"
-msgstr ""
+msgstr "Data"
 
 #. module: account_easy_reconcile
 #: field:account.easy.reconcile.method,date_base_on:0
@@ -257,7 +257,7 @@ msgstr ""
 #. module: account_easy_reconcile
 #: view:easy.reconcile.history:account_easy_reconcile.view_easy_reconcile_history_search
 msgid "Group By..."
-msgstr ""
+msgstr "Agrupado por"
 
 #. module: account_easy_reconcile
 #: view:account.easy.reconcile:account_easy_reconcile.account_easy_reconcile_form
@@ -416,12 +416,12 @@ msgstr ""
 #. module: account_easy_reconcile
 #: field:account.easy.reconcile,reconcile_method:0
 msgid "Method"
-msgstr ""
+msgstr "Método"
 
 #. module: account_easy_reconcile
 #: field:account.easy.reconcile,name:0
 msgid "Name"
-msgstr ""
+msgstr "Nome"
 
 #. module: account_easy_reconcile
 #: view:account.config.settings:account_easy_reconcile.view_account_config

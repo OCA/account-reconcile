@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bank-statement-reconcile (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-08-19 18:08+0000\n"
-"PO-Revision-Date: 2015-07-22 06:46+0000\n"
+"POT-Creation-Date: 2016-10-27 02:42+0000\n"
+"PO-Revision-Date: 2016-11-11 13:00+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
 "Language-Team: Spanish (http://www.transifex.com/oca/OCA-bank-statement-reconcile-8-0/language/es/)\n"
 "MIME-Version: 1.0\n"
@@ -31,7 +31,7 @@ msgstr "Factura"
 #. module: base_transaction_id
 #: model:ir.model,name:base_transaction_id.model_account_move_line
 msgid "Journal Items"
-msgstr ""
+msgstr "Apuntes contables"
 
 #. module: base_transaction_id
 #: model:ir.model,name:base_transaction_id.model_stock_picking

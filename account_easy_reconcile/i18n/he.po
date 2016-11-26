@@ -1,0 +1,615 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# * account_easy_reconcile
+# 
+# Translators:
+msgid ""
+msgstr ""
+"Project-Id-Version: bank-statement-reconcile (8.0)\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-10-27 02:42+0000\n"
+"PO-Revision-Date: 2016-10-11 09:51+0000\n"
+"Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
+"Language-Team: Hebrew (http://www.transifex.com/oca/OCA-bank-statement-reconcile-8-0/language/he/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Language: he\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. module: account_easy_reconcile
+#: view:easy.reconcile.history:account_easy_reconcile.view_easy_reconcile_history_search
+msgid "7 Days"
+msgstr ""
+
+#. module: account_easy_reconcile
+#: model:ir.actions.act_window,help:account_easy_reconcile.action_account_easy_reconcile
+msgid ""
+"<p class=\"oe_view_nocontent_create\">\n"
+"            Click to add a reconciliation profile.\n"
+"          </p><p>\n"
+"            A reconciliation profile specifies, for one account, how\n"
+"            the entries should be reconciled.\n"
+"            You can select one or many reconciliation methods which will\n"
+"            be run sequentially to match the entries between them.\n"
+"          </p>\n"
+"        "
+msgstr ""
+
+#. module: account_easy_reconcile
+#: field:account.easy.reconcile,account:0
+#: field:easy.reconcile.base,account_id:0
+#: field:easy.reconcile.simple,account_id:0
+#: field:easy.reconcile.simple.name,account_id:0
+#: field:easy.reconcile.simple.partner,account_id:0
+#: field:easy.reconcile.simple.reference,account_id:0
+msgid "Account"
+msgstr ""
+
+#. module: account_easy_reconcile
+#: field:account.easy.reconcile.method,account_lost_id:0
+#: field:easy.reconcile.base,account_lost_id:0
+#: field:easy.reconcile.options,account_lost_id:0
+#: field:easy.reconcile.simple,account_lost_id:0
+#: field:easy.reconcile.simple.name,account_lost_id:0
+#: field:easy.reconcile.simple.partner,account_lost_id:0
+#: field:easy.reconcile.simple.reference,account_lost_id:0
+msgid "Account Lost"
+msgstr ""
+
+#. module: account_easy_reconcile
+#: field:account.easy.reconcile.method,account_profit_id:0
+#: field:easy.reconcile.base,account_profit_id:0
+#: field:easy.reconcile.options,account_profit_id:0
+#: field:easy.reconcile.simple,account_profit_id:0
+#: field:easy.reconcile.simple.name,account_profit_id:0
+#: field:easy.reconcile.simple.partner,account_profit_id:0
+#: field:easy.reconcile.simple.reference,account_profit_id:0
+msgid "Account Profit"
+msgstr ""
+
+#. module: account_easy_reconcile
+#: help:account.easy.reconcile.method,analytic_account_id:0
+#: help:easy.reconcile.base,analytic_account_id:0
+#: help:easy.reconcile.options,analytic_account_id:0
+#: help:easy.reconcile.simple,analytic_account_id:0
+#: help:easy.reconcile.simple.name,analytic_account_id:0
+#: help:easy.reconcile.simple.partner,analytic_account_id:0
+#: help:easy.reconcile.simple.reference,analytic_account_id:0
+msgid "Analytic account for the write-off"
+msgstr ""
+
+#. module: account_easy_reconcile
+#: field:account.easy.reconcile.method,analytic_account_id:0
+#: field:easy.reconcile.base,analytic_account_id:0
+#: field:easy.reconcile.options,analytic_account_id:0
+#: field:easy.reconcile.simple,analytic_account_id:0
+#: field:easy.reconcile.simple.name,analytic_account_id:0
+#: field:easy.reconcile.simple.partner,analytic_account_id:0
+#: field:easy.reconcile.simple.reference,analytic_account_id:0
+msgid "Analytic_account"
+msgstr ""
+
+#. module: account_easy_reconcile
+#: view:account.easy.reconcile:account_easy_reconcile.account_easy_reconcile_form
+#: view:account.easy.reconcile:account_easy_reconcile.account_easy_reconcile_tree
+msgid "Automatic Easy Reconcile"
+msgstr ""
+
+#. module: account_easy_reconcile
+#: view:account.easy.reconcile:account_easy_reconcile.account_easy_reconcile_form
+#: view:easy.reconcile.history:account_easy_reconcile.easy_reconcile_history_form
+#: view:easy.reconcile.history:account_easy_reconcile.easy_reconcile_history_tree
+#: view:easy.reconcile.history:account_easy_reconcile.view_easy_reconcile_history_search
+msgid "Automatic Easy Reconcile History"
+msgstr ""
+
+#. module: account_easy_reconcile
+#: view:account.easy.reconcile.method:account_easy_reconcile.account_easy_reconcile_method_form
+#: view:account.easy.reconcile.method:account_easy_reconcile.account_easy_reconcile_method_tree
+msgid "Automatic Easy Reconcile Method"
+msgstr ""
+
+#. module: account_easy_reconcile
+#: model:ir.model,name:account_easy_reconcile.model_res_company
+msgid "Companies"
+msgstr ""
+
+#. module: account_easy_reconcile
+#: field:account.easy.reconcile,company_id:0
+#: field:account.easy.reconcile.method,company_id:0
+#: field:easy.reconcile.history,company_id:0
+msgid "Company"
+msgstr ""
+
+#. module: account_easy_reconcile
+#: view:account.easy.reconcile:account_easy_reconcile.account_easy_reconcile_form
+msgid "Configuration"
+msgstr ""
+
+#. module: account_easy_reconcile
+#: field:account.easy.reconcile,create_uid:0
+#: field:account.easy.reconcile.method,create_uid:0
+#: field:easy.reconcile.history,create_uid:0
+#: field:easy.reconcile.simple.name,create_uid:0
+#: field:easy.reconcile.simple.partner,create_uid:0
+#: field:easy.reconcile.simple.reference,create_uid:0
+msgid "Created by"
+msgstr "נוצר על ידי"
+
+#. module: account_easy_reconcile
+#: field:account.easy.reconcile,create_date:0
+#: field:account.easy.reconcile.method,create_date:0
+#: field:easy.reconcile.history,create_date:0
+#: field:easy.reconcile.simple.name,create_date:0
+#: field:easy.reconcile.simple.partner,create_date:0
+#: field:easy.reconcile.simple.reference,create_date:0
+msgid "Created on"
+msgstr "נוצר ב-"
+
+#. module: account_easy_reconcile
+#: view:easy.reconcile.history:account_easy_reconcile.view_easy_reconcile_history_search
+msgid "Date"
+msgstr ""
+
+#. module: account_easy_reconcile
+#: field:account.easy.reconcile.method,date_base_on:0
+#: field:easy.reconcile.base,date_base_on:0
+#: field:easy.reconcile.options,date_base_on:0
+#: field:easy.reconcile.simple,date_base_on:0
+#: field:easy.reconcile.simple.name,date_base_on:0
+#: field:easy.reconcile.simple.partner,date_base_on:0
+#: field:easy.reconcile.simple.reference,date_base_on:0
+msgid "Date of reconciliation"
+msgstr ""
+
+#. module: account_easy_reconcile
+#: help:account.easy.reconcile,message_last_post:0
+msgid "Date of the last message posted on the record."
+msgstr "תאריך הודעה אחרונה שפורסמה ברשומה."
+
+#. module: account_easy_reconcile
+#: field:account.easy.reconcile,display_name:0
+#: field:account.easy.reconcile.method,display_name:0
+#: field:easy.reconcile.base,display_name:0
+#: field:easy.reconcile.history,display_name:0
+#: field:easy.reconcile.options,display_name:0
+#: field:easy.reconcile.simple,display_name:0
+#: field:easy.reconcile.simple.name,display_name:0
+#: field:easy.reconcile.simple.partner,display_name:0
+#: field:easy.reconcile.simple.reference,display_name:0
+msgid "Display Name"
+msgstr "השם המוצג"
+
+#. module: account_easy_reconcile
+#: view:account.easy.reconcile:account_easy_reconcile.account_easy_reconcile_form
+#: view:account.easy.reconcile:account_easy_reconcile.account_easy_reconcile_tree
+msgid "Display items partially reconciled on the last run"
+msgstr ""
+
+#. module: account_easy_reconcile
+#: view:account.easy.reconcile:account_easy_reconcile.account_easy_reconcile_form
+#: view:account.easy.reconcile:account_easy_reconcile.account_easy_reconcile_tree
+msgid "Display items reconciled on the last run"
+msgstr ""
+
+#. module: account_easy_reconcile
+#: model:ir.actions.act_window,name:account_easy_reconcile.action_account_easy_reconcile
+#: model:ir.ui.menu,name:account_easy_reconcile.menu_easy_reconcile
+msgid "Easy Automatic Reconcile"
+msgstr ""
+
+#. module: account_easy_reconcile
+#: model:ir.actions.act_window,name:account_easy_reconcile.action_easy_reconcile_history
+msgid "Easy Automatic Reconcile History"
+msgstr ""
+
+#. module: account_easy_reconcile
+#: field:account.easy.reconcile.method,filter:0
+#: field:easy.reconcile.base,filter:0 field:easy.reconcile.options,filter:0
+#: field:easy.reconcile.simple,filter:0
+#: field:easy.reconcile.simple.name,filter:0
+#: field:easy.reconcile.simple.partner,filter:0
+#: field:easy.reconcile.simple.reference,filter:0
+msgid "Filter"
+msgstr ""
+
+#. module: account_easy_reconcile
+#: field:account.easy.reconcile,message_follower_ids:0
+msgid "Followers"
+msgstr "עוקבים"
+
+#. module: account_easy_reconcile
+#: field:account.easy.reconcile.method,income_exchange_account_id:0
+#: field:easy.reconcile.base,income_exchange_account_id:0
+#: field:easy.reconcile.options,income_exchange_account_id:0
+#: field:easy.reconcile.simple,income_exchange_account_id:0
+#: field:easy.reconcile.simple.name,income_exchange_account_id:0
+#: field:easy.reconcile.simple.partner,income_exchange_account_id:0
+#: field:easy.reconcile.simple.reference,income_exchange_account_id:0
+msgid "Gain Exchange Rate Account"
+msgstr ""
+
+#. module: account_easy_reconcile
+#: view:account.easy.reconcile:account_easy_reconcile.account_easy_reconcile_form
+msgid "Go to partial reconciled items"
+msgstr ""
+
+#. module: account_easy_reconcile
+#: view:account.easy.reconcile:account_easy_reconcile.account_easy_reconcile_form
+#: view:easy.reconcile.history:account_easy_reconcile.easy_reconcile_history_form
+#: view:easy.reconcile.history:account_easy_reconcile.easy_reconcile_history_tree
+msgid "Go to partially reconciled items"
+msgstr ""
+
+#. module: account_easy_reconcile
+#: view:account.easy.reconcile:account_easy_reconcile.account_easy_reconcile_form
+#: view:easy.reconcile.history:account_easy_reconcile.easy_reconcile_history_form
+#: view:easy.reconcile.history:account_easy_reconcile.easy_reconcile_history_tree
+msgid "Go to reconciled items"
+msgstr ""
+
+#. module: account_easy_reconcile
+#: view:account.easy.reconcile:account_easy_reconcile.account_easy_reconcile_form
+msgid "Go to unreconciled items"
+msgstr ""
+
+#. module: account_easy_reconcile
+#: view:easy.reconcile.history:account_easy_reconcile.view_easy_reconcile_history_search
+msgid "Group By..."
+msgstr ""
+
+#. module: account_easy_reconcile
+#: view:account.easy.reconcile:account_easy_reconcile.account_easy_reconcile_form
+#: field:account.easy.reconcile,history_ids:0
+msgid "History"
+msgstr ""
+
+#. module: account_easy_reconcile
+#: model:ir.actions.act_window,name:account_easy_reconcile.act_easy_reconcile_to_history
+msgid "History Details"
+msgstr ""
+
+#. module: account_easy_reconcile
+#: help:account.easy.reconcile,message_summary:0
+msgid ""
+"Holds the Chatter summary (number of messages, ...). This summary is "
+"directly in html format in order to be inserted in kanban views."
+msgstr ""
+
+#. module: account_easy_reconcile
+#: field:account.config.settings,reconciliation_commit_every:0
+#: field:res.company,reconciliation_commit_every:0
+msgid "How often to commit when performing automatic reconciliation."
+msgstr ""
+
+#. module: account_easy_reconcile
+#: field:account.easy.reconcile,id:0 field:account.easy.reconcile.method,id:0
+#: field:easy.reconcile.base,id:0 field:easy.reconcile.history,id:0
+#: field:easy.reconcile.options,id:0 field:easy.reconcile.simple,id:0
+#: field:easy.reconcile.simple.name,id:0
+#: field:easy.reconcile.simple.partner,id:0
+#: field:easy.reconcile.simple.reference,id:0
+msgid "ID"
+msgstr "מזהה"
+
+#. module: account_easy_reconcile
+#: help:account.easy.reconcile,message_unread:0
+msgid "If checked new messages require your attention."
+msgstr "אם מסומן אז הודעה חדשה דורשת התייחסותכם."
+
+#. module: account_easy_reconcile
+#: view:account.easy.reconcile:account_easy_reconcile.account_easy_reconcile_form
+msgid "Information"
+msgstr ""
+
+#. module: account_easy_reconcile
+#: field:account.easy.reconcile,message_is_follower:0
+msgid "Is a Follower"
+msgstr ""
+
+#. module: account_easy_reconcile
+#: field:account.easy.reconcile.method,journal_id:0
+#: field:easy.reconcile.base,journal_id:0
+#: field:easy.reconcile.options,journal_id:0
+#: field:easy.reconcile.simple,journal_id:0
+#: field:easy.reconcile.simple.name,journal_id:0
+#: field:easy.reconcile.simple.partner,journal_id:0
+#: field:easy.reconcile.simple.reference,journal_id:0
+msgid "Journal"
+msgstr ""
+
+#. module: account_easy_reconcile
+#: field:account.easy.reconcile,message_last_post:0
+msgid "Last Message Date"
+msgstr "תאריך הודעה אחרונה"
+
+#. module: account_easy_reconcile
+#: field:account.easy.reconcile,__last_update:0
+#: field:account.easy.reconcile.method,__last_update:0
+#: field:easy.reconcile.base,__last_update:0
+#: field:easy.reconcile.history,__last_update:0
+#: field:easy.reconcile.options,__last_update:0
+#: field:easy.reconcile.simple,__last_update:0
+#: field:easy.reconcile.simple.name,__last_update:0
+#: field:easy.reconcile.simple.partner,__last_update:0
+#: field:easy.reconcile.simple.reference,__last_update:0
+msgid "Last Modified on"
+msgstr "תאריך שינוי אחרון"
+
+#. module: account_easy_reconcile
+#: field:account.easy.reconcile,write_uid:0
+#: field:account.easy.reconcile.method,write_uid:0
+#: field:easy.reconcile.history,write_uid:0
+#: field:easy.reconcile.simple.name,write_uid:0
+#: field:easy.reconcile.simple.partner,write_uid:0
+#: field:easy.reconcile.simple.reference,write_uid:0
+msgid "Last Updated by"
+msgstr "עודכן לאחרונה על ידי"
+
+#. module: account_easy_reconcile
+#: field:account.easy.reconcile,write_date:0
+#: field:account.easy.reconcile.method,write_date:0
+#: field:easy.reconcile.history,write_date:0
+#: field:easy.reconcile.simple.name,write_date:0
+#: field:easy.reconcile.simple.partner,write_date:0
+#: field:easy.reconcile.simple.reference,write_date:0
+msgid "Last Updated on"
+msgstr "עודכן לאחרונה על"
+
+#. module: account_easy_reconcile
+#: field:account.easy.reconcile,last_history:0
+msgid "Last history"
+msgstr ""
+
+#. module: account_easy_reconcile
+#: help:account.config.settings,reconciliation_commit_every:0
+#: help:res.company,reconciliation_commit_every:0
+msgid "Leave zero to commit only at the end of the process."
+msgstr ""
+
+#. module: account_easy_reconcile
+#: field:account.easy.reconcile.method,expense_exchange_account_id:0
+#: field:easy.reconcile.base,expense_exchange_account_id:0
+#: field:easy.reconcile.options,expense_exchange_account_id:0
+#: field:easy.reconcile.simple,expense_exchange_account_id:0
+#: field:easy.reconcile.simple.name,expense_exchange_account_id:0
+#: field:easy.reconcile.simple.partner,expense_exchange_account_id:0
+#: field:easy.reconcile.simple.reference,expense_exchange_account_id:0
+msgid "Loss Exchange Rate Account"
+msgstr ""
+
+#. module: account_easy_reconcile
+#: view:account.easy.reconcile:account_easy_reconcile.account_easy_reconcile_form
+msgid ""
+"Match one debit line vs one credit line. Do not allow partial "
+"reconciliation. The lines should have the same amount (with the write-off) "
+"and the same name to be reconciled."
+msgstr ""
+
+#. module: account_easy_reconcile
+#: view:account.easy.reconcile:account_easy_reconcile.account_easy_reconcile_form
+msgid ""
+"Match one debit line vs one credit line. Do not allow partial "
+"reconciliation. The lines should have the same amount (with the write-off) "
+"and the same partner to be reconciled."
+msgstr ""
+
+#. module: account_easy_reconcile
+#: view:account.easy.reconcile:account_easy_reconcile.account_easy_reconcile_form
+msgid ""
+"Match one debit line vs one credit line. Do not allow partial "
+"reconciliation. The lines should have the same amount (with the write-off) "
+"and the same reference to be reconciled."
+msgstr ""
+
+#. module: account_easy_reconcile
+#: field:account.easy.reconcile,message_ids:0
+msgid "Messages"
+msgstr "הודעות"
+
+#. module: account_easy_reconcile
+#: help:account.easy.reconcile,message_ids:0
+msgid "Messages and communication history"
+msgstr "היסטוריית הודעות ותקשורת"
+
+#. module: account_easy_reconcile
+#: field:account.easy.reconcile,reconcile_method:0
+msgid "Method"
+msgstr ""
+
+#. module: account_easy_reconcile
+#: field:account.easy.reconcile,name:0
+msgid "Name"
+msgstr "שם"
+
+#. module: account_easy_reconcile
+#: view:account.config.settings:account_easy_reconcile.view_account_config
+msgid "Options"
+msgstr ""
+
+#. module: account_easy_reconcile
+#: code:addons/account_easy_reconcile/easy_reconcile_history.py:104
+#: view:easy.reconcile.history:account_easy_reconcile.easy_reconcile_history_form
+#: field:easy.reconcile.history,reconcile_ids:0
+#: field:easy.reconcile.history,reconcile_partial_ids:0
+#, python-format
+msgid "Partial Reconciliations"
+msgstr ""
+
+#. module: account_easy_reconcile
+#: code:addons/account_easy_reconcile/easy_reconcile.py:334
+#, python-format
+msgid "Partial reconciled items"
+msgstr ""
+
+#. module: account_easy_reconcile
+#: field:account.easy.reconcile,reconciled_partial_count:0
+#: field:easy.reconcile.history,partial_line_ids:0
+msgid "Partially Reconciled Items"
+msgstr ""
+
+#. module: account_easy_reconcile
+#: view:account.easy.reconcile:account_easy_reconcile.account_easy_reconcile_form
+msgid "Profile Information"
+msgstr ""
+
+#. module: account_easy_reconcile
+#: field:easy.reconcile.history,easy_reconcile_id:0
+msgid "Reconcile Profile"
+msgstr ""
+
+#. module: account_easy_reconcile
+#: field:easy.reconcile.history,reconcile_line_ids:0
+msgid "Reconciled Items"
+msgstr ""
+
+#. module: account_easy_reconcile
+#: view:account.config.settings:account_easy_reconcile.view_account_config
+msgid "Reconciliation"
+msgstr ""
+
+#. module: account_easy_reconcile
+#: view:easy.reconcile.history:account_easy_reconcile.view_easy_reconcile_history_search
+msgid "Reconciliation Profile"
+msgstr ""
+
+#. module: account_easy_reconcile
+#: code:addons/account_easy_reconcile/easy_reconcile_history.py:100
+#: view:easy.reconcile.history:account_easy_reconcile.easy_reconcile_history_form
+#, python-format
+msgid "Reconciliations"
+msgstr ""
+
+#. module: account_easy_reconcile
+#: view:easy.reconcile.history:account_easy_reconcile.view_easy_reconcile_history_search
+msgid "Reconciliations of last 7 days"
+msgstr ""
+
+#. module: account_easy_reconcile
+#: field:easy.reconcile.base,partner_ids:0
+#: field:easy.reconcile.simple,partner_ids:0
+#: field:easy.reconcile.simple.name,partner_ids:0
+#: field:easy.reconcile.simple.partner,partner_ids:0
+#: field:easy.reconcile.simple.reference,partner_ids:0
+msgid "Restrict on partners"
+msgstr ""
+
+#. module: account_easy_reconcile
+#: field:easy.reconcile.history,date:0
+msgid "Run date"
+msgstr ""
+
+#. module: account_easy_reconcile
+#: field:account.easy.reconcile.method,sequence:0
+msgid "Sequence"
+msgstr "רצף"
+
+#. module: account_easy_reconcile
+#: view:account.easy.reconcile:account_easy_reconcile.account_easy_reconcile_form
+msgid "Simple. Amount and Name"
+msgstr ""
+
+#. module: account_easy_reconcile
+#: view:account.easy.reconcile:account_easy_reconcile.account_easy_reconcile_form
+msgid "Simple. Amount and Partner"
+msgstr ""
+
+#. module: account_easy_reconcile
+#: view:account.easy.reconcile:account_easy_reconcile.account_easy_reconcile_form
+msgid "Simple. Amount and Reference"
+msgstr ""
+
+#. module: account_easy_reconcile
+#: view:account.easy.reconcile:account_easy_reconcile.account_easy_reconcile_tree
+msgid "Start Auto Reconcilation"
+msgstr ""
+
+#. module: account_easy_reconcile
+#: view:account.easy.reconcile:account_easy_reconcile.account_easy_reconcile_form
+msgid "Start Auto Reconciliation"
+msgstr ""
+
+#. module: account_easy_reconcile
+#: field:account.easy.reconcile,message_summary:0
+msgid "Summary"
+msgstr ""
+
+#. module: account_easy_reconcile
+#: field:account.easy.reconcile.method,task_id:0
+msgid "Task"
+msgstr ""
+
+#. module: account_easy_reconcile
+#: help:account.easy.reconcile.method,sequence:0
+msgid "The sequence field is used to order the reconcile method"
+msgstr ""
+
+#. module: account_easy_reconcile
+#: code:addons/account_easy_reconcile/easy_reconcile.py:294
+#, python-format
+msgid "There is no history of reconciled items on the task: %s."
+msgstr ""
+
+#. module: account_easy_reconcile
+#: code:addons/account_easy_reconcile/easy_reconcile.py:269
+#, python-format
+msgid "There was an error during reconciliation : %s"
+msgstr ""
+
+#. module: account_easy_reconcile
+#: view:easy.reconcile.history:account_easy_reconcile.view_easy_reconcile_history_search
+msgid "Today"
+msgstr ""
+
+#. module: account_easy_reconcile
+#: view:easy.reconcile.history:account_easy_reconcile.view_easy_reconcile_history_search
+msgid "Todays' Reconcilations"
+msgstr ""
+
+#. module: account_easy_reconcile
+#: field:account.easy.reconcile.method,name:0
+msgid "Type"
+msgstr "סוג"
+
+#. module: account_easy_reconcile
+#: field:account.easy.reconcile,message_unread:0
+msgid "Unread Messages"
+msgstr "הודעות שלא נקראו"
+
+#. module: account_easy_reconcile
+#: field:account.easy.reconcile,unreconciled_count:0
+msgid "Unreconciled Items"
+msgstr ""
+
+#. module: account_easy_reconcile
+#: code:addons/account_easy_reconcile/easy_reconcile.py:321
+#, python-format
+msgid "Unreconciled items"
+msgstr ""
+
+#. module: account_easy_reconcile
+#: field:account.easy.reconcile.method,write_off:0
+#: field:easy.reconcile.base,write_off:0
+#: field:easy.reconcile.options,write_off:0
+#: field:easy.reconcile.simple,write_off:0
+#: field:easy.reconcile.simple.name,write_off:0
+#: field:easy.reconcile.simple.partner,write_off:0
+#: field:easy.reconcile.simple.reference,write_off:0
+msgid "Write off allowed"
+msgstr ""
+
+#. module: account_easy_reconcile
+#: model:ir.model,name:account_easy_reconcile.model_account_easy_reconcile
+msgid "account easy reconcile"
+msgstr ""
+
+#. module: account_easy_reconcile
+#: view:account.config.settings:account_easy_reconcile.view_account_config
+msgid "eInvoicing & Payments"
+msgstr ""
+
+#. module: account_easy_reconcile
+#: model:ir.model,name:account_easy_reconcile.model_account_easy_reconcile_method
+msgid "reconcile method for account_easy_reconcile"
+msgstr ""

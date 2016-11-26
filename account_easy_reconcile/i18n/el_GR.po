@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bank-statement-reconcile (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-08-20 05:55+0000\n"
-"PO-Revision-Date: 2016-09-09 12:26+0000\n"
+"POT-Creation-Date: 2016-10-27 02:42+0000\n"
+"PO-Revision-Date: 2016-11-25 14:56+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
 "Language-Team: Greek (Greece) (http://www.transifex.com/oca/OCA-bank-statement-reconcile-8-0/language/el_GR/)\n"
 "MIME-Version: 1.0\n"
@@ -150,7 +150,7 @@ msgstr "Δημιουργήθηκε στις"
 #. module: account_easy_reconcile
 #: view:easy.reconcile.history:account_easy_reconcile.view_easy_reconcile_history_search
 msgid "Date"
-msgstr ""
+msgstr "Ημερομηνία"
 
 #. module: account_easy_reconcile
 #: field:account.easy.reconcile.method,date_base_on:0

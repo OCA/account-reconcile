@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bank-statement-reconcile (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-08-20 05:55+0000\n"
+"POT-Creation-Date: 2016-10-27 02:42+0000\n"
 "PO-Revision-Date: 2016-04-19 11:45+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: Portuguese (http://www.transifex.com/oca/OCA-bank-statement-reconcile-8-0/language/pt/)\n"
@@ -63,7 +63,7 @@ msgstr ""
 #. module: account_statement_operation_rule
 #: field:account.statement.operation.rule,display_name:0
 msgid "Display Name"
-msgstr ""
+msgstr "Nome"
 
 #. module: account_statement_operation_rule
 #: selection:account.statement.operation.rule,rule_type:0
@@ -90,7 +90,7 @@ msgstr ""
 #. module: account_statement_operation_rule
 #: field:account.statement.operation.rule,__last_update:0
 msgid "Last Modified on"
-msgstr ""
+msgstr "Modificado a última vez por"
 
 #. module: account_statement_operation_rule
 #: field:account.statement.operation.rule,write_uid:0
@@ -115,7 +115,7 @@ msgstr ""
 #. module: account_statement_operation_rule
 #: field:account.statement.operation.rule,name:0
 msgid "Name"
-msgstr ""
+msgstr "Nome"
 
 #. module: account_statement_operation_rule
 #: field:account.statement.operation.rule,operations:0

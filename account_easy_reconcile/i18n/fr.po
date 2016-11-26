@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bank-statement-reconcile (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-08-20 05:55+0000\n"
-"PO-Revision-Date: 2016-09-16 21:46+0000\n"
+"POT-Creation-Date: 2016-10-27 02:42+0000\n"
+"PO-Revision-Date: 2016-11-25 14:55+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
 "Language-Team: French (http://www.transifex.com/oca/OCA-bank-statement-reconcile-8-0/language/fr/)\n"
 "MIME-Version: 1.0\n"
@@ -168,7 +168,7 @@ msgstr "Date de lettrage"
 #. module: account_easy_reconcile
 #: help:account.easy.reconcile,message_last_post:0
 msgid "Date of the last message posted on the record."
-msgstr ""
+msgstr "Date du dernier message publié sur cet enregistrement"
 
 #. module: account_easy_reconcile
 #: field:account.easy.reconcile,display_name:0
@@ -219,7 +219,7 @@ msgstr "Filtre"
 #. module: account_easy_reconcile
 #: field:account.easy.reconcile,message_follower_ids:0
 msgid "Followers"
-msgstr ""
+msgstr "Abonnés"
 
 #. module: account_easy_reconcile
 #: field:account.easy.reconcile.method,income_exchange_account_id:0
@@ -277,7 +277,7 @@ msgstr "Détails de l'historique"
 msgid ""
 "Holds the Chatter summary (number of messages, ...). This summary is "
 "directly in html format in order to be inserted in kanban views."
-msgstr ""
+msgstr "Contient le résumé de la discussion (nombre de messages, ...). Ce résumé est au format HTML pour permettre son utilisation dans la vue kanban."
 
 #. module: account_easy_reconcile
 #: field:account.config.settings,reconciliation_commit_every:0
@@ -298,7 +298,7 @@ msgstr "ID"
 #. module: account_easy_reconcile
 #: help:account.easy.reconcile,message_unread:0
 msgid "If checked new messages require your attention."
-msgstr ""
+msgstr "Si coché, les nouveaux messages seront portés à votre attention."
 
 #. module: account_easy_reconcile
 #: view:account.easy.reconcile:account_easy_reconcile.account_easy_reconcile_form
@@ -308,7 +308,7 @@ msgstr "Information"
 #. module: account_easy_reconcile
 #: field:account.easy.reconcile,message_is_follower:0
 msgid "Is a Follower"
-msgstr ""
+msgstr "Est un abonné"
 
 #. module: account_easy_reconcile
 #: field:account.easy.reconcile.method,journal_id:0
@@ -324,7 +324,7 @@ msgstr "Journal"
 #. module: account_easy_reconcile
 #: field:account.easy.reconcile,message_last_post:0
 msgid "Last Message Date"
-msgstr ""
+msgstr "Date du dernier message"
 
 #. module: account_easy_reconcile
 #: field:account.easy.reconcile,__last_update:0
@@ -408,12 +408,12 @@ msgstr "Lettre un débit avec un crédit ayant le même montant et la même réf
 #. module: account_easy_reconcile
 #: field:account.easy.reconcile,message_ids:0
 msgid "Messages"
-msgstr ""
+msgstr "Messages"
 
 #. module: account_easy_reconcile
 #: help:account.easy.reconcile,message_ids:0
 msgid "Messages and communication history"
-msgstr ""
+msgstr "Historique des messages et communications"
 
 #. module: account_easy_reconcile
 #: field:account.easy.reconcile,reconcile_method:0
@@ -535,7 +535,7 @@ msgstr "Lancer le lettrage automatisé"
 #. module: account_easy_reconcile
 #: field:account.easy.reconcile,message_summary:0
 msgid "Summary"
-msgstr ""
+msgstr "Résumé"
 
 #. module: account_easy_reconcile
 #: field:account.easy.reconcile.method,task_id:0
@@ -577,7 +577,7 @@ msgstr "Type"
 #. module: account_easy_reconcile
 #: field:account.easy.reconcile,message_unread:0
 msgid "Unread Messages"
-msgstr ""
+msgstr "Messages non-lus"
 
 #. module: account_easy_reconcile
 #: field:account.easy.reconcile,unreconciled_count:0

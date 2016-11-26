@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bank-statement-reconcile (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-08-20 05:55+0000\n"
-"PO-Revision-Date: 2016-09-16 21:45+0000\n"
+"POT-Creation-Date: 2016-10-27 02:42+0000\n"
+"PO-Revision-Date: 2016-11-25 14:56+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
 "Language-Team: Spanish (http://www.transifex.com/oca/OCA-bank-statement-reconcile-8-0/language/es/)\n"
 "MIME-Version: 1.0\n"
@@ -114,7 +114,7 @@ msgstr "Método de conciliación automática sencilla"
 #. module: account_easy_reconcile
 #: model:ir.model,name:account_easy_reconcile.model_res_company
 msgid "Companies"
-msgstr ""
+msgstr "Compañías"
 
 #. module: account_easy_reconcile
 #: field:account.easy.reconcile,company_id:0
@@ -167,7 +167,7 @@ msgstr "Fecha de conciliación"
 #. module: account_easy_reconcile
 #: help:account.easy.reconcile,message_last_post:0
 msgid "Date of the last message posted on the record."
-msgstr ""
+msgstr "Fecha del último mensaje publicado en el registro."
 
 #. module: account_easy_reconcile
 #: field:account.easy.reconcile,display_name:0
@@ -218,7 +218,7 @@ msgstr "Filtro"
 #. module: account_easy_reconcile
 #: field:account.easy.reconcile,message_follower_ids:0
 msgid "Followers"
-msgstr ""
+msgstr "Seguidores"
 
 #. module: account_easy_reconcile
 #: field:account.easy.reconcile.method,income_exchange_account_id:0
@@ -276,7 +276,7 @@ msgstr "Detalles del historial"
 msgid ""
 "Holds the Chatter summary (number of messages, ...). This summary is "
 "directly in html format in order to be inserted in kanban views."
-msgstr ""
+msgstr "Contiene el resumen del chatter (nº de mensajes, ...). Este resumen está directamente en formato html para ser insertado en vistas kanban."
 
 #. module: account_easy_reconcile
 #: field:account.config.settings,reconciliation_commit_every:0
@@ -297,7 +297,7 @@ msgstr "ID"
 #. module: account_easy_reconcile
 #: help:account.easy.reconcile,message_unread:0
 msgid "If checked new messages require your attention."
-msgstr ""
+msgstr "Si se marca los nuevos mensajes requerirán su atención."
 
 #. module: account_easy_reconcile
 #: view:account.easy.reconcile:account_easy_reconcile.account_easy_reconcile_form
@@ -323,7 +323,7 @@ msgstr "Diario"
 #. module: account_easy_reconcile
 #: field:account.easy.reconcile,message_last_post:0
 msgid "Last Message Date"
-msgstr ""
+msgstr "Fecha del último mensaje"
 
 #. module: account_easy_reconcile
 #: field:account.easy.reconcile,__last_update:0
@@ -407,7 +407,7 @@ msgstr "Casa una línea del debe con una línea del haber. No permite conciliaci
 #. module: account_easy_reconcile
 #: field:account.easy.reconcile,message_ids:0
 msgid "Messages"
-msgstr ""
+msgstr "Mensajes"
 
 #. module: account_easy_reconcile
 #: help:account.easy.reconcile,message_ids:0
@@ -576,7 +576,7 @@ msgstr "Tipo"
 #. module: account_easy_reconcile
 #: field:account.easy.reconcile,message_unread:0
 msgid "Unread Messages"
-msgstr ""
+msgstr "Mensajes sin leer"
 
 #. module: account_easy_reconcile
 #: field:account.easy.reconcile,unreconciled_count:0

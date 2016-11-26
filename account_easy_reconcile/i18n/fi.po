@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bank-statement-reconcile (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-08-20 05:55+0000\n"
-"PO-Revision-Date: 2016-09-15 12:45+0000\n"
+"POT-Creation-Date: 2016-10-27 02:42+0000\n"
+"PO-Revision-Date: 2016-11-25 14:55+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
 "Language-Team: Finnish (http://www.transifex.com/oca/OCA-bank-statement-reconcile-8-0/language/fi/)\n"
 "MIME-Version: 1.0\n"
@@ -166,7 +166,7 @@ msgstr ""
 #. module: account_easy_reconcile
 #: help:account.easy.reconcile,message_last_post:0
 msgid "Date of the last message posted on the record."
-msgstr ""
+msgstr "Viimeisimmän lähetetyn viestin päiväys."
 
 #. module: account_easy_reconcile
 #: field:account.easy.reconcile,display_name:0
@@ -217,7 +217,7 @@ msgstr ""
 #. module: account_easy_reconcile
 #: field:account.easy.reconcile,message_follower_ids:0
 msgid "Followers"
-msgstr ""
+msgstr "Seuraajat"
 
 #. module: account_easy_reconcile
 #: field:account.easy.reconcile.method,income_exchange_account_id:0
@@ -257,7 +257,7 @@ msgstr ""
 #. module: account_easy_reconcile
 #: view:easy.reconcile.history:account_easy_reconcile.view_easy_reconcile_history_search
 msgid "Group By..."
-msgstr ""
+msgstr "Ryhmittele..."
 
 #. module: account_easy_reconcile
 #: view:account.easy.reconcile:account_easy_reconcile.account_easy_reconcile_form
@@ -296,7 +296,7 @@ msgstr "ID"
 #. module: account_easy_reconcile
 #: help:account.easy.reconcile,message_unread:0
 msgid "If checked new messages require your attention."
-msgstr ""
+msgstr "Jos valittuna, uudet viestit vaatii toimenpiteitä."
 
 #. module: account_easy_reconcile
 #: view:account.easy.reconcile:account_easy_reconcile.account_easy_reconcile_form
@@ -322,7 +322,7 @@ msgstr ""
 #. module: account_easy_reconcile
 #: field:account.easy.reconcile,message_last_post:0
 msgid "Last Message Date"
-msgstr ""
+msgstr "Viimeisimmän viestin päiväys"
 
 #. module: account_easy_reconcile
 #: field:account.easy.reconcile,__last_update:0
@@ -406,7 +406,7 @@ msgstr ""
 #. module: account_easy_reconcile
 #: field:account.easy.reconcile,message_ids:0
 msgid "Messages"
-msgstr ""
+msgstr "Viestejä"
 
 #. module: account_easy_reconcile
 #: help:account.easy.reconcile,message_ids:0
@@ -421,7 +421,7 @@ msgstr ""
 #. module: account_easy_reconcile
 #: field:account.easy.reconcile,name:0
 msgid "Name"
-msgstr ""
+msgstr "Nimi"
 
 #. module: account_easy_reconcile
 #: view:account.config.settings:account_easy_reconcile.view_account_config
@@ -575,7 +575,7 @@ msgstr ""
 #. module: account_easy_reconcile
 #: field:account.easy.reconcile,message_unread:0
 msgid "Unread Messages"
-msgstr ""
+msgstr "Lukemattomia viestejä"
 
 #. module: account_easy_reconcile
 #: field:account.easy.reconcile,unreconciled_count:0

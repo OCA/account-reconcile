@@ -1,0 +1,162 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# * account_advanced_reconcile
+# 
+# Translators:
+# OCA Transbot <transbot@odoo-community.org>, 2016
+# Rudolf Schnapka <rs@techno-flex.de>, 2016
+# Philipp Hug <philipp@hug.cx>, 2016
+# Ermin Trevisan <trevi@twanda.com>, 2016
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 8.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-10-27 02:42+0000\n"
+"PO-Revision-Date: 2016-10-27 02:42+0000\n"
+"Last-Translator: Ermin Trevisan <trevi@twanda.com>, 2016\n"
+"Language-Team: German (https://www.transifex.com/oca/teams/23907/de/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Language: de\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. module: account_advanced_reconcile
+#: code:addons/account_advanced_reconcile/models/base_advanced_reconciliation.py:176
+#, python-format
+msgid ""
+"A matcher %s is compared with a matcher %s, the _matchers and "
+"_opposite_matchers are probably wrong"
+msgstr ""
+"Der Abstimmer %s wird mit dem Abstimmer %s verglichen, der Abstimmer und das"
+" Gegenstück sind wahrscheinlich falsch"
+
+#. module: account_advanced_reconcile
+#: field:easy.reconcile.advanced,account_id:0
+#: field:easy.reconcile.advanced.ref,account_id:0
+msgid "Account"
+msgstr "Konto"
+
+#. module: account_advanced_reconcile
+#: field:easy.reconcile.advanced,account_lost_id:0
+#: field:easy.reconcile.advanced.ref,account_lost_id:0
+msgid "Account Lost"
+msgstr "Konto für Verluste"
+
+#. module: account_advanced_reconcile
+#: field:easy.reconcile.advanced,account_profit_id:0
+#: field:easy.reconcile.advanced.ref,account_profit_id:0
+msgid "Account Profit"
+msgstr "Konto für Umsätze"
+
+#. module: account_advanced_reconcile
+#: view:account.easy.reconcile:account_advanced_reconcile.view_easy_reconcile_form
+msgid "Advanced. Partner and Ref"
+msgstr "Weitergehend. Partner und Ref"
+
+#. module: account_advanced_reconcile
+#: help:easy.reconcile.advanced,analytic_account_id:0
+#: help:easy.reconcile.advanced.ref,analytic_account_id:0
+msgid "Analytic account for the write-off"
+msgstr "Kostenstelle für Abschreibungen"
+
+#. module: account_advanced_reconcile
+#: field:easy.reconcile.advanced,analytic_account_id:0
+#: field:easy.reconcile.advanced.ref,analytic_account_id:0
+msgid "Analytic_account"
+msgstr "Kostenstelle"
+
+#. module: account_advanced_reconcile
+#: field:easy.reconcile.advanced.ref,create_uid:0
+msgid "Created by"
+msgstr "erstellt von"
+
+#. module: account_advanced_reconcile
+#: field:easy.reconcile.advanced.ref,create_date:0
+msgid "Created on"
+msgstr "erstellt am"
+
+#. module: account_advanced_reconcile
+#: field:easy.reconcile.advanced,date_base_on:0
+#: field:easy.reconcile.advanced.ref,date_base_on:0
+msgid "Date of reconciliation"
+msgstr "Ausgleichsdatum"
+
+#. module: account_advanced_reconcile
+#: field:easy.reconcile.advanced,display_name:0
+#: field:easy.reconcile.advanced.ref,display_name:0
+msgid "Display Name"
+msgstr "Anzeigename"
+
+#. module: account_advanced_reconcile
+#: field:easy.reconcile.advanced,filter:0
+#: field:easy.reconcile.advanced.ref,filter:0
+msgid "Filter"
+msgstr "Filter"
+
+#. module: account_advanced_reconcile
+#: field:easy.reconcile.advanced,income_exchange_account_id:0
+#: field:easy.reconcile.advanced.ref,income_exchange_account_id:0
+msgid "Gain Exchange Rate Account"
+msgstr "Konto für Wechselkursgewinne"
+
+#. module: account_advanced_reconcile
+#: field:easy.reconcile.advanced,id:0 field:easy.reconcile.advanced.ref,id:0
+msgid "ID"
+msgstr "ID"
+
+#. module: account_advanced_reconcile
+#: field:easy.reconcile.advanced,journal_id:0
+#: field:easy.reconcile.advanced.ref,journal_id:0
+msgid "Journal"
+msgstr "Journal"
+
+#. module: account_advanced_reconcile
+#: field:easy.reconcile.advanced,__last_update:0
+#: field:easy.reconcile.advanced.ref,__last_update:0
+msgid "Last Modified on"
+msgstr "Zuletzt geändert am"
+
+#. module: account_advanced_reconcile
+#: field:easy.reconcile.advanced.ref,write_uid:0
+msgid "Last Updated by"
+msgstr "zuletzt aktualisiert von"
+
+#. module: account_advanced_reconcile
+#: field:easy.reconcile.advanced.ref,write_date:0
+msgid "Last Updated on"
+msgstr "zuletzt aktualisiert am"
+
+#. module: account_advanced_reconcile
+#: field:easy.reconcile.advanced,expense_exchange_account_id:0
+#: field:easy.reconcile.advanced.ref,expense_exchange_account_id:0
+msgid "Loss Exchange Rate Account"
+msgstr "Konto für Wechselkursverluste "
+
+#. module: account_advanced_reconcile
+#: view:account.easy.reconcile:account_advanced_reconcile.view_easy_reconcile_form
+msgid ""
+"Match multiple debit vs multiple credit entries. Allow partial "
+"reconciliation. The lines should have the partner, the credit entry ref. is "
+"matched vs the debit entry ref. or name."
+msgstr ""
+"Stimme mehrere Soll- mit mehreren Habenposten ab. Erlaube Teilausgleich. Die"
+" Positionen müssen den Partner enthalten, Die Ref. der Habenbuchung wird mit"
+" der Ref. oder dem Namen der Sollbuchungabgestimmt."
+
+#. module: account_advanced_reconcile
+#: field:easy.reconcile.advanced,partner_ids:0
+#: field:easy.reconcile.advanced.ref,partner_ids:0
+msgid "Restrict on partners"
+msgstr "Schränke auf Partner ein"
+
+#. module: account_advanced_reconcile
+#: field:easy.reconcile.advanced,write_off:0
+#: field:easy.reconcile.advanced.ref,write_off:0
+msgid "Write off allowed"
+msgstr "Abschreibung erlaubt"
+
+#. module: account_advanced_reconcile
+#: model:ir.model,name:account_advanced_reconcile.model_account_easy_reconcile_method
+msgid "reconcile method for account_easy_reconcile"
+msgstr "Ausgleichsverfahren bei account_easy_reconcile"

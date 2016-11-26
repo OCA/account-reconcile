@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bank-statement-reconcile (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-08-20 05:55+0000\n"
-"PO-Revision-Date: 2016-09-09 12:27+0000\n"
+"POT-Creation-Date: 2016-10-27 02:42+0000\n"
+"PO-Revision-Date: 2016-11-25 14:58+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
 "Language-Team: Portuguese (http://www.transifex.com/oca/OCA-bank-statement-reconcile-8-0/language/pt/)\n"
 "MIME-Version: 1.0\n"
@@ -179,7 +179,7 @@ msgstr ""
 #: field:easy.reconcile.simple.partner,display_name:0
 #: field:easy.reconcile.simple.reference,display_name:0
 msgid "Display Name"
-msgstr ""
+msgstr "Nome"
 
 #. module: account_easy_reconcile
 #: view:account.easy.reconcile:account_easy_reconcile.account_easy_reconcile_form
@@ -335,7 +335,7 @@ msgstr ""
 #: field:easy.reconcile.simple.partner,__last_update:0
 #: field:easy.reconcile.simple.reference,__last_update:0
 msgid "Last Modified on"
-msgstr ""
+msgstr "Modificado a última vez por"
 
 #. module: account_easy_reconcile
 #: field:account.easy.reconcile,write_uid:0
@@ -421,7 +421,7 @@ msgstr ""
 #. module: account_easy_reconcile
 #: field:account.easy.reconcile,name:0
 msgid "Name"
-msgstr ""
+msgstr "Nome"
 
 #. module: account_easy_reconcile
 #: view:account.config.settings:account_easy_reconcile.view_account_config
