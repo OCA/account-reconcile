@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bank-statement-reconcile (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-10-27 02:42+0000\n"
-"PO-Revision-Date: 2016-10-11 09:52+0000\n"
+"POT-Creation-Date: 2016-11-26 03:25+0000\n"
+"PO-Revision-Date: 2016-12-02 13:53+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
 "Language-Team: Norwegian Bokmål (http://www.transifex.com/oca/OCA-bank-statement-reconcile-8-0/language/nb/)\n"
 "MIME-Version: 1.0\n"
@@ -257,13 +257,13 @@ msgstr ""
 #. module: account_easy_reconcile
 #: view:easy.reconcile.history:account_easy_reconcile.view_easy_reconcile_history_search
 msgid "Group By..."
-msgstr ""
+msgstr "Grupper etter ..."
 
 #. module: account_easy_reconcile
 #: view:account.easy.reconcile:account_easy_reconcile.account_easy_reconcile_form
 #: field:account.easy.reconcile,history_ids:0
 msgid "History"
-msgstr ""
+msgstr "Historikk"
 
 #. module: account_easy_reconcile
 #: model:ir.actions.act_window,name:account_easy_reconcile.act_easy_reconcile_to_history
