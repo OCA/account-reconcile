@@ -10,12 +10,12 @@ msgstr ""
 "POT-Creation-Date: 2016-12-10 01:06+0000\n"
 "PO-Revision-Date: 2016-04-19 11:45+0000\n"
 "Last-Translator: <>\n"
-"Language-Team: Portuguese (Brazil) (http://www.transifex.com/oca/OCA-bank-statement-reconcile-8-0/language/pt_BR/)\n"
+"Language-Team: Estonian (http://www.transifex.com/oca/OCA-bank-statement-reconcile-8-0/language/et/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Language: pt_BR\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Language: et\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. module: account_statement_operation_rule
 #: model:ir.actions.act_window,help:account_statement_operation_rule.action_account_statement_operation_rule
@@ -47,12 +47,12 @@ msgstr ""
 #. module: account_statement_operation_rule
 #: field:account.statement.operation.rule,create_uid:0
 msgid "Created by"
-msgstr "Criado por"
+msgstr "Loonud"
 
 #. module: account_statement_operation_rule
 #: field:account.statement.operation.rule,create_date:0
 msgid "Created on"
-msgstr "Criado em"
+msgstr "Loodud"
 
 #. module: account_statement_operation_rule
 #: field:account.statement.operation.rule,currencies:0
@@ -63,7 +63,7 @@ msgstr ""
 #. module: account_statement_operation_rule
 #: field:account.statement.operation.rule,display_name:0
 msgid "Display Name"
-msgstr "Nome para Mostrar"
+msgstr "Näidatav nimi"
 
 #. module: account_statement_operation_rule
 #: selection:account.statement.operation.rule,rule_type:0
@@ -80,7 +80,7 @@ msgstr ""
 #. module: account_statement_operation_rule
 #: field:account.statement.operation.rule,id:0
 msgid "ID"
-msgstr "Identificação"
+msgstr "ID"
 
 #. module: account_statement_operation_rule
 #: help:account.statement.operation.rule,sequence:0
@@ -90,17 +90,17 @@ msgstr ""
 #. module: account_statement_operation_rule
 #: field:account.statement.operation.rule,__last_update:0
 msgid "Last Modified on"
-msgstr "Última atualização em"
+msgstr "Viimati muudetud"
 
 #. module: account_statement_operation_rule
 #: field:account.statement.operation.rule,write_uid:0
 msgid "Last Updated by"
-msgstr "Última atualização por"
+msgstr "Viimati uuendatud"
 
 #. module: account_statement_operation_rule
 #: field:account.statement.operation.rule,write_date:0
 msgid "Last Updated on"
-msgstr "Última atualização em"
+msgstr "Viimati uuendatud"
 
 #. module: account_statement_operation_rule
 #: field:account.statement.operation.rule,amount_max:0
@@ -115,7 +115,7 @@ msgstr ""
 #. module: account_statement_operation_rule
 #: field:account.statement.operation.rule,name:0
 msgid "Name"
-msgstr "Nome"
+msgstr "Nimi"
 
 #. module: account_statement_operation_rule
 #: field:account.statement.operation.rule,operations:0
@@ -135,12 +135,12 @@ msgstr ""
 #. module: account_statement_operation_rule
 #: view:account.statement.operation.rule:account_statement_operation_rule.view_account_statement_operation_rule_form
 msgid "Rule"
-msgstr "Regra"
+msgstr ""
 
 #. module: account_statement_operation_rule
 #: field:account.statement.operation.rule,sequence:0
 msgid "Sequence"
-msgstr "Sequência"
+msgstr "Jada"
 
 #. module: account_statement_operation_rule
 #: view:account.statement.operation.rule:account_statement_operation_rule.view_account_statement_operation_rule_form
@@ -163,7 +163,7 @@ msgstr ""
 #. module: account_statement_operation_rule
 #: field:account.statement.operation.rule,rule_type:0
 msgid "Type"
-msgstr "Tipo"
+msgstr "Tüüp"
 
 #. module: account_statement_operation_rule
 #: view:account.statement.operation.rule:account_statement_operation_rule.view_account_statement_operation_rule_form
