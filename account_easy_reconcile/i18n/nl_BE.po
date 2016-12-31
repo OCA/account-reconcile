@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bank-statement-reconcile (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-10-27 02:42+0000\n"
-"PO-Revision-Date: 2016-10-11 09:47+0000\n"
+"POT-Creation-Date: 2016-12-24 00:36+0000\n"
+"PO-Revision-Date: 2016-12-27 08:20+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
 "Language-Team: Dutch (Belgium) (http://www.transifex.com/oca/OCA-bank-statement-reconcile-8-0/language/nl_BE/)\n"
 "MIME-Version: 1.0\n"
@@ -113,7 +113,7 @@ msgstr ""
 #. module: account_easy_reconcile
 #: model:ir.model,name:account_easy_reconcile.model_res_company
 msgid "Companies"
-msgstr ""
+msgstr "Bedrijven"
 
 #. module: account_easy_reconcile
 #: field:account.easy.reconcile,company_id:0

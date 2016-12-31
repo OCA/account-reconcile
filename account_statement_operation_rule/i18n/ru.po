@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bank-statement-reconcile (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-10-27 02:42+0000\n"
+"POT-Creation-Date: 2016-12-24 00:36+0000\n"
 "PO-Revision-Date: 2016-04-19 11:45+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: Russian (http://www.transifex.com/oca/OCA-bank-statement-reconcile-8-0/language/ru/)\n"
@@ -47,12 +47,12 @@ msgstr ""
 #. module: account_statement_operation_rule
 #: field:account.statement.operation.rule,create_uid:0
 msgid "Created by"
-msgstr ""
+msgstr "Создано"
 
 #. module: account_statement_operation_rule
 #: field:account.statement.operation.rule,create_date:0
 msgid "Created on"
-msgstr ""
+msgstr "Создан"
 
 #. module: account_statement_operation_rule
 #: field:account.statement.operation.rule,currencies:0
@@ -80,7 +80,7 @@ msgstr ""
 #. module: account_statement_operation_rule
 #: field:account.statement.operation.rule,id:0
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: account_statement_operation_rule
 #: help:account.statement.operation.rule,sequence:0
@@ -95,12 +95,12 @@ msgstr ""
 #. module: account_statement_operation_rule
 #: field:account.statement.operation.rule,write_uid:0
 msgid "Last Updated by"
-msgstr ""
+msgstr "Последний раз обновлено"
 
 #. module: account_statement_operation_rule
 #: field:account.statement.operation.rule,write_date:0
 msgid "Last Updated on"
-msgstr ""
+msgstr "Последний раз обновлено"
 
 #. module: account_statement_operation_rule
 #: field:account.statement.operation.rule,amount_max:0

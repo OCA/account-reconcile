@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bank-statement-reconcile (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-12-10 01:06+0000\n"
-"PO-Revision-Date: 2016-12-23 08:32+0000\n"
+"POT-Creation-Date: 2016-12-24 00:36+0000\n"
+"PO-Revision-Date: 2016-12-30 20:56+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
 "Language-Team: Turkish (http://www.transifex.com/oca/OCA-bank-statement-reconcile-8-0/language/tr/)\n"
 "MIME-Version: 1.0\n"
@@ -113,19 +113,19 @@ msgstr ""
 #. module: account_easy_reconcile
 #: model:ir.model,name:account_easy_reconcile.model_res_company
 msgid "Companies"
-msgstr ""
+msgstr "Şirketler"
 
 #. module: account_easy_reconcile
 #: field:account.easy.reconcile,company_id:0
 #: field:account.easy.reconcile.method,company_id:0
 #: field:easy.reconcile.history,company_id:0
 msgid "Company"
-msgstr ""
+msgstr "Şirket"
 
 #. module: account_easy_reconcile
 #: view:account.easy.reconcile:account_easy_reconcile.account_easy_reconcile_form
 msgid "Configuration"
-msgstr ""
+msgstr "Yapılandırma"
 
 #. module: account_easy_reconcile
 #: field:account.easy.reconcile,create_uid:0
@@ -179,7 +179,7 @@ msgstr "Kayıda eklenen son mesajın tarihi."
 #: field:easy.reconcile.simple.partner,display_name:0
 #: field:easy.reconcile.simple.reference,display_name:0
 msgid "Display Name"
-msgstr ""
+msgstr "Görünen İsim"
 
 #. module: account_easy_reconcile
 #: view:account.easy.reconcile:account_easy_reconcile.account_easy_reconcile_form
@@ -275,7 +275,7 @@ msgstr ""
 msgid ""
 "Holds the Chatter summary (number of messages, ...). This summary is "
 "directly in html format in order to be inserted in kanban views."
-msgstr ""
+msgstr "Sohbet özetini tutar (kaç mesa vs) Bu özet kanban görünümleri gibi yerlerde kullanılmak için doğrudan HTML formatındadır. "
 
 #. module: account_easy_reconcile
 #: field:account.config.settings,reconciliation_commit_every:0
@@ -335,7 +335,7 @@ msgstr "Son mesaj tarihi"
 #: field:easy.reconcile.simple.partner,__last_update:0
 #: field:easy.reconcile.simple.reference,__last_update:0
 msgid "Last Modified on"
-msgstr ""
+msgstr "Son değişiklik"
 
 #. module: account_easy_reconcile
 #: field:account.easy.reconcile,write_uid:0
@@ -411,7 +411,7 @@ msgstr "Mesajlar"
 #. module: account_easy_reconcile
 #: help:account.easy.reconcile,message_ids:0
 msgid "Messages and communication history"
-msgstr ""
+msgstr "Mesaj ve iletişim geçmişi"
 
 #. module: account_easy_reconcile
 #: field:account.easy.reconcile,reconcile_method:0
@@ -426,7 +426,7 @@ msgstr "Adı"
 #. module: account_easy_reconcile
 #: view:account.config.settings:account_easy_reconcile.view_account_config
 msgid "Options"
-msgstr ""
+msgstr "Seçenekler"
 
 #. module: account_easy_reconcile
 #: code:addons/account_easy_reconcile/easy_reconcile_history.py:104
@@ -570,7 +570,7 @@ msgstr ""
 #. module: account_easy_reconcile
 #: field:account.easy.reconcile.method,name:0
 msgid "Type"
-msgstr ""
+msgstr "Tipi"
 
 #. module: account_easy_reconcile
 #: field:account.easy.reconcile,message_unread:0
