@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 9.0c\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-11-03 10:40+0000\n"
-"PO-Revision-Date: 2016-11-03 10:40+0000\n"
+"POT-Creation-Date: 2016-12-24 00:39+0000\n"
+"PO-Revision-Date: 2016-12-24 00:39+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2016\n"
 "Language-Team: Latvian (https://www.transifex.com/oca/teams/23907/lv/)\n"
 "MIME-Version: 1.0\n"
@@ -76,7 +76,7 @@ msgstr ""
 #. module: account_move_base_import
 #: model:ir.ui.view,arch_db:account_move_base_import.move_importer_view
 msgid "Cancel"
-msgstr ""
+msgstr "Atcelt"
 
 #. module: account_move_base_import
 #: model:ir.model.fields,help:account_move_base_import.field_account_journal_receivable_account_id
@@ -519,7 +519,7 @@ msgstr ""
 #. module: account_move_base_import
 #: model:ir.model,name:account_move_base_import.model_res_partner
 msgid "Partner"
-msgstr ""
+msgstr "Partneris"
 
 #. module: account_move_base_import
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_move_import_partner_id

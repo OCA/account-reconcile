@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bank-statement-reconcile (9.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-12-10 01:07+0000\n"
-"PO-Revision-Date: 2016-12-23 08:32+0000\n"
+"POT-Creation-Date: 2016-12-24 00:38+0000\n"
+"PO-Revision-Date: 2016-12-27 12:10+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
 "Language-Team: Spanish (http://www.transifex.com/oca/OCA-bank-statement-reconcile-9-0/language/es/)\n"
 "MIME-Version: 1.0\n"
@@ -298,7 +298,7 @@ msgstr "Si se marca los nuevos mensajes requerirán su atención."
 #. module: account_mass_reconcile
 #: model:ir.model.fields,help:account_mass_reconcile.field_account_mass_reconcile_message_needaction
 msgid "If checked, new messages require your attention."
-msgstr ""
+msgstr "Si está marcado, hay nuevos mensajes que requieren su atención."
 
 #. module: account_mass_reconcile
 #: model:ir.ui.view,arch_db:account_mass_reconcile.account_mass_reconcile_form
@@ -308,7 +308,7 @@ msgstr "Información"
 #. module: account_mass_reconcile
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile_message_is_follower
 msgid "Is Follower"
-msgstr ""
+msgstr "Es un seguidor"
 
 #. module: account_mass_reconcile
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile_method_journal_id
@@ -450,17 +450,17 @@ msgstr "Nombre"
 #. module: account_mass_reconcile
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile_message_needaction_counter
 msgid "Number of Actions"
-msgstr ""
+msgstr "Número de acciones"
 
 #. module: account_mass_reconcile
 #: model:ir.model.fields,help:account_mass_reconcile.field_account_mass_reconcile_message_needaction_counter
 msgid "Number of messages which requires an action"
-msgstr ""
+msgstr "Número de mensajes que requieren una acción"
 
 #. module: account_mass_reconcile
 #: model:ir.model.fields,help:account_mass_reconcile.field_account_mass_reconcile_message_unread_counter
 msgid "Number of unread messages"
-msgstr ""
+msgstr "Número de mensajes sin leer"
 
 #. module: account_mass_reconcile
 #: model:ir.ui.view,arch_db:account_mass_reconcile.view_account_config
@@ -595,7 +595,7 @@ msgstr "Mensajes sin leer"
 #. module: account_mass_reconcile
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile_message_unread_counter
 msgid "Unread Messages Counter"
-msgstr ""
+msgstr "Contador de mensajes no leídos"
 
 #. module: account_mass_reconcile
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile_unreconciled_count

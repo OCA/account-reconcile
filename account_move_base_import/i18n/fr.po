@@ -4,15 +4,14 @@
 # 
 # Translators:
 # OCA Transbot <transbot@odoo-community.org>, 2016
-# David BEAL <david.beal@akretion.com>, 2016
-# Sébastien LANGE (SYLEAM) <sebastien.lange@syleam.fr>, 2016
+# Christophe CHAUVET <christophe.chauvet@gmail.com>, 2016
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 9.0c\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-11-03 10:40+0000\n"
-"PO-Revision-Date: 2016-11-03 10:40+0000\n"
-"Last-Translator: Sébastien LANGE (SYLEAM) <sebastien.lange@syleam.fr>, 2016\n"
+"POT-Creation-Date: 2016-12-24 00:39+0000\n"
+"PO-Revision-Date: 2016-12-24 00:39+0000\n"
+"Last-Translator: Christophe CHAUVET <christophe.chauvet@gmail.com>, 2016\n"
 "Language-Team: French (https://www.transifex.com/oca/teams/23907/fr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -303,7 +302,7 @@ msgstr "Paramètres de configuration d'import"
 #. module: account_move_base_import
 #: model:ir.ui.view,arch_db:account_move_base_import.move_importer_view
 msgid "Import file"
-msgstr ""
+msgstr "Importation de fichier"
 
 #. module: account_move_base_import
 #: model:ir.ui.view,arch_db:account_move_base_import.move_importer_view
