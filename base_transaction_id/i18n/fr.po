@@ -1,0 +1,59 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# * base_transaction_id
+# 
+# Translators:
+msgid ""
+msgstr ""
+"Project-Id-Version: bank-statement-reconcile (9.0)\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-11-03 10:40+0000\n"
+"PO-Revision-Date: 2016-11-18 10:00+0000\n"
+"Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
+"Language-Team: French (http://www.transifex.com/oca/OCA-bank-statement-reconcile-9-0/language/fr/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Language: fr\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#. module: base_transaction_id
+#: model:ir.model,name:base_transaction_id.model_account_bank_statement_line
+msgid "Bank Statement Line"
+msgstr "Ligne de relevé bancaire"
+
+#. module: base_transaction_id
+#: model:ir.model,name:base_transaction_id.model_account_invoice
+msgid "Invoice"
+msgstr "Facture"
+
+#. module: base_transaction_id
+#: model:ir.model,name:base_transaction_id.model_account_move_line
+msgid "Journal Item"
+msgstr "Écriture comptable"
+
+#. module: base_transaction_id
+#: model:ir.model,name:base_transaction_id.model_sale_order
+msgid "Sales Order"
+msgstr "Bon de commande"
+
+#. module: base_transaction_id
+#: model:ir.model.fields,field_description:base_transaction_id.field_account_invoice_transaction_id
+#: model:ir.model.fields,field_description:base_transaction_id.field_sale_order_transaction_id
+msgid "Transaction ID"
+msgstr "ID de transaction"
+
+#. module: base_transaction_id
+#: model:ir.model.fields,help:base_transaction_id.field_account_invoice_transaction_id
+msgid "Transaction ID from the financial institute"
+msgstr "ID de transaction de l'institut financier"
+
+#. module: base_transaction_id
+#: model:ir.model.fields,field_description:base_transaction_id.field_account_move_line_transaction_ref
+msgid "Transaction Ref."
+msgstr "Réf. de transaction"
+
+#. module: base_transaction_id
+#: model:ir.model.fields,help:base_transaction_id.field_sale_order_transaction_id
+msgid "Transaction id from the financial institute"
+msgstr "ID de transaction de l'institut financier"
