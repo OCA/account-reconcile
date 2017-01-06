@@ -2,7 +2,7 @@
 # © 2012-2016 Camptocamp SA (Guewen Baconnier, Damien Crier, Matthieu Dietrich)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from openerp import models, api, fields, _
+from odoo import models, api, fields, _
 
 
 class MassReconcileHistory(models.Model):
