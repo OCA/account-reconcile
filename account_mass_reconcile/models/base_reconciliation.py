@@ -3,8 +3,8 @@
 # © 2010 Sébastien Beau
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from openerp import models, api, fields
-from openerp.tools.safe_eval import safe_eval
+from odoo import _, models, api, fields
+from odoo.tools.safe_eval import safe_eval
 from operator import itemgetter
 
 
@@ -149,16 +149,18 @@ class MassReconcileBase(models.AbstractModel):
         """
         self.ensure_one()
         ml_obj = self.env['account.move.line']
-        line_ids = [l['id'] for l in lines]
         below_writeoff, sum_debit, sum_credit = self._below_writeoff_limit(
             lines, self.write_off
         )
+        rec_date = self._get_rec_date(lines, self.date_base_on)
+        line_rs = ml_obj.browse([l['id'] for l in lines]).with_context(
+            date_p=rec_date,
+            comment=_('Automatic Write Off'))
         if below_writeoff:
             if sum_credit > sum_debit:
                 writeoff_account = self.account_profit_id
             else:
                 writeoff_account = self.account_lost_id
-            line_rs = ml_obj.browse(line_ids)
             line_rs.reconcile(
                 writeoff_acc_id=writeoff_account,
                 writeoff_journal_id=self.journal_id
@@ -176,7 +178,6 @@ class MassReconcileBase(models.AbstractModel):
                 writeoff_account = self.income_exchange_account_id
             else:
                 writeoff_account = self.expense_exchange_account_id
-            line_rs = ml_obj.browse(line_ids)
             line_rs.reconcile(
                 writeoff_acc_id=writeoff_account,
                 writeoff_journal_id=self.journal_id

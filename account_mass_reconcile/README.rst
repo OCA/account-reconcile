@@ -36,7 +36,7 @@ new mass reconcile.
 
 .. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas
    :alt: Try me on Runbot
-   :target: https://runbot.odoo-community.org/runbot/98/8.0
+   :target: https://runbot.odoo-community.org/runbot/98/10.0
 
 
 Bug Tracker
@@ -68,6 +68,7 @@ Contributors
 * Laetitia Gangloff <laetitia.gangloff@acsone.eu>
 * Frédéric Clémenti <frederic.clementi@camptocamp.com>
 * Damien Crier <damien.crier@camptocamp.com>
+* Akim Juillerat <akim.juillerat@camptocamp.com>
 
 Maintainer
 ----------
