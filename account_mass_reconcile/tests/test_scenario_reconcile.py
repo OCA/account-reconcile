@@ -64,7 +64,7 @@ class TestScenarioReconcile(common.TransactionCase):
             }
         )
         # validate invoice
-        invoice.signal_workflow('invoice_open')
+        invoice.action_invoice_open()
         self.assertEqual('open', invoice.state)
 
         # create bank_statement
@@ -161,7 +161,7 @@ class TestScenarioReconcile(common.TransactionCase):
             }
         )
         # validate invoice
-        invoice.signal_workflow('invoice_open')
+        invoice.action_invoice_open()
         self.assertEqual('open', invoice.state)
 
         # create bank_statement
