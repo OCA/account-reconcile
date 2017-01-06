@@ -4,9 +4,9 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 from datetime import datetime
-from openerp import models, api, fields, _
-from openerp.exceptions import Warning as UserError
-from openerp import sql_db
+from odoo import models, api, fields, _
+from odoo.exceptions import Warning as UserError
+from odoo import sql_db
 
 import logging
 _logger = logging.getLogger(__name__)

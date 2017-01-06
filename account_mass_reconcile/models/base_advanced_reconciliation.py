@@ -5,9 +5,9 @@
 
 import logging
 
-from openerp import models, api
+from odoo import models, api
 from itertools import product
-from openerp.tools.translate import _
+from odoo.tools.translate import _
 
 _logger = logging.getLogger(__name__)
 

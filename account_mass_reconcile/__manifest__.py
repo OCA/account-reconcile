@@ -5,8 +5,8 @@
 
 {
     "name": "Mass Reconcile",
-    "version": "9.0.1.0.0",
-    "depends": ["account", "account_full_reconcile"],
+    "version": "10.0.1.0.0",
+    "depends": ["account"],
     "author": "Akretion,Camptocamp,Odoo Community Association (OCA)",
     "website": "http://www.akretion.com/",
     "category": "Finance",
@@ -18,6 +18,6 @@
              ],
     'license': 'AGPL-3',
     "auto_install": False,
-    'installable': False,
+    'installable': True,
 
 }
