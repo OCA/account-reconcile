@@ -3,8 +3,8 @@
 # © 2010 Sébastien Beau
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from openerp import models, api, fields
-from openerp.tools.safe_eval import safe_eval
+from odoo import models, api, fields
+from odoo.tools.safe_eval import safe_eval
 from operator import itemgetter
 
 
