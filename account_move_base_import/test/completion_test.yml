@@ -67,29 +67,19 @@
   !python {model: account.move.line}: |
     import datetime as dt
     context['check_move_validity'] = False
-    model.write(cr, uid, [ref('move_line_ci')],
-                {'name': dt.date.today().strftime('TBNK/%Y/0001'),
-                 'credit': 210.0},
-                context)
-    model.write(cr, uid, [ref('move_line_si')],
-                {'name': 'T2S12345',
-                 'debit': 65.0},
-                context)
-    model.write(cr, uid, [ref('move_line_cr')],
-                {'name': dt.date.today().strftime('RTEXJ/%Y/0001'),
-                 'debit': 210.0},
-                context)
-    model.write(cr, uid, [ref('move_line_partner_name')],
-                {'credit': 600.0},
-                context)
-    model.write(cr, uid, [ref('move_line_partner_label')],
-                {'debit': 932.4},
-                context)
+    model.write({'name': dt.date.today().strftime('TBNK/%Y/0001'),
+                 'credit': 210.0})
+    model.write({'name': 'T2S12345',
+                 'debit': 65.0})
+    model.write({'name': dt.date.today().strftime('RTEXJ/%Y/0001'),
+                 'debit': 210.0})
+    model.write({'credit': 600.0})
+    model.write({'debit': 932.4})
 -
   I run the auto complete
 -
   !python {model: account.move}: |
-    result = self.button_auto_completion(cr, uid, [ref("move_test1")])
+    result = self.button_auto_completion()
 -
   Now I can check that all is nice and shiny, line 1. I expect the Customer
   Invoice Number to be recognised.
