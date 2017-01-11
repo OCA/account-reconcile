@@ -27,7 +27,8 @@
 -
   I confirm the Invoice
 -
-  !workflow {model: account.invoice, action: invoice_open, ref: invoice_for_completion_1}
+  !python {model: account.invoice, id: invoice_for_completion_1}:
+    self.action_invoice_open()
 -
   I check that the invoice state is "Open"
 -
@@ -38,5 +39,5 @@
 -
   !python {model: account.invoice}: |
     import datetime as dt
-    invoice = model.browse(cr, uid, ref('invoice_for_completion_1'), context)
+    invoice = model.browse(ref('invoice_for_completion_1'))
     assert invoice.number == dt.date.today().strftime('TBNK/%Y/0001')

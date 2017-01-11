@@ -18,7 +18,7 @@
   I add a reference to an existing supplier invoce
 -
   !python {model: account.invoice}: |
-    self.write(cr, uid, ref('account.demo_invoice_0'), {
+    self.write({
       'reference': 'T2S12345'
     })
 -
@@ -29,7 +29,8 @@
 -
   Now I confirm it
 -
-  !workflow {model: account.invoice, action: invoice_open, ref: account.demo_invoice_0}
+  !python {model: account.invoice, id: account.demo_invoice_0}:
+    self.action_invoice_open()
 -
   I check that the supplier number is there
 -
