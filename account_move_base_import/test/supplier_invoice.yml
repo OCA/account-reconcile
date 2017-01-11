@@ -17,10 +17,8 @@
 -
   I add a reference to an existing supplier invoce
 -
-  !python {model: account.invoice}: |
-    self.write({
-      'reference': 'T2S12345'
-    })
+  !python {model: account.invoice, id: account.demo_invoice_0}: |
+    self.write({'reference': 'T2S12345'})
 -
   I check a second time that my invoice is still a supplier invoice
 -
@@ -29,7 +27,7 @@
 -
   Now I confirm it
 -
-  !python {model: account.invoice, id: account.demo_invoice_0}:
+  !python {model: account.invoice, ref: account.demo_invoice_0}: |
     self.action_invoice_open()
 -
   I check that the supplier number is there

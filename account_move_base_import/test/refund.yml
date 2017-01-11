@@ -27,8 +27,8 @@
 -
   I confirm the refund
 -
-  !python {model: account.invoice, id: invoice_for_completion_1}:
-    self.action_invoice_open()
+  !python {model: account.invoice, ref: invoice_for_completion_1}: |
+    model.browse(ref('refund_for_completion_1')).action_invoice_open()
 -
   I check that the refund state is "Open"
 -
