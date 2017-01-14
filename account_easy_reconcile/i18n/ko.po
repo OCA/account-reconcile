@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bank-statement-reconcile (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-10-27 02:42+0000\n"
-"PO-Revision-Date: 2016-10-11 09:50+0000\n"
+"POT-Creation-Date: 2017-01-07 01:11+0000\n"
+"PO-Revision-Date: 2017-01-13 09:29+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
 "Language-Team: Korean (http://www.transifex.com/oca/OCA-bank-statement-reconcile-8-0/language/ko/)\n"
 "MIME-Version: 1.0\n"
@@ -150,7 +150,7 @@ msgstr "작성일"
 #. module: account_easy_reconcile
 #: view:easy.reconcile.history:account_easy_reconcile.view_easy_reconcile_history_search
 msgid "Date"
-msgstr ""
+msgstr "날짜"
 
 #. module: account_easy_reconcile
 #: field:account.easy.reconcile.method,date_base_on:0
