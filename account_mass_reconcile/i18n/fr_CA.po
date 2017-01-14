@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bank-statement-reconcile (9.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-12-24 00:38+0000\n"
+"POT-Creation-Date: 2017-01-07 01:13+0000\n"
 "PO-Revision-Date: 2016-12-21 19:24+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
 "Language-Team: French (Canada) (http://www.transifex.com/oca/OCA-bank-statement-reconcile-9-0/language/fr_CA/)\n"
@@ -153,7 +153,7 @@ msgstr "Créé le"
 #. module: account_mass_reconcile
 #: model:ir.ui.view,arch_db:account_mass_reconcile.view_mass_reconcile_history_search
 msgid "Date"
-msgstr ""
+msgstr "Date"
 
 #. module: account_mass_reconcile
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile_method_date_base_on

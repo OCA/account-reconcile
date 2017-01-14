@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bank-statement-reconcile (9.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-12-10 01:07+0000\n"
-"PO-Revision-Date: 2016-12-23 08:31+0000\n"
+"POT-Creation-Date: 2017-01-07 01:13+0000\n"
+"PO-Revision-Date: 2017-01-13 09:22+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
 "Language-Team: Catalan (http://www.transifex.com/oca/OCA-bank-statement-reconcile-9-0/language/ca/)\n"
 "MIME-Version: 1.0\n"
@@ -153,7 +153,7 @@ msgstr "Creat el"
 #. module: account_mass_reconcile
 #: model:ir.ui.view,arch_db:account_mass_reconcile.view_mass_reconcile_history_search
 msgid "Date"
-msgstr ""
+msgstr "Data"
 
 #. module: account_mass_reconcile
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile_method_date_base_on
@@ -186,7 +186,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_partner_display_name
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_reference_display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Veure el nom"
 
 #. module: account_mass_reconcile
 #: model:ir.ui.view,arch_db:account_mass_reconcile.account_mass_reconcile_form
@@ -261,7 +261,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile_history_ids
 #: model:ir.ui.view,arch_db:account_mass_reconcile.account_mass_reconcile_form
 msgid "History"
-msgstr ""
+msgstr "Història"
 
 #. module: account_mass_reconcile
 #: model:ir.actions.act_window,name:account_mass_reconcile.act_mass_reconcile_to_history
@@ -340,7 +340,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_partner___last_update
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_reference___last_update
 msgid "Last Modified on"
-msgstr ""
+msgstr "Darrera modificació el"
 
 #. module: account_mass_reconcile
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile_method_write_uid
@@ -522,7 +522,7 @@ msgstr ""
 #. module: account_mass_reconcile
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile_method_sequence
 msgid "Sequence"
-msgstr ""
+msgstr "Seqüència"
 
 #. module: account_mass_reconcile
 #: model:ir.ui.view,arch_db:account_mass_reconcile.account_mass_reconcile_form
@@ -584,7 +584,7 @@ msgstr ""
 #. module: account_mass_reconcile
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile_method_name
 msgid "Type"
-msgstr ""
+msgstr "Tipus"
 
 #. module: account_mass_reconcile
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile_message_unread

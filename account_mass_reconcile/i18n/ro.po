@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bank-statement-reconcile (9.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-12-24 00:38+0000\n"
-"PO-Revision-Date: 2016-12-27 08:24+0000\n"
+"POT-Creation-Date: 2017-01-07 01:13+0000\n"
+"PO-Revision-Date: 2017-01-11 15:38+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
 "Language-Team: Romanian (http://www.transifex.com/oca/OCA-bank-statement-reconcile-9-0/language/ro/)\n"
 "MIME-Version: 1.0\n"
@@ -153,7 +153,7 @@ msgstr "Creat la"
 #. module: account_mass_reconcile
 #: model:ir.ui.view,arch_db:account_mass_reconcile.view_mass_reconcile_history_search
 msgid "Date"
-msgstr ""
+msgstr "Data"
 
 #. module: account_mass_reconcile
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile_method_date_base_on
@@ -261,7 +261,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile_history_ids
 #: model:ir.ui.view,arch_db:account_mass_reconcile.account_mass_reconcile_form
 msgid "History"
-msgstr ""
+msgstr "Istoric"
 
 #. module: account_mass_reconcile
 #: model:ir.actions.act_window,name:account_mass_reconcile.act_mass_reconcile_to_history
@@ -522,7 +522,7 @@ msgstr ""
 #. module: account_mass_reconcile
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile_method_sequence
 msgid "Sequence"
-msgstr ""
+msgstr "Secventa"
 
 #. module: account_mass_reconcile
 #: model:ir.ui.view,arch_db:account_mass_reconcile.account_mass_reconcile_form

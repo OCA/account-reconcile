@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bank-statement-reconcile (9.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-11-03 10:40+0000\n"
-"PO-Revision-Date: 2016-10-19 12:15+0000\n"
+"POT-Creation-Date: 2017-01-07 01:13+0000\n"
+"PO-Revision-Date: 2017-01-13 09:26+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
 "Language-Team: Estonian (http://www.transifex.com/oca/OCA-bank-statement-reconcile-9-0/language/et/)\n"
 "MIME-Version: 1.0\n"
@@ -153,7 +153,7 @@ msgstr "Loodud"
 #. module: account_mass_reconcile
 #: model:ir.ui.view,arch_db:account_mass_reconcile.view_mass_reconcile_history_search
 msgid "Date"
-msgstr ""
+msgstr "Kuupäev"
 
 #. module: account_mass_reconcile
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile_method_date_base_on
@@ -261,7 +261,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile_history_ids
 #: model:ir.ui.view,arch_db:account_mass_reconcile.account_mass_reconcile_form
 msgid "History"
-msgstr ""
+msgstr "Ajalugu"
 
 #. module: account_mass_reconcile
 #: model:ir.actions.act_window,name:account_mass_reconcile.act_mass_reconcile_to_history
