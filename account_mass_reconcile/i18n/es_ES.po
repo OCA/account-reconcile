@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bank-statement-reconcile (9.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-01-07 01:13+0000\n"
-"PO-Revision-Date: 2017-01-13 09:28+0000\n"
+"POT-Creation-Date: 2017-01-21 01:23+0000\n"
+"PO-Revision-Date: 2017-02-16 15:55+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
 "Language-Team: Spanish (Spain) (http://www.transifex.com/oca/OCA-bank-statement-reconcile-9-0/language/es_ES/)\n"
 "MIME-Version: 1.0\n"
@@ -186,7 +186,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_partner_display_name
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_reference_display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Nombre para mostrar"
 
 #. module: account_mass_reconcile
 #: model:ir.ui.view,arch_db:account_mass_reconcile.account_mass_reconcile_form
@@ -340,7 +340,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_partner___last_update
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_reference___last_update
 msgid "Last Modified on"
-msgstr ""
+msgstr "Última modificación en"
 
 #. module: account_mass_reconcile
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile_method_write_uid

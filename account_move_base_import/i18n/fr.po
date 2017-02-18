@@ -4,13 +4,14 @@
 # 
 # Translators:
 # OCA Transbot <transbot@odoo-community.org>, 2016
+# leemannd <denis.leemann@camptocamp.com>, 2017
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 9.0c\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-01-07 01:13+0000\n"
-"PO-Revision-Date: 2017-01-07 01:13+0000\n"
-"Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2016\n"
+"POT-Creation-Date: 2017-01-21 01:23+0000\n"
+"PO-Revision-Date: 2017-01-21 01:23+0000\n"
+"Last-Translator: leemannd <denis.leemann@camptocamp.com>, 2017\n"
 "Language-Team: French (https://www.transifex.com/oca/teams/23907/fr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -41,27 +42,27 @@ msgstr "Action requise"
 #. module: account_move_base_import
 #: model:ir.ui.view,arch_db:account_move_base_import.view_move_importer_form
 msgid "Auto Completion"
-msgstr ""
+msgstr "Autocomplétion"
 
 #. module: account_move_base_import
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_move_line_already_completed
 msgid "Auto-Completed"
-msgstr ""
+msgstr "Complété automatiquement"
 
 #. module: account_move_base_import
 #: model:ir.ui.view,arch_db:account_move_base_import.journal_importer_view_form
 msgid "Auto-Completion Rules"
-msgstr ""
+msgstr "Règles d'autocomplétion"
 
 #. module: account_move_base_import
 #: model:ir.ui.view,arch_db:account_move_base_import.journal_importer_view_form
 msgid "Auto-Completion related infos"
-msgstr ""
+msgstr "Informations d'autocomplétion"
 
 #. module: account_move_base_import
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_journal_rule_ids
 msgid "Auto-completion rules"
-msgstr ""
+msgstr "Règles d'autocomplétion"
 
 #. module: account_move_base_import
 #: model:ir.model.fields,field_description:account_move_base_import.field_res_partner_bank_statement_label
@@ -194,7 +195,7 @@ msgstr ""
 #. module: account_move_base_import
 #: model:ir.model.fields,field_description:account_move_base_import.field_credit_statement_import_file_name
 msgid "File name"
-msgstr ""
+msgstr "Nom du fichier"
 
 #. module: account_move_base_import
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_journal_message_follower_ids
@@ -222,7 +223,7 @@ msgstr "Forcer le compte Client/Fournisseur"
 #. module: account_move_base_import
 #: selection:account.move.completion.rule,function_to_call:0
 msgid "From bank account number (Normal or IBAN)"
-msgstr ""
+msgstr "Du compte banquaire numéro (Normal ou IBAN)"
 
 #. module: account_move_base_import
 #: selection:account.move.completion.rule,function_to_call:0
