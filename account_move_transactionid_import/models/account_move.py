@@ -43,6 +43,9 @@ class AccountMoveCompletionRule(models.Model):
         if len(sales) == 1:
             sale = sales[0]
             res['partner_id'] = sale.partner_id.id
+            res['completion_ref'] = sale.name
+            # Since the update is done in SQL, set 'ref' as well
+            res['ref'] = sale.name
         return res
 
     def get_from_transaction_id_and_invoice(self, line):
@@ -72,4 +75,7 @@ class AccountMoveCompletionRule(models.Model):
             invoice = invoices[0]
             res['partner_id'] = invoice.commercial_partner_id.id
             res['account_id'] = invoice.account_id.id
+            res['completion_ref'] = invoice.move_id.ref
+            # Since the update is done in SQL, set 'ref' as well
+            res['ref'] = invoice.move_id.ref
         return res

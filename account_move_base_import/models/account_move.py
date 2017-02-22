@@ -236,6 +236,16 @@ class AccountMoveLine(models.Model):
         default=False,
         help="When this checkbox is ticked, the auto-completion "
         "process/button will ignore this line.")
+    ref = fields.Char(related=False, compute='_compute_move_line_ref')
+    completion_ref = fields.Char('Completion Reference', copy=False)
+
+    @api.depends('move_id.ref', 'completion_ref')
+    def _compute_move_line_ref(self):
+        for line in self:
+            if line.completion_ref:
+                line.ref = line.completion_ref
+            elif line.move_id:
+                line.ref = line.move_id.ref
 
     def _get_line_values_from_rules(self, rules):
         """We'll try to find out the values related to the line based on rules
