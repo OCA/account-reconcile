@@ -7,6 +7,7 @@
 import sys
 import traceback
 import os
+from datetime import datetime
 from openerp import _, api, fields, models
 from ..parser.parser import new_move_parser
 from openerp.exceptions import UserError, ValidationError
@@ -233,6 +234,13 @@ class AccountJournal(models.Model):
         values['company_currency_id'] = self.company_id.currency_id.id
         values['journal_id'] = self.id
         values['move_id'] = move.id
+        # Add automatic field since we by pass create method
+        datetime_now = datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f')
+        user_id = self.env.uid
+        values['create_date'] = datetime_now
+        values['write_date'] = datetime_now
+        values['create_uid'] = user_id
+        values['write_uid'] = user_id
         if not values.get('account_id', False):
             values['account_id'] = self.receivable_account_id.id
         values = move_line_obj._add_missing_default_values(values)
@@ -305,6 +313,7 @@ class AccountJournal(models.Model):
             # Hack to bypass ORM poor perfomance. Sob...
             move_line_obj._insert_lines(move_store)
             self.env.invalidate_all()
+            move.line_ids._store_balance()
             self._write_extra_move_lines(parser, move)
             if self.create_counterpart:
                 self._create_counterpart(parser, move)
