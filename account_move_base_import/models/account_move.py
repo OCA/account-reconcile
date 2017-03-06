@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# © 2011 Akretion
+# © 2011-2016 Akretion
 # © 2011-2016 Camptocamp SA
 # © 2013 Savoir-faire Linux
 # © 2014 ACSONE SA/NV
@@ -10,8 +10,8 @@ import logging
 
 import psycopg2
 
-from openerp import _, api, fields, models
-from openerp.exceptions import ValidationError
+from odoo import _, api, fields, models
+from odoo.exceptions import ValidationError
 
 
 _logger = logging.getLogger(__name__)
@@ -260,7 +260,7 @@ class AccountMoveLine(models.Model):
 
     def _get_available_columns(self, move_store):
         """Return writeable by SQL columns"""
-        model_cols = self._columns
+        model_cols = self._fields
         avail = [
             k for k, col in model_cols.iteritems() if not hasattr(col, '_fnct')
         ]
@@ -275,7 +275,7 @@ class AccountMoveLine(models.Model):
         move_copy = move
         for k, col in move_copy.iteritems():
             if k in cols:
-                move_copy[k] = self._columns[k]._symbol_set[1](col)
+                move_copy[k] = self._fields[k].convert_to_column(col, None)
         return move_copy
 
     def _prepare_manyinsert(self, move_store, cols):
@@ -333,6 +333,19 @@ class AccountMove(models.Model):
         related='journal_id.used_for_completion',
         readonly=True)
     completion_logs = fields.Text(string='Completion Log', readonly=True)
+    # partner_id is a native field of the account module
+    # (related='line_ids.partner_id', store=True, readonly=True)
+    partner_id = fields.Many2one(related=False, compute='_compute_partner_id')
+    import_partner_id = fields.Many2one('res.partner',
+                                        string="Partner from import")
+
+    @api.one
+    @api.depends('line_ids.partner_id', 'import_partner_id')
+    def _compute_partner_id(self):
+        if self.import_partner_id:
+            self.partner_id = self.import_partner_id
+        elif self.line_ids:
+            self.partner_id = self.line_ids[0].partner_id
 
     def write_completion_log(self, error_msg, number_imported):
         """Write the log in the completion_logs field of the bank statement to
