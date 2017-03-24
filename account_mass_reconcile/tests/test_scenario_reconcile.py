@@ -229,3 +229,94 @@ class TestScenarioReconcile(common.TransactionCase):
             'paid',
             invoice.state
         )
+
+    def test_scenario_reconcile_partial_exchange_writeoff_account(self):
+        # Create Payment
+        move_vals = {
+            'journal_id': self.ref('account.bank_journal'),
+            'partner_id': self.ref('base.res_partner_12'),
+            'name': 'Payment Test',
+            'ref': 'Payment Test',
+            'date': fields.Date.today(),
+            'line_ids': [
+                (0, 0, {
+                    'name': 'Payment Test',
+                    'debit': 500,
+                    'credit': 0,
+                    'account_id': self.ref('account.a_sale')}),
+                (0, 0, {
+                    'name': 'Payment Test',
+                    'debit': 0,
+                    'credit': 500,
+                    'account_id': self.ref('account.a_recv')})
+                ]}
+        move = self.env['account.move'].create(move_vals)
+        move.post()
+        line_payment = move.line_ids.filtered(
+            lambda l: l.account_id.id == self.ref('account.a_recv'))
+        self.assertEqual(
+            line_payment.reconciled,
+            False
+        )
+
+        invoice1 = self.invoice_obj.create(
+            {
+                'type': 'out_invoice',
+                'account_id': self.ref('account.a_recv'),
+                'company_id': self.ref('base.main_company'),
+                'journal_id': self.ref('account.sales_journal'),
+                'partner_id': self.ref('base.res_partner_12'),
+                'reference': 'Payment Test',
+                'invoice_line_ids': [
+                    (0, 0, {
+                        'name': '[PCSC234] PC Assemble SC234',
+                        'account_id': self.ref('account.a_sale'),
+                        'price_unit': 45,
+                        'quantity': 1.0,
+                        'product_id': self.ref('product.product_product_3'),
+                    }
+                    )
+                ]
+            }
+        )
+        # validate invoice
+        invoice1.signal_workflow('invoice_open')
+        invoice1_line = invoice1.move_id.line_ids.filtered(
+            lambda l: l.account_id.id == self.ref('account.a_recv'))
+        self.assertEqual(
+            invoice1_line.reconciled,
+            False
+        )
+
+        # Create the mass reconcile record
+        reconcile_method_vals = {
+            'name': 'mass.reconcile.advanced.ref',
+            'write_off': 0.1,
+            'account_lost_id': self.ref('account.income_fx_expense'),
+            'account_profit_id': self.ref('account.income_fx_expense'),
+            'income_exchange_account_id': self.ref(
+                'account.income_fx_expense'),
+            'expense_exchange_account_id': self.ref(
+                'account.income_fx_expense'),
+            'journal_id': self.ref('account.miscellaneous_journal'),
+        }
+        mass_rec = self.mass_rec_obj.create({
+            'name': 'mass_reconcile_1',
+            'account': self.ref('account.a_recv'),
+            'reconcile_method': [
+                (0, 0, reconcile_method_vals)
+            ]
+        })
+        mass_rec.run_reconcile()
+
+        invoice1_line = invoice1.move_id.line_ids.filtered(
+            lambda l: l.account_id.id == self.ref('account.a_recv'))
+
+        self.assertEqual(
+            line_payment.amount_residual,
+            -455.0
+        )
+        self.assertEqual(
+            invoice1_line.reconciled,
+            True
+        )
