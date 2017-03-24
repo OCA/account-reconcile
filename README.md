@@ -28,6 +28,7 @@ Available addons
 ----------------
 addon | version | summary
 --- | --- | ---
+[account_mass_reconcile](account_mass_reconcile/) | 10.0.1.0.0 | Mass Reconcile
 [account_move_base_import](account_move_base_import/) | 10.0.1.0.0 | Journal Entry base import
 [base_transaction_id](base_transaction_id/) | 10.0.1.0.0 | Base transaction id for financial institutes
 
@@ -37,7 +38,6 @@ addon | version | summary
 --- | --- | ---
 [account_bank_statement_period_from_line_date](account_bank_statement_period_from_line_date/) | 8.0.1.0.0 (unported) | Use bank transaction (line) date to determine move period
 [account_invoice_reference](account_invoice_reference/) | 8.0.1.0.1 (unported) | Invoices Reference
-[account_mass_reconcile](account_mass_reconcile/) | 9.0.1.0.0 (unported) | Mass Reconcile
 [account_mass_reconcile_ref_deep_search](account_mass_reconcile_ref_deep_search/) | 9.0.1.0.0 (unported) | Mass Reconcile Ref Deep Search
 [account_mass_reconcile_transaction_ref](account_mass_reconcile_transaction_ref/) | 9.0.1.0.0 (unported) | Mass Reconcile Transaction Ref
 [account_move_bankaccount_import](account_move_bankaccount_import/) | 9.0.1.0.0 (unported) | Journal Entry completion from bank account number
