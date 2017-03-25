@@ -24,6 +24,7 @@ __Version 7.0 and earlier :__
 
 
 [//]: # (addons)
+
 Available addons
 ----------------
 addon | version | summary
