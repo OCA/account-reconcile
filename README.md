@@ -33,6 +33,7 @@ addon | version | summary
 [account_move_base_import](account_move_base_import/) | 10.0.1.0.0 | Journal Entry base import
 [base_transaction_id](base_transaction_id/) | 10.0.1.0.0 | Base transaction id for financial institutes
 
+
 Unported addons
 ---------------
 addon | version | summary
