@@ -39,6 +39,7 @@ addon | version | summary
 [account_operation_rule](account_operation_rule/) | 9.0.1.0.0 | Bank Statement Operation Rules
 [base_transaction_id](base_transaction_id/) | 9.0.1.0.0 | Base transaction id for financial institutes
 
+
 Unported addons
 ---------------
 addon | version | summary
