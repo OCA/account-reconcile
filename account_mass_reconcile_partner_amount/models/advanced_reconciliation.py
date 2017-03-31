@@ -102,6 +102,9 @@ class MassReconciledAdvancedPartnerAmount(models.TransientModel):
         # it can still be inherited for some special cases
         # where it would be allowed
         if not (value and opposite_value):
+            # allow partner to be empty
+            if key == 'partner_id':
+                return True
             return False
 
         if value == opposite_value:
