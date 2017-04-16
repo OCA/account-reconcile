@@ -142,6 +142,10 @@ class AccountStatementCompletionRule(orm.Model):
         """ Call method which can be inherited """
         return self._get_functions(cr, uid, context=context)
 
+    def __get_functions(self, cr, uid, context=None):
+        """Internal method. Do not override."""
+        return self._get_functions(cr, uid, context=context)
+
     _columns = {
         'sequence': fields.integer('Sequence',
                                    help="Lower means parsed first."),
