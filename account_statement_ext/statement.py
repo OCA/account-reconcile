@@ -670,7 +670,7 @@ class AccountBankStatementLine(orm.Model):
         res = {}
         obj_partner = self.pool.get('res.partner')
         obj_stat = self.pool.get('account.bank.statement')
-        receiv_account = pay_account = account_id = False
+        receiv_account = pay_account = False
         # If profile has a receivable_account_id, we return it in any case
         if master_account_id:
             res['account_id'] = master_account_id
@@ -714,32 +714,54 @@ class AccountBankStatementLine(orm.Model):
         res['type'] = line_type if line_type else comp_line_type
         return res
 
-    def onchange_partner_id(self, cr, uid, ids, partner_id, profile_id=None,
+    def onchange_partner_id(self, cr, uid, ids, partner_id,
                             context=None):
+        return self.onchange_partner_id_with_profile_id(cr, uid, ids, partner_id, context=context)
+
+    def onchange_partner_id_with_profile_id(self, cr, uid, ids, partner_id, profile_id=None,
+                                            context=None):
         """
         Override of the basic method as we need to pass the profile_id in the
         on_change_type call.
         Moreover, we now call the get_account_and_type_for_counterpart method
         now to get the type to use.
         """
+        if not context:
+            context = {}
+
         obj_stat = self.pool['account.bank.statement']
         if not partner_id:
             return {}
         line_type = obj_stat.get_type_for_counterpart(
             cr, uid, 0.0, partner_id=partner_id)
+
+        # Better to pass profile_id as part of context
+        context['statement_profile_id'] = profile_id
         res_type = self.onchange_type(
-            cr, uid, ids, partner_id, line_type, profile_id, context=context)
+            cr, uid, ids, partner_id, line_type, context=context)
+        del context['statement_profile_id']
+
         if res_type['value'] and res_type['value'].get('account_id', False):
             return {'value': {'type': line_type,
                               'account_id': res_type['value']['account_id'],
                               'voucher_id': False}}
         return {'value': {'type': line_type}}
 
-    def onchange_type(self, cr, uid, line_id, partner_id, line_type,
-                      profile_id, context=None):
+    def onchange_type(self, cr, uid, line_id, partner_id, line_type, context=None):
+        return self.onchange_type_with_profile_id(cr, uid, line_id, partner_id, line_type, context=context)
+
+    def onchange_type_with_profile_id(self, cr, uid, line_id, partner_id, line_type,
+                                      profile_id=None, context=None):
         """Keep the same features as in standard and call super. If an account
         is returned, call the method to compute line values.
         """
+        if not context:
+            context = {}
+
+        # Sometimes profile_id cannot be passed as argument
+        if profile_id is None:
+            profile_id = context.get('statement_profile_id', None)
+
         res = super(AccountBankStatementLine, self
                     ).onchange_type(cr, uid, line_id, partner_id,
                                     line_type, context=context)
