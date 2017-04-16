@@ -36,6 +36,7 @@ def float_or_zero(val):
 
 
 class FileParser(BankStatementImportParser):
+
     """Generic abstract class for defining parser for .csv, .xls or .xlsx file
     format.
     """

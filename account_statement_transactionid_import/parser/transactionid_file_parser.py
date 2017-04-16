@@ -25,6 +25,7 @@ from account_statement_base_import.parser.file_parser import (
 
 
 class TransactionIDFileParser(FileParser):
+
     """TransactionID parser that use a define format in csv or xls to import
     bank statement.
     """

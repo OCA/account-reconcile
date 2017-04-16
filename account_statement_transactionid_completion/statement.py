@@ -27,6 +27,7 @@ from openerp.addons.account_statement_base_completion.statement import \
 
 
 class AccountStatementCompletionRule(Model):
+
     """Add a rule based on transaction ID"""
 
     _inherit = "account.statement.completion.rule"

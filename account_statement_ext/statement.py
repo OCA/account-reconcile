@@ -39,6 +39,7 @@ stat_mod.account_bank_statement.write = fixed_write
 
 
 class AccountStatementProfile(orm.Model):
+
     """A Profile will contain all infos related to the type of
     bank statement, and related generated entries. It defines the
     journal to use, the partner and commision account and so on.
@@ -113,6 +114,7 @@ class AccountStatementProfile(orm.Model):
 
 
 class AccountBankStatement(orm.Model):
+
     """We improve the bank statement class mostly for :
     - Removing the period and compute it from the date of each line.
     - Allow to remove the balance check depending on the chosen profile
@@ -591,6 +593,7 @@ class AccountBankStatement(orm.Model):
 
 
 class AccountBankStatementLine(orm.Model):
+
     """Override to compute the period from the date of the line, add a method
     to retrieve the values for a line from the profile. Override the on_change
     method to take care of the profile when fullfilling the bank statement
