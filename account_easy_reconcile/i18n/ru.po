@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bank-statement-reconcile (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-01-07 01:11+0000\n"
-"PO-Revision-Date: 2017-01-11 15:38+0000\n"
+"POT-Creation-Date: 2017-03-28 01:39+0000\n"
+"PO-Revision-Date: 2017-04-25 10:40+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
 "Language-Team: Russian (http://www.transifex.com/oca/OCA-bank-statement-reconcile-8-0/language/ru/)\n"
 "MIME-Version: 1.0\n"
@@ -120,7 +120,7 @@ msgstr ""
 #: field:account.easy.reconcile.method,company_id:0
 #: field:easy.reconcile.history,company_id:0
 msgid "Company"
-msgstr ""
+msgstr "Компания"
 
 #. module: account_easy_reconcile
 #: view:account.easy.reconcile:account_easy_reconcile.account_easy_reconcile_form
@@ -317,7 +317,7 @@ msgstr ""
 #: field:easy.reconcile.simple.partner,journal_id:0
 #: field:easy.reconcile.simple.reference,journal_id:0
 msgid "Journal"
-msgstr ""
+msgstr "Журнал"
 
 #. module: account_easy_reconcile
 #: field:account.easy.reconcile,message_last_post:0

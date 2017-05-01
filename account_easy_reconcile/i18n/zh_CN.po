@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bank-statement-reconcile (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-02-25 01:17+0000\n"
-"PO-Revision-Date: 2017-03-03 07:08+0000\n"
+"POT-Creation-Date: 2017-03-28 01:39+0000\n"
+"PO-Revision-Date: 2017-04-19 01:22+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
 "Language-Team: Chinese (China) (http://www.transifex.com/oca/OCA-bank-statement-reconcile-8-0/language/zh_CN/)\n"
 "MIME-Version: 1.0\n"
@@ -275,7 +275,7 @@ msgstr ""
 msgid ""
 "Holds the Chatter summary (number of messages, ...). This summary is "
 "directly in html format in order to be inserted in kanban views."
-msgstr ""
+msgstr "HTML格式的简介，包括了各种项目的总结信息（比如消息数，作业数……）"
 
 #. module: account_easy_reconcile
 #: field:account.config.settings,reconciliation_commit_every:0
@@ -306,7 +306,7 @@ msgstr ""
 #. module: account_easy_reconcile
 #: field:account.easy.reconcile,message_is_follower:0
 msgid "Is a Follower"
-msgstr ""
+msgstr "关注者"
 
 #. module: account_easy_reconcile
 #: field:account.easy.reconcile.method,journal_id:0
@@ -317,7 +317,7 @@ msgstr ""
 #: field:easy.reconcile.simple.partner,journal_id:0
 #: field:easy.reconcile.simple.reference,journal_id:0
 msgid "Journal"
-msgstr ""
+msgstr "凭证簿"
 
 #. module: account_easy_reconcile
 #: field:account.easy.reconcile,message_last_post:0
