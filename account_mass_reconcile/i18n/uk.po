@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bank-statement-reconcile (9.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-01-07 01:13+0000\n"
-"PO-Revision-Date: 2017-01-13 09:29+0000\n"
+"POT-Creation-Date: 2017-03-28 01:41+0000\n"
+"PO-Revision-Date: 2017-04-27 13:40+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
 "Language-Team: Ukrainian (http://www.transifex.com/oca/OCA-bank-statement-reconcile-9-0/language/uk/)\n"
 "MIME-Version: 1.0\n"
@@ -552,7 +552,7 @@ msgstr ""
 #. module: account_mass_reconcile
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile_method_task_id
 msgid "Task"
-msgstr ""
+msgstr "Завдання"
 
 #. module: account_mass_reconcile
 #: model:ir.model.fields,help:account_mass_reconcile.field_account_mass_reconcile_method_sequence
