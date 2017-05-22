@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<openerp>
-    <data>
+<odoo>
         <report  
             id="bank_statement_detail" 
             model="bank.acc.rec.statement"
@@ -15,5 +14,4 @@
             string="Bank Statement-Summary"
             rml="npg_bank_account_reconciliation/bank_statement_summary.rml"
             attachment="'Summary Statement-'+(object.name)"/>
-    </data>
-</openerp>
+</odoo>

@@ -1,31 +1,15 @@
 # -*- coding: utf-8 -*-
-##############################################################################
-#
-#    OpenERP, Open Source Management Solution
-#    Copyright (C) 2014 Ursa Information Systems (<http://www.ursainfosystems.com>)
-#    Copyright (C) 2011 NovaPoint Group LLC (<http://www.novapointgroup.com>)
-#    Copyright (C) 2004-2010 OpenERP SA (<http://www.openerp.com>)
-#
-#    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU General Public License as published by
-#    the Free Software Foundation, either version 3 of the License, or
-#    (at your option) any later version.
-#
-#    This program is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU General Public License for more details.
-#
-#    You should have received a copy of the GNU General Public License
-#    along with this program.  If not, see <http://www.gnu.org/licenses/>
-#
-##############################################################################
+# Copyright (C) 2015 Ursa Information Systems (http://www.ursainfosystems.com>)
+# Copyright (C) 2011 NovaPoint Group LLC (<http://www.novapointgroup.com>)
+# Copyright (C) 2004-2010 OpenERP SA (<http://www.openerp.com>)
+# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 import time
 
 from openerp.osv import fields, osv
 from openerp.tools.translate import _
 import openerp.addons.decimal_precision as dp
 from operator import itemgetter
+
 
 class bank_acc_rec_statement(osv.osv):
     def check_group(self, cr, uid, ids, context=None):
@@ -426,7 +410,7 @@ class bank_acc_rec_statement(osv.osv):
     _sql_constraints = [
         ('name_company_uniq', 'unique (name, company_id, account_id)', 'The name of the statement must be unique per company and G/L account!')
     ]
-bank_acc_rec_statement()
+
 
 class bank_acc_rec_statement_line(osv.osv):
     _name = "bank.acc.rec.statement.line"
@@ -467,7 +451,3 @@ class bank_acc_rec_statement_line(osv.osv):
                                                              'bank_acc_rec_statement_id': False,
                                                              }, context=context)
         return super(bank_acc_rec_statement_line, self).unlink(cr, uid, ids, context=context)
-
-bank_acc_rec_statement_line()
-
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
