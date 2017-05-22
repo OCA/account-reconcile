@@ -42,7 +42,7 @@ The need for this module is driven by the following:
   correctly (e.g. properly encoded transaction - e.g. company sent a payment of
   $20.20 to the bank. Was it processed for $20.20?). This can be considered
   "Auditing the bank statement". We don't assume the bank correctly processed any
-   transaction.
+  transaction.
 * Users want to understand what payments they've made are still outstanding and
   have not been paid by the bank.
 * The financial auditing segregation standard of separating the duties of:
@@ -163,7 +163,7 @@ Bug Tracker
 ===========
 
 Bugs are tracked on `GitHub Issues
-<https://github.com/OCA/account-invoice-reporting/issues>`_. In case of trouble, please
+<https://github.com/OCA/bank-statement-reconcile/issues>`_. In case of trouble, please
 check there if your issue has already been reported. If you spotted it first,
 help us smash it by providing detailed and welcomed feedback.
 
