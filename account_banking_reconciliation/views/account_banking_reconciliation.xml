@@ -25,22 +25,22 @@
 		<field name="arch" type="xml">
 			<form string="Bank Account Reconciliation Statement" version="7.0">
 				<header>
-					<button name="action_cancel" type="object" states="draft,to_be_reviewed" string="Cancel" icon="gtk-cancel"/>
-					<button name="action_review" type="object" states="draft" string="Ready for Review" icon="gtk-go-forward"/>
-					<button name="action_process" type="object" states="to_be_reviewed" string="Process" icon="gtk-apply"/>
-					<button name="action_cancel_draft" states="cancel,done" string="Set to Draft" type="object" icon="gtk-convert"/>
+					<button name="action_cancel" type="object" states="draft,to_be_reviewed" string="Cancel" icon="fa-ban"/>
+					<button name="action_review" type="object" states="draft" string="Ready for Review" icon="fa-forward"/>
+					<button name="action_process" type="object" states="to_be_reviewed" string="Process"/>
+					<button name="action_cancel_draft" states="cancel,done" string="Set to Draft" type="object"/>
 					<button name='refresh_record' string='Refresh' confirm="Current edits in statement will be lost. Do you want to refresh?" states="draft" type='object'/>
 					<field name="state" widget="statusbar" nolabel="1"/>
 				</header>
 				<sheet>
 					<group col="4" colspan="4">
-						<field name="account_id" placeholder="Enter Account Name" on_change="onchange_account_id(account_id, ending_date, suppress_ending_date_filter)"/>
+						<field name="account_id" placeholder="Enter Account Name"/>
 						<field name="name" placeholder="Enter Name"/>
-						<field name="ending_date" placeholder="Enter ending date" on_change="onchange_account_id(account_id, ending_date, suppress_ending_date_filter)"/>
+						<field name="ending_date" placeholder="Enter ending date"/>
 						<field name="starting_balance" placeholder="Enter Starting Balance"/>
 						<field name="ending_balance" placeholder="Enter Ending Balance"/>
 						<field name="last_ending_date" placeholder="Last Statement Date" readonly="1"/>
-						<field name="suppress_ending_date_filter" on_change="onchange_account_id(account_id, ending_date, suppress_ending_date_filter)"/>
+						<field name="suppress_ending_date_filter"/>
 						<field name="company_id" groups="base.group_multi_company" placeholder="Enter Company Name"/>
 					</group>
 					<notebook colspan="5">
@@ -97,7 +97,7 @@
 									<field name="move_line_id" readonly="1"/>
 								</tree>
 							</field>
-							<group col="2" colspan="1" groups="ursa_npg_bank_account_reconciliation.group_bank_stmt_verifier">
+							<group col="2" colspan="1" groups="account_banking_reconciliation.group_bank_stmt_verifier">
 								<button name="action_select_all" confirm="Current edits in statement will be lost. Do you want to select all?" type="object" states="draft,to_be_reviewed" string="Select All" icon="gtk-go-forward"/>
 								<button name="action_unselect_all" confirm="Current edits in statement will be lost. Do you want to unselect all?" type="object" states="draft,to_be_reviewed" string="Unselect All" icon="gtk-cancel"/>
 							</group>
@@ -190,15 +190,15 @@
 		<field name="search_view_id" ref="view_bank_acc_rec_statement_filter"/>
 	</record>
 
-	<record id="account.menu_bank_statement_tree" model="ir.ui.menu">
-		<field name="groups_id" eval="[(4,ref('base.group_system'))]"/>
-	</record>
+<!-- 	<record id="account.menu_bank_statement_tree" model="ir.ui.menu"> -->
+<!-- 		<field name="groups_id" eval="[(4,ref('base.group_system'))]"/> -->
+<!-- 	</record> -->
 
 	<menuitem
 			icon="STOCK_JUSTIFY_FILL"
 			action="action_bank_acc_rec_statement"
 			id="npg_bank_acc_rec_statement_menu"
-			parent="account.menu_finance_bank_and_cash"
+			parent="account.menu_finance_configuration"
 			sequence="5"/>
 
 	<act_window
