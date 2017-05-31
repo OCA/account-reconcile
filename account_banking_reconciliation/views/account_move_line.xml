@@ -8,7 +8,7 @@
         <field name="inherit_id" ref="account.view_account_move_line_filter"/>
         <field name="type">search</field>
         <field name="arch" type="xml">
-            <field name="period_id" position="after">
+            <field name="move_id" position="after">
                 <field name="bank_acc_rec_statement_id"/>
             </field>
             <field name="move_id" position="before">
