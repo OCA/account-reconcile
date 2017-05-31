@@ -18,7 +18,9 @@
         "security/ir.model.access.csv",
         "views/account_banking_reconciliation.xml",
         "views/account_move_line.xml",
-        "report/bank_statement_report.xml"],
+        "report/bank_statement_report.xml",
+        "views/report_bank_statement_summary.xml",
+        "views/report_bank_statement_detail.xml"],
     "demo": [],
-    "installable": False,
+    "installable": True,
 }
