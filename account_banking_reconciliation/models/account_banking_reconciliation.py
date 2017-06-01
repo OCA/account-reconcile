@@ -66,8 +66,8 @@ class BankAccRecStatement(models.Model):
         statement_line_obj = self.env['bank.acc.rec.statement.line']
         self.check_group()  # Check if user is allowed to perform the action
         for statement in self:
-            statement_lines = statement.credit_move_line_ids \
-                              + statement.debit_move_line_ids
+            statement_lines = \
+                statement.credit_move_line_ids + statement.debit_move_line_ids
             statement_line_ids = map(lambda x: x.id, statement_lines)
             statement_line_brws = statement_line_obj.browse(statement_line_ids)
             statement_line_brws.unlink()  # call unlink method to reset
@@ -116,8 +116,8 @@ class BankAccRecStatement(models.Model):
         # If difference balance not zero prevent further processing
         self.check_difference_balance()
         for statement in self:
-            statement_lines = statement.credit_move_line_ids \
-                              + statement.debit_move_line_ids
+            statement_lines = \
+                statement.credit_move_line_ids + statement.debit_move_line_ids
             for statement_line in statement_lines:
                 # Mark the move lines as 'Cleared'mand assign
                 # the 'Bank Acc Rec Statement ID'
