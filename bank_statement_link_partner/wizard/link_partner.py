@@ -1,24 +1,6 @@
 # -*- coding: utf-8 -*-
-"""Wizard to create partner using information in bank account."""
-##############################################################################
-#
-#    Copyright (C) 2013-2015 Therp BV <http://therp.nl>.
-#    All Rights Reserved
-#
-#    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU General Public License as published by
-#    the Free Software Foundation, either version 3 of the License, or
-#    (at your option) any later version.
-#
-#    This program is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU General Public License for more details.
-#
-#    You should have received a copy of the GNU General Public License
-#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#
-##############################################################################
+# © 2013-2017 Therp BV <http://therp.nl>
+# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 from openerp import api, models, fields
 
 
@@ -166,9 +148,9 @@ class LinkPartner(models.TransientModel):
                     'street': bank_account_obj.street or False,
                     'zip': bank_account_obj.zip or False,
                     'city': bank_account_obj.city or False,
-                    'country_id': (
-                        bank_account_obj.country_id
-                        and bank_account_obj.country_id.id or False),
+                    'country_id':
+                        bank_account_obj.country_id and
+                        bank_account_obj.country_id.id or False,
                     'acc_number': bank_account_obj.acc_number or False,
                 })
         return super(LinkPartner, self).create(vals)
@@ -231,5 +213,3 @@ class LinkPartner(models.TransientModel):
             'res_id': self.id,
             'nodestroy': nodestroy,
         }
-
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
