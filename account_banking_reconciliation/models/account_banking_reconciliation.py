@@ -34,8 +34,8 @@ class BankAccRecStatement(models.Model):
                 res_id = model_data_obj.browse(group_verifier_id).res_id
                 group_verifier = res_groups_obj.browse([res_id])
                 group_user_ids = [user.id for user in group_verifier.users]
-                if statement.state != 'draft' and \
-                                self.env.uid not in group_user_ids:
+                if statement.state != 'draft' \
+                        and self.env.uid not in group_user_ids:
                     raise UserError(_("Only a member of '%s' "
                                       "group may delete/edit "
                                       "bank statements when not in draft "
@@ -66,8 +66,8 @@ class BankAccRecStatement(models.Model):
         statement_line_obj = self.env['bank.acc.rec.statement.line']
         self.check_group()  # Check if user is allowed to perform the action
         for statement in self:
-            statement_lines = statement.credit_move_line_ids + \
-                              statement.debit_move_line_ids
+            statement_lines = statement.credit_move_line_ids \
+                              + statement.debit_move_line_ids
             statement_line_ids = map(lambda x: x.id, statement_lines)
             statement_line_brws = statement_line_obj.browse(statement_line_ids)
             statement_line_brws.unlink()  # call unlink method to reset
@@ -116,8 +116,8 @@ class BankAccRecStatement(models.Model):
         # If difference balance not zero prevent further processing
         self.check_difference_balance()
         for statement in self:
-            statement_lines = statement.credit_move_line_ids + \
-                              statement.debit_move_line_ids
+            statement_lines = statement.credit_move_line_ids \
+                              + statement.debit_move_line_ids
             for statement_line in statement_lines:
                 # Mark the move lines as 'Cleared'mand assign
                 # the 'Bank Acc Rec Statement ID'
