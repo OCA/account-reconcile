@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bank-statement-reconcile (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-10-27 02:42+0000\n"
-"PO-Revision-Date: 2016-11-25 14:55+0000\n"
+"POT-Creation-Date: 2017-05-01 15:33+0000\n"
+"PO-Revision-Date: 2017-05-28 07:40+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
 "Language-Team: German (http://www.transifex.com/oca/OCA-bank-statement-reconcile-8-0/language/de/)\n"
 "MIME-Version: 1.0\n"
@@ -32,12 +32,12 @@ msgstr ""
 #. module: account_statement_operation_rule
 #: view:account.statement.operation.rule:account_statement_operation_rule.view_account_statement_operation_rule_form
 msgid "And"
-msgstr ""
+msgstr "und"
 
 #. module: account_statement_operation_rule
 #: view:account.statement.operation.rule:account_statement_operation_rule.view_account_statement_operation_rule_form
 msgid "And the currency is one of"
-msgstr ""
+msgstr "Und die Währung ist eine aus"
 
 #. module: account_statement_operation_rule
 #: model:ir.model,name:account_statement_operation_rule.model_account_bank_statement_line
@@ -58,7 +58,7 @@ msgstr "Angelegt am"
 #: field:account.statement.operation.rule,currencies:0
 #: selection:account.statement.operation.rule,rule_type:0
 msgid "Currencies"
-msgstr ""
+msgstr "Währungen"
 
 #. module: account_statement_operation_rule
 #: field:account.statement.operation.rule,display_name:0
@@ -75,7 +75,7 @@ msgstr ""
 msgid ""
 "For 'Currencies' rules, you can choose for which currencies the rule will be"
 " applicable."
-msgstr ""
+msgstr "Bei Regel 'Währungen' können Sie festlegen, für welche Währungen diese Regel zutreffen soll."
 
 #. module: account_statement_operation_rule
 #: field:account.statement.operation.rule,id:0
@@ -85,7 +85,7 @@ msgstr "ID"
 #. module: account_statement_operation_rule
 #: help:account.statement.operation.rule,sequence:0
 msgid "If several rules match, the first one is used."
-msgstr ""
+msgstr "Wenn mehrere Regeln zutreffen wird die erste verwendet."
 
 #. module: account_statement_operation_rule
 #: field:account.statement.operation.rule,__last_update:0
@@ -105,12 +105,12 @@ msgstr "Letzte Aktualisierung am"
 #. module: account_statement_operation_rule
 #: field:account.statement.operation.rule,amount_max:0
 msgid "Max. Amount"
-msgstr ""
+msgstr "Höchstbetrag"
 
 #. module: account_statement_operation_rule
 #: field:account.statement.operation.rule,amount_min:0
 msgid "Min. Amount"
-msgstr ""
+msgstr "Mindestbetrag"
 
 #. module: account_statement_operation_rule
 #: field:account.statement.operation.rule,name:0
@@ -120,17 +120,17 @@ msgstr "Bezeichnung"
 #. module: account_statement_operation_rule
 #: field:account.statement.operation.rule,operations:0
 msgid "Operations"
-msgstr ""
+msgstr "Vorgänge"
 
 #. module: account_statement_operation_rule
 #: view:account.statement.operation.rule:account_statement_operation_rule.view_account_statement_operation_rule_form
 msgid "Result"
-msgstr ""
+msgstr "Ergebnis"
 
 #. module: account_statement_operation_rule
 #: selection:account.statement.operation.rule,rule_type:0
 msgid "Roundings"
-msgstr ""
+msgstr "Rundung"
 
 #. module: account_statement_operation_rule
 #: view:account.statement.operation.rule:account_statement_operation_rule.view_account_statement_operation_rule_form
@@ -145,7 +145,7 @@ msgstr "Reihenfolge"
 #. module: account_statement_operation_rule
 #: view:account.statement.operation.rule:account_statement_operation_rule.view_account_statement_operation_rule_form
 msgid "Statement Operation Rule"
-msgstr ""
+msgstr "Geschäftsvorfallsregel"
 
 #. module: account_statement_operation_rule
 #: view:account.statement.operation.rule:account_statement_operation_rule.view_account_statement_operation_rule_search
@@ -153,12 +153,12 @@ msgstr ""
 #: model:ir.actions.act_window,name:account_statement_operation_rule.action_account_statement_operation_rule
 #: model:ir.ui.menu,name:account_statement_operation_rule.menu_action_account_statement_operation_rule
 msgid "Statement Operation Rules"
-msgstr ""
+msgstr "Geschäftsvorfallsregeln"
 
 #. module: account_statement_operation_rule
 #: view:account.statement.operation.rule:account_statement_operation_rule.view_account_statement_operation_rule_form
 msgid "Then the following operations will be applied:"
-msgstr ""
+msgstr "Dann werden die folgenden Funktionen angewendet:"
 
 #. module: account_statement_operation_rule
 #: field:account.statement.operation.rule,rule_type:0
@@ -168,4 +168,4 @@ msgstr "Art"
 #. module: account_statement_operation_rule
 #: view:account.statement.operation.rule:account_statement_operation_rule.view_account_statement_operation_rule_form
 msgid "When the balance is between"
-msgstr ""
+msgstr "Liegt der Saldo zwischen"
