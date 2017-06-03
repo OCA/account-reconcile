@@ -1,9 +1,8 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# * account_move_transactionid_import
+# * account_move_so_import
 # 
 # Translators:
-# OCA Transbot <transbot@odoo-community.org>, 2016
 # Rudolf Schnapka <rs@techno-flex.de>, 2017
 msgid ""
 msgstr ""
@@ -19,19 +18,17 @@ msgstr ""
 "Language: de\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#. module: account_move_transactionid_import
-#: model:ir.model,name:account_move_transactionid_import.model_account_journal
-msgid "Journal"
-msgstr "Journal"
-
-#. module: account_move_transactionid_import
-#: code:addons/account_move_transactionid_import/models/account_move.py:41
-#: code:addons/account_move_transactionid_import/models/account_move.py:69
+#. module: account_move_so_import
+#: code:addons/account_move_so_import/models/account_move.py:43
 #, python-format
-msgid "Line named \"%s\" was matched by more than one partner."
-msgstr "Zu Position \"%s\" wurden mehrere Partner gefunden."
+msgid ""
+"Line named \"%s\"  was matched by more than one partner while looking on SO "
+"by ref."
+msgstr ""
+"Zu Position \"%s\" wurden, bei der Suche nach VA über Ref, mehrere Partner "
+"gefunden."
 
-#. module: account_move_transactionid_import
-#: model:ir.model,name:account_move_transactionid_import.model_account_move_completion_rule
+#. module: account_move_so_import
+#: model:ir.model,name:account_move_so_import.model_account_move_completion_rule
 msgid "account.move.completion.rule"
 msgstr "account.move.completion.rule"
