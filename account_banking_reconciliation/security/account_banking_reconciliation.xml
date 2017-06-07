@@ -10,7 +10,7 @@
     </record>
 
     <!-- Security Rule for Bank Rec Stmts -->
-    <record id="npg_bank_account_reconciliation_comp_rule" model="ir.rule">
+    <record id="comp_rule" model="ir.rule">
         <field name="name">Bank Statements</field>
         <field ref="model_bank_acc_rec_statement" name="model_id"/>
         <field eval="True" name="global"/>
