@@ -260,8 +260,8 @@
     <!-- </record> -->
 
     <menuitem icon="STOCK_JUSTIFY_FILL" action="action_bank_acc_rec_statement"
-              id="npg_bank_acc_rec_statement_menu"
-              parent="account.menu_finance_configuration"
+              id="bank_acc_rec_statement_menu"
+              parent="account.menu_finance_entries"
               sequence="5"/>
 
     <act_window id="act_account_move_line_to_add" name="Journal Items"
