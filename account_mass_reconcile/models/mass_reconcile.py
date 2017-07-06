@@ -48,6 +48,8 @@ class MassReconcileOptions(models.AbstractModel):
     expense_exchange_account_id = fields.Many2one('account.account',
                                                   string='Loss Exchange '
                                                   'Rate Account')
+    analytic_account_id = fields.Many2one(
+        'account.analytic.account', string='Analytic account for write-off')
 
 
 class AccountMassReconcileMethod(models.Model):
@@ -149,6 +151,8 @@ class AccountMassReconcile(models.Model):
                 'write_off': rec_method.write_off,
                 'account_lost_id': (rec_method.account_lost_id.id),
                 'account_profit_id': (rec_method.account_profit_id.id),
+                'analytic_account_id': (
+                    rec_method.analytic_account_id.id),
                 'income_exchange_account_id':
                 (rec_method.income_exchange_account_id.id),
                 'expense_exchange_account_id':
