@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bank-statement-reconcile (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-12-10 01:06+0000\n"
+"POT-Creation-Date: 2017-07-01 00:49+0000\n"
 "PO-Revision-Date: 2015-07-22 06:46+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: Portuguese (Brazil) (http://www.transifex.com/oca/OCA-bank-statement-reconcile-8-0/language/pt_BR/)\n"
@@ -35,7 +35,7 @@ msgstr ""
 #. module: base_transaction_id
 #: model:ir.model,name:base_transaction_id.model_stock_picking
 msgid "Picking List"
-msgstr ""
+msgstr "Lista de separação"
 
 #. module: base_transaction_id
 #: view:account.move.line:base_transaction_id.view_move_line_form
