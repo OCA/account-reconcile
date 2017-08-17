@@ -2,9 +2,9 @@
     :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
     :alt: License: AGPL-3
 
-==============
-Mass Reconcile
-==============
+======================
+Account Mass Reconcile
+======================
 
 This is a shared work between Akretion and Camptocamp
 in order to provide:
