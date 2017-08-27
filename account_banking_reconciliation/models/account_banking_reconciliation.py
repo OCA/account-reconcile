@@ -42,8 +42,9 @@ class BankAccRecStatement(models.Model):
                                       "state!" % (group_verifier.name)))
         return True
 
-    @api.one
+    @api.multi
     def copy(self, default=None):
+        self.ensure_one()
         if default is None:
             default = {}
         default.update({
