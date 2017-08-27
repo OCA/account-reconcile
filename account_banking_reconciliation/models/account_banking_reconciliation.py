@@ -42,7 +42,7 @@ class BankAccRecStatement(models.Model):
                                       "state!" % (group_verifier.name)))
         return True
 
-    @api.model
+    @api.one
     def copy(self, default=None):
         if default is None:
             default = {}
@@ -188,7 +188,7 @@ class BankAccRecStatement(models.Model):
             statement_line_ids.write({'cleared_bank_account': False})
         return True
 
-    def _get_balance(self):
+    def _compute_get_balance(self):
         """Computed as following:
         A) Deposits, Credits, and Interest Amount:
         Total SUM of Amts of lines with Cleared = True
@@ -455,18 +455,19 @@ class BankAccRecStatement(models.Model):
                                           domain=[('type', '=', 'dr')],
                                           states={
                                               'done': [('readonly', True)]})
-    cleared_balance = fields.Float(compute='_get_balance',
+    cleared_balance = fields.Float(compute='_compute_get_balance',
                                    string='Cleared Balance',
                                    digits_compute=dp.get_precision('Account'),
                                    help="Total Sum of the Deposit Amount "
                                         "Cleared – Total Sum of Checks, "
                                         "Withdrawals, Debits, and Service "
                                         "Charges Amount Cleared")
-    difference = fields.Float(compute='_get_balance', string='Difference',
+    difference = fields.Float(compute='_compute_get_balance',
+                              string='Difference',
                               digits_compute=dp.get_precision('Account'),
                               help="(Ending Balance – Beginning Balance) - "
                                    "Cleared Balance.")
-    cleared_balance_cur = fields.Float(compute='_get_balance',
+    cleared_balance_cur = fields.Float(compute='_compute_get_balance',
                                        string='Cleared Balance (Cur)',
                                        digits_compute=dp.get_precision(
                                            'Account'),
@@ -474,12 +475,12 @@ class BankAccRecStatement(models.Model):
                                             "Amount Cleared – Total Sum of "
                                             "Checks, Withdrawals, Debits, and"
                                             " Service Charges Amount Cleared")
-    difference_cur = fields.Float(compute='_get_balance',
+    difference_cur = fields.Float(compute='_compute_get_balance',
                                   string='Difference (Cur)',
                                   digits_compute=dp.get_precision('Account'),
                                   help="(Ending Balance – Beginning Balance)"
                                        " - Cleared Balance.")
-    uncleared_balance = fields.Float(compute='_get_balance',
+    uncleared_balance = fields.Float(compute='_compute_get_balance',
                                      string='Uncleared Balance',
                                      digits_compute=dp.get_precision(
                                          'Account'),
@@ -487,7 +488,7 @@ class BankAccRecStatement(models.Model):
                                           "Amount Uncleared – Total Sum of "
                                           "Checks, Withdrawals, Debits, and"
                                           " Service Charges Amount Uncleared")
-    uncleared_balance_cur = fields.Float(compute='_get_balance',
+    uncleared_balance_cur = fields.Float(compute='_compute_get_balance',
                                          string='Unleared Balance (Cur)',
                                          digits_compute=dp.get_precision(
                                              'Account'),
@@ -496,57 +497,57 @@ class BankAccRecStatement(models.Model):
                                               "Checks, Withdrawals, Debits, "
                                               "and Service Charges "
                                               "Amount Uncleared")
-    sum_of_credits = fields.Float(compute='_get_balance',
+    sum_of_credits = fields.Float(compute='_compute_get_balance',
                                   string='Checks, Withdrawals, Debits, and'
                                          ' Service Charges Amount',
                                   digits_compute=dp.get_precision('Account'),
                                   type='float',
                                   help="Total SUM of Amts of lines with"
                                        " Cleared = True")
-    sum_of_debits = fields.Float(compute='_get_balance',
+    sum_of_debits = fields.Float(compute='_compute_get_balance',
                                  string='Deposits, Credits, and '
                                         'Interest Amount',
                                  digits_compute=dp.get_precision('Account'),
                                  help="Total SUM of Amts of lines with "
                                       "Cleared = True")
-    sum_of_credits_cur = fields.Float(compute='_get_balance',
+    sum_of_credits_cur = fields.Float(compute='_compute_get_balance',
                                       string='Checks, Withdrawals, Debits, and'
                                              ' Service Charges Amount (Cur)',
                                       digits_compute=dp.get_precision(
                                           'Account'),
                                       help="Total SUM of Amts of lines "
                                            "with Cleared = True")
-    sum_of_debits_cur = fields.Float(compute='_get_balance',
+    sum_of_debits_cur = fields.Float(compute='_compute_get_balance',
                                      string='Deposits, Credits, and '
                                             'Interest Amount (Cur)',
                                      digits_compute=dp.get_precision(
                                          'Account'),
                                      help="Total SUM of Amts of lines "
                                           "with Cleared = True")
-    sum_of_credits_lines = fields.Float(compute='_get_balance',
+    sum_of_credits_lines = fields.Float(compute='_compute_get_balance',
                                         string='Checks, Withdrawals, Debits, '
                                                'and Service Charges # of '
                                                'Items',
                                         help="Total of number of lines with "
                                              "Cleared = True")
-    sum_of_debits_lines = fields.Float(compute='_get_balance',
+    sum_of_debits_lines = fields.Float(compute='_compute_get_balance',
                                        string='Deposits, Credits, and Interest'
                                               ' # of Items',
                                        help="Total of number of lines with"
                                             " Cleared = True")
-    sum_of_ucredits = fields.Float(compute='_get_balance',
+    sum_of_ucredits = fields.Float(compute='_compute_get_balance',
                                    string='Uncleared - Checks, Withdrawals, '
                                           'Debits, and Service Charges Amount',
                                    digits_compute=dp.get_precision('Account'),
                                    help="Total SUM of Amts of lines with "
                                         "Cleared = False")
-    sum_of_udebits = fields.Float(compute='_get_balance',
+    sum_of_udebits = fields.Float(compute='_compute_get_balance',
                                   string='Uncleared - Deposits, Credits, '
                                          'and Interest Amount',
                                   digits_compute=dp.get_precision('Account'),
                                   help="Total SUM of Amts of lines with "
                                        "Cleared = False")
-    sum_of_ucredits_cur = fields.Float(compute='_get_balance',
+    sum_of_ucredits_cur = fields.Float(compute='_compute_get_balance',
                                        string='Uncleared - Checks, '
                                               'Withdrawals, Debits, and '
                                               'Service Charges Amount (Cur)',
@@ -554,20 +555,20 @@ class BankAccRecStatement(models.Model):
                                            'Account'),
                                        help="Total SUM of Amts of lines "
                                             "with Cleared = False")
-    sum_of_udebits_cur = fields.Float(compute='_get_balance',
+    sum_of_udebits_cur = fields.Float(compute='_compute_get_balance',
                                       string='Uncleared - Deposits, Credits, '
                                              'and Interest Amount (Cur)',
                                       digits_compute=dp.get_precision(
                                           'Account'),
                                       help="Total SUM of Amts of lines with"
                                            " Cleared = False")
-    sum_of_ucredits_lines = fields.Float(compute='_get_balance',
+    sum_of_ucredits_lines = fields.Float(compute='_compute_get_balance',
                                          string='Uncleared - Checks, '
                                                 'Withdrawals, Debits, and '
                                                 'Service Charges # of Items',
                                          help="Total of number of lines with"
                                               " Cleared = False")
-    sum_of_udebits_lines = fields.Float(compute='_get_balance',
+    sum_of_udebits_lines = fields.Float(compute='_compute_get_balance',
                                         string='Uncleared - Deposits, Credits,'
                                                ' and Interest # of Items',
                                         help="Total of number of lines "
