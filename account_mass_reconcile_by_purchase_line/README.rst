@@ -8,10 +8,9 @@ Account Mass Reconcile by Purchase Line
 
 This module extends the functionality of acccount_mass_reconcile and
 allow an user to reconcile debits and credits of an Account
-using the PO Line, Product and Partner as key fields. This type of
+using the PO Line and Product as key fields. This type of
 reconciliation is to be used in the context of the Perpetual Inventory
 accounting system, with the accrual account '*Goods Received Not Invoiced*'.
-
 
 Usage
 =====
@@ -21,7 +20,7 @@ To use this module, you need to:
 * Go to 'Accounting / Adviser / Mass Automatic Reconcile'.
 
 * Create a new reconciliation profile, and select a new configuration entry
-  with type 'Advanced. Partner, product, purchase order line.'.
+  with type 'Advanced. Product, purchase order line.'.
 
 .. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas
    :alt: Try me on Runbot
@@ -48,6 +47,7 @@ Contributors
 
 * Jordi Ballester Alomar <jordi.ballester@eficent.com>
 * Miquel Raïch <miquel.raich@eficent.com>
+* Lois Rilo <lois.rilo@eficent.com>
 
 Maintainer
 ----------
