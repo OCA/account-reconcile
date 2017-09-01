@@ -13,6 +13,6 @@ class AccountMassReconcileMethod(models.Model):
         methods = super(AccountMassReconcileMethod, self)._get_all_rec_method()
         methods += [
             ('mass.reconcile.advanced.by.purchase.line',
-             'Advanced. Partner, product, purchase order line.'),
+             'Advanced. Product, purchase order line.'),
         ]
         return methods
