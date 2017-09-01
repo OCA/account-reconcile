@@ -16,17 +16,15 @@ class MassReconcileAdvancedByPurchaseLine(models.TransientModel):
         will be skipped for reconciliation. Can be inherited to
         skip on some conditions. ie: ref or partner_id is empty.
         """
-        return not (move_line.get('partner_id') and move_line.get(
-            'product_id') and move_line.get('purchase_line_id'))
+        return not (move_line.get('product_id') and
+                    move_line.get('purchase_line_id'))
 
     @api.multi
     def _matchers(self, move_line):
-        return (('partner_id', move_line['partner_id']),
-                ('product_id', move_line['product_id']),
+        return (('product_id', move_line['product_id']),
                 ('purchase_line_id', move_line['purchase_line_id']))
 
     @api.multi
     def _opposite_matchers(self, move_line):
-        yield ('partner_id', move_line['partner_id'])
         yield ('product_id', move_line['product_id'])
         yield ('purchase_line_id', move_line['purchase_line_id'])
