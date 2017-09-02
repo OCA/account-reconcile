@@ -3,13 +3,14 @@
 # * account_advanced_reconcile
 # 
 # Translators:
+# OCA Transbot <transbot@odoo-community.org>, 2017
 # Peter Hageman <hageman.p@gmail.com>, 2017
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 8.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-06-24 00:30+0000\n"
-"PO-Revision-Date: 2017-06-24 00:30+0000\n"
+"POT-Creation-Date: 2017-08-12 00:48+0000\n"
+"PO-Revision-Date: 2017-08-12 00:48+0000\n"
 "Last-Translator: Peter Hageman <hageman.p@gmail.com>, 2017\n"
 "Language-Team: Dutch (Netherlands) (https://www.transifex.com/oca/teams/23907/nl_NL/)\n"
 "MIME-Version: 1.0\n"
@@ -64,12 +65,12 @@ msgstr ""
 #. module: account_advanced_reconcile
 #: field:easy.reconcile.advanced.ref,create_uid:0
 msgid "Created by"
-msgstr ""
+msgstr "Aangemaakt door"
 
 #. module: account_advanced_reconcile
 #: field:easy.reconcile.advanced.ref,create_date:0
 msgid "Created on"
-msgstr ""
+msgstr "Aangemaakt op"
 
 #. module: account_advanced_reconcile
 #: field:easy.reconcile.advanced,date_base_on:0
@@ -115,12 +116,12 @@ msgstr "Laatst gewijzigd op"
 #. module: account_advanced_reconcile
 #: field:easy.reconcile.advanced.ref,write_uid:0
 msgid "Last Updated by"
-msgstr ""
+msgstr "Laatst bijgewerkt door"
 
 #. module: account_advanced_reconcile
 #: field:easy.reconcile.advanced.ref,write_date:0
 msgid "Last Updated on"
-msgstr ""
+msgstr "Laatst bijgewerkt op"
 
 #. module: account_advanced_reconcile
 #: field:easy.reconcile.advanced,expense_exchange_account_id:0

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bank-statement-reconcile (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-06-24 00:30+0000\n"
+"POT-Creation-Date: 2017-08-12 00:49+0000\n"
 "PO-Revision-Date: 2015-07-22 06:46+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: Dutch (Netherlands) (http://www.transifex.com/oca/OCA-bank-statement-reconcile-8-0/language/nl_NL/)\n"
@@ -25,7 +25,7 @@ msgstr "Bankafschriftregel"
 #. module: base_transaction_id
 #: model:ir.model,name:base_transaction_id.model_account_invoice
 msgid "Invoice"
-msgstr ""
+msgstr "Factuur"
 
 #. module: base_transaction_id
 #: model:ir.model,name:base_transaction_id.model_account_move_line
@@ -45,7 +45,7 @@ msgstr ""
 #. module: base_transaction_id
 #: model:ir.model,name:base_transaction_id.model_sale_order
 msgid "Sales Order"
-msgstr ""
+msgstr "Verkooporder"
 
 #. module: base_transaction_id
 #: field:account.invoice,transaction_id:0 field:sale.order,transaction_id:0

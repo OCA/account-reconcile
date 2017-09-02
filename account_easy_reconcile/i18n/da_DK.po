@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: bank-statement-reconcile (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-08-12 00:48+0000\n"
-"PO-Revision-Date: 2017-08-21 07:21+0000\n"
+"PO-Revision-Date: 2017-08-21 07:22+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
-"Language-Team: Portuguese (Brazil) (http://www.transifex.com/oca/OCA-bank-statement-reconcile-8-0/language/pt_BR/)\n"
+"Language-Team: Danish (Denmark) (http://www.transifex.com/oca/OCA-bank-statement-reconcile-8-0/language/da_DK/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Language: pt_BR\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Language: da_DK\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. module: account_easy_reconcile
 #: view:easy.reconcile.history:account_easy_reconcile.view_easy_reconcile_history_search
@@ -44,7 +44,7 @@ msgstr ""
 #: field:easy.reconcile.simple.partner,account_id:0
 #: field:easy.reconcile.simple.reference,account_id:0
 msgid "Account"
-msgstr "Conta"
+msgstr ""
 
 #. module: account_easy_reconcile
 #: field:account.easy.reconcile.method,account_lost_id:0
@@ -113,19 +113,19 @@ msgstr ""
 #. module: account_easy_reconcile
 #: model:ir.model,name:account_easy_reconcile.model_res_company
 msgid "Companies"
-msgstr "Empresas"
+msgstr ""
 
 #. module: account_easy_reconcile
 #: field:account.easy.reconcile,company_id:0
 #: field:account.easy.reconcile.method,company_id:0
 #: field:easy.reconcile.history,company_id:0
 msgid "Company"
-msgstr "Empresa"
+msgstr ""
 
 #. module: account_easy_reconcile
 #: view:account.easy.reconcile:account_easy_reconcile.account_easy_reconcile_form
 msgid "Configuration"
-msgstr "Configuração"
+msgstr ""
 
 #. module: account_easy_reconcile
 #: field:account.easy.reconcile,create_uid:0
@@ -135,7 +135,7 @@ msgstr "Configuração"
 #: field:easy.reconcile.simple.partner,create_uid:0
 #: field:easy.reconcile.simple.reference,create_uid:0
 msgid "Created by"
-msgstr "Criado por"
+msgstr ""
 
 #. module: account_easy_reconcile
 #: field:account.easy.reconcile,create_date:0
@@ -145,12 +145,12 @@ msgstr "Criado por"
 #: field:easy.reconcile.simple.partner,create_date:0
 #: field:easy.reconcile.simple.reference,create_date:0
 msgid "Created on"
-msgstr "Criado em"
+msgstr ""
 
 #. module: account_easy_reconcile
 #: view:easy.reconcile.history:account_easy_reconcile.view_easy_reconcile_history_search
 msgid "Date"
-msgstr "Data"
+msgstr ""
 
 #. module: account_easy_reconcile
 #: field:account.easy.reconcile.method,date_base_on:0
@@ -166,7 +166,7 @@ msgstr ""
 #. module: account_easy_reconcile
 #: help:account.easy.reconcile,message_last_post:0
 msgid "Date of the last message posted on the record."
-msgstr "Data da última mensagem postada no registro"
+msgstr ""
 
 #. module: account_easy_reconcile
 #: field:account.easy.reconcile,display_name:0
@@ -179,7 +179,7 @@ msgstr "Data da última mensagem postada no registro"
 #: field:easy.reconcile.simple.partner,display_name:0
 #: field:easy.reconcile.simple.reference,display_name:0
 msgid "Display Name"
-msgstr "Nome para Mostrar"
+msgstr ""
 
 #. module: account_easy_reconcile
 #: view:account.easy.reconcile:account_easy_reconcile.account_easy_reconcile_form
@@ -217,7 +217,7 @@ msgstr ""
 #. module: account_easy_reconcile
 #: field:account.easy.reconcile,message_follower_ids:0
 msgid "Followers"
-msgstr "Seguidores"
+msgstr ""
 
 #. module: account_easy_reconcile
 #: field:account.easy.reconcile.method,income_exchange_account_id:0
@@ -257,13 +257,13 @@ msgstr ""
 #. module: account_easy_reconcile
 #: view:easy.reconcile.history:account_easy_reconcile.view_easy_reconcile_history_search
 msgid "Group By..."
-msgstr "Agrupado por"
+msgstr ""
 
 #. module: account_easy_reconcile
 #: view:account.easy.reconcile:account_easy_reconcile.account_easy_reconcile_form
 #: field:account.easy.reconcile,history_ids:0
 msgid "History"
-msgstr "Histórico"
+msgstr ""
 
 #. module: account_easy_reconcile
 #: model:ir.actions.act_window,name:account_easy_reconcile.act_easy_reconcile_to_history
@@ -291,12 +291,12 @@ msgstr ""
 #: field:easy.reconcile.simple.partner,id:0
 #: field:easy.reconcile.simple.reference,id:0
 msgid "ID"
-msgstr "Identificação"
+msgstr ""
 
 #. module: account_easy_reconcile
 #: help:account.easy.reconcile,message_unread:0
 msgid "If checked new messages require your attention."
-msgstr "Se marcado novas mensagens requerem sua atenção."
+msgstr ""
 
 #. module: account_easy_reconcile
 #: view:account.easy.reconcile:account_easy_reconcile.account_easy_reconcile_form
@@ -317,12 +317,12 @@ msgstr ""
 #: field:easy.reconcile.simple.partner,journal_id:0
 #: field:easy.reconcile.simple.reference,journal_id:0
 msgid "Journal"
-msgstr "Diário"
+msgstr ""
 
 #. module: account_easy_reconcile
 #: field:account.easy.reconcile,message_last_post:0
 msgid "Last Message Date"
-msgstr "Última data de mensagem"
+msgstr ""
 
 #. module: account_easy_reconcile
 #: field:account.easy.reconcile,__last_update:0
@@ -335,7 +335,7 @@ msgstr "Última data de mensagem"
 #: field:easy.reconcile.simple.partner,__last_update:0
 #: field:easy.reconcile.simple.reference,__last_update:0
 msgid "Last Modified on"
-msgstr "Última atualização em"
+msgstr ""
 
 #. module: account_easy_reconcile
 #: field:account.easy.reconcile,write_uid:0
@@ -345,7 +345,7 @@ msgstr "Última atualização em"
 #: field:easy.reconcile.simple.partner,write_uid:0
 #: field:easy.reconcile.simple.reference,write_uid:0
 msgid "Last Updated by"
-msgstr "Última atualização por"
+msgstr ""
 
 #. module: account_easy_reconcile
 #: field:account.easy.reconcile,write_date:0
@@ -355,7 +355,7 @@ msgstr "Última atualização por"
 #: field:easy.reconcile.simple.partner,write_date:0
 #: field:easy.reconcile.simple.reference,write_date:0
 msgid "Last Updated on"
-msgstr "Última atualização em"
+msgstr ""
 
 #. module: account_easy_reconcile
 #: field:account.easy.reconcile,last_history:0
@@ -406,7 +406,7 @@ msgstr ""
 #. module: account_easy_reconcile
 #: field:account.easy.reconcile,message_ids:0
 msgid "Messages"
-msgstr "Mensagens"
+msgstr ""
 
 #. module: account_easy_reconcile
 #: help:account.easy.reconcile,message_ids:0
@@ -416,12 +416,12 @@ msgstr ""
 #. module: account_easy_reconcile
 #: field:account.easy.reconcile,reconcile_method:0
 msgid "Method"
-msgstr "Método"
+msgstr ""
 
 #. module: account_easy_reconcile
 #: field:account.easy.reconcile,name:0
 msgid "Name"
-msgstr "Nome"
+msgstr ""
 
 #. module: account_easy_reconcile
 #: view:account.config.settings:account_easy_reconcile.view_account_config
@@ -503,7 +503,7 @@ msgstr ""
 #. module: account_easy_reconcile
 #: field:account.easy.reconcile.method,sequence:0
 msgid "Sequence"
-msgstr "Sequência"
+msgstr ""
 
 #. module: account_easy_reconcile
 #: view:account.easy.reconcile:account_easy_reconcile.account_easy_reconcile_form
@@ -533,12 +533,12 @@ msgstr ""
 #. module: account_easy_reconcile
 #: field:account.easy.reconcile,message_summary:0
 msgid "Summary"
-msgstr ""
+msgstr "Oversigt"
 
 #. module: account_easy_reconcile
 #: field:account.easy.reconcile.method,task_id:0
 msgid "Task"
-msgstr "Tarefa"
+msgstr ""
 
 #. module: account_easy_reconcile
 #: help:account.easy.reconcile.method,sequence:0
@@ -570,12 +570,12 @@ msgstr ""
 #. module: account_easy_reconcile
 #: field:account.easy.reconcile.method,name:0
 msgid "Type"
-msgstr "Tipo"
+msgstr ""
 
 #. module: account_easy_reconcile
 #: field:account.easy.reconcile,message_unread:0
 msgid "Unread Messages"
-msgstr "Mensagens não lidas"
+msgstr ""
 
 #. module: account_easy_reconcile
 #: field:account.easy.reconcile,unreconciled_count:0

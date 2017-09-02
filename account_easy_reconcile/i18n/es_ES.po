@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bank-statement-reconcile (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-03-28 01:39+0000\n"
-"PO-Revision-Date: 2017-04-25 10:42+0000\n"
+"POT-Creation-Date: 2017-08-12 00:48+0000\n"
+"PO-Revision-Date: 2017-08-21 07:20+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
 "Language-Team: Spanish (Spain) (http://www.transifex.com/oca/OCA-bank-statement-reconcile-8-0/language/es_ES/)\n"
 "MIME-Version: 1.0\n"
@@ -570,7 +570,7 @@ msgstr ""
 #. module: account_easy_reconcile
 #: field:account.easy.reconcile.method,name:0
 msgid "Type"
-msgstr ""
+msgstr "Tipo"
 
 #. module: account_easy_reconcile
 #: field:account.easy.reconcile,message_unread:0

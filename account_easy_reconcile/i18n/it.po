@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: bank-statement-reconcile (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-01-07 01:11+0000\n"
-"PO-Revision-Date: 2017-01-13 09:23+0000\n"
+"POT-Creation-Date: 2017-08-12 00:48+0000\n"
+"PO-Revision-Date: 2017-08-21 07:21+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
 "Language-Team: Italian (http://www.transifex.com/oca/OCA-bank-statement-reconcile-8-0/language/it/)\n"
 "MIME-Version: 1.0\n"
@@ -47,7 +47,7 @@ msgstr ""
 #: field:easy.reconcile.simple.partner,account_id:0
 #: field:easy.reconcile.simple.reference,account_id:0
 msgid "Account"
-msgstr ""
+msgstr "Conto"
 
 #. module: account_easy_reconcile
 #: field:account.easy.reconcile.method,account_lost_id:0
