@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 9.0c\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-03-28 01:41+0000\n"
-"PO-Revision-Date: 2017-03-28 01:41+0000\n"
+"POT-Creation-Date: 2017-08-16 10:09+0000\n"
+"PO-Revision-Date: 2017-08-16 10:09+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2016\n"
 "Language-Team: Spanish (Spain) (https://www.transifex.com/oca/teams/23907/es_ES/)\n"
 "MIME-Version: 1.0\n"
@@ -168,7 +168,7 @@ msgstr ""
 #. module: account_operation_rule
 #: model:ir.model.fields,field_description:account_operation_rule.field_account_operation_rule_rule_type
 msgid "Type"
-msgstr ""
+msgstr "Tipo"
 
 #. module: account_operation_rule
 #: model:ir.ui.view,arch_db:account_operation_rule.view_account_operation_rule_form

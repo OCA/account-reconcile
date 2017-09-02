@@ -3,13 +3,14 @@
 # * account_move_base_import
 # 
 # Translators:
+# OCA Transbot <transbot@odoo-community.org>, 2017
 # Peter Hageman <hageman.p@gmail.com>, 2017
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 9.0c\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-06-24 00:39+0000\n"
-"PO-Revision-Date: 2017-06-24 00:39+0000\n"
+"POT-Creation-Date: 2017-08-16 10:09+0000\n"
+"PO-Revision-Date: 2017-08-16 10:09+0000\n"
 "Last-Translator: Peter Hageman <hageman.p@gmail.com>, 2017\n"
 "Language-Team: Dutch (Netherlands) (https://www.transifex.com/oca/teams/23907/nl_NL/)\n"
 "MIME-Version: 1.0\n"
@@ -76,7 +77,7 @@ msgstr ""
 #. module: account_move_base_import
 #: model:ir.ui.view,arch_db:account_move_base_import.move_importer_view
 msgid "Cancel"
-msgstr ""
+msgstr "Verwijderen"
 
 #. module: account_move_base_import
 #: model:ir.model.fields,help:account_move_base_import.field_account_journal_receivable_account_id
@@ -135,13 +136,13 @@ msgstr ""
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_move_completion_rule_create_uid
 #: model:ir.model.fields,field_description:account_move_base_import.field_credit_statement_import_create_uid
 msgid "Created by"
-msgstr ""
+msgstr "Aangemaakt door"
 
 #. module: account_move_base_import
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_move_completion_rule_create_date
 #: model:ir.model.fields,field_description:account_move_base_import.field_credit_statement_import_create_date
 msgid "Created on"
-msgstr ""
+msgstr "Aangemaakt op"
 
 #. module: account_move_base_import
 #: model:ir.model.fields,field_description:account_move_base_import.field_credit_statement_import_partner_id
@@ -374,13 +375,13 @@ msgstr "Laatst gewijzigd op"
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_move_completion_rule_write_uid
 #: model:ir.model.fields,field_description:account_move_base_import.field_credit_statement_import_write_uid
 msgid "Last Updated by"
-msgstr ""
+msgstr "Laatst bijgewerkt door"
 
 #. module: account_move_base_import
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_move_completion_rule_write_date
 #: model:ir.model.fields,field_description:account_move_base_import.field_credit_statement_import_write_date
 msgid "Last Updated on"
-msgstr ""
+msgstr "Laatst bijgewerkt op"
 
 #. module: account_move_base_import
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_journal_launch_import_completion
