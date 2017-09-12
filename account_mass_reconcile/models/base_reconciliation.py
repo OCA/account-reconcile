@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 # © 2012-2016 Camptocamp SA (Guewen Baconnier, Damien Crier, Matthieu Dietrich)
 # © 2010 Sébastien Beau
+# © 2017 Eficent Business and IT Consulting Services S.L. (www.eficent.com)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 from openerp import models, api, fields
@@ -44,6 +45,7 @@ class MassReconcileBase(models.AbstractModel):
         """
         raise NotImplementedError
 
+    @api.model
     def _base_columns(self):
         """ Mandatory columns for move lines queries
         An extra column aliased as ``key`` should be defined
@@ -63,7 +65,8 @@ class MassReconcileBase(models.AbstractModel):
 
     @api.multi
     def _select(self, *args, **kwargs):
-        return "SELECT %s" % ', '.join(self._base_columns())
+        return "SELECT %s" % ', '.join(
+            self.env["mass.reconcile.base"]._base_columns())
 
     @api.multi
     def _from(self, *args, **kwargs):
