@@ -29,7 +29,8 @@ Available addons
 ----------------
 addon | version | summary
 --- | --- | ---
-[account_mass_reconcile](account_mass_reconcile/) | 9.0.1.0.0 | Mass Reconcile
+[account_mass_reconcile](account_mass_reconcile/) | 9.0.1.0.0 | Account Mass Reconcile
+[account_mass_reconcile_by_purchase_line](account_mass_reconcile_by_purchase_line/) | 9.0.1.0.0 | Allows to reconcile based on the PO line
 [account_mass_reconcile_ref_deep_search](account_mass_reconcile_ref_deep_search/) | 9.0.1.0.0 | Mass Reconcile Ref Deep Search
 [account_mass_reconcile_transaction_ref](account_mass_reconcile_transaction_ref/) | 9.0.1.0.0 | Mass Reconcile Transaction Ref
 [account_move_bankaccount_import](account_move_bankaccount_import/) | 9.0.1.0.0 | Journal Entry completion from bank account number
