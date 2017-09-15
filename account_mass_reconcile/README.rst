@@ -2,37 +2,34 @@
     :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
     :alt: License: AGPL-3
 
-==============
-Mass Reconcile
-==============
+======================
+Account Mass Reconcile
+======================
 
 This is a shared work between Akretion and Camptocamp
 in order to provide:
-- reconciliation facilities for big volume of transactions
-- setup different profiles of reconciliation by account
-- each profile can use many methods of reconciliation
-- this module is also a base to create others
-reconciliation methods which can plug in the profiles
-- a profile a reconciliation can be run manually
-or by a cron
-- monitoring of reconciliation runs with an history
-which keep track of the reconciled Journal items
+
+- Reconciliation facilities for big volume of transactions.
+- Setup different profiles of reconciliation by account.
+- Each profile can use many methods of reconciliation.
+- This module is also a base to create others
+  reconciliation methods which can plug in the profiles.
+- A profile a reconciliation can be run manually
+  or by a cron.
+- Monitoring of reconciliation runs with an history
+  which keep track of the reconciled Journal items.
 
 2 simple reconciliation methods are integrated
 in this module, the simple reconciliations works
 on 2 lines (1 debit / 1 credit) and do not allow
-partial reconcilation, they also match on 1 key,
+partial reconciliation, they also match on 1 key,
 partner or Journal item name.
-
-This module combines both the ``account_easy_reconcile``
-and the``account_advanced_reconcile`` modules
-from previous versions.
 
 Usage
 =====
 
-Go to 'Invoicing/Periodic Processing/Reconciliation/Mass Automatic Reconcile' to start a
-new mass reconcile.
+Go to 'Invoicing / Adviser / Mass Automatic Reconcile' to start a new mass
+reconcile.
 
 .. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas
    :alt: Try me on Runbot
