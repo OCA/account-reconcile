@@ -3,7 +3,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 {
-    "name": "Mass Reconcile",
+    "name": "Account Mass Reconcile",
     "version": "11.0.1.0.0",
     "depends": [
         "account_invoicing",

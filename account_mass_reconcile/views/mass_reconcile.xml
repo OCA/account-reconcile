@@ -58,9 +58,8 @@ The lines should have the same amount (with the write-off) and the same referenc
                           <group colspan="2" col="2">
                               <separator colspan="4" string="Advanced. Partner and Ref"/>
                               <label string="Match multiple debit vs multiple credit entries. Allow partial reconciliation.
-The lines should have the partner, the credit entry ref. is matched vs the debit entry ref. or name." colspan="4"/>
+The lines should have the same partner, and the credit entry ref. is matched with the debit entry ref. or name." colspan="4"/>
                           </group>
-
                         </page>
                     </notebook>
                 </sheet>
