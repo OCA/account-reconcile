@@ -5,7 +5,7 @@
 {
     "name": "Account Mass Reconcile by Purchase Line",
     "summary": "Allows to reconcile based on the PO line",
-    "version": "9.0.1.0.0",
+    "version": "10.0.1.0.0",
     "author": "Eficent, "
               "Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/bank-statement-reconcile",
