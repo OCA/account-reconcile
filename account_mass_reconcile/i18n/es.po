@@ -3,15 +3,15 @@
 # * account_mass_reconcile
 # 
 # Translators:
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2014
+# OCA Transbot <transbot@odoo-community.org>, 2017
 msgid ""
 msgstr ""
-"Project-Id-Version: bank-statement-reconcile (9.0)\n"
+"Project-Id-Version: Odoo Server 9.0c\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-12-24 00:38+0000\n"
-"PO-Revision-Date: 2016-12-27 12:10+0000\n"
-"Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
-"Language-Team: Spanish (http://www.transifex.com/oca/OCA-bank-statement-reconcile-9-0/language/es/)\n"
+"POT-Creation-Date: 2017-10-12 13:54+0000\n"
+"PO-Revision-Date: 2017-10-12 13:54+0000\n"
+"Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2017\n"
+"Language-Team: Spanish (https://www.transifex.com/oca/teams/23907/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
@@ -404,9 +404,9 @@ msgstr "Historial de la conciliación automática sencilla"
 #: model:ir.ui.view,arch_db:account_mass_reconcile.account_mass_reconcile_form
 msgid ""
 "Match multiple debit vs multiple credit entries. Allow partial "
-"reconciliation. The lines should have the partner, the credit entry ref. is "
-"matched vs the debit entry ref. or name."
-msgstr "Casa múltiples líneas del debe con múltiples líneas del haber. Permite conciliación parcial. Las líneas deben tener la empresa, la referencia de la línea del haber se casa contra la referencia de la línea del debe o el nombre."
+"reconciliation. The lines should have the same partner, and the credit entry"
+" ref. is matched with the debit entry ref. or name."
+msgstr ""
 
 #. module: account_mass_reconcile
 #: model:ir.ui.view,arch_db:account_mass_reconcile.account_mass_reconcile_form
@@ -414,7 +414,10 @@ msgid ""
 "Match one debit line vs one credit line. Do not allow partial "
 "reconciliation. The lines should have the same amount (with the write-off) "
 "and the same name to be reconciled."
-msgstr "Casa una línea del debe con una línea del haber. No permite conciliación parcial. Las líneas deben tener el mismo importe (con el desajuste) y el mismo nombre para ser conciliadas."
+msgstr ""
+"Casa una línea del debe con una línea del haber. No permite conciliación "
+"parcial. Las líneas deben tener el mismo importe (con el desajuste) y el "
+"mismo nombre para ser conciliadas."
 
 #. module: account_mass_reconcile
 #: model:ir.ui.view,arch_db:account_mass_reconcile.account_mass_reconcile_form
@@ -422,7 +425,10 @@ msgid ""
 "Match one debit line vs one credit line. Do not allow partial "
 "reconciliation. The lines should have the same amount (with the write-off) "
 "and the same partner to be reconciled."
-msgstr "Casa una línea del debe con una línea del haber. No permite conciliación parcial. Las líneas deben tener el mismo importe (con el desajuste) y la misma empresa para ser conciliadas."
+msgstr ""
+"Casa una línea del debe con una línea del haber. No permite conciliación "
+"parcial. Las líneas deben tener el mismo importe (con el desajuste) y la "
+"misma empresa para ser conciliadas."
 
 #. module: account_mass_reconcile
 #: model:ir.ui.view,arch_db:account_mass_reconcile.account_mass_reconcile_form
@@ -430,7 +436,10 @@ msgid ""
 "Match one debit line vs one credit line. Do not allow partial "
 "reconciliation. The lines should have the same amount (with the write-off) "
 "and the same reference to be reconciled."
-msgstr "Casa una línea del debe con una línea del haber. No permite conciliación parcial. Las líneas deben tener el mismo importe (con el desajuste) y la misma referencia para ser conciliadas."
+msgstr ""
+"Casa una línea del debe con una línea del haber. No permite conciliación "
+"parcial. Las líneas deben tener el mismo importe (con el desajuste) y la "
+"misma referencia para ser conciliadas."
 
 #. module: account_mass_reconcile
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile_message_ids

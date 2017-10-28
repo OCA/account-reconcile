@@ -3,14 +3,14 @@
 # * account_mass_reconcile_transaction_ref
 # 
 # Translators:
-# OCA Transbot <transbot@odoo-community.org>, 2016
+# OCA Transbot <transbot@odoo-community.org>, 2017
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 9.0c\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-09-12 11:12+0000\n"
-"PO-Revision-Date: 2016-09-12 11:12+0000\n"
-"Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2016\n"
+"POT-Creation-Date: 2017-10-12 13:54+0000\n"
+"PO-Revision-Date: 2017-10-12 13:54+0000\n"
+"Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2017\n"
 "Language-Team: French (https://www.transifex.com/oca/teams/23907/fr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -80,7 +80,7 @@ msgstr "Filtre"
 #: model:ir.model.fields,field_description:account_mass_reconcile_transaction_ref.field_mass_reconcile_advanced_transaction_ref_income_exchange_account_id
 #: model:ir.model.fields,field_description:account_mass_reconcile_transaction_ref.field_mass_reconcile_advanced_transaction_ref_vs_ref_income_exchange_account_id
 msgid "Gain Exchange Rate Account"
-msgstr ""
+msgstr "Compte de gain de change"
 
 #. module: account_mass_reconcile_transaction_ref
 #: model:ir.model.fields,field_description:account_mass_reconcile_transaction_ref.field_mass_reconcile_advanced_transaction_ref_id
@@ -116,7 +116,7 @@ msgstr "Modifié le"
 #: model:ir.model.fields,field_description:account_mass_reconcile_transaction_ref.field_mass_reconcile_advanced_transaction_ref_expense_exchange_account_id
 #: model:ir.model.fields,field_description:account_mass_reconcile_transaction_ref.field_mass_reconcile_advanced_transaction_ref_vs_ref_expense_exchange_account_id
 msgid "Loss Exchange Rate Account"
-msgstr ""
+msgstr "Compte de perte de change"
 
 #. module: account_mass_reconcile_transaction_ref
 #: model:ir.ui.view,arch_db:account_mass_reconcile_transaction_ref.view_mass_reconcile_form

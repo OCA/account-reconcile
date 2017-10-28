@@ -1,0 +1,132 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# * account_mass_reconcile_by_purchase_line
+# 
+# Translators:
+# OCA Transbot <transbot@odoo-community.org>, 2017
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 9.0c\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-10-12 13:54+0000\n"
+"PO-Revision-Date: 2017-10-12 13:54+0000\n"
+"Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2017\n"
+"Language-Team: Spanish (Argentina) (https://www.transifex.com/oca/teams/23907/es_AR/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Language: es_AR\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. module: account_mass_reconcile_by_purchase_line
+#: model:ir.model.fields,field_description:account_mass_reconcile_by_purchase_line.field_mass_reconcile_advanced_by_purchase_line_account_id
+msgid "Account"
+msgstr ""
+
+#. module: account_mass_reconcile_by_purchase_line
+#: model:ir.model.fields,field_description:account_mass_reconcile_by_purchase_line.field_mass_reconcile_advanced_by_purchase_line_account_lost_id
+msgid "Account Lost"
+msgstr ""
+
+#. module: account_mass_reconcile_by_purchase_line
+#: model:ir.model.fields,field_description:account_mass_reconcile_by_purchase_line.field_mass_reconcile_advanced_by_purchase_line_account_profit_id
+msgid "Account Profit"
+msgstr ""
+
+#. module: account_mass_reconcile_by_purchase_line
+#: model:ir.ui.view,arch_db:account_mass_reconcile_by_purchase_line.account_mass_reconcile_form
+msgid "Advanced. Purchase Order Line"
+msgstr ""
+
+#. module: account_mass_reconcile_by_purchase_line
+#: model:ir.model.fields,field_description:account_mass_reconcile_by_purchase_line.field_mass_reconcile_advanced_by_purchase_line_create_uid
+msgid "Created by"
+msgstr "Creado por"
+
+#. module: account_mass_reconcile_by_purchase_line
+#: model:ir.model.fields,field_description:account_mass_reconcile_by_purchase_line.field_mass_reconcile_advanced_by_purchase_line_create_date
+msgid "Created on"
+msgstr "Creado en"
+
+#. module: account_mass_reconcile_by_purchase_line
+#: model:ir.model.fields,field_description:account_mass_reconcile_by_purchase_line.field_mass_reconcile_advanced_by_purchase_line_date_base_on
+msgid "Date of reconciliation"
+msgstr ""
+
+#. module: account_mass_reconcile_by_purchase_line
+#: model:ir.model.fields,field_description:account_mass_reconcile_by_purchase_line.field_mass_reconcile_advanced_by_purchase_line_display_name
+msgid "Display Name"
+msgstr "Mostrar Nombre"
+
+#. module: account_mass_reconcile_by_purchase_line
+#: model:ir.model.fields,field_description:account_mass_reconcile_by_purchase_line.field_mass_reconcile_advanced_by_purchase_line_filter
+msgid "Filter"
+msgstr ""
+
+#. module: account_mass_reconcile_by_purchase_line
+#: model:ir.model.fields,field_description:account_mass_reconcile_by_purchase_line.field_mass_reconcile_advanced_by_purchase_line_income_exchange_account_id
+msgid "Gain Exchange Rate Account"
+msgstr ""
+
+#. module: account_mass_reconcile_by_purchase_line
+#: model:ir.model.fields,field_description:account_mass_reconcile_by_purchase_line.field_mass_reconcile_advanced_by_purchase_line_id
+msgid "ID"
+msgstr "ID"
+
+#. module: account_mass_reconcile_by_purchase_line
+#: model:ir.model.fields,field_description:account_mass_reconcile_by_purchase_line.field_mass_reconcile_advanced_by_purchase_line_journal_id
+msgid "Journal"
+msgstr ""
+
+#. module: account_mass_reconcile_by_purchase_line
+#: model:ir.model.fields,field_description:account_mass_reconcile_by_purchase_line.field_mass_reconcile_advanced_by_purchase_line___last_update
+msgid "Last Modified on"
+msgstr "Última modificación en"
+
+#. module: account_mass_reconcile_by_purchase_line
+#: model:ir.model.fields,field_description:account_mass_reconcile_by_purchase_line.field_mass_reconcile_advanced_by_purchase_line_write_uid
+msgid "Last Updated by"
+msgstr "Última actualización realizada por"
+
+#. module: account_mass_reconcile_by_purchase_line
+#: model:ir.model.fields,field_description:account_mass_reconcile_by_purchase_line.field_mass_reconcile_advanced_by_purchase_line_write_date
+msgid "Last Updated on"
+msgstr "Última actualización el"
+
+#. module: account_mass_reconcile_by_purchase_line
+#: model:ir.model.fields,field_description:account_mass_reconcile_by_purchase_line.field_mass_reconcile_advanced_by_purchase_line_expense_exchange_account_id
+msgid "Loss Exchange Rate Account"
+msgstr ""
+
+#. module: account_mass_reconcile_by_purchase_line
+#: model:ir.ui.view,arch_db:account_mass_reconcile_by_purchase_line.account_mass_reconcile_form
+msgid ""
+"Match multiple debit vs multiple credit entries. Allow partial "
+"reconciliation. The lines should have the same partner, product and PO lines"
+" to be reconciled."
+msgstr ""
+
+#. module: account_mass_reconcile_by_purchase_line
+#: model:ir.model.fields,field_description:account_mass_reconcile_by_purchase_line.field_mass_reconcile_advanced_by_purchase_line_partner_ids
+msgid "Restrict on partners"
+msgstr ""
+
+#. module: account_mass_reconcile_by_purchase_line
+#: model:ir.model.fields,field_description:account_mass_reconcile_by_purchase_line.field_mass_reconcile_advanced_by_purchase_line_write_off
+msgid "Write off allowed"
+msgstr ""
+
+#. module: account_mass_reconcile_by_purchase_line
+#: model:ir.model,name:account_mass_reconcile_by_purchase_line.model_mass_reconcile_advanced_by_purchase_line
+msgid "mass.reconcile.advanced.by.purchase.line"
+msgstr ""
+
+#. module: account_mass_reconcile_by_purchase_line
+#: model:ir.model,name:account_mass_reconcile_by_purchase_line.model_mass_reconcile_base
+msgid "mass.reconcile.base"
+msgstr ""
+
+#. module: account_mass_reconcile_by_purchase_line
+#: model:ir.model,name:account_mass_reconcile_by_purchase_line.model_account_mass_reconcile_method
+msgid "reconcile method for account_mass_reconcile"
+msgstr ""
