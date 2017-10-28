@@ -3,14 +3,15 @@
 # * account_easy_reconcile
 # 
 # Translators:
+# OCA Transbot <transbot@odoo-community.org>, 2017
 msgid ""
 msgstr ""
-"Project-Id-Version: bank-statement-reconcile (8.0)\n"
+"Project-Id-Version: Odoo Server 8.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-05-01 15:33+0000\n"
-"PO-Revision-Date: 2017-05-11 14:28+0000\n"
-"Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
-"Language-Team: Dutch (http://www.transifex.com/oca/OCA-bank-statement-reconcile-8-0/language/nl/)\n"
+"POT-Creation-Date: 2017-10-12 13:52+0000\n"
+"PO-Revision-Date: 2017-10-12 13:52+0000\n"
+"Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2017\n"
+"Language-Team: Dutch (https://www.transifex.com/oca/teams/23907/nl/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
@@ -44,7 +45,7 @@ msgstr ""
 #: field:easy.reconcile.simple.partner,account_id:0
 #: field:easy.reconcile.simple.reference,account_id:0
 msgid "Account"
-msgstr ""
+msgstr "Grootboekrekening"
 
 #. module: account_easy_reconcile
 #: field:account.easy.reconcile.method,account_lost_id:0
@@ -212,7 +213,7 @@ msgstr ""
 #: field:easy.reconcile.simple.partner,filter:0
 #: field:easy.reconcile.simple.reference,filter:0
 msgid "Filter"
-msgstr ""
+msgstr "Filter"
 
 #. module: account_easy_reconcile
 #: field:account.easy.reconcile,message_follower_ids:0
