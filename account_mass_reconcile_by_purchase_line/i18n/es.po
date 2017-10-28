@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 9.0c\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-10-12 13:54+0000\n"
-"PO-Revision-Date: 2017-10-12 13:54+0000\n"
+"POT-Creation-Date: 2017-09-13 02:48+0000\n"
+"PO-Revision-Date: 2017-09-13 02:48+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2017\n"
 "Language-Team: Spanish (https://www.transifex.com/oca/teams/23907/es/)\n"
 "MIME-Version: 1.0\n"
@@ -81,7 +81,7 @@ msgstr "Diario"
 #. module: account_mass_reconcile_by_purchase_line
 #: model:ir.model.fields,field_description:account_mass_reconcile_by_purchase_line.field_mass_reconcile_advanced_by_purchase_line___last_update
 msgid "Last Modified on"
-msgstr "Última modificación el"
+msgstr "Última modificación en"
 
 #. module: account_mass_reconcile_by_purchase_line
 #: model:ir.model.fields,field_description:account_mass_reconcile_by_purchase_line.field_mass_reconcile_advanced_by_purchase_line_write_uid
@@ -91,7 +91,7 @@ msgstr "Última actualización por"
 #. module: account_mass_reconcile_by_purchase_line
 #: model:ir.model.fields,field_description:account_mass_reconcile_by_purchase_line.field_mass_reconcile_advanced_by_purchase_line_write_date
 msgid "Last Updated on"
-msgstr "Última actualización el"
+msgstr "Última actualización en"
 
 #. module: account_mass_reconcile_by_purchase_line
 #: model:ir.model.fields,field_description:account_mass_reconcile_by_purchase_line.field_mass_reconcile_advanced_by_purchase_line_expense_exchange_account_id
@@ -109,7 +109,7 @@ msgstr ""
 #. module: account_mass_reconcile_by_purchase_line
 #: model:ir.model.fields,field_description:account_mass_reconcile_by_purchase_line.field_mass_reconcile_advanced_by_purchase_line_partner_ids
 msgid "Restrict on partners"
-msgstr "Restringir en las empresas"
+msgstr "Restringir a las empresas"
 
 #. module: account_mass_reconcile_by_purchase_line
 #: model:ir.model.fields,field_description:account_mass_reconcile_by_purchase_line.field_mass_reconcile_advanced_by_purchase_line_write_off
@@ -129,4 +129,4 @@ msgstr ""
 #. module: account_mass_reconcile_by_purchase_line
 #: model:ir.model,name:account_mass_reconcile_by_purchase_line.model_account_mass_reconcile_method
 msgid "reconcile method for account_mass_reconcile"
-msgstr "Método de conciliación para account_mass_reconcile"
+msgstr "método de conciliación para account_mass_reconcile"

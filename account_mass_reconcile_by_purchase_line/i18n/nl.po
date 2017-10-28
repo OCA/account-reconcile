@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 9.0c\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-10-12 13:54+0000\n"
-"PO-Revision-Date: 2017-10-12 13:54+0000\n"
+"POT-Creation-Date: 2017-09-13 02:48+0000\n"
+"PO-Revision-Date: 2017-09-13 02:48+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2017\n"
 "Language-Team: Dutch (https://www.transifex.com/oca/teams/23907/nl/)\n"
 "MIME-Version: 1.0\n"
@@ -21,7 +21,7 @@ msgstr ""
 #. module: account_mass_reconcile_by_purchase_line
 #: model:ir.model.fields,field_description:account_mass_reconcile_by_purchase_line.field_mass_reconcile_advanced_by_purchase_line_account_id
 msgid "Account"
-msgstr ""
+msgstr "Grootboekrekening"
 
 #. module: account_mass_reconcile_by_purchase_line
 #: model:ir.model.fields,field_description:account_mass_reconcile_by_purchase_line.field_mass_reconcile_advanced_by_purchase_line_account_lost_id
@@ -61,7 +61,7 @@ msgstr "Te tonen naam"
 #. module: account_mass_reconcile_by_purchase_line
 #: model:ir.model.fields,field_description:account_mass_reconcile_by_purchase_line.field_mass_reconcile_advanced_by_purchase_line_filter
 msgid "Filter"
-msgstr ""
+msgstr "Filter"
 
 #. module: account_mass_reconcile_by_purchase_line
 #: model:ir.model.fields,field_description:account_mass_reconcile_by_purchase_line.field_mass_reconcile_advanced_by_purchase_line_income_exchange_account_id

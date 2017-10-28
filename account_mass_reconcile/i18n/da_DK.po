@@ -10,11 +10,11 @@ msgstr ""
 "POT-Creation-Date: 2017-09-13 02:48+0000\n"
 "PO-Revision-Date: 2017-09-22 23:00+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
-"Language-Team: Dutch (Netherlands) (http://www.transifex.com/oca/OCA-bank-statement-reconcile-9-0/language/nl_NL/)\n"
+"Language-Team: Danish (Denmark) (http://www.transifex.com/oca/OCA-bank-statement-reconcile-9-0/language/da_DK/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Language: nl_NL\n"
+"Language: da_DK\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. module: account_mass_reconcile
@@ -114,7 +114,7 @@ msgstr ""
 #. module: account_mass_reconcile
 #: model:ir.model,name:account_mass_reconcile.model_res_company
 msgid "Companies"
-msgstr "Bedrijven"
+msgstr ""
 
 #. module: account_mass_reconcile
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile_company_id
@@ -137,7 +137,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_partner_create_uid
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_reference_create_uid
 msgid "Created by"
-msgstr "Aangemaakt door"
+msgstr ""
 
 #. module: account_mass_reconcile
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile_create_date
@@ -148,7 +148,7 @@ msgstr "Aangemaakt door"
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_partner_create_date
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_reference_create_date
 msgid "Created on"
-msgstr "Aangemaakt op"
+msgstr ""
 
 #. module: account_mass_reconcile
 #: model:ir.ui.view,arch_db:account_mass_reconcile.view_mass_reconcile_history_search
@@ -186,7 +186,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_partner_display_name
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_reference_display_name
 msgid "Display Name"
-msgstr "Weergavenaam"
+msgstr ""
 
 #. module: account_mass_reconcile
 #: model:ir.ui.view,arch_db:account_mass_reconcile.account_mass_reconcile_form
@@ -287,7 +287,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_partner_id
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_reference_id
 msgid "ID"
-msgstr "ID"
+msgstr ""
 
 #. module: account_mass_reconcile
 #: model:ir.model.fields,help:account_mass_reconcile.field_account_mass_reconcile_message_unread
@@ -340,7 +340,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_partner___last_update
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_reference___last_update
 msgid "Last Modified on"
-msgstr "Laatst gewijzigd op"
+msgstr ""
 
 #. module: account_mass_reconcile
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile_method_write_uid
@@ -351,7 +351,7 @@ msgstr "Laatst gewijzigd op"
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_partner_write_uid
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_reference_write_uid
 msgid "Last Updated by"
-msgstr "Laatst bijgewerkt door"
+msgstr ""
 
 #. module: account_mass_reconcile
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile_method_write_date
@@ -362,7 +362,7 @@ msgstr "Laatst bijgewerkt door"
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_partner_write_date
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_reference_write_date
 msgid "Last Updated on"
-msgstr "Laatst bijgewerkt op"
+msgstr ""
 
 #. module: account_mass_reconcile
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile_last_history
@@ -444,7 +444,7 @@ msgstr ""
 #. module: account_mass_reconcile
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile_name
 msgid "Name"
-msgstr "Naam"
+msgstr ""
 
 #. module: account_mass_reconcile
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile_message_needaction_counter
@@ -522,7 +522,7 @@ msgstr ""
 #. module: account_mass_reconcile
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile_method_sequence
 msgid "Sequence"
-msgstr ""
+msgstr "Rækkefølge"
 
 #. module: account_mass_reconcile
 #: model:ir.ui.view,arch_db:account_mass_reconcile.account_mass_reconcile_form
@@ -628,7 +628,7 @@ msgstr ""
 #. module: account_mass_reconcile
 #: model:ir.model,name:account_mass_reconcile.model_account_config_settings
 msgid "account.config.settings"
-msgstr "account.config.settings"
+msgstr ""
 
 #. module: account_mass_reconcile
 #: model:ir.model,name:account_mass_reconcile.model_mass_reconcile_advanced
