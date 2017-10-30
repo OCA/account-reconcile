@@ -33,6 +33,8 @@ class TransactionIDFileParser(FileParser):
         super(TransactionIDFileParser, self).__init__(
             profile, extra_fields=conversion_dict, ftype=ftype, header=header,
             **kwargs)
+        self.commission_field = 'commission_amount'
+        self.commission_sign = '-'
 
     @classmethod
     def parser_for(cls, parser_name):

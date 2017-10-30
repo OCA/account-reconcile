@@ -31,6 +31,8 @@ class GenericFileParser(FileParser):
             journal, ftype=ftype,
             extra_fields=conversion_dict,
             **kwargs)
+        self.commission_field = 'commission_amount'
+        self.commission_sign = '-'
 
     @classmethod
     def parser_for(cls, parser_name):
