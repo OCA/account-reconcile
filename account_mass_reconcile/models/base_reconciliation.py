@@ -45,7 +45,6 @@ class MassReconcileBase(models.AbstractModel):
         """
         raise NotImplementedError
 
-    @api.model
     def _base_columns(self):
         """ Mandatory columns for move lines queries
         An extra column aliased as ``key`` should be defined
@@ -65,8 +64,7 @@ class MassReconcileBase(models.AbstractModel):
 
     @api.multi
     def _select(self, *args, **kwargs):
-        return "SELECT %s" % ', '.join(
-            self.env["mass.reconcile.base"]._base_columns())
+        return "SELECT %s" % ', '.join(self._base_columns())
 
     @api.multi
     def _from(self, *args, **kwargs):
