@@ -1,5 +1,4 @@
-# -*- coding: utf-8 -*-
-# © 2014 Guewen Baconnier (Camptocamp)
+# Copyright 2014 Guewen Baconnier (Camptocamp)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 from odoo import models, fields, api
 from odoo.osv import expression
@@ -36,7 +35,7 @@ class AccountMoveLine(models.Model):
     @api.model
     def domain_move_lines_for_reconciliation(self, excluded_ids=None,
                                              str=False):
-        """ Add transaction_ref in search of move lines"""
+        """Add transaction_ref in search of move lines."""
         _super = super(AccountMoveLine, self)
         _get_domain = _super.domain_move_lines_for_reconciliation
         domain = _get_domain(excluded_ids=excluded_ids, str=str)

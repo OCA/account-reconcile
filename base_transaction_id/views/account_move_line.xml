@@ -5,7 +5,7 @@
     <field name="model">account.move.line</field>
     <field name="inherit_id" ref="account.view_move_line_form"/>
     <field name="arch" type="xml">
-      <xpath expr="//field[@name='reconciled']/.." position="after">
+      <xpath expr="//field[@name='full_reconcile_id']/.." position="after">
         <field name="transaction_ref"/>
       </xpath>
     </field>
