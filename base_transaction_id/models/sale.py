@@ -1,6 +1,5 @@
-# -*- coding: utf-8 -*-
-# © 2011-2012 Nicolas Bessi (Camptocamp)
-# © 2012-2015 Yannick Vaucher (Camptocamp)
+# Copyright 2011-2012 Nicolas Bessi (Camptocamp)
+# Copyright 2012-2015 Yannick Vaucher (Camptocamp)
 from odoo import models, fields, api
 
 
@@ -16,7 +15,7 @@ class SaleOrder(models.Model):
 
     @api.multi
     def _prepare_invoice(self):
-        """ Propagate the transaction_id from the sale order to the invoice """
+        """Propagate the transaction_id from the sale order to the invoice."""
         invoice_vals = super(SaleOrder, self)._prepare_invoice()
         invoice_vals['transaction_id'] = self.transaction_id
         return invoice_vals

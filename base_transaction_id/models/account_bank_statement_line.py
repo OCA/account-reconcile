@@ -1,5 +1,4 @@
-# -*- coding: utf-8 -*-
-# © 2016 Yannick Vaucher (Camptocamp SA)
+# Copyright 2016 Yannick Vaucher (Camptocamp SA)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 from odoo import api, models
 
@@ -10,7 +9,8 @@ class AccountBankStatementLine(models.Model):
 
     @api.multi
     def get_reconciliation_proposition(self, excluded_ids=None):
-        """ Look for transaction_ref to give them as proposition move line """
+        """Look for transaction_ref to give them as proposition move line."""
+        self.ensure_one()
         if self.name:
             # If the transaction has no partner, look for match in payable and
             # receivable account anyway
