@@ -6,7 +6,9 @@
     <field name="model">account.invoice</field>
     <field name="inherit_id" ref="account.invoice_form"/>
     <field name="arch" type="xml">
-      <xpath expr="//page[@name='other_info']/group/group/field[@name='origin']" position="after">
+      <!-- target account.invoice.origin
+           the first `origin` field of the view is declared in invoice lines -->
+      <xpath expr="//page[@name='other_info']//field[@name='origin']" position="after">
           <field name="transaction_id"/>
       </xpath>
     </field>
