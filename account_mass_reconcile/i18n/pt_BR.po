@@ -3,13 +3,13 @@
 # * account_mass_reconcile
 # 
 # Translators:
-# Claudio Araujo Santos <claudioaraujosantos@gmail.com>, 2016
+# Claudio Araujo Santos <inactive+CDASCSI@transifex.com>, 2016
 msgid ""
 msgstr ""
 "Project-Id-Version: bank-statement-reconcile (9.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-01-14 01:28+0000\n"
-"PO-Revision-Date: 2017-01-19 20:17+0000\n"
+"POT-Creation-Date: 2017-09-13 02:48+0000\n"
+"PO-Revision-Date: 2017-11-14 00:47+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
 "Language-Team: Portuguese (Brazil) (http://www.transifex.com/oca/OCA-bank-statement-reconcile-9-0/language/pt_BR/)\n"
 "MIME-Version: 1.0\n"
@@ -81,7 +81,7 @@ msgstr ""
 #. module: account_mass_reconcile
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile_message_needaction
 msgid "Action Needed"
-msgstr ""
+msgstr "Ação Necessária"
 
 #. module: account_mass_reconcile
 #: model:ir.ui.view,arch_db:account_mass_reconcile.account_mass_reconcile_form
@@ -216,12 +216,12 @@ msgstr "Seguidores"
 #. module: account_mass_reconcile
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile_message_channel_ids
 msgid "Followers (Channels)"
-msgstr ""
+msgstr "Seguidores (Canais)"
 
 #. module: account_mass_reconcile
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile_message_partner_ids
 msgid "Followers (Partners)"
-msgstr ""
+msgstr "Seguidores (Parceiros)"
 
 #. module: account_mass_reconcile
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_history_reconcile_ids
@@ -298,7 +298,7 @@ msgstr "Se marcado novas mensagens requerem sua atenção."
 #. module: account_mass_reconcile
 #: model:ir.model.fields,help:account_mass_reconcile.field_account_mass_reconcile_message_needaction
 msgid "If checked, new messages require your attention."
-msgstr ""
+msgstr "Se marcado novas mensagens requerem sua atenção."
 
 #. module: account_mass_reconcile
 #: model:ir.ui.view,arch_db:account_mass_reconcile.account_mass_reconcile_form
@@ -404,8 +404,8 @@ msgstr ""
 #: model:ir.ui.view,arch_db:account_mass_reconcile.account_mass_reconcile_form
 msgid ""
 "Match multiple debit vs multiple credit entries. Allow partial "
-"reconciliation. The lines should have the partner, the credit entry ref. is "
-"matched vs the debit entry ref. or name."
+"reconciliation. The lines should have the same partner, and the credit entry"
+" ref. is matched with the debit entry ref. or name."
 msgstr ""
 
 #. module: account_mass_reconcile
@@ -450,17 +450,17 @@ msgstr "Nome"
 #. module: account_mass_reconcile
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile_message_needaction_counter
 msgid "Number of Actions"
-msgstr ""
+msgstr "Número de Ações"
 
 #. module: account_mass_reconcile
 #: model:ir.model.fields,help:account_mass_reconcile.field_account_mass_reconcile_message_needaction_counter
 msgid "Number of messages which requires an action"
-msgstr ""
+msgstr "Número de mensagens que exigem uma ação"
 
 #. module: account_mass_reconcile
 #: model:ir.model.fields,help:account_mass_reconcile.field_account_mass_reconcile_message_unread_counter
 msgid "Number of unread messages"
-msgstr ""
+msgstr "Número de mensagens não lidas"
 
 #. module: account_mass_reconcile
 #: model:ir.ui.view,arch_db:account_mass_reconcile.view_account_config
