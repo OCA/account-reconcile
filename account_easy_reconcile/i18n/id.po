@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: bank-statement-reconcile (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-09-02 01:43+0000\n"
-"PO-Revision-Date: 2017-11-03 12:16+0000\n"
+"PO-Revision-Date: 2017-11-17 09:19+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
 "Language-Team: Indonesian (http://www.transifex.com/oca/OCA-bank-statement-reconcile-8-0/language/id/)\n"
 "MIME-Version: 1.0\n"
@@ -257,7 +257,7 @@ msgstr ""
 #. module: account_easy_reconcile
 #: view:easy.reconcile.history:account_easy_reconcile.view_easy_reconcile_history_search
 msgid "Group By..."
-msgstr ""
+msgstr "Dikelompokan berdasarkan .."
 
 #. module: account_easy_reconcile
 #: view:account.easy.reconcile:account_easy_reconcile.account_easy_reconcile_form
