@@ -71,6 +71,11 @@ class AccountJournal(models.Model):
         help="Two counterparts will be automatically created : one for "
              "the refunds and one for the payments")
 
+    commission_analytic_account_id = fields.Many2one(
+        comodel_name='account.analytic.account',
+        string='Commission Analytic Account',
+        help="Choose an analytic account to be used on the commission line.")
+
     def _get_rules(self):
         # We need to respect the sequence order
         return sorted(self.rule_ids, key=attrgetter('sequence'))
@@ -195,6 +200,11 @@ class AccountJournal(models.Model):
                     'account_id': commission_account_id,
                     'already_completed': True,
                 }
+                if self.commission_analytic_account_id:
+                    comm_values.update({
+                        'analytic_account_id':
+                            self.commission_analytic_account_id.id
+                    })
                 move_line_obj.with_context(
                     check_move_validity=False
                 ).create(comm_values)
