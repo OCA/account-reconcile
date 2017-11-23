@@ -262,7 +262,7 @@ class MassReconcileAdvanced(models.AbstractModel):
             if reconciled and full:
                 reconciled_ids += reconcile_group_ids
 
-            if (self.env.context['commit_every'] and
+            if (self.env.context.get('commit_every') and
                     group_count % self.env.context['commit_every'] == 0):
                 self.env.cr.commit()
                 _logger.info("Commit the reconciliations after %d groups",
