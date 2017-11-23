@@ -600,3 +600,16 @@ msgstr "mass.reconcile.advanced"
 #: model:ir.model,name:account_mass_reconcile.model_mass_reconcile_advanced_ref
 msgid "mass.reconcile.advanced.ref"
 msgstr "mass.reconcile.advanced.ref"
+
+#. module: account_mass_reconcile
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile_method_analytic_account_id
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_advanced_analytic_account_id
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_advanced_ref_analytic_account_id
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_base_analytic_account_id
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_options_analytic_account_id
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_analytic_account_id
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_name_analytic_account_id
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_partner_analytic_account_id
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_reference_analytic_account_id
+msgid "Analytic account for write-off"
+msgstr ""

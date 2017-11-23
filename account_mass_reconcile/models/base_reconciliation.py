@@ -160,6 +160,9 @@ class MassReconcileBase(models.AbstractModel):
             else:
                 writeoff_account = self.account_lost_id
             line_rs = ml_obj.browse(line_ids)
+            if self.analytic_account_id:
+                line_rs = line_rs.with_context(
+                    analytic_id=self.analytic_account_id.id)
             line_rs.reconcile(
                 writeoff_acc_id=writeoff_account,
                 writeoff_journal_id=self.journal_id
