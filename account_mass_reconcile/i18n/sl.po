@@ -3,15 +3,15 @@
 # * account_mass_reconcile
 # 
 # Translators:
-# OCA Transbot <transbot@odoo-community.org>, 2017
+# Matjaž Mozetič <m.mozetic@matmoz.si>, 2015
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 9.0c\n"
+"Project-Id-Version: bank-statement-reconcile (9.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-11-23 16:17+0000\n"
-"PO-Revision-Date: 2017-11-23 16:17+0000\n"
-"Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2017\n"
-"Language-Team: Slovenian (https://www.transifex.com/oca/teams/23907/sl/)\n"
+"POT-Creation-Date: 2017-09-13 02:48+0000\n"
+"PO-Revision-Date: 2017-11-23 23:29+0000\n"
+"Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
+"Language-Team: Slovenian (http://www.transifex.com/oca/OCA-bank-statement-reconcile-9-0/language/sl/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
@@ -29,9 +29,7 @@ msgstr "7 dni"
 msgid ""
 "A matcher %s is compared with a matcher %s, the _matchers and "
 "_opposite_matchers are probably wrong"
-msgstr ""
-"Ujemanje %s se primerja z ujemajočim %s, _ujemanja in _nasprotna_ujemanja so"
-" verjetno napačna"
+msgstr "Ujemanje %s se primerja z ujemajočim %s, _ujemanja in _nasprotna_ujemanja so verjetno napačna"
 
 #. module: account_mass_reconcile
 #: model:ir.actions.act_window,help:account_mass_reconcile.action_account_mass_reconcile
@@ -89,19 +87,6 @@ msgstr ""
 #: model:ir.ui.view,arch_db:account_mass_reconcile.account_mass_reconcile_form
 msgid "Advanced. Partner and Ref"
 msgstr "Napredno. Partner in sklic"
-
-#. module: account_mass_reconcile
-#: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile_method_analytic_account_id
-#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_advanced_analytic_account_id
-#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_advanced_ref_analytic_account_id
-#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_base_analytic_account_id
-#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_options_analytic_account_id
-#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_analytic_account_id
-#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_name_analytic_account_id
-#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_partner_analytic_account_id
-#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_reference_analytic_account_id
-msgid "Analytic account for write-off"
-msgstr ""
 
 #. module: account_mass_reconcile
 #: model:ir.ui.view,arch_db:account_mass_reconcile.account_mass_reconcile_form
@@ -429,10 +414,7 @@ msgid ""
 "Match one debit line vs one credit line. Do not allow partial "
 "reconciliation. The lines should have the same amount (with the write-off) "
 "and the same name to be reconciled."
-msgstr ""
-"Primerjanje ene postavke v breme z eno postavko v dobro. Ne dovoli delnega "
-"usklajevanja.  Da bi se lahko uskladile, morajo imeti postavke isti znesek "
-"(z odpisom) in isti naziv."
+msgstr "Primerjanje ene postavke v breme z eno postavko v dobro. Ne dovoli delnega usklajevanja.  Da bi se lahko uskladile, morajo imeti postavke isti znesek (z odpisom) in isti naziv."
 
 #. module: account_mass_reconcile
 #: model:ir.ui.view,arch_db:account_mass_reconcile.account_mass_reconcile_form
@@ -440,10 +422,7 @@ msgid ""
 "Match one debit line vs one credit line. Do not allow partial "
 "reconciliation. The lines should have the same amount (with the write-off) "
 "and the same partner to be reconciled."
-msgstr ""
-"Primerjanje ene postavke v breme z eno postavko v dobro. Ne dovoli delnega "
-"usklajevanja.  Da bi se lahko uskladile, morajo imeti postavke isti znesek "
-"(z odpisom) in istega partnerja."
+msgstr "Primerjanje ene postavke v breme z eno postavko v dobro. Ne dovoli delnega usklajevanja.  Da bi se lahko uskladile, morajo imeti postavke isti znesek (z odpisom) in istega partnerja."
 
 #. module: account_mass_reconcile
 #: model:ir.ui.view,arch_db:account_mass_reconcile.account_mass_reconcile_form
@@ -451,10 +430,7 @@ msgid ""
 "Match one debit line vs one credit line. Do not allow partial "
 "reconciliation. The lines should have the same amount (with the write-off) "
 "and the same reference to be reconciled."
-msgstr ""
-"Primerjanje ene postavke v breme z eno postavko v dobro. Ne dovoli delnega "
-"usklajevanja.  Da bi se lahko uskladile, morajo imeti postavke isti znesek "
-"(z odpisom) in isti sklic."
+msgstr "Primerjanje ene postavke v breme z eno postavko v dobro. Ne dovoli delnega usklajevanja.  Da bi se lahko uskladile, morajo imeti postavke isti znesek (z odpisom) in isti sklic."
 
 #. module: account_mass_reconcile
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile_message_ids
@@ -585,13 +561,13 @@ msgid "The sequence field is used to order the reconcile method"
 msgstr "Polje zaporedja za razporejanje metod usklajevanja"
 
 #. module: account_mass_reconcile
-#: code:addons/account_mass_reconcile/models/mass_reconcile.py:249
+#: code:addons/account_mass_reconcile/models/mass_reconcile.py:245
 #, python-format
 msgid "There is no history of reconciled items on the task: %s."
 msgstr "Usklajene postavke na opravilu: %s nimajo zgodovine."
 
 #. module: account_mass_reconcile
-#: code:addons/account_mass_reconcile/models/mass_reconcile.py:225
+#: code:addons/account_mass_reconcile/models/mass_reconcile.py:221
 #, python-format
 msgid "There was an error during reconciliation : %s"
 msgstr "Napaka med usklajevanjem: %s"
@@ -627,7 +603,7 @@ msgid "Unreconciled Items"
 msgstr ""
 
 #. module: account_mass_reconcile
-#: code:addons/account_mass_reconcile/models/mass_reconcile.py:275
+#: code:addons/account_mass_reconcile/models/mass_reconcile.py:271
 #, python-format
 msgid "Unreconciled items"
 msgstr "Neusklajene postavke"
