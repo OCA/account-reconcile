@@ -8,19 +8,19 @@ msgstr ""
 "Project-Id-Version: bank-statement-reconcile (9.0)\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-09-13 02:48+0000\n"
-"PO-Revision-Date: 2017-11-23 23:28+0000\n"
+"PO-Revision-Date: 2017-11-26 10:00+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
-"Language-Team: French (http://www.transifex.com/oca/OCA-bank-statement-reconcile-9-0/language/fr/)\n"
+"Language-Team: Romanian (Romania) (http://www.transifex.com/oca/OCA-bank-statement-reconcile-9-0/language/ro_RO/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Language: fr\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Language: ro_RO\n"
+"Plural-Forms: nplurals=3; plural=(n==1?0:(((n%100>19)||((n%100==0)&&(n!=0)))?2:1));\n"
 
 #. module: account_mass_reconcile
 #: model:ir.ui.view,arch_db:account_mass_reconcile.view_mass_reconcile_history_search
 msgid "7 Days"
-msgstr "7 jours"
+msgstr ""
 
 #. module: account_mass_reconcile
 #: code:addons/account_mass_reconcile/models/base_advanced_reconciliation.py:159
@@ -28,7 +28,7 @@ msgstr "7 jours"
 msgid ""
 "A matcher %s is compared with a matcher %s, the _matchers and "
 "_opposite_matchers are probably wrong"
-msgstr "Une correspondance %s est comparé avec une correspondance %s, le correspondant et le correspondant opposé sont probablement faux"
+msgstr ""
 
 #. module: account_mass_reconcile
 #: model:ir.actions.act_window,help:account_mass_reconcile.action_account_mass_reconcile
@@ -49,7 +49,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_partner_account_id
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_reference_account_id
 msgid "Account"
-msgstr "Compte"
+msgstr "cont"
 
 #. module: account_mass_reconcile
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile_method_account_lost_id
@@ -62,7 +62,7 @@ msgstr "Compte"
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_partner_account_lost_id
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_reference_account_lost_id
 msgid "Account Lost"
-msgstr "Compte de pertes"
+msgstr ""
 
 #. module: account_mass_reconcile
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile_method_account_profit_id
@@ -75,23 +75,23 @@ msgstr "Compte de pertes"
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_partner_account_profit_id
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_reference_account_profit_id
 msgid "Account Profit"
-msgstr "Compte de profits"
+msgstr ""
 
 #. module: account_mass_reconcile
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile_message_needaction
 msgid "Action Needed"
-msgstr "Action requise"
+msgstr ""
 
 #. module: account_mass_reconcile
 #: model:ir.ui.view,arch_db:account_mass_reconcile.account_mass_reconcile_form
 msgid "Advanced. Partner and Ref"
-msgstr "Avancé. Partenaire et Réf."
+msgstr ""
 
 #. module: account_mass_reconcile
 #: model:ir.ui.view,arch_db:account_mass_reconcile.account_mass_reconcile_form
 #: model:ir.ui.view,arch_db:account_mass_reconcile.account_mass_reconcile_tree
 msgid "Automatic Mass Reconcile"
-msgstr "Lettrage automatisé"
+msgstr ""
 
 #. module: account_mass_reconcile
 #: model:ir.ui.view,arch_db:account_mass_reconcile.account_mass_reconcile_form
@@ -99,12 +99,12 @@ msgstr "Lettrage automatisé"
 #: model:ir.ui.view,arch_db:account_mass_reconcile.mass_reconcile_history_tree
 #: model:ir.ui.view,arch_db:account_mass_reconcile.view_mass_reconcile_history_search
 msgid "Automatic Mass Reconcile History"
-msgstr "Historique des lettrages automatisés"
+msgstr ""
 
 #. module: account_mass_reconcile
 #: model:ir.ui.view,arch_db:account_mass_reconcile.account_mass_reconcile_method_tree
 msgid "Automatic Mass Reconcile Method"
-msgstr "Méthode de lettrage automatisé"
+msgstr ""
 
 #. module: account_mass_reconcile
 #: model:ir.actions.act_window,help:account_mass_reconcile.action_account_mass_reconcile
@@ -114,19 +114,19 @@ msgstr ""
 #. module: account_mass_reconcile
 #: model:ir.model,name:account_mass_reconcile.model_res_company
 msgid "Companies"
-msgstr "Sociétés"
+msgstr ""
 
 #. module: account_mass_reconcile
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile_company_id
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile_method_company_id
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_history_company_id
 msgid "Company"
-msgstr "Société"
+msgstr ""
 
 #. module: account_mass_reconcile
 #: model:ir.ui.view,arch_db:account_mass_reconcile.account_mass_reconcile_form
 msgid "Configuration"
-msgstr "Configuration"
+msgstr ""
 
 #. module: account_mass_reconcile
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile_create_uid
@@ -137,7 +137,7 @@ msgstr "Configuration"
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_partner_create_uid
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_reference_create_uid
 msgid "Created by"
-msgstr "Créé par"
+msgstr ""
 
 #. module: account_mass_reconcile
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile_create_date
@@ -148,12 +148,12 @@ msgstr "Créé par"
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_partner_create_date
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_reference_create_date
 msgid "Created on"
-msgstr "Date"
+msgstr ""
 
 #. module: account_mass_reconcile
 #: model:ir.ui.view,arch_db:account_mass_reconcile.view_mass_reconcile_history_search
 msgid "Date"
-msgstr "Date"
+msgstr ""
 
 #. module: account_mass_reconcile
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile_method_date_base_on
@@ -166,12 +166,12 @@ msgstr "Date"
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_partner_date_base_on
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_reference_date_base_on
 msgid "Date of reconciliation"
-msgstr "Date de lettrage"
+msgstr ""
 
 #. module: account_mass_reconcile
 #: model:ir.model.fields,help:account_mass_reconcile.field_account_mass_reconcile_message_last_post
 msgid "Date of the last message posted on the record."
-msgstr "Date du dernier message publié sur cet enregistrement"
+msgstr ""
 
 #. module: account_mass_reconcile
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile_display_name
@@ -186,13 +186,13 @@ msgstr "Date du dernier message publié sur cet enregistrement"
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_partner_display_name
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_reference_display_name
 msgid "Display Name"
-msgstr "Nom à afficher"
+msgstr ""
 
 #. module: account_mass_reconcile
 #: model:ir.ui.view,arch_db:account_mass_reconcile.account_mass_reconcile_form
 #: model:ir.ui.view,arch_db:account_mass_reconcile.account_mass_reconcile_tree
 msgid "Display items reconciled on the last run"
-msgstr "Voir les entrées lettrées au dernier lettrage"
+msgstr ""
 
 #. module: account_mass_reconcile
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile_method_filter
@@ -205,22 +205,22 @@ msgstr "Voir les entrées lettrées au dernier lettrage"
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_partner_filter
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_reference_filter
 msgid "Filter"
-msgstr "Filtre"
+msgstr ""
 
 #. module: account_mass_reconcile
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile_message_follower_ids
 msgid "Followers"
-msgstr "Abonnés"
+msgstr ""
 
 #. module: account_mass_reconcile
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile_message_channel_ids
 msgid "Followers (Channels)"
-msgstr "Abonnés (canaux)"
+msgstr ""
 
 #. module: account_mass_reconcile
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile_message_partner_ids
 msgid "Followers (Partners)"
-msgstr "Abonnés (partenaires)"
+msgstr ""
 
 #. module: account_mass_reconcile
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_history_reconcile_ids
@@ -238,14 +238,14 @@ msgstr ""
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_partner_income_exchange_account_id
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_reference_income_exchange_account_id
 msgid "Gain Exchange Rate Account"
-msgstr "Compte de gain de change"
+msgstr ""
 
 #. module: account_mass_reconcile
 #: model:ir.ui.view,arch_db:account_mass_reconcile.account_mass_reconcile_form
 #: model:ir.ui.view,arch_db:account_mass_reconcile.mass_reconcile_history_form
 #: model:ir.ui.view,arch_db:account_mass_reconcile.mass_reconcile_history_tree
 msgid "Go to reconciled items"
-msgstr "Voir les entrées lettrées"
+msgstr ""
 
 #. module: account_mass_reconcile
 #: model:ir.ui.view,arch_db:account_mass_reconcile.account_mass_reconcile_form
@@ -255,18 +255,18 @@ msgstr ""
 #. module: account_mass_reconcile
 #: model:ir.ui.view,arch_db:account_mass_reconcile.view_mass_reconcile_history_search
 msgid "Group By..."
-msgstr "Grouper par..."
+msgstr ""
 
 #. module: account_mass_reconcile
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile_history_ids
 #: model:ir.ui.view,arch_db:account_mass_reconcile.account_mass_reconcile_form
 msgid "History"
-msgstr "Historique"
+msgstr ""
 
 #. module: account_mass_reconcile
 #: model:ir.actions.act_window,name:account_mass_reconcile.act_mass_reconcile_to_history
 msgid "History Details"
-msgstr "Détails de l'historique"
+msgstr ""
 
 #. module: account_mass_reconcile
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_account_config_settings_reconciliation_commit_every
@@ -287,27 +287,27 @@ msgstr ""
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_partner_id
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_reference_id
 msgid "ID"
-msgstr "ID"
+msgstr ""
 
 #. module: account_mass_reconcile
 #: model:ir.model.fields,help:account_mass_reconcile.field_account_mass_reconcile_message_unread
 msgid "If checked new messages require your attention."
-msgstr "Si coché, les nouveaux messages seront portés à votre attention."
+msgstr ""
 
 #. module: account_mass_reconcile
 #: model:ir.model.fields,help:account_mass_reconcile.field_account_mass_reconcile_message_needaction
 msgid "If checked, new messages require your attention."
-msgstr "Si coché, les nouveaux messages demanderont votre attention."
+msgstr ""
 
 #. module: account_mass_reconcile
 #: model:ir.ui.view,arch_db:account_mass_reconcile.account_mass_reconcile_form
 msgid "Information"
-msgstr "Information"
+msgstr ""
 
 #. module: account_mass_reconcile
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile_message_is_follower
 msgid "Is Follower"
-msgstr "Est abonné"
+msgstr ""
 
 #. module: account_mass_reconcile
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile_method_journal_id
@@ -320,12 +320,12 @@ msgstr "Est abonné"
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_partner_journal_id
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_reference_journal_id
 msgid "Journal"
-msgstr "Journal"
+msgstr "jurnal"
 
 #. module: account_mass_reconcile
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile_message_last_post
 msgid "Last Message Date"
-msgstr "Date du dernier message"
+msgstr ""
 
 #. module: account_mass_reconcile
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile___last_update
@@ -340,7 +340,7 @@ msgstr "Date du dernier message"
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_partner___last_update
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_reference___last_update
 msgid "Last Modified on"
-msgstr "Dernière modification le"
+msgstr ""
 
 #. module: account_mass_reconcile
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile_method_write_uid
@@ -351,7 +351,7 @@ msgstr "Dernière modification le"
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_partner_write_uid
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_reference_write_uid
 msgid "Last Updated by"
-msgstr "Dernière mise à jour par"
+msgstr ""
 
 #. module: account_mass_reconcile
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile_method_write_date
@@ -362,7 +362,7 @@ msgstr "Dernière mise à jour par"
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_partner_write_date
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_reference_write_date
 msgid "Last Updated on"
-msgstr "Dernière mise à jour le"
+msgstr ""
 
 #. module: account_mass_reconcile
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile_last_history
@@ -386,18 +386,18 @@ msgstr ""
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_partner_expense_exchange_account_id
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_reference_expense_exchange_account_id
 msgid "Loss Exchange Rate Account"
-msgstr "Compte de perte de change"
+msgstr ""
 
 #. module: account_mass_reconcile
 #: model:ir.actions.act_window,name:account_mass_reconcile.action_account_mass_reconcile
 #: model:ir.ui.menu,name:account_mass_reconcile.menu_mass_reconcile
 msgid "Mass Automatic Reconcile"
-msgstr "Lettrage automatisé"
+msgstr ""
 
 #. module: account_mass_reconcile
 #: model:ir.actions.act_window,name:account_mass_reconcile.action_mass_reconcile_history
 msgid "Mass Automatic Reconcile History"
-msgstr "Lettrage automatisé"
+msgstr ""
 
 #. module: account_mass_reconcile
 #: model:ir.ui.view,arch_db:account_mass_reconcile.account_mass_reconcile_form
@@ -413,7 +413,7 @@ msgid ""
 "Match one debit line vs one credit line. Do not allow partial "
 "reconciliation. The lines should have the same amount (with the write-off) "
 "and the same name to be reconciled."
-msgstr "Lettre un débit avec un crédit ayant le même montant et la même description. Le lettrage ne peut être partiel (écriture d'ajustement en cas d'écart)."
+msgstr ""
 
 #. module: account_mass_reconcile
 #: model:ir.ui.view,arch_db:account_mass_reconcile.account_mass_reconcile_form
@@ -421,7 +421,7 @@ msgid ""
 "Match one debit line vs one credit line. Do not allow partial "
 "reconciliation. The lines should have the same amount (with the write-off) "
 "and the same partner to be reconciled."
-msgstr "Lettre un débit avec un crédit ayant le même montant et le même partenaire. Le lettrage ne peut être partiel (écriture d'ajustement en cas d'écart)."
+msgstr ""
 
 #. module: account_mass_reconcile
 #: model:ir.ui.view,arch_db:account_mass_reconcile.account_mass_reconcile_form
@@ -429,52 +429,52 @@ msgid ""
 "Match one debit line vs one credit line. Do not allow partial "
 "reconciliation. The lines should have the same amount (with the write-off) "
 "and the same reference to be reconciled."
-msgstr "Lettre un débit avec un crédit ayant le même montant et la même référence. Le lettrage ne peut être partiel (écriture d'ajustement en cas d'écart)."
+msgstr ""
 
 #. module: account_mass_reconcile
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile_message_ids
 msgid "Messages"
-msgstr "Messages"
+msgstr ""
 
 #. module: account_mass_reconcile
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile_reconcile_method
 msgid "Method"
-msgstr "Méthode"
+msgstr ""
 
 #. module: account_mass_reconcile
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile_name
 msgid "Name"
-msgstr "Nom"
+msgstr ""
 
 #. module: account_mass_reconcile
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile_message_needaction_counter
 msgid "Number of Actions"
-msgstr "Nombre d'actions"
+msgstr ""
 
 #. module: account_mass_reconcile
 #: model:ir.model.fields,help:account_mass_reconcile.field_account_mass_reconcile_message_needaction_counter
 msgid "Number of messages which requires an action"
-msgstr "Nombre de messages exigeant une action"
+msgstr ""
 
 #. module: account_mass_reconcile
 #: model:ir.model.fields,help:account_mass_reconcile.field_account_mass_reconcile_message_unread_counter
 msgid "Number of unread messages"
-msgstr "Nombre de messages non-lus"
+msgstr ""
 
 #. module: account_mass_reconcile
 #: model:ir.ui.view,arch_db:account_mass_reconcile.view_account_config
 msgid "Options"
-msgstr "Options"
+msgstr ""
 
 #. module: account_mass_reconcile
 #: model:ir.ui.view,arch_db:account_mass_reconcile.account_mass_reconcile_form
 msgid "Profile Information"
-msgstr "Information sur le profil"
+msgstr ""
 
 #. module: account_mass_reconcile
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_history_mass_reconcile_id
 msgid "Reconcile Profile"
-msgstr "Profil de réconciliation"
+msgstr ""
 
 #. module: account_mass_reconcile
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_history_reconcile_line_ids
@@ -489,19 +489,19 @@ msgstr ""
 #. module: account_mass_reconcile
 #: model:ir.ui.view,arch_db:account_mass_reconcile.view_mass_reconcile_history_search
 msgid "Reconciliation Profile"
-msgstr "Profil de réconciliation"
+msgstr ""
 
 #. module: account_mass_reconcile
 #: code:addons/account_mass_reconcile/models/mass_reconcile_history.py:59
 #: model:ir.ui.view,arch_db:account_mass_reconcile.mass_reconcile_history_form
 #, python-format
 msgid "Reconciliations"
-msgstr "Lettrages"
+msgstr ""
 
 #. module: account_mass_reconcile
 #: model:ir.ui.view,arch_db:account_mass_reconcile.view_mass_reconcile_history_search
 msgid "Reconciliations of last 7 days"
-msgstr "Lettrages des 7 derniers jours"
+msgstr ""
 
 #. module: account_mass_reconcile
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_advanced_partner_ids
@@ -512,58 +512,58 @@ msgstr "Lettrages des 7 derniers jours"
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_partner_partner_ids
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_reference_partner_ids
 msgid "Restrict on partners"
-msgstr "Filtrer sur des partenaires"
+msgstr ""
 
 #. module: account_mass_reconcile
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_history_date
 msgid "Run date"
-msgstr "Date de lancement"
+msgstr ""
 
 #. module: account_mass_reconcile
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile_method_sequence
 msgid "Sequence"
-msgstr "Séquence"
+msgstr ""
 
 #. module: account_mass_reconcile
 #: model:ir.ui.view,arch_db:account_mass_reconcile.account_mass_reconcile_form
 msgid "Simple. Amount and Name"
-msgstr "Simple. Montant et description"
+msgstr ""
 
 #. module: account_mass_reconcile
 #: model:ir.ui.view,arch_db:account_mass_reconcile.account_mass_reconcile_form
 msgid "Simple. Amount and Partner"
-msgstr "Simple. Montant et partenaire"
+msgstr ""
 
 #. module: account_mass_reconcile
 #: model:ir.ui.view,arch_db:account_mass_reconcile.account_mass_reconcile_form
 msgid "Simple. Amount and Reference"
-msgstr "Simple. Montant et référence"
+msgstr ""
 
 #. module: account_mass_reconcile
 #: model:ir.ui.view,arch_db:account_mass_reconcile.account_mass_reconcile_tree
 msgid "Start Auto Reconcilation"
-msgstr "Lancer le lettrage automatisé"
+msgstr ""
 
 #. module: account_mass_reconcile
 #: model:ir.ui.view,arch_db:account_mass_reconcile.account_mass_reconcile_form
 msgid "Start Auto Reconciliation"
-msgstr "Lancer le lettrage automatisé"
+msgstr ""
 
 #. module: account_mass_reconcile
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile_method_task_id
 msgid "Task"
-msgstr "Tâche"
+msgstr ""
 
 #. module: account_mass_reconcile
 #: model:ir.model.fields,help:account_mass_reconcile.field_account_mass_reconcile_method_sequence
 msgid "The sequence field is used to order the reconcile method"
-msgstr "La séquence détermine l'ordre des méthodes de lettrage"
+msgstr ""
 
 #. module: account_mass_reconcile
 #: code:addons/account_mass_reconcile/models/mass_reconcile.py:245
 #, python-format
 msgid "There is no history of reconciled items on the task: %s."
-msgstr "Il n'y a pas d'historique d'écritures lettrées sur la tâche: %s."
+msgstr ""
 
 #. module: account_mass_reconcile
 #: code:addons/account_mass_reconcile/models/mass_reconcile.py:221
@@ -574,27 +574,27 @@ msgstr ""
 #. module: account_mass_reconcile
 #: model:ir.ui.view,arch_db:account_mass_reconcile.view_mass_reconcile_history_search
 msgid "Today"
-msgstr "Aujourd'hui"
+msgstr ""
 
 #. module: account_mass_reconcile
 #: model:ir.ui.view,arch_db:account_mass_reconcile.view_mass_reconcile_history_search
 msgid "Todays' Reconcilations"
-msgstr "Lettrages du jour"
+msgstr ""
 
 #. module: account_mass_reconcile
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile_method_name
 msgid "Type"
-msgstr "Type"
+msgstr ""
 
 #. module: account_mass_reconcile
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile_message_unread
 msgid "Unread Messages"
-msgstr "Messages non-lus"
+msgstr ""
 
 #. module: account_mass_reconcile
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile_message_unread_counter
 msgid "Unread Messages Counter"
-msgstr "Compteur de messages non-lus"
+msgstr ""
 
 #. module: account_mass_reconcile
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile_unreconciled_count
@@ -618,27 +618,27 @@ msgstr ""
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_reference_write_off
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_write_off
 msgid "Write off allowed"
-msgstr "Écart autorisé"
+msgstr ""
 
 #. module: account_mass_reconcile
 #: model:ir.model,name:account_mass_reconcile.model_account_mass_reconcile
 msgid "account mass reconcile"
-msgstr "Lettrage automatisé"
+msgstr ""
 
 #. module: account_mass_reconcile
 #: model:ir.model,name:account_mass_reconcile.model_account_config_settings
 msgid "account.config.settings"
-msgstr "account.config.settings"
+msgstr ""
 
 #. module: account_mass_reconcile
 #: model:ir.model,name:account_mass_reconcile.model_mass_reconcile_advanced
 msgid "mass.reconcile.advanced"
-msgstr "mass.reconcile.advanced"
+msgstr ""
 
 #. module: account_mass_reconcile
 #: model:ir.model,name:account_mass_reconcile.model_mass_reconcile_advanced_ref
 msgid "mass.reconcile.advanced.ref"
-msgstr "mass.reconcile.advanced.ref"
+msgstr ""
 
 #. module: account_mass_reconcile
 #: model:ir.model,name:account_mass_reconcile.model_mass_reconcile_base
@@ -678,4 +678,4 @@ msgstr ""
 #. module: account_mass_reconcile
 #: model:ir.model,name:account_mass_reconcile.model_account_mass_reconcile_method
 msgid "reconcile method for account_mass_reconcile"
-msgstr "Méthode de lettrage"
+msgstr ""
