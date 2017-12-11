@@ -233,6 +233,7 @@ class AccountJournal(models.Model):
         values['company_currency_id'] = self.company_id.currency_id.id
         values['journal_id'] = self.id
         values['move_id'] = move.id
+        values['date'] = move.date
         if not values.get('account_id', False):
             values['account_id'] = self.receivable_account_id.id
         values = move_line_obj._add_missing_default_values(values)
