@@ -64,4 +64,22 @@
 
     <menuitem string="Move Completion Rule" action="action_move_completion_rule_tree"
               id="menu_action_move_completion_rule_tree_menu" parent="account.account_management_menu"/>
+
+    <record id="view_account_move_filter" model="ir.ui.view">
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_account_move_filter"/>
+        <field name="arch" type="xml">
+            <separator position="after">
+                <filter
+                    string="To Complete"
+                    domain="[
+                        ('state','!=','posted'),
+                        ('journal_id.used_for_completion', '=', True),
+                        ('line_ids.already_completed', '=', False)]"
+                    help="Account move that should be completed manually"/>
+                <separator/>
+            </separator>
+        </field>
+    </record>
+
 </odoo>
