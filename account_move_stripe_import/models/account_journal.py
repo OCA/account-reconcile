@@ -89,7 +89,7 @@ class StripeParser(AccountMoveImportParser):
                 self.result_row_list.append({
                     'description': description,
                     'amount': -amount,
-                    'available_on': payout['arrival_date'],
+                    'created': payout['arrival_date'],
                     'type': 'fee',
                     })
             yield self.result_row_list
@@ -98,7 +98,7 @@ class StripeParser(AccountMoveImportParser):
         amount = line['amount']/100.
         vals = {
             'name': line['description'] or line.get('source'),
-            'date_maturity': date.fromtimestamp(line['available_on']),
+            'date_maturity': date.fromtimestamp(line['created']),
             'credit': amount > 0.0 and amount or 0.0,
             'debit': amount < 0.0 and -amount or 0.0,
             'transaction_ref': line.get('source'),
