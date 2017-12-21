@@ -228,14 +228,28 @@ class AccountJournal(models.Model):
         """
         move_line_obj = self.env['account.move.line']
         values = parser_vals
-        values['company_id'] = self.company_id.id
-        values['currency_id'] = self.currency_id.id
-        values['company_currency_id'] = self.company_id.currency_id.id
-        values['journal_id'] = self.id
-        values['move_id'] = move.id
-        values['date'] = move.date
         if not values.get('account_id', False):
             values['account_id'] = self.receivable_account_id.id
+        account = self.env['account.account'].browse(values['account_id'])
+        if account.reconcile:
+            values['amount_residual'] = values['debit'] - values['credit']
+        else:
+            values['amount_residual'] = 0
+        values.update({
+            'company_id': self.company_id.id,
+            'currency_id': self.currency_id.id,
+            'company_currency_id': self.company_id.currency_id.id,
+            'journal_id': self.id,
+            'move_id': move.id,
+            'date': move.date,
+            'balance': values['debit'] - values['credit'],
+            'amount_residual_currency': 0,
+            'debit_cash_basic': values['debit'],
+            'credit_cash_basic': values['credit'],
+            'balance_cash_basic': values['debit'] - values['credit'],
+            'ref': move.ref,
+            'user_type_id': account.user_type_id.id,
+        })
         values = move_line_obj._add_missing_default_values(values)
         return values
 
