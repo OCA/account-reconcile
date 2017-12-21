@@ -222,17 +222,91 @@ class MassReconcileAdvanced(models.AbstractModel):
     @api.multi
     def _rec_auto_lines_advanced(self, credit_lines, debit_lines):
         """ Advanced reconciliation main loop """
-        reconciled_ids = []
+        flow = ReconcileAdvancedFlow(self, credit_lines, debit_lines)
+        return flow.run()
+
+
+class ReconcileAdvancedFlow(object):
+
+    def __init__(self, rule, credit_lines, debit_lines):
+        self.rule = rule
+        self.env = rule.env
+        self.credit_lines = dict(
+            [(l['id'], l) for l in credit_lines]
+        )
+        self.credit_lines_number = len(self.credit_lines)
+        self.debit_lines = dict(
+            [(l['id'], l) for l in debit_lines]
+        )
+        self.reconciled_ids = []
+        # number of reconciled groups, used for the commit by batches
+        self.group_count = 0
+
+    def _get_lines_for_ids(self, line_ids):
+        lines = []
+        for line_id in line_ids:
+            line = (self.debit_lines.get(line_id) or
+                    self.credit_lines.get(line_id))
+            assert line
+            lines.append(line)
+        return lines
+
+    def _try_fast_path_reconcile(self, line_ids):
+        """ Check if a group is complete so we can reconcile early
+
+        A group is considered completed if it's balance is below the write-off.
+        In that case we can reconcile it even if not all the lines
+        have been checked. Also, we can remove the debit lines so they will be
+        removed from all the future matchings.
+        """
+        lines = self._get_lines_for_ids(line_ids)
+        below_writeoff, __ = self.rule._below_writeoff_limit(
+            lines, self.rule.write_off
+        )
+        if below_writeoff:
+            reconciled, full = self._reconcile(line_ids, lines)
+            # only in the fast path, we get rid of the
+            # used lines so we'll stop to compare them
+            for line_id in line_ids:
+                self.debit_lines.pop(line_id, None)
+            return reconciled, full
+        return False, False
+
+    def _reconcile(self, line_ids, group_lines):
+        _logger.debug("Reconciling group with ids %s", line_ids)
+        reconciled, full = self.rule._reconcile_lines(
+            group_lines, allow_partial=True
+        )
+
+        if reconciled:
+            self.group_count += 1
+        if reconciled and full:
+            self.reconciled_ids += line_ids
+
+        if (self.env.context.get('commit_every') and
+                self.group_count %
+                self.env.context['commit_every'] == 0):
+            self.env.cr.commit()
+            _logger.info("Commit the reconciliations after %d groups",
+                         self.group_count)
+        return reconciled, full
+
+    def run(self):
         reconcile_groups = []
-        _logger.info("%d credit lines to reconcile", len(credit_lines))
-        for idx, credit_line in enumerate(credit_lines, start=1):
+
+        _logger.info("%d credit lines to reconcile", self.credit_lines_number)
+        for idx, credit_line in enumerate(self.credit_lines.itervalues(),
+                                          start=1):
             if idx % 50 == 0:
-                _logger.info("... %d/%d credit lines inspected ...", idx,
-                             len(credit_lines))
-            if self._skip_line(credit_line):
+                _logger.info("... %d/%d credit lines inspected, still have"
+                             " %d candidate debit lines ...", idx,
+                             self.credit_lines_number, len(self.debit_lines))
+            if self.rule._skip_line(credit_line):
                 continue
-            opposite_lines = self._search_opposites(credit_line,
-                                                    debit_lines)
+            opposite_lines = self.rule._search_opposites(
+                credit_line,
+                self.debit_lines.itervalues()
+            )
             if not opposite_lines:
                 continue
             opposite_ids = [l['id'] for l in opposite_lines]
@@ -242,30 +316,28 @@ class MassReconcileAdvanced(models.AbstractModel):
                     _logger.debug("New lines %s matched with an existing "
                                   "group %s", line_ids, group)
                     group.update(line_ids)
+                    reconciled, __ = self._try_fast_path_reconcile(group)
+                    if reconciled:
+                        # safe to do so only because we stop the iteration
+                        reconcile_groups.remove(group)
                     break
             else:
                 _logger.debug("New group of lines matched %s", line_ids)
-                reconcile_groups.append(set(line_ids))
-        lines_by_id = dict([(l['id'], l)
-                            for l in credit_lines + debit_lines])
-        _logger.info("Found %d groups to reconcile",
-                     len(reconcile_groups))
-        for group_count, reconcile_group_ids \
-                in enumerate(reconcile_groups, start=1):
-            _logger.debug("Reconciling group %d/%d with ids %s",
-                          group_count, len(reconcile_groups),
-                          reconcile_group_ids)
-            group_lines = [lines_by_id[lid]
-                           for lid in reconcile_group_ids]
-            reconciled, full = self._reconcile_lines(group_lines,
-                                                     allow_partial=True)
-            if reconciled and full:
-                reconciled_ids += reconcile_group_ids
+                reconciled, __ = self._try_fast_path_reconcile(line_ids)
+                if not reconciled:
+                    # group is not complete, we will maybe find another line
+                    # later to complete it
+                    reconcile_groups.append(set(line_ids))
 
-            if (self.env.context.get('commit_every') and
-                    group_count % self.env.context['commit_every'] == 0):
-                self.env.cr.commit()
-                _logger.info("Commit the reconciliations after %d groups",
-                             group_count)
+        # remaining groups are probably partial reconciliations
+        _logger.info("Still %d groups to reconcile",
+                     len(reconcile_groups))
+        for idx, reconcile_group_ids in enumerate(reconcile_groups, start=1):
+            _logger.debug("Reconciling group %d/%d with ids %s",
+                          idx, len(reconcile_groups), reconcile_group_ids)
+            self._reconcile(reconcile_group_ids,
+                            self._get_lines_for_ids(reconcile_group_ids)
+                            )
+
         _logger.info("Reconciliation is over")
-        return reconciled_ids
+        return self.reconciled_ids
