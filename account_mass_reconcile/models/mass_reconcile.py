@@ -230,10 +230,10 @@ class AccountMassReconcile(models.Model):
                 # the cron will just loop on this reconcile task.
                 _logger.exception(
                     "The reconcile task %s had an exception: %s",
-                    rec.name, e.message
+                    rec.name, e
                 )
                 message = _("There was an error during reconciliation : %s") \
-                    % e.message
+                    % e
                 rec.message_post(body=message)
                 self.env['mass.reconcile.history'].create(
                     {
