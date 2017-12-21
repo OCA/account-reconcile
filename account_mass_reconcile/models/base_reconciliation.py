@@ -52,6 +52,7 @@ class MassReconcileBase(models.AbstractModel):
             'id',
             'debit',
             'credit',
+            'amount_residual',
             'date',
             'ref',
             'name',
@@ -99,16 +100,9 @@ class MassReconcileBase(models.AbstractModel):
     def _below_writeoff_limit(self, lines, writeoff_limit):
         self.ensure_one()
         precision = self.env['decimal.precision'].precision_get('Account')
-        keys = ('debit', 'credit')
-        sums = reduce(
-            lambda line, memo:
-            dict((key, value + memo[key])
-                 for key, value
-                 in line.iteritems()
-                 if key in keys), lines)
-        debit, credit = sums['debit'], sums['credit']
-        writeoff_amount = round(debit - credit, precision)
-        return bool(writeoff_limit >= abs(writeoff_amount)), debit, credit
+        amount_residual = sum([l['amount_residual'] for l in lines])
+        writeoff_amount = round(amount_residual, precision)
+        return bool(writeoff_limit >= abs(writeoff_amount)), amount_residual
 
     @api.multi
     def _get_rec_date(self, lines, based_on='end_period_last_credit'):
@@ -150,11 +144,11 @@ class MassReconcileBase(models.AbstractModel):
         self.ensure_one()
         ml_obj = self.env['account.move.line']
         line_ids = [l['id'] for l in lines]
-        below_writeoff, sum_debit, sum_credit = self._below_writeoff_limit(
+        below_writeoff, amount_residual = self._below_writeoff_limit(
             lines, self.write_off
         )
         if below_writeoff:
-            if sum_credit > sum_debit:
+            if amount_residual < 0.0:
                 writeoff_account = self.account_profit_id
             else:
                 writeoff_account = self.account_lost_id
@@ -172,7 +166,7 @@ class MassReconcileBase(models.AbstractModel):
             # lines to reconcile
             # it will do a full reconcile instead of a partial reconcile
             # and make a write-off for exchange
-            if sum_credit > sum_debit:
+            if amount_residual < 0.0:
                 writeoff_account = self.income_exchange_account_id
             else:
                 writeoff_account = self.expense_exchange_account_id
