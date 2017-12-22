@@ -160,6 +160,14 @@ class AccountMassReconcile(models.Model):
                 'filter': rec_method.filter}
 
     @api.multi
+    def _run_reconcile_method(self, reconcile_method):
+        rec_model = self.env[reconcile_method.name]
+        auto_rec_id = rec_model.create(
+            self._prepare_run_transient(reconcile_method)
+        )
+        return auto_rec_id.automatic_reconcile()
+
+    @api.multi
     def run_reconcile(self):
         def find_reconcile_ids(fieldname, move_line_ids):
             if not move_line_ids:
@@ -203,13 +211,9 @@ class AccountMassReconcile(models.Model):
                 all_ml_rec_ids = []
 
                 for method in rec.reconcile_method:
-                    rec_model = self.with_env(new_env).env[method.name]
-                    auto_rec_id = rec_model.create(
-                        self._prepare_run_transient(method)
+                    ml_rec_ids = self.with_env(new_env)._run_reconcile_method(
+                        method
                     )
-
-                    ml_rec_ids = auto_rec_id.automatic_reconcile()
-
                     all_ml_rec_ids += ml_rec_ids
 
                 reconcile_ids = find_reconcile_ids(
