@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # © 2014-2016 Camptocamp SA (Damien Crier)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
@@ -7,40 +6,42 @@ from odoo import fields, tools
 from odoo.modules import get_module_resource
 
 
-class TestScenarioReconcile(common.TransactionCase):
+class TestScenarioReconcile(common.SavepointCase):
 
-    def setUp(self):
-        super(TestScenarioReconcile, self).setUp()
-        tools.convert_file(self.cr, 'account',
+    @classmethod
+    def setUpClass(cls):
+        super(TestScenarioReconcile, cls).setUpClass()
+        tools.convert_file(cls.cr, 'account',
                            get_module_resource('account', 'test',
                                                'account_minimal_test.xml'),
                            {}, 'init', False, 'test')
-        self.rec_history_obj = self.env['mass.reconcile.history']
-        self.mass_rec_obj = self.env['account.mass.reconcile']
-        self.invoice_obj = self.env['account.invoice']
-        self.bk_stmt_obj = self.env['account.bank.statement']
-        self.bk_stmt_line_obj = self.env['account.bank.statement.line']
-        self.acc_move_line_obj = self.env['account.move.line']
-        self.mass_rec_method_obj = (
-            self.env['account.mass.reconcile.method']
+        cls.rec_history_obj = cls.env['mass.reconcile.history']
+        cls.mass_rec_obj = cls.env['account.mass.reconcile']
+        cls.invoice_obj = cls.env['account.invoice']
+        cls.bk_stmt_obj = cls.env['account.bank.statement']
+        cls.bk_stmt_line_obj = cls.env['account.bank.statement.line']
+        cls.acc_move_line_obj = cls.env['account.move.line']
+        cls.mass_rec_method_obj = (
+            cls.env['account.mass.reconcile.method']
         )
-        self.account_fx_income_id = self.ref("account.income_fx_income")
-        self.account_fx_expense_id = self.ref("account.income_fx_expense")
-        self.acs_model = self.env['account.config.settings']
+        cls.account_fx_income_id = cls.env.ref("account.income_fx_income").id
+        cls.account_fx_expense_id = cls.env.ref("account.income_fx_expense").id
+        cls.acs_model = cls.env['res.config.settings']
 
-        acs_ids = self.acs_model.search(
-            [('company_id', '=', self.ref("base.main_company"))]
+        acs_ids = cls.acs_model.search(
+            [('company_id', '=', cls.env.ref("base.main_company").id)]
             )
 
-        values = {'group_multi_currency': True,
-                  'currency_id': self.ref('base.EUR')}
+        values = {
+            'group_multi_currency': True,
+        }
 
         if acs_ids:
             acs_ids.write(values)
         else:
-            default_vals = self.acs_model.default_get([])
+            default_vals = cls.acs_model.default_get([])
             default_vals.update(values)
-            acs_ids = self.acs_model.create(default_vals)
+            acs_ids = cls.acs_model.create(default_vals)
 
     def test_scenario_reconcile(self):
         # create invoice
@@ -80,8 +81,7 @@ class TestScenarioReconcile(common.TransactionCase):
                         'partner_id': self.ref('base.res_partner_12'),
                         'name': invoice.number,
                         'ref': invoice.number,
-                        }
-                     )
+                    })
                 ]
             }
         )
@@ -119,9 +119,8 @@ class TestScenarioReconcile(common.TransactionCase):
                 'account': self.ref('account.a_recv'),
                 'reconcile_method': [
                     (0, 0, {
-                     'name': 'mass.reconcile.simple.partner',
-                     }
-                     )
+                        'name': 'mass.reconcile.simple.partner',
+                    })
                 ]
             }
         )
@@ -155,8 +154,7 @@ class TestScenarioReconcile(common.TransactionCase):
                         'price_unit': 1000.0,
                         'quantity': 1.0,
                         'product_id': self.ref('product.product_product_3'),
-                    }
-                    )
+                    })
                 ]
             }
         )
@@ -179,8 +177,7 @@ class TestScenarioReconcile(common.TransactionCase):
                         'partner_id': self.ref('base.res_partner_12'),
                         'name': invoice.number,
                         'ref': invoice.number,
-                        }
-                     )
+                    })
                 ]
             }
         )
@@ -217,9 +214,8 @@ class TestScenarioReconcile(common.TransactionCase):
                 'account': self.ref('account.a_recv'),
                 'reconcile_method': [
                     (0, 0, {
-                     'name': 'mass.reconcile.simple.partner',
-                     }
-                     )
+                        'name': 'mass.reconcile.simple.partner',
+                    })
                 ]
             }
         )
