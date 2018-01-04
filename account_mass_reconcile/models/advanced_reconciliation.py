@@ -1,9 +1,8 @@
-# -*- coding: utf-8 -*-
-# © 2012-2016 Camptocamp SA (Guewen Baconnier, Damien Crier, Matthieu Dietrich)
-# © 2010 Sébastien Beau
+# Copyright 2012-2016 Camptocamp SA
+# Copyright 2010 Sébastien Beau
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from odoo import models, api
+from odoo import models
 
 
 class MassReconcileAdvancedRef(models.TransientModel):
@@ -11,8 +10,8 @@ class MassReconcileAdvancedRef(models.TransientModel):
     _name = 'mass.reconcile.advanced.ref'
     _inherit = 'mass.reconcile.advanced'
 
-    @api.multi
-    def _skip_line(self, move_line):
+    @staticmethod
+    def _skip_line(move_line):
         """
         When True is returned on some conditions, the credit move line
         will be skipped for reconciliation. Can be inherited to
@@ -20,8 +19,8 @@ class MassReconcileAdvancedRef(models.TransientModel):
         """
         return not (move_line.get('ref') and move_line.get('partner_id'))
 
-    @api.multi
-    def _matchers(self, move_line):
+    @staticmethod
+    def _matchers(move_line):
         """
         Return the values used as matchers to find the opposite lines
 
@@ -61,8 +60,8 @@ class MassReconcileAdvancedRef(models.TransientModel):
         return (('partner_id', move_line['partner_id']),
                 ('ref', move_line['ref'].lower().strip()))
 
-    @api.multi
-    def _opposite_matchers(self, move_line):
+    @staticmethod
+    def _opposite_matchers(move_line):
         """
         Return the values of the opposite line used as matchers
         so the line is matched
