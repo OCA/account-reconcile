@@ -36,13 +36,13 @@ new mass reconcile.
 
 .. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas
    :alt: Try me on Runbot
-   :target: https://runbot.odoo-community.org/runbot/98/10.0
+   :target: https://runbot.odoo-community.org/runbot/98/11.0
 
 
 Bug Tracker
 ===========
 
-Bugs are tracked on `GitHub Issues <https://github.com/OCA/bank-statement-reconcile/issues>`_.
+Bugs are tracked on `GitHub Issues <https://github.com/OCA/account-reconcile/issues>`_.
 In case of trouble, please check there if your issue has already been reported.
 If you spotted it first, help us smashing it by providing a detailed and welcomed feedback.
 
@@ -57,7 +57,7 @@ Contributors
 * Vincent Renaville <vincent.renaville@camptocamp.com>
 * Alexandre Fayolle <alexandre.fayolle@camptocamp.com>
 * Joël Grand-Guillaume <joel.grandguillaume@camptocamp.com>
-* Nicolas Bessis <nicolas.bessi@camptocamp.com>
+* Nicolas Bessi <nicolas.bessi@camptocamp.com>
 * Pedro M.Baeza <pedro.baeza@gmail.com>
 * Matthieu Dietrich <matthieu.dietrich@camptocamp.com>
 * Leonardo Pistone <leonardo.pistone@camptocamp.com>
@@ -69,6 +69,7 @@ Contributors
 * Frédéric Clémenti <frederic.clementi@camptocamp.com>
 * Damien Crier <damien.crier@camptocamp.com>
 * Akim Juillerat <akim.juillerat@camptocamp.com>
+* Mykhailo Panarin <m.panarin@mobilunity.com>
 
 Maintainer
 ----------

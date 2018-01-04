@@ -1,19 +1,17 @@
-# -*- coding: utf-8 -*-
-# © 2012-2016 Camptocamp SA (Guewen Baconnier, Damien Crier, Matthieu Dietrich)
-# © 2010 Sébastien Beau
+# Copyright 2012-2016 Camptocamp SA
+# Copyright 2010 Sébastien Beau
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from odoo import _, models, api, fields
-from odoo.tools.safe_eval import safe_eval
+from functools import reduce
 from operator import itemgetter
+
+from odoo import _, api, fields, models
+from odoo.tools.safe_eval import safe_eval
 
 
 class MassReconcileBase(models.AbstractModel):
-
     """Abstract Model for reconciliation methods"""
-
     _name = 'mass.reconcile.base'
-
     _inherit = 'mass.reconcile.options'
 
     account_id = fields.Many2one(
@@ -36,7 +34,6 @@ class MassReconcileBase(models.AbstractModel):
         self.ensure_one()
         return self._action_rec()
 
-    @api.multi
     def _action_rec(self):
         """ Must be inherited to implement the reconciliation
 
@@ -44,7 +41,8 @@ class MassReconcileBase(models.AbstractModel):
         """
         raise NotImplementedError
 
-    def _base_columns(self):
+    @staticmethod
+    def _base_columns():
         """ Mandatory columns for move lines queries
         An extra column aliased as ``key`` should be defined
         in each query."""
@@ -58,19 +56,19 @@ class MassReconcileBase(models.AbstractModel):
             'partner_id',
             'account_id',
             'reconciled',
-            'move_id')
-        return ["account_move_line.%s" % col for col in aml_cols]
+            'move_id',
+        )
+        return ["account_move_line.{}".format(col) for col in aml_cols]
 
-    @api.multi
-    def _select(self, *args, **kwargs):
+    def _select_query(self, *args, **kwargs):
         return "SELECT %s" % ', '.join(self._base_columns())
 
-    @api.multi
-    def _from(self, *args, **kwargs):
+    def _from_query(self, *args, **kwargs):
         return ("FROM account_move_line ")
 
     @api.multi
-    def _where(self, *args, **kwargs):
+    def _where_query(self, *args, **kwargs):
+        self.ensure_one()
         where = ("WHERE account_move_line.account_id = %s "
                  "AND NOT account_move_line.reconciled")
         # it would be great to use dict for params
@@ -85,12 +83,13 @@ class MassReconcileBase(models.AbstractModel):
 
     @api.multi
     def _get_filter(self):
+        self.ensure_one()
         ml_obj = self.env['account.move.line']
         where = ''
         params = []
-        if self.filter:
+        if self._filter:
             dummy, where, params = ml_obj._where_calc(
-                safe_eval(self.filter)).get_sql()
+                safe_eval(self._filter)).get_sql()
             if where:
                 where = " AND %s" % where
         return where, params
@@ -104,7 +103,7 @@ class MassReconcileBase(models.AbstractModel):
             lambda line, memo:
             dict((key, value + memo[key])
                  for key, value
-                 in line.iteritems()
+                 in line.items()
                  if key in keys), lines)
         debit, credit = sums['debit'], sums['credit']
         writeoff_amount = round(debit - credit, precision)
@@ -164,7 +163,7 @@ class MassReconcileBase(models.AbstractModel):
             line_rs.reconcile(
                 writeoff_acc_id=writeoff_account,
                 writeoff_journal_id=self.journal_id
-                )
+            )
             return True, True
         elif allow_partial:
             # We need to give a writeoff_acc_id
@@ -181,6 +180,6 @@ class MassReconcileBase(models.AbstractModel):
             line_rs.reconcile(
                 writeoff_acc_id=writeoff_account,
                 writeoff_journal_id=self.journal_id
-                )
+            )
             return True, False
         return False, False

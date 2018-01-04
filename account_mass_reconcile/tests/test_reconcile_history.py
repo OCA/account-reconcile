@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # © 2014-2016 Camptocamp SA (Damien Crier)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
@@ -7,36 +6,37 @@ from odoo import fields, tools
 from odoo.modules import get_module_resource
 
 
-class TestReconcileHistory(common.TransactionCase):
+class TestReconcileHistory(common.SavepointCase):
 
-    def setUp(self):
-        super(TestReconcileHistory, self).setUp()
-        tools.convert_file(self.cr, 'account',
+    @classmethod
+    def setUpClass(cls):
+        super(TestReconcileHistory, cls).setUpClass()
+        tools.convert_file(cls.cr, 'account',
                            get_module_resource('account', 'test',
                                                'account_minimal_test.xml'),
                            {}, 'init', False, 'test')
-        self.rec_history_obj = self.env['mass.reconcile.history']
-        self.mass_rec_obj = self.env['account.mass.reconcile']
-        self.mass_rec = self.mass_rec_obj.create(
+        cls.rec_history_obj = cls.env['mass.reconcile.history']
+        cls.mass_rec_obj = cls.env['account.mass.reconcile']
+        cls.mass_rec = cls.mass_rec_obj.create(
             {
                 'name': 'AER1',
-                'account': self.ref('account.a_expense'),
+                'account': cls.env.ref('account.a_expense').id,
 
             }
             )
-        self.rec_history = self.rec_history_obj.create(
+        cls.rec_history = cls.rec_history_obj.create(
             {
-                'mass_reconcile_id': self.mass_rec.id,
+                'mass_reconcile_id': cls.mass_rec.id,
                 'date': fields.Datetime.now(),
             }
             )
 
     def test_open_full_empty(self):
         res = self.rec_history._open_move_lines()
-        self.assertEqual(unicode([('id', 'in', [])]), res.get(
+        self.assertEqual([('id', 'in', [])], res.get(
             'domain', []))
 
     def test_open_full_empty_from_method(self):
         res = self.rec_history.open_reconcile()
-        self.assertEqual(unicode([('id', 'in', [])]), res.get(
+        self.assertEqual([('id', 'in', [])], res.get(
             'domain', []))

@@ -1,6 +1,5 @@
-# -*- coding: utf-8 -*-
-# © 2012-2016 Camptocamp SA (Guewen Baconnier, Damien Crier, Matthieu Dietrich)
-# © 2010 Sébastien Beau
+# Copyright 2012-2016 Camptocamp SA
+# Copyright 2010 Sébastien Beau
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 from odoo import models, api
@@ -21,7 +20,7 @@ class MassReconcileSimple(models.AbstractModel):
         count = 0
         res = []
         while (count < len(lines)):
-            for i in xrange(count + 1, len(lines)):
+            for i in range(count + 1, len(lines)):
                 if lines[count][self._key_field] != lines[i][self._key_field]:
                     break
                 check = False
@@ -46,22 +45,20 @@ class MassReconcileSimple(models.AbstractModel):
             count += 1
         return res
 
-    @api.multi
     def _simple_order(self, *args, **kwargs):
         return "ORDER BY account_move_line.%s" % self._key_field
 
-    @api.multi
     def _action_rec(self):
         """Match only 2 move lines, do not allow partial reconcile"""
-        select = self._select()
+        select = self._select_query()
         select += ", account_move_line.%s " % self._key_field
-        where, params = self._where()
+        where, params = self._where_query()
         where += " AND account_move_line.%s IS NOT NULL " % self._key_field
 
         where2, params2 = self._get_filter()
         query = ' '.join((
             select,
-            self._from(),
+            self._from_query(),
             where, where2,
             self._simple_order()))
 
