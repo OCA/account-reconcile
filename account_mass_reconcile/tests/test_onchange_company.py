@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # © 2014-2016 Camptocamp SA (Damien Crier)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
@@ -7,20 +6,21 @@ from odoo import tools
 from odoo.modules import get_module_resource
 
 
-class TestOnChange(common.TransactionCase):
+class TestOnChange(common.SavepointCase):
 
-    def setUp(self):
-        super(TestOnChange, self).setUp()
-        tools.convert_file(self.cr, 'account',
+    @classmethod
+    def setUpClass(cls):
+        super(TestOnChange, cls).setUpClass()
+        tools.convert_file(cls.cr, 'account',
                            get_module_resource('account', 'test',
                                                'account_minimal_test.xml'),
                            {}, 'init', False, 'test')
-        acc_setting = self.env['account.config.settings']
-        self.acc_setting_obj = acc_setting.create({})
-        self.company_obj = self.env['res.company']
+        acc_setting = cls.env['res.config.settings']
+        cls.acc_setting_obj = acc_setting.create({})
+        cls.company_obj = cls.env['res.company']
         # analytic defaults account creation
-        self.main_company = self.env.ref('base.main_company')
-        self.sec_company = self.company_obj.create(
+        cls.main_company = cls.env.ref('base.main_company')
+        cls.sec_company = cls.company_obj.create(
             {
                 'name': 'Second company',
                 'reconciliation_commit_every': 80

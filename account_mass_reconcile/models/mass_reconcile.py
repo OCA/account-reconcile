@@ -1,14 +1,14 @@
-# -*- coding: utf-8 -*-
-# © 2012-2016 Camptocamp SA (Guewen Baconnier, Damien Crier, Matthieu Dietrich)
-# © 2010 Sébastien Beau
+# Copyright 2012-2016 Camptocamp SA
+# Copyright 2010 Sébastien Beau
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 from datetime import datetime
+import logging
+
 from odoo import models, api, fields, _
 from odoo.exceptions import Warning as UserError
 from odoo import sql_db
 
-import logging
 _logger = logging.getLogger(__name__)
 
 
@@ -20,7 +20,6 @@ class MassReconcileOptions(models.AbstractModel):
     This allows decoupling of the methods and the
     wizards and allows to launch the wizards alone
     """
-
     _name = 'mass.reconcile.options'
 
     @api.model
@@ -30,24 +29,39 @@ class MassReconcileOptions(models.AbstractModel):
             ('actual', 'Today'),
         ]
 
-    write_off = fields.Float('Write off allowed', default=0.)
-    account_lost_id = fields.Many2one('account.account',
-                                      string="Account Lost")
-    account_profit_id = fields.Many2one('account.account',
-                                        string="Account Profit")
-    journal_id = fields.Many2one('account.journal',
-                                 string="Journal")
-    date_base_on = fields.Selection('_get_rec_base_date',
-                                    required=True,
-                                    string='Date of reconciliation',
-                                    default='newest')
-    filter = fields.Char(string='Filter')
-    income_exchange_account_id = fields.Many2one('account.account',
-                                                 string='Gain Exchange '
-                                                 'Rate Account')
-    expense_exchange_account_id = fields.Many2one('account.account',
-                                                  string='Loss Exchange '
-                                                  'Rate Account')
+    write_off = fields.Float(
+        'Write off allowed',
+        default=0.,
+    )
+    account_lost_id = fields.Many2one(
+        'account.account',
+        string="Account Lost",
+    )
+    account_profit_id = fields.Many2one(
+        'account.account',
+        string="Account Profit",
+    )
+    journal_id = fields.Many2one(
+        'account.journal',
+        string="Journal",
+    )
+    date_base_on = fields.Selection(
+        '_get_rec_base_date',
+        required=True,
+        string='Date of reconciliation',
+        default='newest',
+    )
+    _filter = fields.Char(
+        string='Filter',
+    )
+    income_exchange_account_id = fields.Many2one(
+        'account.account',
+        string='Gain Exchange Rate Account',
+    )
+    expense_exchange_account_id = fields.Many2one(
+        'account.account',
+        string='Loss Exchange Rate Account',
+    )
 
 
 class AccountMassReconcileMethod(models.Model):
@@ -56,8 +70,8 @@ class AccountMassReconcileMethod(models.Model):
     _inherit = 'mass.reconcile.options'
     _order = 'sequence'
 
-    @api.model
-    def _get_all_rec_method(self):
+    @staticmethod
+    def _get_reconcilation_methods():
         return [
             ('mass.reconcile.simple.name', 'Simple. Amount and Name'),
             ('mass.reconcile.simple.partner', 'Simple. Amount and Partner'),
@@ -67,32 +81,36 @@ class AccountMassReconcileMethod(models.Model):
              'Advanced. Partner and Ref.'),
         ]
 
-    @api.model
-    def _get_rec_method(self):
-        return self._get_all_rec_method()
+    def _selection_name(self):
+        return self._get_reconcilation_methods()
 
-    name = fields.Selection('_get_rec_method', string='Type', required=True)
-    sequence = fields.Integer(string='Sequence',
-                              default=1,
-                              required=True,
-                              help="The sequence field is used to order "
-                              "the reconcile method"
-                              )
-    task_id = fields.Many2one('account.mass.reconcile',
-                              string='Task',
-                              required=True,
-                              ondelete='cascade'
-                              )
-    company_id = fields.Many2one('res.company',
-                                 string='Company',
-                                 related="task_id.company_id",
-                                 store=True,
-                                 readonly=True
-                                 )
+    name = fields.Selection(
+        '_selection_name',
+        string='Type',
+        required=True,
+    )
+    sequence = fields.Integer(
+        string='Sequence',
+        default=1,
+        required=True,
+        help="The sequence field is used to order the reconcile method",
+    )
+    task_id = fields.Many2one(
+        'account.mass.reconcile',
+        string='Task',
+        required=True,
+        ondelete='cascade',
+    )
+    company_id = fields.Many2one(
+        'res.company',
+        string='Company',
+        related="task_id.company_id",
+        store=True,
+        readonly=True,
+    )
 
 
 class AccountMassReconcile(models.Model):
-
     _name = 'account.mass.reconcile'
     _inherit = ['mail.thread']
     _description = 'account mass reconcile'
@@ -120,31 +138,42 @@ class AccountMassReconcile(models.Model):
                 )
             rec.last_history = last_history_rs or False
 
-    name = fields.Char(string='Name', required=True)
-    account = fields.Many2one('account.account',
-                              string='Account',
-                              required=True,
-                              )
-    reconcile_method = fields.One2many('account.mass.reconcile.method',
-                                       'task_id',
-                                       string='Method'
-                                       )
-    unreconciled_count = fields.Integer(string='Unreconciled Items',
-                                        compute='_get_total_unrec'
-                                        )
-    history_ids = fields.One2many('mass.reconcile.history',
-                                  'mass_reconcile_id',
-                                  string='History',
-                                  readonly=True
-                                  )
-    last_history = fields.Many2one('mass.reconcile.history',
-                                   string='Last history', readonly=True,
-                                   compute='_last_history',
-                                   )
-    company_id = fields.Many2one('res.company', string='Company')
+    name = fields.Char(
+        string='Name',
+        required=True,
+    )
+    account = fields.Many2one(
+        'account.account',
+        string='Account',
+        required=True,
+    )
+    reconcile_method = fields.One2many(
+        'account.mass.reconcile.method',
+        'task_id',
+        string='Method',
+    )
+    unreconciled_count = fields.Integer(
+        string='Unreconciled Items',
+        compute='_get_total_unrec',
+    )
+    history_ids = fields.One2many(
+        'mass.reconcile.history',
+        'mass_reconcile_id',
+        string='History',
+        readonly=True,
+    )
+    last_history = fields.Many2one(
+        'mass.reconcile.history',
+        string='Last history', readonly=True,
+        compute='_last_history',
+    )
+    company_id = fields.Many2one(
+        'res.company',
+        string='Company',
+    )
 
-    @api.model
-    def _prepare_run_transient(self, rec_method):
+    @staticmethod
+    def _prepare_run_transient(rec_method):
         return {'account_id': rec_method.task_id.account.id,
                 'write_off': rec_method.write_off,
                 'account_lost_id': (rec_method.account_lost_id.id),
@@ -155,7 +184,7 @@ class AccountMassReconcile(models.Model):
                 (rec_method.income_exchange_account_id.id),
                 'journal_id': (rec_method.journal_id.id),
                 'date_base_on': rec_method.date_base_on,
-                'filter': rec_method.filter}
+                '_filter': rec_method._filter}
 
     @api.multi
     def run_reconcile(self):
@@ -216,10 +245,10 @@ class AccountMassReconcile(models.Model):
                 # the cron will just loop on this reconcile task.
                 _logger.exception(
                     "The reconcile task %s had an exception: %s",
-                    rec.name, e.message
+                    rec.name, str(e)
                 )
                 message = _("There was an error during reconciliation : %s") \
-                    % e.message
+                    % str(e)
                 rec.message_post(body=message)
                 self.env['mass.reconcile.history'].create(
                     {
@@ -235,7 +264,6 @@ class AccountMassReconcile(models.Model):
 
         return True
 
-    @api.multi
     def _no_history(self):
         """ Raise an `orm.except_orm` error, supposed to
         be called when there is no history on the reconciliation
@@ -246,8 +274,8 @@ class AccountMassReconcile(models.Model):
               'items on the task: %s.') % self.name
         )
 
-    @api.model
-    def _open_move_line_list(self, move_line_ids, name):
+    @staticmethod
+    def _open_move_line_list(move_line_ids, name):
         return {
             'name': name,
             'view_mode': 'tree,form',
@@ -257,7 +285,7 @@ class AccountMassReconcile(models.Model):
             'type': 'ir.actions.act_window',
             'nodestroy': True,
             'target': 'current',
-            'domain': unicode([('id', 'in', move_line_ids)]),
+            'domain': [('id', 'in', move_line_ids)],
         }
 
     @api.multi
@@ -271,7 +299,6 @@ class AccountMassReconcile(models.Model):
         name = _('Unreconciled items')
         return self._open_move_line_list(lines.ids or [], name)
 
-    @api.multi
     def last_history_reconcile(self):
         """ Get the last history record for this reconciliation profile
         and return the action which opens move lines reconciled

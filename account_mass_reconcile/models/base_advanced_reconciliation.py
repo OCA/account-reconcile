@@ -1,12 +1,11 @@
-# -*- coding: utf-8 -*-
-# © 2012-2016 Camptocamp SA (Guewen Baconnier, Damien Crier, Matthieu Dietrich)
-# © 2010 Sébastien Beau
+# Copyright 2012-2016 Camptocamp SA
+# Copyright 2010 Sébastien Beau
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 import logging
+from itertools import product
 
 from odoo import models, api
-from itertools import product
 from odoo.tools.translate import _
 
 _logger = logging.getLogger(__name__)
@@ -16,12 +15,11 @@ class MassReconcileAdvanced(models.AbstractModel):
     _name = 'mass.reconcile.advanced'
     _inherit = 'mass.reconcile.base'
 
-    @api.multi
     def _query_debit(self):
         """Select all move (debit>0) as candidate. """
-        select = self._select()
-        sql_from = self._from()
-        where, params = self._where()
+        select = self._select_query()
+        sql_from = self._from_query()
+        where, params = self._where_query()
         where += " AND account_move_line.debit > 0 "
         where2, params2 = self._get_filter()
         query = ' '.join((select, sql_from, where, where2))
@@ -30,17 +28,17 @@ class MassReconcileAdvanced(models.AbstractModel):
 
     def _query_credit(self):
         """Select all move (credit>0) as candidate. """
-        select = self._select()
-        sql_from = self._from()
-        where, params = self._where()
+        select = self._select_query()
+        sql_from = self._from_query()
+        where, params = self._where_query()
         where += " AND account_move_line.credit > 0 "
         where2, params2 = self._get_filter()
         query = ' '.join((select, sql_from, where, where2))
         self.env.cr.execute(query, params + params2)
         return self.env.cr.dictfetchall()
 
-    @api.multi
-    def _matchers(self, move_line):
+    @staticmethod
+    def _matchers(move_line):
         """
         Return the values used as matchers to find the opposite lines
 
@@ -79,8 +77,8 @@ class MassReconcileAdvanced(models.AbstractModel):
         """
         raise NotImplementedError
 
-    @api.multi
-    def _opposite_matchers(self, move_line):
+    @staticmethod
+    def _opposite_matchers(move_line):
         """
         Return the values of the opposite line used as matchers
         so the line is matched
@@ -136,15 +134,15 @@ class MassReconcileAdvanced(models.AbstractModel):
             return True
         return False
 
-    @staticmethod
-    def _compare_matcher_values(key, values, opposite_values):
+    @classmethod
+    def _compare_matcher_values(cls, key, values, opposite_values):
         """ Compare every values from a matcher vs an opposite matcher
         and return True if it matches
         """
         for value, ovalue in product(values, opposite_values):
             # we do not need to compare all values, if one matches
             # we are done
-            if MassReconcileAdvanced._compare_values(key, value, ovalue):
+            if cls._compare_values(key, value, ovalue):
                 return True
         return False
 
@@ -165,7 +163,6 @@ class MassReconcileAdvanced(models.AbstractModel):
         return MassReconcileAdvanced._compare_matcher_values(mkey, mvalue,
                                                              omvalue)
 
-    @api.multi
     def _compare_opposite(self, move_line, opposite_move_line, matchers):
         """ Iterate over the matchers of the move lines vs opposite move lines
         and if they all match, return True.
@@ -191,7 +188,6 @@ class MassReconcileAdvanced(models.AbstractModel):
 
         return True
 
-    @api.multi
     def _search_opposites(self, move_line, opposite_move_lines):
         """Search the opposite move lines for a move line
 
@@ -210,7 +206,6 @@ class MassReconcileAdvanced(models.AbstractModel):
         result = self._rec_auto_lines_advanced(credit_lines, debit_lines)
         return result
 
-    @api.multi
     def _skip_line(self, move_line):
         """
         When True is returned on some conditions, the credit move line
