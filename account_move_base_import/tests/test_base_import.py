@@ -11,6 +11,7 @@ from operator import attrgetter
 from openerp.tests import common
 from openerp import tools
 from openerp.modules import get_module_resource
+from openerp.exceptions import UserError
 
 
 class TestCodaImport(common.TransactionCase):
@@ -63,6 +64,14 @@ class TestCodaImport(common.TransactionCase):
         move = self._import_file(file_name)
         self._validate_imported_move(move)
 
+    def test_simple_empty_xls(self):
+        """Test import from xls
+        """
+        file_name = self._filename_to_abs_filename(
+            os.path.join("..", "data", "statement_empty.xls"))
+        with self.assertRaises(UserError):
+            self._import_file(file_name)
+
     def test_simple_csv(self):
         """Test import from csv
         """
@@ -70,6 +79,14 @@ class TestCodaImport(common.TransactionCase):
             os.path.join("..", "data", "statement.csv"))
         move = self._import_file(file_name)
         self._validate_imported_move(move)
+
+    def test_simple_empty_csv(self):
+        """Test import from empty csv
+        """
+        file_name = self._filename_to_abs_filename(
+            os.path.join("..", "data", "statement_empty.csv"))
+        with self.assertRaises(UserError):
+            self._import_file(file_name)
 
     def _validate_imported_move(self, move):
         self.assertEqual("/", move.name)
