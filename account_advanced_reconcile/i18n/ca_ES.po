@@ -4,13 +4,14 @@
 # 
 # Translators:
 # OCA Transbot <transbot@odoo-community.org>, 2017
+# Carlos Hormigo, 2018
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 8.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-03-28 01:39+0000\n"
-"PO-Revision-Date: 2017-03-28 01:39+0000\n"
-"Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2017\n"
+"POT-Creation-Date: 2017-09-02 01:43+0000\n"
+"PO-Revision-Date: 2017-09-02 01:43+0000\n"
+"Last-Translator: Carlos Hormigo, 2018\n"
 "Language-Team: Catalan (Spain) (https://www.transifex.com/oca/teams/23907/ca_ES/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -64,12 +65,12 @@ msgstr ""
 #. module: account_advanced_reconcile
 #: field:easy.reconcile.advanced.ref,create_uid:0
 msgid "Created by"
-msgstr ""
+msgstr "Creat per"
 
 #. module: account_advanced_reconcile
 #: field:easy.reconcile.advanced.ref,create_date:0
 msgid "Created on"
-msgstr ""
+msgstr "Creat a"
 
 #. module: account_advanced_reconcile
 #: field:easy.reconcile.advanced,date_base_on:0
@@ -81,7 +82,7 @@ msgstr ""
 #: field:easy.reconcile.advanced,display_name:0
 #: field:easy.reconcile.advanced.ref,display_name:0
 msgid "Display Name"
-msgstr ""
+msgstr "Nom visible"
 
 #. module: account_advanced_reconcile
 #: field:easy.reconcile.advanced,filter:0
@@ -110,17 +111,17 @@ msgstr "Diari"
 #: field:easy.reconcile.advanced,__last_update:0
 #: field:easy.reconcile.advanced.ref,__last_update:0
 msgid "Last Modified on"
-msgstr ""
+msgstr "Darrera modificació en"
 
 #. module: account_advanced_reconcile
 #: field:easy.reconcile.advanced.ref,write_uid:0
 msgid "Last Updated by"
-msgstr ""
+msgstr "Darrera actualització per"
 
 #. module: account_advanced_reconcile
 #: field:easy.reconcile.advanced.ref,write_date:0
 msgid "Last Updated on"
-msgstr ""
+msgstr "Darrera actualització el"
 
 #. module: account_advanced_reconcile
 #: field:easy.reconcile.advanced,expense_exchange_account_id:0
