@@ -1,0 +1,35 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# * account_move_reconcile_helper
+# 
+# Translators:
+# enjolras <yo@miguelrevilla.com>, 2018
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 10.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-03-09 01:44+0000\n"
+"PO-Revision-Date: 2018-03-09 01:44+0000\n"
+"Last-Translator: enjolras <yo@miguelrevilla.com>, 2018\n"
+"Language-Team: Spanish (https://www.transifex.com/oca/teams/23907/es/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Language: es\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. module: account_move_reconcile_helper
+#: model:ir.model,name:account_move_reconcile_helper.model_account_move_line
+msgid "Journal Item"
+msgstr "Apunte contable"
+
+#. module: account_move_reconcile_helper
+#: model:ir.model.fields,field_description:account_move_reconcile_helper.field_account_move_line_partial_reconciliation_in_progress
+msgid "Partial reconciliation in progress"
+msgstr "Reconciliación parcial en proceso"
+
+#. module: account_move_reconcile_helper
+#: model:ir.model.fields,field_description:account_move_reconcile_helper.field_account_move_line_reconcile_line_ids
+#: model:ir.ui.view,arch_db:account_move_reconcile_helper.account_move_line_tree_view
+msgid "Reconciled lines"
+msgstr "Líneas reconciliadas"
