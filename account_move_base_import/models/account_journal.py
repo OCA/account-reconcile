@@ -249,6 +249,7 @@ class AccountJournal(models.Model):
             'balance_cash_basic': values['debit'] - values['credit'],
             'ref': move.ref,
             'user_type_id': account.user_type_id.id,
+            'reconciled': False,
         })
         values = move_line_obj._add_missing_default_values(values)
         return values
@@ -323,6 +324,11 @@ class AccountJournal(models.Model):
             self._write_extra_move_lines(parser, move)
             if self.create_counterpart:
                 self._create_counterpart(parser, move)
+            # Check if move is balanced
+            move.assert_balanced()
+            # Computed total amount of the move
+            move._amount_compute()
+            # Attach data to the move
             attachment_data = {
                 'name': 'statement file',
                 'datas': file_stream,
