@@ -48,7 +48,9 @@ class MassReconcileSimple(models.AbstractModel):
 
     @api.multi
     def _simple_order(self, *args, **kwargs):
-        return "ORDER BY account_move_line.%s" % self._key_field
+        return (
+            "ORDER BY account_move_line.%s, "
+            "account_move_line.date asc") % self._key_field
 
     @api.multi
     def _action_rec(self):
