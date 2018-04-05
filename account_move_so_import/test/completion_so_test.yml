@@ -42,15 +42,12 @@
   and add the correct name
 -
   !python {model: account.move.line}: |
-    context['check_move_validity'] = False
-    model.write(cr, uid, [ref('move_line_so')],
-                {'credit': 14981.0},
-                context)
+    self.env.ref('account_move_so_import.move_line_so').with_context(check_move_validity=False).write({'credit': 14981.0})
 -
   I run the auto complete
 -
   !python {model: account.move}: |
-    result = self.button_auto_completion(cr, uid, [ref("move_test_sale1")])
+    result = self.env.ref('account_move_so_import.move_test_sale1').button_auto_completion()
 -
   Now I can check that all is nice and shiny, line 1. I expect the Sale Order
   Number to be recognised.
