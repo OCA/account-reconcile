@@ -32,8 +32,14 @@ class TestScenarioReconcile(common.TransactionCase):
             [('company_id', '=', self.ref("base.main_company"))]
             )
 
-        values = {'group_multi_currency': True,
-                  'currency_id': self.ref('base.EUR')}
+        values = {'group_multi_currency': True}
+        #          'currency_id': self.ref('base.EUR')}
+
+        self.env['res.currency.rate'].create({
+            'currency_id': self.env.user.company_id.currency_id.id,
+            'rate': 1.00,
+            'name': fields.Date.today()
+            }),
 
         if acs_ids:
             acs_ids.write(values)
@@ -136,7 +142,7 @@ class TestScenarioReconcile(common.TransactionCase):
         # create currency rate
         self.env['res.currency.rate'].create({
             'name': fields.Date.today() + ' 00:00:00',
-            'currency_id': self.ref('base.USD'),
+            'currency_id': self.ref('base.EUR'),
             'rate': 1.5,
         })
         # create invoice
@@ -145,8 +151,8 @@ class TestScenarioReconcile(common.TransactionCase):
                 'type': 'out_invoice',
                 'account_id': self.ref('account.a_recv'),
                 'company_id': self.ref('base.main_company'),
-                'currency_id': self.ref('base.USD'),
-                'journal_id': self.ref('account.bank_journal_usd'),
+                'currency_id': self.ref('base.EUR'),
+                'journal_id': self.ref('account.bank_journal'),
                 'partner_id': self.ref('base.res_partner_12'),
                 'invoice_line_ids': [
                     (0, 0, {
@@ -171,7 +177,7 @@ class TestScenarioReconcile(common.TransactionCase):
                 'balance_start': 0.0,
                 'date': fields.Date.today(),
                 'journal_id': self.ref('account.bank_journal_usd'),
-                'currency_id': self.ref('base.USD'),
+                'currency_id': self.ref('base.EUR'),
                 'line_ids': [
                     (0, 0, {
                         'amount': 1000.0,
