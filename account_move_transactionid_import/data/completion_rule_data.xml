@@ -12,5 +12,5 @@
          <field name="sequence">40</field>
          <field name="function_to_call">get_from_transaction_id_and_invoice</field>
      </record>
-    
- </odoo>
+
+</odoo>

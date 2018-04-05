@@ -31,15 +31,12 @@
   and add the correct amount
 -
   !python {model: account.move.line}: |
-    context['check_move_validity'] = False
-    model.write(cr, uid, [ref('move_line_transactionid')],
-                {'credit': 118.4},
-                context)
+    self.env.ref('account_move_transactionid_import.move_line_transactionid').with_context(check_move_validity=False).write({'credit': 118.4})
 -
   I run the auto complete
 -
   !python {model: account.move}: |
-    result = self.button_auto_completion(cr, uid, [ref("move_transactionid_test1")])
+    result = self.env.ref('account_move_transactionid_import.move_transactionid_test1').button_auto_completion()
 -
   Now I can check that all is nice and shiny, line 1. I expect the SO has been
   recognised from the transaction ID.

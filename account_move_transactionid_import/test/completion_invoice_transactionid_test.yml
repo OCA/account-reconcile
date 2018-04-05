@@ -27,15 +27,12 @@
   and add the correct amount
 -
   !python {model: account.move.line}: |
-    context['check_move_validity'] = False
-    model.write(cr, uid, [ref('move_line_invoice_transactionid')],
-                {'credit': 450.0},
-                context)
+    self.env.ref('account_move_transactionid_import.move_line_invoice_transactionid').with_context(check_move_validity=False).write({'credit': 450.0})
 -
   I run the auto complete
 -
   !python {model: account.move}: |
-    result = self.button_auto_completion(cr, uid, [ref("move_invoice_transactionid_test1")])
+    result = self.env.ref('account_move_transactionid_import.move_invoice_transactionid_test').button_auto_completion()
 -
   Now I can check that all is nice and shiny, line 1. I expect the invoice has been
   recognised from the transaction ID.
