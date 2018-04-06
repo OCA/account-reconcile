@@ -301,7 +301,7 @@ class AccountJournal(models.Model):
             if col not in move_line_obj._columns:
                 raise UserError(
                     _("Missing column! Column %s you try to import is not "
-                      "present in the bank statement line!") % col)
+                      "present in the account move line!") % col)
         move_vals = self.prepare_move_vals(result_row_list, parser)
         move = move_obj.create(move_vals)
         try:
