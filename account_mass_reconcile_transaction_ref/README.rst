@@ -11,7 +11,7 @@ to use the 'transaction_ref' field defined in base_transaction_id.
 
 .. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas
    :alt: Try me on Runbot
-   :target: https://runbot.odoo-community.org/runbot/98/9.0
+   :target: https://runbot.odoo-community.org/runbot/98/10.0
 
 Bug Tracker
 ===========
