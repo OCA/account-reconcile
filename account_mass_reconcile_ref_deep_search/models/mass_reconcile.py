@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
-# © 2015-2016 Camptocamp SA
+# © 2015-2018 Camptocamp SA
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html)
-from openerp import api, models
+from odoo import api, models
 
 
 class AccountMassReconcileMethod(models.Model):
