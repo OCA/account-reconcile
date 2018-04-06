@@ -17,7 +17,7 @@ The button is visible only to users that belong to the accounting groups
 
 .. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas
    :alt: Try me on Runbot
-   :target: https://runbot.odoo-community.org/runbot/96/10.0
+   :target: https://runbot.odoo-community.org/runbot/96/11.0
 
 Bug Tracker
 ===========
@@ -35,6 +35,7 @@ Contributors
 ------------
 
 * Jordi Ballester <jordi.ballester@eficent.com>
+* Jaume Planas <jaume.planas@minorisa.net>
 
 Maintainer
 ----------
