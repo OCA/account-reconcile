@@ -33,12 +33,11 @@ class AccountMoveLine(models.Model):
         return prepared_lines
 
     @api.model
-    def domain_move_lines_for_reconciliation(self, excluded_ids=None,
-                                             str=False):
+    def domain_move_lines_for_reconciliation(self, str=False):
         """Add transaction_ref in search of move lines."""
         _super = super(AccountMoveLine, self)
         _get_domain = _super.domain_move_lines_for_reconciliation
-        domain = _get_domain(excluded_ids=excluded_ids, str=str)
+        domain = _get_domain(str=str)
         if not str and str != '/':
             return domain
         domain_trans_ref = [('transaction_ref', 'ilike', str)]
