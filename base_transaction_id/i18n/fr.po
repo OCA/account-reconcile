@@ -3,14 +3,16 @@
 # * base_transaction_id
 # 
 # Translators:
+# OCA Transbot <transbot@odoo-community.org>, 2018
+# Quentin THEURET <odoo@kerpeo.com>, 2018
 msgid ""
 msgstr ""
-"Project-Id-Version: bank-statement-reconcile (9.0)\n"
+"Project-Id-Version: Odoo Server 11.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-11-03 10:40+0000\n"
-"PO-Revision-Date: 2016-11-18 10:00+0000\n"
-"Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
-"Language-Team: French (http://www.transifex.com/oca/OCA-bank-statement-reconcile-9-0/language/fr/)\n"
+"POT-Creation-Date: 2018-04-07 02:39+0000\n"
+"PO-Revision-Date: 2018-04-07 02:39+0000\n"
+"Last-Translator: Quentin THEURET <odoo@kerpeo.com>, 2018\n"
+"Language-Team: French (https://www.transifex.com/oca/teams/23907/fr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
@@ -34,8 +36,8 @@ msgstr "Écriture comptable"
 
 #. module: base_transaction_id
 #: model:ir.model,name:base_transaction_id.model_sale_order
-msgid "Sales Order"
-msgstr "Bon de commande"
+msgid "Quotation"
+msgstr "Devis"
 
 #. module: base_transaction_id
 #: model:ir.model.fields,field_description:base_transaction_id.field_account_invoice_transaction_id
