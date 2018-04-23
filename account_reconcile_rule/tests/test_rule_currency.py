@@ -1,76 +1,78 @@
-# -*- coding: utf-8 -*-
 # Author: Guewen Baconnier
-# © 2014-2016 Camptocamp SA
+# Copyright 2014-2016 Camptocamp SA
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-from .common import AccountOperationTestCase
+from .common import AccountReconciliationModelTestCase
 
 
-class TestRuleCurrency(AccountOperationTestCase):
+class TestRuleCurrency(AccountReconciliationModelTestCase):
 
-    def setUp(self):
-        super(TestRuleCurrency, self).setUp()
-        self.operation_obj = self.env['account.operation.template']
-        self.rule_obj = self.env['account.operation.rule']
-        self.aed = self.browse_ref('base.AED')
-        self.aed.active = True
-        self.afn = self.browse_ref('base.AFN')
-        self.afn.active = True
-        self.all = self.browse_ref('base.ALL')
-        self.all.active = True
-        self.amd = self.browse_ref('base.AMD')
-        self.amd.active = True
-        self.aoa = self.browse_ref('base.AOA')
-        self.aoa.active = True
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
 
-        self.operation_currency_1 = self.operation_obj.create({
+        cls.aed = cls.env.ref('base.AED')
+        cls.aed.active = True
+        cls.afn = cls.env.ref('base.AFN')
+        cls.afn.active = True
+        cls.all = cls.env.ref('base.ALL')
+        cls.all.active = True
+        cls.amd = cls.env.ref('base.AMD')
+        cls.amd.active = True
+        cls.aoa = cls.env.ref('base.AOA')
+        cls.aoa.active = True
+
+        cls.reconcile_model_currency_1 = cls.reconcile_model_obj.create({
             'name': 'Currency AED, AFR, ALL -1.0 to 0.0',
             'label': 'Currency',
-            'account_id': self.account_receivable.id,
+            'account_id': cls.account_receivable.id,
             'amount_type': 'percentage',
             'amount': 100.0,
         })
-        self.rule_currency_1 = self.rule_obj.create({
+        cls.rule_currency_1 = cls.rule_obj.create({
             'name': 'Currency AED, AFR, ALL -1.0 to 0.0',
             'rule_type': 'currency',
-            'operations': [(6, 0, (self.operation_currency_1.id, ))],
+            'reconcile_model_ids': [
+                (6, 0, (cls.reconcile_model_currency_1.id,))],
             'amount_min': -1.0,
             'amount_max': 0,
             'sequence': 1,
-            'currencies': [(6, 0, [self.aed.id, self.afn.id, self.all.id])],
+            'currency_ids': [(6, 0, [cls.aed.id, cls.afn.id, cls.all.id])],
         })
 
-        self.operation_currency_2 = self.operation_obj.create({
+        cls.reconcile_model_currency_2 = cls.reconcile_model_obj.create({
             'name': 'Currency AED, AFR, ALL -2.0 to -1.0',
             'label': 'Currency',
             'amount_type': 'percentage',
             'amount': 100.0,
         })
-        self.rule_currency_2 = self.rule_obj.create({
+        cls.rule_currency_2 = cls.rule_obj.create({
             'name': 'Currency AED, AFR, ALL -2.0 to 1.0',
             'rule_type': 'currency',
-            'operations': [(6, 0, (self.operation_currency_2.id, ))],
+            'reconcile_model_ids': [
+                (6, 0, (cls.reconcile_model_currency_2.id, ))],
             'amount_min': -2.0,
             'amount_max': -1.0,
             'sequence': 2,
-            'currencies': [(6, 0, [self.aed.id, self.afn.id, self.all.id])],
+            'currency_ids': [(6, 0, [cls.aed.id, cls.afn.id, cls.all.id])],
         })
 
-        self.operation_currency_3 = self.operation_obj.create({
+        cls.reconcile_model_currency_3 = cls.reconcile_model_obj.create({
             'name': 'Currency AMD, AOA -2.0 to 0.0',
             'label': 'Currency',
             'amount_type': 'percentage',
             'amount': 100.0,
 
         })
-        self.rule_currency_3 = self.rule_obj.create({
+        cls.rule_currency_3 = cls.rule_obj.create({
             'name': 'Currency AMD, AOA -2.0 to 0.0',
             'rule_type': 'currency',
-            'operations': [(6, 0, (self.operation_currency_3.id, ))],
+            'reconcile_model_ids': [
+                (6, 0, (cls.reconcile_model_currency_3.id, ))],
             'amount_min': -2,
             'amount_max': 0,
             'sequence': 2,
-            'currencies': [(6, 0, [self.amd.id, self.aoa.id])],
+            'currency_ids': [(6, 0, [cls.amd.id, cls.aoa.id])],
         })
 
     def test_no_currency_match(self):
@@ -80,15 +82,15 @@ class TestRuleCurrency(AccountOperationTestCase):
             -0.5,
             statement_line_currency=sek,
             move_line_currency=sek)
-        ops = self.rule_obj.operations_for_reconciliation(statement_line.id,
-                                                          move_line.ids)
+        ops = self.rule_obj.models_for_reconciliation(statement_line.id,
+                                                      move_line.ids)
         self.assertFalse(ops)
 
     def test_rounding_lines(self):
         """No Currencies rules on lines with company currency"""
         statement_line, move_line = self.prepare_statement(-0.5)
-        ops = self.rule_obj.operations_for_reconciliation(statement_line.id,
-                                                          move_line.ids)
+        ops = self.rule_obj.models_for_reconciliation(statement_line.id,
+                                                      move_line.ids)
         self.assertFalse(ops)
 
     def test_currency_rule_1(self):
@@ -99,7 +101,7 @@ class TestRuleCurrency(AccountOperationTestCase):
             move_line_currency=self.aed,
             amount_currency_difference=0)
         rule = self.rule_obj.find_first_rule(statement_line, [move_line])
-        self.assertEquals(rule, self.rule_currency_1)
+        self.assertEqual(rule, self.rule_currency_1)
 
     def test_currency_rule_2(self):
         """Rule 2 is found with -2 AED"""
@@ -109,7 +111,7 @@ class TestRuleCurrency(AccountOperationTestCase):
             move_line_currency=self.aed,
             amount_currency_difference=0)
         rule = self.rule_obj.find_first_rule(statement_line, [move_line])
-        self.assertEquals(rule, self.rule_currency_2)
+        self.assertEqual(rule, self.rule_currency_2)
 
     def test_currency_rule_3(self):
         """Rule 3 is found with -2 AOA"""
@@ -119,7 +121,7 @@ class TestRuleCurrency(AccountOperationTestCase):
             move_line_currency=self.aoa,
             amount_currency_difference=0)
         rule = self.rule_obj.find_first_rule(statement_line, [move_line])
-        self.assertEquals(rule, self.rule_currency_3)
+        self.assertEqual(rule, self.rule_currency_3)
 
     def test_currency_rule_not_in_bounds(self):
         """No rule is found with -3 AOA"""
@@ -149,4 +151,4 @@ class TestRuleCurrency(AccountOperationTestCase):
             move_line_currency=self.aed,
             amount_currency_difference=-0.001)
         rule = self.rule_obj.find_first_rule(statement_line, [move_line])
-        self.assertEquals(rule, self.rule_currency_1)
+        self.assertEqual(rule, self.rule_currency_1)
