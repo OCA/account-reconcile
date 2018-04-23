@@ -1,14 +1,13 @@
-# -*- coding: utf-8 -*-
 # Author: Guewen Baconnier
-# © 2014-2016 Camptocamp SA
+# Copyright 2014-2016 Camptocamp SA
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-from openerp import models, fields, api
-from openerp.addons import decimal_precision as dp
+from odoo import models, fields, api
+from odoo.addons import decimal_precision as dp
 
 
-class AccountOperationRule(models.Model):
-    _name = 'account.operation.rule'
+class AccountReconcileRule(models.Model):
+    _name = 'account.reconcile.rule'
 
     _order = 'sequence ASC, id ASC'
 
@@ -20,8 +19,9 @@ class AccountOperationRule(models.Model):
         default='rounding',
         required=True,
     )
-    operations = fields.Many2many(
-        comodel_name='account.operation.template',
+    reconcile_model_ids = fields.Many2many(
+        comodel_name='account.reconcile.model',
+        string='Reconciliation models',
     )
     amount_min = fields.Float(
         string='Min. Amount',
@@ -31,7 +31,7 @@ class AccountOperationRule(models.Model):
         string='Max. Amount',
         digits=dp.get_precision('Account'),
     )
-    currencies = fields.Many2many(
+    currency_ids = fields.Many2many(
         comodel_name='res.currency',
         string='Currencies',
         help="For 'Currencies' rules, you can choose for which currencies "
@@ -44,7 +44,7 @@ class AccountOperationRule(models.Model):
 
     @staticmethod
     def _between_with_bounds(low, value, high, currency):
-        """ Equivalent to a three way comparison: ``min <= value <= high``
+        """Equivalent to a three way comparison: ``min <= value <= high``
 
         The comparisons are done with the currency to use the correct
         precision.
@@ -57,10 +57,8 @@ class AccountOperationRule(models.Model):
 
     @api.multi
     def _balance_in_range(self, balance, currency):
-        amount_min = self.amount_min
-        amount_max = self.amount_max
-        return self._between_with_bounds(amount_min, balance,
-                                         amount_max, currency)
+        return self._between_with_bounds(self.amount_min, balance,
+                                         self.amount_max, currency)
 
     @api.model
     def _is_multicurrency(self, statement_line):
@@ -77,7 +75,7 @@ class AccountOperationRule(models.Model):
 
     @api.multi
     def _is_valid_multicurrency(self, statement_line, move_lines, balance):
-        """ Check if the multi-currency rule can be applied
+        """Check if the multi-currency rule can be applied.
 
         The rule is applied if and only if:
         * The currency is not company's one
@@ -88,7 +86,7 @@ class AccountOperationRule(models.Model):
         if not self._is_multicurrency(statement_line):
             return False
         currency = statement_line.currency_for_rules()
-        if currency not in self.currencies:
+        if currency not in self.currency_ids:
             return False
         amount_currency = statement_line.amount_currency
         for move_line in move_lines:
@@ -105,8 +103,7 @@ class AccountOperationRule(models.Model):
 
     @api.multi
     def is_valid(self, statement_line, move_lines, balance):
-        """ Returns True if a rule applies to a group of statement_line +
-        move lines.
+        """Check if a rule applies to a group of statement_line + move lines.
 
         This is the public method where the rule is evaluated whatever
         its type is.  When a rule returns True, it means that it is a
@@ -130,8 +127,7 @@ class AccountOperationRule(models.Model):
 
     @api.model
     def find_first_rule(self, statement_line, move_lines):
-        """ Find the rules that apply to a statement line and
-        a selection of move lines.
+        """Find rules to apply to given statement line and move lines.
 
         :param statement_line: the line to reconcile
         :param move_lines: the selected move lines for reconciliation
@@ -152,17 +148,18 @@ class AccountOperationRule(models.Model):
         return self.browse()
 
     @api.model
-    @api.returns('account.operation.template')
-    def operations_for_reconciliation(self, statement_line_id, move_line_ids):
-        """ Find the rule for the current reconciliation and returns the
-        ``account.operation.template`` of the found rule.
+    @api.returns('account.reconcile.model')
+    def models_for_reconciliation(self, statement_line_id, move_line_ids):
+        """Find the reconcile models for the for given statement and move lines.
+
+        Look for the first reconciliation rule to apply and return its
+        reconciliation models.
 
         Called from the javascript reconciliation view.
-
         """
         line_obj = self.env['account.bank.statement.line']
         move_line_obj = self.env['account.move.line']
         statement_line = line_obj.browse(statement_line_id)
         move_lines = move_line_obj.browse(move_line_ids)
         rules = self.find_first_rule(statement_line, move_lines)
-        return rules.operations
+        return rules.reconcile_model_ids

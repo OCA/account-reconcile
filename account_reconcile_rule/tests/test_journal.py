@@ -1,8 +1,7 @@
-# -*- coding: utf-8 -*-
-# © 2016 Cyril Gaudin (Camptocamp)
+# Copyright 2016 Cyril Gaudin (Camptocamp)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-from openerp.tests.common import TransactionCase
+from odoo.tests.common import TransactionCase
 
 
 class TestJournal(TransactionCase):
@@ -11,5 +10,5 @@ class TestJournal(TransactionCase):
         # Just test that method returned the good view
 
         result = self.env['account.journal'].open_reconciliation_rules()
-        self.assertEqual('account.operation.rule', result['res_model'])
+        self.assertEqual('account.reconcile.rule', result['res_model'])
         self.assertEqual('form', result['view_type'])
