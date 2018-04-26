@@ -1,12 +1,13 @@
-.. image:: https://img.shields.io/badge/licence-AGPL--3-blue.svg
-    :alt: License
+.. image:: https://img.shields.io/badge/license-AGPL--3-blue.png
+   :target: https://www.gnu.org/licenses/agpl
+   :alt: License: AGPL-3
 
-Bank Statement Operation Rules for Early Payment Discount
-=========================================================
+=================================================
+Account Reconcile Rule for Early Payment Discount
+=================================================
 
-Extends the *Bank Statement Operation Rules* with a new rule, the
-**Early Payment Discount** rule.
-
+Extends the module *Account Reconcile Rules* with a new rule type :
+**Early Payment Discount**.
 
 It allows to automatically create a write-off
 entry for the amount paid by the customers when they received dunning
@@ -21,7 +22,7 @@ to configure payment terms with an early payment discount.
 
 -----
 
-2. Configure a ``Reconciliation Models`` in
+2. Configure some ``Reconciliation Models`` in
 ``Invoicing > Dashboard > Bank Card > Reconciliation Models``
 
 .. image:: docs/operation_rule_menu.png
@@ -41,14 +42,14 @@ to configure payment terms with an early payment discount.
 payment term configured with early payment discount, this rule will verify if
 the remaining balance respects the early payment discount rules
 (discount percentage and payment delay).
-If true, the remaining balance will be automatically reconcile in the configured account.
+If true, the remaining balance will be automatically reconciled in the configured account.
 
 .. image:: docs/reconcilation.png
 
 
 .. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas
    :alt: Try me on Runbot
-   :target: https://runbot.odoo-community.org/runbot/98/9.0
+   :target: https://runbot.odoo-community.org/runbot/98/11.0
 
 Dependencies
 ------------
@@ -59,10 +60,16 @@ module in the project: https://github.com/OCA/account-payment
 Credits
 =======
 
+Images
+------
+
+* Odoo Community Association: `Icon <https://odoo-community.org/logo.png>`_.
+
 Contributors
 ------------
 
 * Cyril Gaudin <cyril.gaudin@camptocamp.com>
+* Akim Juillerat <akim.juillerat@camptocamp.com>
 
 
 Maintainer
