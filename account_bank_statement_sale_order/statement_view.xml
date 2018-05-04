@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+<data>
+
+    <record id="view_accounting_entries_unassigned_search" model="ir.ui.view">
+            <field name="name">account.move.line.unassigned.search</field>
+            <field name="model">account.move.line</field>
+            <field name="inherit_id" ref="account.view_account_move_line_filter" />
+            <field name="arch" type="xml">
+                <xpath expr="/search/filter[@string='Unbalanced']" position="before">
+                    <filter name= "unassigned" string="Unassigned"
+                            domain="[('reconcile_id', '=', False), ('sale_ids', '=', False)]"/>
+                </xpath>
+            </field>
+    </record>
+
+    <record id="view_bank_statement_form2" model="ir.ui.view">
+        <field name="model">account.bank.statement</field>
+        <field name="inherit_id" ref="account.view_bank_statement_form2"></field>
+        <field name="arch" type="xml">
+             <xpath expr="//field[@name='line_ids']/tree/field[@name='partner_id']" position="after">
+                <field name="sale_ids" context="{'only_partner_id': partner_id}"/>
+            </xpath>
+         </field>
+    </record>
+
+</data>
+</openerp>
