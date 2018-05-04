@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    <tr t-extend="bank_statement_reconciliation_line">
+        <t t-jquery="t[t-esc='line.partner_name']" t-operation="after">
+            <a class="display_partner_move_line glyphicon glyphicon-align-justify" />            
+        </t>
+    </tr>
+</templates>
