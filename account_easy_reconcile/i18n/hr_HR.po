@@ -3,15 +3,14 @@
 # * account_easy_reconcile
 # 
 # Translators:
-# OCA Transbot <transbot@odoo-community.org>, 2017
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 8.0\n"
+"Project-Id-Version: bank-statement-reconcile (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-05-19 01:04+0000\n"
-"PO-Revision-Date: 2018-05-19 01:04+0000\n"
-"Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2017\n"
-"Language-Team: Croatian (Croatia) (https://www.transifex.com/oca/teams/23907/hr_HR/)\n"
+"POT-Creation-Date: 2017-09-02 01:43+0000\n"
+"PO-Revision-Date: 2017-11-23 23:27+0000\n"
+"Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
+"Language-Team: Croatian (Croatia) (http://www.transifex.com/oca/OCA-bank-statement-reconcile-8-0/language/hr_HR/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
@@ -45,7 +44,7 @@ msgstr ""
 #: field:easy.reconcile.simple.partner,account_id:0
 #: field:easy.reconcile.simple.reference,account_id:0
 msgid "Account"
-msgstr "Konto"
+msgstr ""
 
 #. module: account_easy_reconcile
 #: field:account.easy.reconcile.method,account_lost_id:0
@@ -56,7 +55,7 @@ msgstr "Konto"
 #: field:easy.reconcile.simple.partner,account_lost_id:0
 #: field:easy.reconcile.simple.reference,account_lost_id:0
 msgid "Account Lost"
-msgstr "Konto gubitka"
+msgstr ""
 
 #. module: account_easy_reconcile
 #: field:account.easy.reconcile.method,account_profit_id:0
@@ -67,7 +66,7 @@ msgstr "Konto gubitka"
 #: field:easy.reconcile.simple.partner,account_profit_id:0
 #: field:easy.reconcile.simple.reference,account_profit_id:0
 msgid "Account Profit"
-msgstr "Konto dobiti"
+msgstr ""
 
 #. module: account_easy_reconcile
 #: help:account.easy.reconcile.method,analytic_account_id:0
@@ -162,7 +161,7 @@ msgstr "Datum"
 #: field:easy.reconcile.simple.partner,date_base_on:0
 #: field:easy.reconcile.simple.reference,date_base_on:0
 msgid "Date of reconciliation"
-msgstr "Datum zatvaranja"
+msgstr ""
 
 #. module: account_easy_reconcile
 #: help:account.easy.reconcile,message_last_post:0
@@ -213,7 +212,7 @@ msgstr ""
 #: field:easy.reconcile.simple.partner,filter:0
 #: field:easy.reconcile.simple.reference,filter:0
 msgid "Filter"
-msgstr "Filter"
+msgstr ""
 
 #. module: account_easy_reconcile
 #: field:account.easy.reconcile,message_follower_ids:0
@@ -494,7 +493,7 @@ msgstr ""
 #: field:easy.reconcile.simple.partner,partner_ids:0
 #: field:easy.reconcile.simple.reference,partner_ids:0
 msgid "Restrict on partners"
-msgstr "Ograniči na partnere"
+msgstr ""
 
 #. module: account_easy_reconcile
 #: field:easy.reconcile.history,date:0
