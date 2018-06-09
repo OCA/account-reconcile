@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 9.0c\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-09-13 02:48+0000\n"
-"PO-Revision-Date: 2017-09-13 02:48+0000\n"
+"POT-Creation-Date: 2018-06-02 01:39+0000\n"
+"PO-Revision-Date: 2018-06-02 01:39+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2017\n"
 "Language-Team: French (https://www.transifex.com/oca/teams/23907/fr/)\n"
 "MIME-Version: 1.0\n"
@@ -36,6 +36,11 @@ msgstr "Compte de produit"
 #. module: account_mass_reconcile_by_purchase_line
 #: model:ir.ui.view,arch_db:account_mass_reconcile_by_purchase_line.account_mass_reconcile_form
 msgid "Advanced. Purchase Order Line"
+msgstr ""
+
+#. module: account_mass_reconcile_by_purchase_line
+#: model:ir.model.fields,field_description:account_mass_reconcile_by_purchase_line.field_mass_reconcile_advanced_by_purchase_line_analytic_account_id
+msgid "Analytic account for write-off"
 msgstr ""
 
 #. module: account_mass_reconcile_by_purchase_line
@@ -117,13 +122,13 @@ msgid "Write off allowed"
 msgstr "Écart autorisé"
 
 #. module: account_mass_reconcile_by_purchase_line
-#: model:ir.model,name:account_mass_reconcile_by_purchase_line.model_mass_reconcile_advanced_by_purchase_line
-msgid "mass.reconcile.advanced.by.purchase.line"
-msgstr ""
+#: model:ir.model,name:account_mass_reconcile_by_purchase_line.model_mass_reconcile_advanced
+msgid "mass.reconcile.advanced"
+msgstr "mass.reconcile.advanced"
 
 #. module: account_mass_reconcile_by_purchase_line
-#: model:ir.model,name:account_mass_reconcile_by_purchase_line.model_mass_reconcile_base
-msgid "mass.reconcile.base"
+#: model:ir.model,name:account_mass_reconcile_by_purchase_line.model_mass_reconcile_advanced_by_purchase_line
+msgid "mass.reconcile.advanced.by.purchase.line"
 msgstr ""
 
 #. module: account_mass_reconcile_by_purchase_line
