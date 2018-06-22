@@ -1,7 +1,7 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
 # * account_statement_operation_rule
-# 
+#
 # Translators:
 msgid ""
 msgstr ""
@@ -10,11 +10,12 @@ msgstr ""
 "POT-Creation-Date: 2017-01-07 01:11+0000\n"
 "PO-Revision-Date: 2016-04-19 11:45+0000\n"
 "Last-Translator: <>\n"
-"Language-Team: Dutch (http://www.transifex.com/oca/OCA-bank-statement-reconcile-8-0/language/nl/)\n"
+"Language-Team: Dutch (http://www.transifex.com/oca/OCA-bank-statement-"
+"reconcile-8-0/language/nl/)\n"
+"Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Language: nl\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. module: account_statement_operation_rule
@@ -23,7 +24,8 @@ msgid ""
 "<p class=\"oe_view_nocontent_create\">\n"
 "          Click to create a statement operation rule.\n"
 "          </p><p>\n"
-"          Those can be used to automatically create a move line when reconciling\n"
+"          Those can be used to automatically create a move line when "
+"reconciling\n"
 "          your bank statements.\n"
 "        </p>\n"
 "      "
@@ -73,8 +75,8 @@ msgstr ""
 #. module: account_statement_operation_rule
 #: help:account.statement.operation.rule,currencies:0
 msgid ""
-"For 'Currencies' rules, you can choose for which currencies the rule will be"
-" applicable."
+"For 'Currencies' rules, you can choose for which currencies the rule will be "
+"applicable."
 msgstr ""
 
 #. module: account_statement_operation_rule
