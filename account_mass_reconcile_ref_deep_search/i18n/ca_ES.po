@@ -1,7 +1,7 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
 # * account_mass_reconcile_ref_deep_search
-# 
+#
 # Translators:
 # OCA Transbot <transbot@odoo-community.org>, 2017
 # Carlos Hormigo, 2018
@@ -12,11 +12,12 @@ msgstr ""
 "POT-Creation-Date: 2017-09-13 02:48+0000\n"
 "PO-Revision-Date: 2017-09-13 02:48+0000\n"
 "Last-Translator: Carlos Hormigo, 2018\n"
-"Language-Team: Catalan (Spain) (https://www.transifex.com/oca/teams/23907/ca_ES/)\n"
+"Language-Team: Catalan (Spain) (https://www.transifex.com/oca/teams/23907/"
+"ca_ES/)\n"
+"Language: ca_ES\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Language: ca_ES\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. module: account_mass_reconcile_ref_deep_search
@@ -45,6 +46,11 @@ msgstr ""
 #. module: account_mass_reconcile_ref_deep_search
 #: model:ir.ui.view,arch_db:account_mass_reconcile_ref_deep_search.view_mass_reconcile_form
 msgid "Advanced. Partner and Ref Deep Search"
+msgstr ""
+
+#. module: account_mass_reconcile_ref_deep_search
+#: model:ir.model.fields,field_description:account_mass_reconcile_ref_deep_search.field_mass_reconcile_advanced_ref_deep_search_analytic_account_id
+msgid "Analytic account for write-off"
 msgstr ""
 
 #. module: account_mass_reconcile_ref_deep_search
