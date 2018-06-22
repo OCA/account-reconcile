@@ -1,7 +1,7 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
 # * account_easy_reconcile
-# 
+#
 # Translators:
 # Rudolf Schnapka <rs@techno-flex.de>, 2015
 msgid ""
@@ -11,11 +11,12 @@ msgstr ""
 "POT-Creation-Date: 2016-09-17 06:16+0000\n"
 "PO-Revision-Date: 2016-10-04 09:42+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
-"Language-Team: German (http://www.transifex.com/oca/OCA-bank-statement-reconcile-8-0/language/de/)\n"
+"Language-Team: German (http://www.transifex.com/oca/OCA-bank-statement-"
+"reconcile-8-0/language/de/)\n"
+"Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Language: de\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. module: account_easy_reconcile
@@ -35,7 +36,16 @@ msgid ""
 "            be run sequentially to match the entries between them.\n"
 "          </p>\n"
 "        "
-msgstr "<p class=\"oe_view_nocontent_create\">\n            Klicken, um ein Ausgleichsprofil anzulegen.\n          </p><p>\n            Ein Ausgleichsprofil legt für ein Konto fest, wie die Posten ausgeglichen werden sollen.\nSie können eine oder mehrere Ausgleichsverfahren wählen, welche sequentiell auf die vorliegenden Posten angewendet werden.\n          </p>\n        "
+msgstr ""
+"<p class=\"oe_view_nocontent_create\">\n"
+"            Klicken, um ein Ausgleichsprofil anzulegen.\n"
+"          </p><p>\n"
+"            Ein Ausgleichsprofil legt für ein Konto fest, wie die Posten "
+"ausgeglichen werden sollen.\n"
+"Sie können eine oder mehrere Ausgleichsverfahren wählen, welche sequentiell "
+"auf die vorliegenden Posten angewendet werden.\n"
+"          </p>\n"
+"        "
 
 #. module: account_easy_reconcile
 #: field:account.easy.reconcile,account:0
@@ -276,7 +286,9 @@ msgstr "Verlaufsdetails"
 msgid ""
 "Holds the Chatter summary (number of messages, ...). This summary is "
 "directly in html format in order to be inserted in kanban views."
-msgstr "Beinhaltet die Meldungsübersicht (Anzahl Nachrichten, ...) Diese Übersicht liegt in HTML vor, um in Kanban-Sichten eingefügt zu werden."
+msgstr ""
+"Beinhaltet die Meldungsübersicht (Anzahl Nachrichten, ...) Diese Übersicht "
+"liegt in HTML vor, um in Kanban-Sichten eingefügt zu werden."
 
 #. module: account_easy_reconcile
 #: field:account.config.settings,reconciliation_commit_every:0
@@ -386,7 +398,10 @@ msgid ""
 "Match one debit line vs one credit line. Do not allow partial "
 "reconciliation. The lines should have the same amount (with the write-off) "
 "and the same name to be reconciled."
-msgstr "Abstimmen einer Soll-Position gegen eine Haben-Position. Teilausgleich nicht zulassen. Die Posten müssen den gleichen Betrag (inkl. Abschreibung) und die gleiche Bezeichnung aufweisen."
+msgstr ""
+"Abstimmen einer Soll-Position gegen eine Haben-Position. Teilausgleich nicht "
+"zulassen. Die Posten müssen den gleichen Betrag (inkl. Abschreibung) und die "
+"gleiche Bezeichnung aufweisen."
 
 #. module: account_easy_reconcile
 #: view:account.easy.reconcile:account_easy_reconcile.account_easy_reconcile_form
@@ -394,7 +409,10 @@ msgid ""
 "Match one debit line vs one credit line. Do not allow partial "
 "reconciliation. The lines should have the same amount (with the write-off) "
 "and the same partner to be reconciled."
-msgstr "Abstimmen einer Soll-Position gegen eine Haben-Position. Teilausgleich nicht zulassen. Die Posten müssen den gleichen Betrag (inkl. Abschreibung) und den gleichen Partner aufweisen."
+msgstr ""
+"Abstimmen einer Soll-Position gegen eine Haben-Position. Teilausgleich nicht "
+"zulassen. Die Posten müssen den gleichen Betrag (inkl. Abschreibung) und den "
+"gleichen Partner aufweisen."
 
 #. module: account_easy_reconcile
 #: view:account.easy.reconcile:account_easy_reconcile.account_easy_reconcile_form
@@ -402,7 +420,10 @@ msgid ""
 "Match one debit line vs one credit line. Do not allow partial "
 "reconciliation. The lines should have the same amount (with the write-off) "
 "and the same reference to be reconciled."
-msgstr "Abstimmen einer Soll-Position gegen eine Haben-Position. Teilausgleich nicht zulassen. Die Posten müssen den gleichen Betrag (inkl. Abschreibung) und die gleiche Referenz aufweisen."
+msgstr ""
+"Abstimmen einer Soll-Position gegen eine Haben-Position. Teilausgleich nicht "
+"zulassen. Die Posten müssen den gleichen Betrag (inkl. Abschreibung) und die "
+"gleiche Referenz aufweisen."
 
 #. module: account_easy_reconcile
 #: field:account.easy.reconcile,message_ids:0
@@ -544,7 +565,8 @@ msgstr "Aufgabe"
 #. module: account_easy_reconcile
 #: help:account.easy.reconcile.method,sequence:0
 msgid "The sequence field is used to order the reconcile method"
-msgstr "Das Reihenfolge-Feld wird zum Sortieren der Ausgleichsverfahren verwendet"
+msgstr ""
+"Das Reihenfolge-Feld wird zum Sortieren der Ausgleichsverfahren verwendet"
 
 #. module: account_easy_reconcile
 #: code:addons/account_easy_reconcile/easy_reconcile.py:294

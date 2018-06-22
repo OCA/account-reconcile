@@ -1,7 +1,7 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
 # * account_easy_reconcile
-# 
+#
 # Translators:
 # Hotellook, 2014
 # Massimiliano Casa <mcasa@cantiericasa.com>, 2015
@@ -12,11 +12,12 @@ msgstr ""
 "POT-Creation-Date: 2016-12-31 01:35+0000\n"
 "PO-Revision-Date: 2017-01-06 06:47+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
-"Language-Team: French (http://www.transifex.com/oca/OCA-bank-statement-reconcile-8-0/language/fr/)\n"
+"Language-Team: French (http://www.transifex.com/oca/OCA-bank-statement-"
+"reconcile-8-0/language/fr/)\n"
+"Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Language: fr\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
 #. module: account_easy_reconcile
@@ -36,7 +37,16 @@ msgid ""
 "            be run sequentially to match the entries between them.\n"
 "          </p>\n"
 "        "
-msgstr "<p class=\"oe_view_nocontent_create\">\n            Cliquez pour ajouter un profil de lettrage.\n          </p><p>\n            Un profil de lettrage spécifie, pour un compte, comment\n            les écritures doivent être lettrées.\n            Vous pouvez sélectionner une ou plusieurs méthodes de lettrage\n            qui seront lancées successivement pour identifier les écritures\n            devant être lettrées.          </p>\n        "
+msgstr ""
+"<p class=\"oe_view_nocontent_create\">\n"
+"            Cliquez pour ajouter un profil de lettrage.\n"
+"          </p><p>\n"
+"            Un profil de lettrage spécifie, pour un compte, comment\n"
+"            les écritures doivent être lettrées.\n"
+"            Vous pouvez sélectionner une ou plusieurs méthodes de lettrage\n"
+"            qui seront lancées successivement pour identifier les écritures\n"
+"            devant être lettrées.          </p>\n"
+"        "
 
 #. module: account_easy_reconcile
 #: field:account.easy.reconcile,account:0
@@ -277,7 +287,9 @@ msgstr "Détails de l'historique"
 msgid ""
 "Holds the Chatter summary (number of messages, ...). This summary is "
 "directly in html format in order to be inserted in kanban views."
-msgstr "Contient le résumé de la discussion (nombre de messages, ...). Ce résumé est au format HTML pour permettre son utilisation dans la vue kanban."
+msgstr ""
+"Contient le résumé de la discussion (nombre de messages, ...). Ce résumé est "
+"au format HTML pour permettre son utilisation dans la vue kanban."
 
 #. module: account_easy_reconcile
 #: field:account.config.settings,reconciliation_commit_every:0
@@ -387,7 +399,9 @@ msgid ""
 "Match one debit line vs one credit line. Do not allow partial "
 "reconciliation. The lines should have the same amount (with the write-off) "
 "and the same name to be reconciled."
-msgstr "Lettre un débit avec un crédit ayant le même montant et la même description. Le lettrage ne peut être partiel (écriture d'ajustement en cas d'écart)."
+msgstr ""
+"Lettre un débit avec un crédit ayant le même montant et la même description. "
+"Le lettrage ne peut être partiel (écriture d'ajustement en cas d'écart)."
 
 #. module: account_easy_reconcile
 #: view:account.easy.reconcile:account_easy_reconcile.account_easy_reconcile_form
@@ -395,7 +409,9 @@ msgid ""
 "Match one debit line vs one credit line. Do not allow partial "
 "reconciliation. The lines should have the same amount (with the write-off) "
 "and the same partner to be reconciled."
-msgstr "Lettre un débit avec un crédit ayant le même montant et le même partenaire. Le lettrage ne peut être partiel (écriture d'ajustement en cas d'écart)."
+msgstr ""
+"Lettre un débit avec un crédit ayant le même montant et le même partenaire. "
+"Le lettrage ne peut être partiel (écriture d'ajustement en cas d'écart)."
 
 #. module: account_easy_reconcile
 #: view:account.easy.reconcile:account_easy_reconcile.account_easy_reconcile_form
@@ -403,7 +419,9 @@ msgid ""
 "Match one debit line vs one credit line. Do not allow partial "
 "reconciliation. The lines should have the same amount (with the write-off) "
 "and the same reference to be reconciled."
-msgstr "Lettre un débit avec un crédit ayant le même montant et la même référence. Le lettrage ne peut être partiel (écriture d'ajustement en cas d'écart)."
+msgstr ""
+"Lettre un débit avec un crédit ayant le même montant et la même référence. "
+"Le lettrage ne peut être partiel (écriture d'ajustement en cas d'écart)."
 
 #. module: account_easy_reconcile
 #: field:account.easy.reconcile,message_ids:0

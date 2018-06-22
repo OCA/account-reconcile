@@ -1,7 +1,7 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
 # * account_easy_reconcile
-# 
+#
 # Translators:
 # Hotellook, 2014
 # Matjaž Mozetič <m.mozetic@matmoz.si>, 2015-2016
@@ -12,12 +12,14 @@ msgstr ""
 "POT-Creation-Date: 2016-08-15 18:23+0000\n"
 "PO-Revision-Date: 2016-08-16 07:58+0000\n"
 "Last-Translator: Matjaž Mozetič <m.mozetic@matmoz.si>\n"
-"Language-Team: Slovenian (http://www.transifex.com/oca/OCA-bank-statement-reconcile-8-0/language/sl/)\n"
+"Language-Team: Slovenian (http://www.transifex.com/oca/OCA-bank-statement-"
+"reconcile-8-0/language/sl/)\n"
+"Language: sl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Language: sl\n"
-"Plural-Forms: nplurals=4; plural=(n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n%100==4 ? 2 : 3);\n"
+"Plural-Forms: nplurals=4; plural=(n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n"
+"%100==4 ? 2 : 3);\n"
 
 #. module: account_easy_reconcile
 #: view:easy.reconcile.history:account_easy_reconcile.view_easy_reconcile_history_search
@@ -36,7 +38,16 @@ msgid ""
 "            be run sequentially to match the entries between them.\n"
 "          </p>\n"
 "        "
-msgstr "<p class=\"oe_view_nocontent_create\">\n            Dodaj profil za uskladitev kontov.\n          </p><p>\n            Uskladitveni profil določa, kako naj se\n            vnosi konta usklajujejo.\n            Izberete lahko eno ali več usklajevalnih metod, ki bodo\n            zagnane zapovrstjo za medsebojno primerjavo vnosov.\n          </p>\n        "
+msgstr ""
+"<p class=\"oe_view_nocontent_create\">\n"
+"            Dodaj profil za uskladitev kontov.\n"
+"          </p><p>\n"
+"            Uskladitveni profil določa, kako naj se\n"
+"            vnosi konta usklajujejo.\n"
+"            Izberete lahko eno ali več usklajevalnih metod, ki bodo\n"
+"            zagnane zapovrstjo za medsebojno primerjavo vnosov.\n"
+"          </p>\n"
+"        "
 
 #. module: account_easy_reconcile
 #: field:account.easy.reconcile,account:0
@@ -277,7 +288,9 @@ msgstr "Podrobnosti o zgodovini"
 msgid ""
 "Holds the Chatter summary (number of messages, ...). This summary is "
 "directly in html format in order to be inserted in kanban views."
-msgstr "Povzetek sporočanja (število sporočil, ...) neposredno v html formatu, da se lahko vstavlja v kanban prikaze."
+msgstr ""
+"Povzetek sporočanja (število sporočil, ...) neposredno v html formatu, da se "
+"lahko vstavlja v kanban prikaze."
 
 #. module: account_easy_reconcile
 #: field:account.config.settings,reconciliation_commit_every:0
@@ -387,7 +400,10 @@ msgid ""
 "Match one debit line vs one credit line. Do not allow partial "
 "reconciliation. The lines should have the same amount (with the write-off) "
 "and the same name to be reconciled."
-msgstr "Primerjanje ene postavke v breme z eno postavko v dobro. Ne dovoli delnega usklajevanja.  Da bi se lahko uskladile, morajo imeti postavke isti znesek (z odpisom) in isti naziv."
+msgstr ""
+"Primerjanje ene postavke v breme z eno postavko v dobro. Ne dovoli delnega "
+"usklajevanja.  Da bi se lahko uskladile, morajo imeti postavke isti znesek "
+"(z odpisom) in isti naziv."
 
 #. module: account_easy_reconcile
 #: view:account.easy.reconcile:account_easy_reconcile.account_easy_reconcile_form
@@ -395,7 +411,10 @@ msgid ""
 "Match one debit line vs one credit line. Do not allow partial "
 "reconciliation. The lines should have the same amount (with the write-off) "
 "and the same partner to be reconciled."
-msgstr "Primerjanje ene postavke v breme z eno postavko v dobro. Ne dovoli delnega usklajevanja.  Da bi se lahko uskladile, morajo imeti postavke isti znesek (z odpisom) in istega partnerja."
+msgstr ""
+"Primerjanje ene postavke v breme z eno postavko v dobro. Ne dovoli delnega "
+"usklajevanja.  Da bi se lahko uskladile, morajo imeti postavke isti znesek "
+"(z odpisom) in istega partnerja."
 
 #. module: account_easy_reconcile
 #: view:account.easy.reconcile:account_easy_reconcile.account_easy_reconcile_form
@@ -403,7 +422,10 @@ msgid ""
 "Match one debit line vs one credit line. Do not allow partial "
 "reconciliation. The lines should have the same amount (with the write-off) "
 "and the same reference to be reconciled."
-msgstr "Primerjanje ene postavke v breme z eno postavko v dobro. Ne dovoli delnega usklajevanja.  Da bi se lahko uskladile, morajo imeti postavke isti znesek (z odpisom) in isti sklic."
+msgstr ""
+"Primerjanje ene postavke v breme z eno postavko v dobro. Ne dovoli delnega "
+"usklajevanja.  Da bi se lahko uskladile, morajo imeti postavke isti znesek "
+"(z odpisom) in isti sklic."
 
 #. module: account_easy_reconcile
 #: field:account.easy.reconcile,message_ids:0
