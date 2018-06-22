@@ -1,7 +1,7 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
 # * account_move_base_import
-# 
+#
 # Translators:
 # Quentin THEURET <odoo@kerpeo.com>, 2018
 msgid ""
@@ -12,10 +12,10 @@ msgstr ""
 "PO-Revision-Date: 2018-03-20 20:58+0000\n"
 "Last-Translator: Quentin THEURET <odoo@kerpeo.com>, 2018\n"
 "Language-Team: French (https://www.transifex.com/oca/teams/23907/fr/)\n"
+"Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Language: fr\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
 #. module: account_move_base_import
@@ -161,7 +161,8 @@ msgstr ""
 #: code:addons/account_move_base_import/parser/file_parser.py:162
 #, python-format
 msgid ""
-"Date format is not valid. Please modify the cell formatting to date format for column: %s value: %s\n"
+"Date format is not valid. Please modify the cell formatting to date format "
+"for column: %s value: %s\n"
 " Please check the line with ref: %s\n"
 " \n"
 " Detail: %s"
@@ -177,10 +178,10 @@ msgstr ""
 #: model:ir.model.fields,help:account_move_base_import.field_res_partner_bank_statement_label
 #: model:ir.model.fields,help:account_move_base_import.field_res_users_bank_statement_label
 msgid ""
-"Enter the various label found on your bank statement separated by a ; If one"
-" of this label is include in the bank statement line, the partner will be "
-"automatically filled (as long as you use this method/rules in your statement"
-" profile)."
+"Enter the various label found on your bank statement separated by a ; If one "
+"of this label is include in the bank statement line, the partner will be "
+"automatically filled (as long as you use this method/rules in your statement "
+"profile)."
 msgstr ""
 
 #. module: account_move_base_import
@@ -514,8 +515,8 @@ msgstr ""
 #. module: account_move_base_import
 #: model:ir.model.fields,help:account_move_base_import.field_account_journal_split_counterpart
 msgid ""
-"Two counterparts will be automatically created : one for the refunds and one"
-" for the payments"
+"Two counterparts will be automatically created : one for the refunds and one "
+"for the payments"
 msgstr ""
 
 #. module: account_move_base_import
@@ -537,8 +538,8 @@ msgstr ""
 #. module: account_move_base_import
 #: model:ir.model.fields,help:account_move_base_import.field_account_move_line_already_completed
 msgid ""
-"When this checkbox is ticked, the auto-completion process/button will ignore"
-" this line."
+"When this checkbox is ticked, the auto-completion process/button will ignore "
+"this line."
 msgstr ""
 
 #. module: account_move_base_import
