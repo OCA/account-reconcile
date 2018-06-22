@@ -1,7 +1,7 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
 # * account_mass_reconcile
-# 
+#
 # Translators:
 msgid ""
 msgstr ""
@@ -10,12 +10,14 @@ msgstr ""
 "POT-Creation-Date: 2017-03-28 01:41+0000\n"
 "PO-Revision-Date: 2017-04-25 11:09+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
-"Language-Team: Bosnian (http://www.transifex.com/oca/OCA-bank-statement-reconcile-9-0/language/bs/)\n"
+"Language-Team: Bosnian (http://www.transifex.com/oca/OCA-bank-statement-"
+"reconcile-9-0/language/bs/)\n"
+"Language: bs\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Language: bs\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
 #. module: account_mass_reconcile
 #: model:ir.ui.view,arch_db:account_mass_reconcile.view_mass_reconcile_history_search
@@ -85,6 +87,19 @@ msgstr ""
 #. module: account_mass_reconcile
 #: model:ir.ui.view,arch_db:account_mass_reconcile.account_mass_reconcile_form
 msgid "Advanced. Partner and Ref"
+msgstr ""
+
+#. module: account_mass_reconcile
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile_method_analytic_account_id
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_advanced_analytic_account_id
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_advanced_ref_analytic_account_id
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_base_analytic_account_id
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_options_analytic_account_id
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_analytic_account_id
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_name_analytic_account_id
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_partner_analytic_account_id
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_reference_analytic_account_id
+msgid "Analytic account for write-off"
 msgstr ""
 
 #. module: account_mass_reconcile
@@ -403,8 +418,8 @@ msgstr ""
 #: model:ir.ui.view,arch_db:account_mass_reconcile.account_mass_reconcile_form
 msgid ""
 "Match multiple debit vs multiple credit entries. Allow partial "
-"reconciliation. The lines should have the partner, the credit entry ref. is "
-"matched vs the debit entry ref. or name."
+"reconciliation. The lines should have the same partner, and the credit entry "
+"ref. is matched with the debit entry ref. or name."
 msgstr ""
 
 #. module: account_mass_reconcile
@@ -560,13 +575,13 @@ msgid "The sequence field is used to order the reconcile method"
 msgstr ""
 
 #. module: account_mass_reconcile
-#: code:addons/account_mass_reconcile/models/mass_reconcile.py:245
+#: code:addons/account_mass_reconcile/models/mass_reconcile.py:249
 #, python-format
 msgid "There is no history of reconciled items on the task: %s."
 msgstr ""
 
 #. module: account_mass_reconcile
-#: code:addons/account_mass_reconcile/models/mass_reconcile.py:221
+#: code:addons/account_mass_reconcile/models/mass_reconcile.py:225
 #, python-format
 msgid "There was an error during reconciliation : %s"
 msgstr ""
@@ -602,7 +617,7 @@ msgid "Unreconciled Items"
 msgstr ""
 
 #. module: account_mass_reconcile
-#: code:addons/account_mass_reconcile/models/mass_reconcile.py:271
+#: code:addons/account_mass_reconcile/models/mass_reconcile.py:275
 #, python-format
 msgid "Unreconciled items"
 msgstr ""

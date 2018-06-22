@@ -1,7 +1,7 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
 # * account_mass_reconcile
-# 
+#
 # Translators:
 # Rudolf Schnapka <rs@techno-flex.de>, 2016
 msgid ""
@@ -11,11 +11,12 @@ msgstr ""
 "POT-Creation-Date: 2017-09-13 02:48+0000\n"
 "PO-Revision-Date: 2018-05-24 09:50+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
-"Language-Team: German (http://www.transifex.com/oca/OCA-bank-statement-reconcile-9-0/language/de/)\n"
+"Language-Team: German (http://www.transifex.com/oca/OCA-bank-statement-"
+"reconcile-9-0/language/de/)\n"
+"Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Language: de\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. module: account_mass_reconcile
@@ -29,7 +30,9 @@ msgstr "7 Tage"
 msgid ""
 "A matcher %s is compared with a matcher %s, the _matchers and "
 "_opposite_matchers are probably wrong"
-msgstr "Der Abstimmer %s wird mit dem Abstimmer %s verglichen, der Abstimmer und das Gegenstück sind wahrscheinlich falsch"
+msgstr ""
+"Der Abstimmer %s wird mit dem Abstimmer %s verglichen, der Abstimmer und das "
+"Gegenstück sind wahrscheinlich falsch"
 
 #. module: account_mass_reconcile
 #: model:ir.actions.act_window,help:account_mass_reconcile.action_account_mass_reconcile
@@ -38,7 +41,12 @@ msgid ""
 "            the entries should be reconciled.\n"
 "            You can select one or many reconciliation methods which will\n"
 "            be run sequentially to match the entries between them."
-msgstr "Ein Ausgleichsprofil gibt für ein Konto an, wie\ndie Einträge ausgeglichen werden sollen.\nSie können eine oder mehrere Ausgleichsmethoden\nauswählen, die nacheinander durchlaufen werden, \num Übereinstimmungen der Einträge zu finden."
+msgstr ""
+"Ein Ausgleichsprofil gibt für ein Konto an, wie\n"
+"die Einträge ausgeglichen werden sollen.\n"
+"Sie können eine oder mehrere Ausgleichsmethoden\n"
+"auswählen, die nacheinander durchlaufen werden, \n"
+"um Übereinstimmungen der Einträge zu finden."
 
 #. module: account_mass_reconcile
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile_account
@@ -87,6 +95,19 @@ msgstr "Handlungsbedarf"
 #: model:ir.ui.view,arch_db:account_mass_reconcile.account_mass_reconcile_form
 msgid "Advanced. Partner and Ref"
 msgstr "Weitergehend. Partner und Ref"
+
+#. module: account_mass_reconcile
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile_method_analytic_account_id
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_advanced_analytic_account_id
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_advanced_ref_analytic_account_id
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_base_analytic_account_id
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_options_analytic_account_id
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_analytic_account_id
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_name_analytic_account_id
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_partner_analytic_account_id
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_reference_analytic_account_id
+msgid "Analytic account for write-off"
+msgstr ""
 
 #. module: account_mass_reconcile
 #: model:ir.ui.view,arch_db:account_mass_reconcile.account_mass_reconcile_form
@@ -404,8 +425,8 @@ msgstr "Verlauf zum massenhaften automatischen Ausgleich"
 #: model:ir.ui.view,arch_db:account_mass_reconcile.account_mass_reconcile_form
 msgid ""
 "Match multiple debit vs multiple credit entries. Allow partial "
-"reconciliation. The lines should have the same partner, and the credit entry"
-" ref. is matched with the debit entry ref. or name."
+"reconciliation. The lines should have the same partner, and the credit entry "
+"ref. is matched with the debit entry ref. or name."
 msgstr ""
 
 #. module: account_mass_reconcile
@@ -414,7 +435,10 @@ msgid ""
 "Match one debit line vs one credit line. Do not allow partial "
 "reconciliation. The lines should have the same amount (with the write-off) "
 "and the same name to be reconciled."
-msgstr "Stimme eine Soll- mit einer Habenposition ab. Erlaube keinen Teilausgleich. Die Positionen müssen den gleichen Betrag (mit Abschreibung) und die gleiche Bezeichnung haben."
+msgstr ""
+"Stimme eine Soll- mit einer Habenposition ab. Erlaube keinen Teilausgleich. "
+"Die Positionen müssen den gleichen Betrag (mit Abschreibung) und die gleiche "
+"Bezeichnung haben."
 
 #. module: account_mass_reconcile
 #: model:ir.ui.view,arch_db:account_mass_reconcile.account_mass_reconcile_form
@@ -422,7 +446,10 @@ msgid ""
 "Match one debit line vs one credit line. Do not allow partial "
 "reconciliation. The lines should have the same amount (with the write-off) "
 "and the same partner to be reconciled."
-msgstr "Stimme eine Soll- mit einer Habenposition ab. Erlaube keinen Teilausgleich. Die Positionen müssen den gleichen Betrag (mit Abschreibung) und den gleichen Partner ausweisen."
+msgstr ""
+"Stimme eine Soll- mit einer Habenposition ab. Erlaube keinen Teilausgleich. "
+"Die Positionen müssen den gleichen Betrag (mit Abschreibung) und den "
+"gleichen Partner ausweisen."
 
 #. module: account_mass_reconcile
 #: model:ir.ui.view,arch_db:account_mass_reconcile.account_mass_reconcile_form
@@ -430,7 +457,10 @@ msgid ""
 "Match one debit line vs one credit line. Do not allow partial "
 "reconciliation. The lines should have the same amount (with the write-off) "
 "and the same reference to be reconciled."
-msgstr "Stimme eine Soll- mit einer Habenposition ab. Erlaube keinen Teilausgleich. Die Positionen müssen den gleichen Betrag (mit Abschreibung) und die gleiche Referenz (Zweck) ausweisen."
+msgstr ""
+"Stimme eine Soll- mit einer Habenposition ab. Erlaube keinen Teilausgleich. "
+"Die Positionen müssen den gleichen Betrag (mit Abschreibung) und die gleiche "
+"Referenz (Zweck) ausweisen."
 
 #. module: account_mass_reconcile
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile_message_ids
@@ -558,16 +588,17 @@ msgstr "Aufgabe"
 #. module: account_mass_reconcile
 #: model:ir.model.fields,help:account_mass_reconcile.field_account_mass_reconcile_method_sequence
 msgid "The sequence field is used to order the reconcile method"
-msgstr "Das Reihenfolgefeld wird verwendet, um die Ausgleichsverfahren zu sortieren"
+msgstr ""
+"Das Reihenfolgefeld wird verwendet, um die Ausgleichsverfahren zu sortieren"
 
 #. module: account_mass_reconcile
-#: code:addons/account_mass_reconcile/models/mass_reconcile.py:245
+#: code:addons/account_mass_reconcile/models/mass_reconcile.py:249
 #, python-format
 msgid "There is no history of reconciled items on the task: %s."
 msgstr "Es gibt keinen Verlauf zu Ausgleichsposten bei Aufgabe %s."
 
 #. module: account_mass_reconcile
-#: code:addons/account_mass_reconcile/models/mass_reconcile.py:221
+#: code:addons/account_mass_reconcile/models/mass_reconcile.py:225
 #, python-format
 msgid "There was an error during reconciliation : %s"
 msgstr "Beim Ausgleichen ist ein Fehler aufgetreten: %s"
@@ -603,7 +634,7 @@ msgid "Unreconciled Items"
 msgstr "Unausgeglichene Posten"
 
 #. module: account_mass_reconcile
-#: code:addons/account_mass_reconcile/models/mass_reconcile.py:271
+#: code:addons/account_mass_reconcile/models/mass_reconcile.py:275
 #, python-format
 msgid "Unreconciled items"
 msgstr "Unausgeglichene Posten"

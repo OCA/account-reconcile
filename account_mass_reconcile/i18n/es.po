@@ -1,7 +1,7 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
 # * account_mass_reconcile
-# 
+#
 # Translators:
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2014
 msgid ""
@@ -11,11 +11,12 @@ msgstr ""
 "POT-Creation-Date: 2017-09-13 02:48+0000\n"
 "PO-Revision-Date: 2018-05-24 09:50+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
-"Language-Team: Spanish (http://www.transifex.com/oca/OCA-bank-statement-reconcile-9-0/language/es/)\n"
+"Language-Team: Spanish (http://www.transifex.com/oca/OCA-bank-statement-"
+"reconcile-9-0/language/es/)\n"
+"Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Language: es\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. module: account_mass_reconcile
@@ -87,6 +88,19 @@ msgstr "Acción requerida"
 #: model:ir.ui.view,arch_db:account_mass_reconcile.account_mass_reconcile_form
 msgid "Advanced. Partner and Ref"
 msgstr "Avanzado. Empresa y referencia"
+
+#. module: account_mass_reconcile
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile_method_analytic_account_id
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_advanced_analytic_account_id
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_advanced_ref_analytic_account_id
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_base_analytic_account_id
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_options_analytic_account_id
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_analytic_account_id
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_name_analytic_account_id
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_partner_analytic_account_id
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_reference_analytic_account_id
+msgid "Analytic account for write-off"
+msgstr ""
 
 #. module: account_mass_reconcile
 #: model:ir.ui.view,arch_db:account_mass_reconcile.account_mass_reconcile_form
@@ -404,8 +418,8 @@ msgstr "Historial de la conciliación automática sencilla"
 #: model:ir.ui.view,arch_db:account_mass_reconcile.account_mass_reconcile_form
 msgid ""
 "Match multiple debit vs multiple credit entries. Allow partial "
-"reconciliation. The lines should have the same partner, and the credit entry"
-" ref. is matched with the debit entry ref. or name."
+"reconciliation. The lines should have the same partner, and the credit entry "
+"ref. is matched with the debit entry ref. or name."
 msgstr ""
 
 #. module: account_mass_reconcile
@@ -414,7 +428,10 @@ msgid ""
 "Match one debit line vs one credit line. Do not allow partial "
 "reconciliation. The lines should have the same amount (with the write-off) "
 "and the same name to be reconciled."
-msgstr "Casa una línea del debe con una línea del haber. No permite conciliación parcial. Las líneas deben tener el mismo importe (con el desajuste) y el mismo nombre para ser conciliadas."
+msgstr ""
+"Casa una línea del debe con una línea del haber. No permite conciliación "
+"parcial. Las líneas deben tener el mismo importe (con el desajuste) y el "
+"mismo nombre para ser conciliadas."
 
 #. module: account_mass_reconcile
 #: model:ir.ui.view,arch_db:account_mass_reconcile.account_mass_reconcile_form
@@ -422,7 +439,10 @@ msgid ""
 "Match one debit line vs one credit line. Do not allow partial "
 "reconciliation. The lines should have the same amount (with the write-off) "
 "and the same partner to be reconciled."
-msgstr "Casa una línea del debe con una línea del haber. No permite conciliación parcial. Las líneas deben tener el mismo importe (con el desajuste) y la misma empresa para ser conciliadas."
+msgstr ""
+"Casa una línea del debe con una línea del haber. No permite conciliación "
+"parcial. Las líneas deben tener el mismo importe (con el desajuste) y la "
+"misma empresa para ser conciliadas."
 
 #. module: account_mass_reconcile
 #: model:ir.ui.view,arch_db:account_mass_reconcile.account_mass_reconcile_form
@@ -430,7 +450,10 @@ msgid ""
 "Match one debit line vs one credit line. Do not allow partial "
 "reconciliation. The lines should have the same amount (with the write-off) "
 "and the same reference to be reconciled."
-msgstr "Casa una línea del debe con una línea del haber. No permite conciliación parcial. Las líneas deben tener el mismo importe (con el desajuste) y la misma referencia para ser conciliadas."
+msgstr ""
+"Casa una línea del debe con una línea del haber. No permite conciliación "
+"parcial. Las líneas deben tener el mismo importe (con el desajuste) y la "
+"misma referencia para ser conciliadas."
 
 #. module: account_mass_reconcile
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile_message_ids
@@ -561,13 +584,13 @@ msgid "The sequence field is used to order the reconcile method"
 msgstr "El campo de secuencia se usa para ordenar los métodos de conciliación"
 
 #. module: account_mass_reconcile
-#: code:addons/account_mass_reconcile/models/mass_reconcile.py:245
+#: code:addons/account_mass_reconcile/models/mass_reconcile.py:249
 #, python-format
 msgid "There is no history of reconciled items on the task: %s."
 msgstr "No hay histórico de elementos conciliados en la tarea: %s"
 
 #. module: account_mass_reconcile
-#: code:addons/account_mass_reconcile/models/mass_reconcile.py:221
+#: code:addons/account_mass_reconcile/models/mass_reconcile.py:225
 #, python-format
 msgid "There was an error during reconciliation : %s"
 msgstr ""
@@ -603,7 +626,7 @@ msgid "Unreconciled Items"
 msgstr ""
 
 #. module: account_mass_reconcile
-#: code:addons/account_mass_reconcile/models/mass_reconcile.py:271
+#: code:addons/account_mass_reconcile/models/mass_reconcile.py:275
 #, python-format
 msgid "Unreconciled items"
 msgstr ""
