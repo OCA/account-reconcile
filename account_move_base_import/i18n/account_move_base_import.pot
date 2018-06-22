@@ -1,30 +1,25 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# * account_move_base_import
+#	* account_move_base_import
 #
-# Translators:
-# OCA Transbot <transbot@odoo-community.org>, 2017
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-03-24 03:37+0000\n"
-"PO-Revision-Date: 2017-03-24 03:37+0000\n"
-"Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2017\n"
-"Language-Team: Vietnamese (https://www.transifex.com/oca/teams/23907/vi/)\n"
-"Language: vi\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=1; plural=0;\n"
+"Plural-Forms: \n"
 
 #. module: account_move_base_import
 #: code:addons/account_move_base_import/models/account_move.py:364
 #, python-format
-msgid ""
-"%s Account Move %s has %s/%s lines completed by %s \n"
+msgid "%s Account Move %s has %s/%s lines completed by %s \n"
 "%s\n"
 "%s\n"
+""
 msgstr ""
 
 #. module: account_move_base_import
@@ -77,21 +72,17 @@ msgstr ""
 #. module: account_move_base_import
 #: model:ir.ui.view,arch_db:account_move_base_import.move_importer_view
 msgid "Cancel"
-msgstr "Hủy bỏ"
+msgstr ""
 
 #. module: account_move_base_import
 #: model:ir.model.fields,help:account_move_base_import.field_account_journal_receivable_account_id
 #: model:ir.model.fields,help:account_move_base_import.field_credit_statement_import_receivable_account_id
-msgid ""
-"Choose a receivable/payable account to use as the default debit/credit "
-"account."
+msgid "Choose a receivable/payable account to use as the default debit/credit account."
 msgstr ""
 
 #. module: account_move_base_import
 #: model:ir.model.fields,help:account_move_base_import.field_account_journal_import_type
-msgid ""
-"Choose here the method by which you want to import account moves for this "
-"journal."
+msgid "Choose here the method by which you want to import account moves for this journal."
 msgstr ""
 
 #. module: account_move_base_import
@@ -137,19 +128,18 @@ msgstr ""
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_move_completion_rule_create_uid
 #: model:ir.model.fields,field_description:account_move_base_import.field_credit_statement_import_create_uid
 msgid "Created by"
-msgstr "Được tạo bởi"
+msgstr ""
 
 #. module: account_move_base_import
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_move_completion_rule_create_date
 #: model:ir.model.fields,field_description:account_move_base_import.field_credit_statement_import_create_date
 msgid "Created on"
-msgstr "Được tạo vào"
+msgstr ""
 
 #. module: account_move_base_import
 #: code:addons/account_move_base_import/parser/file_parser.py:132
 #, python-format
-msgid ""
-"Date format is not valid. It should be YYYY-MM-DD for column: %s value: %s \n"
+msgid "Date format is not valid. It should be YYYY-MM-DD for column: %s value: %s \n"
 " \n"
 " \n"
 " Please check the line with ref: %s \n"
@@ -160,9 +150,7 @@ msgstr ""
 #. module: account_move_base_import
 #: code:addons/account_move_base_import/parser/file_parser.py:162
 #, python-format
-msgid ""
-"Date format is not valid. Please modify the cell formatting to date format "
-"for column: %s value: %s\n"
+msgid "Date format is not valid. Please modify the cell formatting to date format for column: %s value: %s\n"
 " Please check the line with ref: %s\n"
 " \n"
 " Detail: %s"
@@ -172,16 +160,12 @@ msgstr ""
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_move_completion_rule_display_name
 #: model:ir.model.fields,field_description:account_move_base_import.field_credit_statement_import_display_name
 msgid "Display Name"
-msgstr "Tên hiển thị"
+msgstr ""
 
 #. module: account_move_base_import
 #: model:ir.model.fields,help:account_move_base_import.field_res_partner_bank_statement_label
 #: model:ir.model.fields,help:account_move_base_import.field_res_users_bank_statement_label
-msgid ""
-"Enter the various label found on your bank statement separated by a ; If one "
-"of this label is include in the bank statement line, the partner will be "
-"automatically filled (as long as you use this method/rules in your statement "
-"profile)."
+msgid "Enter the various label found on your bank statement separated by a ; If one of this label is include in the bank statement line, the partner will be automatically filled (as long as you use this method/rules in your statement profile)."
 msgstr ""
 
 #. module: account_move_base_import
@@ -218,7 +202,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_move_completion_rule_id
 #: model:ir.model.fields,field_description:account_move_base_import.field_credit_statement_import_id
 msgid "ID"
-msgstr "ID"
+msgstr ""
 
 #. module: account_move_base_import
 #: model:ir.actions.act_window,name:account_move_base_import.move_importer_action
@@ -304,19 +288,19 @@ msgstr ""
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_move_completion_rule___last_update
 #: model:ir.model.fields,field_description:account_move_base_import.field_credit_statement_import___last_update
 msgid "Last Modified on"
-msgstr "Sửa lần cuối vào"
+msgstr ""
 
 #. module: account_move_base_import
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_move_completion_rule_write_uid
 #: model:ir.model.fields,field_description:account_move_base_import.field_credit_statement_import_write_uid
 msgid "Last Updated by"
-msgstr "Last Updated by"
+msgstr ""
 
 #. module: account_move_base_import
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_move_completion_rule_write_date
 #: model:ir.model.fields,field_description:account_move_base_import.field_credit_statement_import_write_date
 msgid "Last Updated on"
-msgstr "Cập nhật lần cuối vào"
+msgstr ""
 
 #. module: account_move_base_import
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_journal_launch_import_completion
@@ -326,25 +310,19 @@ msgstr ""
 #. module: account_move_base_import
 #: code:addons/account_move_base_import/models/account_move.py:87
 #, python-format
-msgid ""
-"Line named \"%s\" was matched by more than one partner while looking on %s "
-"invoices"
+msgid "Line named \"%s\" was matched by more than one partner while looking on %s invoices"
 msgstr ""
 
 #. module: account_move_base_import
 #: code:addons/account_move_base_import/models/account_move.py:214
 #, python-format
-msgid ""
-"Line named \"%s\" was matched by more than one partner while looking on "
-"partner by name"
+msgid "Line named \"%s\" was matched by more than one partner while looking on partner by name"
 msgstr ""
 
 #. module: account_move_base_import
 #: code:addons/account_move_base_import/models/account_move.py:168
 #, python-format
-msgid ""
-"Line named \"%s\" was matched by more than one partner while looking on "
-"partner label: %s"
+msgid "Line named \"%s\" was matched by more than one partner while looking on partner label: %s"
 msgstr ""
 
 #. module: account_move_base_import
@@ -367,10 +345,9 @@ msgid "Missing"
 msgstr ""
 
 #. module: account_move_base_import
-#: code:addons/account_move_base_import/models/account_journal.py:309
+#: code:addons/account_move_base_import/models/account_journal.py:310
 #, python-format
-msgid ""
-"Missing column! Column %s you try to import is not present in the move line!"
+msgid "Missing column! Column %s you try to import is not present in the move line!"
 msgstr ""
 
 #. module: account_move_base_import
@@ -394,7 +371,7 @@ msgstr ""
 #. module: account_move_base_import
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_move_completion_rule_name
 msgid "Name"
-msgstr "Tên"
+msgstr ""
 
 #. module: account_move_base_import
 #: code:addons/account_move_base_import/parser/parser.py:148
@@ -409,7 +386,7 @@ msgid "No commission account is set on the journal."
 msgstr ""
 
 #. module: account_move_base_import
-#: code:addons/account_move_base_import/models/account_journal.py:303
+#: code:addons/account_move_base_import/models/account_journal.py:304
 #, python-format
 msgid "Nothing to import: The file is empty"
 msgstr ""
@@ -446,10 +423,7 @@ msgstr ""
 #. module: account_move_base_import
 #: model:ir.model.fields,help:account_move_base_import.field_account_journal_partner_id
 #: model:ir.model.fields,help:account_move_base_import.field_credit_statement_import_partner_id
-msgid ""
-"Put a partner if you want to have it on the commission move (and optionaly "
-"on the counterpart of the intermediate/banking move if you tick the "
-"corresponding checkbox)."
+msgid "Put a partner if you want to have it on the commission move (and optionaly on the counterpart of the intermediate/banking move if you tick the corresponding checkbox)."
 msgstr ""
 
 #. module: account_move_base_import
@@ -471,7 +445,7 @@ msgstr ""
 #. module: account_move_base_import
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_move_completion_rule_sequence
 msgid "Sequence"
-msgstr "Trình tự"
+msgstr ""
 
 #. module: account_move_base_import
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_journal_split_counterpart
@@ -490,16 +464,14 @@ msgid "Statement file"
 msgstr ""
 
 #. module: account_move_base_import
-#: code:addons/account_move_base_import/models/account_journal.py:348
+#: code:addons/account_move_base_import/models/account_journal.py:354
 #, python-format
 msgid "Statement import error The statement cannot be created: %s"
 msgstr ""
 
 #. module: account_move_base_import
 #: model:ir.model.fields,help:account_move_base_import.field_account_journal_launch_import_completion
-msgid ""
-"Tic that box to automatically launch the completion on each imported file "
-"using this journal."
+msgid "Tic that box to automatically launch the completion on each imported file using this journal."
 msgstr ""
 
 #. module: account_move_base_import
@@ -514,9 +486,7 @@ msgstr ""
 
 #. module: account_move_base_import
 #: model:ir.model.fields,help:account_move_base_import.field_account_journal_split_counterpart
-msgid ""
-"Two counterparts will be automatically created : one for the refunds and one "
-"for the payments"
+msgid "Two counterparts will be automatically created : one for the refunds and one for the payments"
 msgstr ""
 
 #. module: account_move_base_import
@@ -528,8 +498,7 @@ msgstr ""
 #: code:addons/account_move_base_import/parser/file_parser.py:143
 #: code:addons/account_move_base_import/parser/file_parser.py:173
 #, python-format
-msgid ""
-"Value %s of column %s is not valid.\n"
+msgid "Value %s of column %s is not valid.\n"
 " Please check the line with ref %s:\n"
 " \n"
 " Detail: %s"
@@ -537,12 +506,11 @@ msgstr ""
 
 #. module: account_move_base_import
 #: model:ir.model.fields,help:account_move_base_import.field_account_move_line_already_completed
-msgid ""
-"When this checkbox is ticked, the auto-completion process/button will ignore "
-"this line."
+msgid "When this checkbox is ticked, the auto-completion process/button will ignore this line."
 msgstr ""
 
 #. module: account_move_base_import
 #: model:ir.model,name:account_move_base_import.model_account_move_completion_rule
 msgid "account.move.completion.rule"
 msgstr ""
+
