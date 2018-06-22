@@ -1,7 +1,7 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
 # * account_mass_reconcile
-# 
+#
 # Translators:
 # OCA Transbot <transbot@odoo-community.org>, 2017
 msgid ""
@@ -12,11 +12,12 @@ msgstr ""
 "PO-Revision-Date: 2017-03-24 03:37+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2017\n"
 "Language-Team: Slovenian (https://www.transifex.com/oca/teams/23907/sl/)\n"
+"Language: sl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Language: sl\n"
-"Plural-Forms: nplurals=4; plural=(n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n%100==4 ? 2 : 3);\n"
+"Plural-Forms: nplurals=4; plural=(n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n"
+"%100==4 ? 2 : 3);\n"
 
 #. module: account_mass_reconcile
 #: model:ir.ui.view,arch_db:account_mass_reconcile.view_mass_reconcile_history_search
@@ -30,8 +31,8 @@ msgid ""
 "A matcher %s is compared with a matcher %s, the _matchers and "
 "_opposite_matchers are probably wrong"
 msgstr ""
-"Ujemanje %s se primerja z ujemajočim %s, _ujemanja in _nasprotna_ujemanja so"
-" verjetno napačna"
+"Ujemanje %s se primerja z ujemajočim %s, _ujemanja in _nasprotna_ujemanja so "
+"verjetno napačna"
 
 #. module: account_mass_reconcile
 #: model:ir.actions.act_window,help:account_mass_reconcile.action_account_mass_reconcile
@@ -103,6 +104,12 @@ msgstr "Zgodovina samodejnih preprostih usklajevanj"
 #: model:ir.ui.view,arch_db:account_mass_reconcile.account_mass_reconcile_method_tree
 msgid "Automatic Mass Reconcile Method"
 msgstr "Metoda samodejne preproste uskladitve"
+
+#. module: account_mass_reconcile
+#: code:addons/account_mass_reconcile/models/base_reconciliation.py:158
+#, python-format
+msgid "Automatic Write Off"
+msgstr ""
 
 #. module: account_mass_reconcile
 #: model:ir.actions.act_window,help:account_mass_reconcile.action_account_mass_reconcile

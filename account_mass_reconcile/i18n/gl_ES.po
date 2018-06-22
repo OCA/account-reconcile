@@ -1,7 +1,7 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
 # * account_mass_reconcile
-# 
+#
 # Translators:
 msgid ""
 msgstr ""
@@ -10,11 +10,12 @@ msgstr ""
 "POT-Creation-Date: 2016-11-03 10:40+0000\n"
 "PO-Revision-Date: 2016-11-22 16:25+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>\n"
-"Language-Team: Galician (Spain) (http://www.transifex.com/oca/OCA-bank-statement-reconcile-9-0/language/gl_ES/)\n"
+"Language-Team: Galician (Spain) (http://www.transifex.com/oca/OCA-bank-"
+"statement-reconcile-9-0/language/gl_ES/)\n"
+"Language: gl_ES\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Language: gl_ES\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. module: account_mass_reconcile
@@ -78,11 +79,6 @@ msgid "Account Profit"
 msgstr ""
 
 #. module: account_mass_reconcile
-#: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile_message_needaction
-msgid "Action Needed"
-msgstr ""
-
-#. module: account_mass_reconcile
 #: model:ir.ui.view,arch_db:account_mass_reconcile.account_mass_reconcile_form
 msgid "Advanced. Partner and Ref"
 msgstr ""
@@ -104,6 +100,12 @@ msgstr ""
 #. module: account_mass_reconcile
 #: model:ir.ui.view,arch_db:account_mass_reconcile.account_mass_reconcile_method_tree
 msgid "Automatic Mass Reconcile Method"
+msgstr ""
+
+#. module: account_mass_reconcile
+#: code:addons/account_mass_reconcile/models/base_reconciliation.py:158
+#, python-format
+msgid "Automatic Write Off"
 msgstr ""
 
 #. module: account_mass_reconcile
@@ -169,11 +171,6 @@ msgid "Date of reconciliation"
 msgstr ""
 
 #. module: account_mass_reconcile
-#: model:ir.model.fields,help:account_mass_reconcile.field_account_mass_reconcile_message_last_post
-msgid "Date of the last message posted on the record."
-msgstr ""
-
-#. module: account_mass_reconcile
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile_display_name
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile_method_display_name
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_advanced_display_name
@@ -205,21 +202,6 @@ msgstr ""
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_partner_filter
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_reference_filter
 msgid "Filter"
-msgstr ""
-
-#. module: account_mass_reconcile
-#: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile_message_follower_ids
-msgid "Followers"
-msgstr ""
-
-#. module: account_mass_reconcile
-#: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile_message_channel_ids
-msgid "Followers (Channels)"
-msgstr ""
-
-#. module: account_mass_reconcile
-#: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile_message_partner_ids
-msgid "Followers (Partners)"
 msgstr ""
 
 #. module: account_mass_reconcile
@@ -290,23 +272,8 @@ msgid "ID"
 msgstr "ID"
 
 #. module: account_mass_reconcile
-#: model:ir.model.fields,help:account_mass_reconcile.field_account_mass_reconcile_message_unread
-msgid "If checked new messages require your attention."
-msgstr ""
-
-#. module: account_mass_reconcile
-#: model:ir.model.fields,help:account_mass_reconcile.field_account_mass_reconcile_message_needaction
-msgid "If checked, new messages require your attention."
-msgstr ""
-
-#. module: account_mass_reconcile
 #: model:ir.ui.view,arch_db:account_mass_reconcile.account_mass_reconcile_form
 msgid "Information"
-msgstr ""
-
-#. module: account_mass_reconcile
-#: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile_message_is_follower
-msgid "Is Follower"
 msgstr ""
 
 #. module: account_mass_reconcile
@@ -320,11 +287,6 @@ msgstr ""
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_partner_journal_id
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_reference_journal_id
 msgid "Journal"
-msgstr ""
-
-#. module: account_mass_reconcile
-#: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile_message_last_post
-msgid "Last Message Date"
 msgstr ""
 
 #. module: account_mass_reconcile
@@ -432,11 +394,6 @@ msgid ""
 msgstr ""
 
 #. module: account_mass_reconcile
-#: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile_message_ids
-msgid "Messages"
-msgstr ""
-
-#. module: account_mass_reconcile
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile_reconcile_method
 msgid "Method"
 msgstr ""
@@ -444,21 +401,6 @@ msgstr ""
 #. module: account_mass_reconcile
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile_name
 msgid "Name"
-msgstr ""
-
-#. module: account_mass_reconcile
-#: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile_message_needaction_counter
-msgid "Number of Actions"
-msgstr ""
-
-#. module: account_mass_reconcile
-#: model:ir.model.fields,help:account_mass_reconcile.field_account_mass_reconcile_message_needaction_counter
-msgid "Number of messages which requires an action"
-msgstr ""
-
-#. module: account_mass_reconcile
-#: model:ir.model.fields,help:account_mass_reconcile.field_account_mass_reconcile_message_unread_counter
-msgid "Number of unread messages"
 msgstr ""
 
 #. module: account_mass_reconcile
@@ -584,16 +526,6 @@ msgstr ""
 #. module: account_mass_reconcile
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile_method_name
 msgid "Type"
-msgstr ""
-
-#. module: account_mass_reconcile
-#: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile_message_unread
-msgid "Unread Messages"
-msgstr ""
-
-#. module: account_mass_reconcile
-#: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile_message_unread_counter
-msgid "Unread Messages Counter"
 msgstr ""
 
 #. module: account_mass_reconcile
