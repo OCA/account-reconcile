@@ -8,6 +8,7 @@ setuptools.setup(
     description="Meta package for oca-account-reconcile Odoo addons",
     version=version,
     install_requires=[
+        'odoo11-addon-bank_statement_foreign_currency',
         'odoo11-addon-base_transaction_id',
     ],
     classifiers=[
