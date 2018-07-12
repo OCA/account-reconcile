@@ -28,12 +28,19 @@ class TestScenarioReconcile(common.TransactionCase):
         self.account_fx_expense_id = self.ref("account.income_fx_expense")
         self.acs_model = self.env['account.config.settings']
 
+        self.currency_eur_id = self.env.ref("base.EUR").id
+        company = self.env.ref('base.main_company')
+        self.cr.execute(
+            "UPDATE res_company SET currency_id = %s WHERE id = %s",
+            [self.currency_eur_id, company.id]
+        )
+
         acs_ids = self.acs_model.search(
-            [('company_id', '=', self.ref("base.main_company"))]
+            [('company_id', '=', company.id)]
             )
 
         values = {'group_multi_currency': True,
-                  'currency_id': self.ref('base.EUR')}
+                  'currency_id': self.currency_eur_id}
 
         if acs_ids:
             acs_ids.write(values)

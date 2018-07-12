@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 # © 2012-2016 Camptocamp SA (Guewen Baconnier, Damien Crier, Matthieu Dietrich)
 # © 2010 Sébastien Beau
+# © 2017 Eficent Business and IT Consulting Services S.L. (www.eficent.com)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 from odoo import _, models, api, fields
