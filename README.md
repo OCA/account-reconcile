@@ -29,7 +29,8 @@ Available addons
 ----------------
 addon | version | summary
 --- | --- | ---
-[account_mass_reconcile](account_mass_reconcile/) | 10.0.1.0.0 | Mass Reconcile
+[account_mass_reconcile](account_mass_reconcile/) | 10.0.1.0.0 | Account Mass Reconcile
+[account_mass_reconcile_by_purchase_line](account_mass_reconcile_by_purchase_line/) | 10.0.1.0.0 | Allows to reconcile based on the PO line
 [account_move_base_import](account_move_base_import/) | 10.0.1.0.0 | Journal Entry base import
 [account_move_reconcile_helper](account_move_reconcile_helper/) | 10.0.1.0.0 | Provides tools to facilitate reconciliation
 [bank_statement_foreign_currency](bank_statement_foreign_currency/) | 10.0.1.0.0 | Make visible the foreign currencies in the bank statements
