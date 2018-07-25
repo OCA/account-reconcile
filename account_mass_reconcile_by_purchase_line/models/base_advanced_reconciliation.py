@@ -7,13 +7,8 @@ from odoo import models
 class MassReconcileAdvanced(models.AbstractModel):
     _inherit = 'mass.reconcile.advanced'
 
-    @staticmethod
-    def _base_columns():
-        """ Mandatory columns for move lines queries
-        An extra column aliased as ``key`` should be defined
-        in each query."""
-        aml_cols = super(MassReconcileAdvanced, MassReconcileAdvanced).\
-            _base_columns()
+    def _selection_columns(self):
+        aml_cols = super(MassReconcileAdvanced, self)._selection_columns()
         aml_cols.append('account_move_line.purchase_line_id')
         aml_cols.append('account_move_line.product_id')
         return aml_cols
