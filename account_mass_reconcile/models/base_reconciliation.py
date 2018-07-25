@@ -60,8 +60,11 @@ class MassReconcileBase(models.AbstractModel):
         )
         return ["account_move_line.{}".format(col) for col in aml_cols]
 
+    def _selection_columns(self):
+        return self._base_columns()
+
     def _select_query(self, *args, **kwargs):
-        return "SELECT %s" % ', '.join(self._base_columns())
+        return "SELECT %s" % ', '.join(self._selection_columns())
 
     def _from_query(self, *args, **kwargs):
         return ("FROM account_move_line ")
