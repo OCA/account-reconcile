@@ -173,7 +173,7 @@ class MassReconcileAdvanced(models.AbstractModel):
         opp_matchers = self._opposite_matchers(opposite_move_line)
         for matcher in matchers:
             try:
-                opp_matcher = opp_matchers.next()
+                opp_matcher = next(opp_matchers)
             except StopIteration:
                 # if you fall here, you probably missed to put a `yield`
                 # in `_opposite_matchers()`
