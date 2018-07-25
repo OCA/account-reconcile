@@ -38,7 +38,7 @@
                 <header>
                     <button name="open_reconcile"
                         string="Go to reconciled items"
-                        icon="STOCK_JUMP_TO" type="object"/>
+                        icon="fa-share" type="object"/>
                 </header>
                 <sheet>
                     <group>
@@ -62,7 +62,7 @@
             <tree string="Automatic Mass Reconcile History">
                 <field name="mass_reconcile_id"/>
                 <field name="date"/>
-                <button icon="STOCK_JUMP_TO" name="open_reconcile"
+                <button icon="fa-share" name="open_reconcile"
                     string="Go to reconciled items" type="object"/>
             </tree>
         </field>

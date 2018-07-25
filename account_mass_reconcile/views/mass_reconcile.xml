@@ -10,7 +10,7 @@
                 <header>
                     <button name="run_reconcile" class="oe_highlight"
                         string="Start Auto Reconciliation" type="object"/>
-                    <button icon="STOCK_JUMP_TO" name="last_history_reconcile"
+                    <button icon="fa-share" name="last_history_reconcile"
                         string="Display items reconciled on the last run"
                         type="object"/>
                 </header>
@@ -25,7 +25,7 @@
                         <group>
                             <group>
                                 <field name="unreconciled_count"/>
-                                <button icon="STOCK_JUMP_TO" name="open_unreconcile"
+                                <button icon="fa-share" name="open_unreconcile"
                                         string="Go to unreconciled items" type="object"/>
                             </group>
                         </group>
@@ -38,7 +38,7 @@
                             <field name="history_ids" nolabel="1">
                                 <tree string="Automatic Mass Reconcile History">
                                     <field name="date"/>
-                                    <button icon="STOCK_JUMP_TO" name="open_reconcile"
+                                    <button icon="fa-share" name="open_reconcile"
                                         string="Go to reconciled items" type="object"/>
                                 </tree>
                             </field>
@@ -83,7 +83,7 @@ The lines should have the same partner, and the credit entry ref. is matched wit
                 <field name="unreconciled_count"/>
                 <button icon="gtk-ok" name="run_reconcile" colspan="4"
                     string="Start Auto Reconcilation" type="object"/>
-                <button icon="STOCK_JUMP_TO" name="last_history_reconcile" colspan="2"
+                <button icon="fa-share" name="last_history_reconcile" colspan="2"
                     string="Display items reconciled on the last run" type="object"/>
             </tree>
         </field>
