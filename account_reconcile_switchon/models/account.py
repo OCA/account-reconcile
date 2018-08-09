@@ -32,7 +32,7 @@ class AccountAccount(models.Model):
             # in the case, that there are already reconciled lines, a user error is displayed
             elif vals.get('reconcile') \
                      and len(aml.search([('account_id', '=', account.id), ('reconciled', '=', True)], limit=1)):
-                raise UserError(_('You cannot switch reconciliation on on this account as it already has reconciled moves'
+                raise UserError(_('You cannot switch reconciliation on on this account as it already has reconciled move lines'
                                   'it must have been switched off before. Now you will have to create a new account'))
             # not sure if this is still necessary. In the original write unsetting was allowed and we take care, that
             # with reconciled move lines but switched off, it cannot be set again. Maybe we should allow to unset it.
