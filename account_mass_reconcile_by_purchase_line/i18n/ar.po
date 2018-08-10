@@ -6,7 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 11.0\n"
 "Report-Msgid-Bugs-To: \n"
-"Last-Translator: Automatically generated\n"
+"PO-Revision-Date: 2018-08-12 00:01+0000\n"
+"Last-Translator: Osoul <baruni@osoul.ly>\n"
 "Language-Team: none\n"
 "Language: ar\n"
 "MIME-Version: 1.0\n"
@@ -14,11 +15,12 @@ msgstr ""
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
 "&& n%100<=10 ? 3 : n%100>=11 ? 4 : 5;\n"
+"X-Generator: Weblate 3.1.1\n"
 
 #. module: account_mass_reconcile_by_purchase_line
 #: model:ir.ui.view,arch_db:account_mass_reconcile_by_purchase_line.account_mass_reconcile_form
 msgid "Advanced. Purchase Order Line"
-msgstr ""
+msgstr "متطور. أوامر الشراء"
 
 #. module: account_mass_reconcile_by_purchase_line
 #: model:ir.model.fields,field_description:account_mass_reconcile_by_purchase_line.field_mass_reconcile_advanced_by_purchase_line_create_uid
@@ -59,6 +61,8 @@ msgstr ""
 #: model:ir.ui.view,arch_db:account_mass_reconcile_by_purchase_line.account_mass_reconcile_form
 msgid "Match multiple debit vs multiple credit entries. Allow partial reconciliation. The lines should have the same partner, product and PO lines to be reconciled."
 msgstr ""
+"تسوية مجموعة قيود مدينة ودائنة. السماح بالتسوية الجزئية. القيود يجب ان تحتوي "
+"على نفس الشريك، والمنتج وبند أمر الشراء."
 
 #. module: account_mass_reconcile_by_purchase_line
 #: model:ir.model,name:account_mass_reconcile_by_purchase_line.model_mass_reconcile_advanced
