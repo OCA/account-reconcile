@@ -9,20 +9,21 @@ msgstr ""
 "Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-03-24 03:37+0000\n"
-"PO-Revision-Date: 2017-03-24 03:37+0000\n"
-"Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2017\n"
+"PO-Revision-Date: 2018-08-12 00:01+0000\n"
+"Last-Translator: Osoul <baruni@osoul.ly>\n"
 "Language-Team: Arabic (https://www.transifex.com/oca/teams/23907/ar/)\n"
 "Language: ar\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
-"&& n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
+"&& n%100<=10 ? 3 : n%100>=11 ? 4 : 5;\n"
+"X-Generator: Weblate 3.1.1\n"
 
 #. module: account_mass_reconcile
 #: model:ir.ui.view,arch_db:account_mass_reconcile.view_mass_reconcile_history_search
 msgid "7 Days"
-msgstr ""
+msgstr "7 أيام"
 
 #. module: account_mass_reconcile
 #: code:addons/account_mass_reconcile/models/base_advanced_reconciliation.py:157
@@ -51,7 +52,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_partner_account_id
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_reference_account_id
 msgid "Account"
-msgstr ""
+msgstr "الحساب"
 
 #. module: account_mass_reconcile
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile_method_account_lost_id
@@ -64,7 +65,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_partner_account_lost_id
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_reference_account_lost_id
 msgid "Account Lost"
-msgstr ""
+msgstr "حساب الخسارة"
 
 #. module: account_mass_reconcile
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile_method_account_profit_id
@@ -77,18 +78,18 @@ msgstr ""
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_partner_account_profit_id
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_reference_account_profit_id
 msgid "Account Profit"
-msgstr ""
+msgstr "حساب الربح"
 
 #. module: account_mass_reconcile
 #: model:ir.ui.view,arch_db:account_mass_reconcile.account_mass_reconcile_form
 msgid "Advanced. Partner and Ref"
-msgstr ""
+msgstr "متطور. الشريك والمرجع"
 
 #. module: account_mass_reconcile
 #: model:ir.ui.view,arch_db:account_mass_reconcile.account_mass_reconcile_form
 #: model:ir.ui.view,arch_db:account_mass_reconcile.account_mass_reconcile_tree
 msgid "Automatic Mass Reconcile"
-msgstr ""
+msgstr "تسوية تلقائية شاملة"
 
 #. module: account_mass_reconcile
 #: model:ir.ui.view,arch_db:account_mass_reconcile.account_mass_reconcile_form
@@ -96,45 +97,46 @@ msgstr ""
 #: model:ir.ui.view,arch_db:account_mass_reconcile.mass_reconcile_history_tree
 #: model:ir.ui.view,arch_db:account_mass_reconcile.view_mass_reconcile_history_search
 msgid "Automatic Mass Reconcile History"
-msgstr ""
+msgstr "سجلات التسوية التلقائية الشاملة"
 
 #. module: account_mass_reconcile
 #: model:ir.ui.view,arch_db:account_mass_reconcile.account_mass_reconcile_method_tree
 msgid "Automatic Mass Reconcile Method"
-msgstr ""
+msgstr "طريقة التسوية"
 
 #. module: account_mass_reconcile
 #: code:addons/account_mass_reconcile/models/base_reconciliation.py:157
 #, python-format
 msgid "Automatic Write Off"
-msgstr ""
+msgstr "شطب تلقائي"
 
 #. module: account_mass_reconcile
 #: model:ir.actions.act_window,help:account_mass_reconcile.action_account_mass_reconcile
 msgid "Click to add a reconciliation profile."
-msgstr ""
+msgstr "انقر هنا لاضافة ملف تسوية."
 
 #. module: account_mass_reconcile
 #: model:ir.ui.view,arch_db:account_mass_reconcile.view_account_config
+#, fuzzy
 msgid "Commit frequency"
-msgstr ""
+msgstr "Commit frequency"
 
 #. module: account_mass_reconcile
 #: model:ir.model,name:account_mass_reconcile.model_res_company
 msgid "Companies"
-msgstr "الشركات"
+msgstr "المؤسسات"
 
 #. module: account_mass_reconcile
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile_company_id
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile_method_company_id
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_history_company_id
 msgid "Company"
-msgstr ""
+msgstr "المؤسسة"
 
 #. module: account_mass_reconcile
 #: model:ir.ui.view,arch_db:account_mass_reconcile.account_mass_reconcile_form
 msgid "Configuration"
-msgstr ""
+msgstr "الاعدادات"
 
 #. module: account_mass_reconcile
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile_create_uid
@@ -161,7 +163,7 @@ msgstr "أنشئ في"
 #. module: account_mass_reconcile
 #: model:ir.ui.view,arch_db:account_mass_reconcile.view_mass_reconcile_history_search
 msgid "Date"
-msgstr ""
+msgstr "التاريخ"
 
 #. module: account_mass_reconcile
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile_method_date_base_on
@@ -174,7 +176,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_partner_date_base_on
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_reference_date_base_on
 msgid "Date of reconciliation"
-msgstr ""
+msgstr "تاريخ التسوية"
 
 #. module: account_mass_reconcile
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile_display_name
@@ -195,14 +197,14 @@ msgstr "اسم العرض"
 #: model:ir.ui.view,arch_db:account_mass_reconcile.account_mass_reconcile_form
 #: model:ir.ui.view,arch_db:account_mass_reconcile.account_mass_reconcile_tree
 msgid "Display items reconciled on the last run"
-msgstr ""
+msgstr "عرض آخر البنود التي تم تسويتها"
 
 #. module: account_mass_reconcile
 #: model:ir.actions.server,name:account_mass_reconcile.ir_cron_run_reconciliations_ir_actions_server
 #: model:ir.cron,cron_name:account_mass_reconcile.ir_cron_run_reconciliations
 #: model:ir.cron,name:account_mass_reconcile.ir_cron_run_reconciliations
 msgid "Do Automatic Reconciliations"
-msgstr ""
+msgstr "تسوية تلقائية"
 
 #. module: account_mass_reconcile
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile_method__filter
@@ -215,12 +217,12 @@ msgstr ""
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_partner__filter
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_reference__filter
 msgid "Filter"
-msgstr ""
+msgstr "فرز"
 
 #. module: account_mass_reconcile
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_history_reconcile_ids
 msgid "Full Reconciliations"
-msgstr ""
+msgstr "تسوية كاملة"
 
 #. module: account_mass_reconcile
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile_method_income_exchange_account_id
@@ -233,35 +235,35 @@ msgstr ""
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_partner_income_exchange_account_id
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_reference_income_exchange_account_id
 msgid "Gain Exchange Rate Account"
-msgstr ""
+msgstr "حساب مكسب فرق العملة"
 
 #. module: account_mass_reconcile
 #: model:ir.ui.view,arch_db:account_mass_reconcile.account_mass_reconcile_form
 #: model:ir.ui.view,arch_db:account_mass_reconcile.mass_reconcile_history_form
 #: model:ir.ui.view,arch_db:account_mass_reconcile.mass_reconcile_history_tree
 msgid "Go to reconciled items"
-msgstr ""
+msgstr "البنود التي تم تسويتها"
 
 #. module: account_mass_reconcile
 #: model:ir.ui.view,arch_db:account_mass_reconcile.account_mass_reconcile_form
 msgid "Go to unreconciled items"
-msgstr ""
+msgstr "البنود التي لم يتم تسويتها"
 
 #. module: account_mass_reconcile
 #: model:ir.ui.view,arch_db:account_mass_reconcile.view_mass_reconcile_history_search
 msgid "Group By..."
-msgstr ""
+msgstr "تجميع حسب..."
 
 #. module: account_mass_reconcile
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile_history_ids
 #: model:ir.ui.view,arch_db:account_mass_reconcile.account_mass_reconcile_form
 msgid "History"
-msgstr ""
+msgstr "السجلات"
 
 #. module: account_mass_reconcile
 #: model:ir.actions.act_window,name:account_mass_reconcile.act_mass_reconcile_to_history
 msgid "History Details"
-msgstr ""
+msgstr "بيانات السجلات"
 
 #. module: account_mass_reconcile
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_res_company_reconciliation_commit_every
@@ -294,7 +296,7 @@ msgstr "المعرف"
 #. module: account_mass_reconcile
 #: model:ir.ui.view,arch_db:account_mass_reconcile.account_mass_reconcile_form
 msgid "Information"
-msgstr ""
+msgstr "البيانات"
 
 #. module: account_mass_reconcile
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile_method_journal_id
@@ -307,7 +309,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_partner_journal_id
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_reference_journal_id
 msgid "Journal"
-msgstr ""
+msgstr "اليومية"
 
 #. module: account_mass_reconcile
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile___last_update
@@ -349,7 +351,7 @@ msgstr "آخر تحديث في"
 #. module: account_mass_reconcile
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile_last_history
 msgid "Last history"
-msgstr ""
+msgstr "آخر سجل"
 
 #. module: account_mass_reconcile
 #: model:ir.model.fields,help:account_mass_reconcile.field_res_company_reconciliation_commit_every
@@ -368,18 +370,18 @@ msgstr ""
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_partner_expense_exchange_account_id
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_reference_expense_exchange_account_id
 msgid "Loss Exchange Rate Account"
-msgstr ""
+msgstr "حسب خسارة فرق العملة"
 
 #. module: account_mass_reconcile
 #: model:ir.actions.act_window,name:account_mass_reconcile.action_account_mass_reconcile
 #: model:ir.ui.menu,name:account_mass_reconcile.menu_mass_reconcile
 msgid "Mass Automatic Reconcile"
-msgstr ""
+msgstr "تسوية تلقائية شاملة"
 
 #. module: account_mass_reconcile
 #: model:ir.actions.act_window,name:account_mass_reconcile.action_mass_reconcile_history
 msgid "Mass Automatic Reconcile History"
-msgstr ""
+msgstr "سجلات التسوية التلقائية"
 
 #. module: account_mass_reconcile
 #: model:ir.ui.view,arch_db:account_mass_reconcile.account_mass_reconcile_form
@@ -388,6 +390,8 @@ msgid ""
 "reconciliation. The lines should have the partner, the credit entry ref. is "
 "matched vs the debit entry ref. or name."
 msgstr ""
+"تسوية مجموعة قيود مدينة ودائنة. السماح بالتسوية الجزئية. القيود يجب ان تحتوي "
+"على نفس شريك، ومرجع القيد الدائن يكون مطابق لمرجع القيد المدين، او البيان."
 
 #. module: account_mass_reconcile
 #: model:ir.ui.view,arch_db:account_mass_reconcile.account_mass_reconcile_form
@@ -396,6 +400,9 @@ msgid ""
 "reconciliation. The lines should have the same amount (with the write-off) "
 "and the same name to be reconciled."
 msgstr ""
+"تسوية قيد مدين واحد مع قيد دائن واحد. عدم السماح بالتسوية الجزئية. قيمة "
+"القيود يجب ان تكون متطابقة (او مع قيمة الشطب المسموح بها)، وكذلك البيان يكون "
+"متطابق."
 
 #. module: account_mass_reconcile
 #: model:ir.ui.view,arch_db:account_mass_reconcile.account_mass_reconcile_form
@@ -404,6 +411,9 @@ msgid ""
 "reconciliation. The lines should have the same amount (with the write-off) "
 "and the same partner to be reconciled."
 msgstr ""
+"تسوية قيد مدين واحد مع قيد دائن واحد. عدم السماح بالتسوية الجزئية. قيمة "
+"القيود يجب ان تكون متطابقة (او مع قيمة الشطب المسموح بها)، وكذلك الشريك يكون "
+"متطابق."
 
 #. module: account_mass_reconcile
 #: model:ir.ui.view,arch_db:account_mass_reconcile.account_mass_reconcile_form
@@ -412,11 +422,14 @@ msgid ""
 "reconciliation. The lines should have the same amount (with the write-off) "
 "and the same reference to be reconciled."
 msgstr ""
+"تسوية قيد مدين واحد مع قيد دائن واحد. عدم السماح بالتسوية الجزئية. قيمة "
+"القيود يجب ان تكون متطابقة (او مع قيمة الشطب المسموح بها)، وكذلك المرجع يكون "
+"متطابق."
 
 #. module: account_mass_reconcile
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile_reconcile_method
 msgid "Method"
-msgstr ""
+msgstr "الطريقة"
 
 #. module: account_mass_reconcile
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile_name
@@ -426,39 +439,39 @@ msgstr "الاسم"
 #. module: account_mass_reconcile
 #: model:ir.ui.view,arch_db:account_mass_reconcile.account_mass_reconcile_form
 msgid "Profile Information"
-msgstr ""
+msgstr "بيانات الملف"
 
 #. module: account_mass_reconcile
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_history_mass_reconcile_id
 msgid "Reconcile Profile"
-msgstr ""
+msgstr "ملف التسوية"
 
 #. module: account_mass_reconcile
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_history_reconcile_line_ids
 msgid "Reconciled Items"
-msgstr ""
+msgstr "القيود التي تم تسويتها"
 
 #. module: account_mass_reconcile
 #: model:ir.ui.view,arch_db:account_mass_reconcile.view_account_config
 msgid "Reconciliation"
-msgstr ""
+msgstr "التسوية"
 
 #. module: account_mass_reconcile
 #: model:ir.ui.view,arch_db:account_mass_reconcile.view_mass_reconcile_history_search
 msgid "Reconciliation Profile"
-msgstr ""
+msgstr "ملف التسوية"
 
 #. module: account_mass_reconcile
 #: code:addons/account_mass_reconcile/models/mass_reconcile_history.py:63
 #: model:ir.ui.view,arch_db:account_mass_reconcile.mass_reconcile_history_form
 #, python-format
 msgid "Reconciliations"
-msgstr ""
+msgstr "التسويات"
 
 #. module: account_mass_reconcile
 #: model:ir.ui.view,arch_db:account_mass_reconcile.view_mass_reconcile_history_search
 msgid "Reconciliations of last 7 days"
-msgstr ""
+msgstr "التسويات في آخر 7 أيام"
 
 #. module: account_mass_reconcile
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_advanced_partner_ids
@@ -469,12 +482,12 @@ msgstr ""
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_partner_partner_ids
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_reference_partner_ids
 msgid "Restrict on partners"
-msgstr ""
+msgstr "مقتصر على الشركاء"
 
 #. module: account_mass_reconcile
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_history_date
 msgid "Run date"
-msgstr ""
+msgstr "تاريخ التسوية"
 
 #. module: account_mass_reconcile
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile_method_sequence
@@ -484,27 +497,27 @@ msgstr "المسلسل"
 #. module: account_mass_reconcile
 #: model:ir.ui.view,arch_db:account_mass_reconcile.account_mass_reconcile_form
 msgid "Simple. Amount and Name"
-msgstr ""
+msgstr "بسيط. القيمة والاسم"
 
 #. module: account_mass_reconcile
 #: model:ir.ui.view,arch_db:account_mass_reconcile.account_mass_reconcile_form
 msgid "Simple. Amount and Partner"
-msgstr ""
+msgstr "بسيط. القيمة والشريك"
 
 #. module: account_mass_reconcile
 #: model:ir.ui.view,arch_db:account_mass_reconcile.account_mass_reconcile_form
 msgid "Simple. Amount and Reference"
-msgstr ""
+msgstr "بسيط. القيمة والمرجع"
 
 #. module: account_mass_reconcile
 #: model:ir.ui.view,arch_db:account_mass_reconcile.account_mass_reconcile_tree
 msgid "Start Auto Reconcilation"
-msgstr ""
+msgstr "بدء التسوية"
 
 #. module: account_mass_reconcile
 #: model:ir.ui.view,arch_db:account_mass_reconcile.account_mass_reconcile_form
 msgid "Start Auto Reconciliation"
-msgstr ""
+msgstr "بدء التسوية"
 
 #. module: account_mass_reconcile
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile_method_task_id
@@ -520,23 +533,23 @@ msgstr ""
 #: code:addons/account_mass_reconcile/models/mass_reconcile.py:273
 #, python-format
 msgid "There is no history of reconciled items on the task: %s."
-msgstr ""
+msgstr "لا يوجد سجلات تسوية للمهة: %s."
 
 #. module: account_mass_reconcile
 #: code:addons/account_mass_reconcile/models/mass_reconcile.py:250
 #, python-format
 msgid "There was an error during reconciliation : %s"
-msgstr ""
+msgstr "حدث خلل خلال التسوية : %s"
 
 #. module: account_mass_reconcile
 #: model:ir.ui.view,arch_db:account_mass_reconcile.view_mass_reconcile_history_search
 msgid "Today"
-msgstr ""
+msgstr "اليوم"
 
 #. module: account_mass_reconcile
 #: model:ir.ui.view,arch_db:account_mass_reconcile.view_mass_reconcile_history_search
 msgid "Todays' Reconcilations"
-msgstr ""
+msgstr "تسويات اليوم"
 
 #. module: account_mass_reconcile
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile_method_name
@@ -546,13 +559,13 @@ msgstr "النوع"
 #. module: account_mass_reconcile
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile_unreconciled_count
 msgid "Unreconciled Items"
-msgstr ""
+msgstr "قيود غير مسوّاة"
 
 #. module: account_mass_reconcile
 #: code:addons/account_mass_reconcile/models/mass_reconcile.py:299
 #, python-format
 msgid "Unreconciled items"
-msgstr ""
+msgstr "قيود غير مسوّاة"
 
 #. module: account_mass_reconcile
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile_method_write_off
@@ -565,7 +578,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_reference_write_off
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_write_off
 msgid "Write off allowed"
-msgstr ""
+msgstr "السماح بالشطب"
 
 #. module: account_mass_reconcile
 #: model:ir.model,name:account_mass_reconcile.model_account_mass_reconcile
