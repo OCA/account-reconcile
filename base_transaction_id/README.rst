@@ -37,6 +37,7 @@ Contributors
 * Alexandre Fayolle <alexandre.fayolle@camptocamp.com>
 * Guewen Baconnier <guewen.baconnier@camptocamp.com>
 * Lorenzo Battistini <lorenzo.battistini@agilebg.com>
+* Mykhailo Panarin <m.panarin@mobilunity.com>
 
 Do not contact contributors directly about support or help with technical issues.
 
