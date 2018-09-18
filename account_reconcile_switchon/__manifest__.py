@@ -9,7 +9,8 @@
     'category': 'Accounting & Finance',
     'license': 'AGPL-3',
     'summary': 'Make switching on reconcile for account with lines possible',
-    'author': 'Magnus',
+    'author': 'Magnus'
+              "Odoo Community Association (OCA)",
     'website': 'http://www.magnus.nl',
     'depends': [
         'account',
