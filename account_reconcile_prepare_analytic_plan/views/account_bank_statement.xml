@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+        <record id="view_bank_statement_form" model="ir.ui.view">
+            <field name="model">account.bank.statement</field>
+            <field name="inherit_id" ref="account_reconcile_prepare_account.view_bank_statement_form" />
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='line_ids']//field[@name='prepared_analytic_account_id']" position="attributes">
+                    <attribute name="invisible">True</attribute>
+                </xpath>
+                <xpath expr="//field[@name='line_ids']//field[@name='prepared_analytic_account_id']" position="after">
+                    <field name="prepared_analytic_plan_instance_id" attrs="{'readonly': [('journal_entry_id', '!=', False)]}" />
+                </xpath>
+            </field>
+        </record>
+        <record id="view_bank_statement_form2" model="ir.ui.view">
+            <field name="model">account.bank.statement</field>
+            <field name="inherit_id" ref="account_reconcile_prepare_account.view_bank_statement_form2" />
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='line_ids']//field[@name='prepared_analytic_account_id']" position="attributes">
+                    <attribute name="invisible">True</attribute>
+                </xpath>
+                <xpath expr="//field[@name='line_ids']//field[@name='prepared_analytic_account_id']" position="after">
+                    <field name="prepared_analytic_plan_instance_id" />
+                </xpath>
+            </field>
+        </record>
+    </data>
+</openerp>
