@@ -25,7 +25,11 @@ openerp.account_reconcile_prepare_account = function(instance)
         {
             var result = this._super.apply(this, arguments);
             this.account_id_field.set('value', this.st_line.prepared_account_id);
-            this.analytic_account_id_field.set('value', this.st_line.prepared_analytic_account_id);
+            if(this.analytic_account_id_field) {
+                this.analytic_account_id_field.set(
+                    'value', this.st_line.prepared_analytic_account_id
+                );
+            }
             return result;
         },
     });
