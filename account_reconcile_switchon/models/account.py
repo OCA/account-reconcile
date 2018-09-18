@@ -23,7 +23,8 @@ class AccountAccount(models.Model):
             # remove the "reconcile" key from the vals dict so it will not stumble upon the original write.
             if vals.get('reconcile') \
                 and not account.reconcile \
-                and not len(aml.search([('account_id', '=', account.id),'|', ('reconciled', '=', True),
+                and not len(aml.search([('account_id', '=', account.id),
+                                        '|', ('reconciled', '=', True),
                                         '|',('matched_debit_ids', '!=', []),
                                         ('matched_credit_ids', '!=', [])], limit=1)) \
                 and len(aml.search([('account_id', '=', account.id)], limit=1)):
@@ -31,9 +32,10 @@ class AccountAccount(models.Model):
                     vals.pop('reconcile')
             # in the case, that there are already reconciled lines, a user error is displayed
             elif vals.get('reconcile') \
-                and len(aml.search([('account_id', '=', account.id),'|', ('reconciled', '=', True),
-                                                               '|',('matched_debit_ids', '!=', []),
-                                                                ('matched_credit_ids', '!=', [])], limit=1)):
+                and len(aml.search([('account_id', '=', account.id),
+                                    '|', ('reconciled', '=', True),
+                                    '|',('matched_debit_ids', '!=', []),
+                                    ('matched_credit_ids', '!=', [])], limit=1)):
                     raise UserError(_('You cannot switch reconciliation on on this account'
                                   ' as it already has reconciled move lines it must have been switched off before.'
                                   ' Now you will have to create a new account'))
@@ -41,8 +43,10 @@ class AccountAccount(models.Model):
             # with reconciled move lines but switched off, it cannot be set again. Maybe we should allow to unset it.
             elif not vals.get('reconcile') \
                 and account.reconcile\
-                and len(self.env['account.move.line'].search([('account_id', '=', account.id),
-                                                              ('reconciled', '=', True)], limit=1)):
+                and len(aml.search([('account_id', '=', account.id),
+                                    '|', ('reconciled', '=', True),
+                                    '|', ('matched_debit_ids', '!=', []),
+                                    ('matched_credit_ids', '!=', [])], limit=1)):
                     raise UserError(_('You cannot switch reconciliation off on this account '
                                       'as it already has reconciled moves'))
         if accounts:
@@ -56,7 +60,6 @@ class AccountAccount(models.Model):
                 raise UserError(_('You are trying to switch on reconciliation on %s %s %s, '
                                   'that already has reconcile True') %
                                 (account.code, account.name, account.company_id.name))
-        str_lst = ','.join([str(item) for item in ids])
 
         # UPDATE query to compute residual amounts
         sql_aml = ("""UPDATE account_move_line
@@ -71,7 +74,7 @@ class AccountAccount(models.Model):
                                                END
                     WHERE account_id in (%s);""")
 
-        self.env.cr.execute(sql_aml, str_lst)
+        self.env.cr.execute(sql_aml, ids)
 
         # UPDATE query to set reconcile = true in account_account
         sql_account = ("""UPDATE account_account
@@ -79,4 +82,4 @@ class AccountAccount(models.Model):
                     reconcile = true
                     WHERE id in (%s);""")
 
-        self.env.cr.execute(sql_account, str_lst)
+        self.env.cr.execute(sql_account, ids)
