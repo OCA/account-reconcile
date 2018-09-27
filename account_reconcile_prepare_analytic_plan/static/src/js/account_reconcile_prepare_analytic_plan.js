@@ -5,8 +5,8 @@ openerp.account_reconcile_prepare_analytic_plan = function(instance) {
     instance.web.account.bankStatementReconciliationLine.include({
         initializeCreateForm: function() {
             var result = this._super.apply(this, arguments);
-            this.analytics_id_field.set(
-                'value', this.st_line.prepared_analytic_analytic_plan_id
+            this.analytic_plan_field.set(
+                'value', this.st_line.prepared_analytic_plan_instance_id
             );
             return result;
         },
