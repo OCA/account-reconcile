@@ -6,7 +6,7 @@
     'version': '10.0.1.0.0',
     'author': "Camptocamp,Odoo Community Association (OCA)",
     'category': 'Finance',
-    'website': 'http://www.camptocamp.com',
+    'website': 'https://github.com/OCA/account-reconcile',
     'license': 'AGPL-3',
     'depends': [
         'account_mass_reconcile',
@@ -15,9 +15,6 @@
     'data': [
         'views/mass_reconcile_view.xml'
     ],
-    'demo': [],
-    'test': [],
     'auto_install': False,
     'installable': True,
-    'images': []
 }
