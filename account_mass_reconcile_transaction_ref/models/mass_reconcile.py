@@ -10,8 +10,7 @@ class AccountMassReconcileMethod(models.Model):
 
     @api.model
     def _get_all_rec_method(self):
-        _super = super(AccountMassReconcileMethod, self)
-        methods = _super._get_all_rec_method()
+        methods = super(AccountMassReconcileMethod, self)._get_all_rec_method()
         methods += [
             ('mass.reconcile.advanced.transaction_ref',
              'Advanced. Partner and Transaction Ref.'),
