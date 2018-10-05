@@ -32,7 +32,7 @@ class MassReconcileAdvancedTransactionRef(models.TransientModel):
 
 class MassReconcileAdvancedTransactionRefVsRef(models.TransientModel):
 
-    _name = 'mass.reconcile.advanced.transaction.ref.vs.ref'
+    _name = 'mass.reconcile.advanced.trans_ref_vs_ref'
     _inherit = 'mass.reconcile.advanced'
 
     @api.multi
