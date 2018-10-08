@@ -1,0 +1,167 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# * account_mass_reconcile_transaction_ref
+# 
+# Translators:
+# OCA Transbot <transbot@odoo-community.org>, 2016
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 9.0c\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-03-28 01:41+0000\n"
+"PO-Revision-Date: 2017-03-28 01:41+0000\n"
+"Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2016\n"
+"Language-Team: Danish (https://www.transifex.com/oca/teams/23907/da/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Language: da\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. module: account_mass_reconcile_transaction_ref
+#: model:ir.model.fields,field_description:account_mass_reconcile_transaction_ref.field_mass_reconcile_advanced_transaction_ref_account_id
+#: model:ir.model.fields,field_description:account_mass_reconcile_transaction_ref.field_mass_reconcile_advanced_transaction_ref_vs_ref_account_id
+msgid "Account"
+msgstr ""
+
+#. module: account_mass_reconcile_transaction_ref
+#: model:ir.model.fields,field_description:account_mass_reconcile_transaction_ref.field_mass_reconcile_advanced_transaction_ref_account_lost_id
+#: model:ir.model.fields,field_description:account_mass_reconcile_transaction_ref.field_mass_reconcile_advanced_transaction_ref_vs_ref_account_lost_id
+msgid "Account Lost"
+msgstr ""
+
+#. module: account_mass_reconcile_transaction_ref
+#: model:ir.model.fields,field_description:account_mass_reconcile_transaction_ref.field_mass_reconcile_advanced_transaction_ref_account_profit_id
+#: model:ir.model.fields,field_description:account_mass_reconcile_transaction_ref.field_mass_reconcile_advanced_transaction_ref_vs_ref_account_profit_id
+msgid "Account Profit"
+msgstr ""
+
+#. module: account_mass_reconcile_transaction_ref
+#: model:ir.ui.view,arch_db:account_mass_reconcile_transaction_ref.view_mass_reconcile_form
+msgid "Advanced. Partner and Transaction Ref"
+msgstr ""
+
+#. module: account_mass_reconcile_transaction_ref
+#: model:ir.ui.view,arch_db:account_mass_reconcile_transaction_ref.view_mass_reconcile_form
+msgid "Advanced. Partner and Transaction Ref. vs Ref."
+msgstr ""
+
+#. module: account_mass_reconcile_transaction_ref
+#: model:ir.model.fields,field_description:account_mass_reconcile_transaction_ref.field_mass_reconcile_advanced_transaction_ref_create_uid
+#: model:ir.model.fields,field_description:account_mass_reconcile_transaction_ref.field_mass_reconcile_advanced_transaction_ref_vs_ref_create_uid
+msgid "Created by"
+msgstr "Oprettet af"
+
+#. module: account_mass_reconcile_transaction_ref
+#: model:ir.model.fields,field_description:account_mass_reconcile_transaction_ref.field_mass_reconcile_advanced_transaction_ref_create_date
+#: model:ir.model.fields,field_description:account_mass_reconcile_transaction_ref.field_mass_reconcile_advanced_transaction_ref_vs_ref_create_date
+msgid "Created on"
+msgstr "Oprettet den"
+
+#. module: account_mass_reconcile_transaction_ref
+#: model:ir.model.fields,field_description:account_mass_reconcile_transaction_ref.field_mass_reconcile_advanced_transaction_ref_date_base_on
+#: model:ir.model.fields,field_description:account_mass_reconcile_transaction_ref.field_mass_reconcile_advanced_transaction_ref_vs_ref_date_base_on
+msgid "Date of reconciliation"
+msgstr ""
+
+#. module: account_mass_reconcile_transaction_ref
+#: model:ir.model.fields,field_description:account_mass_reconcile_transaction_ref.field_mass_reconcile_advanced_transaction_ref_display_name
+#: model:ir.model.fields,field_description:account_mass_reconcile_transaction_ref.field_mass_reconcile_advanced_transaction_ref_vs_ref_display_name
+msgid "Display Name"
+msgstr "Vist navn"
+
+#. module: account_mass_reconcile_transaction_ref
+#: model:ir.model.fields,field_description:account_mass_reconcile_transaction_ref.field_mass_reconcile_advanced_transaction_ref_filter
+#: model:ir.model.fields,field_description:account_mass_reconcile_transaction_ref.field_mass_reconcile_advanced_transaction_ref_vs_ref_filter
+msgid "Filter"
+msgstr ""
+
+#. module: account_mass_reconcile_transaction_ref
+#: model:ir.model.fields,field_description:account_mass_reconcile_transaction_ref.field_mass_reconcile_advanced_transaction_ref_income_exchange_account_id
+#: model:ir.model.fields,field_description:account_mass_reconcile_transaction_ref.field_mass_reconcile_advanced_transaction_ref_vs_ref_income_exchange_account_id
+msgid "Gain Exchange Rate Account"
+msgstr ""
+
+#. module: account_mass_reconcile_transaction_ref
+#: model:ir.model.fields,field_description:account_mass_reconcile_transaction_ref.field_mass_reconcile_advanced_transaction_ref_id
+#: model:ir.model.fields,field_description:account_mass_reconcile_transaction_ref.field_mass_reconcile_advanced_transaction_ref_vs_ref_id
+msgid "ID"
+msgstr "Id"
+
+#. module: account_mass_reconcile_transaction_ref
+#: model:ir.model.fields,field_description:account_mass_reconcile_transaction_ref.field_mass_reconcile_advanced_transaction_ref_journal_id
+#: model:ir.model.fields,field_description:account_mass_reconcile_transaction_ref.field_mass_reconcile_advanced_transaction_ref_vs_ref_journal_id
+msgid "Journal"
+msgstr "Journal"
+
+#. module: account_mass_reconcile_transaction_ref
+#: model:ir.model.fields,field_description:account_mass_reconcile_transaction_ref.field_mass_reconcile_advanced_transaction_ref___last_update
+#: model:ir.model.fields,field_description:account_mass_reconcile_transaction_ref.field_mass_reconcile_advanced_transaction_ref_vs_ref___last_update
+msgid "Last Modified on"
+msgstr "Sidst ændret den"
+
+#. module: account_mass_reconcile_transaction_ref
+#: model:ir.model.fields,field_description:account_mass_reconcile_transaction_ref.field_mass_reconcile_advanced_transaction_ref_vs_ref_write_uid
+#: model:ir.model.fields,field_description:account_mass_reconcile_transaction_ref.field_mass_reconcile_advanced_transaction_ref_write_uid
+msgid "Last Updated by"
+msgstr "Sidst opdateret af"
+
+#. module: account_mass_reconcile_transaction_ref
+#: model:ir.model.fields,field_description:account_mass_reconcile_transaction_ref.field_mass_reconcile_advanced_transaction_ref_vs_ref_write_date
+#: model:ir.model.fields,field_description:account_mass_reconcile_transaction_ref.field_mass_reconcile_advanced_transaction_ref_write_date
+msgid "Last Updated on"
+msgstr "Sidst opdateret den"
+
+#. module: account_mass_reconcile_transaction_ref
+#: model:ir.model.fields,field_description:account_mass_reconcile_transaction_ref.field_mass_reconcile_advanced_transaction_ref_expense_exchange_account_id
+#: model:ir.model.fields,field_description:account_mass_reconcile_transaction_ref.field_mass_reconcile_advanced_transaction_ref_vs_ref_expense_exchange_account_id
+msgid "Loss Exchange Rate Account"
+msgstr ""
+
+#. module: account_mass_reconcile_transaction_ref
+#: model:ir.ui.view,arch_db:account_mass_reconcile_transaction_ref.view_mass_reconcile_form
+msgid ""
+"Match multiple debit vs multiple credit entries. Allow partial "
+"reconciliation. The lines should have the partner, the credit entry "
+"reference is matched vs the debit entry transaction reference."
+msgstr ""
+
+#. module: account_mass_reconcile_transaction_ref
+#: model:ir.ui.view,arch_db:account_mass_reconcile_transaction_ref.view_mass_reconcile_form
+msgid ""
+"Match multiple debit vs multiple credit entries. Allow partial "
+"reconciliation. The lines should have the partner, the credit entry "
+"transaction ref. is matched vs the debit entry transaction ref."
+msgstr ""
+
+#. module: account_mass_reconcile_transaction_ref
+#: model:ir.model.fields,field_description:account_mass_reconcile_transaction_ref.field_mass_reconcile_advanced_transaction_ref_partner_ids
+#: model:ir.model.fields,field_description:account_mass_reconcile_transaction_ref.field_mass_reconcile_advanced_transaction_ref_vs_ref_partner_ids
+msgid "Restrict on partners"
+msgstr ""
+
+#. module: account_mass_reconcile_transaction_ref
+#: model:ir.model.fields,field_description:account_mass_reconcile_transaction_ref.field_mass_reconcile_advanced_transaction_ref_vs_ref_write_off
+#: model:ir.model.fields,field_description:account_mass_reconcile_transaction_ref.field_mass_reconcile_advanced_transaction_ref_write_off
+msgid "Write off allowed"
+msgstr ""
+
+#. module: account_mass_reconcile_transaction_ref
+#: model:ir.model,name:account_mass_reconcile_transaction_ref.model_mass_reconcile_advanced
+msgid "mass.reconcile.advanced"
+msgstr ""
+
+#. module: account_mass_reconcile_transaction_ref
+#: model:ir.model,name:account_mass_reconcile_transaction_ref.model_mass_reconcile_advanced_transaction_ref_vs_ref
+msgid "mass.reconcile.advanced.transaction.ref.vs.ref"
+msgstr ""
+
+#. module: account_mass_reconcile_transaction_ref
+#: model:ir.model,name:account_mass_reconcile_transaction_ref.model_mass_reconcile_advanced_transaction_ref
+msgid "mass.reconcile.advanced.transaction_ref"
+msgstr ""
+
+#. module: account_mass_reconcile_transaction_ref
+#: model:ir.model,name:account_mass_reconcile_transaction_ref.model_account_mass_reconcile_method
+msgid "reconcile method for account_mass_reconcile"
+msgstr ""

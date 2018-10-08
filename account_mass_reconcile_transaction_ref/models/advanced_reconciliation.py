@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
-# © 2013-2016 Camptocamp SA
+# © 2013-2018 Camptocamp SA
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html)
-from openerp import api, models
+from odoo import api, models
 
 
 class MassReconcileAdvancedTransactionRef(models.TransientModel):
@@ -32,7 +32,7 @@ class MassReconcileAdvancedTransactionRef(models.TransientModel):
 
 class MassReconcileAdvancedTransactionRefVsRef(models.TransientModel):
 
-    _name = 'mass.reconcile.advanced.transaction.ref.vs.ref'
+    _name = 'mass.reconcile.advanced.trans_ref_vs_ref'
     _inherit = 'mass.reconcile.advanced'
 
     @api.multi
