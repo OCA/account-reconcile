@@ -31,6 +31,7 @@ addon | version | summary
 --- | --- | ---
 [account_mass_reconcile](account_mass_reconcile/) | 10.0.1.0.0 | Account Mass Reconcile
 [account_mass_reconcile_by_purchase_line](account_mass_reconcile_by_purchase_line/) | 10.0.1.0.0 | Allows to reconcile based on the PO line
+[account_mass_reconcile_transaction_ref](account_mass_reconcile_transaction_ref/) | 10.0.1.1.0 | Mass Reconcile Transaction Ref
 [account_move_base_import](account_move_base_import/) | 10.0.1.0.0 | Journal Entry base import
 [account_move_reconcile_helper](account_move_reconcile_helper/) | 10.0.1.0.0 | Provides tools to facilitate reconciliation
 [bank_statement_foreign_currency](bank_statement_foreign_currency/) | 10.0.1.0.0 | Make visible the foreign currencies in the bank statements
@@ -43,7 +44,6 @@ addon | version | summary
 --- | --- | ---
 [account_invoice_reference](account_invoice_reference/) | 8.0.1.0.1 (unported) | Invoices Reference
 [account_mass_reconcile_ref_deep_search](account_mass_reconcile_ref_deep_search/) | 9.0.1.0.0 (unported) | Mass Reconcile Ref Deep Search
-[account_mass_reconcile_transaction_ref](account_mass_reconcile_transaction_ref/) | 9.0.1.0.0 (unported) | Mass Reconcile Transaction Ref
 [account_move_bankaccount_import](account_move_bankaccount_import/) | 9.0.1.0.0 (unported) | Journal Entry completion from bank account number
 [account_move_so_import](account_move_so_import/) | 9.0.1.0.0 (unported) | Journal Entry Sale Order completion
 [account_move_transactionid_import](account_move_transactionid_import/) | 9.0.1.0.0 (unported) | Journal Entry transactionID import
