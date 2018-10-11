@@ -9,14 +9,15 @@ msgstr ""
 "Project-Id-Version: Odoo Server 11.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2018-04-07 02:39+0000\n"
-"PO-Revision-Date: 2018-04-07 02:39+0000\n"
-"Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2018\n"
+"PO-Revision-Date: 2018-10-11 11:26+0000\n"
+"Last-Translator: Rudolf Schnapka <rs@techno-flex.de>\n"
 "Language-Team: German (https://www.transifex.com/oca/teams/23907/de/)\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 3.1.1\n"
 
 #. module: base_transaction_id
 #: model:ir.model,name:base_transaction_id.model_account_bank_statement_line
@@ -36,7 +37,7 @@ msgstr "Journalposten"
 #. module: base_transaction_id
 #: model:ir.model,name:base_transaction_id.model_sale_order
 msgid "Quotation"
-msgstr ""
+msgstr "Angebot"
 
 #. module: base_transaction_id
 #: model:ir.model.fields,field_description:base_transaction_id.field_account_invoice_transaction_id
