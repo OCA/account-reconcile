@@ -73,7 +73,7 @@ class StripeParser(AccountMoveImportParser):
         return payouts
 
     def parse(self, filebuffer):
-        api_key = self._get_account().get_password()
+        api_key = self._get_account()._get_password()
         for payout in self._get_payout(api_key=api_key):
             if self._skip(payout['id']):
                 continue
