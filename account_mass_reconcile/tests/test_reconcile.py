@@ -15,6 +15,7 @@ class TestReconcile(common.SavepointCase):
                            get_module_resource('account', 'test',
                                                'account_minimal_test.xml'),
                            {}, 'init', False, 'test')
+        cls.reconcile_account_id = cls.env.ref('account.a_salary_expense').id
         cls.rec_history_obj = cls.env['mass.reconcile.history']
         cls.mass_rec_obj = cls.env['account.mass.reconcile']
         cls.mass_rec_method_obj = (
@@ -52,7 +53,11 @@ class TestReconcile(common.SavepointCase):
 
     def test_open_unreconcile(self):
         res = self.mass_rec.open_unreconcile()
-        self.assertEqual([('id', 'in', [])], res.get('domain', []))
+        context = {
+            'search_default_account_id': self.reconcile_account_id,
+            'search_default_unreconciled': True
+        }
+        self.assertEqual(context, res.get('context', {}))
 
     def test_prepare_run_transient(self):
         res = self.mass_rec._prepare_run_transient(self.mass_rec_method)
