@@ -15,6 +15,7 @@ class TestReconcile(common.TransactionCase):
                            get_module_resource('account', 'test',
                                                'account_minimal_test.xml'),
                            {}, 'init', False, 'test')
+        self.reconcile_account_id = self.ref('account.a_salary_expense')
         self.rec_history_obj = self.env['mass.reconcile.history']
         self.mass_rec_obj = self.env['account.mass.reconcile']
         self.mass_rec_method_obj = (
@@ -23,7 +24,7 @@ class TestReconcile(common.TransactionCase):
         self.mass_rec = self.mass_rec_obj.create(
             {
                 'name': 'AER2',
-                'account': self.ref('account.a_salary_expense'),
+                'account': self.reconcile_account_id,
             }
             )
         self.mass_rec_method = self.mass_rec_method_obj.create(
@@ -61,7 +62,11 @@ class TestReconcile(common.TransactionCase):
 
     def test_open_unreconcile(self):
         res = self.mass_rec.open_unreconcile()
-        self.assertEqual(unicode([('id', 'in', [])]), res.get('domain', []))
+        context = {
+            'search_default_account_id': self.reconcile_account_id,
+            'search_default_unreconciled': True
+        }
+        self.assertEqual(context, res.get('context', {}))
 
     def test_prepare_run_transient(self):
         res = self.mass_rec._prepare_run_transient(self.mass_rec_method)
