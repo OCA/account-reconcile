@@ -34,6 +34,7 @@ addon | version | summary
 [account_mass_reconcile_transaction_ref](account_mass_reconcile_transaction_ref/) | 10.0.1.1.0 | Mass Reconcile Transaction Ref
 [account_move_base_import](account_move_base_import/) | 10.0.1.0.0 | Journal Entry base import
 [account_move_reconcile_helper](account_move_reconcile_helper/) | 10.0.1.0.0 | Provides tools to facilitate reconciliation
+[account_set_reconcilable](account_set_reconcilable/) | 10.0.1.0.0 | Allows to set as reconcilable a non reconcilableaccount that already have journal items.
 [bank_statement_foreign_currency](bank_statement_foreign_currency/) | 10.0.1.0.0 | Make visible the foreign currencies in the bank statements
 [base_transaction_id](base_transaction_id/) | 10.0.1.0.0 | Base transaction id for financial institutes
 
