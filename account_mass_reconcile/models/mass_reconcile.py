@@ -251,7 +251,7 @@ class AccountMassReconcile(models.Model):
         )
 
     @api.model
-    def _open_move_line_list(self, move_line_ids, name):
+    def _open_move_line_list(self, context, name):
         return {
             'name': name,
             'view_mode': 'tree,form',
@@ -261,19 +261,19 @@ class AccountMassReconcile(models.Model):
             'type': 'ir.actions.act_window',
             'nodestroy': True,
             'target': 'current',
-            'domain': unicode([('id', 'in', move_line_ids)]),
+            'context': context,
         }
 
     @api.multi
     def open_unreconcile(self):
         """ Open the view of move line with the unreconciled move lines"""
         self.ensure_one()
-        obj_move_line = self.env['account.move.line']
-        lines = obj_move_line.search(
-            [('account_id', '=', self.account.id),
-             ('reconciled', '=', False)])
+        context = {
+            'search_default_account_id': self.account.id,
+            'search_default_unreconciled': True
+        }
         name = _('Unreconciled items')
-        return self._open_move_line_list(lines.ids or [], name)
+        return self._open_move_line_list(context, name)
 
     @api.multi
     def last_history_reconcile(self):
