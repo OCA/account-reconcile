@@ -28,12 +28,16 @@ class TestScenarioReconcile(common.TransactionCase):
         self.account_fx_expense_id = self.ref("account.income_fx_expense")
         self.acs_model = self.env['account.config.settings']
 
+        self.bank_journal_usd = self.env.ref('account.bank_journal_usd')
+
         self.currency_eur_id = self.env.ref("base.EUR").id
         company = self.env.ref('base.main_company')
         self.cr.execute(
             "UPDATE res_company SET currency_id = %s WHERE id = %s",
             [self.currency_eur_id, company.id]
         )
+
+        self.bank_journal_usd.currency_id = self.env.ref("base.USD")
 
         acs_ids = self.acs_model.search(
             [('company_id', '=', company.id)]
@@ -153,7 +157,7 @@ class TestScenarioReconcile(common.TransactionCase):
                 'account_id': self.ref('account.a_recv'),
                 'company_id': self.ref('base.main_company'),
                 'currency_id': self.ref('base.USD'),
-                'journal_id': self.ref('account.bank_journal_usd'),
+                'journal_id': self.bank_journal_usd.id,
                 'partner_id': self.ref('base.res_partner_12'),
                 'invoice_line_ids': [
                     (0, 0, {
@@ -177,7 +181,7 @@ class TestScenarioReconcile(common.TransactionCase):
                 'balance_end_real': 0.0,
                 'balance_start': 0.0,
                 'date': fields.Date.today(),
-                'journal_id': self.ref('account.bank_journal_usd'),
+                'journal_id': self.bank_journal_usd.id,
                 'currency_id': self.ref('base.USD'),
                 'line_ids': [
                     (0, 0, {
