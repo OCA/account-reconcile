@@ -52,7 +52,7 @@ class MassReconcileOptions(models.AbstractModel):
         default='newest',
     )
     _filter = fields.Char(
-        string='Filter',
+        string='Filter', oldname='filter',
     )
     income_exchange_account_id = fields.Many2one(
         'account.account',
