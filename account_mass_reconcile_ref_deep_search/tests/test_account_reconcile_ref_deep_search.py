@@ -40,7 +40,7 @@ class TestAccountReconcileRefDeepSearch(SavepointCase):
     def test_account_reconcile_ref_deep_search(self):
         self.assertEqual(self.cust_invoice.state, 'open')
         bank_journal = self.env['account.journal'].search([
-            ('type', '=', 'sale')], limit=1)
+            ('type', '=', 'bank')], limit=1)
 
         # Create payment
         payment = self.env['account.payment'].create({
