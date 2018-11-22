@@ -7,10 +7,8 @@ class AccountMassReconcileMethod(models.Model):
 
     _inherit = 'account.mass.reconcile.method'
 
-    @api.model
-    def _get_all_rec_method(self):
-        _super = super(AccountMassReconcileMethod, self)
-        methods = _super._get_all_rec_method()
+    def _selection_name(self):
+        methods = super()._selection_name()
         methods += [
             ('mass.reconcile.advanced.ref.deep.search',
              'Advanced. Partner and Ref. Deep Search'),
