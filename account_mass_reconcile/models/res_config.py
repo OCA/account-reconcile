@@ -11,6 +11,7 @@ class AccountConfigSettings(models.TransientModel):
         related="company_id.reconciliation_commit_every",
         string="How often to commit when performing automatic reconciliation.",
         help="Leave zero to commit only at the end of the process.",
+        readonly=False,
     )
 
 
