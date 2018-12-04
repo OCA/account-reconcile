@@ -10,6 +10,7 @@ class MassReconcileHistory(models.Model):
     Each history stores the list of reconciliations done
     """
     _name = 'mass.reconcile.history'
+    _description = 'Store an history of the runs per profile'
     _rec_name = 'mass_reconcile_id'
     _order = 'date DESC'
 

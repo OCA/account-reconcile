@@ -4,18 +4,18 @@
 
 {
     "name": "Account Mass Reconcile",
-    "version": "11.0.1.0.0",
+    "version": "12.0.1.0.0",
     "depends": [
-        "account_invoicing",
+        "account",
     ],
     "author": "Akretion,Camptocamp,Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/account-reconcile",
     "category": "Finance",
     "data": [
-        "views/mass_reconcile.xml",
-        "views/mass_reconcile_history_view.xml",
         "security/ir_rule.xml",
         "security/ir.model.access.csv",
+        "views/mass_reconcile.xml",
+        "views/mass_reconcile_history_view.xml",
         "views/res_config_view.xml",
     ],
     'license': 'AGPL-3',

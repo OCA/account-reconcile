@@ -45,19 +45,19 @@
                         </page>
                         <page name="information" string="Information">
                           <separator colspan="4" string="Simple. Amount and Name"/>
-                          <label string="Match one debit line vs one credit line. Do not allow partial reconciliation.
+                          <label for="reconcile_method" string="Match one debit line vs one credit line. Do not allow partial reconciliation.
 The lines should have the same amount (with the write-off) and the same name to be reconciled." colspan="4"/>
 
                           <separator colspan="4" string="Simple. Amount and Partner"/>
-                          <label string="Match one debit line vs one credit line. Do not allow partial reconciliation.
+                          <label for="reconcile_method" string="Match one debit line vs one credit line. Do not allow partial reconciliation.
 The lines should have the same amount (with the write-off) and the same partner to be reconciled." colspan="4"/>
 
                           <separator colspan="4" string="Simple. Amount and Reference"/>
-                          <label string="Match one debit line vs one credit line. Do not allow partial reconciliation.
+                          <label for="reconcile_method" string="Match one debit line vs one credit line. Do not allow partial reconciliation.
 The lines should have the same amount (with the write-off) and the same reference to be reconciled." colspan="4"/>
                           <group colspan="2" col="2">
                               <separator colspan="4" string="Advanced. Partner and Ref"/>
-                              <label string="Match multiple debit vs multiple credit entries. Allow partial reconciliation.
+                              <label for="reconcile_method" string="Match multiple debit vs multiple credit entries. Allow partial reconciliation.
 The lines should have the same partner, and the credit entry ref. is matched with the debit entry ref. or name." colspan="4"/>
                           </group>
                         </page>
@@ -81,7 +81,7 @@ The lines should have the same partner, and the credit entry ref. is matched wit
                 <field name="account"/>
                 <field name="company_id" groups="base.group_multi_company"/>
                 <field name="unreconciled_count"/>
-                <button icon="gtk-ok" name="run_reconcile" colspan="4"
+                <button icon="fa-cogs" name="run_reconcile" colspan="4"
                     string="Start Auto Reconcilation" type="object"/>
                 <button icon="fa-share" name="last_history_reconcile" colspan="2"
                     string="Display items reconciled on the last run" type="object"/>
@@ -132,8 +132,8 @@ The lines should have the same partner, and the credit entry ref. is matched wit
     <!-- menu item -->
 
     <menuitem action="action_account_mass_reconcile"
-        id="menu_mass_reconcile"
-        parent="account.menu_finance_entries"/>
+        id="menu_mass_reconcile" sequence="30"
+        parent="account.menu_finance_entries_actions"/>
 
 
 <data noupdate="1">
