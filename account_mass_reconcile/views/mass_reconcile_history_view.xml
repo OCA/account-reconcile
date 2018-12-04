@@ -6,10 +6,10 @@
         <field name="model">mass.reconcile.history</field>
         <field name="arch" type="xml">
             <search string="Automatic Mass Reconcile History">
-                <filter icon="terp-go-today" string="Today"
+                <filter icon="terp-go-today" name="Today"
                     domain="[('date','&lt;', time.strftime('%%Y-%%m-%%d 23:59:59')), ('date','&gt;=', time.strftime('%%Y-%%m-%%d 00:00:00'))]"
                     help="Todays' Reconcilations" />
-                <filter icon="terp-go-week" string="7 Days"
+                <filter icon="terp-go-week" name="7 Days"
                     help="Reconciliations of last 7 days"
                     domain="[('date','&lt;', time.strftime('%%Y-%%m-%%d 23:59:59')),('date','&gt;=',(datetime.date.today()-datetime.timedelta(days=7)).strftime('%%Y-%%m-%%d 00:00:00'))]"
                 />
@@ -20,10 +20,10 @@
 
                 <newline/>
                 <group expand="0" string="Group By...">
-                    <filter string="Reconciliation Profile"
+                    <filter name="Reconciliation Profile"
                         icon="terp-stock_effects-object-colorize"
                         domain="[]" context="{'group_by': 'mass_reconcile_id'}"/>
-                    <filter string="Date" icon="terp-go-month" domain="[]"
+                    <filter name="Date" icon="terp-go-month" domain="[]"
                         context="{'group_by': 'date'}"/>
                 </group>
             </search>

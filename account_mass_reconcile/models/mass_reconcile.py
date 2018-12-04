@@ -21,6 +21,7 @@ class MassReconcileOptions(models.AbstractModel):
     wizards and allows to launch the wizards alone
     """
     _name = 'mass.reconcile.options'
+    _description = 'Options of a reconciliation profile'
 
     @api.model
     def _get_rec_base_date(self):
@@ -319,7 +320,7 @@ class AccountMassReconcile(models.Model):
         """
         def _get_date(reconcile):
             if reconcile.last_history.date:
-                return fields.Datetime.from_string(reconcile.last_history.date)
+                return fields.Datetime.to_datetime(reconcile.last_history.date)
             else:
                 return datetime.min
 
