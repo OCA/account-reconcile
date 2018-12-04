@@ -134,7 +134,7 @@ class TestScenarioReconcile(common.SavepointCase):
     def test_scenario_reconcile_currency(self):
         # create currency rate
         self.env['res.currency.rate'].create({
-            'name': fields.Date.today() + ' 00:00:00',
+            'name': fields.Date.today().strftime('%Y-%m-%d') + ' 00:00:00',
             'currency_id': self.ref('base.USD'),
             'rate': 1.5,
         })
