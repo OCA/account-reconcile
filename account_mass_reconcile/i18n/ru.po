@@ -45,6 +45,7 @@ msgstr ""
 #. module: account_mass_reconcile
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile_account
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_advanced_account_id
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_advanced_by_purchase_line_account_id
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_advanced_ref_account_id
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_base_account_id
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_account_id
@@ -57,6 +58,7 @@ msgstr ""
 #. module: account_mass_reconcile
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile_method_account_lost_id
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_advanced_account_lost_id
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_advanced_by_purchase_line_account_lost_id
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_advanced_ref_account_lost_id
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_base_account_lost_id
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_options_account_lost_id
@@ -70,6 +72,7 @@ msgstr ""
 #. module: account_mass_reconcile
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile_method_account_profit_id
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_advanced_account_profit_id
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_advanced_by_purchase_line_account_profit_id
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_advanced_ref_account_profit_id
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_base_account_profit_id
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_options_account_profit_id
@@ -105,7 +108,7 @@ msgid "Automatic Mass Reconcile Method"
 msgstr ""
 
 #. module: account_mass_reconcile
-#: code:addons/account_mass_reconcile/models/base_reconciliation.py:157
+#: code:addons/account_mass_reconcile/models/base_reconciliation.py:160
 #, python-format
 msgid "Automatic Write Off"
 msgstr ""
@@ -166,6 +169,7 @@ msgstr ""
 
 #. module: account_mass_reconcile
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile_method_date_base_on
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_advanced_by_purchase_line_date_base_on
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_advanced_date_base_on
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_advanced_ref_date_base_on
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_base_date_base_on
@@ -208,6 +212,7 @@ msgstr ""
 #. module: account_mass_reconcile
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile_method__filter
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_advanced__filter
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_advanced_by_purchase_line__filter
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_advanced_ref__filter
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_base__filter
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_options__filter
@@ -225,6 +230,7 @@ msgstr ""
 
 #. module: account_mass_reconcile
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile_method_income_exchange_account_id
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_advanced_by_purchase_line_income_exchange_account_id
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_advanced_income_exchange_account_id
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_advanced_ref_income_exchange_account_id
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_base_income_exchange_account_id
@@ -299,6 +305,7 @@ msgstr ""
 
 #. module: account_mass_reconcile
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile_method_journal_id
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_advanced_by_purchase_line_journal_id
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_advanced_journal_id
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_advanced_ref_journal_id
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_base_journal_id
@@ -360,6 +367,7 @@ msgstr ""
 
 #. module: account_mass_reconcile
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile_method_expense_exchange_account_id
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_advanced_by_purchase_line_expense_exchange_account_id
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_advanced_expense_exchange_account_id
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_advanced_ref_expense_exchange_account_id
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_base_expense_exchange_account_id
@@ -386,8 +394,8 @@ msgstr ""
 #: model:ir.ui.view,arch_db:account_mass_reconcile.account_mass_reconcile_form
 msgid ""
 "Match multiple debit vs multiple credit entries. Allow partial "
-"reconciliation. The lines should have the partner, the credit entry ref. is "
-"matched vs the debit entry ref. or name."
+"reconciliation. The lines should have the same partner, and the credit entry "
+"ref. is matched with the debit entry ref. or name."
 msgstr ""
 
 #. module: account_mass_reconcile
@@ -462,6 +470,7 @@ msgid "Reconciliations of last 7 days"
 msgstr ""
 
 #. module: account_mass_reconcile
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_advanced_by_purchase_line_partner_ids
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_advanced_partner_ids
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_advanced_ref_partner_ids
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_base_partner_ids
@@ -557,6 +566,7 @@ msgstr ""
 
 #. module: account_mass_reconcile
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile_method_write_off
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_advanced_by_purchase_line_write_off
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_advanced_ref_write_off
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_advanced_write_off
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_base_write_off
