@@ -371,7 +371,7 @@ msgid "Missing"
 msgstr ""
 
 #. module: account_move_base_import
-#: code:addons/account_move_base_import/models/account_journal.py:309
+#: code:addons/account_move_base_import/models/account_journal.py:310
 #, python-format
 msgid ""
 "Missing column! Column %s you try to import is not present in the move line!"
@@ -413,7 +413,7 @@ msgid "No commission account is set on the journal."
 msgstr ""
 
 #. module: account_move_base_import
-#: code:addons/account_move_base_import/models/account_journal.py:303
+#: code:addons/account_move_base_import/models/account_journal.py:304
 #, python-format
 msgid "Nothing to import: The file is empty"
 msgstr ""
@@ -494,7 +494,7 @@ msgid "Statement file"
 msgstr ""
 
 #. module: account_move_base_import
-#: code:addons/account_move_base_import/models/account_journal.py:348
+#: code:addons/account_move_base_import/models/account_journal.py:354
 #, python-format
 msgid "Statement import error The statement cannot be created: %s"
 msgstr ""
