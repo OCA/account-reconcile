@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-
+<!--Copyright 2017-19 Eficent Business and IT Consulting Services S.L.-->
+<!--(http://www.eficent.com)-->
+<!--License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).-->
     <record id="res_partner_view_buttons" model="ir.ui.view">
         <field name="name">res.partner.view.buttons</field>
         <field name="model">res.partner</field>
