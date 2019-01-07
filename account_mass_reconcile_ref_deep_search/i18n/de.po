@@ -1,21 +1,22 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
 # * account_mass_reconcile_ref_deep_search
-# 
+#
 # Translators:
-# Rudolf Schnapka <rs@techno-flex.de>, 2016
+# OCA Transbot <transbot@odoo-community.org>, 2016
+# Rudolf Schnapka <rs@techno-flex.de>, 2017
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 9.0c\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-06-30 02:44+0000\n"
-"PO-Revision-Date: 2016-06-30 02:44+0000\n"
-"Last-Translator: Rudolf Schnapka <rs@techno-flex.de>, 2016\n"
+"POT-Creation-Date: 2017-05-06 00:19+0000\n"
+"PO-Revision-Date: 2017-05-06 00:19+0000\n"
+"Last-Translator: Rudolf Schnapka <rs@techno-flex.de>, 2017\n"
 "Language-Team: German (https://www.transifex.com/oca/teams/23907/de/)\n"
+"Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Language: de\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. module: account_mass_reconcile_ref_deep_search
@@ -25,8 +26,8 @@ msgid ""
 "A matcher %s is compared with a matcher %s, the _matchers and "
 "_opposite_matchers are probably wrong"
 msgstr ""
-"Der Abstimmer %s wird mit dem Abstimmer %s verglichen, der Abstimmer und das"
-" Gegenstück sind wahrscheinlich falsch"
+"Der Abstimmer %s wird mit dem Abstimmer %s verglichen, der Abstimmer und das "
+"Gegenstück sind wahrscheinlich falsch"
 
 #. module: account_mass_reconcile_ref_deep_search
 #: model:ir.model.fields,field_description:account_mass_reconcile_ref_deep_search.field_mass_reconcile_advanced_ref_deep_search_account_id
@@ -46,6 +47,11 @@ msgstr "Konto für Umsätze"
 #. module: account_mass_reconcile_ref_deep_search
 #: model:ir.ui.view,arch_db:account_mass_reconcile_ref_deep_search.view_mass_reconcile_form
 msgid "Advanced. Partner and Ref Deep Search"
+msgstr "Weitergehend. Partner und Ref Tiefensuche"
+
+#. module: account_mass_reconcile_ref_deep_search
+#: model:ir.model.fields,field_description:account_mass_reconcile_ref_deep_search.field_mass_reconcile_advanced_ref_deep_search_analytic_account_id
+msgid "Analytic account for write-off"
 msgstr ""
 
 #. module: account_mass_reconcile_ref_deep_search
@@ -115,6 +121,9 @@ msgid ""
 "reconciliation.                             The lines should have the "
 "partner, the credit entry ref is searched inside the debit entry ref."
 msgstr ""
+"Stimme mehrere Soll- mit mehreren Habenposten ab. Erlaube Teilausgleich. Die "
+"Positionen müssen den Partner enthalten, die Ref. der Habenbuchung wird mit "
+"der Ref. oder dem Namen der Sollbuchungabgestimmt."
 
 #. module: account_mass_reconcile_ref_deep_search
 #: model:ir.model.fields,field_description:account_mass_reconcile_ref_deep_search.field_mass_reconcile_advanced_ref_deep_search_partner_ids
@@ -129,7 +138,7 @@ msgstr "Abschreibung erlaubt"
 #. module: account_mass_reconcile_ref_deep_search
 #: model:ir.model,name:account_mass_reconcile_ref_deep_search.model_mass_reconcile_advanced_ref_deep_search
 msgid "mass.reconcile.advanced.ref.deep.search"
-msgstr ""
+msgstr "mass.reconcile.advanced.ref.deep.search"
 
 #. module: account_mass_reconcile_ref_deep_search
 #: model:ir.model,name:account_mass_reconcile_ref_deep_search.model_account_mass_reconcile_method
