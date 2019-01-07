@@ -44,7 +44,7 @@ class TestAccountReconcileTransactionRef(SavepointCase):
         self.assertEqual(self.cust_invoice.transaction_id,
                          'test_transaction_id')
         bank_journal = self.env['account.journal'].search([
-            ('type', '=', 'sale')], limit=1)
+            ('type', '=', 'bank')], limit=1)
 
         # Create payment
         payment = self.env['account.payment'].create({
