@@ -45,7 +45,8 @@ class BankAccRecStatement(models.Model):
     @api.multi
     def copy(self, default=None):
         self.ensure_one()
-        if default is None: default = {}
+        if default is None:
+            default = {}
         default.update({'credit_move_line_ids': [],
                         'debit_move_line_ids': [],
                         'name': ''})
@@ -61,7 +62,6 @@ class BankAccRecStatement(models.Model):
     def unlink(self):
         """Reset the related account.move.line to be re-assigned later
         to statement."""
-        statement_line_obj = self.env['bank.acc.rec.statement.line']
         self.check_group()  # Check if user is allowed to perform the action
         for statement in self:
             statement_lines = \
