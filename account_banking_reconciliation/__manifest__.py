@@ -10,7 +10,7 @@
     "category": "Accounting and Financial Management",
     "author": "NovaPoint Group LLC, Ursa Information Systems, "
               "Odoo Community Association (OCA)",
-    "website": "http://www.novapointgroup.com",
+    "website": "https://github.com/OCA/account-reconcile",
     "depends": [
         "account_voucher",
     ],
