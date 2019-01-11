@@ -269,12 +269,12 @@
                 src_model="bank.acc.rec.statement"/>
 
     <act_window id="act_supplier_payment_to_add" name="Supplier Payment"
-                domain="[('journal_id.type', 'in', ['bank', 'cash']), ('type','=','receipt')]"
+                domain="[('voucher_type', 'in', ['bank', 'cash']), ('type','=','receipt')]"
                 context="{'type':'payment'}" res_model="account.voucher"
                 src_model="bank.acc.rec.statement"/>
 
     <act_window id="act_customer_payment_to_add" name="Customer Payment"
-                domain="[('journal_id.type', 'in', ['bank', 'cash']), ('type','=','receipt')]"
+                domain="[('voucher_type', 'in', ['bank', 'cash']), ('type','=','receipt')]"
                 context="{'type':'receipt'}" res_model="account.voucher"
                 src_model="bank.acc.rec.statement"/>
 
