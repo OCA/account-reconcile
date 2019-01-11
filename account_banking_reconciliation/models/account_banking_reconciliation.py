@@ -138,21 +138,18 @@ class BankAccRecStatement(models.Model):
             statement_lines = \
                 statement.credit_move_line_ids + statement.debit_move_line_ids
             line_ids = []
-            statement_line_ids = []
             for statement_line in statement_lines:
-                statement_line_ids.append(statement_line)
-
                 if statement_line.move_line_id:
                     # Find move lines related to statement lines
-                    line_ids.append(statement_line.move_line_id)
-
+                    line_ids.append(statement_line.move_line_id.id)
             # Reset 'Cleared' and 'Bank Acc Rec Statement ID' to False
-            line_ids.write({'cleared_bank_account': False,
-                            'bank_acc_rec_statement_id': False})
+            self.env['account.move.line'].browse(line_ids).write(
+                {'cleared_bank_account': False,
+                 'bank_acc_rec_statement_id': False})
 
             # Reset 'Cleared' in statement lines
-            statement_line_ids.write({'cleared_bank_account': False,
-                                      'research_required': False})
+            statement_lines.write({'cleared_bank_account': False,
+                                   'research_required': False})
             # Reset statement
             statement.write({'state': 'draft',
                              'verified_by_user_id': False,
