@@ -5,7 +5,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 import time
 
-from odoo import fields, models, api, _
+from odoo import api, fields, models, _
 from odoo.exceptions import UserError
 import odoo.addons.decimal_precision as dp
 from operator import itemgetter
@@ -45,13 +45,10 @@ class BankAccRecStatement(models.Model):
     @api.multi
     def copy(self, default=None):
         self.ensure_one()
-        if default is None:
-            default = {}
-        default.update({
-            'credit_move_line_ids': [],
-            'debit_move_line_ids': [],
-            'name': '',
-        })
+        if default is None: default = {}
+        default.update({'credit_move_line_ids': [],
+                        'debit_move_line_ids': [],
+                        'name': ''})
         return super(BankAccRecStatement, self).copy(default=default)
 
     @api.multi
@@ -69,9 +66,7 @@ class BankAccRecStatement(models.Model):
         for statement in self:
             statement_lines = \
                 statement.credit_move_line_ids + statement.debit_move_line_ids
-            statement_line_ids = map(lambda x: x.id, statement_lines)
-            statement_line_brws = statement_line_obj.browse(statement_line_ids)
-            statement_line_brws.unlink()  # call unlink method to reset
+            statement_lines.unlink()  # call unlink method to reset
         return super(BankAccRecStatement, self).unlink()
 
     @api.multi
@@ -129,13 +124,11 @@ class BankAccRecStatement(models.Model):
                     statement_line.cleared_bank_account
                 statement_line.move_line_id.write({
                     'cleared_bank_account': cleared_bank_account,
-                    'bank_acc_rec_statement_id': statement_id
-                })
+                    'bank_acc_rec_statement_id': statement_id})
 
             statement.write({'state': 'done',
                              'verified_by_user_id': self.env.uid,
-                             'verified_date': time.strftime('%Y-%m-%d')
-                             })
+                             'verified_date': time.strftime('%Y-%m-%d')})
         return True
 
     @api.multi
@@ -151,22 +144,19 @@ class BankAccRecStatement(models.Model):
 
                 if statement_line.move_line_id:
                     # Find move lines related to statement lines
-                    line_ids.append(
-                        statement_line.move_line_id)
+                    line_ids.append(statement_line.move_line_id)
 
             # Reset 'Cleared' and 'Bank Acc Rec Statement ID' to False
             line_ids.write({'cleared_bank_account': False,
-                            'bank_acc_rec_statement_id': False,
-                            })
+                            'bank_acc_rec_statement_id': False})
+
             # Reset 'Cleared' in statement lines
             statement_line_ids.write({'cleared_bank_account': False,
-                                      'research_required': False
-                                      })
+                                      'research_required': False})
             # Reset statement
             statement.write({'state': 'draft',
                              'verified_by_user_id': False,
-                             'verified_date': False
-                             })
+                             'verified_date': False})
         return True
 
     @api.multi
@@ -175,8 +165,7 @@ class BankAccRecStatement(models.Model):
         for statement in self:
             statement_lines = \
                 statement.credit_move_line_ids + statement.debit_move_line_ids
-            statement_line_ids = map(lambda x: x.id, statement_lines)
-            statement_line_ids.write({'cleared_bank_account': True})
+            statement_lines.write({'cleared_bank_account': True})
         return True
 
     @api.multi
@@ -185,8 +174,7 @@ class BankAccRecStatement(models.Model):
         for statement in self:
             statement_lines = \
                 statement.credit_move_line_ids + statement.debit_move_line_ids
-            statement_line_ids = map(lambda x: x.id, statement_lines)
-            statement_line_ids.write({'cleared_bank_account': False})
+            statement_lines.write({'cleared_bank_account': False})
         return True
 
     def _compute_get_balance(self):
@@ -201,7 +189,7 @@ class BankAccRecStatement(models.Model):
         Total Sum of Checks Amount Cleared (B))
         Difference= (Ending Balance – Beginning Balance) - cleared balance =
         should be zero.
-"""
+        """
         account_precision = self.env['decimal.precision'].precision_get(
             'Account')
         for statement in self:
@@ -286,10 +274,7 @@ class BankAccRecStatement(models.Model):
 
             # process only if the statement is in draft state
             if statement.state == 'draft':
-                vals = self.onchange_account_id(
-                    statement.account_id,
-                    statement.ending_date,
-                    statement.suppress_ending_date_filter)
+                vals = statement.onchange_account_id()
 
                 # list of credit lines
                 outlist = []
@@ -384,8 +369,7 @@ class BankAccRecStatement(models.Model):
                     'amountcur': amount_currency,
                     'name': line.name,
                     'move_line_id': line.id,
-                    'type': line.credit and 'cr' or 'dr'
-                }
+                    'type': line.credit and 'cr' or 'dr'}
 
                 if res['type'] == 'cr':
                     val['value']['credit_move_line_ids'].append(res)
@@ -422,12 +406,12 @@ class BankAccRecStatement(models.Model):
                                    help="The previous statement date "
                                         "of your bank statement.")
     starting_balance = fields.Float('Starting Balance', required=True,
-                                    digits_compute=dp.get_precision('Account'),
+                                    digits=dp.get_precision('Account'),
                                     help="The Starting Balance on your "
                                          "bank statement.",
                                     states={'done': [('readonly', True)]})
     ending_balance = fields.Float('Ending Balance', required=True,
-                                  digits_compute=dp.get_precision('Account'),
+                                  digits=dp.get_precision('Account'),
                                   help="The Ending Balance on your "
                                        "bank statement.",
                                   states={'done': [('readonly', True)]})
@@ -458,41 +442,38 @@ class BankAccRecStatement(models.Model):
                                               'done': [('readonly', True)]})
     cleared_balance = fields.Float(compute='_compute_get_balance',
                                    string='Cleared Balance',
-                                   digits_compute=dp.get_precision('Account'),
+                                   digits=dp.get_precision('Account'),
                                    help="Total Sum of the Deposit Amount "
                                         "Cleared – Total Sum of Checks, "
                                         "Withdrawals, Debits, and Service "
                                         "Charges Amount Cleared")
     difference = fields.Float(compute='_compute_get_balance',
                               string='Difference',
-                              digits_compute=dp.get_precision('Account'),
+                              digits=dp.get_precision('Account'),
                               help="(Ending Balance – Beginning Balance) - "
                                    "Cleared Balance.")
     cleared_balance_cur = fields.Float(compute='_compute_get_balance',
                                        string='Cleared Balance (Cur)',
-                                       digits_compute=dp.get_precision(
-                                           'Account'),
+                                       digits=dp.get_precision('Account'),
                                        help="Total Sum of the Deposit "
                                             "Amount Cleared – Total Sum of "
                                             "Checks, Withdrawals, Debits, and"
                                             " Service Charges Amount Cleared")
     difference_cur = fields.Float(compute='_compute_get_balance',
                                   string='Difference (Cur)',
-                                  digits_compute=dp.get_precision('Account'),
+                                  digits=dp.get_precision('Account'),
                                   help="(Ending Balance – Beginning Balance)"
                                        " - Cleared Balance.")
     uncleared_balance = fields.Float(compute='_compute_get_balance',
                                      string='Uncleared Balance',
-                                     digits_compute=dp.get_precision(
-                                         'Account'),
+                                     digits=dp.get_precision('Account'),
                                      help="Total Sum of the Deposit "
                                           "Amount Uncleared – Total Sum of "
                                           "Checks, Withdrawals, Debits, and"
                                           " Service Charges Amount Uncleared")
     uncleared_balance_cur = fields.Float(compute='_compute_get_balance',
                                          string='Unleared Balance (Cur)',
-                                         digits_compute=dp.get_precision(
-                                             'Account'),
+                                         digits=dp.get_precision('Account'),
                                          help="Total Sum of the Deposit Amount"
                                               " Uncleared – Total Sum of "
                                               "Checks, Withdrawals, Debits, "
@@ -501,28 +482,26 @@ class BankAccRecStatement(models.Model):
     sum_of_credits = fields.Float(compute='_compute_get_balance',
                                   string='Checks, Withdrawals, Debits, and'
                                          ' Service Charges Amount',
-                                  digits_compute=dp.get_precision('Account'),
+                                  digits=dp.get_precision('Account'),
                                   type='float',
                                   help="Total SUM of Amts of lines with"
                                        " Cleared = True")
     sum_of_debits = fields.Float(compute='_compute_get_balance',
                                  string='Deposits, Credits, and '
                                         'Interest Amount',
-                                 digits_compute=dp.get_precision('Account'),
+                                 digits=dp.get_precision('Account'),
                                  help="Total SUM of Amts of lines with "
                                       "Cleared = True")
     sum_of_credits_cur = fields.Float(compute='_compute_get_balance',
                                       string='Checks, Withdrawals, Debits, and'
                                              ' Service Charges Amount (Cur)',
-                                      digits_compute=dp.get_precision(
-                                          'Account'),
+                                      digits=dp.get_precision('Account'),
                                       help="Total SUM of Amts of lines "
                                            "with Cleared = True")
     sum_of_debits_cur = fields.Float(compute='_compute_get_balance',
                                      string='Deposits, Credits, and '
                                             'Interest Amount (Cur)',
-                                     digits_compute=dp.get_precision(
-                                         'Account'),
+                                     digits=dp.get_precision('Account'),
                                      help="Total SUM of Amts of lines "
                                           "with Cleared = True")
     sum_of_credits_lines = fields.Float(compute='_compute_get_balance',
@@ -539,28 +518,26 @@ class BankAccRecStatement(models.Model):
     sum_of_ucredits = fields.Float(compute='_compute_get_balance',
                                    string='Uncleared - Checks, Withdrawals, '
                                           'Debits, and Service Charges Amount',
-                                   digits_compute=dp.get_precision('Account'),
+                                   digits=dp.get_precision('Account'),
                                    help="Total SUM of Amts of lines with "
                                         "Cleared = False")
     sum_of_udebits = fields.Float(compute='_compute_get_balance',
                                   string='Uncleared - Deposits, Credits, '
                                          'and Interest Amount',
-                                  digits_compute=dp.get_precision('Account'),
+                                  digits=dp.get_precision('Account'),
                                   help="Total SUM of Amts of lines with "
                                        "Cleared = False")
     sum_of_ucredits_cur = fields.Float(compute='_compute_get_balance',
                                        string='Uncleared - Checks, '
                                               'Withdrawals, Debits, and '
                                               'Service Charges Amount (Cur)',
-                                       digits_compute=dp.get_precision(
-                                           'Account'),
+                                       digits=dp.get_precision('Account'),
                                        help="Total SUM of Amts of lines "
                                             "with Cleared = False")
     sum_of_udebits_cur = fields.Float(compute='_compute_get_balance',
                                       string='Uncleared - Deposits, Credits, '
                                              'and Interest Amount (Cur)',
-                                      digits_compute=dp.get_precision(
-                                          'Account'),
+                                      digits=dp.get_precision('Account'),
                                       help="Total SUM of Amts of lines with"
                                            " Cleared = False")
     sum_of_ucredits_lines = fields.Float(compute='_compute_get_balance',
@@ -607,11 +584,11 @@ class BankAccRecStatementLine(models.Model):
                       help="Derived from related Journal Item.")
     partner_id = fields.Many2one('res.partner', string='Partner',
                                  help="Derived from related Journal Item.")
-    amount = fields.Float('Amount', digits_compute=dp.get_precision('Account'),
+    amount = fields.Float('Amount', digits=dp.get_precision('Account'),
                           help="Derived from the 'debit' amount from "
                                "related Journal Item.")
     amountcur = fields.Float('Amount in Currency',
-                             digits_compute=dp.get_precision('Account'),
+                             digits=dp.get_precision('Account'),
                              help="Derived from the 'amount currency' "
                                   "amount from related Journal Item.")
     date = fields.Date('Date', required=True,
@@ -656,6 +633,5 @@ class BankAccRecStatementLine(models.Model):
         account_move_line_obj.browse(move_line_ids).write(
             {'draft_assigned_to_statement': False,
              'cleared_bank_account': False,
-             'bank_acc_rec_statement_id': False,
-             })
+             'bank_acc_rec_statement_id': False})
         return super(BankAccRecStatementLine, self).unlink()
