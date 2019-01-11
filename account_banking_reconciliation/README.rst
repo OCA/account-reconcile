@@ -179,9 +179,9 @@ Contributors
 ------------
 
 * Nova Point Group <info@novapointgroup.com>
-* Balaji Kannan <bkannan@ursainfosystems.com>
-* Bhavesh Odedra <bodedra@ursainfosystems.com>
-* Sandeep Mangukiya <smangukiya@ursainfosystems.com>
+* Balaji Kannan <bkannan@opensourceintegrators.com>
+* Bhavesh Odedra <bodedra@opensourceintegrators.com>
+* Sandeep Mangukiya <smangukiya@opensourceintegrators.com>
 
 Funders
 -------
@@ -189,7 +189,7 @@ Funders
 The development of this module has been financially supported by:
 
 * Nova Point Group <http://www.novapointgroup.com>
-* Ursa Information Systems <http://www.ursainfosystems.com>
+* Open Source Integrators <https://opensourceintegrators.com>
 
 Maintainer
 ----------

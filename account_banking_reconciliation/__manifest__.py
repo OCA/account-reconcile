@@ -8,7 +8,7 @@
     "version": "10.0.1.0.0",
     "license": "AGPL-3",
     "category": "Accounting and Financial Management",
-    "author": "NovaPoint Group LLC, Ursa Information Systems, "
+    "author": "NovaPoint Group LLC, Open Source Integrators, "
               "Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/account-reconcile",
     "depends": [
