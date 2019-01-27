@@ -19,7 +19,7 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0;\n"
 
 #. module: account_mass_reconcile_ref_deep_search
-#: code:addons/account_mass_reconcile_ref_deep_search/models/advanced_reconciliation.py:51
+#: code:addons/account_mass_reconcile_ref_deep_search/models/advanced_reconciliation.py:50
 #, python-format
 msgid ""
 "A matcher %s is compared with a matcher %s, the _matchers and "
@@ -27,28 +27,8 @@ msgid ""
 msgstr ""
 
 #. module: account_mass_reconcile_ref_deep_search
-#: model:ir.model.fields,field_description:account_mass_reconcile_ref_deep_search.field_mass_reconcile_advanced_ref_deep_search_account_id
-msgid "Account"
-msgstr ""
-
-#. module: account_mass_reconcile_ref_deep_search
-#: model:ir.model.fields,field_description:account_mass_reconcile_ref_deep_search.field_mass_reconcile_advanced_ref_deep_search_account_lost_id
-msgid "Account Lost"
-msgstr ""
-
-#. module: account_mass_reconcile_ref_deep_search
-#: model:ir.model.fields,field_description:account_mass_reconcile_ref_deep_search.field_mass_reconcile_advanced_ref_deep_search_account_profit_id
-msgid "Account Profit"
-msgstr ""
-
-#. module: account_mass_reconcile_ref_deep_search
 #: model:ir.ui.view,arch_db:account_mass_reconcile_ref_deep_search.view_mass_reconcile_form
 msgid "Advanced. Partner and Ref Deep Search"
-msgstr ""
-
-#. module: account_mass_reconcile_ref_deep_search
-#: model:ir.model.fields,field_description:account_mass_reconcile_ref_deep_search.field_mass_reconcile_advanced_ref_deep_search_analytic_account_id
-msgid "Analytic account for write-off"
 msgstr ""
 
 #. module: account_mass_reconcile_ref_deep_search
@@ -62,34 +42,14 @@ msgid "Created on"
 msgstr "ایجاد شده در"
 
 #. module: account_mass_reconcile_ref_deep_search
-#: model:ir.model.fields,field_description:account_mass_reconcile_ref_deep_search.field_mass_reconcile_advanced_ref_deep_search_date_base_on
-msgid "Date of reconciliation"
-msgstr ""
-
-#. module: account_mass_reconcile_ref_deep_search
 #: model:ir.model.fields,field_description:account_mass_reconcile_ref_deep_search.field_mass_reconcile_advanced_ref_deep_search_display_name
 msgid "Display Name"
 msgstr "نام نمایشی"
 
 #. module: account_mass_reconcile_ref_deep_search
-#: model:ir.model.fields,field_description:account_mass_reconcile_ref_deep_search.field_mass_reconcile_advanced_ref_deep_search_filter
-msgid "Filter"
-msgstr ""
-
-#. module: account_mass_reconcile_ref_deep_search
-#: model:ir.model.fields,field_description:account_mass_reconcile_ref_deep_search.field_mass_reconcile_advanced_ref_deep_search_income_exchange_account_id
-msgid "Gain Exchange Rate Account"
-msgstr ""
-
-#. module: account_mass_reconcile_ref_deep_search
 #: model:ir.model.fields,field_description:account_mass_reconcile_ref_deep_search.field_mass_reconcile_advanced_ref_deep_search_id
 msgid "ID"
 msgstr "شناسه"
-
-#. module: account_mass_reconcile_ref_deep_search
-#: model:ir.model.fields,field_description:account_mass_reconcile_ref_deep_search.field_mass_reconcile_advanced_ref_deep_search_journal_id
-msgid "Journal"
-msgstr ""
 
 #. module: account_mass_reconcile_ref_deep_search
 #: model:ir.model.fields,field_description:account_mass_reconcile_ref_deep_search.field_mass_reconcile_advanced_ref_deep_search___last_update
@@ -107,26 +67,11 @@ msgid "Last Updated on"
 msgstr "آخرین به روز رسانی در"
 
 #. module: account_mass_reconcile_ref_deep_search
-#: model:ir.model.fields,field_description:account_mass_reconcile_ref_deep_search.field_mass_reconcile_advanced_ref_deep_search_expense_exchange_account_id
-msgid "Loss Exchange Rate Account"
-msgstr ""
-
-#. module: account_mass_reconcile_ref_deep_search
 #: model:ir.ui.view,arch_db:account_mass_reconcile_ref_deep_search.view_mass_reconcile_form
 msgid ""
 "Match multiple debit vs multiple credit entries. Allow partial "
 "reconciliation.                             The lines should have the "
 "partner, the credit entry ref is searched inside the debit entry ref."
-msgstr ""
-
-#. module: account_mass_reconcile_ref_deep_search
-#: model:ir.model.fields,field_description:account_mass_reconcile_ref_deep_search.field_mass_reconcile_advanced_ref_deep_search_partner_ids
-msgid "Restrict on partners"
-msgstr ""
-
-#. module: account_mass_reconcile_ref_deep_search
-#: model:ir.model.fields,field_description:account_mass_reconcile_ref_deep_search.field_mass_reconcile_advanced_ref_deep_search_write_off
-msgid "Write off allowed"
 msgstr ""
 
 #. module: account_mass_reconcile_ref_deep_search
