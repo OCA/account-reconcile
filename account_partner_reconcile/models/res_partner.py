@@ -10,13 +10,15 @@ class ResPartner(models.Model):
 
     @api.multi
     def action_open_reconcile(self):
-        # Open reconciliation view for customers
-        accounts = self.env['account.account']
-        accounts += (self.property_account_receivable_id +
-                     self.property_account_payable_id)
+        # Open reconciliation view for customers and suppliers
+        reconcile_mode = self.env.context.get('reconcile_mode', False)
+        accounts = self.property_account_payable_id
+        if reconcile_mode == 'customers':
+            accounts = self.property_account_receivable_id
 
         action_context = {'show_mode_selector': True,
                           'partner_ids': [self.id, ],
+                          'mode': reconcile_mode,
                           'account_ids': accounts.ids}
         return {
             'type': 'ir.actions.client',
