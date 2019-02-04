@@ -4,7 +4,7 @@
 
 {
     'name': "Account Partner Reconcile",
-    'version': '12.0.1.0.0',
+    'version': '12.0.1.0.1',
     'category': 'Accounting',
     'author': 'Eficent,'
               'Odoo Community Association (OCA), ',
