@@ -214,6 +214,7 @@ class AccountMassReconcile(models.Model):
                 # In case of error, we log it in the mail thread, log the
                 # stack trace and create an empty history line; otherwise,
                 # the cron will just loop on this reconcile task.
+                new_cr.rollback()
                 _logger.exception(
                     "The reconcile task %s had an exception: %s",
                     rec.name, e.message
