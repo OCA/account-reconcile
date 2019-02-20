@@ -35,26 +35,26 @@ msgstr "Apunte contable"
 
 #. module: base_transaction_id
 #: model:ir.model,name:base_transaction_id.model_sale_order
-msgid "Quotation"
+msgid "Sale Order"
 msgstr ""
 
 #. module: base_transaction_id
-#: model:ir.model.fields,field_description:base_transaction_id.field_account_invoice_transaction_id
-#: model:ir.model.fields,field_description:base_transaction_id.field_sale_order_transaction_id
+#: model:ir.model.fields,field_description:base_transaction_id.field_account_invoice__transaction_id
+#: model:ir.model.fields,field_description:base_transaction_id.field_sale_order__transaction_id
 msgid "Transaction ID"
 msgstr ""
 
 #. module: base_transaction_id
-#: model:ir.model.fields,help:base_transaction_id.field_account_invoice_transaction_id
+#: model:ir.model.fields,help:base_transaction_id.field_account_invoice__transaction_id
 msgid "Transaction ID from the financial institute"
 msgstr ""
 
 #. module: base_transaction_id
-#: model:ir.model.fields,field_description:base_transaction_id.field_account_move_line_transaction_ref
+#: model:ir.model.fields,field_description:base_transaction_id.field_account_move_line__transaction_ref
 msgid "Transaction Ref."
 msgstr ""
 
 #. module: base_transaction_id
-#: model:ir.model.fields,help:base_transaction_id.field_sale_order_transaction_id
+#: model:ir.model.fields,help:base_transaction_id.field_sale_order__transaction_id
 msgid "Transaction id from the financial institute"
 msgstr "Id de la transacción de la institución financiera"

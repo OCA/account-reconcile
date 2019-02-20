@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+
+<templates xml:space="preserve">
+
+  <t t-name="reconciliation.line.mv_line" t-inherit="account.reconciliation.line.mv_line">
+    <xpath expr="//td[@class='cell_label']" position="inside">
+      <t t-if="line.transaction_ref"> (<t t-esc="line.transaction_ref"/>)</t>
+    </xpath>
+  </t>
+
+</templates>

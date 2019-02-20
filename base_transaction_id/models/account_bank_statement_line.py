@@ -1,5 +1,7 @@
-# Copyright 2016 Yannick Vaucher (Camptocamp SA)
-# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
+# Copyright 2019 Camptocamp SA
+# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl)
+
+
 from odoo import api, models
 
 
@@ -21,5 +23,5 @@ class AccountBankStatementLine(models.Model):
                 overlook_partner=overlook_partner)
             if match_recs and len(match_recs) == 1:
                 return match_recs
-        _super = super(AccountBankStatementLine, self)
+        _super = super()
         return _super.get_reconciliation_proposition(excluded_ids=excluded_ids)
