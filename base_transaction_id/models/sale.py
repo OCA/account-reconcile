@@ -1,5 +1,7 @@
-# Copyright 2011-2012 Nicolas Bessi (Camptocamp)
-# Copyright 2012-2015 Yannick Vaucher (Camptocamp)
+# Copyright 2019 Camptocamp SA
+# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl)
+
+
 from odoo import models, fields, api
 
 
@@ -16,6 +18,6 @@ class SaleOrder(models.Model):
     @api.multi
     def _prepare_invoice(self):
         """Propagate the transaction_id from the sale order to the invoice."""
-        invoice_vals = super(SaleOrder, self)._prepare_invoice()
+        invoice_vals = super()._prepare_invoice()
         invoice_vals['transaction_id'] = self.transaction_id
         return invoice_vals
