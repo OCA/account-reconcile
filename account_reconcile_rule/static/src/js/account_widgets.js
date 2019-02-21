@@ -17,7 +17,7 @@ odoo.define('account_reconcile_rule', function (require) {
         reconciliation_rule_models: function() {
             var self = this;
             // Get the statement line
-            var line = this.model.getLine(this.handle)
+            var line = this.model.getLine(this.handle);
             // Call the models_for_reconciliation through RPC
             this._rpc({
                 model: 'account.reconcile.rule',
@@ -32,8 +32,8 @@ odoo.define('account_reconcile_rule', function (require) {
                 _.each(rule_models, function (rule_model_id) {
                     self.trigger_up('quick_create_proposition',
                                     {'data': rule_model_id});
-                })
-            })
+                });
+            });
         },
         /*
         * Add the write off entries after the the line renderer is ready
