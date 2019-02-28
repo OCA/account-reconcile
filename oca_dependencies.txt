@@ -1,2 +1,2 @@
 account-reconcile https://github.com/tschanzt/account-reconcile 12.0-mig-account_reconcile_rule
-account-payment https://github.com/p-tombez/account-reconcile 12.0-mig-account_early_payment_discount
+account-payment https://github.com/p-tombez/account-payment 12.0-mig-account_early_payment_discount

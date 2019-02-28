@@ -3,9 +3,11 @@
 
 from datetime import date, timedelta
 
-from odoo.tests.common import SavepointCase
+from odoo.tests.common import SavepointCase, at_install, post_install
 
 
+@at_install(False)
+@post_install(True)
 class TestEarlyPaymentDiscountRule(SavepointCase):
 
     @classmethod
