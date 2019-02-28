@@ -7,7 +7,7 @@
         <field name="arch" type="xml">
             <group name="rule" position="inside">
                 <group name="early_payment_discount" attrs="{'invisible': [('rule_type', '!=', 'early_payment_discount')]}">
-                    <label string="This rule is applied when the invoice payment term is an Early Payment Discount and if the statement respects the term and discount."/>
+                    <label for="" string="This rule is applied when the invoice payment term is an Early Payment Discount and if the statement respects the term and discount."/>
                 </group>
             </group>
         </field>
