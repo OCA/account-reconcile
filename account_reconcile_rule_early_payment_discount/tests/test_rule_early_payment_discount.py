@@ -1,5 +1,6 @@
 # Copyright 2016 Cyril Gaudin (Camptocamp)
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
+
 from datetime import date, timedelta
 
 from odoo.tests.common import SavepointCase
