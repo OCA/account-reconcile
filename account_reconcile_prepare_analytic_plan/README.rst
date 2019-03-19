@@ -1,22 +1,22 @@
 .. image:: https://img.shields.io/badge/licence-AGPL--3-blue.svg
     :alt: License: AGPL-3
-======================================
+============================================
 Prepare analytic plans before reconciliation
 ============================================
 
-This module supoprts a workflow for bank statements where one person with few
+This module supports a workflow for bank statements where one person with few
 permissions already assigns accounts and analytic plans to bank
 transactions, so that another person only needs to review the assignment,
-select the correct moves (filtered by the assigned partner and account), and
+select the correct moves (filtered by the assigned partner and plan), and
 then confirm the reconciliation.
 
-Those preassigned accounts are also used as default values for newly created
+Those preassigned plans are also used as default values for newly created
 move lines during reconciliation.
 
 Usage
 =====
 
-Select accounts on the bank statement form, and offered moves for
+Select analytic plans on the bank statement form, and offered moves for
 reconciliation will be filtered accordingly.
 
 * go to ...
