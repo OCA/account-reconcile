@@ -4,6 +4,7 @@
 from datetime import date, timedelta
 
 from odoo.tests.common import SavepointCase, at_install, post_install
+from odoo.tools import mute_logger
 
 
 @at_install(False)
@@ -13,16 +14,17 @@ class TestEarlyPaymentDiscountRule(SavepointCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
+        cls.env = cls.env(context=dict(cls.env.context, tracking_disable=True))
 
         # Customer Partner
-        cls.partner = cls.env['res.partner'].with_context(
-            tracking_disable=True).create({
-                'name': 'Customer partner',
-            })
+        cls.partner = cls.env['res.partner'].create({
+            'name': 'Customer partner',
+        })
 
         cls.rule_model = cls.env['account.reconcile.rule']
         # Delete existing rules
-        cls.rule_model.search([]).unlink()
+        with mute_logger('odoo.models.unlink'):
+            cls.rule_model.search([]).unlink()
 
         # Creation operation template and rule
         cls.operation = cls.env['account.reconcile.model'].create({
