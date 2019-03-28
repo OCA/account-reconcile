@@ -4,7 +4,7 @@
 
 <odoo>
 
-    <record model="ir.ui.view" id="account_move_line_tree_view">
+    <record id="account_move_line_tree_view" model="ir.ui.view">
         <field name="name">account.move.line.tree (in account_move_reconcile_helper)</field>
         <field name="model">account.move.line</field>
         <field name="inherit_id" ref="account.view_move_line_tree"/>
