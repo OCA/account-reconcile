@@ -6,7 +6,6 @@ from odoo.exceptions import UserError
 
 
 class AccountBankStatementLine(models.Model):
-
     _inherit = 'account.bank.statement.line'
 
     @api.multi
@@ -42,7 +41,7 @@ class AccountBankStatementLine(models.Model):
         currency = (st_line_currency and st_line_currency !=
                     company_currency) and st_line_currency.id or False
         precision = st_line_currency and st_line_currency.decimal_places or \
-                    company_currency.decimal_places
+            company_currency.decimal_places
         params = {'company_id': self.env.user.company_id.id,
                   'account_payable_receivable': (
                       self.journal_id.default_credit_account_id.id,
@@ -53,17 +52,17 @@ class AccountBankStatementLine(models.Model):
                                        precision_digits=precision),
                   'partner_id': self.partner_id.id,
                   'ref': self.ref or self.name,
-        }
+                  }
         field = currency and 'amount_residual_currency' or 'amount_residual'
         liquidity_field = currency and 'amount_currency' or amount > 0 and \
-                          'debit' or 'credit'
+            'debit' or 'credit'
         # Look for structured communication match using transaction_ref
         if self.name:
-            sql_query = self._get_common_sql_query() + \
-                " AND aml.transaction_ref = %(ref)s AND ("+field+\
-                        " = %(amount)s OR (acc.internal_type='liquidity' AND "\
-                        +liquidity_field+" = %(amount)s)) \
-                ORDER BY date_maturity asc, aml.id asc"
+            sql_query = self._get_common_sql_query() +  \
+                " AND aml.transaction_ref = %(ref)s AND (" + field + \
+                " = %(amount)s OR (acc.internal_type='liquidity' AND " + \
+                liquidity_field + " = %(amount)s)) " \
+                "ORDER BY date_maturity asc, aml.id asc"
             self.env.cr.execute(sql_query, params)
             match_recs = self.env.cr.dictfetchall()
             if len(match_recs) > 1:
@@ -80,7 +79,7 @@ class AccountBankStatementLine(models.Model):
                 payment_aml_rec = (payment_aml_rec | aml)
             else:
                 amount = aml.currency_id and aml.amount_residual_currency or \
-                         aml.amount_residual
+                    aml.amount_residual
                 counterpart_aml_dicts.append({
                     'name': aml.name if aml.name != '/' else aml.move_id.name,
                     'debit': amount < 0 and -amount or 0,
