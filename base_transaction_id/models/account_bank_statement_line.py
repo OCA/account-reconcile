@@ -21,5 +21,11 @@ class AccountBankStatementLine(models.Model):
                 overlook_partner=overlook_partner)
             if match_recs and len(match_recs) == 1:
                 return match_recs
+        if self.ref:
+            domain = [('transaction_ref', 'ilike', self.ref)]
+            match_recs = self.get_move_lines_for_reconciliation(
+                excluded_ids=excluded_ids, limit=2, additional_domain=domain)
+            if match_recs and len(match_recs) == 1:
+                return match_recs
         _super = super(AccountBankStatementLine, self)
         return _super.get_reconciliation_proposition(excluded_ids=excluded_ids)
