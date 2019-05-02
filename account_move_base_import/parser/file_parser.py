@@ -5,13 +5,20 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html)
 import datetime
 import tempfile
-import xlrd
+import logging
 
 from odoo import _
 from odoo.exceptions import UserError
 
-
 from .parser import AccountMoveImportParser, UnicodeDictReader
+
+_logger = logging.getLogger(__name__)
+
+try:
+    import xlrd
+except (ImportError, IOError) as err:
+    _logger.debug(err)
+    xlrd = False
 
 
 def float_or_zero(val):

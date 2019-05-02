@@ -18,6 +18,9 @@
         "views/journal_view.xml",
         "views/partner_view.xml",
     ],
+    'external_dependencies': {
+        'python' : ['xlrd'],
+    },
     'installable': True,
     'license': 'AGPL-3',
 }
