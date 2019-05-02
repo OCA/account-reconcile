@@ -12,7 +12,7 @@ from .parser import AccountMoveImportParser, UnicodeDictReader
 try:
     import xlrd
 except:
-    raise Exception(_('Please install python lib xlrd'))
+    xlrd = False
 
 
 def float_or_zero(val):
