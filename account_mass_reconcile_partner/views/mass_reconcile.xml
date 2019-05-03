@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="account_mass_reconcile_form_inherit" model="ir.ui.view">
+        <field name="name">account.mass.reconcile.form.inherit</field>
+        <field name="model">account.mass.reconcile</field>
+        <field name="inherit_id" ref="account_mass_reconcile.account_mass_reconcile_form"/>
+        <field name="arch" type="xml">
+            <page name="information" position="inside">
+                <group>
+                    <separator colspan="4" string="Advanced. Partner"/>
+                    <label string="Match multiple debit vs multiple credit entries. Allow partial reconciliation.
+                            Lines are matched in a chronological order if the partner is the same." colspan="4"/>
+                </group>
+            </page>
+        </field>
+    </record>
+</odoo>
