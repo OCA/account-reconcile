@@ -6,12 +6,12 @@ import time
 from odoo.tests import SavepointCase
 
 
-class TestAccountReconcilePartnerChrono(SavepointCase):
+class TestAccountReconcilePartner(SavepointCase):
 
     @classmethod
     def setUpClass(cls):
-        super(TestAccountReconcilePartnerChrono, cls).setUpClass()
-
+        super(TestAccountReconcilePartner, cls).setUpClass()
+        cls.env = cls.env(context=dict(cls.env.context, tracking_disable=True))
         cls.partner = cls.env.ref('base.res_partner_18')
         cls.account_receivable = cls.env['account.account'].search([
             ('user_type_id', '=',
