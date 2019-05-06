@@ -11,7 +11,10 @@
                     <button name="run_reconcile" class="oe_highlight"
                         string="Start Auto Reconciliation" type="object"/>
                     <button icon="fa-share" name="last_history_reconcile"
-                        string="Display items reconciled on the last run"
+                        string="Display items fully reconciled on the last run"
+                        type="object"/>
+                    <button icon="fa-share" name="last_history_partial_reconcile"
+                        string="Display items partially reconciled on the last run"
                         type="object"/>
                 </header>
                 <sheet>
@@ -39,7 +42,9 @@
                                 <tree string="Automatic Mass Reconcile History">
                                     <field name="date"/>
                                     <button icon="fa-share" name="open_reconcile"
-                                        string="Go to reconciled items" type="object"/>
+                                        string="Go to fully reconciled items" type="object"/>
+                                    <button icon="fa-share" name="open_partial_reconcile"
+                                        string="Go to partially reconciled items" type="object"/>
                                 </tree>
                             </field>
                         </page>
@@ -84,7 +89,9 @@ The lines should have the same partner, and the credit entry ref. is matched wit
                 <button icon="gtk-ok" name="run_reconcile" colspan="4"
                     string="Start Auto Reconcilation" type="object"/>
                 <button icon="fa-share" name="last_history_reconcile" colspan="2"
-                    string="Display items reconciled on the last run" type="object"/>
+                    string="Display items fully reconciled on the last run" type="object"/>
+                <button icon="fa-share" name="last_history_partial_reconcile" colspan="2"
+                    string="Display items partially reconciled on the last run" type="object"/>
             </tree>
         </field>
     </record>

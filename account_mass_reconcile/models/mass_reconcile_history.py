@@ -33,6 +33,11 @@ class MassReconcileHistory(models.Model):
         string='Full Reconciliations',
         readonly=True
     )
+    partial_reconcile_ids = fields.Many2many(
+        comodel_name='account.partial.reconcile',
+        string='Partial reconciliations',
+        readonly=True,
+    )
     reconcile_line_ids = fields.Many2many(
         comodel_name='account.move.line',
         relation='account_move_line_history_rel',
@@ -66,7 +71,33 @@ class MassReconcileHistory(models.Model):
             'type': 'ir.actions.act_window',
             'nodestroy': True,
             'target': 'current',
-            'domain': unicode([('id', 'in', move_line_ids)]),
+            'domain': [('id', 'in', move_line_ids)],
+        }
+
+    @api.multi
+    def _open_partial_move_lines(self):
+        """ For an history record, open the view of move line with
+        the reconciled move lines
+
+        :param history_id: id of the history
+        :return: action to open the move lines
+        """
+        partial_credit_move_lines = self.partial_reconcile_ids.mapped(
+            'credit_move_id')
+        partial_debit_move_lines = self.partial_reconcile_ids.mapped(
+            'debit_move_id')
+        move_lines = partial_credit_move_lines | partial_debit_move_lines
+        name = _('Partial reconciliations')
+        return {
+            'name': name,
+            'view_mode': 'tree,form',
+            'view_id': False,
+            'view_type': 'form',
+            'res_model': 'account.move.line',
+            'type': 'ir.actions.act_window',
+            'nodestroy': True,
+            'target': 'current',
+            'domain': [('id', 'in', move_lines.ids)],
         }
 
     @api.multi
@@ -80,3 +111,8 @@ class MassReconcileHistory(models.Model):
         """
         self.ensure_one()
         return self._open_move_lines()
+
+    @api.multi
+    def open_partial_reconcile(self):
+        self.ensure_one()
+        return self._open_partial_move_lines()
