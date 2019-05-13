@@ -4,7 +4,7 @@
 {
     "name": "Bank Statement Foreign Currency",
     "summary": "Make visible the foreign currencies in the bank statements",
-    "version": "11.0.1.0.0",
+    "version": "12.0.1.0.0",
     "depends": ["account"],
     "author": "Eficent, Odoo Community Association (OCA)",
     "website": "http://www.github.com/OCA/account-reconcile",
