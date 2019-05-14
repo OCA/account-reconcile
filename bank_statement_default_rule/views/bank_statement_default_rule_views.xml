@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="bank_statement_default_rule_tree" model="ir.ui.view">
+        <field name="model">bank.statement.default.rule</field>
+        <field name="arch" type="xml">
+            <tree string="Bank Statement Partner Finder Rule">
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="bank_statement_default_form" model="ir.ui.view">
+        <field name="model">bank.statement.default.rule</field>
+        <field name="arch" type="xml">
+            <form string="Bank Statement Partner Finder Rule">
+                <group>
+                    <field name="name"/>
+                </group>
+                <group name="company">
+                    <field name="company_id" groups="base.group_multi_company"/>
+                </group>
+                <group name="match" string="Matching criteria">
+                    <label for="match_label"/>
+                    <div>
+                        <field name="applicable_field_id"/>
+                        <field name="match_label" style="width: 30% !important" class="oe_inline"/>
+                        <span class="o_form_label" style="width: 2% !important">   </span> <!-- Make a little space. -->
+                        <field name="match_label_param" style="width: 68% !important;" class="oe_inline"
+                               attrs="{'invisible': [('match_label', '=', False)], 'required': [('match_label', '!=', False)]}"/>
+                    </div>
+                </group>
+                <group name="default values" string="Default Values">
+                    <field name="partner_id"/>
+                </group>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_bank_statement_default_rule">
+        <field name="name">Bank Statement Default Rule</field>
+        <field name="res_model">bank.statement.default.rule</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="menu_bank_statement_default_rule"
+              parent="account.menu_finance_entries_management"
+              action="action_bank_statement_default_rule"
+              name="Bank Statement Default Rules"/>
+</odoo>
