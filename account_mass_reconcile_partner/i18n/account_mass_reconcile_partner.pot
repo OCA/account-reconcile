@@ -1,0 +1,70 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* account_mass_reconcile_partner
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 10.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: account_mass_reconcile_partner
+#: model:ir.ui.view,arch_db:account_mass_reconcile_partner.account_mass_reconcile_form_inherit
+msgid "Advanced. Partner"
+msgstr ""
+
+#. module: account_mass_reconcile_partner
+#: model:ir.model.fields,field_description:account_mass_reconcile_partner.field_mass_reconcile_advanced_partner_create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: account_mass_reconcile_partner
+#: model:ir.model.fields,field_description:account_mass_reconcile_partner.field_mass_reconcile_advanced_partner_create_date
+msgid "Created on"
+msgstr ""
+
+#. module: account_mass_reconcile_partner
+#: model:ir.model.fields,field_description:account_mass_reconcile_partner.field_mass_reconcile_advanced_partner_display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: account_mass_reconcile_partner
+#: model:ir.model.fields,field_description:account_mass_reconcile_partner.field_mass_reconcile_advanced_partner_id
+msgid "ID"
+msgstr ""
+
+#. module: account_mass_reconcile_partner
+#: model:ir.model.fields,field_description:account_mass_reconcile_partner.field_mass_reconcile_advanced_partner___last_update
+msgid "Last Modified on"
+msgstr ""
+
+#. module: account_mass_reconcile_partner
+#: model:ir.model.fields,field_description:account_mass_reconcile_partner.field_mass_reconcile_advanced_partner_write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: account_mass_reconcile_partner
+#: model:ir.model.fields,field_description:account_mass_reconcile_partner.field_mass_reconcile_advanced_partner_write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: account_mass_reconcile_partner
+#: model:ir.ui.view,arch_db:account_mass_reconcile_partner.account_mass_reconcile_form_inherit
+msgid "Match multiple debit vs multiple credit entries. Allow partial reconciliation.                             Lines are matched in a chronological order if the partner is the same."
+msgstr ""
+
+#. module: account_mass_reconcile_partner
+#: model:ir.model,name:account_mass_reconcile_partner.model_mass_reconcile_advanced_partner
+msgid "mass.reconcile.advanced.partner"
+msgstr ""
+
+#. module: account_mass_reconcile_partner
+#: model:ir.model,name:account_mass_reconcile_partner.model_account_mass_reconcile_method
+msgid "reconcile method for account_mass_reconcile"
+msgstr ""
+
