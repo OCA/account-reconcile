@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- QWeb Reports -->
+    <report id="bank_statement_detail" model="bank.acc.rec.statement"
+            string="Bank Statement-Detail" report_type="qweb-pdf"
+            name="account_banking_reconciliation.report_bank_statement_detail"
+            file="account_banking_reconciliation.report_bank_statement_detail"
+            attachment="'Detail Statement-'+(object.name)+'.pdf'"/>
+    <report id="bank_statement_summary" model="bank.acc.rec.statement"
+            string="Bank Statement-Summary" report_type="qweb-pdf"
+            name="account_banking_reconciliation.report_bank_statement_summary"
+            file="account_banking_reconciliation.report_bank_statement_summary"
+            attachment="'Summary Statement-'+(object.name)+'.pdf'"/>
+</odoo>
