@@ -4,7 +4,7 @@
 {
     "name": "Account Mass Reconcile Scheduled",
     "summary": "Schedule only selected mass reconcile records",
-    "version": "11.0.1.0.0",
+    "version": "10.0.1.0.0",
     "category": "Accounting",
     "website": "https://github.com/OCA/account-reconcile",
     "author": "Camptocamp, Odoo Community Association (OCA)",
