@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="account_mass_reconcile_form_inherit" model="ir.ui.view">
+        <field name="name">account.mass.reconcile.form.inherit</field>
+        <field name="model">account.mass.reconcile</field>
+        <field name="inherit_id" ref="account_mass_reconcile.account_mass_reconcile_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//notebook" position="inside">
+                <page name="scheduling" string="Scheduling">
+                    <field name="scheduled_run" />
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>
