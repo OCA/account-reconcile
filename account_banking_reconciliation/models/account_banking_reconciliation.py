@@ -1,5 +1,5 @@
-# -*- coding: utf-8 -*-
-# Copyright (C) 2015 Ursa Information Systems (http://www.ursainfosystems.com>)
+# Copyright (C) 2019 Open Source Integrators
+# <https://www.opensourceintegrators.com>
 # Copyright (C) 2011 NovaPoint Group LLC (<http://www.novapointgroup.com>)
 # Copyright (C) 2004-2010 OpenERP SA (<http://www.openerp.com>)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
@@ -13,6 +13,10 @@ from odoo.tools.float_utils import float_round
 
 
 class BankAccRecStatement(models.Model):
+    _name = "bank.acc.rec.statement"
+    _description = "Bank Acc Rec Statement"
+    _order = "ending_date desc"
+
     @api.multi
     def check_group(self):
         """Check if following security constraints are implemented for groups:
@@ -43,30 +47,16 @@ class BankAccRecStatement(models.Model):
         return True
 
     @api.multi
-    def copy(self, default=None):
-        self.ensure_one()
-        if default is None:
-            default = {}
-        default.update({'credit_move_line_ids': [],
-                        'debit_move_line_ids': [],
-                        'name': ''})
-        return super(BankAccRecStatement, self).copy(default=default)
-
-    @api.multi
     def write(self, vals):
         # Check if the user is allowed to perform the action
         self.check_group()
         return super(BankAccRecStatement, self).write(vals)
 
-    @api.model
+    @api.multi
     def unlink(self):
         """Reset the related account.move.line to be re-assigned later
         to statement."""
         self.check_group()  # Check if user is allowed to perform the action
-        for statement in self:
-            statement_lines = \
-                statement.credit_move_line_ids + statement.debit_move_line_ids
-            statement_lines.unlink()  # call unlink method to reset
         return super(BankAccRecStatement, self).unlink()
 
     @api.multi
@@ -224,7 +214,6 @@ class BankAccRecStatement(models.Model):
                     float_round(line.amountcur, account_precision) or 0.0
                 statement.sum_of_udebits_lines += \
                     (not line.cleared_bank_account) and 1.0 or 0.0
-
             statement.cleared_balance = float_round(
                 statement.sum_of_debits - statement.sum_of_credits,
                 account_precision)
@@ -251,16 +240,13 @@ class BankAccRecStatement(models.Model):
     def refresh_record(self):
         retval = True
         refdict = {}
-
         # get current state of moves in the statement
         for statement in self:
-
             if statement.state == 'draft':
                 for cr_item in statement.credit_move_line_ids:
                     if cr_item.move_line_id and cr_item.cleared_bank_account:
                         refdict[cr_item.move_line_id.id] = \
                             cr_item.cleared_bank_account
-
                 for dr_item in statement.debit_move_line_ids:
                     if dr_item.move_line_id and dr_item.cleared_bank_account:
                         refdict[dr_item.move_line_id.id] = \
@@ -268,61 +254,50 @@ class BankAccRecStatement(models.Model):
 
         # for the statement
         for statement in self:
-
             # process only if the statement is in draft state
             if statement.state == 'draft':
                 vals = statement.onchange_account_id()
-
                 # list of credit lines
                 outlist = []
                 for cr_item in vals['value']['credit_move_line_ids']:
                     cr_item['cleared_bank_account'] = refdict and refdict.get(
                         cr_item['move_line_id'], False) or False
                     cr_item['research_required'] = False
-
                     item = [0, False, cr_item]
                     outlist.append(item)
-
                 # list of debit lines
                 inlist = []
                 for dr_item in vals['value']['debit_move_line_ids']:
                     dr_item['cleared_bank_account'] = refdict and refdict.get(
                         dr_item['move_line_id'], False) or False
                     dr_item['research_required'] = False
-
                     item = [0, False, dr_item]
                     inlist.append(item)
-
                 # write it to the record so it is visible on the form
                 retval = self.write(
                     {'last_ending_date': vals['value']['last_ending_date'],
                      'starting_balance': vals['value']['starting_balance'],
                      'credit_move_line_ids': outlist,
                      'debit_move_line_ids': inlist})
-
         return retval
 
     # get starting balance for the account
     @api.multi
     def get_starting_balance(self, account_id, ending_date):
-
         result = (False, 0.0)
         reslist = []
         statement_obj = self.env['bank.acc.rec.statement']
         domain = [('account_id', '=', account_id), ('state', '=', 'done')]
-        statement_ids = statement_obj.search(domain).ids
-
+        statement_ids = statement_obj.search(domain)
         # get all statements for this account in the past
-        for statement in statement_obj.browse(statement_ids):
+        for statement in statement_ids:
             if statement.ending_date < ending_date:
                 reslist.append(
                     (statement.ending_date, statement.ending_balance))
-
         # get the latest statement value
         if len(reslist):
             reslist = sorted(reslist, key=itemgetter(0))
             result = reslist[len(reslist) - 1]
-
         return result
 
     @api.onchange('account_id', 'ending_date', 'suppress_ending_date_filter')
@@ -339,7 +314,6 @@ class BankAccRecStatement(models.Model):
                 # remove existing statement lines and
                 # mark reset field values in related move lines
                 statement_line_ids.unlink()
-
             # Apply filter on move lines to allow
             # 1. credit and debit side journal items in posted state of
             # the selected GL account
@@ -352,9 +326,8 @@ class BankAccRecStatement(models.Model):
                       ('cleared_bank_account', '=', False)]
             if not self.suppress_ending_date_filter:
                 domain += [('date', '<=', self.ending_date)]
-            line_ids = account_move_line_obj.search(domain).ids
-            for line in account_move_line_obj.browse(line_ids):
-
+            line_ids = account_move_line_obj.search(domain)
+            for line in line_ids:
                 amount_currency = (line.amount_currency < 0) and (
                     -1 * line.amount_currency) or line.amount_currency
                 res = {
@@ -364,29 +337,25 @@ class BankAccRecStatement(models.Model):
                     'currency_id': line.currency_id.id,
                     'amount': line.credit or line.debit,
                     'amountcur': amount_currency,
-                    'name': line.name,
+                    'name': line.name or line.ref,
                     'move_line_id': line.id,
                     'type': line.credit and 'cr' or 'dr'}
-
                 if res['type'] == 'cr':
                     val['value']['credit_move_line_ids'].append(res)
                 else:
                     val['value']['debit_move_line_ids'].append(res)
-
             # look for previous statement for the account to
             # pull ending balance as starting balance
             prev_stmt = self.get_starting_balance(self.account_id.id,
                                                   self.ending_date)
             val['value']['last_ending_date'] = prev_stmt[0]
             val['value']['starting_balance'] = prev_stmt[1]
-
         return val
 
     def get_default_company_id(self):
         return self.env['res.users'].browse([self.env.uid]).company_id.id
 
-    _name = "bank.acc.rec.statement"
-    name = fields.Char('Name', required=True, size=64,
+    name = fields.Char('Name', required=True, size=64, copy=False, default='',
                        states={'done': [('readonly', True)]},
                        help="This is a unique name identifying "
                             "the statement (e.g. Bank X January 2012).")
@@ -429,11 +398,13 @@ class BankAccRecStatement(models.Model):
                                                "System generated.")
     credit_move_line_ids = fields.One2many('bank.acc.rec.statement.line',
                                            'statement_id', 'Credits',
+                                           copy=False,
                                            domain=[('type', '=', 'cr')],
                                            states={
                                                'done': [('readonly', True)]})
     debit_move_line_ids = fields.One2many('bank.acc.rec.statement.line',
                                           'statement_id', 'Debits',
+                                          copy=False,
                                           domain=[('type', '=', 'dr')],
                                           states={
                                               'done': [('readonly', True)]})
@@ -561,9 +532,8 @@ class BankAccRecStatement(models.Model):
         ('to_be_reviewed', 'Ready for Review'),
         ('done', 'Done'),
         ('cancel', 'Cancel')
-    ], 'State', select=True, readonly=True, default='draft')
+    ], 'State', index=True, readonly=True, default='draft')
 
-    _order = "ending_date desc"
     _sql_constraints = [
         ('name_company_uniq', 'unique (name, company_id, account_id)',
          'The name of the statement must be unique per '
@@ -574,6 +544,7 @@ class BankAccRecStatement(models.Model):
 class BankAccRecStatementLine(models.Model):
     _name = "bank.acc.rec.statement.line"
     _description = "Statement Line"
+
     name = fields.Char('Name', size=64,
                        help="Derived from the related Journal Item.",
                        required=True)
@@ -620,7 +591,7 @@ class BankAccRecStatementLine(models.Model):
             {'draft_assigned_to_statement': True})
         return super(BankAccRecStatementLine, self).create(vals)
 
-    @api.model
+    @api.multi
     def unlink(self):
         account_move_line_obj = self.env['account.move.line']
         move_line_ids = [x.move_line_id.id for x in self if x.move_line_id]

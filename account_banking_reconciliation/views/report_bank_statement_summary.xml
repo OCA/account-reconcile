@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
+
     <template id="report_bank_statement_summary_doc">
-        <t t-call="report.external_layout">
+        <t t-call="web.external_layout">
             <t t-set="o"
                t-value="o.with_context({'lang':o.company_id.partner_id.lang})"/>
             <div class="page">
@@ -286,7 +287,7 @@
     </template>
 
     <template id="report_bank_statement_summary">
-        <t t-call="report.html_container">
+        <t t-call="web.html_container">
             <t t-foreach="docs" t-as="o">
                 <t
                         t-call="account_banking_reconciliation.report_bank_statement_summary_doc"
@@ -294,4 +295,5 @@
             </t>
         </t>
     </template>
+
 </odoo>
