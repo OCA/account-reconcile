@@ -24,7 +24,7 @@
         <field name="model">bank.acc.rec.statement</field>
         <field name="type">form</field>
         <field name="arch" type="xml">
-            <form string="Bank Account Reconciliation Statement" version="7.0">
+            <form string="Bank Account Reconciliation Statement">
                 <header>
                     <button name="action_cancel" type="object"
                             states="draft,to_be_reviewed"
@@ -54,7 +54,7 @@
                                placeholder="Enter Ending Balance"/>
                         <field name="last_ending_date"
                                placeholder="Last Statement Date"
-                               readonly="1"/>
+                               readonly="1" force_save="1"/>
                         <field name="suppress_ending_date_filter"/>
                         <field name="company_id"
                                groups="base.group_multi_company"
@@ -68,32 +68,46 @@
                                    name="debit_move_line_ids"
                                    nolabel="1" widget="one2many_list"
                                    height="300">
-                                <form string="Deposits, Credits, and Interest"
-                                      version="7.0">
+                                <form string="Deposits, Credits, and Interest">
                                     <field name="cleared_bank_account"/>
-                                    <field name="date" readonly="1"/>
-                                    <field name="name" readonly="1"/>
-                                    <field name="ref" readonly="1"/>
-                                    <field name="partner_id" readonly="1"/>
-                                    <field name="amount" readonly="1"/>
-                                    <field name="amountcur" readonly="1"/>
-                                    <field name="currency_id" readonly="1"/>
+                                    <field name="date" readonly="1"
+                                           force_save="1"/>
+                                    <field name="name" readonly="1"
+                                           force_save="1"/>
+                                    <field name="ref" readonly="1"
+                                           force_save="1"/>
+                                    <field name="partner_id" readonly="1"
+                                           force_save="1"/>
+                                    <field name="amount" readonly="1"
+                                           force_save="1"/>
+                                    <field name="amountcur" readonly="1"
+                                           force_save="1"/>
+                                    <field name="currency_id" readonly="1"
+                                           force_save="1"/>
                                     <field name="research_required"
-                                           readonly="1"/>
+                                           readonly="1" force_save="1"/>
                                 </form>
                                 <tree string="Deposits, Credits, and Interest"
                                       editable="top"
                                       mute_additem="draft,to_be_reviewed,done, cancel">
                                     <field name="cleared_bank_account"/>
-                                    <field name="date" readonly="1"/>
-                                    <field name="name" readonly="1"/>
-                                    <field name="ref" readonly="1"/>
-                                    <field name="partner_id" readonly="1"/>
-                                    <field name="amount" readonly="1"/>
-                                    <field name="amountcur" readonly="1"/>
-                                    <field name="currency_id" readonly="1"/>
+                                    <field name="date" readonly="1"
+                                           force_save="1"/>
+                                    <field name="name" readonly="1"
+                                           force_save="1"/>
+                                    <field name="ref" readonly="1"
+                                           force_save="1"/>
+                                    <field name="partner_id" readonly="1"
+                                           force_save="1"/>
+                                    <field name="amount" readonly="1"
+                                           force_save="1"/>
+                                    <field name="amountcur" readonly="1"
+                                           force_save="1"/>
+                                    <field name="currency_id" readonly="1"
+                                           force_save="1"/>
                                     <field name="research_required"/>
-                                    <field name="move_line_id" readonly="1"/>
+                                    <field name="move_line_id" readonly="1"
+                                           force_save="1"/>
                                 </tree>
                             </field>
                             <label for='account_label2'
@@ -102,32 +116,46 @@
                                    name="credit_move_line_ids"
                                    nolabel="1" widget="one2many_list"
                                    height="300">
-                                <form string="Checks, Withdrawals, Debits, and Service Charges"
-                                      version="7.0">
+                                <form string="Checks, Withdrawals, Debits, and Service Charges">
                                     <field name="cleared_bank_account"/>
-                                    <field name="date" readonly="1"/>
-                                    <field name="name" readonly="1"/>
-                                    <field name="ref" readonly="1"/>
-                                    <field name="partner_id" readonly="1"/>
-                                    <field name="amount" readonly="1"/>
-                                    <field name="amountcur" readonly="1"/>
-                                    <field name="currency_id" readonly="1"/>
+                                    <field name="date" readonly="1"
+                                           force_save="1"/>
+                                    <field name="name" readonly="1"
+                                           force_save="1"/>
+                                    <field name="ref" readonly="1"
+                                           force_save="1"/>
+                                    <field name="partner_id" readonly="1"
+                                           force_save="1"/>
+                                    <field name="amount" readonly="1"
+                                           force_save="1"/>
+                                    <field name="amountcur" readonly="1"
+                                           force_save="1"/>
+                                    <field name="currency_id" readonly="1"
+                                           force_save="1"/>
                                     <field name="research_required"
-                                           readonly="1"/>
+                                           readonly="1" force_save="1"/>
                                 </form>
                                 <tree string="Checks, Withdrawals, Debits, and Service Charges"
                                       editable="top"
                                       mute_additem="draft,to_be_reviewed,done, cancel">
                                     <field name="cleared_bank_account"/>
-                                    <field name="date" readonly="1"/>
-                                    <field name="name" readonly="1"/>
-                                    <field name="ref" readonly="1"/>
-                                    <field name="partner_id" readonly="1"/>
-                                    <field name="amount" readonly="1"/>
-                                    <field name="amountcur" readonly="1"/>
-                                    <field name="currency_id" readonly="1"/>
+                                    <field name="date" readonly="1"
+                                           force_save="1"/>
+                                    <field name="name" readonly="1"
+                                           force_save="1"/>
+                                    <field name="ref" readonly="1"
+                                           force_save="1"/>
+                                    <field name="partner_id" readonly="1"
+                                           force_save="1"/>
+                                    <field name="amount" readonly="1"
+                                           force_save="1"/>
+                                    <field name="amountcur" readonly="1"
+                                           force_save="1"/>
+                                    <field name="currency_id" readonly="1"
+                                           force_save="1"/>
                                     <field name="research_required"/>
-                                    <field name="move_line_id" readonly="1"/>
+                                    <field name="move_line_id" readonly="1"
+                                           force_save="1"/>
                                 </tree>
                             </field>
                             <group col="2" colspan="1"
@@ -137,13 +165,13 @@
                                         type="object"
                                         states="draft,to_be_reviewed"
                                         string="Select All"
-                                        icon="gtk-go-forward"/>
+                                        icon="fa-check"/>
                                 <button name="action_unselect_all"
                                         confirm="Current edits in statement will be lost. Do you want to unselect all?"
                                         type="object"
                                         states="draft,to_be_reviewed"
                                         string="Unselect All"
-                                        icon="gtk-cancel"/>
+                                        icon="fa-close"/>
                             </group>
                             <newline/>
                             <separator string="Totals - Cleared and Uncleared"
@@ -233,10 +261,8 @@
                             icon="terp-personal"/>
                 </field>
                 <newline/>
-                <group expand="0" string="Group By..." colspan="11" col="11"
-                       groups="base.group_extended">
-                    <filter string="Account" icon="terp-personal" domain="[]"
-                            context="{'group_by':'account_id'}"/>
+                <group expand="0" string="Group By...">
+                    <filter string="Account" icon="terp-personal" domain="[]" context="{'group_by':'account_id'}"/>
                     <separator orientation="vertical"/>
                     <filter string="State"
                             icon="terp-stock_effects-object-colorize"
@@ -255,12 +281,9 @@
         <field name="search_view_id" ref="view_bank_acc_rec_statement_filter"/>
     </record>
 
-    <!-- <record id="account.menu_bank_statement_tree" model="ir.ui.menu"> -->
-    <!-- <field name="groups_id" eval="[(4,ref('base.group_system'))]"/> -->
-    <!-- </record> -->
-
-    <menuitem icon="STOCK_JUSTIFY_FILL" action="action_bank_acc_rec_statement"
-              id="bank_acc_rec_statement_menu"
+    <menuitem id="bank_acc_rec_statement_menu"
+              icon="STOCK_JUSTIFY_FILL"
+              action="action_bank_acc_rec_statement"
               parent="account.menu_finance_entries"
               sequence="5"/>
 
@@ -269,12 +292,12 @@
                 src_model="bank.acc.rec.statement"/>
 
     <act_window id="act_supplier_payment_to_add" name="Supplier Payment"
-                domain="[('voucher_type', 'in', ['bank', 'cash']), ('type','=','receipt')]"
+                domain="[('voucher_type', 'in', ['bank', 'cash'])]"
                 context="{'type':'payment'}" res_model="account.voucher"
                 src_model="bank.acc.rec.statement"/>
 
     <act_window id="act_customer_payment_to_add" name="Customer Payment"
-                domain="[('voucher_type', 'in', ['bank', 'cash']), ('type','=','receipt')]"
+                domain="[('voucher_type', 'in', ['bank', 'cash'])]"
                 context="{'type':'receipt'}" res_model="account.voucher"
                 src_model="bank.acc.rec.statement"/>
 
