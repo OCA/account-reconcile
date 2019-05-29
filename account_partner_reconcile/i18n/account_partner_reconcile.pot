@@ -20,6 +20,11 @@ msgstr ""
 
 #. module: account_partner_reconcile
 #: model_terms:ir.ui.view,arch_db:account_partner_reconcile.res_partner_view_buttons
-msgid "Match payments"
+msgid "Match Payables"
+msgstr ""
+
+#. module: account_partner_reconcile
+#: model_terms:ir.ui.view,arch_db:account_partner_reconcile.res_partner_view_buttons
+msgid "Match Receivables"
 msgstr ""
 
