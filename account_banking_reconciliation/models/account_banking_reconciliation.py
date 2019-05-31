@@ -54,9 +54,8 @@ class BankAccRecStatement(models.Model):
 
     @api.multi
     def unlink(self):
-        """Reset the related account.move.line to be re-assigned later
-        to statement."""
-        self.check_group()  # Check if user is allowed to perform the action
+        """Check if the user is allowed to perform the action"""
+        self.check_group()
         return super(BankAccRecStatement, self).unlink()
 
     @api.multi
@@ -188,7 +187,7 @@ class BankAccRecStatement(models.Model):
                     line.cleared_bank_account and \
                     float_round(line.amountcur, account_precision) or 0.0
                 statement.sum_of_credits_lines += \
-                    line.cleared_bank_account and 1.0 or 0.0
+                    line.cleared_bank_account and 1 or 0
                 statement.sum_of_ucredits += \
                     (not line.cleared_bank_account) and \
                     float_round(line.amount, account_precision) or 0.0
@@ -196,7 +195,7 @@ class BankAccRecStatement(models.Model):
                     (not line.cleared_bank_account) and \
                     float_round(line.amountcur, account_precision) or 0.0
                 statement.sum_of_ucredits_lines += \
-                    (not line.cleared_bank_account) and 1.0 or 0.0
+                    (not line.cleared_bank_account) and 1 or 0
             for line in statement.debit_move_line_ids:
                 statement.sum_of_debits += \
                     line.cleared_bank_account and \
@@ -205,7 +204,7 @@ class BankAccRecStatement(models.Model):
                     line.cleared_bank_account and \
                     float_round(line.amountcur, account_precision) or 0.0
                 statement.sum_of_debits_lines += \
-                    line.cleared_bank_account and 1.0 or 0.0
+                    line.cleared_bank_account and 1 or 0
                 statement.sum_of_udebits += \
                     (not line.cleared_bank_account) and \
                     float_round(line.amount, account_precision) or 0.0
@@ -213,7 +212,7 @@ class BankAccRecStatement(models.Model):
                     (not line.cleared_bank_account) and \
                     float_round(line.amountcur, account_precision) or 0.0
                 statement.sum_of_udebits_lines += \
-                    (not line.cleared_bank_account) and 1.0 or 0.0
+                    (not line.cleared_bank_account) and 1 or 0
             statement.cleared_balance = float_round(
                 statement.sum_of_debits - statement.sum_of_credits,
                 account_precision)
@@ -288,9 +287,8 @@ class BankAccRecStatement(models.Model):
         reslist = []
         statement_obj = self.env['bank.acc.rec.statement']
         domain = [('account_id', '=', account_id), ('state', '=', 'done')]
-        statement_ids = statement_obj.search(domain)
         # get all statements for this account in the past
-        for statement in statement_ids:
+        for statement in statement_obj.search(domain):
             if statement.ending_date < ending_date:
                 reslist.append(
                     (statement.ending_date, statement.ending_balance))
@@ -306,7 +304,7 @@ class BankAccRecStatement(models.Model):
         statement_line_obj = self.env['bank.acc.rec.statement.line']
         val = {
             'value': {'credit_move_line_ids': [], 'debit_move_line_ids': []}}
-        if self.account_id:
+        if self.ending_date and self.account_id:
             for statement in self:
                 statement_line_ids = statement_line_obj.search(
                     [('statement_id', '=', statement.id)])
@@ -326,8 +324,7 @@ class BankAccRecStatement(models.Model):
                       ('cleared_bank_account', '=', False)]
             if not self.suppress_ending_date_filter:
                 domain += [('date', '<=', self.ending_date)]
-            line_ids = account_move_line_obj.search(domain)
-            for line in line_ids:
+            for line in account_move_line_obj.search(domain):
                 amount_currency = (line.amount_currency < 0) and (
                     -1 * line.amount_currency) or line.amount_currency
                 res = {
@@ -355,7 +352,7 @@ class BankAccRecStatement(models.Model):
     def get_default_company_id(self):
         return self.env['res.users'].browse([self.env.uid]).company_id.id
 
-    name = fields.Char('Name', required=True, size=64, copy=False, default='',
+    name = fields.Char('Name', required=True, size=64,
                        states={'done': [('readonly', True)]},
                        help="This is a unique name identifying "
                             "the statement (e.g. Bank X January 2012).")
@@ -388,11 +385,13 @@ class BankAccRecStatement(models.Model):
     notes = fields.Text('Notes')
     verified_date = fields.Date('Verified Date',
                                 states={'done': [('readonly', True)]},
+                                copy=False,
                                 help="Date in which Deposit "
                                      "Ticket was verified.")
     verified_by_user_id = fields.Many2one('res.users', 'Verified By',
                                           states={
                                               'done': [('readonly', True)]},
+                                          copy=False,
                                           help="Entered automatically by "
                                                "the “last user” who saved it. "
                                                "System generated.")
@@ -472,17 +471,17 @@ class BankAccRecStatement(models.Model):
                                      digits=dp.get_precision('Account'),
                                      help="Total SUM of Amts of lines "
                                           "with Cleared = True")
-    sum_of_credits_lines = fields.Float(compute='_compute_get_balance',
-                                        string='Checks, Withdrawals, Debits, '
-                                               'and Service Charges # of '
-                                               'Items',
-                                        help="Total of number of lines with "
-                                             "Cleared = True")
-    sum_of_debits_lines = fields.Float(compute='_compute_get_balance',
-                                       string='Deposits, Credits, and Interest'
-                                              ' # of Items',
-                                       help="Total of number of lines with"
-                                            " Cleared = True")
+    sum_of_credits_lines = fields.Integer(compute='_compute_get_balance',
+                                          string='''Checks, Withdrawals,
+                                          Debits, and Service Charges # of
+                                          Items''',
+                                          help="Total of number of lines with "
+                                          "Cleared = True")
+    sum_of_debits_lines = fields.Integer(compute='_compute_get_balance',
+                                         string='''Deposits, Credits, and
+                                         Interest # of Items''',
+                                         help="Total of number of lines with"
+                                         " Cleared = True")
     sum_of_ucredits = fields.Float(compute='_compute_get_balance',
                                    string='Uncleared - Checks, Withdrawals, '
                                           'Debits, and Service Charges Amount',
@@ -508,17 +507,17 @@ class BankAccRecStatement(models.Model):
                                       digits=dp.get_precision('Account'),
                                       help="Total SUM of Amts of lines with"
                                            " Cleared = False")
-    sum_of_ucredits_lines = fields.Float(compute='_compute_get_balance',
-                                         string='Uncleared - Checks, '
-                                                'Withdrawals, Debits, and '
-                                                'Service Charges # of Items',
-                                         help="Total of number of lines with"
-                                              " Cleared = False")
-    sum_of_udebits_lines = fields.Float(compute='_compute_get_balance',
-                                        string='Uncleared - Deposits, Credits,'
-                                               ' and Interest # of Items',
-                                        help="Total of number of lines "
-                                             "with Cleared = False")
+    sum_of_ucredits_lines = fields.Integer(compute='_compute_get_balance',
+                                           string='Uncleared - Checks, '
+                                           'Withdrawals, Debits, and '
+                                           'Service Charges # of Items',
+                                           help="Total of number of lines with"
+                                           " Cleared = False")
+    sum_of_udebits_lines = fields.Integer(compute='_compute_get_balance',
+                                          string='''Uncleared - Deposits,
+                                          Credits, and Interest # of Items''',
+                                          help="Total of number of lines "
+                                          "with Cleared = False")
     suppress_ending_date_filter = fields.Boolean('Remove Ending Date Filter',
                                                  help="If this is checked then"
                                                       " the Statement End Date"
@@ -531,7 +530,7 @@ class BankAccRecStatement(models.Model):
         ('draft', 'Draft'),
         ('to_be_reviewed', 'Ready for Review'),
         ('done', 'Done'),
-        ('cancel', 'Cancel')
+        ('cancel', 'Cancelled')
     ], 'State', index=True, readonly=True, default='draft')
 
     _sql_constraints = [
@@ -539,6 +538,15 @@ class BankAccRecStatement(models.Model):
          'The name of the statement must be unique per '
          'company and G/L account!')
     ]
+
+    @api.multi
+    def copy(self, default=None):
+        for rec in self:
+            if default is None:
+                default = {}
+            if 'name' not in default:
+                default['name'] = _("%s (copy)") % rec.name
+        return super(BankAccRecStatement, self).copy(default=default)
 
 
 class BankAccRecStatementLine(models.Model):
