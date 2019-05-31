@@ -6,14 +6,13 @@
             <t t-set="o"
                t-value="o.with_context({'lang':o.company_id.partner_id.lang})"/>
             <div class="page">
-                <h2 style='text-align:center;'>
+                <p style='text-align:center;'>
                     Reconciliation Summary
-                </h2>
+                </p>
                 <h5 style='text-align:center;'>
                     <span>Period Ending</span>
                     <span t-field="o.ending_date"/>
                 </h5>
-
                 <div class="row" t-if="not o.account_id.currency_id">
                     <table class="table table-condensed">
                         <tbody class="invoice_tbody">

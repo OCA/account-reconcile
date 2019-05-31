@@ -5,13 +5,16 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 {
     "name": "Bank Account Reconciliation",
+    "summary": "Check transactions that cleared the bank",
     "version": "11.0.1.0.0",
     "license": "AGPL-3",
     "category": "Accounting and Financial Management",
-    "author": "NovaPoint Group LLC, Open Source Integrators, "
+    "author": "NovaPoint Group LLC, "
+              "Open Source Integrators, "
               "Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/account-reconcile",
     "depends": [
+        "account_invoicing",
         "account_voucher",
     ],
     "data": [
@@ -20,7 +23,9 @@
         "views/account_banking_reconciliation.xml",
         "views/account_move_line.xml",
         "report/bank_statement_report.xml",
-        "views/report_bank_statement_summary.xml",
-        "views/report_bank_statement_detail.xml"],
+        "report/report_bank_statement_summary.xml",
+        "report/report_bank_statement_detail.xml"],
     "installable": True,
+    "development_status": "Stable",
+    "maintainers": ["max3903"],
 }
