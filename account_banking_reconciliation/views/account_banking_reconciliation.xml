@@ -26,39 +26,49 @@
         <field name="arch" type="xml">
             <form string="Bank Account Reconciliation Statement">
                 <header>
-                    <button name="action_cancel" type="object"
-                            states="draft,to_be_reviewed"
-                            string="Cancel" icon="fa-ban"/>
                     <button name="action_review" type="object" states="draft"
-                            string="Ready for Review" icon="fa-forward"/>
+                            string="Submit for Review"
+                            class="oe_highlight"/>
                     <button name="action_process" type="object"
                             states="to_be_reviewed"
-                            string="Process"/>
+                            string="Process"
+                            class="oe_highlight"/>
                     <button name="action_cancel_draft" states="cancel,done"
                             string="Set to Draft" type="object"/>
+                    <button name="action_cancel" type="object"
+                            states="draft,to_be_reviewed"
+                            string="Cancel"/>
                     <button name='refresh_record' string='Refresh'
                             confirm="Current edits in statement will be lost. Do you want to refresh?"
                             states="draft" type='object'/>
                     <field name="state" widget="statusbar" nolabel="1"/>
                 </header>
                 <sheet>
-                    <group col="4" colspan="4">
-                        <field name="account_id"
-                               placeholder="Enter Account Name"/>
-                        <field name="name" placeholder="Enter Name"/>
-                        <field name="ending_date"
-                               placeholder="Enter ending date"/>
-                        <field name="starting_balance"
-                               placeholder="Enter Starting Balance"/>
-                        <field name="ending_balance"
-                               placeholder="Enter Ending Balance"/>
-                        <field name="last_ending_date"
-                               placeholder="Last Statement Date"
-                               readonly="1" force_save="1"/>
-                        <field name="suppress_ending_date_filter"/>
-                        <field name="company_id"
-                               groups="base.group_multi_company"
-                               placeholder="Enter Company Name"/>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" placeholder="Enter Name"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="account_id"
+                                   placeholder="Select the account"/>
+                            <field name="ending_date"
+                                   placeholder="Enter the ending date"/>
+                            <field name="ending_balance"
+                                   placeholder="Enter the ending balance"/>
+                        </group>
+                        <group>
+                            <field name="last_ending_date"
+                                   placeholder="Date of the last statement"
+                                   readonly="1" force_save="1"/>
+                            <field name="starting_balance"
+                                   placeholder="Enter the starting balance"/>
+                            <field name="suppress_ending_date_filter"/>
+                            <field name="company_id"
+                                   groups="base.group_multi_company"
+                                   placeholder="Select the company"/>
+                        </group>
                     </group>
                     <notebook colspan="5">
                         <page string="Journal Items">
@@ -69,34 +79,36 @@
                                    nolabel="1" widget="one2many_list"
                                    height="300">
                                 <form string="Deposits, Credits, and Interest">
-                                    <field name="cleared_bank_account"/>
-                                    <field name="date" readonly="1"
-                                           force_save="1"/>
-                                    <field name="name" readonly="1"
-                                           force_save="1"/>
-                                    <field name="ref" readonly="1"
-                                           force_save="1"/>
-                                    <field name="partner_id" readonly="1"
-                                           force_save="1"/>
-                                    <field name="amount" readonly="1"
-                                           force_save="1"/>
-                                    <field name="amountcur" readonly="1"
-                                           force_save="1"/>
-                                    <field name="currency_id" readonly="1"
-                                           force_save="1"/>
-                                    <field name="research_required"
-                                           readonly="1" force_save="1"/>
+                                    <group col="4">
+                                        <field name="cleared_bank_account"/>
+                                        <field name="date" readonly="1"
+                                               force_save="1"/>
+                                        <field name="name" readonly="1"
+                                               force_save="1"/>
+                                        <field name="ref" readonly="1"
+                                               force_save="1"/>
+                                        <field name="partner_id" readonly="1"
+                                               force_save="1"/>
+                                        <field name="amount" readonly="1"
+                                               force_save="1"/>
+                                        <field name="amountcur" readonly="1"
+                                               force_save="1"/>
+                                        <field name="currency_id" readonly="1"
+                                               force_save="1"/>
+                                        <field name="research_required"
+                                               readonly="1" force_save="1"/>
+                                    </group>
                                 </form>
                                 <tree string="Deposits, Credits, and Interest"
                                       editable="top"
-                                      mute_additem="draft,to_be_reviewed,done, cancel">
+                                      mute_additem="draft,to_be_reviewed,done, cancel"
+                                      create="0">
                                     <field name="cleared_bank_account"/>
                                     <field name="date" readonly="1"
                                            force_save="1"/>
                                     <field name="name" readonly="1"
                                            force_save="1"/>
-                                    <field name="ref" readonly="1"
-                                           force_save="1"/>
+                                    <field name="ref" readonly="1"/>
                                     <field name="partner_id" readonly="1"
                                            force_save="1"/>
                                     <field name="amount" readonly="1"
@@ -117,27 +129,30 @@
                                    nolabel="1" widget="one2many_list"
                                    height="300">
                                 <form string="Checks, Withdrawals, Debits, and Service Charges">
-                                    <field name="cleared_bank_account"/>
-                                    <field name="date" readonly="1"
-                                           force_save="1"/>
-                                    <field name="name" readonly="1"
-                                           force_save="1"/>
-                                    <field name="ref" readonly="1"
-                                           force_save="1"/>
-                                    <field name="partner_id" readonly="1"
-                                           force_save="1"/>
-                                    <field name="amount" readonly="1"
-                                           force_save="1"/>
-                                    <field name="amountcur" readonly="1"
-                                           force_save="1"/>
-                                    <field name="currency_id" readonly="1"
-                                           force_save="1"/>
-                                    <field name="research_required"
-                                           readonly="1" force_save="1"/>
+                                    <group col="4">
+                                        <field name="cleared_bank_account"/>
+                                        <field name="date" readonly="1"
+                                               force_save="1"/>
+                                        <field name="name" readonly="1"
+                                               force_save="1"/>
+                                        <field name="ref" readonly="1"
+                                               force_save="1"/>
+                                        <field name="partner_id" readonly="1"
+                                               force_save="1"/>
+                                        <field name="amount" readonly="1"
+                                               force_save="1"/>
+                                        <field name="amountcur" readonly="1"
+                                               force_save="1"/>
+                                        <field name="currency_id" readonly="1"
+                                               force_save="1"/>
+                                        <field name="research_required"
+                                               readonly="1" force_save="1"/>
+                                    </group>
                                 </form>
                                 <tree string="Checks, Withdrawals, Debits, and Service Charges"
                                       editable="top"
-                                      mute_additem="draft,to_be_reviewed,done, cancel">
+                                      mute_additem="draft,to_be_reviewed,done, cancel"
+                                      create="0">
                                     <field name="cleared_bank_account"/>
                                     <field name="date" readonly="1"
                                            force_save="1"/>
@@ -173,12 +188,8 @@
                                         string="Unselect All"
                                         icon="fa-close"/>
                             </group>
-                            <newline/>
-                            <separator string="Totals - Cleared and Uncleared"
-                                       colspan="2"/>
-                            <group name="totals" col="4" colspan="4">
-
-                                <group name="total1" col="2" colspan="2">
+                            <group name="totals" string="Totals">
+                                <group name="total1" string="Cleared">
                                     <field name="sum_of_debits"/>
                                     <field name="sum_of_debits_cur"/>
                                     <field name="sum_of_debits_lines"/>
@@ -186,7 +197,7 @@
                                     <field name="sum_of_credits_cur"/>
                                     <field name="sum_of_credits_lines"/>
                                 </group>
-                                <group name="total2" col="2" colspan="2">
+                                <group name="total2" string="Uncleared">
                                     <field name="sum_of_udebits"/>
                                     <field name="sum_of_udebits_cur"/>
                                     <field name="sum_of_udebits_lines"/>
@@ -195,11 +206,8 @@
                                     <field name="sum_of_ucredits_lines"/>
                                 </group>
                             </group>
-                            <newline/>
-                            <separator
-                                    string="Balances - Cleared and Uncleared"/>
-                            <group name="balances" col="4" colspan="4">
-                                <group name="balance1" col="2" colspan="2">
+                            <group name="balances" string="Balances">
+                                <group name="balance1" string="Cleared">
                                     <field name="cleared_balance"/>
                                     <field name="cleared_balance_cur"
                                            attrs="{'invisible':[('cleared_balance_cur','=', 0.0)]}"/>
@@ -207,7 +215,7 @@
                                     <field name="difference_cur"
                                            attrs="{'invisible':[('cleared_balance_cur','=', 0.0)]}"/>
                                 </group>
-                                <group name="balance2" col="2" colspan="2">
+                                <group name="balance2" string="Uncleared">
                                     <field name="uncleared_balance"/>
                                     <field name="uncleared_balance_cur"
                                            attrs="{'invisible':[('uncleared_balance_cur','=', 0.0)]}"/>
@@ -215,15 +223,17 @@
                             </group>
                         </page>
                         <page string="Other Information">
-                            <separator string="Tracking Information"
-                                       colspan="4"/>
-                            <group colspan="2" col="2">
-                                <field name="verified_by_user_id"
-                                       placeholder="Enter user whoever varified"/>
-                            </group>
-                            <group colspan="2" col="2">
-                                <field name="verified_date"
-                                       placeholder="Enter date of varification"/>
+                            <group string="Tracking Information">
+                                <group>
+                                    <field name="verified_by_user_id"
+                                           placeholder="Enter the user who verified"
+                                           readonly="1"/>
+                                </group>
+                                <group>
+                                    <field name="verified_date"
+                                           placeholder="Enter the verification date"
+                                           readonly="1"/>
+                                </group>
                             </group>
                         </page>
                         <page string="Notes">
@@ -262,7 +272,8 @@
                 </field>
                 <newline/>
                 <group expand="0" string="Group By...">
-                    <filter string="Account" icon="terp-personal" domain="[]" context="{'group_by':'account_id'}"/>
+                    <filter string="Account" icon="terp-personal" domain="[]"
+                            context="{'group_by':'account_id'}"/>
                     <separator orientation="vertical"/>
                     <filter string="State"
                             icon="terp-stock_effects-object-colorize"
