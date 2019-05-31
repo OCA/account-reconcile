@@ -2,4 +2,4 @@
 * Balaji Kannan <bkannan@opensourceintegrators.com>
 * Bhavesh Odedra <bodedra@opensourceintegrators.com>
 * Sandeep Mangukiya <smangukiya@opensourceintegrators.com>
-* Serpent Consulting Services Pvt. Ltd. <support@serpentcs.com>
+* Murtuza Saleh <murtuza.saleh@serpentcs.com>

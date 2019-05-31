@@ -6,14 +6,13 @@
             <t t-set="o"
                t-value="o.with_context({'lang':o.company_id.partner_id.lang})"/>
             <div class="page">
-                <h2 style='text-align:center;'>
+                <p style='text-align:center;'>
                     Reconciliation Detail
-                </h2>
+                </p>
                 <h5 style='text-align:center;'>
                     <span>Period Ending</span>
                     <span t-field="o.ending_date"/>
                 </h5>
-
                 <div class="row">
                     <table class="table table-condensed"
                            t-if="not o.account_id.currency_id">
@@ -23,8 +22,8 @@
                                 <th>Date</th>
                                 <th class="text-center">Comment</th>
                                 <th class="text-center">Partner</th>
-                                <th class="text-right">Reference</th>
-                                <th class="text-right">Cleared</th>
+                                <th class="text-center">Reference</th>
+                                <th class="text-center">Cleared</th>
                                 <th class="text-right">
                                     <span t-field="o.company_id.currency_id.symbol"/>
                                 </th>
@@ -42,11 +41,12 @@
                                 <th>Date</th>
                                 <th class="text-center">Comment</th>
                                 <th class="text-center">Partner</th>
-                                <th class="text-right">Reference</th>
-                                <th class="text-right">Cleared</th>
+                                <th class="text-center">Reference</th>
+                                <th class="text-center">Cleared</th>
                                 <th class="text-right">
                                     <span t-field="o.company_id.currency_id.symbol"/>
                                 </th>
+                                 <th class="text-right">Cleared</th>
                             </tr>
                         </thead>
                     </table>
@@ -141,7 +141,9 @@
                                     <span t-field="debit.ref"/>
                                 </td>
                                 <td class="text-right">
-                                    <span t-esc="debit.cleared_bank_account and 'X' or ''"/>
+                                    <t t-if="debit.cleared_bank_account">
+                                        <input type="checkbox" checked="1"/>
+                                    </t>
                                 </td>
                                 <td class="text-right">
                                     <span t-field="debit.amount"
@@ -173,7 +175,9 @@
                                     <span t-field="debit.ref"/>
                                 </td>
                                 <td class="text-right">
-                                    <span t-esc="debit.cleared_bank_account and 'X' or ''"/>
+                                    <t t-if="debit.cleared_bank_account">
+                                        <input type="checkbox" checked="1"/>
+                                    </t>
                                 </td>
                                 <td class="text-right">
                                     <span t-field="debit.amount"
@@ -279,7 +283,9 @@
                                     <span t-field="credit.ref"/>
                                 </td>
                                 <td class="text-right">
-                                    <span t-esc="credit.cleared_bank_account and 'X' or ''"/>
+                                    <t t-if="credit.cleared_bank_account">
+                                        <input type="checkbox" checked="1"/>
+                                    </t>
                                 </td>
                                 <td class="text-right">
                                     <span t-field="credit.amount"
@@ -312,7 +318,9 @@
                                     <span t-field="credit.ref"/>
                                 </td>
                                 <td class="text-right">
-                                    <span t-esc="credit.cleared_bank_account and 'X' or ''"/>
+                                    <t t-if="credit.cleared_bank_account">
+                                        <input type="checkbox" checked="1"/>
+                                    </t>
                                 </td>
                                 <td class="text-right">
                                     <span t-field="credit.amount"
