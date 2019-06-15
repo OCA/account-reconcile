@@ -83,6 +83,7 @@ Contributors
 * Laurent Mignon <laurent.mignon@acsone.eu>
 * Sébastien Beau <sebastien.beau@akretion.com>
 * Matthieu Dietrich <matthieu.dietrich@camptocamp.com>
+* Alexandre Fayolle <alexandre.fayolle@camptocamp.com>
 
 Maintainer
 ----------
