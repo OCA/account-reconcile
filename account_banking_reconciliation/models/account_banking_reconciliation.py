@@ -561,7 +561,7 @@ class BankAccRecStatement(models.Model):
         ('to_be_reviewed', 'Ready for Review'),
         ('done', 'Done'),
         ('cancel', 'Cancel')
-    ], 'State', select=True, readonly=True, default='draft')
+    ], 'State', index=True, readonly=True, default='draft')
 
     _order = "ending_date desc"
     _sql_constraints = [
