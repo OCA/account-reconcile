@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 # © 2011-2016 Akretion
-# © 2011-2016 Camptocamp SA
+# © 2011-2019 Camptocamp SA
 # © 2013 Savoir-faire Linux
 # © 2014 ACSONE SA/NV
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html)
@@ -196,6 +196,20 @@ class AccountJournal(models.Model):
                     'account_id': commission_account_id,
                     'already_completed': True,
                 }
+                if (self.currency_id and
+                        self.currency_id != self.company_id.currency_id):
+                    # the commission we are reading is in the currency of the
+                    # journal: use the amount in the amount_currency field, and
+                    # set credit / debit to the value in company currency at
+                    # the date of the move.
+                    currency = self.currency_id.with_context(date=move.date)
+                    company_currency = self.company_id.currency_id
+                    comm_values['amount_currency'] = comm_values['debit']
+                    comm_values['debit'] = currency.compute(
+                        comm_values['debit'],
+                        company_currency
+                    )
+                    comm_values['currency_id'] = currency.id
                 move_line_obj.with_context(
                     check_move_validity=False
                 ).create(comm_values)
@@ -231,6 +245,19 @@ class AccountJournal(models.Model):
         if not values.get('account_id', False):
             values['account_id'] = self.receivable_account_id.id
         account = self.env['account.account'].browse(values['account_id'])
+        if (self.currency_id and
+                self.currency_id != self.company_id.currency_id):
+            # the debit and credit we are reading are in the currency of the
+            # journal: use the amount in the amount_currency field, and set
+            # credit / debit to the value in company currency at the date of
+            # the move.
+            currency = self.currency_id.with_context(date=move.date)
+            company_currency = self.company_id.currency_id
+            values['amount_currency'] = values['debit'] - values['credit']
+            values['debit'] = currency.compute(values['debit'],
+                                               company_currency)
+            values['credit'] = currency.compute(values['credit'],
+                                                company_currency)
         if account.reconcile:
             values['amount_residual'] = values['debit'] - values['credit']
         else:
