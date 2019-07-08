@@ -1,0 +1,43 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* auto_reconcile_strucured_ref
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 10.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-05-13 14:39+0000\n"
+"PO-Revision-Date: 2019-05-13 16:41+0200\n"
+"Last-Translator: Timon Tschanz <timon.tschanz@camptocamp.com>\n"
+"Language-Team: French\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Language: fr\n"
+
+#. module: auto_reconcile_strucured_ref
+#: model:ir.model,name:auto_reconcile_strucured_ref.model_account_bank_statement_line
+msgid "Bank Statement Line"
+msgstr "Ligne de relevé bancaire"
+
+#. module: auto_reconcile_strucured_ref
+#. openerp-web
+#: code:addons/auto_reconcile_strucured_ref/static/src/xml/account_reconciliation.xml:9
+#, python-format
+msgid "ESR reconciliation"
+msgstr "Lettrage BVR"
+
+#. module: auto_reconcile_strucured_ref
+#. openerp-web
+#: code:addons/auto_reconcile_strucured_ref/static/src/xml/account_reconciliation.xml:9
+#, python-format
+msgid "Let odoo try to reconcile entries for the user using esr refs"
+msgstr "Laisser Odoo essayer de lettrer les entrées pour l'utilisateur avec les références BVR"
+
+#. module: auto_reconcile_strucured_ref
+#. openerp-web
+#: code:addons/auto_reconcile_strucured_ref/static/src/xml/account_reconciliation.xml:12
+#, python-format
+msgid "display: none;"
+msgstr "display: none;"
