@@ -4,7 +4,7 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 10.0\n"
+"Project-Id-Version: Odoo Server 11.0\n"
 "Report-Msgid-Bugs-To: \n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
@@ -12,6 +12,12 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
+
+#. module: account_banking_reconciliation
+#: code:addons/account_banking_reconciliation/models/account_banking_reconciliation.py:548
+#, python-format
+msgid "%s (copy)"
+msgstr ""
 
 #. module: account_banking_reconciliation
 #: model:ir.model.fields,help:account_banking_reconciliation.field_bank_acc_rec_statement_difference
@@ -136,10 +142,11 @@ msgstr ""
 
 #. module: account_banking_reconciliation
 #: model:ir.ui.view,arch_db:account_banking_reconciliation.view_bank_acc_rec_statement_form
-msgid "Balances - Cleared and Uncleared"
+msgid "Balances"
 msgstr ""
 
 #. module: account_banking_reconciliation
+#: model:ir.model,name:account_banking_reconciliation.model_bank_acc_rec_statement
 #: model:ir.model.fields,field_description:account_banking_reconciliation.field_account_move_line_bank_acc_rec_statement_id
 msgid "Bank Acc Rec Statement"
 msgstr ""
@@ -165,12 +172,12 @@ msgid "Bank Statement Verifier"
 msgstr ""
 
 #. module: account_banking_reconciliation
-#: model:ir.actions.report.xml,name:account_banking_reconciliation.bank_statement_detail
+#: model:ir.actions.report,name:account_banking_reconciliation.bank_statement_detail
 msgid "Bank Statement-Detail"
 msgstr ""
 
 #. module: account_banking_reconciliation
-#: model:ir.actions.report.xml,name:account_banking_reconciliation.bank_statement_summary
+#: model:ir.actions.report,name:account_banking_reconciliation.bank_statement_summary
 msgid "Bank Statement-Summary"
 msgstr ""
 
@@ -181,9 +188,13 @@ msgid "Bank Statements"
 msgstr ""
 
 #. module: account_banking_reconciliation
-#: selection:bank.acc.rec.statement,state:0
 #: model:ir.ui.view,arch_db:account_banking_reconciliation.view_bank_acc_rec_statement_form
 msgid "Cancel"
+msgstr ""
+
+#. module: account_banking_reconciliation
+#: selection:bank.acc.rec.statement,state:0
+msgid "Cancelled"
 msgstr ""
 
 #. module: account_banking_reconciliation
@@ -203,13 +214,15 @@ msgid "Check if the transaction should be researched by Accounting personal"
 msgstr ""
 
 #. module: account_banking_reconciliation
-#: model:ir.ui.view,arch_db:account_banking_reconciliation.view_bank_acc_rec_statement_form
-msgid "Checks, Withdrawals, Debits, and Service Charges"
+#: model:ir.model.fields,field_description:account_banking_reconciliation.field_bank_acc_rec_statement_sum_of_credits_lines
+msgid "Checks, Withdrawals,\n"
+"                                          Debits, and Service Charges # of\n"
+"                                          Items"
 msgstr ""
 
 #. module: account_banking_reconciliation
-#: model:ir.model.fields,field_description:account_banking_reconciliation.field_bank_acc_rec_statement_sum_of_credits_lines
-msgid "Checks, Withdrawals, Debits, and Service Charges # of Items"
+#: model:ir.ui.view,arch_db:account_banking_reconciliation.view_bank_acc_rec_statement_form
+msgid "Checks, Withdrawals, Debits, and Service Charges"
 msgstr ""
 
 #. module: account_banking_reconciliation
@@ -224,6 +237,7 @@ msgstr ""
 
 #. module: account_banking_reconciliation
 #: model:ir.ui.view,arch_db:account_banking_reconciliation.report_bank_statement_detail_doc
+#: model:ir.ui.view,arch_db:account_banking_reconciliation.view_bank_acc_rec_statement_form
 msgid "Cleared"
 msgstr ""
 
@@ -317,6 +331,11 @@ msgid "Date in which Deposit Ticket was verified."
 msgstr ""
 
 #. module: account_banking_reconciliation
+#: model:ir.ui.view,arch_db:account_banking_reconciliation.view_bank_acc_rec_statement_form
+msgid "Date of the last statement"
+msgstr ""
+
+#. module: account_banking_reconciliation
 #: selection:bank.acc.rec.statement.line,type:0
 msgid "Debit"
 msgstr ""
@@ -327,13 +346,14 @@ msgid "Debits"
 msgstr ""
 
 #. module: account_banking_reconciliation
-#: model:ir.ui.view,arch_db:account_banking_reconciliation.view_bank_acc_rec_statement_form
-msgid "Deposits, Credits, and Interest"
+#: model:ir.model.fields,field_description:account_banking_reconciliation.field_bank_acc_rec_statement_sum_of_debits_lines
+msgid "Deposits, Credits, and\n"
+"                                         Interest # of Items"
 msgstr ""
 
 #. module: account_banking_reconciliation
-#: model:ir.model.fields,field_description:account_banking_reconciliation.field_bank_acc_rec_statement_sum_of_debits_lines
-msgid "Deposits, Credits, and Interest # of Items"
+#: model:ir.ui.view,arch_db:account_banking_reconciliation.view_bank_acc_rec_statement_form
+msgid "Deposits, Credits, and Interest"
 msgstr ""
 
 #. module: account_banking_reconciliation
@@ -409,37 +429,7 @@ msgstr ""
 
 #. module: account_banking_reconciliation
 #: model:ir.ui.view,arch_db:account_banking_reconciliation.view_bank_acc_rec_statement_form
-msgid "Enter Account Name"
-msgstr ""
-
-#. module: account_banking_reconciliation
-#: model:ir.ui.view,arch_db:account_banking_reconciliation.view_bank_acc_rec_statement_form
-msgid "Enter Company Name"
-msgstr ""
-
-#. module: account_banking_reconciliation
-#: model:ir.ui.view,arch_db:account_banking_reconciliation.view_bank_acc_rec_statement_form
-msgid "Enter Ending Balance"
-msgstr ""
-
-#. module: account_banking_reconciliation
-#: model:ir.ui.view,arch_db:account_banking_reconciliation.view_bank_acc_rec_statement_form
 msgid "Enter Name"
-msgstr ""
-
-#. module: account_banking_reconciliation
-#: model:ir.ui.view,arch_db:account_banking_reconciliation.view_bank_acc_rec_statement_form
-msgid "Enter Starting Balance"
-msgstr ""
-
-#. module: account_banking_reconciliation
-#: model:ir.ui.view,arch_db:account_banking_reconciliation.view_bank_acc_rec_statement_form
-msgid "Enter date of varification"
-msgstr ""
-
-#. module: account_banking_reconciliation
-#: model:ir.ui.view,arch_db:account_banking_reconciliation.view_bank_acc_rec_statement_form
-msgid "Enter ending date"
 msgstr ""
 
 #. module: account_banking_reconciliation
@@ -449,7 +439,27 @@ msgstr ""
 
 #. module: account_banking_reconciliation
 #: model:ir.ui.view,arch_db:account_banking_reconciliation.view_bank_acc_rec_statement_form
-msgid "Enter user whoever varified"
+msgid "Enter the ending balance"
+msgstr ""
+
+#. module: account_banking_reconciliation
+#: model:ir.ui.view,arch_db:account_banking_reconciliation.view_bank_acc_rec_statement_form
+msgid "Enter the ending date"
+msgstr ""
+
+#. module: account_banking_reconciliation
+#: model:ir.ui.view,arch_db:account_banking_reconciliation.view_bank_acc_rec_statement_form
+msgid "Enter the starting balance"
+msgstr ""
+
+#. module: account_banking_reconciliation
+#: model:ir.ui.view,arch_db:account_banking_reconciliation.view_bank_acc_rec_statement_form
+msgid "Enter the user who verified"
+msgstr ""
+
+#. module: account_banking_reconciliation
+#: model:ir.ui.view,arch_db:account_banking_reconciliation.view_bank_acc_rec_statement_form
+msgid "Enter the verification date"
 msgstr ""
 
 #. module: account_banking_reconciliation
@@ -497,11 +507,6 @@ msgid "Last Modified on"
 msgstr ""
 
 #. module: account_banking_reconciliation
-#: model:ir.ui.view,arch_db:account_banking_reconciliation.view_bank_acc_rec_statement_form
-msgid "Last Statement Date"
-msgstr ""
-
-#. module: account_banking_reconciliation
 #: model:ir.model.fields,field_description:account_banking_reconciliation.field_bank_acc_rec_statement_last_ending_date
 msgid "Last Stmt Date"
 msgstr ""
@@ -531,7 +536,7 @@ msgid "Notes"
 msgstr ""
 
 #. module: account_banking_reconciliation
-#: code:addons/account_banking_reconciliation/models/account_banking_reconciliation.py:42
+#: code:addons/account_banking_reconciliation/models/account_banking_reconciliation.py:46
 #, python-format
 msgid "Only a member of '%s' group may delete/edit bank statements when not in draft state!"
 msgstr ""
@@ -548,8 +553,8 @@ msgid "Partner"
 msgstr ""
 
 #. module: account_banking_reconciliation
-#: code:addons/account_banking_reconciliation/models/account_banking_reconciliation.py:79
-#: code:addons/account_banking_reconciliation/models/account_banking_reconciliation.py:86
+#: code:addons/account_banking_reconciliation/models/account_banking_reconciliation.py:68
+#: code:addons/account_banking_reconciliation/models/account_banking_reconciliation.py:75
 #, python-format
 msgid "Prior to reconciling a statement, all differences must be accounted for and the Difference balance must be zero. Please review and make necessary changes."
 msgstr ""
@@ -561,7 +566,6 @@ msgstr ""
 
 #. module: account_banking_reconciliation
 #: selection:bank.acc.rec.statement,state:0
-#: model:ir.ui.view,arch_db:account_banking_reconciliation.view_bank_acc_rec_statement_form
 msgid "Ready for Review"
 msgstr ""
 
@@ -613,6 +617,16 @@ msgstr ""
 
 #. module: account_banking_reconciliation
 #: model:ir.ui.view,arch_db:account_banking_reconciliation.view_bank_acc_rec_statement_form
+msgid "Select the account"
+msgstr ""
+
+#. module: account_banking_reconciliation
+#: model:ir.ui.view,arch_db:account_banking_reconciliation.view_bank_acc_rec_statement_form
+msgid "Select the company"
+msgstr ""
+
+#. module: account_banking_reconciliation
+#: model:ir.ui.view,arch_db:account_banking_reconciliation.view_bank_acc_rec_statement_form
 msgid "Set to Draft"
 msgstr ""
 
@@ -650,6 +664,11 @@ msgstr ""
 #. module: account_banking_reconciliation
 #: model:ir.ui.view,arch_db:account_banking_reconciliation.view_bank_acc_rec_statement_filter
 msgid "Statements that haven't yet been confirmed"
+msgstr ""
+
+#. module: account_banking_reconciliation
+#: model:ir.ui.view,arch_db:account_banking_reconciliation.view_bank_acc_rec_statement_form
+msgid "Submit for Review"
 msgstr ""
 
 #. module: account_banking_reconciliation
@@ -754,12 +773,17 @@ msgstr ""
 
 #. module: account_banking_reconciliation
 #: model:ir.ui.view,arch_db:account_banking_reconciliation.view_bank_acc_rec_statement_form
-msgid "Totals - Cleared and Uncleared"
+msgid "Totals"
 msgstr ""
 
 #. module: account_banking_reconciliation
 #: model:ir.ui.view,arch_db:account_banking_reconciliation.view_bank_acc_rec_statement_form
 msgid "Tracking Information"
+msgstr ""
+
+#. module: account_banking_reconciliation
+#: model:ir.ui.view,arch_db:account_banking_reconciliation.view_bank_acc_rec_statement_form
+msgid "Uncleared"
 msgstr ""
 
 #. module: account_banking_reconciliation
@@ -779,7 +803,8 @@ msgstr ""
 
 #. module: account_banking_reconciliation
 #: model:ir.model.fields,field_description:account_banking_reconciliation.field_bank_acc_rec_statement_sum_of_udebits_lines
-msgid "Uncleared - Deposits, Credits, and Interest # of Items"
+msgid "Uncleared - Deposits,\n"
+"                                          Credits, and Interest # of Items"
 msgstr ""
 
 #. module: account_banking_reconciliation
@@ -828,14 +853,9 @@ msgid "Verified by me"
 msgstr ""
 
 #. module: account_banking_reconciliation
-#: code:addons/account_banking_reconciliation/models/account_banking_reconciliation.py:616
+#: code:addons/account_banking_reconciliation/models/account_banking_reconciliation.py:595
 #, python-format
 msgid "You cannot add any new bank statement line manually as of this revision!"
-msgstr ""
-
-#. module: account_banking_reconciliation
-#: model:ir.model,name:account_banking_reconciliation.model_bank_acc_rec_statement
-msgid "bank.acc.rec.statement"
 msgstr ""
 
 #. module: account_banking_reconciliation
