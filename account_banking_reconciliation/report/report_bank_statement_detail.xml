@@ -1,0 +1,484 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="report_bank_statement_detail_doc">
+        <t t-call="web.external_layout">
+            <t t-set="o"
+               t-value="o.with_context({'lang':o.company_id.partner_id.lang})"/>
+            <div class="page">
+                <p style='text-align:center;'>
+                    Reconciliation Detail
+                </p>
+                <h5 style='text-align:center;'>
+                    <span>Period Ending</span>
+                    <span t-field="o.ending_date"/>
+                </h5>
+                <div class="row">
+                    <table class="table table-condensed"
+                           t-if="not o.account_id.currency_id">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>Date</th>
+                                <th class="text-center">Comment</th>
+                                <th class="text-center">Partner</th>
+                                <th class="text-center">Reference</th>
+                                <th class="text-center">Cleared</th>
+                                <th class="text-right">
+                                    <span t-field="o.company_id.currency_id.symbol"/>
+                                </th>
+                                <th class="text-right">
+                                    <span t-field="o.account_id.currency_id.symbol"/>
+                                </th>
+                            </tr>
+                        </thead>
+                    </table>
+                    <table class="table table-condensed"
+                           t-if="o.account_id.currency_id">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>Date</th>
+                                <th class="text-center">Comment</th>
+                                <th class="text-center">Partner</th>
+                                <th class="text-center">Reference</th>
+                                <th class="text-center">Cleared</th>
+                                <th class="text-right">
+                                    <span t-field="o.company_id.currency_id.symbol"/>
+                                </th>
+                                 <th class="text-right">Cleared</th>
+                            </tr>
+                        </thead>
+                    </table>
+                    <table class="table table-condensed"
+                           t-if="not o.account_id.currency_id">
+                        <tbody class="invoice_tbody">
+                            <tr>
+                                <td>
+                                    <b>
+                                        <span>Initial Balance:</span>
+                                    </b>
+                                </td>
+                                <td></td>
+                                <td class="text-right">
+                                    <span t-field="o.starting_balance"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <b>
+                                        <span>Cleared Transactions</span>
+                                    </b>
+                                </td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <b>
+                                        <span>Deposits &amp; Credits-</span>
+                                        <span t-field="o.sum_of_debits_lines"/>
+                                        items
+                                    </b>
+                                </td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table class="table table-condensed"
+                           t-if="o.account_id.currency_id">
+                        <tbody class="invoice_tbody">
+                            <tr>
+                                <td>
+                                    <b>
+                                        <span>Initial Balance:</span>
+                                    </b>
+                                </td>
+                                <td></td>
+                                <td class="text-right">
+                                    <span t-field="o.starting_balance"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <b>
+                                        <span>Cleared Transactions</span>
+                                    </b>
+                                </td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <b>
+                                        <span>Deposits &amp; Credits-</span>
+                                        <span t-field="o.sum_of_debits_lines"/>
+                                        items
+                                    </b>
+                                </td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table class="table table-condensed"
+                           t-if="not o.account_id.currency_id">
+                        <tbody class="invoice_tbody">
+                            <tr t-foreach="o.debit_move_line_ids" t-as="debit"
+                                t-if="debit.cleared_bank_account">
+                                <td></td>
+                                <td>
+                                    <span t-field="debit.date"/>
+                                </td>
+                                <td>
+                                    <span t-field="debit.name"/>
+                                </td>
+                                <td>
+                                    <span t-field="debit.partner_id.name"/>
+                                </td>
+                                <td>
+                                    <span t-field="debit.ref"/>
+                                </td>
+                                <td class="text-right">
+                                    <t t-if="debit.cleared_bank_account">
+                                        <input type="checkbox" checked="1"/>
+                                    </t>
+                                </td>
+                                <td class="text-right">
+                                    <span t-field="debit.amount"
+                                          t-options='{"widget": "monetary", "display_currency": o.account_id.currency_id}'/>
+                                </td>
+                                <td class="text-right">
+                                    <span t-field="debit.amountcur"
+                                          t-options='{"widget": "monetary", "display_currency": o.account_id.currency_id}'/>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table class="table table-condensed"
+                           t-if="o.account_id.currency_id">
+                        <tbody class="invoice_tbody">
+                            <tr t-foreach="o.debit_move_line_ids" t-as="debit"
+                                t-if="debit.cleared_bank_account">
+                                <td></td>
+                                <td>
+                                    <span t-field="debit.date"/>
+                                </td>
+                                <td>
+                                    <span t-field="debit.name"/>
+                                </td>
+                                <td>
+                                    <span t-field="debit.partner_id.name"/>
+                                </td>
+                                <td>
+                                    <span t-field="debit.ref"/>
+                                </td>
+                                <td class="text-right">
+                                    <t t-if="debit.cleared_bank_account">
+                                        <input type="checkbox" checked="1"/>
+                                    </t>
+                                </td>
+                                <td class="text-right">
+                                    <span t-field="debit.amount"
+                                          t-options='{"widget": "monetary", "display_currency": o.account_id.currency_id}'/>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div t-if="not o.account_id.currency_id">
+                        <table class="table table-condensed">
+                            <tbody class="invoice_tbody">
+                                <tr>
+                                    <td>
+                                        <b>
+                                            <span>Total Deposits &amp;
+                                                Credits
+                                            </span>
+                                        </b>
+                                    </td>
+                                    <td></td>
+                                    <td class="text-right">
+                                        <span t-if="o.sum_of_debits"
+                                              t-field="o.sum_of_debits"
+                                              t-options='{"widget": "monetary", "display_currency": o.account_id.currency_id}'/>
+                                    </td>
+                                    <td class="text-right">
+                                        <span t-if="o.sum_of_debits_cur"
+                                              t-field="o.sum_of_debits_cur"
+                                              t-options='{"widget": "monetary", "display_currency": o.account_id.currency_id}'/>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <table class="table table-condensed">
+                            <tbody class="invoice_tbody">
+                                <tr>
+                                    <td>
+                                        <b>
+                                            <span>Checks &amp; Payments-</span>
+                                            <span t-field="o.sum_of_credits_lines"/>
+                                            items
+                                        </b>
+                                    </td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div t-if="o.account_id.currency_id">
+                        <table class="table table-condensed">
+                            <tbody class="invoice_tbody">
+                                <tr>
+                                    <td>
+                                        <b>
+                                            <span>Total Deposits &amp;
+                                                Credits
+                                            </span>
+                                        </b>
+                                    </td>
+                                    <td></td>
+                                    <td class="text-right">
+                                        <span t-if="o.sum_of_debits"
+                                              t-field="o.sum_of_debits"
+                                              t-options='{"widget": "monetary", "display_currency": o.account_id.currency_id}'/>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <table class="table table-condensed">
+                            <tbody class="invoice_tbody">
+                                <tr>
+                                    <td>
+                                        <b>
+                                            <span>Checks &amp; Payments-</span>
+                                            <span t-field="o.sum_of_credits_lines"/>
+                                            items
+                                        </b>
+                                    </td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <table class="table table-condensed"
+                           t-if="not o.account_id.currency_id">
+                        <tbody class="invoice_tbody">
+                            <tr t-foreach="o.credit_move_line_ids"
+                                t-as="credit"
+                                t-if="credit.cleared_bank_account">
+                                <td></td>
+                                <td>
+                                    <span t-field="credit.date"/>
+                                </td>
+                                <td>
+                                    <span t-field="credit.name"/>
+                                </td>
+                                <td>
+                                    <span t-field="credit.partner_id.name"/>
+                                </td>
+                                <td>
+                                    <span t-field="credit.ref"/>
+                                </td>
+                                <td class="text-right">
+                                    <t t-if="credit.cleared_bank_account">
+                                        <input type="checkbox" checked="1"/>
+                                    </t>
+                                </td>
+                                <td class="text-right">
+                                    <span t-field="credit.amount"
+                                          t-options='{"widget": "monetary", "display_currency": o.account_id.currency_id}'/>
+                                </td>
+                                <td class="text-right">
+                                    <span t-field="credit.amountcur"
+                                          t-options='{"widget": "monetary", "display_currency": o.account_id.currency_id}'/>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table class="table table-condensed"
+                           t-if="o.account_id.currency_id">
+                        <tbody class="invoice_tbody">
+                            <tr t-foreach="o.credit_move_line_ids"
+                                t-as="credit"
+                                t-if="credit.cleared_bank_account">
+                                <td></td>
+                                <td>
+                                    <span t-field="credit.date"/>
+                                </td>
+                                <td>
+                                    <span t-field="credit.name"/>
+                                </td>
+                                <td>
+                                    <span t-field="credit.partner_id.name"/>
+                                </td>
+                                <td>
+                                    <span t-field="credit.ref"/>
+                                </td>
+                                <td class="text-right">
+                                    <t t-if="credit.cleared_bank_account">
+                                        <input type="checkbox" checked="1"/>
+                                    </t>
+                                </td>
+                                <td class="text-right">
+                                    <span t-field="credit.amount"
+                                          t-options='{"widget": "monetary", "display_currency": o.account_id.currency_id}'/>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div t-if="not o.account_id.currency_id">
+                        <table class="table table-condensed">
+                            <tbody class="invoice_tbody">
+                                <tr>
+                                    <td>
+                                        <b>
+                                            <span>Total Checks &amp; Payments
+                                            </span>
+                                        </b>
+                                    </td>
+                                    <td></td>
+                                    <td class="text-right">
+                                        <span t-if="o.sum_of_credits"
+                                              t-field="o.sum_of_credits"
+                                              t-options='{"widget": "monetary", "display_currency": o.account_id.currency_id}'/>
+                                    </td>
+                                    <td class="text-right">
+                                        <span t-if="o.sum_of_credits_cur"
+                                              t-field="o.sum_of_credits_cur"
+                                              t-options='{"widget": "monetary", "display_currency": o.account_id.currency_id}'/>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <table class="table table-condensed">
+                            <tbody class="invoice_tbody">
+                                <tr>
+                                    <td>
+                                        <b>
+                                            <span>Total Cleared Transactions
+                                            </span>
+                                        </b>
+                                    </td>
+                                    <td></td>
+                                    <td class="text-right">
+                                        <span t-esc="o.sum_of_debits - o.sum_of_credits"
+                                              t-options='{"widget": "monetary", "display_currency": o.account_id.currency_id}'/>
+                                    </td>
+                                    <td class="text-right">
+                                        <span t-esc="o.sum_of_debits_cur - o.sum_of_credits_cur"
+                                              t-options='{"widget": "monetary", "display_currency": o.account_id.currency_id}'/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <b>
+                                            <span>Cleared Balance</span>
+                                        </b>
+                                    </td>
+                                    <td></td>
+                                    <td class="text-right">
+                                        <span t-field="o.cleared_balance"
+                                              t-options='{"widget": "monetary", "display_currency": o.account_id.currency_id}'/>
+                                    </td>
+                                    <td class="text-right">
+                                        <span t-field="o.cleared_balance_cur"
+                                              t-options='{"widget": "monetary", "display_currency": o.account_id.currency_id}'/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <b>
+                                            <span>Ending Balance</span>
+                                        </b>
+                                    </td>
+                                    <td></td>
+                                    <td></td>
+                                    <td class="text-right">
+                                        <span t-field="o.ending_balance"
+                                              t-options='{"widget": "monetary", "display_currency": o.account_id.currency_id}'/>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div t-if="o.account_id.currency_id">
+                        <table class="table table-condensed">
+                            <tbody class="invoice_tbody">
+                                <tr>
+                                    <td>
+                                        <b>
+                                            <span>Total Deposits &amp;
+                                                Credits
+                                            </span>
+                                        </b>
+                                    </td>
+                                    <td></td>
+                                    <td class="text-right">
+                                        <span t-if="o.sum_of_credits"
+                                              t-field="o.sum_of_credits"
+                                              t-options='{"widget": "monetary", "display_currency": o.account_id.currency_id}'/>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <table class="table table-condensed">
+                            <tbody class="invoice_tbody">
+                                <tr>
+                                    <td>
+                                        <b>
+                                            <span>Total Cleared Transactions
+                                            </span>
+                                        </b>
+                                    </td>
+                                    <td></td>
+                                    <td class="text-right">
+                                        <span t-esc="o.sum_of_debits - o.sum_of_credits"
+                                              t-options='{"widget": "monetary", "display_currency": o.account_id.currency_id}'/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <b>
+                                            <span>Cleared Balance</span>
+                                        </b>
+                                    </td>
+                                    <td></td>
+                                    <td class="text-right">
+                                        <span t-field="o.cleared_balance"
+                                              t-options='{"widget": "monetary", "display_currency": o.account_id.currency_id}'/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <b>
+                                            <span>Ending Balance</span>
+                                        </b>
+                                    </td>
+                                    <td></td>
+                                    <td></td>
+                                    <td class="text-right">
+                                        <span t-field="o.ending_balance"
+                                              t-options='{"widget": "monetary", "display_currency": o.account_id.currency_id}'/>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template>
+
+    <template id="report_bank_statement_detail">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="account_banking_reconciliation.report_bank_statement_detail_doc"
+                   t-lang="o.company_id.partner_id.lang"/>
+            </t>
+        </t>
+    </template>
+
+</odoo>
