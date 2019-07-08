@@ -7,23 +7,20 @@ Bank Account Reconciliation
    !! changes will be overwritten.                   !!
    !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
-.. |badge1| image:: https://img.shields.io/badge/maturity-Beta-yellow.png
-    :target: https://odoo-community.org/page/development-status
-    :alt: Beta
-.. |badge2| image:: https://img.shields.io/badge/licence-AGPL--3-blue.png
+.. |badge1| image:: https://img.shields.io/badge/licence-AGPL--3-blue.png
     :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
     :alt: License: AGPL-3
-.. |badge3| image:: https://img.shields.io/badge/github-OCA%2Faccount--reconcile-lightgray.png?logo=github
+.. |badge2| image:: https://img.shields.io/badge/github-OCA%2Faccount--reconcile-lightgray.png?logo=github
     :target: https://github.com/OCA/account-reconcile/tree/11.0/account_banking_reconciliation
     :alt: OCA/account-reconcile
-.. |badge4| image:: https://img.shields.io/badge/weblate-Translate%20me-F47D42.png
+.. |badge3| image:: https://img.shields.io/badge/weblate-Translate%20me-F47D42.png
     :target: https://translation.odoo-community.org/projects/account-reconcile-11-0/account-reconcile-11-0-account_banking_reconciliation
     :alt: Translate me on Weblate
-.. |badge5| image:: https://img.shields.io/badge/runbot-Try%20me-875A7B.png
+.. |badge4| image:: https://img.shields.io/badge/runbot-Try%20me-875A7B.png
     :target: https://runbot.odoo-community.org/runbot/98/11.0
     :alt: Try me on Runbot
 
-|badge1| |badge2| |badge3| |badge4| |badge5| 
+|badge1| |badge2| |badge3| |badge4| 
 
 This module is designed to provide an easy method in which Odoo accounting users
 can manually reconcile/validate their financial transactions from their financial
@@ -160,6 +157,31 @@ common in Europe due to the electronic nature of transactions).
 .. contents::
    :local:
 
+Configuration
+=============
+
+To configure this module
+
+* Go to Settings and activate the developer mode
+* Go to Settings > Users and Companies > Users
+* Add users who will prepare the bank statements to the "Bank Statement Preparer"
+* Add users who will verify them to the "Bank Statement Manager" group
+
+Usage
+=====
+
+To use this module:
+
+* Go to Accounting > Adviser > Bank Statements
+* Create a new bank statement
+* Select the account and provide a name
+* Enter the ending balance from the bank statement
+* Check the transactions that cleared the bank
+* Check the balances
+* Save and submit for review
+* As a reviewer, check the transactions, totals and balances
+* Click on Process
+
 Bug Tracker
 ===========
 
@@ -186,7 +208,14 @@ Contributors
 * Balaji Kannan <bkannan@opensourceintegrators.com>
 * Bhavesh Odedra <bodedra@opensourceintegrators.com>
 * Sandeep Mangukiya <smangukiya@opensourceintegrators.com>
-* Serpent Consulting Services Pvt. Ltd. <support@serpentcs.com>
+* Murtuza Saleh <murtuza.saleh@serpentcs.com>
+
+Other credits
+~~~~~~~~~~~~~
+
+* Nova Point Group <https://www.novapointgroup.com>
+* Open Source Integrators <https://www.opensourceintegrators.com>
+* Serpent Consulting Services Pvt. Ltd. <https://www.serpentcs.com>
 
 Maintainers
 ~~~~~~~~~~~
@@ -200,6 +229,14 @@ This module is maintained by the OCA.
 OCA, or the Odoo Community Association, is a nonprofit organization whose
 mission is to support the collaborative development of Odoo features and
 promote its widespread use.
+
+.. |maintainer-max3903| image:: https://github.com/max3903.png?size=40px
+    :target: https://github.com/max3903
+    :alt: max3903
+
+Current `maintainer <https://odoo-community.org/page/maintainer-role>`__:
+
+|maintainer-max3903| 
 
 This module is part of the `OCA/account-reconcile <https://github.com/OCA/account-reconcile/tree/11.0/account_banking_reconciliation>`_ project on GitHub.
 
