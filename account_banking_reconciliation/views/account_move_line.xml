@@ -13,7 +13,7 @@
                 <field name="bank_acc_rec_statement_id"/>
             </field>
             <field name="move_id" position="before">
-                <filter icon="terp-document-new"
+                <filter name="uncleared_bank_account" icon="terp-document-new"
                         string="Uncleared Bank Account"
                         domain="[('cleared_bank_account','=',False)]"
                         help="Journal Entries not cleared"/>

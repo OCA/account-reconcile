@@ -252,13 +252,13 @@
         <field name="type">search</field>
         <field name="arch" type="xml">
             <search string="Search Bank Account Reconciliation Statements">
-                <filter icon="terp-document-new" string="Draft"
+                <filter name="draft" icon="terp-document-new" string="Draft"
                         domain="[('state','=','draft')]"
                         help="Statements that haven't yet been confirmed"/>
-                <filter icon="terp-dolar" string="To be Reviewed"
+                <filter name="to_be_reviewed" icon="terp-dolar" string="To be Reviewed"
                         domain="[('state','=','to_be_reviewed')]"
                         help="Statements that are ready for review"/>
-                <filter icon="terp-check" string="Done"
+                <filter name="done" icon="terp-check" string="Done"
                         domain="[('state','=','done')]"
                         help="Statements that have been processed"/>
                 <separator orientation="vertical"/>
@@ -266,16 +266,16 @@
                 <field name="ending_date" select="1" string="Ending Date"/>
                 <field name="account_id" select="1"/>
                 <field name="verified_by_user_id" select="1">
-                    <filter domain="[('verified_by_user_id','=',uid)]"
+                    <filter name="verified_by_user_id" domain="[('verified_by_user_id','=',uid)]"
                             help="Verified by me"
                             icon="terp-personal"/>
                 </field>
                 <newline/>
                 <group expand="0" string="Group By...">
-                    <filter string="Account" icon="terp-personal" domain="[]"
+                    <filter name="account_id" string="Account" icon="terp-personal" domain="[]"
                             context="{'group_by':'account_id'}"/>
                     <separator orientation="vertical"/>
-                    <filter string="State"
+                    <filter name="state" string="State"
                             icon="terp-stock_effects-object-colorize"
                             domain="[]" context="{'group_by':'state'}"/>
                 </group>
