@@ -6,7 +6,7 @@
 {
     "name": "Bank Account Reconciliation",
     "summary": "Check transactions that cleared the bank",
-    "version": "11.0.1.0.0",
+    "version": "12.0.1.0.0",
     "license": "AGPL-3",
     "category": "Accounting and Financial Management",
     "author": "NovaPoint Group LLC, "
@@ -14,7 +14,6 @@
               "Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/account-reconcile",
     "depends": [
-        "account_invoicing",
         "account_voucher",
     ],
     "data": [
