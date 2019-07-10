@@ -1,8 +1,7 @@
-# -*- coding: utf-8 -*-
-# © 2011 Akretion
-# © 2011-2016 Camptocamp SA
-# © 2013 Savoir-faire Linux
-# © 2014 ACSONE SA/NV
+# Copyright 2011 Akretion
+# Copyright 2011-2019 Camptocamp SA
+# Copyright 2013 Savoir-faire Linux
+# Copyright 2014 ACSONE SA/NV
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html)
 import base64
 import csv
@@ -21,9 +20,9 @@ def UnicodeDictReader(utf8_data, **kwargs):
         dialect = kwargs.pop('dialect')
     csv_reader = csv.DictReader(utf8_data, dialect=dialect, **kwargs)
     for row in csv_reader:
-        yield dict([(unicode(key or '', 'utf-8'),
-                     unicode(value or '', 'utf-8'))
-                    for key, value in row.iteritems()])
+        yield dict([(str(key or ''),
+                     str(value or ''))
+                    for key, value in row.items()])
 
 
 class AccountMoveImportParser(object):

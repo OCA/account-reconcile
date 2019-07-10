@@ -1,18 +1,17 @@
-# -*- coding: utf-8 -*-
-# © 2011 Akretion
-# © 2011-2016 Camptocamp SA
-# © 2013 Savoir-faire Linux
-# © 2014 ACSONE SA/NV
+# Copyright 2011 Akretion
+# Copyright 2011-2019 Camptocamp SA
+# Copyright 2013 Savoir-faire Linux
+# Copyright 2014 ACSONE SA/NV
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html)
-from openerp.tools.translate import _
-from openerp.exceptions import UserError
-import tempfile
 import datetime
+import tempfile
+import xlrd
+
+from odoo import _
+from odoo.exceptions import UserError
+
+
 from .parser import AccountMoveImportParser, UnicodeDictReader
-try:
-    import xlrd
-except:
-    raise Exception(_('Please install python lib xlrd'))
 
 
 def float_or_zero(val):
@@ -37,14 +36,14 @@ class FileParser(AccountMoveImportParser):
             :param list: header : specify header fields if the csv file has no
               header
             """
-        super(FileParser, self).__init__(journal, **kwargs)
+        super().__init__(journal, **kwargs)
         if ftype in ('csv', 'xls', 'xlsx'):
             self.ftype = ftype[0:3]
         else:
             raise UserError(
                 _('Invalid file type %s. Please use csv, xls or xlsx') % ftype)
         self.conversion_dict = extra_fields
-        self.keys_to_validate = self.conversion_dict.keys()
+        self.keys_to_validate = list(self.conversion_dict.keys())
         self.fieldnames = header
         self._datemode = 0  # used only for xls documents,
         # 0 means Windows mode (1900 based dates).
@@ -79,7 +78,7 @@ class FileParser(AccountMoveImportParser):
         separately (in the field: fieldnames).
         """
         if self.fieldnames is None:
-            parsed_cols = self.result_row_list[0].keys()
+            parsed_cols = list(self.result_row_list[0].keys())
             for col in self.keys_to_validate:
                 if col not in parsed_cols:
                     raise UserError(_('Column %s not present in file') % col)
@@ -113,7 +112,7 @@ class FileParser(AccountMoveImportParser):
             header = sheet.row_values(0)
             res = []
             for rownum in range(1, sheet.nrows):
-                res.append(dict(zip(header, sheet.row_values(rownum))))
+                res.append(dict(list(zip(header, sheet.row_values(rownum)))))
         return res
 
     def _from_csv(self, result_set, conversion_rules):

@@ -1,11 +1,10 @@
-# -*- coding: utf-8 -*-
-# © 2011-2016 Akretion
-# © 2011-2016 Camptocamp SA
-# © 2013 Savoir-faire Linux
-# © 2014 ACSONE SA/NV
+# Copyright 2011-2016 Akretion
+# Copyright 2011-2019 Camptocamp SA
+# Copyright 2013 Savoir-faire Linux
+# Copyright 2014 ACSONE SA/NV
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html)
 from odoo import fields, tools
-from odoo.modules import get_module_resource
+from odoo.modules import get_resource_path
 from odoo.tests import common
 from collections import namedtuple
 
@@ -36,10 +35,10 @@ NAMES_COMPLETION_CASES = [
 class BaseCompletion(common.TransactionCase):
 
     def setUp(self):
-        super(BaseCompletion, self).setUp()
+        super().setUp()
         tools.convert_file(self.cr, 'account',
-                           get_module_resource('account', 'test',
-                                               'account_minimal_test.xml'),
+                           get_resource_path('account', 'test',
+                                             'account_minimal_test.xml'),
                            {}, 'init', False, 'test')
         self.account_move_obj = self.env["account.move"]
         self.account_move_line_obj = \
@@ -82,13 +81,13 @@ class BaseCompletion(common.TransactionCase):
                 "Partner_id must be blank before completion")
             self.move.button_auto_completion()
             if case.should_match:
-                self.assertEquals(
+                self.assertEqual(
                     self.partner, self.move_line.partner_id,
                     "Missing expected partner id after completion "
                     "(partner_name: %s, line_name: %s)" %
                     (case.partner_name, case.line_label))
             else:
-                self.assertNotEquals(
+                self.assertNotEqual(
                     self.partner, self.move_line.partner_id,
                     "Partner id should be empty after completion "
                     "(partner_name: %s, line_name: %s)"

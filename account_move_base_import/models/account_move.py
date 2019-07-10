@@ -1,8 +1,7 @@
-# -*- coding: utf-8 -*-
-# © 2011-2016 Akretion
-# © 2011-2016 Camptocamp SA
-# © 2013 Savoir-faire Linux
-# © 2014 ACSONE SA/NV
+# Copyright 2011-2016 Akretion
+# Copyright 2011-2019 Camptocamp SA
+# Copyright 2013 Savoir-faire Linux
+# Copyright 2014 ACSONE SA/NV
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html)
 import traceback
 import sys
@@ -10,8 +9,9 @@ import logging
 
 import psycopg2
 
-from odoo import _, api, fields, models
+from odoo import _, api, fields, models, registry
 from odoo.exceptions import ValidationError
+from odoo.tools import float_repr
 
 
 _logger = logging.getLogger(__name__)
@@ -62,7 +62,8 @@ class AccountMoveCompletionRule(models.Model):
             'From line name (based on partner field)'),
         ('get_from_name_and_partner_name',
             'From line name (based on partner name)')
-        ], string='Method')
+    ], string='Method'
+    )
 
     def _find_invoice(self, line, inv_type):
         """Find invoice related to statement line"""
@@ -262,9 +263,9 @@ class AccountMoveLine(models.Model):
         """Return writeable by SQL columns"""
         model_cols = self._fields
         avail = [
-            k for k, col in model_cols.iteritems() if not hasattr(col, '_fnct')
+            k for k, col in model_cols.items() if not hasattr(col, '_fnct')
         ]
-        keys = [k for k in move_store[0].keys() if k in avail]
+        keys = [k for k in list(move_store[0].keys()) if k in avail]
         keys.sort()
         return keys
 
@@ -273,9 +274,34 @@ class AccountMoveLine(models.Model):
         Return a copy of statement
         """
         move_copy = move
-        for k, col in move_copy.iteritems():
+        for k, col in move_copy.items():
             if k in cols:
-                move_copy[k] = self._fields[k].convert_to_column(col, None)
+                # In v11, the record is needed to call convert_to_column on a
+                # Monetary field because it must find the currency to apply the
+                # proper rounding. So we mimic the call here as best as we can.
+                if isinstance(self._fields[k], fields.Monetary):
+                    currency_field = move_copy.get(
+                        self._fields[k].currency_field
+                    )
+                    if currency_field:
+                        currency_id = (
+                            move_copy.get(currency_field)
+                            or move.get('company_currency_id')
+                        )
+                        if currency_id:
+                            currency = self.env['res.currency'].browse(
+                                currency_id
+                            )
+                            move_copy[k] = float_repr(
+                                currency.round(col), currency.decimal_places
+                            )
+                            continue
+                    # If no currency was found, set what convert_to_column
+                    # would do and used to do in v10
+                    move_copy[k] = float(col or 0.0)
+                    continue
+                else:
+                    move_copy[k] = self._fields[k].convert_to_column(col, None)
         return move_copy
 
     def _prepare_manyinsert(self, move_store, cols):
@@ -333,19 +359,16 @@ class AccountMove(models.Model):
         related='journal_id.used_for_completion',
         readonly=True)
     completion_logs = fields.Text(string='Completion Log', readonly=True)
-    # partner_id is a native field of the account module
-    # (related='line_ids.partner_id', store=True, readonly=True)
-    partner_id = fields.Many2one(related=False, compute='_compute_partner_id')
     import_partner_id = fields.Many2one('res.partner',
                                         string="Partner from import")
 
-    @api.one
     @api.depends('line_ids.partner_id', 'import_partner_id')
     def _compute_partner_id(self):
-        if self.import_partner_id:
-            self.partner_id = self.import_partner_id
-        elif self.line_ids:
-            self.partner_id = self.line_ids[0].partner_id
+        for move in self:
+            if move.import_partner_id:
+                move.partner_id = move.import_partner_id
+            else:
+                super(AccountMove, move)._compute_partner_id()
 
     def write_completion_log(self, error_msg, number_imported):
         """Write the log in the completion_logs field of the bank statement to
@@ -392,9 +415,9 @@ class AccountMove(models.Model):
                     res = line._get_line_values_from_rules(rules)
                     if res:
                         compl_lines += 1
-                except ErrorTooManyPartner, exc:
+                except ErrorTooManyPartner as exc:
                     msg_lines.append(repr(exc))
-                except Exception, exc:
+                except Exception as exc:
                     msg_lines.append(repr(exc))
                     error_type, error_value, trbk = sys.exc_info()
                     st = "Error: %s\nDescription: %s\nTraceback:" % (
@@ -411,10 +434,6 @@ class AccountMove(models.Model):
                             error_type.__name__, error_value)
                         st += ''.join(traceback.format_tb(trbk, 30))
                         _logger.error(st)
-                    # we can commit as it is not needed to be atomic
-                    # commiting here adds a nice perfo boost
-                    if not compl_lines % 500:
-                        self.env.cr.commit()
-            msg = u'\n'.join(msg_lines)
+            msg = '\n'.join(msg_lines)
             self.write_completion_log(msg, compl_lines)
         return True
