@@ -2,7 +2,7 @@
 <odoo>
     <template id="assets_backend" name="account assets" inherit_id="web.assets_backend">
         <xpath expr="." position="inside">
-            <script type="text/javascript" src="/auto_reconcile_structured_ref/static/src/js/account_reconciliation.js"></script>
+            <script type="text/javascript" src="/auto_reconcile_structured_ref/static/src/js/account_reconciliation.js"/>
         </xpath>
     </template>
 </odoo>
