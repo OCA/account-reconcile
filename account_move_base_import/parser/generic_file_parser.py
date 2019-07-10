@@ -1,15 +1,11 @@
-# -*- coding: utf-8 -*-
-# © 2011 Akretion
-# © 2011-2016 Camptocamp SA
-# © 2013 Savoir-faire Linux
-# © 2014 ACSONE SA/NV
+# Copyright 2011 Akretion
+# Copyright 2011-2019 Camptocamp SA
+# Copyright 2013 Savoir-faire Linux
+# Copyright 2014 ACSONE SA/NV
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html)
 import datetime
-from .file_parser import FileParser
-from openerp.addons.account_move_base_import.parser.file_parser import (
-    float_or_zero
-)
-from openerp.tools import ustr
+from .file_parser import FileParser, float_or_zero
+from odoo.tools import ustr
 
 
 class GenericFileParser(FileParser):
@@ -27,7 +23,7 @@ class GenericFileParser(FileParser):
         }
         # set self.env for later ORM searches
         self.env = journal.env
-        super(GenericFileParser, self).__init__(
+        super().__init__(
             journal, ftype=ftype,
             extra_fields=conversion_dict,
             **kwargs)

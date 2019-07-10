@@ -8,7 +8,7 @@
             <field name="journal_id" position="after">
                 <field name="used_for_completion" invisible="1"/>
             </field>
-            <button name="button_cancel" position="after">
+            <button name="post" position="after">
                 <button name="button_auto_completion"
                         string="Auto Completion"
                         type="object"
