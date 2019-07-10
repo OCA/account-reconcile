@@ -1,26 +1,24 @@
-# -*- coding: utf-8 -*-
-# © 2011-2016 Akretion
-# © 2011-2016 Camptocamp SA
-# © 2013 Savoir-faire Linux
-# © 2014 ACSONE SA/NV
+# Copyright 2011-2016 Akretion
+# Copyright 2011-2019 Camptocamp SA
+# Copyright 2013 Savoir-faire Linux
+# Copyright 2014 ACSONE SA/NV
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html)
 import base64
-import inspect
 import os
 from operator import attrgetter
 from odoo.tests import common
 from odoo import tools
-from odoo.modules import get_module_resource
+from odoo.modules import get_resource_path
 
 
 class TestCodaImport(common.TransactionCase):
 
     def setUp(self):
-        super(TestCodaImport, self).setUp()
+        super().setUp()
         self.company_a = self.browse_ref('base.main_company')
         tools.convert_file(self.cr, 'account',
-                           get_module_resource('account', 'test',
-                                               'account_minimal_test.xml'),
+                           get_resource_path('account', 'test',
+                                             'account_minimal_test.xml'),
                            {}, 'init', False, 'test')
         self.account_move_obj = self.env["account.move"]
         self.account_move_line_obj = self.env["account.move.line"]
@@ -37,15 +35,11 @@ class TestCodaImport(common.TransactionCase):
             'create_counterpart': True,
         })
 
-    def _filename_to_abs_filename(self, file_name):
-        dir_name = os.path.dirname(inspect.getfile(self.__class__))
-        return os.path.join(dir_name, file_name)
-
     def _import_file(self, file_name):
         """ import a file using the wizard
         return the create account.bank.statement object
         """
-        with open(file_name) as f:
+        with open(file_name, 'rb') as f:
             content = f.read()
             self.wizard = self.import_wizard_obj.create({
                 "journal_id": self.journal.id,
@@ -58,16 +52,18 @@ class TestCodaImport(common.TransactionCase):
     def test_simple_xls(self):
         """Test import from xls
         """
-        file_name = self._filename_to_abs_filename(
-            os.path.join("..", "data", "statement.xls"))
+        file_name = get_resource_path(
+            'account_move_base_import', 'demo', 'statement.xls'
+        )
         move = self._import_file(file_name)
         self._validate_imported_move(move)
 
     def test_simple_csv(self):
         """Test import from csv
         """
-        file_name = self._filename_to_abs_filename(
-            os.path.join("..", "data", "statement.csv"))
+        file_name = get_resource_path(
+            'account_move_base_import', 'demo', 'statement.csv'
+        )
         move = self._import_file(file_name)
         self._validate_imported_move(move)
 
