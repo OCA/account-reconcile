@@ -1,8 +1,7 @@
-# -*- coding: utf-8 -*-
-# © 2011-2016 Akretion
-# © 2011-2019 Camptocamp SA
-# © 2013 Savoir-faire Linux
-# © 2014 ACSONE SA/NV
+# Copyright 2011-2016 Akretion
+# Copyright 2011-2019 Camptocamp SA
+# Copyright 2013 Savoir-faire Linux
+# Copyright 2014 ACSONE SA/NV
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html)
 import sys
 import traceback
@@ -330,7 +329,9 @@ class AccountJournal(models.Model):
         if not result_row_list:
             raise UserError(_("Nothing to import: "
                               "The file is empty"))
-        parsed_cols = parser.get_move_line_vals(result_row_list[0]).keys()
+        parsed_cols = list(
+            parser.get_move_line_vals(result_row_list[0]).keys()
+        )
         for col in parsed_cols:
             if col not in move_line_obj._fields:
                 raise UserError(
@@ -345,9 +346,10 @@ class AccountJournal(models.Model):
                 parser_vals = parser.get_move_line_vals(line)
                 values = self.prepare_move_line_vals(parser_vals, move)
                 move_store.append(values)
+            # TODO Check if this is still needed
             # Hack to bypass ORM poor perfomance. Sob...
             move_line_obj._insert_lines(move_store)
-            self.env.invalidate_all()
+            self.invalidate_cache()
             self._write_extra_move_lines(parser, move)
             if self.create_counterpart:
                 self._create_counterpart(parser, move)
