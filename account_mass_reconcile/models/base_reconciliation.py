@@ -106,7 +106,7 @@ class MassReconcileBase(models.AbstractModel):
             lambda line, memo:
             dict((key, value + memo[key])
                  for key, value
-                 in line.items()
+                 in list(line.items())
                  if key in keys), lines)
         debit, credit = sums['debit'], sums['credit']
         writeoff_amount = round(debit - credit, precision)
