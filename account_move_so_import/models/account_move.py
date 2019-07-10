@@ -1,8 +1,7 @@
-# -*- coding: utf-8 -*-
-# © 2011-2016 Camptocamp SA
+# Copyright 2011-2019 Camptocamp SA
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html)
-from openerp import _, fields, models
-from openerp.addons.account_move_base_import.models.account_move \
+from odoo import _, fields, models
+from odoo.addons.account_move_base_import.models.account_move \
     import ErrorTooManyPartner
 
 
@@ -16,7 +15,7 @@ class AccountMoveCompletionRule(models.Model):
             ('get_from_name_and_so', 'From line name (based on SO number)')
         ])
 
-    # Should be private but data are initialised with no update XML
+    # Should be private but data are initialized with no update XML
     def get_from_name_and_so(self, line):
         """
         Match the partner based on the SO number and the reference of the
