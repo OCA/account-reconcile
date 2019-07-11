@@ -1,8 +1,7 @@
-# -*- coding: utf-8 -*-
-# © 2011-2016 Camptocamp SA
+# © 2011-2019 Camptocamp SA
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html)
-from openerp import _, fields, models
-from openerp.addons.account_move_base_import.models.account_move import \
+from odoo import _, fields, models
+from odoo.addons.account_move_base_import.models.account_move import \
     ErrorTooManyPartner
 
 
@@ -41,8 +40,7 @@ class AccountMoveCompletionRule(models.Model):
                 _('Line named "%s" was matched by more than '
                   'one partner.') % line.name)
         if len(sales) == 1:
-            sale = sales[0]
-            res['partner_id'] = sale.partner_id.id
+            res['partner_id'] = sales[0].partner_id.id
         return res
 
     def get_from_transaction_id_and_invoice(self, line):
