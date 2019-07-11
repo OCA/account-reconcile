@@ -1,9 +1,8 @@
-# -*- coding: utf-8 -*-
-# © 2011-2016 Camptocamp SA
+# © 2011-2019 Camptocamp SA
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html)
 import datetime
-from openerp.tools import ustr
-from openerp.addons.account_move_base_import.parser.file_parser import (
+from odoo.tools import ustr
+from odoo.addons.account_move_base_import.parser.file_parser import (
     FileParser, float_or_zero
 )
 
@@ -30,7 +29,7 @@ class TransactionIDFileParser(FileParser):
             'amount': float_or_zero,
             'commission_amount': float_or_zero,
         }
-        super(TransactionIDFileParser, self).__init__(
+        super().__init__(
             profile, extra_fields=conversion_dict, ftype=ftype, header=header,
             **kwargs)
 
