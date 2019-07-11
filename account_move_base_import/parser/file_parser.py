@@ -8,10 +8,15 @@ from openerp.tools.translate import _
 from openerp.exceptions import UserError
 import tempfile
 import datetime
+import logging
 from .parser import AccountMoveImportParser, UnicodeDictReader
+
+_logger = logging.getLogger(__name__)
+
 try:
     import xlrd
-except:
+except (ImportError, IOError) as err:
+    _logger.debug(err)
     xlrd = False
 
 
