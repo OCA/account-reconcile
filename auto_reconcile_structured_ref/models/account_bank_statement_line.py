@@ -42,13 +42,7 @@ class AccountBankStatementLine(models.Model):
         }
         # Try to get Structured Ref match
         if self.name:
-            sql_query = self._get_common_sql_query_ignore_partner() + \
-                " AND POSITION(aml.ref in %(ref)s) > 0" \
-                " AND aml.ref is not null" \
-                " AND round(aml.amount_residual,%(precision)s)" \
-                " = round(%(amount)s,%(precision)s) " \
-                " ORDER BY" \
-                " date_maturity asc, aml.id asc"
+            sql_query = self._get_sql_query()
             self.env.cr.execute(sql_query, params)
             match_recs = self.env.cr.dictfetchall()
             if len(match_recs) > 1:
@@ -116,3 +110,13 @@ class AccountBankStatementLine(models.Model):
         AND ({0} ( {1} AND aml.reconciled = false))
         """
         return query.format(account_clause, acc_type)
+
+    def _get_sql_query(self):
+        sql_query = self._get_common_sql_query_ignore_partner() + \
+            " AND POSITION(aml.ref in %(ref)s) > 0" \
+            " AND aml.ref is not null" \
+            " AND round(aml.amount_residual,%(precision)s)" \
+            " = round(%(amount)s,%(precision)s) " \
+            " ORDER BY" \
+            " date_maturity asc, aml.id asc"
+        return sql_query
