@@ -9,12 +9,12 @@ import os
 from odoo import _, api, fields, models
 from ..parser.parser import new_move_parser
 from odoo.exceptions import UserError, ValidationError
-from operator import attrgetter
 
 
 class AccountJournal(models.Model):
     _name = 'account.journal'
     _inherit = ['account.journal', 'mail.thread']
+    _order = 'sequence'
 
     used_for_import = fields.Boolean(
         string="Journal used for import")
@@ -70,33 +70,6 @@ class AccountJournal(models.Model):
         help="Two counterparts will be automatically created : one for "
              "the refunds and one for the payments")
 
-    def _get_rules(self):
-        # We need to respect the sequence order
-        return sorted(self.rule_ids, key=attrgetter('sequence'))
-
-    def _find_values_from_rules(self, calls, line):
-        """This method will execute all related rules, in their sequence order,
-        to retrieve all the values returned by the first rules that will match.
-        :param calls: list of lookup function name available in rules
-        :param dict line: read of the concerned account.bank.statement.line
-        :return:
-            A dict of value that can be passed directly to the write method of
-            the statement line or {}
-           {'partner_id': value,
-            'account_id: value,
-            ...}
-        """
-        if not calls:
-            calls = self._get_rules()
-        rule_obj = self.env['account.move.completion.rule']
-        for call in calls:
-            method_to_call = getattr(rule_obj, call.function_to_call)
-            result = method_to_call(line)
-            if result:
-                result['already_completed'] = True
-                return result
-        return None
-
     @api.multi
     def _prepare_counterpart_line(self, move, amount, date):
         if amount > 0.0:
@@ -108,7 +81,6 @@ class AccountJournal(models.Model):
             credit = -amount
             debit = 0.0
         counterpart_values = {
-            'name': _('/'),
             'date_maturity': date,
             'credit': credit,
             'debit': debit,
@@ -229,7 +201,7 @@ class AccountJournal(models.Model):
 
     def prepare_move_line_vals(self, parser_vals, move):
         """Hook to build the values of a line from the parser returned values.
-        At least it fullfill the basic values. Overide it to add your own
+        At least it fulfills the basic values. Override it to add your own
         completion if needed.
 
         :param dict of vals from parser for account.bank.statement.line
@@ -295,9 +267,9 @@ class AccountJournal(models.Model):
         the given profile.
 
         :param int/long profile_id: ID of the profile used to import the file
-        :param filebuffer file_stream: binary of the providen file
-        :param char: ftype represent the file exstension (csv by default)
-        :return: list: list of ids of the created account.bank.statemênt
+        :param filebuffer file_stream: binary of the provided file
+        :param char: ftype represent the file extension (csv by default)
+        :return: list: list of ids of the created account.bank.statement
         """
         filename = self._context.get('file_name', None)
         if filename:
@@ -311,15 +283,15 @@ class AccountJournal(models.Model):
 
     def _move_import(self, parser, file_stream, ftype="csv"):
         """Create a bank statement with the given profile and parser. It will
-        fullfill the bank statement with the values of the file providen, but
+        fulfill the bank statement with the values of the file provided, but
         will not complete data (like finding the partner, or the right
         account). This will be done in a second step with the completion rules.
 
         :param prof : The profile used to import the file
         :param parser: the parser
-        :param filebuffer file_stream: binary of the providen file
-        :param char: ftype represent the file exstension (csv by default)
-        :return: ID of the created account.bank.statemênt
+        :param filebuffer file_stream: binary of the provided file
+        :param char: ftype represent the file extension (csv by default)
+        :return: ID of the created account.bank.statement
         """
         move_obj = self.env['account.move']
         move_line_obj = self.env['account.move.line']
@@ -346,10 +318,9 @@ class AccountJournal(models.Model):
                 parser_vals = parser.get_move_line_vals(line)
                 values = self.prepare_move_line_vals(parser_vals, move)
                 move_store.append(values)
-            # TODO Check if this is still needed
-            # Hack to bypass ORM poor perfomance. Sob...
-            move_line_obj._insert_lines(move_store)
-            self.invalidate_cache()
+            move_line_obj.with_context(check_move_validity=False).create(
+                move_store
+            )
             self._write_extra_move_lines(parser, move)
             if self.create_counterpart:
                 self._create_counterpart(parser, move)
