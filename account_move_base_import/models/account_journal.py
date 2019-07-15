@@ -229,7 +229,7 @@ class AccountJournal(models.Model):
 
     def prepare_move_line_vals(self, parser_vals, move):
         """Hook to build the values of a line from the parser returned values.
-        At least it fullfill the basic values. Overide it to add your own
+        At least it fulfills the basic values. Override it to add your own
         completion if needed.
 
         :param dict of vals from parser for account.bank.statement.line
@@ -295,9 +295,9 @@ class AccountJournal(models.Model):
         the given profile.
 
         :param int/long profile_id: ID of the profile used to import the file
-        :param filebuffer file_stream: binary of the providen file
-        :param char: ftype represent the file exstension (csv by default)
-        :return: list: list of ids of the created account.bank.statemênt
+        :param filebuffer file_stream: binary of the provided file
+        :param char: ftype represent the file extension (csv by default)
+        :return: list: list of ids of the created account.bank.statement
         """
         filename = self._context.get('file_name', None)
         if filename:
@@ -311,15 +311,15 @@ class AccountJournal(models.Model):
 
     def _move_import(self, parser, file_stream, ftype="csv"):
         """Create a bank statement with the given profile and parser. It will
-        fullfill the bank statement with the values of the file providen, but
+        fulfill the bank statement with the values of the file provided, but
         will not complete data (like finding the partner, or the right
         account). This will be done in a second step with the completion rules.
 
         :param prof : The profile used to import the file
         :param parser: the parser
-        :param filebuffer file_stream: binary of the providen file
-        :param char: ftype represent the file exstension (csv by default)
-        :return: ID of the created account.bank.statemênt
+        :param filebuffer file_stream: binary of the provided file
+        :param char: ftype represent the file extension (csv by default)
+        :return: ID of the created account.bank.statement
         """
         move_obj = self.env['account.move']
         move_line_obj = self.env['account.move.line']
@@ -346,10 +346,9 @@ class AccountJournal(models.Model):
                 parser_vals = parser.get_move_line_vals(line)
                 values = self.prepare_move_line_vals(parser_vals, move)
                 move_store.append(values)
-            # TODO Check if this is still needed
-            # Hack to bypass ORM poor perfomance. Sob...
-            move_line_obj._insert_lines(move_store)
-            self.invalidate_cache()
+            move_line_obj.with_context(check_move_validity=False).create(
+                move_store
+            )
             self._write_extra_move_lines(parser, move)
             if self.create_counterpart:
                 self._create_counterpart(parser, move)
