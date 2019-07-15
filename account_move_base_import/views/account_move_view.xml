@@ -8,7 +8,7 @@
             <field name="journal_id" position="after">
                 <field name="used_for_completion" invisible="1"/>
             </field>
-            <button name="post" position="after">
+            <button name="action_duplicate" position="after">
                 <button name="button_auto_completion"
                         string="Auto Completion"
                         type="object"
@@ -70,7 +70,7 @@
         <field name="inherit_id" ref="account.view_account_move_filter"/>
         <field name="arch" type="xml">
             <separator position="after">
-                <filter
+                <filter name="to_complete"
                     string="To Complete"
                     domain="[
                         ('state','!=','posted'),
