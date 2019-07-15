@@ -7,7 +7,7 @@ import base64
 import os
 from operator import attrgetter
 from odoo.tests import common
-from odoo import tools
+from odoo import tools, fields
 from odoo.modules import get_resource_path
 
 
@@ -73,6 +73,8 @@ class TestCodaImport(common.TransactionCase):
         move_line = sorted(move.line_ids,
                            key=attrgetter('date_maturity'))[2]
         # common infos
-        self.assertEqual(move_line.date_maturity, "2011-03-07")
+        self.assertEqual(
+            move_line.date_maturity, fields.Date.from_string('2011-03-07')
+        )
         self.assertEqual(move_line.credit, 118.4)
         self.assertEqual(move_line.name, "label a")

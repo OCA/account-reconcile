@@ -7,11 +7,8 @@ import traceback
 import sys
 import logging
 
-import psycopg2
-
-from odoo import _, api, fields, models, registry
+from odoo import _, api, fields, models
 from odoo.exceptions import ValidationError
-from odoo.tools import float_repr
 
 
 _logger = logging.getLogger(__name__)
@@ -34,15 +31,16 @@ class ErrorTooManyPartner(Exception):
 
 class AccountMoveCompletionRule(models.Model):
     """This will represent all the completion method that we can have to
-    fullfill the bank statement lines. You'll be able to extend them in you own
+    fulfill the bank statement lines. You'll be able to extend them in you own
     module and choose those to apply for every statement profile.
-    The goal of a rule is to fullfill at least the partner of the line, but
+    The goal of a rule is to fulfill at least the partner of the line, but
     if possible also the reference because we'll use it in the reconciliation
     process. The reference should contain the invoice number or the SO number
     or any reference that will be matched by the invoice accounting move.
     """
     _name = "account.move.completion.rule"
     _order = "sequence asc"
+    _description = "Account move completion method"
 
     sequence = fields.Integer(
         string='Sequence',
@@ -224,7 +222,7 @@ class AccountMoveLine(models.Model):
     Add sparse field on the statement line to allow to store all the bank infos
     that are given by a bank/office. You can then add you own in your module.
     The idea here is to store all bank/office infos in the
-    additionnal_bank_fields serialized field when importing the file. If many
+    additional_bank_fields serialized field when importing the file. If many
     values, add a tab in the bank statement line to store your specific one.
     Have a look in account_move_base_import module to see how we've done
     it.
@@ -238,119 +236,51 @@ class AccountMoveLine(models.Model):
         help="When this checkbox is ticked, the auto-completion "
         "process/button will ignore this line.")
 
-    def _get_line_values_from_rules(self, rules):
+    def _get_line_values_from_rules(self):
         """We'll try to find out the values related to the line based on rules
-        setted on the profile.. We will ignore line for which already_completed
+        set on the profile.. We will ignore line for which already_completed
         is ticked.
 
         :return:
             A dict of dict value that can be passed directly to the write
-            method of the statement line or {}. The first dict has statement
+            method of the move line or {}. The first dict has statement
             line ID as a key: {117009: {'partner_id': 100997,
             'account_id': 489L}}
         """
-        journal_obj = self.env['account.journal']
-        for line in self:
-            if not line.already_completed:
-                # Ask the rule
-                vals = journal_obj._find_values_from_rules(rules, line)
-                if vals:
-                    vals['id'] = line['id']
-                    return vals
-        return {}
+        self.ensure_one()
+        vals = {}
+        if not self.already_completed:
+            # Ask the rule
+            vals = self._find_values_from_rules()
+        return vals
 
-    def _get_available_columns(self, move_store):
-        """Return writeable by SQL columns"""
-        model_cols = self._fields
-        avail = [
-            k for k, col in model_cols.items() if not hasattr(col, '_fnct')
-        ]
-        keys = [k for k in list(move_store[0].keys()) if k in avail]
-        keys.sort()
-        return keys
-
-    def _prepare_insert(self, move, cols):
-        """ Apply column formating to prepare data for SQL inserting
-        Return a copy of statement
+    def _find_values_from_rules(self):
+        """This method will execute all related rules, in their sequence order,
+        to retrieve all the values returned by the first rules that will match.
+        :return:
+            A dict of value that can be passed directly to the write method of
+            the move line or {}
+           {'partner_id': value,
+            'account_id: value,
+            ...}
         """
-        move_copy = move
-        for k, col in move_copy.items():
-            if k in cols:
-                # In v11, the record is needed to call convert_to_column on a
-                # Monetary field because it must find the currency to apply the
-                # proper rounding. So we mimic the call here as best as we can.
-                if isinstance(self._fields[k], fields.Monetary):
-                    currency_field = move_copy.get(
-                        self._fields[k].currency_field
-                    )
-                    if currency_field:
-                        currency_id = (
-                            move_copy.get(currency_field)
-                            or move.get('company_currency_id')
-                        )
-                        if currency_id:
-                            currency = self.env['res.currency'].browse(
-                                currency_id
-                            )
-                            move_copy[k] = float_repr(
-                                currency.round(col), currency.decimal_places
-                            )
-                            continue
-                    # If no currency was found, set what convert_to_column
-                    # would do and used to do in v10
-                    move_copy[k] = float(col or 0.0)
-                    continue
-                else:
-                    move_copy[k] = self._fields[k].convert_to_column(col, None)
-        return move_copy
-
-    def _prepare_manyinsert(self, move_store, cols):
-        """ Apply column formating to prepare multiple SQL inserts
-        Return a copy of statement_store
-        """
-        values = []
-        for move in move_store:
-            values.append(self._prepare_insert(move, cols))
-        return values
-
-    def _insert_lines(self, move_store):
-        """ Do raw insert into database because ORM is awfully slow
-            when doing batch write. It is a shame that batch function
-            does not exist"""
-        self.check_access_rule('create')
-        self.check_access_rights('create', raise_exception=True)
-        cols = self._get_available_columns(move_store)
-        move_store = self._prepare_manyinsert(move_store, cols)
-        tmp_vals = (', '.join(cols), ', '.join(['%%(%s)s' % i for i in cols]))
-        sql = "INSERT INTO account_move_line (%s) " \
-              "VALUES (%s);" % tmp_vals
-        try:
-            self.env.cr.executemany(sql, tuple(move_store))
-        except psycopg2.Error as sql_err:
-            self.env.cr.rollback()
-            raise ValidationError(
-                _("ORM bypass error: %s") % sql_err.pgerror)
-
-    def _update_line(self, vals):
-        """ Do raw update into database because ORM is awfully slow
-            when cheking security.
-        """
-        cols = self._get_available_columns([vals])
-        vals = self._prepare_insert(vals, cols)
-        tmp_vals = (', '.join(['%s = %%(%s)s' % (i, i) for i in cols]))
-        sql = "UPDATE account_move_line " \
-              "SET %s where id = %%(id)s;" % tmp_vals
-        try:
-            self.env.cr.execute(sql, vals)
-        except psycopg2.Error as sql_err:
-            self.env.cr.rollback()
-            raise ValidationError(
-                _("ORM bypass error: %s") % sql_err.pgerror)
+        self.ensure_one()
+        rules = self.journal_id.rule_ids
+        for rule in rules:
+            method_to_call = getattr(
+                self.env['account.move.completion.rule'],
+                rule.function_to_call
+            )
+            result = method_to_call(self)
+            if result:
+                result['already_completed'] = True
+                return result
+        return None
 
 
 class AccountMove(models.Model):
     """We add a basic button and stuff to support the auto-completion
-    of the bank statement once line have been imported or manually fullfill.
+    of the bank statement once line have been imported or manually fulfill.
     """
     _name = 'account.move'
     _inherit = ['account.move', 'mail.thread']
@@ -401,18 +331,13 @@ class AccountMove(models.Model):
         already_completed checkbox so we won't compute them again unless the
         user untick them!
         """
-        move_line_obj = self.env['account.move.line']
         compl_lines = 0
-        move_line_obj.check_access_rule('create')
-        move_line_obj.check_access_rights('create', raise_exception=True)
         for move in self:
             msg_lines = []
-            journal = move.journal_id
-            rules = journal._get_rules()
             res = False
             for line in move.line_ids:
                 try:
-                    res = line._get_line_values_from_rules(rules)
+                    res = line._get_line_values_from_rules()
                     if res:
                         compl_lines += 1
                 except ErrorTooManyPartner as exc:
@@ -426,7 +351,7 @@ class AccountMove(models.Model):
                     _logger.error(st)
                 if res:
                     try:
-                        move_line_obj._update_line(res)
+                        line.write(res)
                     except Exception as exc:
                         msg_lines.append(repr(exc))
                         error_type, error_value, trbk = sys.exc_info()
