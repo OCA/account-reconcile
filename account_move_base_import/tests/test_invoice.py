@@ -1,7 +1,6 @@
 # Copyright 2019 Camptocamp SA
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl)
-import datetime as dt
-
+from odoo import fields
 from odoo.modules import get_resource_path
 from odoo.tests import SingleTransactionCase
 from odoo.tools import convert_file
@@ -40,12 +39,11 @@ class TestInvoice(SingleTransactionCase):
                 'product_id': product_3.id,
                 'price_unit': 210.0,
                 'quantity': 1.0,
-                'uom_id': self.env.ref('product.product_uom_unit').id,
+                'uom_id': self.env.ref('uom.product_uom_unit').id,
                 'account_id': self.env.ref('account.a_sale').id,
             })],
             'journal_id': self.journal.id,
             'partner_id': self.partner.id,
-            'reference_type': 'none',
             'account_id': self.env.ref('account.a_recv').id,
         })
         # I confirm the Invoice
@@ -55,19 +53,41 @@ class TestInvoice(SingleTransactionCase):
         # I check that it is given the number "TBNK/%Y/0001"
         self.assertEqual(
             self.invoice_for_completion_1.number,
-            dt.date.today().strftime('TBNK/%Y/0001')
+            fields.Date.today().strftime('TBNK/%Y/0001')
         )
 
     def test_03_supplier_invoice(self):
-        # I import account minimal data
-        convert_file(
-            self.cr, 'account', get_resource_path(
-                'account', 'demo', 'account_invoice_demo.yml'
-            ), {}, 'init', False, 'test'
-        )
+        # I create a demo invoice
+        product_delivery = self.env.ref('product.product_delivery_01')
+        product_order = self.env.ref('product.product_order_01')
+        exp_account = self.env.ref('account.a_expense')
+        rec_account = self.env.ref('account.a_recv')
+        demo_invoice_0 = self.env['account.invoice'].create({
+            'partner_id': self.partner.id,
+            'payment_term_id': self.env.ref('account.account_payment_term').id,
+            'type': 'in_invoice',
+            'date_invoice': fields.Date.today().replace(day=1),
+            'account_id': rec_account.id,
+            'invoice_line_ids': [
+                (0, 0, {
+                    'price_unit': 10.0,
+                    'quantity': 1.0,
+                    'product_id': product_delivery.id,
+                    'name': product_delivery.name,
+                    'uom_id': self.env.ref('uom.product_uom_unit').id,
+                    'account_id': exp_account.id,
+                }), (0, 0, {
+                    'price_unit': 4.0,
+                    'quantity': 1.0,
+                    'product_id': product_order.id,
+                    'name': product_order.name,
+                    'uom_id': self.env.ref('uom.product_uom_unit').id,
+                    'account_id': exp_account.id,
+                })
+            ],
+        })
 
         # I check that my invoice is a supplier invoice
-        demo_invoice_0 = self.env.ref('account.demo_invoice_0')
         self.assertEqual(
             demo_invoice_0.type, 'in_invoice', msg="Check invoice type"
         )
@@ -107,13 +127,12 @@ class TestInvoice(SingleTransactionCase):
                 'product_id': product_3.id,
                 'price_unit': 210.0,
                 'quantity': 1.0,
-                'uom_id': self.env.ref('product.product_uom_unit').id,
+                'uom_id': self.env.ref('uom.product_uom_unit').id,
                 'account_id': self.env.ref('account.a_sale').id,
             })],
             'journal_id': self.env.ref('account.expenses_journal').id,
             'partner_id': res_partner_12_child.id,
             'type': 'out_refund',
-            'reference_type': 'none',
             'account_id': self.env.ref('account.a_recv').id,
         })
         # I confirm the refund
@@ -124,11 +143,10 @@ class TestInvoice(SingleTransactionCase):
         # I check that it is given the number "RTEXJ/%Y/0001"
         self.assertEqual(
             self.refund_for_completion_1.number,
-            dt.date.today().strftime('RTEXJ/%Y/0001')
+            fields.Date.today().strftime('RTEXJ/%Y/0001')
         )
 
     def test_05_completion(self):
-
         # In order to test the banking framework, I first need to create a
         # journal
         self.journal = self.env.ref("account.bank_journal")
@@ -165,7 +183,7 @@ class TestInvoice(SingleTransactionCase):
             'name': '\\',
             'account_id': self.env.ref('account.a_sale').id,
             'move_id': move_test1.id,
-            'date_maturity': '2013-12-20',
+            'date_maturity': fields.Date.from_string('2013-12-20'),
             'credit': 0.0,
         })
         # I create a move line for a SI
@@ -173,7 +191,7 @@ class TestInvoice(SingleTransactionCase):
             'name': '\\',
             'account_id': self.env.ref('account.a_expense').id,
             'move_id': move_test1.id,
-            'date_maturity': '2013-12-19',
+            'date_maturity': fields.Date.from_string('2013-12-19'),
             'debit': 0.0,
         })
         # I create a move line for a CR
@@ -181,15 +199,15 @@ class TestInvoice(SingleTransactionCase):
             'name': '\\',
             'account_id': self.env.ref('account.a_expense').id,
             'move_id': move_test1.id,
-            'date_maturity': '2013-12-19',
+            'date_maturity': fields.Date.from_string('2013-12-19'),
             'debit': 0.0,
         })
         # I create a move line for the Partner Name
         move_line_partner_name = self.env['account.move.line'].create({
-            'name': 'Test autocompletion based on Partner Name Camptocamp',
+            'name': 'Test autocompletion based on Partner Name Azure Interior',
             'account_id': self.env.ref('account.a_sale').id,
             'move_id': move_test1.id,
-            'date_maturity': '2013-12-17',
+            'date_maturity': fields.Date.from_string('2013-12-17'),
             'credit': 0.0,
         })
         # I create a move line for the Partner Label
@@ -202,7 +220,7 @@ class TestInvoice(SingleTransactionCase):
         })
         # and add the correct name
         move_line_ci.with_context(check_move_validity=False).write({
-            'name': dt.date.today().strftime('TBNK/%Y/0001'),
+            'name': fields.Date.today().strftime('TBNK/%Y/0001'),
             'credit': 210.0,
         })
         move_line_si.with_context(check_move_validity=False).write({
@@ -210,7 +228,7 @@ class TestInvoice(SingleTransactionCase):
             'debit': 65.0,
         })
         move_line_cr.with_context(check_move_validity=False).write({
-            'name': dt.date.today().strftime('RTEXJ/%Y/0001'),
+            'name': fields.Date.today().strftime('RTEXJ/%Y/0001'),
             'debit': 210.0,
         })
         move_line_partner_name.with_context(check_move_validity=False).write({
@@ -244,7 +262,7 @@ class TestInvoice(SingleTransactionCase):
         )
         # Line 4. I check that the partner name has been recognised.
         self.assertEqual(
-            move_line_partner_name.partner_id.name, 'Camptocamp',
+            move_line_partner_name.partner_id.name, 'Azure Interior',
             msg="Check completion by partner name"
         )
         # Line 5. I check that the partner special label has been recognised.
