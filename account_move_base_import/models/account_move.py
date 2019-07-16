@@ -40,6 +40,7 @@ class AccountMoveCompletionRule(models.Model):
     """
     _name = "account.move.completion.rule"
     _order = "sequence asc"
+    _description = "Account move completion method"
 
     sequence = fields.Integer(
         string='Sequence',
