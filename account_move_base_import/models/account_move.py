@@ -235,14 +235,14 @@ class AccountMoveLine(models.Model):
         help="When this checkbox is ticked, the auto-completion "
         "process/button will ignore this line.")
 
-    def _get_line_values_from_rules(self, rules):
+    def _get_line_values_from_rules(self):
         """We'll try to find out the values related to the line based on rules
         set on the profile.. We will ignore line for which already_completed
         is ticked.
 
         :return:
             A dict of dict value that can be passed directly to the write
-            method of the statement line or {}. The first dict has statement
+            method of the move line or {}. The first dict has statement
             line ID as a key: {117009: {'partner_id': 100997,
             'account_id': 489L}}
         """
@@ -250,10 +250,31 @@ class AccountMoveLine(models.Model):
         vals = {}
         if not self.already_completed:
             # Ask the rule
-            vals = self.env['account.journal']._find_values_from_rules(
-                rules, self
-            )
+            vals = self._find_values_from_rules()
         return vals
+
+    def _find_values_from_rules(self):
+        """This method will execute all related rules, in their sequence order,
+        to retrieve all the values returned by the first rules that will match.
+        :return:
+            A dict of value that can be passed directly to the write method of
+            the move line or {}
+           {'partner_id': value,
+            'account_id: value,
+            ...}
+        """
+        self.ensure_one()
+        rules = self.journal_id.rule_ids
+        for rule in rules:
+            method_to_call = getattr(
+                self.env['account.move.completion.rule'],
+                rule.function_to_call
+            )
+            result = method_to_call(self)
+            if result:
+                result['already_completed'] = True
+                return result
+        return None
 
 
 class AccountMove(models.Model):
@@ -312,12 +333,10 @@ class AccountMove(models.Model):
         compl_lines = 0
         for move in self:
             msg_lines = []
-            journal = move.journal_id
-            rules = journal._get_rules()
             res = False
             for line in move.line_ids:
                 try:
-                    res = line._get_line_values_from_rules(rules)
+                    res = line._get_line_values_from_rules()
                     if res:
                         compl_lines += 1
                 except ErrorTooManyPartner as exc:

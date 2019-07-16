@@ -15,6 +15,7 @@ from operator import attrgetter
 class AccountJournal(models.Model):
     _name = 'account.journal'
     _inherit = ['account.journal', 'mail.thread']
+    _order = 'sequence'
 
     used_for_import = fields.Boolean(
         string="Journal used for import")
@@ -70,33 +71,6 @@ class AccountJournal(models.Model):
         help="Two counterparts will be automatically created : one for "
              "the refunds and one for the payments")
 
-    def _get_rules(self):
-        # We need to respect the sequence order
-        return sorted(self.rule_ids, key=attrgetter('sequence'))
-
-    def _find_values_from_rules(self, calls, line):
-        """This method will execute all related rules, in their sequence order,
-        to retrieve all the values returned by the first rules that will match.
-        :param calls: list of lookup function name available in rules
-        :param dict line: read of the concerned account.bank.statement.line
-        :return:
-            A dict of value that can be passed directly to the write method of
-            the statement line or {}
-           {'partner_id': value,
-            'account_id: value,
-            ...}
-        """
-        if not calls:
-            calls = self._get_rules()
-        rule_obj = self.env['account.move.completion.rule']
-        for call in calls:
-            method_to_call = getattr(rule_obj, call.function_to_call)
-            result = method_to_call(line)
-            if result:
-                result['already_completed'] = True
-                return result
-        return None
-
     @api.multi
     def _prepare_counterpart_line(self, move, amount, date):
         if amount > 0.0:
@@ -108,7 +82,6 @@ class AccountJournal(models.Model):
             credit = -amount
             debit = 0.0
         counterpart_values = {
-            'name': _('/'),
             'date_maturity': date,
             'credit': credit,
             'debit': debit,
