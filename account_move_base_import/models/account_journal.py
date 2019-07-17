@@ -9,7 +9,6 @@ import os
 from odoo import _, api, fields, models
 from ..parser.parser import new_move_parser
 from odoo.exceptions import UserError, ValidationError
-from operator import attrgetter
 
 
 class AccountJournal(models.Model):
