@@ -31,11 +31,6 @@ class TestReconciliation(AccountingTestCase):
         self.bank_journal = self.env['account.journal']. \
             create({'name': 'Bank', 'type': 'bank', 'code': 'BNK67'})
         self.aml = self.init_moves()
-        self.wizard = self.env['account.move.line.reconcile.writeoff']. \
-            with_context(active_ids=[x.id for x in self.aml]).create({
-                'journal_id': self.bank_journal.id,
-                'writeoff_acc_id': self.account_rsa.id
-            })
 
     def create_move(self, name, amount):
         debit_line_vals = {
@@ -73,22 +68,22 @@ class TestReconciliation(AccountingTestCase):
         return aml_recs
 
     def test_reconcile_no_partner(self):
-        self.wizard.trans_rec_reconcile()
+        self.aml.reconcile()
         self.assertTrue(all(self.aml.mapped('reconciled')))
 
     def test_reconcile_partner_mismatch(self):
         self.aml[0].partner_id = self.partner.id
         with self.assertRaises(UserError):
-            self.wizard.trans_rec_reconcile()
+            self.aml.reconcile()
         # all lines with same partner allowed
         self.aml.write({'partner_id': self.partner.id})
-        self.wizard.trans_rec_reconcile()
+        self.aml.reconcile()
         self.assertTrue(all(self.aml.mapped('reconciled')))
 
     def test_reconcile_accounts_excluded(self):
         self.aml[0].partner_id = self.partner.id
         with self.assertRaises(UserError):
-            self.wizard.trans_rec_reconcile()
+            self.aml.reconcile()
         # reconciliation forbiden only for certain types of accounts
         account = self.env['account.account'].search([
             ('user_type_id.type', '=', 'other')
@@ -96,9 +91,9 @@ class TestReconciliation(AccountingTestCase):
         account.reconcile = True
         self.aml[0].account_id = account.id
         with self.assertRaises(UserError):
-            self.wizard.trans_rec_reconcile()
+            self.aml.reconcile()
         # reconciliation for different partners allowed
         # for not forbidden types
         self.aml.write({'account_id': account.id})
-        self.wizard.trans_rec_reconcile()
+        self.aml.reconcile()
         self.assertTrue(all(self.aml.mapped('reconciled')))
