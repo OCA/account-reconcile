@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Copyright 2019 Camptocamp SA
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 
@@ -9,7 +8,7 @@ from odoo.exceptions import UserError
 class TestReconciliation(AccountingTestCase):
 
     def setUp(self):
-        super(TestReconciliation, self).setUp()
+        super().setUp()
         self.env = self.env(context=dict(
             self.env.context, tracking_disable=True,
             test_partner_mismatch=True)

@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Copyright 2019 Camptocamp SA
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 
@@ -14,8 +13,7 @@ class AccountMoveLine(models.Model):
     def reconcile(self, writeoff_acc_id=False, writeoff_journal_id=False):
         if (config['test_enable']
                 and not self.env.context.get('test_partner_mismatch')):
-            return super(AccountMoveLine, self).reconcile(
-                writeoff_acc_id, writeoff_journal_id)
+            return super().reconcile(writeoff_acc_id, writeoff_journal_id)
 
         # to be consistent with parent method
         if not self:
@@ -27,5 +25,5 @@ class AccountMoveLine(models.Model):
         if len(partners) > 1:
             raise UserError(_('The partner has to be the same on all'
                               ' lines for receivable and payable accounts!'))
-        return super(AccountMoveLine, self).reconcile(
+        return super().reconcile(
             writeoff_acc_id, writeoff_journal_id)
