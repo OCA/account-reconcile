@@ -8,8 +8,8 @@ class AccountMassReconcileMethod(models.Model):
     _inherit = 'account.mass.reconcile.method'
 
     @api.model
-    def _get_all_rec_method(self):
-        methods = super(AccountMassReconcileMethod, self)._get_all_rec_method()
+    def _get_reconcilation_methods(self):
+        methods = super()._get_reconcilation_methods()
         methods += [
             ('mass.reconcile.advanced.transaction_ref',
              'Advanced. Partner and Transaction Ref.'),
