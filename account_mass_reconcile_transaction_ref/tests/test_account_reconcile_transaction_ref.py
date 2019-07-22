@@ -72,7 +72,6 @@ class TestAccountReconcileTransactionRef(SavepointCase):
         })
         count = reconcile.unreconciled_count
         reconcile.run_reconcile()
-        reconcile._get_total_unrec()
         self.assertEqual(self.cust_invoice.state, 'paid')
         self.assertEqual(reconcile.unreconciled_count, count - 2)
 
@@ -115,6 +114,5 @@ class TestAccountReconcileTransactionRef(SavepointCase):
         })
         count = reconcile.unreconciled_count
         reconcile.run_reconcile()
-        reconcile._get_total_unrec()
         self.assertEqual(self.cust_invoice.state, 'paid')
         self.assertEqual(reconcile.unreconciled_count, count - 2)
