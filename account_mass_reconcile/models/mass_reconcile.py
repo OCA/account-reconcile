@@ -117,7 +117,7 @@ class AccountMassReconcile(models.Model):
     _description = 'account mass reconcile'
 
     @api.multi
-    @api.depends('account')
+    @api.depends('account', 'history_ids')
     def _get_total_unrec(self):
         obj_move_line = self.env['account.move.line']
         for rec in self:
