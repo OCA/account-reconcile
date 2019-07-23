@@ -13,6 +13,7 @@ setuptools.setup(
         'odoo11-addon-account_mass_reconcile_by_purchase_line',
         'odoo11-addon-account_mass_reconcile_ref_deep_search',
         'odoo11-addon-account_mass_reconcile_transaction_ref',
+        'odoo11-addon-account_reconcile_rule',
         'odoo11-addon-account_set_reconcilable',
         'odoo11-addon-account_skip_bank_reconciliation',
         'odoo11-addon-bank_statement_foreign_currency',
