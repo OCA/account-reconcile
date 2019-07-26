@@ -1,4 +1,4 @@
-# Copyright 2018 Camptocamp SA
+# Copyright 2019 Camptocamp SA
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 from odoo.tests import SavepointCase
 
@@ -7,8 +7,8 @@ class TestAccountReconcileRefDeepSearch(SavepointCase):
 
     @classmethod
     def setUpClass(cls):
-        super(TestAccountReconcileRefDeepSearch, cls).setUpClass()
-
+        super().setUpClass()
+        cls.env = cls.env(context=dict(cls.env.context, tracking_disable=True))
         cls.partner = cls.env.ref('base.res_partner_18')
         cls.account_receivable = cls.env['account.account'].search([
             ('user_type_id', '=',
