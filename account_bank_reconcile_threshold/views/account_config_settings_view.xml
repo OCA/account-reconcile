@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<odoo>
+    <data>
+        <!--  Add payment options to sale.order and invoice forms -->
+        <record model="ir.ui.view" id="payment_acquirer_installation">
+            <field name="model">account.config.settings</field>
+            <field name="inherit_id" ref="account.view_account_config_settings"/>
+            <field name="arch" type="xml">
+                <xpath expr="//div[@name='payment_acquirer']/.." position="after">
+                    <div class="o_setting_right_pane">
+                        <label for="account_bank_reconciliation_start"/>
+                        <div class="text-muted">
+                            The payments which have not been matched with a bank statement will not be shown in bank reconciliation data if they were made before this date.
+                        </div>
+                        <field name="account_bank_reconciliation_start"/>
+                    </div>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>
