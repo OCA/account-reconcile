@@ -28,51 +28,103 @@ msgid ""
 msgstr ""
 
 #. module: account_mass_reconcile_ref_deep_search
-#: model:ir.ui.view,arch_db:account_mass_reconcile_ref_deep_search.view_mass_reconcile_form
+#: model:ir.model.fields,field_description:account_mass_reconcile_ref_deep_search.field_mass_reconcile_advanced_ref_deep_search__account_id
+msgid "Account"
+msgstr "Hesap"
+
+#. module: account_mass_reconcile_ref_deep_search
+#: model:ir.model.fields,field_description:account_mass_reconcile_ref_deep_search.field_mass_reconcile_advanced_ref_deep_search__account_lost_id
+#, fuzzy
+msgid "Account Lost"
+msgstr "Hesap"
+
+#. module: account_mass_reconcile_ref_deep_search
+#: model:ir.model.fields,field_description:account_mass_reconcile_ref_deep_search.field_mass_reconcile_advanced_ref_deep_search__account_profit_id
+#, fuzzy
+msgid "Account Profit"
+msgstr "Hesap"
+
+#. module: account_mass_reconcile_ref_deep_search
+#: model_terms:ir.ui.view,arch_db:account_mass_reconcile_ref_deep_search.view_mass_reconcile_form
 msgid "Advanced. Partner and Ref Deep Search"
 msgstr ""
 
 #. module: account_mass_reconcile_ref_deep_search
-#: model:ir.model.fields,field_description:account_mass_reconcile_ref_deep_search.field_mass_reconcile_advanced_ref_deep_search_create_uid
+#: model:ir.model.fields,field_description:account_mass_reconcile_ref_deep_search.field_mass_reconcile_advanced_ref_deep_search__create_uid
 msgid "Created by"
 msgstr "Oluşturan"
 
 #. module: account_mass_reconcile_ref_deep_search
-#: model:ir.model.fields,field_description:account_mass_reconcile_ref_deep_search.field_mass_reconcile_advanced_ref_deep_search_create_date
+#: model:ir.model.fields,field_description:account_mass_reconcile_ref_deep_search.field_mass_reconcile_advanced_ref_deep_search__create_date
 msgid "Created on"
 msgstr "Oluşturuldu"
 
 #. module: account_mass_reconcile_ref_deep_search
-#: model:ir.model.fields,field_description:account_mass_reconcile_ref_deep_search.field_mass_reconcile_advanced_ref_deep_search_display_name
+#: model:ir.model.fields,field_description:account_mass_reconcile_ref_deep_search.field_mass_reconcile_advanced_ref_deep_search__date_base_on
+msgid "Date of reconciliation"
+msgstr ""
+
+#. module: account_mass_reconcile_ref_deep_search
+#: model:ir.model.fields,field_description:account_mass_reconcile_ref_deep_search.field_mass_reconcile_advanced_ref_deep_search__display_name
 msgid "Display Name"
 msgstr "Görünen İsim"
 
 #. module: account_mass_reconcile_ref_deep_search
-#: model:ir.model.fields,field_description:account_mass_reconcile_ref_deep_search.field_mass_reconcile_advanced_ref_deep_search_id
+#: model:ir.model.fields,field_description:account_mass_reconcile_ref_deep_search.field_mass_reconcile_advanced_ref_deep_search___filter
+msgid "Filter"
+msgstr ""
+
+#. module: account_mass_reconcile_ref_deep_search
+#: model:ir.model.fields,field_description:account_mass_reconcile_ref_deep_search.field_mass_reconcile_advanced_ref_deep_search__income_exchange_account_id
+msgid "Gain Exchange Rate Account"
+msgstr ""
+
+#. module: account_mass_reconcile_ref_deep_search
+#: model:ir.model.fields,field_description:account_mass_reconcile_ref_deep_search.field_mass_reconcile_advanced_ref_deep_search__id
 msgid "ID"
 msgstr "ID"
 
 #. module: account_mass_reconcile_ref_deep_search
-#: model:ir.model.fields,field_description:account_mass_reconcile_ref_deep_search.field_mass_reconcile_advanced_ref_deep_search___last_update
+#: model:ir.model.fields,field_description:account_mass_reconcile_ref_deep_search.field_mass_reconcile_advanced_ref_deep_search__journal_id
+msgid "Journal"
+msgstr "Yevmiye Defteri"
+
+#. module: account_mass_reconcile_ref_deep_search
+#: model:ir.model.fields,field_description:account_mass_reconcile_ref_deep_search.field_mass_reconcile_advanced_ref_deep_search____last_update
 msgid "Last Modified on"
 msgstr "Son değişiklik"
 
 #. module: account_mass_reconcile_ref_deep_search
-#: model:ir.model.fields,field_description:account_mass_reconcile_ref_deep_search.field_mass_reconcile_advanced_ref_deep_search_write_uid
+#: model:ir.model.fields,field_description:account_mass_reconcile_ref_deep_search.field_mass_reconcile_advanced_ref_deep_search__write_uid
 msgid "Last Updated by"
 msgstr "Son güncelleyen"
 
 #. module: account_mass_reconcile_ref_deep_search
-#: model:ir.model.fields,field_description:account_mass_reconcile_ref_deep_search.field_mass_reconcile_advanced_ref_deep_search_write_date
+#: model:ir.model.fields,field_description:account_mass_reconcile_ref_deep_search.field_mass_reconcile_advanced_ref_deep_search__write_date
 msgid "Last Updated on"
 msgstr "Son güncelleme"
 
 #. module: account_mass_reconcile_ref_deep_search
-#: model:ir.ui.view,arch_db:account_mass_reconcile_ref_deep_search.view_mass_reconcile_form
+#: model:ir.model.fields,field_description:account_mass_reconcile_ref_deep_search.field_mass_reconcile_advanced_ref_deep_search__expense_exchange_account_id
+msgid "Loss Exchange Rate Account"
+msgstr ""
+
+#. module: account_mass_reconcile_ref_deep_search
+#: model_terms:ir.ui.view,arch_db:account_mass_reconcile_ref_deep_search.view_mass_reconcile_form
 msgid ""
 "Match multiple debit vs multiple credit entries. Allow partial "
 "reconciliation.                             The lines should have the "
 "partner, the credit entry ref is searched inside the debit entry ref."
+msgstr ""
+
+#. module: account_mass_reconcile_ref_deep_search
+#: model:ir.model.fields,field_description:account_mass_reconcile_ref_deep_search.field_mass_reconcile_advanced_ref_deep_search__partner_ids
+msgid "Restrict on partners"
+msgstr ""
+
+#. module: account_mass_reconcile_ref_deep_search
+#: model:ir.model.fields,field_description:account_mass_reconcile_ref_deep_search.field_mass_reconcile_advanced_ref_deep_search__write_off
+msgid "Write off allowed"
 msgstr ""
 
 #. module: account_mass_reconcile_ref_deep_search
@@ -84,9 +136,3 @@ msgstr ""
 #: model:ir.model,name:account_mass_reconcile_ref_deep_search.model_account_mass_reconcile_method
 msgid "reconcile method for account_mass_reconcile"
 msgstr ""
-
-#~ msgid "Account"
-#~ msgstr "Hesap"
-
-#~ msgid "Journal"
-#~ msgstr "Yevmiye Defteri"
