@@ -8,7 +8,7 @@
             <page name="information" position="inside">
                 <group colspan="2" col="2">
                     <separator colspan="4" string="Advanced. Partner and Ref Deep Search"/>
-                    <label string="Match multiple debit vs multiple credit entries. Allow partial reconciliation.
+                    <label for="reconcile_method" string="Match multiple debit vs multiple credit entries. Allow partial reconciliation.
                             The lines should have the partner, the credit entry ref is searched inside the debit entry ref." colspan="4"/>
             </group>
             </page>
