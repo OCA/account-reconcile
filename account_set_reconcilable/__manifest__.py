@@ -5,7 +5,7 @@
     "name": "Account Set Reconcilable",
     "summary": "Allows to set as reconcilable a non reconcilable"
                "account that already have journal items.",
-    "version": "11.0.1.0.0",
+    "version": "12.0.1.0.0",
     "depends": ["account"],
     "author": "Eficent, Odoo Community Association (OCA)",
     "website": "http://www.github.com/OCA/account-reconcile",
