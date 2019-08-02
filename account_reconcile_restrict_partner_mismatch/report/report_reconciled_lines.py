@@ -7,6 +7,7 @@ from odoo import api, fields, models, tools
 
 class AccountReconcilePartnerMismatchReport(models.Model):
     _name = 'account.reconcile.partner.mismatch.report'
+    _description = 'Account Reconcile Partner Mismatch Report'
     _auto = False
 
     partial_reconcile_id = fields.Many2one(
