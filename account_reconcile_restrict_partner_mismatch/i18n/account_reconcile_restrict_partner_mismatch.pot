@@ -19,6 +19,11 @@ msgid "Account"
 msgstr ""
 
 #. module: account_reconcile_restrict_partner_mismatch
+#: model:ir.model,name:account_reconcile_restrict_partner_mismatch.model_account_reconcile_partner_mismatch_report
+msgid "Account Reconcile Partner Mismatch Report"
+msgstr ""
+
+#. module: account_reconcile_restrict_partner_mismatch
 #: model:ir.model.fields,field_description:account_reconcile_restrict_partner_mismatch.field_account_reconcile_partner_mismatch_report__account_type_id
 msgid "Account type"
 msgstr ""
@@ -95,10 +100,5 @@ msgstr ""
 #: code:addons/account_reconcile_restrict_partner_mismatch/models/account_move_line.py:26
 #, python-format
 msgid "The partner has to be the same on all lines for receivable and payable accounts!"
-msgstr ""
-
-#. module: account_reconcile_restrict_partner_mismatch
-#: model:ir.model,name:account_reconcile_restrict_partner_mismatch.model_account_reconcile_partner_mismatch_report
-msgid "account.reconcile.partner.mismatch.report"
 msgstr ""
 
