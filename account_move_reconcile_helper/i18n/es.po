@@ -24,12 +24,14 @@ msgid "Journal Item"
 msgstr "Apunte contable"
 
 #. module: account_move_reconcile_helper
-#: model:ir.model.fields,field_description:account_move_reconcile_helper.field_account_move_line_partial_reconciliation_in_progress
-msgid "Partial reconciliation in progress"
+#: model:ir.model.fields,field_description:account_move_reconcile_helper.field_account_move_line__partial_reconciliation_in_progress
+#, fuzzy
+#| msgid "Partial reconciliation in progress"
+msgid "Partial Reconciliation In Progress"
 msgstr "Reconciliación parcial en proceso"
 
 #. module: account_move_reconcile_helper
-#: model:ir.model.fields,field_description:account_move_reconcile_helper.field_account_move_line_reconcile_line_ids
-#: model:ir.ui.view,arch_db:account_move_reconcile_helper.account_move_line_tree_view
+#: model:ir.model.fields,field_description:account_move_reconcile_helper.field_account_move_line__reconcile_line_ids
+#: model_terms:ir.ui.view,arch_db:account_move_reconcile_helper.account_move_line_tree_view
 msgid "Reconciled lines"
 msgstr "Líneas reconciliadas"
