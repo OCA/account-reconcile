@@ -1,5 +1,6 @@
 .. image:: https://img.shields.io/badge/licence-AGPL--3-blue.svg
     :alt: License: AGPL-3
+
 ======================================
 Prepare accounts before reconciliation
 ======================================
@@ -19,7 +20,6 @@ Usage
 Select accounts on the bank statement form, and offered moves for
 reconciliation will be filtered accordingly.
 
-* go to ...
 .. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas
     :alt: Try me on Runbot
     :target: https://runbot.odoo-community.org/runbot/98/8.0
