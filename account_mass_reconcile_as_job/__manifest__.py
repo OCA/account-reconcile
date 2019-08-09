@@ -7,10 +7,12 @@
     'depends': [
         'connector',
         'account_mass_reconcile',
-        'account_mass_reconcile_transaction_ref', # TODO: not yet migrated to 12.0
-        'account_mass_reconcile_ref_deep_search', # TODO: not yet migrated to 12.0
+        #  TODO: not yet migrated to 12.0
+        'account_mass_reconcile_transaction_ref',
+        #  TODO: not yet migrated to 12.0
+        'account_mass_reconcile_ref_deep_search',
     ],
-    'author': 'Camptocamp '
+    'author': 'Camptocamp, '
               'Odoo Community Association (OCA)',
     'license': 'AGPL-3',
     'website': 'https://github.com/OCA/account-reconcile',
@@ -19,4 +21,4 @@
     ],
     'installable': True,
     'application': False,
- }
+}
