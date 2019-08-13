@@ -204,6 +204,11 @@ msgid "Generic .csv/.xls based on SO Name"
 msgstr ""
 
 #. module: account_move_base_import
+#: selection:account.journal,import_type:0
+msgid "Generic .csv/.xls based on SO transaction ID"
+msgstr ""
+
+#. module: account_move_base_import
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_move_completion_rule__id
 #: model:ir.model.fields,field_description:account_move_base_import.field_credit_statement_import__id
 msgid "ID"
@@ -338,6 +343,16 @@ msgstr ""
 #. module: account_move_base_import
 #: model:ir.model.fields,help:account_move_base_import.field_account_move_completion_rule__sequence
 msgid "Lower means parsed first."
+msgstr ""
+
+#. module: account_move_base_import
+#: selection:account.move.completion.rule,function_to_call:0
+msgid "Match Invoice using transaction ID"
+msgstr ""
+
+#. module: account_move_base_import
+#: selection:account.move.completion.rule,function_to_call:0
+msgid "Match Sales Order using transaction ID"
 msgstr ""
 
 #. module: account_move_base_import
