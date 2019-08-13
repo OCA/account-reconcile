@@ -12,6 +12,7 @@ setuptools.setup(
         'odoo12-addon-account_mass_reconcile',
         'odoo12-addon-account_move_base_import',
         'odoo12-addon-account_move_reconcile_helper',
+        'odoo12-addon-account_move_so_import',
         'odoo12-addon-account_move_transactionid_import',
         'odoo12-addon-account_partner_reconcile',
         'odoo12-addon-account_reconcile_restrict_partner_mismatch',
