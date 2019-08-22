@@ -121,7 +121,7 @@ class TestCompletionTransactionId(SingleTransactionCase):
                 'currency_id': self.env.ref('base.EUR').id,
                 'partner_id': self.partner.id,
                 'transaction_id': 'XXX77Z',
-                'reference_type': None,
+                'reference_type': 'none',
                 'journal_id': self.journal.id,
                 'invoice_line_ids': [
                     (
