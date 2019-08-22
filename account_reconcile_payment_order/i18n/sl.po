@@ -20,6 +20,9 @@ msgstr ""
 "%100==4 ? 2 : 3);\n"
 
 #. module: account_reconcile_payment_order
-#: model:ir.model,name:account_reconcile_payment_order.model_account_bank_statement_line
-msgid "Bank Statement Line"
-msgstr "Postavka bančnega izpiska"
+#: model:ir.model,name:account_reconcile_payment_order.model_account_reconciliation_widget
+msgid "Account Reconciliation widget"
+msgstr ""
+
+#~ msgid "Bank Statement Line"
+#~ msgstr "Postavka bančnega izpiska"
