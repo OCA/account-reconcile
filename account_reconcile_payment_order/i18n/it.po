@@ -19,6 +19,9 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. module: account_reconcile_payment_order
-#: model:ir.model,name:account_reconcile_payment_order.model_account_bank_statement_line
-msgid "Bank Statement Line"
-msgstr "Linea estratto conto"
+#: model:ir.model,name:account_reconcile_payment_order.model_account_reconciliation_widget
+msgid "Account Reconciliation widget"
+msgstr ""
+
+#~ msgid "Bank Statement Line"
+#~ msgstr "Linea estratto conto"
