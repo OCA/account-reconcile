@@ -29,6 +29,7 @@ Available addons
 ----------------
 addon | version | summary
 --- | --- | ---
+[account_bank_reconcile_hook](account_bank_reconcile_hook/) | 10.0.1.0.0 | Bank Reconciliation Threshold
 [account_banking_reconciliation](account_banking_reconciliation/) | 10.0.1.0.0 | Bank Account Reconciliation
 [account_mass_reconcile](account_mass_reconcile/) | 10.0.1.0.0 | Account Mass Reconcile
 [account_mass_reconcile_by_purchase_line](account_mass_reconcile_by_purchase_line/) | 10.0.1.0.0 | Allows to reconcile based on the PO line
