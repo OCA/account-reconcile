@@ -34,6 +34,11 @@ msgstr ""
 
 #. module: account_move_transactionid_import
 #: selection:account.move.completion.rule,function_to_call:0
+msgid "From line name (based on SO number)"
+msgstr ""
+
+#. module: account_move_transactionid_import
+#: selection:account.move.completion.rule,function_to_call:0
 msgid "From line name (based on customer invoice number)"
 msgstr ""
 
