@@ -8,6 +8,7 @@ setuptools.setup(
     description="Meta package for oca-account-reconcile Odoo addons",
     version=version,
     install_requires=[
+        'odoo10-addon-account_bank_reconcile_hook',
         'odoo10-addon-account_banking_reconciliation',
         'odoo10-addon-account_mass_reconcile',
         'odoo10-addon-account_mass_reconcile_by_purchase_line',
