@@ -42,8 +42,8 @@ class StripeParser(AccountMoveImportParser):
         return parser_name == 'stripe'
 
     def _get_account(self):
-        return self.env['keychain.account'].sudo().retrieve([
-            ('namespace', '=', 'stripe')])[0]
+        return self.env['payment.acquirer'].search(
+            [('provider', '=', 'stripe')])
 
     def _skip(self, payout_id):
         return bool(self.env['account.move'].search([
@@ -73,13 +73,13 @@ class StripeParser(AccountMoveImportParser):
         return payouts
 
     def parse(self, filebuffer):
-        api_key = self._get_account()._get_password()
+        api_key = self._get_account().stripe_secret_key
         for payout in self._get_payout(api_key=api_key):
             if self._skip(payout['id']):
                 continue
             self.move_ref = payout['id']
             self.move_date = date.fromtimestamp(payout['arrival_date'])
-            self.result_row_list = stripe.BalanceTransaction.all(
+            self.result_row_list = stripe.BalanceTransaction.list(
                 payout=payout['id'], api_key=api_key, limit=1000)['data']
             fee_vals = defaultdict(float)
             for line in self.result_row_list:

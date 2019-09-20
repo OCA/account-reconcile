@@ -20,7 +20,6 @@
     "depends": [
         "base_transaction_id",
         "account_move_base_import",
-        "keychain",
     ],
     "data": [
         "wizards/import_statement_view.xml",
