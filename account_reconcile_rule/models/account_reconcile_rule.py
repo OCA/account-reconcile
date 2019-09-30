@@ -8,7 +8,7 @@ from odoo.addons import decimal_precision as dp
 
 class AccountReconcileRule(models.Model):
     _name = 'account.reconcile.rule'
-
+    _description = 'Rules for reconciliation'
     _order = 'sequence ASC, id ASC'
 
     name = fields.Char()
