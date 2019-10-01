@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+
+    <t t-extend="reconciliation.line.mv_line">
+        <t t-jquery="td.cell_left" t-operation="inner">
+            <t t-if="line.amount &lt; 0">
+                <t t-call="reconciliation.line.mv_line.amount"/>
+            </t>
+        </t>
+        <t t-jquery="td.cell_right" t-operation="inner">
+            <t t-if="line.amount &gt; 0">
+                <t t-call="reconciliation.line.mv_line.amount"/>
+            </t>
+        </t>
+
+    </t>
+    <t t-name="reconciliation.line.mv_line.amount">
+        <span t-att-class="(line.is_move_line) ? 'cell' : ''">
+            <span class="line_amount">
+                <span t-if="line.partial_reconcile &amp;&amp; line.partial_amount != line.amount" class="strike_amount text-muted">
+                    <span t-if="line.amount_currency_str" t-attf-class="o_multi_currency o_multi_currency_color_#{line.currency_id%8} line_info_button fa fa-money" t-att-data-content="line.amount_currency_str"/>
+                    <t t-raw="line.amount_str"/>
+                    <br/>
+                </span>
+            </span>
+            <span class="line_info_edit fa fa-pencil"/>
+            <span class="line_amount">
+                <span t-if="(!line.partial_reconcile || line.partial_amount === line.amount) &amp;&amp; line.amount_currency_str" t-attf-class="o_multi_currency o_multi_currency_color_#{line.currency_id%8} line_info_button fa fa-money" t-att-data-content="line.amount_currency_str"/>
+                <t t-if="!line.partial_reconcile || line.partial_amount === line.amount" t-raw="line.amount_str"/>
+                <t t-if="line.partial_reconcile &amp;&amp; line.partial_amount != line.amount" t-raw="line.partial_amount_str"/>
+            </span>
+            <input class="edit_amount_input text-right o_hidden" />
+        </span>
+    </t>
+    <t t-extend="reconciliation.line.balance">
+        <t t-jquery="tr" t-operation="attributes">
+            <attribute name="t-if">state.balance.amount_currency</attribute>
+        </t>
+    </t>
+
+</templates>
