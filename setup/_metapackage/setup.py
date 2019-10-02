@@ -16,6 +16,7 @@ setuptools.setup(
         'odoo11-addon-account_reconcile_payment_order',
         'odoo11-addon-account_reconcile_restrict_partner_mismatch',
         'odoo11-addon-account_reconcile_rule',
+        'odoo11-addon-account_reconciliation_widget_partial',
         'odoo11-addon-account_set_reconcilable',
         'odoo11-addon-account_skip_bank_reconciliation',
         'odoo11-addon-bank_statement_foreign_currency',
