@@ -35,14 +35,14 @@ class AccountMoveCompletionRule(models.Model):
         res = {}
         so_obj = self.env['sale.order']
         sales = so_obj.search([('transaction_id', '=', line.ref)])
-        if len(sales) > 1:
+        partners = sales.mapped('partner_id')
+        if len(partners) > 1:
             raise ErrorTooManyPartner(
                 _('Line named "%s" was matched by more than '
                   'one partner.') % line.name)
-        if len(sales) == 1:
-            partner = sales[0].partner_id
-            res['partner_id'] = partner.id
-            res['account_id'] = partner.property_account_receivable_id.id
+        if len(partners) == 1:
+            res['partner_id'] = partners.id
+            res['account_id'] = partners.property_account_receivable_id.id
         return res
 
     def get_from_transaction_id_and_invoice(self, line):
@@ -64,12 +64,19 @@ class AccountMoveCompletionRule(models.Model):
         invoice_obj = self.env['account.invoice']
         invoices = invoice_obj.search(
             [('transaction_id', '=', line.ref)])
-        if len(invoices) > 1:
+        partners = invoices.mapped('partner_id.commercial_partner_id')
+        accounts = invoices.mapped('account_id')
+        if len(partners) > 1:
             raise ErrorTooManyPartner(
                 _('Line named "%s" was matched by more than '
                   'one partner.') % line.name)
-        elif len(invoices) == 1:
-            invoice = invoices[0]
-            res['partner_id'] = invoice.commercial_partner_id.id
-            res['account_id'] = invoice.account_id.id
+        elif len(partners) == 1:
+            res['partner_id'] = partners.id
+        if len(accounts) > 1:
+            raise ErrorTooManyPartner(
+                _('Line named "%s" was matched by more than '
+                  'one invoice.') % line.name
+            )
+        elif len(accounts) == 1:
+            res['account_id'] = accounts.id
         return res
