@@ -19,19 +19,9 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. module: base_transaction_id
-#: model:ir.model,name:base_transaction_id.model_account_bank_statement_line
-msgid "Bank Statement Line"
-msgstr "Linea estratto conto"
-
-#. module: base_transaction_id
 #: model:ir.model,name:base_transaction_id.model_account_invoice
 msgid "Invoice"
 msgstr "Fattura"
-
-#. module: base_transaction_id
-#: model:ir.model,name:base_transaction_id.model_account_move_line
-msgid "Journal Item"
-msgstr ""
 
 #. module: base_transaction_id
 #: model:ir.model,name:base_transaction_id.model_sale_order
@@ -50,11 +40,9 @@ msgid "Transaction ID from the financial institute"
 msgstr ""
 
 #. module: base_transaction_id
-#: model:ir.model.fields,field_description:base_transaction_id.field_account_move_line__transaction_ref
-msgid "Transaction Ref."
-msgstr ""
-
-#. module: base_transaction_id
 #: model:ir.model.fields,help:base_transaction_id.field_sale_order__transaction_id
 msgid "Transaction id from the financial institute"
 msgstr ""
+
+#~ msgid "Bank Statement Line"
+#~ msgstr "Linea estratto conto"

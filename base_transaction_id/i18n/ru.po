@@ -21,19 +21,9 @@ msgstr ""
 "%100>=11 && n%100<=14)? 2 : 3);\n"
 
 #. module: base_transaction_id
-#: model:ir.model,name:base_transaction_id.model_account_bank_statement_line
-msgid "Bank Statement Line"
-msgstr ""
-
-#. module: base_transaction_id
 #: model:ir.model,name:base_transaction_id.model_account_invoice
 msgid "Invoice"
 msgstr "Счет"
-
-#. module: base_transaction_id
-#: model:ir.model,name:base_transaction_id.model_account_move_line
-msgid "Journal Item"
-msgstr ""
 
 #. module: base_transaction_id
 #: model:ir.model,name:base_transaction_id.model_sale_order
@@ -49,11 +39,6 @@ msgstr ""
 #. module: base_transaction_id
 #: model:ir.model.fields,help:base_transaction_id.field_account_invoice__transaction_id
 msgid "Transaction ID from the financial institute"
-msgstr ""
-
-#. module: base_transaction_id
-#: model:ir.model.fields,field_description:base_transaction_id.field_account_move_line__transaction_ref
-msgid "Transaction Ref."
 msgstr ""
 
 #. module: base_transaction_id
