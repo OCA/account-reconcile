@@ -31,14 +31,14 @@ class TestCompletionTransactionId(SingleTransactionCase):
                 'name': 'Test autocompletion on invoice with transaction ID',
                 'account_id': cls.env.ref('account.a_sale').id,
                 'move_id': cls.move.id,
-                'transaction_ref': 'XXX66Z',
+                'ref': 'XXX66Z',
                 'date_maturity': '{}-01-06'.format(datetime.now().year),
                 'credit': 0.0,
             }
         )
 
     def test_sale_order_transaction_id(self):
-        self.move_line.transaction_ref = 'XXX66Z'
+        self.move_line.ref = 'XXX66Z'
         self.journal.rule_ids = [
             (
                 4,
@@ -104,7 +104,7 @@ class TestCompletionTransactionId(SingleTransactionCase):
         self.assertEqual(self.move_line.partner_id.name, self.partner.name)
 
     def test_new_invoice_with_transaction_id(self):
-        self.move_line.transaction_ref = 'XXX77Z'
+        self.move_line.ref = 'XXX77Z'
         self.move_line.partner_id = None
         self.journal.rule_ids = [
             (
