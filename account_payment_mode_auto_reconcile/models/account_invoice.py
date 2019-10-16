@@ -2,6 +2,7 @@
 # Copyright 2019 Camptocamp SA
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl)
 import json
+from operator import itemgetter
 
 from odoo import api, fields, models, _
 
@@ -77,14 +78,19 @@ class AccountInvoice(models.Model):
                 credits_dict = invoice._filter_payment_same_journal(
                     credits_dict
                 )
-            credits_dict.reverse()
-            for credit in credits_dict:
+            sorted_credits = self._sort_credits_dict(credits_dict)
+            for credit in sorted_credits:
                 if (
                     not partial_allowed
                     and credit.get('amount') > invoice.residual
                 ):
                     continue
                 invoice.assign_outstanding_credit(credit.get('id'))
+
+    @api.model
+    def _sort_credits_dict(self, credits_dict):
+        """Sort credits dict according to their id (oldest recs first)"""
+        return sorted(credits_dict, key=itemgetter('id'))
 
     @api.multi
     def _filter_payment_same_journal(self, credits_dict):
