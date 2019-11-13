@@ -245,7 +245,6 @@ class AccountJournal(models.Model):
             'debit_cash_basic': values['debit'],
             'credit_cash_basic': values['credit'],
             'balance_cash_basic': values['debit'] - values['credit'],
-            'ref': move.ref,
             'user_type_id': account.user_type_id.id,
             'reconciled': False,
         })
@@ -277,11 +276,13 @@ class AccountJournal(models.Model):
         parser = new_move_parser(self, ftype=ftype, move_ref=filename)
         res = self.env['account.move']
         for result_row_list in parser.parse(file_stream):
-            move = self._move_import(parser, file_stream, ftype=ftype)
+            move = self._move_import(
+                parser, file_stream, result_row_list=result_row_list, ftype=ftype
+            )
             res |= move
         return res
 
-    def _move_import(self, parser, file_stream, ftype="csv"):
+    def _move_import(self, parser, file_stream, result_row_list=None, ftype="csv"):
         """Create a bank statement with the given profile and parser. It will
         fulfill the bank statement with the values of the file provided, but
         will not complete data (like finding the partner, or the right
@@ -296,7 +297,8 @@ class AccountJournal(models.Model):
         move_obj = self.env['account.move']
         move_line_obj = self.env['account.move.line']
         attachment_obj = self.env['ir.attachment']
-        result_row_list = parser.result_row_list
+        if result_row_list is None:
+            result_row_list = parser.result_row_list
         # Check all key are present in account.bank.statement.line!!
         if not result_row_list:
             raise UserError(_("Nothing to import: "
