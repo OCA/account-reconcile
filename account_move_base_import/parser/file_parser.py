@@ -57,6 +57,8 @@ class FileParser(AccountMoveImportParser):
         # Set in _parse_xls, from the contents of the file
         self.dialect = dialect
         self.move_ref = move_ref
+        self.parsed_file = None
+        self.current_line = 0
 
     def _custom_format(self, *args, **kwargs):
         """No other work on data are needed in this parser."""
@@ -70,13 +72,24 @@ class FileParser(AccountMoveImportParser):
         """Launch the parsing through .csv, .xls or .xlsx depending on the
         given ftype
         """
-        res = None
-        if self.ftype == 'csv':
-            res = self._parse_csv()
+        if self.parsed_file is None:
+            if self.ftype == 'csv':
+                self.parsed_file = self._parse_csv()
+            else:
+                self.parsed_file = self._parse_xls()
+        if self.support_multi_moves:
+            if len(self.parsed_file) <= self.current_line:
+                return False
+            else:
+                print(self.current_line)
+                self.result_row_list = self.parsed_file[
+                    self.current_line:self.current_line + 1
+                ]
+                self.current_line += 1
+                return True
         else:
-            res = self._parse_xls()
-        self.result_row_list = res
-        return True
+            self.result_row_list = self.parsed_file
+            return True
 
     def _validate(self, *args, **kwargs):
         """We check that all the key of the given file (means header) are
