@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2019 Eficent Business and IT Consulting Services S.L.
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+<odoo>
+    <record id="account_mass_reconcile_method_tree" model="ir.ui.view">
+        <field name="name">account.mass.reconcile.method.tree.inherit</field>
+        <field name="priority">20</field>
+        <field name="model">account.mass.reconcile.method</field>
+        <field name="inherit_id" ref="account_mass_reconcile.account_mass_reconcile_method_tree"/>
+        <field name="arch" type="xml">
+             <field name="date_base_on" position="after">
+                 <field name="date_to"/>
+             </field>
+        </field>
+    </record>
+
+</odoo>
