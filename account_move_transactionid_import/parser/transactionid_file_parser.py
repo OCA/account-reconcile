@@ -32,6 +32,7 @@ class TransactionIDFileParser(FileParser):
         super().__init__(
             profile, extra_fields=conversion_dict, ftype=ftype, header=header,
             **kwargs)
+        self.support_multi_moves = True
 
     @classmethod
     def parser_for(cls, parser_name):
@@ -68,3 +69,11 @@ class TransactionIDFileParser(FileParser):
             'debit': amount < 0.0 and -amount or 0.0,
             'ref': line.get('transaction_id', '/'),
         }
+
+    def get_move_vals(self):
+        res = super().get_move_vals()
+        if 'ref' in res:
+            res.pop('ref')
+        if res.get('name') == '/':
+            res['name'] = self.move_ref
+        return res
