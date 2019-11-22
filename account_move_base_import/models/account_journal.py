@@ -242,9 +242,6 @@ class AccountJournal(models.Model):
             'date': move.date,
             'balance': values['debit'] - values['credit'],
             'amount_residual_currency': 0,
-            'debit_cash_basic': values['debit'],
-            'credit_cash_basic': values['credit'],
-            'balance_cash_basic': values['debit'] - values['credit'],
             'user_type_id': account.user_type_id.id,
             'reconciled': False,
         })
@@ -277,12 +274,16 @@ class AccountJournal(models.Model):
         res = self.env['account.move']
         for result_row_list in parser.parse(file_stream):
             move = self._move_import(
-                parser, file_stream, result_row_list=result_row_list, ftype=ftype
+                parser, file_stream,
+                result_row_list=result_row_list,
+                ftype=ftype
             )
             res |= move
         return res
 
-    def _move_import(self, parser, file_stream, result_row_list=None, ftype="csv"):
+    def _move_import(
+        self, parser, file_stream, result_row_list=None, ftype="csv"
+    ):
         """Create a bank statement with the given profile and parser. It will
         fulfill the bank statement with the values of the file provided, but
         will not complete data (like finding the partner, or the right
