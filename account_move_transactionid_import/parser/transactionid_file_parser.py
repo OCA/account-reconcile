@@ -3,7 +3,8 @@
 import datetime
 from odoo.tools import ustr
 from odoo.addons.account_move_base_import.parser.file_parser import (
-    FileParser, float_or_zero
+    FileParser,
+    float_or_zero,
 )
 
 
@@ -12,8 +13,13 @@ class TransactionIDFileParser(FileParser):
     bank statement.
     """
 
-    def __init__(self, profile, ftype='csv', extra_fields=None, header=None,
-                 **kwargs):
+    def __init__(
+            self,
+            profile,
+            ftype="csv",
+            extra_fields=None,
+            header=None,
+            **kwargs):
         """Add transaction_id in header keys
             :param char: profile: Reference to the profile
             :param char: ftype: extension of the file (could be csv or xls)
@@ -23,15 +29,19 @@ class TransactionIDFileParser(FileParser):
               header
         """
         conversion_dict = {
-            'transaction_id': ustr,
-            'label': ustr,
-            'date': datetime.datetime,
-            'amount': float_or_zero,
-            'commission_amount': float_or_zero,
+            "transaction_id": ustr,
+            "label": ustr,
+            "date": datetime.datetime,
+            "amount": float_or_zero,
+            "commission_amount": float_or_zero,
         }
         super().__init__(
-            profile, extra_fields=conversion_dict, ftype=ftype, header=header,
-            **kwargs)
+            profile,
+            extra_fields=conversion_dict,
+            ftype=ftype,
+            header=header,
+            **kwargs
+        )
         self.support_multi_moves = True
 
     @classmethod
@@ -39,7 +49,7 @@ class TransactionIDFileParser(FileParser):
         """Used by the new_bank_statement_parser class factory. Return true if
         the providen name is generic_csvxls_transaction
         """
-        return parser_name == 'generic_csvxls_transaction'
+        return parser_name == "generic_csvxls_transaction"
 
     def get_move_line_vals(self, line, *args, **kwargs):
         """This method must return a dict of vals that can be passed to create
@@ -61,19 +71,19 @@ class TransactionIDFileParser(FileParser):
         In this generic parser, the commission is given for every line, so we
         store it for each one.
         """
-        amount = line.get('amount', 0.0)
+        amount = line.get("amount", 0.0)
         return {
-            'name': line.get('label', '/'),
-            'date_maturity': line.get('date', datetime.datetime.now().date()),
-            'credit': amount > 0.0 and amount or 0.0,
-            'debit': amount < 0.0 and -amount or 0.0,
-            'ref': line.get('transaction_id', '/'),
+            "name": line.get("label", "/"),
+            "date_maturity": line.get("date", datetime.datetime.now().date()),
+            "credit": amount > 0.0 and amount or 0.0,
+            "debit": amount < 0.0 and -amount or 0.0,
+            "ref": line.get("transaction_id", "/"),
         }
 
     def get_move_vals(self):
         res = super().get_move_vals()
-        if 'ref' in res:
-            res.pop('ref')
-        if res.get('name') == '/':
-            res['name'] = self.move_ref
+        if "ref" in res:
+            res.pop("ref")
+        if res.get("name") == "/":
+            res["name"] = self.move_ref
         return res
