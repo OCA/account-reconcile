@@ -12,63 +12,67 @@ from odoo.exceptions import UserError, ValidationError
 
 
 class AccountJournal(models.Model):
-    _name = 'account.journal'
-    _inherit = ['account.journal', 'mail.thread']
-    _order = 'sequence'
+    _name = "account.journal"
+    _inherit = ["account.journal", "mail.thread"]
+    _order = "sequence"
 
-    used_for_import = fields.Boolean(
-        string="Journal used for import")
+    used_for_import = fields.Boolean(string="Journal used for import")
 
     commission_account_id = fields.Many2one(
-        comodel_name='account.account',
-        string='Commission account')
+        comodel_name="account.account", string="Commission account"
+    )
 
     import_type = fields.Selection(
-        [('generic_csvxls_so', 'Generic .csv/.xls based on SO Name')],
-        string='Type of import',
-        default='generic_csvxls_so',
+        [("generic_csvxls_so", "Generic .csv/.xls based on SO Name")],
+        string="Type of import",
+        default="generic_csvxls_so",
         required=True,
         help="Choose here the method by which you want to import account "
-        "moves for this journal.")
+        "moves for this journal.",
+    )
 
-    last_import_date = fields.Datetime(
-        string="Last Import Date")
+    last_import_date = fields.Datetime(string="Last Import Date")
 
     partner_id = fields.Many2one(
-        comodel_name='res.partner',
-        string='Bank/Payment Office partner',
+        comodel_name="res.partner",
+        string="Bank/Payment Office partner",
         help="Put a partner if you want to have it on the commission move "
         "(and optionaly on the counterpart of the intermediate/"
-        "banking move if you tick the corresponding checkbox).")
+        "banking move if you tick the corresponding checkbox).",
+    )
 
     receivable_account_id = fields.Many2one(
-        comodel_name='account.account',
-        string='Receivable/Payable Account',
+        comodel_name="account.account",
+        string="Receivable/Payable Account",
         help="Choose a receivable/payable account to use as the default "
-        "debit/credit account.")
+        "debit/credit account.",
+    )
 
-    used_for_completion = fields.Boolean(
-        string="Journal used for completion")
+    used_for_completion = fields.Boolean(string="Journal used for completion")
 
     rule_ids = fields.Many2many(
-        comodel_name='account.move.completion.rule',
-        string='Auto-completion rules',
-        relation='account_journal_completion_rule_rel')
+        comodel_name="account.move.completion.rule",
+        string="Auto-completion rules",
+        relation="account_journal_completion_rule_rel",
+    )
 
     launch_import_completion = fields.Boolean(
         string="Launch completion after import",
         help="Tic that box to automatically launch the completion "
-        "on each imported file using this journal.")
+        "on each imported file using this journal.",
+    )
 
     create_counterpart = fields.Boolean(
         string="Create Counterpart",
         help="Tick that box to automatically create the move counterpart",
-        default=True)
+        default=True,
+    )
 
     split_counterpart = fields.Boolean(
         string="Split Counterpart",
         help="Two counterparts will be automatically created : one for "
-             "the refunds and one for the payments")
+        "the refunds and one for the payments",
+    )
 
     @api.multi
     def _prepare_counterpart_line(self, move, amount, date):
@@ -81,24 +85,24 @@ class AccountJournal(models.Model):
             credit = -amount
             debit = 0.0
         counterpart_values = {
-            'date_maturity': date,
-            'credit': credit,
-            'debit': debit,
-            'partner_id': self.partner_id.id,
-            'move_id': move.id,
-            'account_id': account_id,
-            'already_completed': True,
-            'journal_id': self.id,
-            'company_id': self.company_id.id,
-            'currency_id': self.currency_id.id,
-            'company_currency_id': self.company_id.currency_id.id,
-            'amount_residual': amount,
+            "date_maturity": date,
+            "credit": credit,
+            "debit": debit,
+            "partner_id": self.partner_id.id,
+            "move_id": move.id,
+            "account_id": account_id,
+            "already_completed": True,
+            "journal_id": self.id,
+            "company_id": self.company_id.id,
+            "currency_id": self.currency_id.id,
+            "company_currency_id": self.company_id.currency_id.id,
+            "amount_residual": amount,
         }
         return counterpart_values
 
     @api.multi
     def _create_counterpart(self, parser, move):
-        move_line_obj = self.env['account.move.line']
+        move_line_obj = self.env["account.move.line"]
         refund = 0.0
         payment = 0.0
         transfer_lines = []
@@ -114,16 +118,18 @@ class AccountJournal(models.Model):
             total_amount = refund + payment
             if total_amount:
                 transfer_lines.append(total_amount)
-        counterpart_date = parser.get_move_vals().get('date') or \
-            fields.Date.today()
+        counterpart_date = (
+            parser.get_move_vals().get("date") or fields.Date.today()
+        )
         transfer_line_count = len(transfer_lines)
         check_move_validity = False
         for amount in transfer_lines:
             transfer_line_count -= 1
             if not transfer_line_count:
                 check_move_validity = True
-            vals = self._prepare_counterpart_line(move, amount,
-                                                  counterpart_date)
+            vals = self._prepare_counterpart_line(
+                move, amount, counterpart_date
+            )
             move_line_obj.with_context(
                 check_move_validity=check_move_validity
             ).create(vals)
@@ -142,48 +148,53 @@ class AccountJournal(models.Model):
               statement ID
             :param:    context: global context
         """
-        move_line_obj = self.env['account.move.line']
+        move_line_obj = self.env["account.move.line"]
         global_commission_amount = 0
         for row in parser.result_row_list:
             global_commission_amount += float(
-                row.get('commission_amount', '0.0'))
+                row.get("commission_amount", "0.0")
+            )
         partner_id = self.partner_id.id
         # Commission line
         if global_commission_amount > 0.0:
-            raise UserError(_('Commission amount should not be positive.'))
+            raise UserError(_("Commission amount should not be positive."))
         elif global_commission_amount < 0.0:
             if not self.commission_account_id:
                 raise UserError(
-                    _('No commission account is set on the journal.'))
+                    _("No commission account is set on the journal.")
+                )
             else:
                 commission_account_id = self.commission_account_id.id
                 comm_values = {
-                    'name': _('Commission line'),
-                    'date_maturity': parser.get_move_vals().get('date') or
-                    fields.Date.today(),
-                    'debit': -global_commission_amount,
-                    'partner_id': partner_id,
-                    'move_id': move.id,
-                    'account_id': commission_account_id,
-                    'already_completed': True,
+                    "name": _("Commission line"),
+                    "date_maturity": (
+                        parser.get_move_vals().get("date")
+                        or fields.Date.today()
+                    ),
+                    "debit": -global_commission_amount,
+                    "partner_id": partner_id,
+                    "move_id": move.id,
+                    "account_id": commission_account_id,
+                    "already_completed": True,
                 }
-                if (self.currency_id and
-                        self.currency_id != self.company_id.currency_id):
+                if (
+                    self.currency_id
+                    and self.currency_id != self.company_id.currency_id
+                ):
                     # the commission we are reading is in the currency of the
                     # journal: use the amount in the amount_currency field, and
                     # set credit / debit to the value in company currency at
                     # the date of the move.
                     currency = self.currency_id.with_context(date=move.date)
                     company_currency = self.company_id.currency_id
-                    comm_values['amount_currency'] = comm_values['debit']
-                    comm_values['debit'] = currency.compute(
-                        comm_values['debit'],
-                        company_currency
+                    comm_values["amount_currency"] = comm_values["debit"]
+                    comm_values["debit"] = currency.compute(
+                        comm_values["debit"], company_currency
                     )
-                    comm_values['currency_id'] = currency.id
-                move_line_obj.with_context(
-                    check_move_validity=False
-                ).create(comm_values)
+                    comm_values["currency_id"] = currency.id
+                move_line_obj.with_context(check_move_validity=False).create(
+                    comm_values
+                )
 
     @api.multi
     def write_logs_after_import(self, move, num_lines):
@@ -195,8 +206,9 @@ class AccountJournal(models.Model):
         :return: True
         """
         self.message_post(
-            body=_('Move %s have been imported with %s '
-                   'lines.') % (move.name, num_lines))
+            body=_("Move %s have been imported with %s " "lines.")
+            % (move.name, num_lines)
+        )
         return True
 
     def prepare_move_line_vals(self, parser_vals, move):
@@ -211,40 +223,46 @@ class AccountJournal(models.Model):
         :return: dict of vals that will be passed to create method of
           statement line.
         """
-        move_line_obj = self.env['account.move.line']
+        move_line_obj = self.env["account.move.line"]
         values = parser_vals
-        if not values.get('account_id', False):
-            values['account_id'] = self.receivable_account_id.id
-        account = self.env['account.account'].browse(values['account_id'])
-        if (self.currency_id and
-                self.currency_id != self.company_id.currency_id):
+        if not values.get("account_id", False):
+            values["account_id"] = self.receivable_account_id.id
+        account = self.env["account.account"].browse(values["account_id"])
+        if (
+            self.currency_id
+            and self.currency_id != self.company_id.currency_id
+        ):
             # the debit and credit we are reading are in the currency of the
             # journal: use the amount in the amount_currency field, and set
             # credit / debit to the value in company currency at the date of
             # the move.
             currency = self.currency_id.with_context(date=move.date)
             company_currency = self.company_id.currency_id
-            values['amount_currency'] = values['debit'] - values['credit']
-            values['debit'] = currency.compute(values['debit'],
-                                               company_currency)
-            values['credit'] = currency.compute(values['credit'],
-                                                company_currency)
+            values["amount_currency"] = values["debit"] - values["credit"]
+            values["debit"] = currency.compute(
+                values["debit"], company_currency
+            )
+            values["credit"] = currency.compute(
+                values["credit"], company_currency
+            )
         if account.reconcile:
-            values['amount_residual'] = values['debit'] - values['credit']
+            values["amount_residual"] = values["debit"] - values["credit"]
         else:
-            values['amount_residual'] = 0
-        values.update({
-            'company_id': self.company_id.id,
-            'currency_id': self.currency_id.id,
-            'company_currency_id': self.company_id.currency_id.id,
-            'journal_id': self.id,
-            'move_id': move.id,
-            'date': move.date,
-            'balance': values['debit'] - values['credit'],
-            'amount_residual_currency': 0,
-            'user_type_id': account.user_type_id.id,
-            'reconciled': False,
-        })
+            values["amount_residual"] = 0
+        values.update(
+            {
+                "company_id": self.company_id.id,
+                "currency_id": self.currency_id.id,
+                "company_currency_id": self.company_id.currency_id.id,
+                "journal_id": self.id,
+                "move_id": move.id,
+                "date": move.date,
+                "balance": values["debit"] - values["credit"],
+                "amount_residual_currency": 0,
+                "user_type_id": account.user_type_id.id,
+                "reconciled": False,
+            }
+        )
         values = move_line_obj._add_missing_default_values(values)
         return values
 
@@ -252,9 +270,11 @@ class AccountJournal(models.Model):
         """Hook to build the values of the statement from the parser and
         the profile.
         """
-        vals = {'journal_id': self.id,
-                'currency_id': self.currency_id.id,
-                'import_partner_id': self.partner_id.id}
+        vals = {
+            "journal_id": self.id,
+            "currency_id": self.currency_id.id,
+            "import_partner_id": self.partner_id.id,
+        }
         vals.update(parser.get_move_vals())
         return vals
 
@@ -267,23 +287,23 @@ class AccountJournal(models.Model):
         :param char: ftype represent the file extension (csv by default)
         :return: list: list of ids of the created account.bank.statement
         """
-        filename = self._context.get('file_name', None)
+        filename = self._context.get("file_name", None)
         if filename:
             (filename, __) = os.path.splitext(filename)
         parser = new_move_parser(self, ftype=ftype, move_ref=filename)
-        res = self.env['account.move']
+        res = self.env["account.move"]
         for result_row_list in parser.parse(file_stream):
             move = self._move_import(
-                parser, file_stream,
+                parser,
+                file_stream,
                 result_row_list=result_row_list,
-                ftype=ftype
+                ftype=ftype,
             )
             res |= move
         return res
 
     def _move_import(
-        self, parser, file_stream, result_row_list=None, ftype="csv"
-    ):
+            self, parser, file_stream, result_row_list=None, ftype="csv"):
         """Create a bank statement with the given profile and parser. It will
         fulfill the bank statement with the values of the file provided, but
         will not complete data (like finding the partner, or the right
@@ -295,23 +315,26 @@ class AccountJournal(models.Model):
         :param char: ftype represent the file extension (csv by default)
         :return: ID of the created account.bank.statement
         """
-        move_obj = self.env['account.move']
-        move_line_obj = self.env['account.move.line']
-        attachment_obj = self.env['ir.attachment']
+        move_obj = self.env["account.move"]
+        move_line_obj = self.env["account.move.line"]
+        attachment_obj = self.env["ir.attachment"]
         if result_row_list is None:
             result_row_list = parser.result_row_list
         # Check all key are present in account.bank.statement.line!!
         if not result_row_list:
-            raise UserError(_("Nothing to import: "
-                              "The file is empty"))
+            raise UserError(_("Nothing to import: " "The file is empty"))
         parsed_cols = list(
             parser.get_move_line_vals(result_row_list[0]).keys()
         )
         for col in parsed_cols:
             if col not in move_line_obj._fields:
                 raise UserError(
-                    _("Missing column! Column %s you try to import is not "
-                      "present in the move line!") % col)
+                    _(
+                        "Missing column! Column %s you try to import is not "
+                        "present in the move line!"
+                    )
+                    % col
+                )
         move_vals = self.prepare_move_vals(result_row_list, parser)
         move = move_obj.create(move_vals)
         try:
@@ -333,11 +356,11 @@ class AccountJournal(models.Model):
             move._amount_compute()
             # Attach data to the move
             attachment_data = {
-                'name': 'statement file',
-                'datas': file_stream,
-                'datas_fname': "%s.%s" % (fields.Date.today(), ftype),
-                'res_model': 'account.move',
-                'res_id': move.id,
+                "name": "statement file",
+                "datas": file_stream,
+                "datas_fname": "%s.%s" % (fields.Date.today(), ftype),
+                "res_model": "account.move",
+                "res_id": move.id,
             }
             attachment_obj.create(attachment_data)
             # If user ask to launch completion at end of import, do it!
@@ -351,9 +374,15 @@ class AccountJournal(models.Model):
         except Exception:
             error_type, error_value, trbk = sys.exc_info()
             st = "Error: %s\nDescription: %s\nTraceback:" % (
-                error_type.__name__, error_value)
-            st += ''.join(traceback.format_tb(trbk, 30))
+                error_type.__name__,
+                error_value,
+            )
+            st += "".join(traceback.format_tb(trbk, 30))
             raise ValidationError(
-                _("Statement import error "
-                  "The statement cannot be created: %s") % st)
+                _(
+                    "Statement import error "
+                    "The statement cannot be created: %s"
+                )
+                % st
+            )
         return move
