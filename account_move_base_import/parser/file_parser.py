@@ -32,8 +32,15 @@ class FileParser(AccountMoveImportParser):
     format.
     """
 
-    def __init__(self, journal, ftype='csv', extra_fields=None, header=None,
-                 dialect=None, move_ref=None, **kwargs):
+    def __init__(
+            self,
+            journal,
+            ftype="csv",
+            extra_fields=None,
+            header=None,
+            dialect=None,
+            move_ref=None,
+            **kwargs):
         """
             :param char: parse_name: The name of the parser
             :param char: ftype: extension of the file (could be csv, xls or
@@ -44,11 +51,12 @@ class FileParser(AccountMoveImportParser):
               header
             """
         super().__init__(journal, **kwargs)
-        if ftype in ('csv', 'xls', 'xlsx'):
+        if ftype in ("csv", "xls", "xlsx"):
             self.ftype = ftype[0:3]
         else:
             raise UserError(
-                _('Invalid file type %s. Please use csv, xls or xlsx') % ftype)
+                _("Invalid file type %s. Please use csv, xls or xlsx") % ftype
+            )
         self.conversion_dict = extra_fields
         self.keys_to_validate = list(self.conversion_dict.keys())
         self.fieldnames = header
@@ -73,7 +81,7 @@ class FileParser(AccountMoveImportParser):
         given ftype
         """
         if self.parsed_file is None:
-            if self.ftype == 'csv':
+            if self.ftype == "csv":
                 self.parsed_file = self._parse_csv()
             else:
                 self.parsed_file = self._parse_xls()
@@ -81,9 +89,8 @@ class FileParser(AccountMoveImportParser):
             if len(self.parsed_file) <= self.current_line:
                 return False
             else:
-                print(self.current_line)
                 self.result_row_list = self.parsed_file[
-                    self.current_line:self.current_line + 1
+                    self.current_line: self.current_line + 1
                 ]
                 self.current_line += 1
                 return True
@@ -101,7 +108,7 @@ class FileParser(AccountMoveImportParser):
             parsed_cols = list(self.result_row_list[0].keys())
             for col in self.keys_to_validate:
                 if col not in parsed_cols:
-                    raise UserError(_('Column %s not present in file') % col)
+                    raise UserError(_("Column %s not present in file") % col)
         return True
 
     def _post(self, *args, **kwargs):
@@ -115,9 +122,10 @@ class FileParser(AccountMoveImportParser):
         csv_file = tempfile.NamedTemporaryFile()
         csv_file.write(self.filebuffer)
         csv_file.flush()
-        with open(csv_file.name, 'rU') as fobj:
-            reader = UnicodeDictReader(fobj, fieldnames=self.fieldnames,
-                                       dialect=self.dialect)
+        with open(csv_file.name, "rU") as fobj:
+            reader = UnicodeDictReader(
+                fobj, fieldnames=self.fieldnames, dialect=self.dialect
+            )
             return list(reader)
 
     def _parse_xls(self):
@@ -143,26 +151,41 @@ class FileParser(AccountMoveImportParser):
             for rule in conversion_rules:
                 if conversion_rules[rule] == datetime.datetime:
                     try:
-                        date_string = line[rule].split(' ')[0]
-                        line[rule] = datetime.datetime.strptime(date_string,
-                                                                '%Y-%m-%d')
+                        date_string = line[rule].split(" ")[0]
+                        line[rule] = datetime.datetime.strptime(
+                            date_string, "%Y-%m-%d"
+                        )
                     except ValueError as err:
                         raise UserError(
-                            _("Date format is not valid."
-                              " It should be YYYY-MM-DD for column: %s"
-                              " value: %s \n \n \n Please check the line with "
-                              "ref: %s \n \n Detail: %s") %
-                            (rule, line.get(rule, _('Missing')),
-                             line.get('ref', line), repr(err)))
+                            _(
+                                "Date format is not valid."
+                                " It should be YYYY-MM-DD for column: %s"
+                                " value: %s \n \n \n Please check"
+                                " the line with ref: %s \n \n Detail: %s"
+                            )
+                            % (
+                                rule,
+                                line.get(rule, _("Missing")),
+                                line.get("ref", line),
+                                repr(err),
+                            )
+                        )
                 else:
                     try:
                         line[rule] = conversion_rules[rule](line[rule])
                     except Exception as err:
                         raise UserError(
-                            _("Value %s of column %s is not valid.\n Please "
-                              "check the line with ref %s:\n \n Detail: %s") %
-                            (line.get(rule, _('Missing')), rule,
-                             line.get('ref', line), repr(err)))
+                            _(
+                                "Value %s of column %s is not valid.\n Please "
+                                "check the line with ref %s:\n \n Detail: %s"
+                            )
+                            % (
+                                line.get(rule, _("Missing")),
+                                rule,
+                                line.get("ref", line),
+                                repr(err),
+                            )
+                        )
         return result_set
 
     def _from_xls(self, result_set, conversion_rules):
@@ -173,26 +196,41 @@ class FileParser(AccountMoveImportParser):
             for rule in conversion_rules:
                 if conversion_rules[rule] == datetime.datetime:
                     try:
-                        t_tuple = xlrd.xldate_as_tuple(line[rule],
-                                                       self._datemode)
+                        t_tuple = xlrd.xldate_as_tuple(
+                            line[rule], self._datemode
+                        )
                         line[rule] = datetime.datetime(*t_tuple)
                     except Exception as err:
                         raise UserError(
-                            _("Date format is not valid. "
-                              "Please modify the cell formatting to date "
-                              "format for column: %s value: %s\n Please check "
-                              "the line with ref: %s\n \n Detail: %s") %
-                            (rule, line.get(rule, _('Missing')),
-                             line.get('ref', line), repr(err)))
+                            _(
+                                "Date format is not valid. "
+                                "Please modify the cell formatting to date "
+                                "format for column: %s value: %s\n Please"
+                                " check the line with ref: %s\n \n Detail: %s"
+                            )
+                            % (
+                                rule,
+                                line.get(rule, _("Missing")),
+                                line.get("ref", line),
+                                repr(err),
+                            )
+                        )
                 else:
                     try:
                         line[rule] = conversion_rules[rule](line[rule])
                     except Exception as err:
                         raise UserError(
-                            _("Value %s of column %s is not valid.\n Please "
-                              "check the line with ref %s:\n \n Detail: %s") %
-                            (line.get(rule, _('Missing')), rule,
-                             line.get('ref', line), repr(err)))
+                            _(
+                                "Value %s of column %s is not valid.\n Please "
+                                "check the line with ref %s:\n \n Detail: %s"
+                            )
+                            % (
+                                line.get(rule, _("Missing")),
+                                rule,
+                                line.get("ref", line),
+                                repr(err),
+                            )
+                        )
         return result_set
 
     def _cast_rows(self, *args, **kwargs):
@@ -200,6 +238,6 @@ class FileParser(AccountMoveImportParser):
         providen. We call here _from_xls or _from_csv depending on the
         self.ftype variable.
         """
-        func = getattr(self, '_from_%s' % self.ftype)
+        func = getattr(self, "_from_%s" % self.ftype)
         res = func(self.result_row_list, self.conversion_dict)
         return res

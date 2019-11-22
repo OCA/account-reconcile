@@ -53,7 +53,10 @@ class TestCodaImport(common.TransactionCase):
         """Test import from xls
         """
         file_name = get_resource_path(
-            'account_move_base_import', 'demo', 'statement.xls'
+            'account_move_base_import',
+            'tests',
+            'data',
+            'statement.xls'
         )
         move = self._import_file(file_name)
         self._validate_imported_move(move)
@@ -62,7 +65,10 @@ class TestCodaImport(common.TransactionCase):
         """Test import from csv
         """
         file_name = get_resource_path(
-            'account_move_base_import', 'demo', 'statement.csv'
+            'account_move_base_import',
+            'tests',
+            'data',
+            'statement.csv'
         )
         move = self._import_file(file_name)
         self._validate_imported_move(move)
