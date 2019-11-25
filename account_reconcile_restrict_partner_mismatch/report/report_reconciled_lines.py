@@ -6,29 +6,22 @@ from odoo import api, fields, models, tools
 
 
 class AccountReconcilePartnerMismatchReport(models.Model):
-    _name = 'account.reconcile.partner.mismatch.report'
-    _description = 'Account Reconcile Partner Mismatch Report'
+    _name = "account.reconcile.partner.mismatch.report"
+    _description = "Account Reconcile Partner Mismatch Report"
     _auto = False
 
     partial_reconcile_id = fields.Many2one(
-        'account.partial.reconcile',
-        string="Partial Reconcile"
+        "account.partial.reconcile", string="Partial Reconcile"
     )
-    full_reconcile_id = fields.Many2one('account.full.reconcile')
-    account_id = fields.Many2one(
-        'account.account',
-        string="Account"
-    )
-    account_type_id = fields.Many2one(
-        'account.account.type',
-        string="Account type",
-    )
-    debit_move_id = fields.Many2one('account.move.line', string="Debit move")
+    full_reconcile_id = fields.Many2one("account.full.reconcile")
+    account_id = fields.Many2one("account.account", string="Account")
+    account_type_id = fields.Many2one("account.account.type", string="Account type")
+    debit_move_id = fields.Many2one("account.move.line", string="Debit move")
     debit_amount = fields.Float("Debit amount")
-    debit_partner_id = fields.Many2one('res.partner', string="Debit partner")
-    credit_move_id = fields.Many2one('account.move.line', string="Credit move")
+    debit_partner_id = fields.Many2one("res.partner", string="Debit partner")
+    credit_move_id = fields.Many2one("account.move.line", string="Credit move")
     credit_amount = fields.Float("Credit amount")
-    credit_partner_id = fields.Many2one('res.partner', string="Credit partner")
+    credit_partner_id = fields.Many2one("res.partner", string="Credit partner")
 
     @api.model_cr
     def init(self):
