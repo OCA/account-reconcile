@@ -2,7 +2,7 @@
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 
 
-from odoo import api, fields, models, tools
+from odoo import fields, models, tools
 
 
 class AccountReconcilePartnerMismatchReport(models.Model):
@@ -23,7 +23,6 @@ class AccountReconcilePartnerMismatchReport(models.Model):
     credit_amount = fields.Float("Credit amount")
     credit_partner_id = fields.Many2one("res.partner", string="Credit partner")
 
-    @api.model_cr
     def init(self):
         """Select lines which violate defined rules"""
         tools.drop_view_if_exists(self.env.cr, self._table)
@@ -45,8 +44,10 @@ class AccountReconcilePartnerMismatchReport(models.Model):
                         ON daml.id = pr.debit_move_id
                     LEFT JOIN account_move_line caml
                         ON caml.id = pr.credit_move_id
+                    LEFT JOIN account_account aa
+                        ON daml.account_id = aa.id
                     LEFT JOIN account_account_type aat
-                        ON daml.user_type_id = aat.id
+                        ON aa.user_type_id = aat.id
                     WHERE aat.type in ('receivable', 'payable')
                     AND (daml.partner_id <> caml.partner_id
                     OR (daml.partner_id IS NULL

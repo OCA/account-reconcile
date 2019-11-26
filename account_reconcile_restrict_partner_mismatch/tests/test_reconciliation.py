@@ -2,67 +2,66 @@
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 
 from odoo.exceptions import UserError
+from odoo.tests.common import SavepointCase
 
-from odoo.addons.account.tests.account_test_classes import AccountingTestCase
 
-
-class TestReconciliation(AccountingTestCase):
-    def setUp(self):
-        super().setUp()
-        self.env = self.env(
+class TestReconciliation(SavepointCase):
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        cls.env = cls.env(
             context=dict(
-                self.env.context, tracking_disable=True, test_partner_mismatch=True
+                cls.env.context, tracking_disable=True, test_partner_mismatch=True
             )
         )
-
-        self.partner = self.env.ref("base.res_partner_2")
-        self.partner_id = self.partner.id
-        rec_type = self.env["account.account"].search(
-            [
-                (
-                    "user_type_id",
-                    "=",
-                    self.env.ref("account.data_account_type_receivable").id,
-                )
-            ],
-            limit=1,
+        cls.partner = cls.env.ref("base.res_partner_2")
+        cls.partner_id = cls.partner.id
+        cls.account_rcv = cls.env["account.account"].create(
+            {
+                "code": "RA1000",
+                "name": "Test Receivable Account",
+                "user_type_id": cls.env.ref("account.data_account_type_receivable").id,
+                "reconcile": True,
+            }
         )
-        pay_type = self.env["account.account"].search(
-            [
-                (
-                    "user_type_id",
-                    "=",
-                    self.env.ref("account.data_account_type_payable").id,
-                )
-            ],
-            limit=1,
+        cls.account_rsa = cls.env["account.account"].create(
+            {
+                "code": "PA1000",
+                "name": "Test Payable Account",
+                "user_type_id": cls.env.ref("account.data_account_type_payable").id,
+                "reconcile": True,
+            }
         )
-        self.account_rcv = self.partner.property_account_receivable_id or rec_type
-        self.account_rsa = self.partner.property_account_payable_id or pay_type
-
-        self.bank_journal = self.env["account.journal"].create(
+        cls.bank_journal = cls.env["account.journal"].create(
             {"name": "Bank", "type": "bank", "code": "BNK67"}
         )
-        self.aml = self.init_moves()
+        cls.aml = cls.init_moves()
 
-    def create_move(self, name, amount):
+    @classmethod
+    def create_move(cls, name, amount):
         debit_line_vals = {
             "name": name,
             "debit": amount > 0 and amount or 0.0,
             "credit": amount < 0 and -amount or 0.0,
-            "account_id": self.account_rcv.id,
+            "account_id": cls.account_rcv.id,
         }
         credit_line_vals = debit_line_vals.copy()
         credit_line_vals["debit"] = debit_line_vals["credit"]
         credit_line_vals["credit"] = debit_line_vals["debit"]
-        credit_line_vals["account_id"] = self.account_rsa.id
+        credit_line_vals["account_id"] = cls.account_rsa.id
         vals = {
-            "journal_id": self.bank_journal.id,
+            "journal_id": cls.bank_journal.id,
             "line_ids": [(0, 0, debit_line_vals), (0, 0, credit_line_vals)],
         }
-        return self.env["account.move"].create(vals).id
+        return (
+            cls.env["account.move"]
+            .with_context(default_journal_id=cls.bank_journal.id)
+            .create(vals)
+            .id
+        )
 
-    def init_moves(self):
+    @classmethod
+    def init_moves(cls):
         move_list_vals = [
             ("1", -1.83),
             ("2", 728.35),
@@ -73,9 +72,9 @@ class TestReconciliation(AccountingTestCase):
         ]
         move_ids = []
         for name, amount in move_list_vals:
-            move_ids.append(self.create_move(name, amount))
-        aml_recs = self.env["account.move.line"].search(
-            [("move_id", "in", move_ids), ("account_id", "=", self.account_rcv.id)]
+            move_ids.append(cls.create_move(name, amount))
+        aml_recs = cls.env["account.move.line"].search(
+            [("move_id", "in", move_ids), ("account_id", "=", cls.account_rcv.id)]
         )
         return aml_recs
 
@@ -97,10 +96,16 @@ class TestReconciliation(AccountingTestCase):
         with self.assertRaises(UserError):
             self.aml.reconcile()
         # reconciliation forbiden only for certain types of accounts
-        account = self.env["account.account"].search(
-            [("user_type_id.type", "=", "other")], limit=1
+        account = self.env["account.account"].create(
+            {
+                "code": "CAA1000",
+                "name": "Test Current Assets Account",
+                "user_type_id": self.env.ref(
+                    "account.data_account_type_current_assets"
+                ).id,
+                "reconcile": True,
+            }
         )
-        account.reconcile = True
         self.aml[0].account_id = account.id
         with self.assertRaises(UserError):
             self.aml.reconcile()
