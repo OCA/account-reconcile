@@ -7,8 +7,8 @@ from odoo import models
 
 class MassReconcileAdvancedRef(models.TransientModel):
 
-    _name = 'mass.reconcile.advanced.ref'
-    _inherit = 'mass.reconcile.advanced'
+    _name = "mass.reconcile.advanced.ref"
+    _inherit = "mass.reconcile.advanced"
 
     @staticmethod
     def _skip_line(move_line):
@@ -17,7 +17,7 @@ class MassReconcileAdvancedRef(models.TransientModel):
         will be skipped for reconciliation. Can be inherited to
         skip on some conditions. ie: ref or partner_id is empty.
         """
-        return not (move_line.get('ref') and move_line.get('partner_id'))
+        return not (move_line.get("ref") and move_line.get("partner_id"))
 
     @staticmethod
     def _matchers(move_line):
@@ -57,8 +57,10 @@ class MassReconcileAdvancedRef(models.TransientModel):
             and their values to match in the opposite lines.
             A matching key can have multiples values.
         """
-        return (('partner_id', move_line['partner_id']),
-                ('ref', move_line['ref'].lower().strip()))
+        return (
+            ("partner_id", move_line["partner_id"]),
+            ("ref", move_line["ref"].lower().strip()),
+        )
 
     @staticmethod
     def _opposite_matchers(move_line):
@@ -99,6 +101,11 @@ class MassReconcileAdvancedRef(models.TransientModel):
         :param dict move_line: values of the move_line
         :yield: matchers as tuple ('matcher key', value(s))
         """
-        yield ('partner_id', move_line['partner_id'])
-        yield ('ref', ((move_line['ref'] or '').lower().strip(),
-                       move_line['name'].lower().strip()))
+        yield ("partner_id", move_line["partner_id"])
+        yield (
+            "ref",
+            (
+                (move_line["ref"] or "").lower().strip(),
+                move_line["name"].lower().strip(),
+            ),
+        )
