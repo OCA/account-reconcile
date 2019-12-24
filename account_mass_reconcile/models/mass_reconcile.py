@@ -5,6 +5,8 @@
 import logging
 from datetime import datetime
 
+from psycopg2.extensions import AsIs
+
 from odoo import _, api, fields, models, sql_db
 from odoo.exceptions import Warning as UserError
 
@@ -37,7 +39,7 @@ class MassReconcileOptions(models.AbstractModel):
         string="Date of reconciliation",
         default="newest",
     )
-    _filter = fields.Char(string="Filter", oldname="filter")
+    _filter = fields.Char(string="Filter")
     income_exchange_account_id = fields.Many2one(
         "account.account", string="Gain Exchange Rate Account"
     )
@@ -48,7 +50,7 @@ class MassReconcileOptions(models.AbstractModel):
 
 class AccountMassReconcileMethod(models.Model):
     _name = "account.mass.reconcile.method"
-    _description = "reconcile method for account_mass_reconcile"
+    _description = "Reconcile Method for account_mass_reconcile"
     _inherit = "mass.reconcile.options"
     _order = "sequence"
 
@@ -86,20 +88,18 @@ class AccountMassReconcileMethod(models.Model):
 class AccountMassReconcile(models.Model):
     _name = "account.mass.reconcile"
     _inherit = ["mail.thread"]
-    _description = "account mass reconcile"
+    _description = "Account Mass Reconcile"
 
-    @api.multi
     @api.depends("account")
-    def _get_total_unrec(self):
+    def _compute_total_unrec(self):
         obj_move_line = self.env["account.move.line"]
         for rec in self:
             rec.unreconciled_count = obj_move_line.search_count(
                 [("account_id", "=", rec.account.id), ("reconciled", "=", False)]
             )
 
-    @api.multi
     @api.depends("history_ids")
-    def _last_history(self):
+    def _compute_last_history(self):
         # do a search() for retrieving the latest history line,
         # as a read() will badly split the list of ids with 'date desc'
         # and return the wrong result.
@@ -116,7 +116,7 @@ class AccountMassReconcile(models.Model):
         "account.mass.reconcile.method", "task_id", string="Method"
     )
     unreconciled_count = fields.Integer(
-        string="Unreconciled Items", compute="_get_total_unrec"
+        string="Unreconciled Items", compute="_compute_total_unrec"
     )
     history_ids = fields.One2many(
         "mass.reconcile.history", "mass_reconcile_id", string="History", readonly=True
@@ -125,7 +125,7 @@ class AccountMassReconcile(models.Model):
         "mass.reconcile.history",
         string="Last history",
         readonly=True,
-        compute="_last_history",
+        compute="_compute_last_history",
     )
     company_id = fields.Many2one("res.company", string="Company")
 
@@ -143,17 +143,17 @@ class AccountMassReconcile(models.Model):
             "_filter": rec_method._filter,
         }
 
-    @api.multi
     def run_reconcile(self):
         def find_reconcile_ids(fieldname, move_line_ids):
             if not move_line_ids:
                 return []
-            sql = (
-                "SELECT DISTINCT " + fieldname + " FROM account_move_line "
-                " WHERE id in %s "
-                " AND " + fieldname + " IS NOT NULL"
-            )
-            self.env.cr.execute(sql, (tuple(move_line_ids),))
+            self.flush()
+            sql = """
+                SELECT DISTINCT %s FROM account_move_line
+                WHERE %s IS NOT NULL AND id in %s
+            """
+            params = [AsIs(fieldname), AsIs(fieldname), tuple(move_line_ids)]
+            self.env.cr.execute(sql, params)
             res = self.env.cr.fetchall()
             return [row[0] for row in res]
 
@@ -235,7 +235,6 @@ class AccountMassReconcile(models.Model):
             "domain": [("id", "in", move_line_ids)],
         }
 
-    @api.multi
     def open_unreconcile(self):
         """ Open the view of move line with the unreconciled move lines"""
         self.ensure_one()

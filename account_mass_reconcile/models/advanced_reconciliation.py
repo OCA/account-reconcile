@@ -9,6 +9,7 @@ class MassReconcileAdvancedRef(models.TransientModel):
 
     _name = "mass.reconcile.advanced.ref"
     _inherit = "mass.reconcile.advanced"
+    _description = "Mass Reconcile Advanced Ref"
 
     @staticmethod
     def _skip_line(move_line):
