@@ -5,7 +5,7 @@
 import logging
 from itertools import product
 
-from odoo import api, models
+from odoo import models
 from odoo.tools.translate import _
 
 _logger = logging.getLogger(__name__)
@@ -14,6 +14,7 @@ _logger = logging.getLogger(__name__)
 class MassReconcileAdvanced(models.AbstractModel):
     _name = "mass.reconcile.advanced"
     _inherit = "mass.reconcile.base"
+    _description = "Mass Reconcile Advanced"
 
     def _query_debit(self):
         """Select all move (debit>0) as candidate. """
@@ -217,9 +218,9 @@ class MassReconcileAdvanced(models.AbstractModel):
         """
         return False
 
-    @api.multi
     def _rec_auto_lines_advanced(self, credit_lines, debit_lines):
         """ Advanced reconciliation main loop """
+        # pylint: disable=invalid-commit
         reconciled_ids = []
         for rec in self:
             reconcile_groups = []
