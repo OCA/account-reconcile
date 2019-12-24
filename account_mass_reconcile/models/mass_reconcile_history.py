@@ -15,9 +15,8 @@ class MassReconcileHistory(models.Model):
     _rec_name = "mass_reconcile_id"
     _order = "date DESC"
 
-    @api.multi
     @api.depends("reconcile_ids")
-    def _get_reconcile_line_ids(self):
+    def _compute_reconcile_line_ids(self):
         for rec in self:
             rec.reconcile_line_ids = rec.mapped("reconcile_ids.reconciled_line_ids").ids
 
@@ -35,7 +34,7 @@ class MassReconcileHistory(models.Model):
         comodel_name="account.move.line",
         relation="account_move_line_history_rel",
         string="Reconciled Items",
-        compute="_get_reconcile_line_ids",
+        compute="_compute_reconcile_line_ids",
     )
     company_id = fields.Many2one(
         "res.company",
@@ -45,7 +44,6 @@ class MassReconcileHistory(models.Model):
         related="mass_reconcile_id.company_id",
     )
 
-    @api.multi
     def _open_move_lines(self):
         """ For an history record, open the view of move line with
         the reconciled move lines
@@ -67,7 +65,6 @@ class MassReconcileHistory(models.Model):
             "domain": [("id", "in", move_line_ids)],
         }
 
-    @api.multi
     def open_reconcile(self):
         """ For an history record, open the view of move line
         with the reconciled move lines
