@@ -21,7 +21,7 @@ class TestScenarioReconcile(common.SavepointCase):
         )
         cls.rec_history_obj = cls.env["mass.reconcile.history"]
         cls.mass_rec_obj = cls.env["account.mass.reconcile"]
-        cls.invoice_obj = cls.env["account.invoice"]
+        cls.invoice_obj = cls.env["account.move"]
         cls.bk_stmt_obj = cls.env["account.bank.statement"]
         cls.bk_stmt_line_obj = cls.env["account.bank.statement.line"]
         cls.acc_move_line_obj = cls.env["account.move.line"]
@@ -45,10 +45,9 @@ class TestScenarioReconcile(common.SavepointCase):
 
     def test_scenario_reconcile(self):
         # create invoice
-        invoice = self.invoice_obj.create(
+        invoice = self.invoice_obj.with_context(default_type="out_invoice").create(
             {
                 "type": "out_invoice",
-                "account_id": self.ref("account.a_recv"),
                 "company_id": self.ref("base.main_company"),
                 "journal_id": self.ref("account.sales_journal"),
                 "partner_id": self.ref("base.res_partner_12"),
@@ -57,7 +56,7 @@ class TestScenarioReconcile(common.SavepointCase):
                         0,
                         0,
                         {
-                            "name": "[PCSC234] PC Assemble SC234",
+                            "name": "[FURN_7800] Desk Combination",
                             "account_id": self.ref("account.a_sale"),
                             "price_unit": 1000.0,
                             "quantity": 1.0,
@@ -68,8 +67,8 @@ class TestScenarioReconcile(common.SavepointCase):
             }
         )
         # validate invoice
-        invoice.action_invoice_open()
-        self.assertEqual("open", invoice.state)
+        invoice.post()
+        self.assertEqual("posted", invoice.state)
 
         # create bank_statement
         statement = self.bk_stmt_obj.create(
@@ -85,8 +84,8 @@ class TestScenarioReconcile(common.SavepointCase):
                         {
                             "amount": 1000.0,
                             "partner_id": self.ref("base.res_partner_12"),
-                            "name": invoice.number,
-                            "ref": invoice.number,
+                            "name": invoice.name,
+                            "ref": invoice.name,
                         },
                     )
                 ],
@@ -95,8 +94,8 @@ class TestScenarioReconcile(common.SavepointCase):
 
         # reconcile
         line_id = None
-        for l in invoice.move_id.line_ids:
-            if l.account_id.id == self.ref("account.a_recv"):
+        for l in invoice.line_ids:
+            if l.account_id.internal_type == "receivable":
                 line_id = l
                 break
 
@@ -107,7 +106,7 @@ class TestScenarioReconcile(common.SavepointCase):
                         "move_line": line_id,
                         "credit": 1000.0,
                         "debit": 0.0,
-                        "name": invoice.number,
+                        "name": invoice.name,
                     }
                 ]
             )
@@ -122,13 +121,14 @@ class TestScenarioReconcile(common.SavepointCase):
         mass_rec = self.mass_rec_obj.create(
             {
                 "name": "mass_reconcile_1",
-                "account": self.ref("account.a_recv"),
+                "account": line_id.account_id.id,
                 "reconcile_method": [(0, 0, {"name": "mass.reconcile.simple.partner"})],
             }
         )
         # call the automatic reconcilation method
         mass_rec.run_reconcile()
-        self.assertEqual("paid", invoice.state)
+        invoice.invalidate_cache()
+        self.assertEqual("paid", invoice.invoice_payment_state)
 
     def test_scenario_reconcile_currency(self):
         # create currency rate
@@ -140,20 +140,19 @@ class TestScenarioReconcile(common.SavepointCase):
             }
         )
         # create invoice
-        invoice = self.invoice_obj.create(
+        invoice = self.invoice_obj.with_context(default_type="out_invoice").create(
             {
                 "type": "out_invoice",
-                "account_id": self.ref("account.a_recv"),
                 "company_id": self.ref("base.main_company"),
                 "currency_id": self.ref("base.USD"),
-                "journal_id": self.ref("account.bank_journal_usd"),
+                "journal_id": self.ref("account.sales_journal"),
                 "partner_id": self.ref("base.res_partner_12"),
                 "invoice_line_ids": [
                     (
                         0,
                         0,
                         {
-                            "name": "[PCSC234] PC Assemble SC234",
+                            "name": "[FURN_7800] Desk Combination",
                             "account_id": self.ref("account.a_sale"),
                             "price_unit": 1000.0,
                             "quantity": 1.0,
@@ -164,8 +163,8 @@ class TestScenarioReconcile(common.SavepointCase):
             }
         )
         # validate invoice
-        invoice.action_invoice_open()
-        self.assertEqual("open", invoice.state)
+        invoice.post()
+        self.assertEqual("posted", invoice.state)
 
         # create bank_statement
         statement = self.bk_stmt_obj.create(
@@ -183,8 +182,8 @@ class TestScenarioReconcile(common.SavepointCase):
                             "amount": 1000.0,
                             "amount_currency": 1500.0,
                             "partner_id": self.ref("base.res_partner_12"),
-                            "name": invoice.number,
-                            "ref": invoice.number,
+                            "name": invoice.name,
+                            "ref": invoice.name,
                         },
                     )
                 ],
@@ -193,8 +192,8 @@ class TestScenarioReconcile(common.SavepointCase):
 
         # reconcile
         line_id = None
-        for l in invoice.move_id.line_ids:
-            if l.account_id.id == self.ref("account.a_recv"):
+        for l in invoice.line_ids:
+            if l.account_id.internal_type == "receivable":
                 line_id = l
                 break
 
@@ -205,7 +204,7 @@ class TestScenarioReconcile(common.SavepointCase):
                         "move_line": line_id,
                         "credit": 1000.0,
                         "debit": 0.0,
-                        "name": invoice.number,
+                        "name": invoice.name,
                     }
                 ]
             )
@@ -219,10 +218,11 @@ class TestScenarioReconcile(common.SavepointCase):
         mass_rec = self.mass_rec_obj.create(
             {
                 "name": "mass_reconcile_1",
-                "account": self.ref("account.a_recv"),
+                "account": line_id.account_id.id,
                 "reconcile_method": [(0, 0, {"name": "mass.reconcile.simple.partner"})],
             }
         )
         # call the automatic reconcilation method
         mass_rec.run_reconcile()
-        self.assertEqual("paid", invoice.state)
+        invoice.invalidate_cache()
+        self.assertEqual("paid", invoice.invoice_payment_state)

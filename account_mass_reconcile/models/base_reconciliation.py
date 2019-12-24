@@ -5,7 +5,7 @@
 from functools import reduce
 from operator import itemgetter
 
-from odoo import _, api, fields, models
+from odoo import _, fields, models
 from odoo.tools.safe_eval import safe_eval
 
 
@@ -14,6 +14,7 @@ class MassReconcileBase(models.AbstractModel):
 
     _name = "mass.reconcile.base"
     _inherit = "mass.reconcile.options"
+    _description = "Mass Reconcile Base"
 
     account_id = fields.Many2one("account.account", string="Account", required=True)
     partner_ids = fields.Many2many(
@@ -21,7 +22,6 @@ class MassReconcileBase(models.AbstractModel):
     )
     # other fields are inherited from mass.reconcile.options
 
-    @api.multi
     def automatic_reconcile(self):
         """ Reconciliation method called from the view.
 
@@ -65,7 +65,6 @@ class MassReconcileBase(models.AbstractModel):
     def _from_query(self, *args, **kwargs):
         return "FROM account_move_line "
 
-    @api.multi
     def _where_query(self, *args, **kwargs):
         self.ensure_one()
         where = (
@@ -82,7 +81,6 @@ class MassReconcileBase(models.AbstractModel):
             params.append(tuple([l.id for l in self.partner_ids]))
         return where, params
 
-    @api.multi
     def _get_filter(self):
         self.ensure_one()
         ml_obj = self.env["account.move.line"]
@@ -94,7 +92,6 @@ class MassReconcileBase(models.AbstractModel):
                 where = " AND %s" % where
         return where, params
 
-    @api.multi
     def _below_writeoff_limit(self, lines, writeoff_limit):
         self.ensure_one()
         precision = self.env["decimal.precision"].precision_get("Account")
@@ -109,7 +106,6 @@ class MassReconcileBase(models.AbstractModel):
         writeoff_amount = round(debit - credit, precision)
         return bool(writeoff_limit >= abs(writeoff_amount)), debit, credit
 
-    @api.multi
     def _get_rec_date(self, lines, based_on="end_period_last_credit"):
         self.ensure_one()
 
@@ -132,7 +128,6 @@ class MassReconcileBase(models.AbstractModel):
         # when date is None
         return None
 
-    @api.multi
     def _reconcile_lines(self, lines, allow_partial=False):
         """ Try to reconcile given lines
 

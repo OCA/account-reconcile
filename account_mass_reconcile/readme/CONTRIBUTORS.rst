@@ -16,3 +16,4 @@
 * Damien Crier <damien.crier@camptocamp.com>
 * Akim Juillerat <akim.juillerat@camptocamp.com>
 * Mykhailo Panarin <m.panarin@mobilunity.com>
+* Adrià Gil Sorribes <adria.gil@forgeflow.com>
