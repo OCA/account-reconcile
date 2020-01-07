@@ -17,7 +17,6 @@ class AccountMoveLine(models.Model):
         string="Reconciled lines",
     )
 
-    @api.multi
     @api.depends("matched_debit_ids", "matched_credit_ids")
     def _compute_partial_reconciliation_in_progress(self):
         for rec in self:
@@ -25,12 +24,10 @@ class AccountMoveLine(models.Model):
                 rec.matched_debit_ids
             ) or bool(rec.matched_credit_ids)
 
-    @api.multi
     def _compute_reconciled_lines(self):
         for rec in self:
             rec.reconcile_line_ids = rec._get_reconciled_lines()
 
-    @api.multi
     def _get_reconciled_lines(self, move_lines=None):
         """
         Returns lines which were reconciled directly or indirectly with
@@ -64,7 +61,6 @@ class AccountMoveLine(models.Model):
 
         return move_lines
 
-    @api.multi
     def open_full_reconcile_view(self):
         action = self.env.ref("account.action_account_moves_all_a").read()[0]
         action["domain"] = [("id", "in", self.mapped("reconcile_line_ids").ids)]
