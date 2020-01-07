@@ -84,6 +84,8 @@ class TestAccountMoveReconcileHelper(TransactionCase):
         )
 
         lines.reconcile()
+        # For v13, need to force compute
+        lines._compute_reconciled_lines()
 
         for line in lines:
             self.assertEquals(line.reconcile_line_ids, lines)
@@ -102,6 +104,8 @@ class TestAccountMoveReconcileHelper(TransactionCase):
         )
 
         lines.reconcile()
+        # For v13, need to force compute
+        lines._compute_reconciled_lines()
 
         for line in lines:
             self.assertEquals(line.reconcile_line_ids, lines)
