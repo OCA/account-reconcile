@@ -95,7 +95,7 @@ msgid ""
 msgstr ""
 
 #. module: account_move_base_import
-#: code:addons/account_move_base_import/parser/file_parser.py:91
+#: code:addons/account_move_base_import/parser/file_parser.py:111
 #, python-format
 msgid "Column %s not present in file"
 msgstr ""
@@ -107,13 +107,13 @@ msgid "Commission account"
 msgstr ""
 
 #. module: account_move_base_import
-#: code:addons/account_move_base_import/models/account_journal.py:153
+#: code:addons/account_move_base_import/models/account_journal.py:160
 #, python-format
 msgid "Commission amount should not be positive."
 msgstr ""
 
 #. module: account_move_base_import
-#: code:addons/account_move_base_import/models/account_journal.py:161
+#: code:addons/account_move_base_import/models/account_journal.py:169
 #, python-format
 msgid "Commission line"
 msgstr ""
@@ -151,7 +151,7 @@ msgid "Created on"
 msgstr "Oprettet den"
 
 #. module: account_move_base_import
-#: code:addons/account_move_base_import/parser/file_parser.py:138
+#: code:addons/account_move_base_import/parser/file_parser.py:160
 #, python-format
 msgid ""
 "Date format is not valid. It should be YYYY-MM-DD for column: %s value: %s \n"
@@ -163,7 +163,7 @@ msgid ""
 msgstr ""
 
 #. module: account_move_base_import
-#: code:addons/account_move_base_import/parser/file_parser.py:168
+#: code:addons/account_move_base_import/parser/file_parser.py:205
 #, python-format
 msgid ""
 "Date format is not valid. Please modify the cell formatting to date format "
@@ -279,7 +279,7 @@ msgid "Import related infos"
 msgstr ""
 
 #. module: account_move_base_import
-#: code:addons/account_move_base_import/parser/file_parser.py:51
+#: code:addons/account_move_base_import/parser/file_parser.py:58
 #, python-format
 msgid "Invalid file type %s. Please use csv, xls or xlsx"
 msgstr ""
@@ -390,23 +390,23 @@ msgid "Method"
 msgstr ""
 
 #. module: account_move_base_import
-#: code:addons/account_move_base_import/parser/file_parser.py:142
-#: code:addons/account_move_base_import/parser/file_parser.py:151
-#: code:addons/account_move_base_import/parser/file_parser.py:172
-#: code:addons/account_move_base_import/parser/file_parser.py:181
+#: code:addons/account_move_base_import/parser/file_parser.py:168
+#: code:addons/account_move_base_import/parser/file_parser.py:183
+#: code:addons/account_move_base_import/parser/file_parser.py:213
+#: code:addons/account_move_base_import/parser/file_parser.py:228
 #, python-format
 msgid "Missing"
 msgstr ""
 
 #. module: account_move_base_import
-#: code:addons/account_move_base_import/models/account_journal.py:310
+#: code:addons/account_move_base_import/models/account_journal.py:332
 #, python-format
 msgid ""
 "Missing column! Column %s you try to import is not present in the move line!"
 msgstr ""
 
 #. module: account_move_base_import
-#: code:addons/account_move_base_import/models/account_journal.py:198
+#: code:addons/account_move_base_import/models/account_journal.py:209
 #, python-format
 msgid "Move %s have been imported with %s lines."
 msgstr ""
@@ -435,13 +435,13 @@ msgid "No buffer file given."
 msgstr ""
 
 #. module: account_move_base_import
-#: code:addons/account_move_base_import/models/account_journal.py:157
+#: code:addons/account_move_base_import/models/account_journal.py:164
 #, python-format
 msgid "No commission account is set on the journal."
 msgstr ""
 
 #. module: account_move_base_import
-#: code:addons/account_move_base_import/models/account_journal.py:302
+#: code:addons/account_move_base_import/models/account_journal.py:325
 #, python-format
 msgid "Nothing to import: The file is empty"
 msgstr ""
@@ -504,7 +504,7 @@ msgid "Statement file"
 msgstr ""
 
 #. module: account_move_base_import
-#: code:addons/account_move_base_import/models/account_journal.py:354
+#: code:addons/account_move_base_import/models/account_journal.py:382
 #, python-format
 msgid "Statement import error The statement cannot be created: %s"
 msgstr ""
@@ -539,8 +539,8 @@ msgid "Type of import"
 msgstr ""
 
 #. module: account_move_base_import
-#: code:addons/account_move_base_import/parser/file_parser.py:149
-#: code:addons/account_move_base_import/parser/file_parser.py:179
+#: code:addons/account_move_base_import/parser/file_parser.py:178
+#: code:addons/account_move_base_import/parser/file_parser.py:223
 #, python-format
 msgid ""
 "Value %s of column %s is not valid.\n"
