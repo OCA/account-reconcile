@@ -1,14 +1,11 @@
-# Copyright 2017-19 Eficent Business and IT Consulting Services S.L.
-#        (http://www.eficent.com)
+# Copyright 2017-20 ForgeFlow S.L. (http://www.forgeflow.com)
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 
 from odoo.tests.common import TransactionCase
 
 
 class TestAccountPartnerReconcile(TransactionCase):
-    """
-        Tests for Account Partner Reconcile.
-    """
+    """ Tests for Account Partner Reconcile."""
 
     def setUp(self):
         super(TestAccountPartnerReconcile, self).setUp()
