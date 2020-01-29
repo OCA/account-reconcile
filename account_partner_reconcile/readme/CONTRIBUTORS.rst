@@ -1,2 +1,2 @@
-* Jordi Ballester <jordi.ballester@eficent.com>
+* Jordi Ballester <jordi.ballester@forgeflow.com>
 * Jaume Planas <jaume.planas@minorisa.net>
