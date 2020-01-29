@@ -1,14 +1,12 @@
-# Copyright 2017-19 Eficent Business and IT Consulting Services S.L.
-#        (http://www.eficent.com)
+# Copyright 2017-20 ForgeFlow S.L. (http://www.forgeflow.com)
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 
-from odoo import api, models
+from odoo import models
 
 
 class ResPartner(models.Model):
     _inherit = "res.partner"
 
-    @api.multi
     def action_open_reconcile(self):
         # Open reconciliation view for customers and suppliers
         reconcile_mode = self.env.context.get("reconcile_mode", False)
