@@ -1,4 +1,4 @@
-odoo.define('auto_reconcile_structured_ref.structured_ref_reconciliation', function (require) {
+odoo.define('account_reconcile_structured_ref_auto.structured_ref_reconciliation', function (require) {
 "use strict";
 
 var AccountReconciliation = require('account.reconciliation');
