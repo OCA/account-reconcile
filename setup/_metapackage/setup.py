@@ -18,6 +18,7 @@ setuptools.setup(
         'odoo10-addon-account_move_base_import',
         'odoo10-addon-account_move_reconcile_helper',
         'odoo10-addon-account_reconcile_restrict_partner_mismatch',
+        'odoo10-addon-account_reconcile_structured_ref_auto',
         'odoo10-addon-account_set_reconcilable',
         'odoo10-addon-account_skip_bank_reconciliation',
         'odoo10-addon-bank_statement_foreign_currency',
