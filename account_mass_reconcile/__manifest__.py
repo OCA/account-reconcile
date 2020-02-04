@@ -4,7 +4,7 @@
 
 {
     "name": "Account Mass Reconcile",
-    "version": "11.0.1.0.0",
+    "version": "11.0.1.0.1",
     "depends": [
         "account_invoicing",
     ],
