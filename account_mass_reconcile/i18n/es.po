@@ -208,7 +208,17 @@ msgstr "Nombre mostrado"
 #. module: account_mass_reconcile
 #: model:ir.ui.view,arch_db:account_mass_reconcile.account_mass_reconcile_form
 #: model:ir.ui.view,arch_db:account_mass_reconcile.account_mass_reconcile_tree
-msgid "Display items reconciled on the last run"
+#, fuzzy
+#| msgid "Display items reconciled on the last run"
+msgid "Display items fully reconciled on the last run"
+msgstr "Mostrar elementos conciliados en la última ejecucción"
+
+#. module: account_mass_reconcile
+#: model:ir.ui.view,arch_db:account_mass_reconcile.account_mass_reconcile_form
+#: model:ir.ui.view,arch_db:account_mass_reconcile.account_mass_reconcile_tree
+#, fuzzy
+#| msgid "Display items reconciled on the last run"
+msgid "Display items partially reconciled on the last run"
 msgstr "Mostrar elementos conciliados en la última ejecucción"
 
 #. module: account_mass_reconcile
@@ -231,6 +241,7 @@ msgstr "Filtro"
 
 #. module: account_mass_reconcile
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_history_reconcile_ids
+#: model:ir.ui.view,arch_db:account_mass_reconcile.mass_reconcile_history_form
 msgid "Full Reconciliations"
 msgstr ""
 
@@ -254,8 +265,22 @@ msgstr ""
 
 #. module: account_mass_reconcile
 #: model:ir.ui.view,arch_db:account_mass_reconcile.account_mass_reconcile_form
-#: model:ir.ui.view,arch_db:account_mass_reconcile.mass_reconcile_history_form
 #: model:ir.ui.view,arch_db:account_mass_reconcile.mass_reconcile_history_tree
+#, fuzzy
+#| msgid "Go to reconciled items"
+msgid "Go to fully reconciled items"
+msgstr "Ir a los elementos conciliados"
+
+#. module: account_mass_reconcile
+#: model:ir.ui.view,arch_db:account_mass_reconcile.account_mass_reconcile_form
+#: model:ir.ui.view,arch_db:account_mass_reconcile.mass_reconcile_history_tree
+#, fuzzy
+#| msgid "Go to reconciled items"
+msgid "Go to partially reconciled items"
+msgstr "Ir a los elementos conciliados"
+
+#. module: account_mass_reconcile
+#: model:ir.ui.view,arch_db:account_mass_reconcile.mass_reconcile_history_form
 msgid "Go to reconciled items"
 msgstr "Ir a los elementos conciliados"
 
@@ -463,6 +488,21 @@ msgid "Options"
 msgstr "Opciones"
 
 #. module: account_mass_reconcile
+#: model:ir.ui.view,arch_db:account_mass_reconcile.mass_reconcile_history_form
+#, fuzzy
+#| msgid "Reconciliations"
+msgid "Partial Reconciliations"
+msgstr "Conciliaciones"
+
+#. module: account_mass_reconcile
+#: code:addons/account_mass_reconcile/models/mass_reconcile_history.py:90
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_history_partial_reconcile_ids
+#, fuzzy, python-format
+#| msgid "Date of reconciliation"
+msgid "Partial reconciliations"
+msgstr "Fecha de conciliación"
+
+#. module: account_mass_reconcile
 #: model:ir.ui.view,arch_db:account_mass_reconcile.account_mass_reconcile_form
 msgid "Profile Information"
 msgstr "Información del perfil"
@@ -488,8 +528,7 @@ msgid "Reconciliation Profile"
 msgstr "Perfil de conciliación"
 
 #. module: account_mass_reconcile
-#: code:addons/account_mass_reconcile/models/mass_reconcile_history.py:59
-#: model:ir.ui.view,arch_db:account_mass_reconcile.mass_reconcile_history_form
+#: code:addons/account_mass_reconcile/models/mass_reconcile_history.py:64
 #, python-format
 msgid "Reconciliations"
 msgstr "Conciliaciones"
@@ -561,13 +600,13 @@ msgid "The sequence field is used to order the reconcile method"
 msgstr "El campo de secuencia se usa para ordenar los métodos de conciliación"
 
 #. module: account_mass_reconcile
-#: code:addons/account_mass_reconcile/models/mass_reconcile.py:245
+#: code:addons/account_mass_reconcile/models/mass_reconcile.py:262
 #, python-format
 msgid "There is no history of reconciled items on the task: %s."
 msgstr "No hay histórico de elementos conciliados en la tarea: %s"
 
 #. module: account_mass_reconcile
-#: code:addons/account_mass_reconcile/models/mass_reconcile.py:221
+#: code:addons/account_mass_reconcile/models/mass_reconcile.py:238
 #, python-format
 msgid "There was an error during reconciliation : %s"
 msgstr ""
@@ -593,7 +632,7 @@ msgid "Unreconciled Items"
 msgstr ""
 
 #. module: account_mass_reconcile
-#: code:addons/account_mass_reconcile/models/mass_reconcile.py:271
+#: code:addons/account_mass_reconcile/models/mass_reconcile.py:288
 #, python-format
 msgid "Unreconciled items"
 msgstr ""
