@@ -264,7 +264,7 @@ class MassReconcileAdvanced(models.AbstractModel):
                                for lid in reconcile_group_ids]
                 reconciled, full = self._reconcile_lines(group_lines,
                                                          allow_partial=True)
-                if reconciled and full:
+                if reconciled:
                     reconciled_ids += reconcile_group_ids
 
                 if (ctx['commit_every'] and

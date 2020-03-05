@@ -61,7 +61,7 @@ class TestReconcile(common.TransactionCase):
 
     def test_open_unreconcile(self):
         res = self.mass_rec.open_unreconcile()
-        self.assertEqual(unicode([('id', 'in', [])]), res.get('domain', []))
+        self.assertEqual([('id', 'in', [])], res.get('domain', []))
 
     def test_prepare_run_transient(self):
         res = self.mass_rec._prepare_run_transient(self.mass_rec_method)

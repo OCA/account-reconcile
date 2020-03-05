@@ -33,10 +33,10 @@ class TestReconcileHistory(common.TransactionCase):
 
     def test_open_full_empty(self):
         res = self.rec_history._open_move_lines()
-        self.assertEqual(unicode([('id', 'in', [])]), res.get(
+        self.assertEqual([('id', 'in', [])], res.get(
             'domain', []))
 
     def test_open_full_empty_from_method(self):
         res = self.rec_history.open_reconcile()
-        self.assertEqual(unicode([('id', 'in', [])]), res.get(
+        self.assertEqual([('id', 'in', [])], res.get(
             'domain', []))

@@ -159,7 +159,7 @@ class AccountMassReconcile(models.Model):
 
     @api.multi
     def run_reconcile(self):
-        def find_reconcile_ids(fieldname, move_line_ids):
+        def find_full_reconcile_ids(fieldname, move_line_ids):
             if not move_line_ids:
                 return []
             sql = ("SELECT DISTINCT " + fieldname +
@@ -169,6 +169,17 @@ class AccountMassReconcile(models.Model):
             self.env.cr.execute(sql, (tuple(move_line_ids),))
             res = self.env.cr.fetchall()
             return [row[0] for row in res]
+
+        def find_partial_reconcile_ids(move_line_ids):
+            if not move_line_ids:
+                return []
+            reconciles = self.env['account.partial.reconcile'].search([
+                '|',
+                ('credit_move_id', 'in', move_line_ids),
+                ('debit_move_id', 'in', move_line_ids),
+                ('full_reconcile_id', '=', False),
+            ])
+            return reconciles.ids
 
         # we use a new cursor to be able to commit the reconciliation
         # often. We have to create it here and not later to avoid problems
@@ -198,8 +209,11 @@ class AccountMassReconcile(models.Model):
 
                     all_ml_rec_ids += ml_rec_ids
 
-                reconcile_ids = find_reconcile_ids(
+                full_reconcile_ids = find_full_reconcile_ids(
                     'full_reconcile_id',
+                    all_ml_rec_ids
+                )
+                partial_reconcile_ids = find_partial_reconcile_ids(
                     all_ml_rec_ids
                 )
                 self.env['mass.reconcile.history'].create(
@@ -207,8 +221,11 @@ class AccountMassReconcile(models.Model):
                         'mass_reconcile_id': rec.id,
                         'date': fields.Datetime.now(),
                         'reconcile_ids': [
-                            (4, rid) for rid in reconcile_ids
-                            ],
+                            (4, rid) for rid in full_reconcile_ids
+                        ],
+                        'partial_reconcile_ids': [
+                            (4, pid) for pid in partial_reconcile_ids
+                        ],
                     })
             except Exception as e:
                 # In case of error, we log it in the mail thread, log the
@@ -257,7 +274,7 @@ class AccountMassReconcile(models.Model):
             'type': 'ir.actions.act_window',
             'nodestroy': True,
             'target': 'current',
-            'domain': unicode([('id', 'in', move_line_ids)]),
+            'domain': [('id', 'in', move_line_ids)],
         }
 
     @api.multi
@@ -279,6 +296,15 @@ class AccountMassReconcile(models.Model):
         if not self.last_history:
             self._no_history()
         return self.last_history.open_reconcile()
+
+    @api.multi
+    def last_history_partial_reconcile(self):
+        """ Get the last history record for this reconciliation profile
+        and return the action which opens move lines reconciled
+        """
+        if not self.last_history:
+            self._no_history()
+        return self.last_history.open_partial_reconcile()
 
     @api.model
     def run_scheduler(self, run_all=None):

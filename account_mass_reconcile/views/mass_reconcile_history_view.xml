@@ -47,8 +47,12 @@
                         <field name="company_id" groups="base.group_multi_company"/>
                     </group>
                     <group col="2">
-                        <separator colspan="2" string="Reconciliations"/>
+                        <separator colspan="2" string="Full Reconciliations"/>
                         <field name="reconcile_ids" nolabel="1"/>
+                    </group>
+                    <group col="2">
+                        <separator colspan="2" string="Partial Reconciliations"/>
+                        <field name="partial_reconcile_ids" nolabel="1"/>
                     </group>
                 </sheet>
             </form>
@@ -63,7 +67,9 @@
                 <field name="mass_reconcile_id"/>
                 <field name="date"/>
                 <button icon="fa-share" name="open_reconcile"
-                    string="Go to reconciled items" type="object"/>
+                    string="Go to fully reconciled items" type="object"/>
+                <button icon="fa-share" name="open_reconcile"
+                    string="Go to partially reconciled items" type="object"/>
             </tree>
         </field>
     </record>
