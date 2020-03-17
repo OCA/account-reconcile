@@ -4,7 +4,7 @@
 {
     "name": "Account Reconciliation Date",
     "summary": "Track Reconciliation Date of Payments and Invoices",
-    "version": "12.0.1.0.0",
+    "version": "12.0.1.1.0",
     "depends": ["account"],
     "author": "Open Source Integrators, Odoo Community Association (OCA)",
     "website": "http://www.github.com/OCA/account-reconcile",
