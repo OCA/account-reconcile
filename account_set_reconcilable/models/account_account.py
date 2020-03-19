@@ -1,13 +1,12 @@
 # © 2018 Eficent Business and IT Consulting Services S.L. (www.eficent.com)
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 
-from odoo import api, models
+from odoo import models
 
 
 class AccountAccount(models.Model):
     _inherit = "account.account"
 
-    @api.multi
     def write(self, vals):
         if "reconcile" in vals:
             rec_val = vals.get("reconcile")
@@ -25,4 +24,4 @@ class AccountAccount(models.Model):
                     )
                     acc_move_lines._amount_residual()
                 vals.pop("reconcile")
-        return super(AccountAccount, self).write(vals=vals)
+        return super().write(vals=vals)

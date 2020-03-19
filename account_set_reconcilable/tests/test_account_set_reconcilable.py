@@ -6,7 +6,7 @@ from odoo.tests.common import TransactionCase
 
 class TestAccountSetReconcilable(TransactionCase):
     def setUp(self):
-        super(TestAccountSetReconcilable, self).setUp()
+        super().setUp()
         account_account_model = self.env["account.account"]
         account_move_model = self.env["account.move"]
         journal = self.env["account.journal"].search(
@@ -30,12 +30,12 @@ class TestAccountSetReconcilable(TransactionCase):
                     (
                         0,
                         0,
-                        {"name": "foo", "debit": 10, "account_id": self.account1.id,},
+                        {"name": "foo", "debit": 10, "account_id": self.account1.id},
                     ),
                     (
                         0,
                         0,
-                        {"name": "bar", "credit": 10, "account_id": self.account1.id,},
+                        {"name": "bar", "credit": 10, "account_id": self.account1.id},
                     ),
                 ],
             }
@@ -43,5 +43,8 @@ class TestAccountSetReconcilable(TransactionCase):
 
     def test_write(self):
         self.account1.reconcile = True
+        # In write method this module execute an update sql query so we need
+        # invalidate chache to check data
+        self.env["account.account"].invalidate_cache()
         self.assertTrue(self.account1.reconcile)
         self.assertEqual(len(self.move1.line_ids), 2)
