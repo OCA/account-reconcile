@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<!--
+    Copyright (C) 2016-Today: La Louve (<http://www.lalouve.net/>)
+    # Copyright (C) 2019-Today: Druidoo (<https://www.druidoo.io>)
+    @author: Sylvain LE GAL (https://twitter.com/legalsylvain)
+    License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
+-->
+<odoo>
+    <record id="view_account_journal_form" model="ir.ui.view">
+        <field name="model">account.journal</field>
+        <field name="inherit_id" ref="account.view_account_journal_form"/>
+        <field name="arch" type="xml">
+            <field name="type" position="after">
+                <field name="reconcile_mode" />
+            </field>
+            <xpath expr="//page[@name='bank_account']" position="after">
+                <page name="bank_reconcile" string="Bank Reconcile Account Allowed" attrs="{'invisible': [('reconcile_mode', '!=', 'journal_account')]}">
+                    <group>
+                        <field name="bank_reconcile_account_allowed_ids" nolabel="1" />
+                    </group>
+                </page>
+            </xpath>
+            <field name="bank_account_id" position="after">
+                <field name="search_limit_days" />
+            </field>
+        </field>
+    </record>
+</odoo>

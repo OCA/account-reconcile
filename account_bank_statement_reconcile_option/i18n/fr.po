@@ -1,0 +1,77 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* account_bank_statement_reconcile_option
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 9.0c\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-12-17 15:09+0000\n"
+"PO-Revision-Date: 2016-12-17 15:09+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: account_bank_statement_reconcile_option
+#: model:ir.model.fields,field_description:account_bank_statement_reconcile_option.field_account_journal_bank_reconcile_account_allowed_ids
+#: model:ir.ui.view,arch_db:account_bank_statement_reconcile_option.view_account_journal_form
+msgid "Bank Reconcile Account Allowed"
+msgstr ""
+
+#. module: account_bank_statement_reconcile_option
+#: model:ir.model,name:account_bank_statement_reconcile_option.model_account_bank_statement_line
+msgid "Bank Statement Line"
+msgstr "Ligne de relevé bancaire"
+
+#. module: account_bank_statement_reconcile_option
+#: model:ir.model.fields,help:account_bank_statement_reconcile_option.field_account_journal_reconcile_mode
+msgid ""
+"Change the reconciliation proposition.\n"
+" 'Normal': default behaviour of Odoo;\n"
+" 'Journal Accounts', reconciliation wizard will propose only account move "
+"lines with accounts defined in debit / credit accounting setting of the "
+"current journal."
+msgstr ""
+"Change les propositions de rapprochements bancaires.\n"
+" 'Normal': Comportement par défaut de Odoo;\n"
+" 'Comptes comptables du journal', l'assitant de rapprochement ne proposera "
+"que les lignes d'écritures associées aux comptes comptables définis comme "
+"compte de débit ou de crédit sur le journal courant."
+
+#. module: account_bank_statement_reconcile_option
+#: model:ir.model,name:account_bank_statement_reconcile_option.model_account_journal
+msgid "Journal"
+msgstr "Journal"
+
+#. module: account_bank_statement_reconcile_option
+#: selection:account.journal,reconcile_mode:0
+msgid "Journal Accounts"
+msgstr "Comptes comptables du journal"
+
+#. module: account_bank_statement_reconcile_option
+#: selection:account.journal,reconcile_mode:0
+msgid "Normal"
+msgstr "Normal"
+
+#. module: account_bank_statement_reconcile_option
+#: model:ir.model.fields,field_description:account_bank_statement_reconcile_option.field_account_journal_reconcile_mode
+msgid "Reconciliation Mode"
+msgstr "Mode de rapprochement bancaire"
+
+#. module: account_bank_statement_reconcile_option
+#: model:ir.model.fields,field_description:account_bank_statement_reconcile_option.field_account_journal_search_limit_days
+msgid "Search Limit Days"
+msgstr "Période de rapprochement"
+
+#. module: account_bank_statement_reconcile_option
+#: model:ir.model.fields,help:account_bank_statement_reconcile_option.field_account_journal_search_limit_days
+msgid ""
+"Set here the number of days before and after the bank transaction on which "
+"Journal Items can be proposed for reconciliation"
+msgstr ""
+"Définissez le nombre de jours avant et après la transaction bancaire pour la "
+"proposition d'écritures comptables à rapprocher"
