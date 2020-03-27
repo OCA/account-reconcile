@@ -16,12 +16,13 @@ class AccountJournal(models.Model):
     # Column Section
     reconcile_mode = fields.Selection(
         selection=_SELECTION_RECONCILE_MODE, default='normal', required=True,
-        string='Reconciliation Mode', help="Change the reconciliation"
-        " proposition.\n"
-        " 'Normal': default behaviour of Odoo;\n"
-        " 'Journal Accounts', reconciliation wizard will propose only account"
-        " move lines with accounts defined in debit / credit accounting"
-        " setting of the current journal.")
+        string='Reconciliation Mode',
+        help=("Change the reconciliation proposition.\n"
+              " 'Normal': default behaviour of Odoo;\n"
+              " 'Journal Accounts', reconciliation wizard will propose only account"
+              " move lines with accounts defined in debit / credit accounting"
+              " setting of the current journal."),
+    )
     bank_reconcile_account_allowed_ids = fields.Many2many(
         'account.account',
         'account_acount_journal_rel',
@@ -31,7 +32,7 @@ class AccountJournal(models.Model):
     )
     search_limit_days = fields.Integer(
         string='Search Limit Days',
-        help="Set here the number of days before and after the bank " +
+        help="Set here the number of days before and after the bank "
         "transaction on which Journal Items can be proposed for reconciliation",
         default=0
     )

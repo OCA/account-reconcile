@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # Copyright (C) 2016-Today: La Louve (<http://www.lalouve.net/>)
 # Copyright (C) 2019-Today: Druidoo (<https://www.druidoo.io>)
 # @author: Sylvain LE GAL
@@ -8,7 +9,7 @@ from odoo import models, fields, api
 from odoo.osv import expression
 
 
-class AccountBankStatementLine(models.AbstractModel):
+class AccountReconciliation(models.AbstractModel):
     _inherit = 'account.reconciliation.widget'
 
     # Overload Section
@@ -60,7 +61,8 @@ class AccountBankStatementLine(models.AbstractModel):
         target_currency = st_line.currency_id or\
             st_line.journal_id.currency_id or\
             st_line.journal_id.company_id.currency_id
-        return self._prepare_move_lines(
+        journal_ids = st_line.journal_id.ids
+        return self.with_context(journal_ids=journal_ids)._prepare_move_lines(
             aml_recs,
             target_currency=target_currency,
             target_date=st_line.date,
@@ -214,3 +216,110 @@ class AccountBankStatementLine(models.AbstractModel):
             return domain
         else:
             return []
+
+    @api.model
+    def get_bank_statement_line_data(self, st_line_ids, excluded_ids=None):
+        """Merge from account_bank_reconciliation_rule module
+            Returns the data required to display a reconciliation widget, for
+            each statement line in self
+
+            :param st_line_id: ids of the statement lines
+            :param excluded_ids: optional move lines ids excluded from the
+                result
+        """
+        excluded_ids = excluded_ids or []
+
+        # Make a search to preserve the table's order.
+        bank_statement_lines = self.env['account.bank.statement.line'].search(
+            [('id', 'in', st_line_ids)]
+        )
+        reconcile_model = self.env['account.reconcile.model'].search(
+            [('rule_type', '!=', 'writeoff_button')]
+        )
+
+        # Search for missing partners when opening the reconciliation widget.
+        partner_map = self._get_bank_statement_line_partners(bank_statement_lines)
+
+        matching_amls = reconcile_model._apply_rules(
+            bank_statement_lines,
+            excluded_ids=excluded_ids,
+            partner_map=partner_map
+        )
+
+        results = {
+            'lines': [],
+            'value_min': 0,
+            'value_max': len(bank_statement_lines),
+            'reconciled_aml_ids': [],
+        }
+
+        # Iterate on st_lines to keep the same order in the results list.
+        bank_statements_left = self.env['account.bank.statement']
+        for line in bank_statement_lines:
+            if matching_amls[line.id].get('status') == 'reconciled':
+                reconciled_move_lines = matching_amls[line.id].get('reconciled_lines')
+                results['value_min'] += 1
+                results['reconciled_aml_ids'] +=\
+                    reconciled_move_lines and reconciled_move_lines.ids or []
+            else:
+                aml_ids = matching_amls[line.id]['aml_ids']
+                bank_statements_left += line.statement_id
+                target_currency = line.currency_id or\
+                    line.journal_id.currency_id or\
+                    line.journal_id.company_id.currency_id
+
+                amls = aml_ids and self.env['account.move.line'].browse(aml_ids)
+                journal_ids = [line.journal_id.id]
+                line_vals = {
+                    'st_line': self._get_statement_line(line),
+                    'reconciliation_proposition':
+                        aml_ids and
+                        self.with_context(
+                            journal_ids=journal_ids
+                        )._prepare_move_lines(
+                            amls, target_currency=target_currency,
+                            target_date=line.date
+                        ) or [],
+                    'model_id': matching_amls[line.id].get('model') and
+                        matching_amls[line.id]['model'].id,
+                    'write_off': matching_amls[line.id].get('status') == 'write_off',
+                }
+                if not line.partner_id and partner_map.get(line.id):
+                    partner = self.env['res.partner'].browse(partner_map[line.id])
+                    line_vals.update({
+                        'partner_id': partner.id,
+                        'partner_name': partner.name,
+                    })
+                results['lines'].append(line_vals)
+
+        return results
+
+    @api.model
+    def _prepare_move_lines(
+            self, move_lines,
+            target_currency=False,
+            target_date=False, recs_count=0
+    ):
+        """ Merge from account_bank_reconciliation_rule module
+            Returns move lines formatted for the manual/bank reconciliation widget
+
+            :param move_line_ids:
+            :param target_currency: currency (browse) you want
+            the move line debit/credit converted into
+            :param target_date: date to use for the monetary conversion
+        """
+        ret = super(AccountReconciliation, self)._prepare_move_lines(
+            move_lines, target_currency, target_date, recs_count
+        )
+        journal_ids = self.env.context.get('journal_ids', [])
+        journals = self.env['account.journal'].browse(journal_ids)
+        debit_account = journals.mapped('default_debit_account_id')
+        list_account_code = debit_account.mapped('code')
+        for ret_line in ret:
+            if ret_line['account_code'] in list_account_code:
+                ret_line.update({
+                    'already_paid': True})
+            else:
+                ret_line.update({
+                    'already_paid': False})
+        return ret
