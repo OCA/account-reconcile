@@ -6,25 +6,27 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
-"Last-Translator: Automatically generated\n"
+"PO-Revision-Date: 2020-04-07 20:19+0000\n"
+"Last-Translator: alvarorib <alvaro.ribeiro@exo.pt>\n"
 "Language-Team: none\n"
 "Language: pt\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: Weblate 3.10\n"
 
 #. module: account_banking_reconciliation
 #: code:addons/account_banking_reconciliation/models/account_banking_reconciliation.py:548
 #, python-format
 msgid "%s (copy)"
-msgstr ""
+msgstr "%s (copiar)"
 
 #. module: account_banking_reconciliation
 #: model:ir.model.fields,help:account_banking_reconciliation.field_bank_acc_rec_statement__difference
 #: model:ir.model.fields,help:account_banking_reconciliation.field_bank_acc_rec_statement__difference_cur
 msgid "(Ending Balance – Beginning Balance) - Cleared Balance."
-msgstr ""
+msgstr "(Saldo Final - Saldo Inicial) - Saldo Apurado."
 
 #. module: account_banking_reconciliation
 #: model_terms:ir.ui.view,arch_db:account_banking_reconciliation.report_bank_statement_detail_doc
@@ -32,6 +34,9 @@ msgid "<b>\n"
 "                                            <span>Cleared Balance</span>\n"
 "                                        </b>"
 msgstr ""
+"<b>\n"
+"                                            <span>Saldo Apurado</span>\n"
+"                                        </b>"
 
 #. module: account_banking_reconciliation
 #: model_terms:ir.ui.view,arch_db:account_banking_reconciliation.report_bank_statement_detail_doc
@@ -39,6 +44,9 @@ msgid "<b>\n"
 "                                            <span>Ending Balance</span>\n"
 "                                        </b>"
 msgstr ""
+"<b>\n"
+"                                            <span>Saldo Final</span>\n"
+"                                        </b>"
 
 #. module: account_banking_reconciliation
 #: model_terms:ir.ui.view,arch_db:account_banking_reconciliation.report_bank_statement_detail_doc
@@ -47,6 +55,11 @@ msgid "<b>\n"
 "                                            </span>\n"
 "                                        </b>"
 msgstr ""
+"<b>\n"
+"                                            <span>Total de Cheques &amp; "
+"Pagamentos\n"
+"                                            </span>\n"
+"                                        </b>"
 
 #. module: account_banking_reconciliation
 #: model_terms:ir.ui.view,arch_db:account_banking_reconciliation.report_bank_statement_detail_doc
@@ -55,6 +68,11 @@ msgid "<b>\n"
 "                                            </span>\n"
 "                                        </b>"
 msgstr ""
+"<b>\n"
+"                                            <span>Total de Transações "
+"Apuradas\n"
+"                                            </span>\n"
+"                                        </b>"
 
 #. module: account_banking_reconciliation
 #: model_terms:ir.ui.view,arch_db:account_banking_reconciliation.report_bank_statement_detail_doc
@@ -64,6 +82,11 @@ msgid "<b>\n"
 "                                            </span>\n"
 "                                        </b>"
 msgstr ""
+"<b>\n"
+"                                            <span>Total Depósitos &amp;\n"
+"                                                Créditos\n"
+"                                            </span>\n"
+"                                        </b>"
 
 #. module: account_banking_reconciliation
 #: model_terms:ir.ui.view,arch_db:account_banking_reconciliation.report_bank_statement_summary_doc
@@ -71,6 +94,9 @@ msgid "<b>\n"
 "                                        <span>Cleared Balance</span>\n"
 "                                    </b>"
 msgstr ""
+"<b>\n"
+"                                        <span>Saldo Apurado</span>\n"
+"                                    </b>"
 
 #. module: account_banking_reconciliation
 #: model_terms:ir.ui.view,arch_db:account_banking_reconciliation.report_bank_statement_detail_doc
@@ -79,6 +105,9 @@ msgid "<b>\n"
 "                                        <span>Cleared Transactions</span>\n"
 "                                    </b>"
 msgstr ""
+"<b>\n"
+"                                        <span>Transações Apuradas</span>\n"
+"                                    </b>"
 
 #. module: account_banking_reconciliation
 #: model_terms:ir.ui.view,arch_db:account_banking_reconciliation.report_bank_statement_summary_doc
@@ -86,6 +115,9 @@ msgid "<b>\n"
 "                                        <span>Ending Balance:</span>\n"
 "                                    </b>"
 msgstr ""
+"<b>\n"
+"                                        <span>Saldo Final:</span>\n"
+"                                    </b>"
 
 #. module: account_banking_reconciliation
 #: model_terms:ir.ui.view,arch_db:account_banking_reconciliation.report_bank_statement_detail_doc
@@ -94,6 +126,9 @@ msgid "<b>\n"
 "                                        <span>Initial Balance:</span>\n"
 "                                    </b>"
 msgstr ""
+"<b>\n"
+"                                        <span>Saldo Inicial:</span>\n"
+"                                    </b>"
 
 #. module: account_banking_reconciliation
 #: model_terms:ir.ui.view,arch_db:account_banking_reconciliation.report_bank_statement_summary_doc
@@ -101,107 +136,111 @@ msgid "<b>\n"
 "                                        <span>Total Cleared Transactions</span>\n"
 "                                    </b>"
 msgstr ""
+"<b>\n"
+"                                        <span>Total Transações "
+"Apuradas</span>\n"
+"                                    </b>"
 
 #. module: account_banking_reconciliation
 #: model_terms:ir.ui.view,arch_db:account_banking_reconciliation.report_bank_statement_detail_doc
 #: model_terms:ir.ui.view,arch_db:account_banking_reconciliation.report_bank_statement_summary_doc
 msgid "<span>Checks &amp; Payments-</span>"
-msgstr ""
+msgstr "<span>Cheques &amp; Pagamentos-</span>"
 
 #. module: account_banking_reconciliation
 #: model_terms:ir.ui.view,arch_db:account_banking_reconciliation.report_bank_statement_detail_doc
 #: model_terms:ir.ui.view,arch_db:account_banking_reconciliation.report_bank_statement_summary_doc
 msgid "<span>Deposits &amp; Credits-</span>"
-msgstr ""
+msgstr "<span>Depósitos &amp; Créditos-</span>"
 
 #. module: account_banking_reconciliation
 #: model_terms:ir.ui.view,arch_db:account_banking_reconciliation.report_bank_statement_detail_doc
 #: model_terms:ir.ui.view,arch_db:account_banking_reconciliation.report_bank_statement_summary_doc
 msgid "<span>Period Ending</span>"
-msgstr ""
+msgstr "<span>Fim do Período</span>"
 
 #. module: account_banking_reconciliation
 #: model:ir.model.fields,field_description:account_banking_reconciliation.field_bank_acc_rec_statement__account_id
 #: model_terms:ir.ui.view,arch_db:account_banking_reconciliation.view_bank_acc_rec_statement_filter
 msgid "Account"
-msgstr ""
+msgstr "Conta"
 
 #. module: account_banking_reconciliation
 #: model:ir.model.fields,field_description:account_banking_reconciliation.field_bank_acc_rec_statement_line__amount
 msgid "Amount"
-msgstr ""
+msgstr "Montante"
 
 #. module: account_banking_reconciliation
 #: model:ir.model.fields,field_description:account_banking_reconciliation.field_bank_acc_rec_statement_line__amountcur
 msgid "Amount in Currency"
-msgstr ""
+msgstr "Montante em Divisa"
 
 #. module: account_banking_reconciliation
 #: model:ir.model.fields,field_description:account_banking_reconciliation.field_account_move_line__draft_assigned_to_statement
 msgid "Assigned to Statement? "
-msgstr ""
+msgstr "Atribuído ao Extrato? "
 
 #. module: account_banking_reconciliation
 #: model_terms:ir.ui.view,arch_db:account_banking_reconciliation.view_bank_acc_rec_statement_form
 msgid "Balances"
-msgstr ""
+msgstr "Saldos"
 
 #. module: account_banking_reconciliation
 #: model:ir.model,name:account_banking_reconciliation.model_bank_acc_rec_statement
 #: model:ir.model.fields,field_description:account_banking_reconciliation.field_account_move_line__bank_acc_rec_statement_id
 msgid "Bank Acc Rec Statement"
-msgstr ""
+msgstr "Extrato de Reconcilação da Conta Bancária"
 
 #. module: account_banking_reconciliation
 #: model_terms:ir.ui.view,arch_db:account_banking_reconciliation.view_bank_acc_rec_statement_form
 msgid "Bank Account Reconciliation Statement"
-msgstr ""
+msgstr "Extrato de Reconcilação da Conta Bancária"
 
 #. module: account_banking_reconciliation
 #: model_terms:ir.ui.view,arch_db:account_banking_reconciliation.view_bank_acc_rec_statement_tree
 msgid "Bank Account Reconciliation Statements"
-msgstr ""
+msgstr "Extratos de Reconcilação da Conta Bancária"
 
 #. module: account_banking_reconciliation
 #: model:res.groups,name:account_banking_reconciliation.group_bank_stmt_preparer
 msgid "Bank Statement Preparer"
-msgstr ""
+msgstr "Preparador de Extratos Bancários"
 
 #. module: account_banking_reconciliation
 #: model:res.groups,name:account_banking_reconciliation.group_bank_stmt_verifier
 msgid "Bank Statement Verifier"
-msgstr ""
+msgstr "Verificador de Extratos Bancários"
 
 #. module: account_banking_reconciliation
 #: model:ir.actions.report,name:account_banking_reconciliation.bank_statement_detail
 msgid "Bank Statement-Detail"
-msgstr ""
+msgstr "Detalhe de Extrato Bancário"
 
 #. module: account_banking_reconciliation
 #: model:ir.actions.report,name:account_banking_reconciliation.bank_statement_summary
 msgid "Bank Statement-Summary"
-msgstr ""
+msgstr "Sumário de Extrato Bancário"
 
 #. module: account_banking_reconciliation
 #: model:ir.actions.act_window,name:account_banking_reconciliation.action_bank_acc_rec_statement
 #: model:ir.ui.menu,name:account_banking_reconciliation.bank_acc_rec_statement_menu
 msgid "Bank Statements"
-msgstr ""
+msgstr "Extratos Bancários"
 
 #. module: account_banking_reconciliation
 #: model_terms:ir.ui.view,arch_db:account_banking_reconciliation.view_bank_acc_rec_statement_form
 msgid "Cancel"
-msgstr ""
+msgstr "Cancelar"
 
 #. module: account_banking_reconciliation
 #: selection:bank.acc.rec.statement,state:0
 msgid "Cancelled"
-msgstr ""
+msgstr "Cancelado"
 
 #. module: account_banking_reconciliation
 #: model:ir.model.fields,help:account_banking_reconciliation.field_account_move_line__draft_assigned_to_statement
 msgid "Check if the move line is assigned to statement lines"
-msgstr ""
+msgstr "Verifique se a linha do movimento está atribuído às linhas do extrato"
 
 #. module: account_banking_reconciliation
 #: model:ir.model.fields,help:account_banking_reconciliation.field_account_move_line__cleared_bank_account
