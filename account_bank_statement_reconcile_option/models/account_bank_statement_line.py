@@ -39,14 +39,15 @@ class AccountReconciliation(models.AbstractModel):
         ]
         if partner_id is None:
             partner_id = st_line.partner_id.id
-        domain = False
         if st_line.journal_id.reconcile_mode == 'journal_account':
             additional_domain = self.get_date_additional_domain(st_line)
             domain = self._domain_move_lines_for_reconciliation(
                 st_line, aml_accounts, partner_id,
                 excluded_ids=excluded_ids, search_str=search_str,
-                additional_domain=additional_domain
             )
+            # Domain from caller
+            additional_domain = expression.normalize_domain(additional_domain)
+            domain = expression.AND([domain, additional_domain])
         else:
             domain = self._domain_move_lines_for_reconciliation(
                 st_line, aml_accounts, partner_id,
@@ -70,7 +71,9 @@ class AccountReconciliation(models.AbstractModel):
         )
 
     @api.model
-    def _get_move_line_reconciliation_proposition(self, account_id, partner_id=None):
+    def _get_move_line_reconciliation_proposition(
+            self, account_id, partner_id=None
+    ):
         """ Returns two lines whose amount are opposite """
         Account_move_line = self.env['account.move.line']
         search_limit_days = self.journal_id.search_limit_days or 0
@@ -143,7 +146,7 @@ class AccountReconciliation(models.AbstractModel):
             :param excluded_ids:
             :param search_str:
         """
-        bank_reconcile_account_allowed_ids =\
+        bank_reconcile_account_allowed_ids = \
             st_line.journal_id.bank_reconcile_account_allowed_ids.ids or []
         reconciliation_account_all = aml_accounts + \
             bank_reconcile_account_allowed_ids
@@ -165,7 +168,8 @@ class AccountReconciliation(models.AbstractModel):
 
         domain = expression.OR([domain_reconciliation, domain_matching])
         if partner_id:
-            domain = expression.AND([domain, [('partner_id', '=', partner_id)]])
+            domain = expression.AND(
+                [domain, [('partner_id', '=', partner_id)]])
 
         # Domain factorized for all reconciliation use cases
         if search_str:
@@ -184,20 +188,16 @@ class AccountReconciliation(models.AbstractModel):
                 [('id', 'not in', excluded_ids)],
                 domain
             ])
-        # filter on account.move.line having the same company as the statement line
-        domain = expression.AND([domain, [('company_id', '=', st_line.company_id.id)]])
+        # filter on account.move.line having the same company
+        # as the statement line
+        domain = expression.AND(
+            [domain, [('company_id', '=', st_line.company_id.id)]])
         if st_line.company_id.account_bank_reconciliation_start:
             domain = expression.AND(
                 [domain,
                     [('date', '>=',
                         st_line.company_id.account_bank_reconciliation_start)]]
             )
-        # Domain from caller
-        if additional_domain is None:
-            additional_domain = []
-        else:
-            additional_domain = expression.normalize_domain(additional_domain)
-        domain = expression.AND([domain, additional_domain])
         return domain
 
     @api.multi
@@ -238,7 +238,8 @@ class AccountReconciliation(models.AbstractModel):
         )
 
         # Search for missing partners when opening the reconciliation widget.
-        partner_map = self._get_bank_statement_line_partners(bank_statement_lines)
+        partner_map = self._get_bank_statement_line_partners(
+            bank_statement_lines)
 
         matching_amls = reconcile_model._apply_rules(
             bank_statement_lines,
@@ -257,9 +258,10 @@ class AccountReconciliation(models.AbstractModel):
         bank_statements_left = self.env['account.bank.statement']
         for line in bank_statement_lines:
             if matching_amls[line.id].get('status') == 'reconciled':
-                reconciled_move_lines = matching_amls[line.id].get('reconciled_lines')
+                reconciled_move_lines = \
+                    matching_amls[line.id].get('reconciled_lines')
                 results['value_min'] += 1
-                results['reconciled_aml_ids'] +=\
+                results['reconciled_aml_ids'] += \
                     reconciled_move_lines and reconciled_move_lines.ids or []
             else:
                 aml_ids = matching_amls[line.id]['aml_ids']
@@ -268,7 +270,8 @@ class AccountReconciliation(models.AbstractModel):
                     line.journal_id.currency_id or\
                     line.journal_id.company_id.currency_id
 
-                amls = aml_ids and self.env['account.move.line'].browse(aml_ids)
+                amls = aml_ids and self.env['account.move.line'].browse(
+                    aml_ids)
                 journal_ids = [line.journal_id.id]
                 line_vals = {
                     'st_line': self._get_statement_line(line),
@@ -282,10 +285,12 @@ class AccountReconciliation(models.AbstractModel):
                         ) or [],
                     'model_id': matching_amls[line.id].get('model') and
                         matching_amls[line.id]['model'].id,
-                    'write_off': matching_amls[line.id].get('status') == 'write_off',
+                    'write_off':
+                        matching_amls[line.id].get('status') == 'write_off',
                 }
                 if not line.partner_id and partner_map.get(line.id):
-                    partner = self.env['res.partner'].browse(partner_map[line.id])
+                    partner_obj = self.env['res.partner']
+                    partner = partner_obj.browse(partner_map[line.id])
                     line_vals.update({
                         'partner_id': partner.id,
                         'partner_name': partner.name,
@@ -301,7 +306,8 @@ class AccountReconciliation(models.AbstractModel):
             target_date=False, recs_count=0
     ):
         """ Merge from account_bank_reconciliation_rule module
-            Returns move lines formatted for the manual/bank reconciliation widget
+            Returns move lines formatted for the manual/bank
+            reconciliation widget
 
             :param move_line_ids:
             :param target_currency: currency (browse) you want
