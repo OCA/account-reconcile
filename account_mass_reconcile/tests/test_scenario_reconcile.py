@@ -24,8 +24,7 @@ class TestScenarioReconcile(common.SavepointCase):
         cls.mass_rec_method_obj = (
             cls.env['account.mass.reconcile.method']
         )
-        cls.account_fx_income_id = cls.env.ref("account.income_fx_income").id
-        cls.account_fx_expense_id = cls.env.ref("account.income_fx_expense").id
+        cls.currency = cls.env.ref('base.USD')
         cls.acs_model = cls.env['res.config.settings']
 
         acs_ids = cls.acs_model.search(
@@ -135,7 +134,7 @@ class TestScenarioReconcile(common.SavepointCase):
         # create currency rate
         self.env['res.currency.rate'].create({
             'name': fields.Date.today() + ' 00:00:00',
-            'currency_id': self.ref('base.USD'),
+            'currency_id': self.currency.id,
             'rate': 1.5,
         })
         # create invoice
@@ -144,7 +143,7 @@ class TestScenarioReconcile(common.SavepointCase):
                 'type': 'out_invoice',
                 'account_id': self.ref('account.a_recv'),
                 'company_id': self.ref('base.main_company'),
-                'currency_id': self.ref('base.USD'),
+                'currency_id': self.currency.id,
                 'journal_id': self.ref('account.bank_journal_usd'),
                 'partner_id': self.ref('base.res_partner_12'),
                 'invoice_line_ids': [
@@ -169,7 +168,7 @@ class TestScenarioReconcile(common.SavepointCase):
                 'balance_start': 0.0,
                 'date': fields.Date.today(),
                 'journal_id': self.ref('account.bank_journal_usd'),
-                'currency_id': self.ref('base.USD'),
+                'currency_id': self.currency.id,
                 'line_ids': [
                     (0, 0, {
                         'amount': 1000.0,
@@ -177,6 +176,7 @@ class TestScenarioReconcile(common.SavepointCase):
                         'partner_id': self.ref('base.res_partner_12'),
                         'name': invoice.number,
                         'ref': invoice.number,
+                        'currency_id': self.currency.id,
                     })
                 ]
             }
@@ -197,6 +197,7 @@ class TestScenarioReconcile(common.SavepointCase):
                         'credit': 1000.0,
                         'debit': 0.0,
                         'name': invoice.number,
+                        'currency_id': self.currency.id,
                     }
                 ]
             )
