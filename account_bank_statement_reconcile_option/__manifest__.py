@@ -14,11 +14,11 @@
         Merge from account_bank_reconciliation_rule module:
         A new rule is applied when doing bank reconciliation:
         -   if account_code of account.move.line = account_code of
-            bank.statement.line  => the transaction is matched,
+        bank.statement.line  => the transaction is matched,
         -   if account_code of account.move.line != account_code
-            of bank.statement.line => a new move is generated,
-            move.line on source account is allocated and counterpart
-            on bank journal account is matched to the statement.
+        of bank.statement.line => a new move is generated,
+        move.line on source account is allocated and counterpart
+        on bank journal account is matched to the statement.
     """,
     'author': 'La Louve, Druidoo',
     'website': 'http://www.lalouve.net',
