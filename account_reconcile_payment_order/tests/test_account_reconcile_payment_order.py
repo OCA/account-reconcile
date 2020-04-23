@@ -11,9 +11,11 @@ class TestAccountReconcilePaymentOrder(TestPaymentOrderInboundBase):
         super().setUpClass()
         cls.widget_obj = cls.env['account.reconciliation.widget']
         cls.bank_journal = cls.env['account.journal'].search(
-            [('type', '=', 'bank')], limit=1)
+            [('type', '=', 'bank'),
+             '|', ('company_id', '=', cls.env.user.company_id.id),
+             ('company_id', '=', False)], limit=1)
         # Create second invoice for being sure it handles the payment order
-        cls.invoice2 = cls._create_customer_invoice(cls)
+        cls.invoice2 = cls._create_customer_invoice()
         cls.partner2 = cls.env['res.partner'].create({
             'name': 'Test partner 2',
         })
