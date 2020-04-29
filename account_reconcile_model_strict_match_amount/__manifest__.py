@@ -10,10 +10,6 @@
     "license": "AGPL-3",
     "application": False,
     "installable": True,
-    "depends": [
-        "account",
-    ],
-    "data": [
-        "views/account_reconcile_model.xml",
-    ],
+    "depends": ["account",],
+    "data": ["views/account_reconcile_model.xml",],
 }
