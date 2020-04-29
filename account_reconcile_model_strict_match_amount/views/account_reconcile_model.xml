@@ -12,7 +12,7 @@
                 />
             </xpath>
             <xpath
-                expr="//div[field[@name='match_total_amount']]/div[@class='text-muted']"
+                expr="//div[field[@name='match_total_amount']]/div[hasclass('text-muted')]"
                 position="attributes"
             >
                 <attribute
