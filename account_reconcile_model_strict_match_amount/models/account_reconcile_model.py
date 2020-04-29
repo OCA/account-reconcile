@@ -5,12 +5,12 @@ from odoo import api, fields, models
 
 class AccountReconcileModel(models.Model):
 
-    _inherit = 'account.reconcile.model'
+    _inherit = "account.reconcile.model"
 
     strict_match_total_amount = fields.Boolean(
         string="Strict Amount Matching",
         help="Avoid bypassing the Amount Matching parameter in case of a "
-             "statement line communication matching exactly existing entries."
+        "statement line communication matching exactly existing entries.",
     )
 
     @api.multi
@@ -19,7 +19,7 @@ class AccountReconcileModel(models.Model):
             return super()._get_select_communication_flag()
         else:
             regexp = r"'[^0-9|^\s]', '', 'g'), '\S(?:.*\S)*'), '\s+'"
-            return r'''
+            return r"""
                 -- Determine a matching or not with the statement line communication using the move.name or move.ref.
                 -- only digits are considered and reference are split by any space characters
                 COALESCE(
@@ -39,4 +39,6 @@ class AccountReconcileModel(models.Model):
                     WHEN abs(st_line.amount) > abs(aml.balance) THEN abs(aml.balance) / abs(st_line.amount) * 100
                     ELSE 100
                 END >= {match_total_amount_param} AS communication_flag
-            '''.format(regexp=regexp, match_total_amount_param=self.match_total_amount_param)
+            """.format(
+                regexp=regexp, match_total_amount_param=self.match_total_amount_param
+            )
