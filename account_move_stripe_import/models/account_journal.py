@@ -8,8 +8,8 @@ from odoo.addons.account_move_base_import.parser.parser import (
 )
 from datetime import date
 from collections import defaultdict
-from odoo.tools import DEFAULT_SERVER_DATETIME_FORMAT
 from datetime import datetime
+from datetime import timezone
 
 import logging
 
@@ -56,10 +56,10 @@ class StripeParser(AccountMoveImportParser):
             "limit": 100,
         }
         if self.journal.last_import_date:
-            timestamp = datetime.strptime(
-                self.journal.last_import_date, DEFAULT_SERVER_DATETIME_FORMAT
-            ).strftime("%s")
-            kwargs["arrival_date"] = {"gt": timestamp}
+            timestamp = self.journal.last_import_date.replace(
+                tzinfo=timezone.utc
+            ).timestamp()
+            kwargs["arrival_date"] = {"gt": int(timestamp)}
         while True:
             results = stripe.Payout.list(api_key=api_key, **kwargs)["data"]
             if not results:
@@ -68,7 +68,7 @@ class StripeParser(AccountMoveImportParser):
             kwargs["starting_after"] = results[-1]["id"]
         if payouts:
             payouts.reverse()
-            self.journal.last_import_date = date.fromtimestamp(
+            self.journal.last_import_date = datetime.fromtimestamp(
                 payouts[-1]["arrival_date"]
             )
         return payouts
@@ -105,7 +105,7 @@ class StripeParser(AccountMoveImportParser):
             "date_maturity": date.fromtimestamp(line["created"]),
             "credit": amount > 0.0 and amount or 0.0,
             "debit": amount < 0.0 and -amount or 0.0,
-            "transaction_ref": line.get("source"),
+            "ref": line.get("source"),
             "already_completed": False,
             "partner_id": None,
             "account_id": None,
