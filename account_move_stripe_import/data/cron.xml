@@ -9,8 +9,8 @@
     <field name="interval_number">1</field>
     <field name="interval_type">days</field>
     <field name="numbercall">-1</field>
+    <field name="model_id" ref="account.model_account_journal"/>
     <field eval="False" name="doall"/>
-    <field eval="'account.journal'" name="model"/>
     <field eval="'run_import_stripe_deposit'" name="function"/>
     <field eval="'()'" name="args"/>
 </record>
