@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+
+     <record id="bank_statement_completion_rule_trans_ref_so" model="account.move.completion.rule">
+         <field name="name">Match from Sales Order using transaction Ref. (Stripe)</field>
+         <field name="sequence">40</field>
+         <field name="function_to_call">get_from_transaction_ref_and_so</field>
+     </record>
+
+</odoo>
