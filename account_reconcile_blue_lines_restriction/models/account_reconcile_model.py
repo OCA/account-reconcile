@@ -1,13 +1,12 @@
 # Copyright 2020 Camptocamp SA
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl)
-from odoo import api, models
+from odoo import models
 
 
 class AccountReconcileModel(models.Model):
 
     _inherit = "account.reconcile.model"
 
-    @api.multi
     def _apply_conditions(self, query, params):
         """Remove AMLs with account not allowed for reconciliation from
            blue lines appearance conditions"""
