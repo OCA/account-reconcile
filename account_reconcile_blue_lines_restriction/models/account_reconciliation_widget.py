@@ -13,7 +13,11 @@ class AccountReconciliationWidget(models.AbstractModel):
         self, st_line, aml_accounts, partner_id, excluded_ids=None, search_str=False
     ):
         domain = super()._domain_move_lines_for_reconciliation(
-            st_line, aml_accounts, partner_id, excluded_ids=excluded_ids, search_str=search_str
+            st_line,
+            aml_accounts,
+            partner_id,
+            excluded_ids=excluded_ids,
+            search_str=search_str,
         )
-        domain = expression.AND([domain, [('account_id.reconcile', '=', True)]])
+        domain = expression.AND([domain, [("account_id.reconcile", "=", True)]])
         return domain

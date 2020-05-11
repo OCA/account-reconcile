@@ -10,9 +10,6 @@
     "license": "AGPL-3",
     "application": False,
     "installable": True,
-    "depends": [
-        "account",
-    ],
-    "data": [
-    ],
+    "depends": ["account",],
+    "data": [],
 }

@@ -5,15 +5,15 @@ from odoo import api, models
 
 class AccountReconcileModel(models.Model):
 
-    _inherit = 'account.reconcile.model'
+    _inherit = "account.reconcile.model"
 
     @api.multi
     def _apply_conditions(self, query, params):
         """Remove AMLs with account not allowed for reconciliation from
            blue lines appearance conditions"""
         new_query, new_params = super()._apply_conditions(query, params)
-        if self.rule_type == 'invoice_matching':
-            new_query += '''
+        if self.rule_type == "invoice_matching":
+            new_query += """
                 AND (
                     -- modified blue lines appearance conditions
                     aml.account_id IN (
@@ -35,5 +35,5 @@ class AccountReconcileModel(models.Model):
                         AND aml.reconciled IS FALSE
                     )
                 )
-            '''
+            """
         return new_query, new_params
