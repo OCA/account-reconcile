@@ -12,6 +12,7 @@
     "category": "Finance",
     "data": [
         "views/account_view.xml",
+        "views/account_journal_view.xml",
     ],
     'license': 'AGPL-3',
     'installable': True,
