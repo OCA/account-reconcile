@@ -23,6 +23,9 @@
             <field name="bank_account_id" position="after">
                 <field name="search_limit_days" />
             </field>
+            <field name="bank_id" position="after">
+                <field name="set_default_reconcile_partner" />
+            </field>
         </field>
     </record>
 </odoo>

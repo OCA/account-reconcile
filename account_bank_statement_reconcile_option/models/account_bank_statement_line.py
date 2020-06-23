@@ -9,6 +9,11 @@ from odoo import models, fields, api
 from odoo.osv import expression
 
 
+class AccountBankStatementLine(models.Model):
+    _inherit = "account.bank.statement.line"
+    _order = "statement_id desc, sequence, id desc"
+
+
 class AccountReconciliation(models.AbstractModel):
     _inherit = 'account.reconciliation.widget'
 
@@ -76,8 +81,6 @@ class AccountReconciliation(models.AbstractModel):
     ):
         """ Returns two lines whose amount are opposite """
         Account_move_line = self.env['account.move.line']
-        search_limit_days = self.journal_id.search_limit_days or 0
-        date_line = fields.Date.from_string(self.date)
         ir_rules_query = Account_move_line._where_calc([])
         Account_move_line._apply_ir_rules(ir_rules_query, 'read')
         from_clause, where_clause, where_clause_params = ir_rules_query.get_sql()
@@ -116,16 +119,6 @@ class AccountReconciliation(models.AbstractModel):
             move_line_id, move_line_id,
             partner_id, partner_id, partner_id,
         ] + where_clause_params + where_clause_params
-        if date_line and search_limit_days:
-            limit_days_after = date_line + timedelta(
-                days=search_limit_days)
-            limit_days_before = date_line - timedelta(
-                days=search_limit_days)
-            params.extend([limit_days_after, limit_days_before])
-            query += """AND a.date_maturity < %(limit_days_after)s \
-                        AND a.date_maturity > %(limit_days_before)s
-                        AND b.date_maturity < %(limit_days_after)s \
-                        AND b.date_maturity > %(limit_days_before)s"""
         self.env.cr.execute(query, params)
         pairs = self.env.cr.fetchall()
 
@@ -136,7 +129,7 @@ class AccountReconciliation(models.AbstractModel):
     @api.model
     def _domain_move_lines_for_reconciliation(
         self, st_line, aml_accounts, partner_id,
-        excluded_ids=None, search_str=False, additional_domain=None
+        excluded_ids=None, search_str=False
     ):
         """ Return the domain for account.move.line records
             which can be used for bank statement reconciliation.
@@ -146,58 +139,24 @@ class AccountReconciliation(models.AbstractModel):
             :param excluded_ids:
             :param search_str:
         """
-        bank_reconcile_account_allowed_ids = \
-            st_line.journal_id.bank_reconcile_account_allowed_ids.ids or []
-        reconciliation_account_all = aml_accounts + \
-            bank_reconcile_account_allowed_ids
-
-        domain_reconciliation = [
-            '&', '&',
-            ('statement_line_id', '=', False),
-            ('account_id', 'in', reconciliation_account_all),
-            ('balance', '!=', 0.0),
-        ]
-
-        # default domain matching
-        domain_matching = [
-            '&', '&',
-            ('reconciled', '=', False),
-            ('account_id.reconcile', '=', True),
-            ('balance', '!=', 0.0),
-        ]
-
-        domain = expression.OR([domain_reconciliation, domain_matching])
-        if partner_id:
-            domain = expression.AND(
-                [domain, [('partner_id', '=', partner_id)]])
-
-        # Domain factorized for all reconciliation use cases
-        if search_str:
-            str_domain = self._domain_move_lines(search_str=search_str)
-            str_domain = expression.OR([
-                str_domain,
-                [('partner_id.name', 'ilike', search_str)]
-            ])
-            domain = expression.AND([
-                domain,
-                str_domain
-            ])
-
-        if excluded_ids:
-            domain = expression.AND([
-                [('id', 'not in', excluded_ids)],
-                domain
-            ])
-        # filter on account.move.line having the same company
-        # as the statement line
-        domain = expression.AND(
-            [domain, [('company_id', '=', st_line.company_id.id)]])
-        if st_line.company_id.account_bank_reconciliation_start:
-            domain = expression.AND(
-                [domain,
-                    [('date', '>=',
-                        st_line.company_id.account_bank_reconciliation_start)]]
-            )
+        domain = super(AccountReconciliation, self)._domain_move_lines_for_reconciliation(
+            st_line, aml_accounts, partner_id,
+            excluded_ids=excluded_ids, search_str=search_str)
+        if st_line.journal_id.reconcile_mode == 'journal_account':
+            bank_reconcile_account_allowed_ids = \
+                st_line.journal_id.bank_reconcile_account_allowed_ids.ids
+            args = [
+                ('statement_line_id', '=', False),
+                ('reconciled', '=', False),
+                ('account_id.reconcile', '=', True),
+            ]
+            if bank_reconcile_account_allowed_ids:
+                reconciliation_account_all = aml_accounts + \
+                    bank_reconcile_account_allowed_ids
+                args += [
+                    ('account_id', 'in', reconciliation_account_all),
+                ]
+            domain = expression.AND([domain, args])
         return domain
 
     @api.multi
@@ -288,7 +247,10 @@ class AccountReconciliation(models.AbstractModel):
                     'write_off':
                         matching_amls[line.id].get('status') == 'write_off',
                 }
-                if not line.partner_id and partner_map.get(line.id):
+                if (line.journal_id.set_default_reconcile_partner and
+                     not line.partner_id and
+                     partner_map.get(line.id)
+                ):
                     partner_obj = self.env['res.partner']
                     partner = partner_obj.browse(partner_map[line.id])
                     line_vals.update({

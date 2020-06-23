@@ -13,6 +13,8 @@ class AccountJournal(models.Model):
         ('journal_account', 'Journal Accounts'),
     ]
 
+    set_default_reconcile_partner = fields.Boolean()
+
     # Column Section
     reconcile_mode = fields.Selection(
         selection=_SELECTION_RECONCILE_MODE, default='normal', required=True,
