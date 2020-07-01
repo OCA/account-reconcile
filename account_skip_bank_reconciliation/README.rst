@@ -26,7 +26,9 @@ Account Skip Bank Reconciliation
 |badge1| |badge2| |badge3| |badge4| |badge5| 
 
 This module allows to exclude from bank statement reconciliation
-all journal items of a specific reconcilable account.
+all journal items of a specific reconcilable account. It also allows
+to specify in the Bank Journal which accounts should be taken into account
+for reconciliation.
 
 Usually, you would want to that in accounts like the
 `Goods Received Not Invoiced`, which are required to be reconcilable
@@ -41,11 +43,21 @@ their reconciliation is done using the `account_mass_reconcile` module.
 Usage
 =====
 
-To use this module, you need to:
+To use this module, you can choose one of the following approaches:
 
-#. Go to  `Invoicing / Configuration / Accounting / Charts of Accounts`
+1. Go to  `Invoicing / Configuration / Accounting / Charts of Accounts`
    and open a reconcilable account.
-#. In that account, select or not the `Exclude from Bank Reconciliation` option.
+2. In that account, select or not the `Exclude from Bank Reconciliation` option.
+
+or
+
+1. Go to  `Invoicing / Configuration / Accounting / Journals` and open any
+   bank Journal
+2. In the Journal select the accounts that you would like to be proposed in
+   reconciliations.
+
+Be careful, if an account is set to be excluded it will be excluded even if it
+appears in the Bank Journal to be considered for reconciliation.
 
 Bug Tracker
 ===========
@@ -63,12 +75,13 @@ Credits
 Authors
 ~~~~~~~
 
-* Eficent
+* ForgeFlow
 
 Contributors
 ~~~~~~~~~~~~
 
-* Miquel Raïch <miquel.raich@eficent.com>
+* Miquel Raïch <miquel.raich@forgeflow.com>
+* Adrià Gil Sorribes <adria.gil@forgeflow.com>
 
 Maintainers
 ~~~~~~~~~~~
