@@ -369,7 +369,9 @@ ul.auto-toc {
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
 <p><a class="reference external" href="https://odoo-community.org/page/development-status"><img alt="Beta" src="https://img.shields.io/badge/maturity-Beta-yellow.png" /></a> <a class="reference external" href="http://www.gnu.org/licenses/agpl-3.0-standalone.html"><img alt="License: AGPL-3" src="https://img.shields.io/badge/licence-AGPL--3-blue.png" /></a> <a class="reference external" href="https://github.com/OCA/account-reconcile/tree/12.0/account_skip_bank_reconciliation"><img alt="OCA/account-reconcile" src="https://img.shields.io/badge/github-OCA%2Faccount--reconcile-lightgray.png?logo=github" /></a> <a class="reference external" href="https://translation.odoo-community.org/projects/account-reconcile-12-0/account-reconcile-12-0-account_skip_bank_reconciliation"><img alt="Translate me on Weblate" src="https://img.shields.io/badge/weblate-Translate%20me-F47D42.png" /></a> <a class="reference external" href="https://runbot.odoo-community.org/runbot/98/12.0"><img alt="Try me on Runbot" src="https://img.shields.io/badge/runbot-Try%20me-875A7B.png" /></a></p>
 <p>This module allows to exclude from bank statement reconciliation
-all journal items of a specific reconcilable account.</p>
+all journal items of a specific reconcilable account. It also allows
+to specify in the Bank Journal which accounts should be taken into account
+for reconciliation.</p>
 <p>Usually, you would want to that in accounts like the
 <cite>Goods Received Not Invoiced</cite>, which are required to be reconcilable
 to be able to have proper traceability in stock received but
@@ -389,12 +391,21 @@ their reconciliation is done using the <cite>account_mass_reconcile</cite> modul
 </div>
 <div class="section" id="usage">
 <h1><a class="toc-backref" href="#id1">Usage</a></h1>
-<p>To use this module, you need to:</p>
+<p>To use this module, you can choose one of the following approaches:</p>
 <ol class="arabic simple">
 <li>Go to  <cite>Invoicing / Configuration / Accounting / Charts of Accounts</cite>
 and open a reconcilable account.</li>
 <li>In that account, select or not the <cite>Exclude from Bank Reconciliation</cite> option.</li>
 </ol>
+<p>or</p>
+<ol class="arabic simple">
+<li>Go to  <cite>Invoicing / Configuration / Accounting / Journals</cite> and open any
+bank Journal</li>
+<li>In the Journal select the accounts that you would like to be proposed in
+reconciliations.</li>
+</ol>
+<p>Be careful, if an account is set to be excluded it will be excluded even if it
+appears in the Bank Journal to be considered for reconciliation.</p>
 </div>
 <div class="section" id="bug-tracker">
 <h1><a class="toc-backref" href="#id2">Bug Tracker</a></h1>
@@ -409,13 +420,14 @@ If you spotted it first, help us smashing it by providing a detailed and welcome
 <div class="section" id="authors">
 <h2><a class="toc-backref" href="#id4">Authors</a></h2>
 <ul class="simple">
-<li>Eficent</li>
+<li>ForgeFlow</li>
 </ul>
 </div>
 <div class="section" id="contributors">
 <h2><a class="toc-backref" href="#id5">Contributors</a></h2>
 <ul class="simple">
-<li>Miquel Raïch &lt;<a class="reference external" href="mailto:miquel.raich&#64;eficent.com">miquel.raich&#64;eficent.com</a>&gt;</li>
+<li>Miquel Raïch &lt;<a class="reference external" href="mailto:miquel.raich&#64;forgeflow.com">miquel.raich&#64;forgeflow.com</a>&gt;</li>
+<li>Adrià Gil Sorribes &lt;<a class="reference external" href="mailto:adria.gil&#64;forgeflow.com">adria.gil&#64;forgeflow.com</a>&gt;</li>
 </ul>
 </div>
 <div class="section" id="maintainers">
