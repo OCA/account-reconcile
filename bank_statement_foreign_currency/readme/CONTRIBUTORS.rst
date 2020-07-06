@@ -1,2 +1,6 @@
 * Miquel Raïch <miquel.raich@eficent.com>
-* Luis M. Ontalba <luis.martinez@tecnativa.com>
+
+* `Tecnativa <https://www.tecnativa.com>`_:
+
+  * Luis M. Ontalba
+  * Carlos Roca
