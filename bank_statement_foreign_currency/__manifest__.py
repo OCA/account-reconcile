@@ -9,9 +9,8 @@
     "author": "Eficent, Odoo Community Association (OCA)",
     "website": "http://www.github.com/OCA/account-reconcile",
     "category": "Finance",
-    "data": ["views/account_view.xml",
-             ],
-    'license': 'AGPL-3',
+    "data": ["views/account_view.xml"],
+    "license": "AGPL-3",
     "auto_install": False,
-    'installable': True,
+    "installable": True,
 }
