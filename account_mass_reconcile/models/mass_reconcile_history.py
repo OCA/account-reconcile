@@ -16,7 +16,7 @@ class MassReconcileHistory(models.Model):
 
     @api.multi
     @api.depends('reconcile_ids')
-    def _get_reconcile_line_ids(self):
+    def _compute_reconcile_line_ids(self):
         for rec in self:
             rec.reconcile_line_ids = rec.mapped(
                 'reconcile_ids.reconciled_line_ids'
@@ -42,7 +42,7 @@ class MassReconcileHistory(models.Model):
         comodel_name='account.move.line',
         relation='account_move_line_history_rel',
         string='Reconciled Items',
-        compute='_get_reconcile_line_ids',
+        compute='_compute_reconcile_line_ids',
     )
     company_id = fields.Many2one(
         'res.company',

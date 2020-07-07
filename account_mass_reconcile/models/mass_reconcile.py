@@ -118,7 +118,7 @@ class AccountMassReconcile(models.Model):
 
     @api.multi
     @api.depends('account', 'history_ids')
-    def _get_total_unrec(self):
+    def _compute_total_unrec(self):
         obj_move_line = self.env['account.move.line']
         for rec in self:
             rec.unreconciled_count = obj_move_line.search_count(
@@ -127,7 +127,7 @@ class AccountMassReconcile(models.Model):
 
     @api.multi
     @api.depends('history_ids')
-    def _last_history(self):
+    def _compute_last_history(self):
         # do a search() for retrieving the latest history line,
         # as a read() will badly split the list of ids with 'date desc'
         # and return the wrong result.
@@ -155,7 +155,7 @@ class AccountMassReconcile(models.Model):
     )
     unreconciled_count = fields.Integer(
         string='Unreconciled Items',
-        compute='_get_total_unrec',
+        compute='_compute_total_unrec',
     )
     history_ids = fields.One2many(
         'mass.reconcile.history',
@@ -166,7 +166,7 @@ class AccountMassReconcile(models.Model):
     last_history = fields.Many2one(
         'mass.reconcile.history',
         string='Last history', readonly=True,
-        compute='_last_history',
+        compute='_compute_last_history',
     )
     company_id = fields.Many2one(
         'res.company',
@@ -189,6 +189,7 @@ class AccountMassReconcile(models.Model):
 
     @api.multi
     def run_reconcile(self):
+        # pylint: disable=sql-injection
         def find_reconcile_ids(fieldname, move_line_ids):
             if not move_line_ids:
                 return []

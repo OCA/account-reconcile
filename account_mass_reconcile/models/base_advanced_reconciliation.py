@@ -5,7 +5,7 @@
 import logging
 from itertools import product
 
-from odoo import models, api
+from odoo import models, api, sql_db
 from odoo.tools.translate import _
 
 _logger = logging.getLogger(__name__)
@@ -224,6 +224,11 @@ class MassReconcileAdvanced(models.AbstractModel):
             ctx['commit_every'] = (
                 rec.account_id.company_id.reconciliation_commit_every
             )
+            if ctx['commit_every']:
+                new_cr = sql_db.db_connect(self.env.cr.dbname).cursor()
+            else:
+                new_cr = self.env.cr
+
             _logger.info("%d credit lines to reconcile", len(credit_lines))
             for idx, credit_line in enumerate(credit_lines, start=1):
                 if idx % 50 == 0:
@@ -264,8 +269,14 @@ class MassReconcileAdvanced(models.AbstractModel):
 
                 if (ctx['commit_every'] and
                         group_count % ctx['commit_every'] == 0):
-                    self.env.cr.commit()
-                    _logger.info("Commit the reconciliations after %d groups",
-                                 group_count)
+                    try:
+                        new_cr.commit()
+                        _logger.info(
+                            "Commit the reconciliations after %d groups", group_count
+                        )
+                    except Exception:
+                        new_cr.rollback()
+                    finally:
+                            new_cr.close()
             _logger.info("Reconciliation is over")
         return reconciled_ids
