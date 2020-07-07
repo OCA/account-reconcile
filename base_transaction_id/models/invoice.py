@@ -1,6 +1,5 @@
-# Copyright 2019 Camptocamp SA
+# Copyright 2019-2020 Camptocamp SA
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl)
-
 
 from odoo import fields, models
 
@@ -12,5 +11,11 @@ class AccountMove(models.Model):
         string="Transaction ID",
         index=True,
         copy=False,
-        help="Transaction ID from the " "financial institute",
+        store=True,
+        help="Transaction ID from the financial institute",
     )
+
+    def _get_computed_reference(self):
+        if self.transaction_id:
+            return self.transaction_id
+        return super()._get_computed_reference()
