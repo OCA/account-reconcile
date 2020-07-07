@@ -1,8 +1,7 @@
-# Copyright 2019 Camptocamp SA
+# Copyright 2019-2020 Camptocamp SA
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl)
 
-
-from odoo import models, fields, api
+from odoo import api, fields, models
 
 
 class AccountInvoice(models.Model):
@@ -11,14 +10,12 @@ class AccountInvoice(models.Model):
     transaction_id = fields.Char(string='Transaction ID',
                                  index=True,
                                  copy=False,
+                                 store=True,
                                  help="Transaction ID from the "
                                       "financial institute")
 
     @api.multi
-    def action_move_create(self):
-        """Propagate the transaction_id from the invoice to the move ref."""
-        res = super().action_move_create()
-        for invoice in self:
-            if invoice.transaction_id:
-                invoice.move_id.ref = invoice.transaction_id
-        return res
+    def _get_computed_reference(self):
+        if self.transaction_id:
+            return self.transaction_id
+        return super()._get_computed_reference()
