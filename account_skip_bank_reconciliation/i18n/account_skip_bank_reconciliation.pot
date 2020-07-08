@@ -24,6 +24,7 @@ msgid "Account Reconciliation widget"
 msgstr ""
 
 #. module: account_skip_bank_reconciliation
+#: model:ir.model.fields,field_description:account_skip_bank_reconciliation.field_account_bank_statement_import_journal_creation__account_reconciliation_ids
 #: model:ir.model.fields,field_description:account_skip_bank_reconciliation.field_account_journal__account_reconciliation_ids
 msgid "Accounts to consider in reconciliation"
 msgstr ""
@@ -39,6 +40,7 @@ msgid "Exclude from Bank Reconciliation"
 msgstr ""
 
 #. module: account_skip_bank_reconciliation
+#: model:ir.model.fields,help:account_skip_bank_reconciliation.field_account_bank_statement_import_journal_creation__account_reconciliation_ids
 #: model:ir.model.fields,help:account_skip_bank_reconciliation.field_account_journal__account_reconciliation_ids
 msgid "If you enter accounts here they will be the only onesto be considered during the reconciliation"
 msgstr ""
