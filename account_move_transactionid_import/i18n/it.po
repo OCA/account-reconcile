@@ -24,6 +24,7 @@ msgid "Account move completion method"
 msgstr ""
 
 #. module: account_move_transactionid_import
+#: model:ir.model.fields,help:account_move_transactionid_import.field_account_bank_statement_import_journal_creation__import_type
 #: model:ir.model.fields,help:account_move_transactionid_import.field_account_journal__import_type
 msgid ""
 "Choose here the method by which you want to import account moves for this "
@@ -99,6 +100,7 @@ msgid "Method"
 msgstr ""
 
 #. module: account_move_transactionid_import
+#: model:ir.model.fields,field_description:account_move_transactionid_import.field_account_bank_statement_import_journal_creation__import_type
 #: model:ir.model.fields,field_description:account_move_transactionid_import.field_account_journal__import_type
 msgid "Type of import"
 msgstr ""
