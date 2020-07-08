@@ -13,6 +13,7 @@ setuptools.setup(
         'odoo11-addon-account_mass_reconcile_by_purchase_line',
         'odoo11-addon-account_mass_reconcile_ref_deep_search',
         'odoo11-addon-account_mass_reconcile_transaction_ref',
+        'odoo11-addon-account_move_base_import',
         'odoo11-addon-account_reconcile_payment_order',
         'odoo11-addon-account_reconcile_restrict_partner_mismatch',
         'odoo11-addon-account_reconcile_rule',
