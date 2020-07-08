@@ -53,6 +53,7 @@ msgid "Auto-Completion related infos"
 msgstr ""
 
 #. module: account_move_base_import
+#: model:ir.model.fields,field_description:account_move_base_import.field_account_bank_statement_import_journal_creation__rule_ids
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_journal__rule_ids
 msgid "Auto-completion rules"
 msgstr ""
@@ -64,6 +65,7 @@ msgid "Bank Statement Label"
 msgstr ""
 
 #. module: account_move_base_import
+#: model:ir.model.fields,field_description:account_move_base_import.field_account_bank_statement_import_journal_creation__partner_id
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_journal__partner_id
 #: model:ir.model.fields,field_description:account_move_base_import.field_credit_statement_import__partner_id
 msgid "Bank/Payment Office partner"
@@ -75,12 +77,14 @@ msgid "Cancel"
 msgstr ""
 
 #. module: account_move_base_import
+#: model:ir.model.fields,help:account_move_base_import.field_account_bank_statement_import_journal_creation__receivable_account_id
 #: model:ir.model.fields,help:account_move_base_import.field_account_journal__receivable_account_id
 #: model:ir.model.fields,help:account_move_base_import.field_credit_statement_import__receivable_account_id
 msgid "Choose a receivable/payable account to use as the default debit/credit account."
 msgstr ""
 
 #. module: account_move_base_import
+#: model:ir.model.fields,help:account_move_base_import.field_account_bank_statement_import_journal_creation__import_type
 #: model:ir.model.fields,help:account_move_base_import.field_account_journal__import_type
 msgid "Choose here the method by which you want to import account moves for this journal."
 msgstr ""
@@ -92,6 +96,7 @@ msgid "Column %s not present in file"
 msgstr ""
 
 #. module: account_move_base_import
+#: model:ir.model.fields,field_description:account_move_base_import.field_account_bank_statement_import_journal_creation__commission_account_id
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_journal__commission_account_id
 #: model:ir.model.fields,field_description:account_move_base_import.field_credit_statement_import__commission_account_id
 msgid "Commission account"
@@ -125,6 +130,7 @@ msgid "Contact"
 msgstr ""
 
 #. module: account_move_base_import
+#: model:ir.model.fields,field_description:account_move_base_import.field_account_bank_statement_import_journal_creation__create_counterpart
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_journal__create_counterpart
 msgid "Create Counterpart"
 msgstr ""
@@ -289,17 +295,20 @@ msgid "Journal Item"
 msgstr ""
 
 #. module: account_move_base_import
+#: model:ir.model.fields,field_description:account_move_base_import.field_account_bank_statement_import_journal_creation__used_for_completion
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_journal__used_for_completion
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_move__used_for_completion
 msgid "Journal used for completion"
 msgstr ""
 
 #. module: account_move_base_import
+#: model:ir.model.fields,field_description:account_move_base_import.field_account_bank_statement_import_journal_creation__used_for_import
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_journal__used_for_import
 msgid "Journal used for import"
 msgstr ""
 
 #. module: account_move_base_import
+#: model:ir.model.fields,field_description:account_move_base_import.field_account_bank_statement_import_journal_creation__last_import_date
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_journal__last_import_date
 msgid "Last Import Date"
 msgstr ""
@@ -323,6 +332,7 @@ msgid "Last Updated on"
 msgstr ""
 
 #. module: account_move_base_import
+#: model:ir.model.fields,field_description:account_move_base_import.field_account_bank_statement_import_journal_creation__launch_import_completion
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_journal__launch_import_completion
 msgid "Launch completion after import"
 msgstr ""
@@ -433,12 +443,14 @@ msgid "Please use a file with an extension"
 msgstr ""
 
 #. module: account_move_base_import
+#: model:ir.model.fields,help:account_move_base_import.field_account_bank_statement_import_journal_creation__partner_id
 #: model:ir.model.fields,help:account_move_base_import.field_account_journal__partner_id
 #: model:ir.model.fields,help:account_move_base_import.field_credit_statement_import__partner_id
 msgid "Put a partner if you want to have it on the commission move (and optionaly on the counterpart of the intermediate/banking move if you tick the corresponding checkbox)."
 msgstr ""
 
 #. module: account_move_base_import
+#: model:ir.model.fields,field_description:account_move_base_import.field_account_bank_statement_import_journal_creation__receivable_account_id
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_journal__receivable_account_id
 #: model:ir.model.fields,field_description:account_move_base_import.field_credit_statement_import__receivable_account_id
 msgid "Receivable/Payable Account"
@@ -460,6 +472,7 @@ msgid "Sequence"
 msgstr ""
 
 #. module: account_move_base_import
+#: model:ir.model.fields,field_description:account_move_base_import.field_account_bank_statement_import_journal_creation__split_counterpart
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_journal__split_counterpart
 msgid "Split Counterpart"
 msgstr ""
@@ -482,11 +495,13 @@ msgid "Statement import error The statement cannot be created: %s"
 msgstr ""
 
 #. module: account_move_base_import
+#: model:ir.model.fields,help:account_move_base_import.field_account_bank_statement_import_journal_creation__launch_import_completion
 #: model:ir.model.fields,help:account_move_base_import.field_account_journal__launch_import_completion
 msgid "Tic that box to automatically launch the completion on each imported file using this journal."
 msgstr ""
 
 #. module: account_move_base_import
+#: model:ir.model.fields,help:account_move_base_import.field_account_bank_statement_import_journal_creation__create_counterpart
 #: model:ir.model.fields,help:account_move_base_import.field_account_journal__create_counterpart
 msgid "Tick that box to automatically create the move counterpart"
 msgstr ""
@@ -497,11 +512,13 @@ msgid "To Complete"
 msgstr ""
 
 #. module: account_move_base_import
+#: model:ir.model.fields,help:account_move_base_import.field_account_bank_statement_import_journal_creation__split_counterpart
 #: model:ir.model.fields,help:account_move_base_import.field_account_journal__split_counterpart
 msgid "Two counterparts will be automatically created : one for the refunds and one for the payments"
 msgstr ""
 
 #. module: account_move_base_import
+#: model:ir.model.fields,field_description:account_move_base_import.field_account_bank_statement_import_journal_creation__import_type
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_journal__import_type
 msgid "Type of import"
 msgstr ""
