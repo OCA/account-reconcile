@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="journal_importer_view_form" model="ir.ui.view">
+        <field name="name">account.journal.view</field>
+        <field name="model">account.journal</field>
+        <field name="inherit_id" ref="account.view_account_journal_form"/>
+        <field name="arch" type="xml">
+            <field name="loss_account_id" position="after">
+                <field name="used_for_import"/>
+                <field name="used_for_completion"/>
+            </field>
+            <notebook position="inside">
+                <page string="Import related infos" attrs="{'invisible': [('used_for_import', '=', False)]}">
+                    <group>
+                        <field name="launch_import_completion" attrs="{'invisible': ['|',
+                                                                                     ('used_for_import', '=', False),
+                                                                                     ('used_for_completion', '=', False)]}"/>
+                        <field name="last_import_date" readonly="1"/>
+                        <field name="import_type" attrs="{'required': [('used_for_import', '=', True)]}"/>
+                    </group>
+                    <group>
+                        <field name="commission_account_id"/>
+                        <field name="receivable_account_id" attrs="{'required': [('used_for_import', '=', True)]}"/>
+                        <field name="partner_id"/>
+                        <field name="create_counterpart"/>
+                        <field name="split_counterpart" attrs="{'invisible': [('create_counterpart', '=', False)]}"/>
+                    </group>
+                    <group>
+                        <button name="%(account_move_base_import.move_importer_action)d"
+                                string="Import batch file"
+                                type="action"
+                                colspan = "2"/>
+                    </group>
+                </page>
+                <page string="Auto-Completion related infos" attrs="{'invisible': [('used_for_completion', '=', False)]}">
+                    <group string="Auto-Completion Rules" name="completion_rules">
+                        <field name="rule_ids" colspan="2" nolabel="1"/>
+                    </group>
+                </page>
+            </notebook>
+        </field>
+    </record>
+</odoo>
