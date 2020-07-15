@@ -4,8 +4,8 @@
 # Copyright 2014 ACSONE SA/NV
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html)
 import datetime
-import tempfile
 import logging
+import tempfile
 
 from odoo import _
 from odoo.exceptions import UserError
@@ -33,14 +33,15 @@ class FileParser(AccountMoveImportParser):
     """
 
     def __init__(
-            self,
-            journal,
-            ftype="csv",
-            extra_fields=None,
-            header=None,
-            dialect=None,
-            move_ref=None,
-            **kwargs):
+        self,
+        journal,
+        ftype="csv",
+        extra_fields=None,
+        header=None,
+        dialect=None,
+        move_ref=None,
+        **kwargs
+    ):
         """
             :param char: parse_name: The name of the parser
             :param char: ftype: extension of the file (could be csv, xls or
@@ -90,7 +91,7 @@ class FileParser(AccountMoveImportParser):
                 return False
             else:
                 self.result_row_list = self.parsed_file[
-                    self.current_line: self.current_line + 1
+                    self.current_line : self.current_line + 1
                 ]
                 self.current_line += 1
                 return True
@@ -152,9 +153,7 @@ class FileParser(AccountMoveImportParser):
                 if conversion_rules[rule] == datetime.datetime:
                     try:
                         date_string = line[rule].split(" ")[0]
-                        line[rule] = datetime.datetime.strptime(
-                            date_string, "%Y-%m-%d"
-                        )
+                        line[rule] = datetime.datetime.strptime(date_string, "%Y-%m-%d")
                     except ValueError as err:
                         raise UserError(
                             _(
@@ -196,9 +195,7 @@ class FileParser(AccountMoveImportParser):
             for rule in conversion_rules:
                 if conversion_rules[rule] == datetime.datetime:
                     try:
-                        t_tuple = xlrd.xldate_as_tuple(
-                            line[rule], self._datemode
-                        )
+                        t_tuple = xlrd.xldate_as_tuple(line[rule], self._datemode)
                         line[rule] = datetime.datetime(*t_tuple)
                     except Exception as err:
                         raise UserError(
