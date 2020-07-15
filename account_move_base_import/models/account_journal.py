@@ -3,12 +3,14 @@
 # Copyright 2013 Savoir-faire Linux
 # Copyright 2014 ACSONE SA/NV
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html)
+import os
 import sys
 import traceback
-import os
+
 from odoo import _, api, fields, models
-from ..parser.parser import new_move_parser
 from odoo.exceptions import UserError, ValidationError
+
+from ..parser.parser import new_move_parser
 
 
 class AccountJournal(models.Model):
@@ -118,21 +120,17 @@ class AccountJournal(models.Model):
             total_amount = refund + payment
             if total_amount:
                 transfer_lines.append(total_amount)
-        counterpart_date = (
-            parser.get_move_vals().get("date") or fields.Date.today()
-        )
+        counterpart_date = parser.get_move_vals().get("date") or fields.Date.today()
         transfer_line_count = len(transfer_lines)
         check_move_validity = False
         for amount in transfer_lines:
             transfer_line_count -= 1
             if not transfer_line_count:
                 check_move_validity = True
-            vals = self._prepare_counterpart_line(
-                move, amount, counterpart_date
+            vals = self._prepare_counterpart_line(move, amount, counterpart_date)
+            move_line_obj.with_context(check_move_validity=check_move_validity).create(
+                vals
             )
-            move_line_obj.with_context(
-                check_move_validity=check_move_validity
-            ).create(vals)
 
     @api.multi
     def _write_extra_move_lines(self, parser, move):
@@ -151,25 +149,20 @@ class AccountJournal(models.Model):
         move_line_obj = self.env["account.move.line"]
         global_commission_amount = 0
         for row in parser.result_row_list:
-            global_commission_amount += float(
-                row.get("commission_amount", "0.0")
-            )
+            global_commission_amount += float(row.get("commission_amount", "0.0"))
         partner_id = self.partner_id.id
         # Commission line
         if global_commission_amount > 0.0:
             raise UserError(_("Commission amount should not be positive."))
         elif global_commission_amount < 0.0:
             if not self.commission_account_id:
-                raise UserError(
-                    _("No commission account is set on the journal.")
-                )
+                raise UserError(_("No commission account is set on the journal."))
             else:
                 commission_account_id = self.commission_account_id.id
                 comm_values = {
                     "name": _("Commission line"),
                     "date_maturity": (
-                        parser.get_move_vals().get("date")
-                        or fields.Date.today()
+                        parser.get_move_vals().get("date") or fields.Date.today()
                     ),
                     "debit": -global_commission_amount,
                     "partner_id": partner_id,
@@ -177,10 +170,7 @@ class AccountJournal(models.Model):
                     "account_id": commission_account_id,
                     "already_completed": True,
                 }
-                if (
-                    self.currency_id
-                    and self.currency_id != self.company_id.currency_id
-                ):
+                if self.currency_id and self.currency_id != self.company_id.currency_id:
                     # the commission we are reading is in the currency of the
                     # journal: use the amount in the amount_currency field, and
                     # set credit / debit to the value in company currency at
@@ -228,10 +218,7 @@ class AccountJournal(models.Model):
         if not values.get("account_id", False):
             values["account_id"] = self.receivable_account_id.id
         account = self.env["account.account"].browse(values["account_id"])
-        if (
-            self.currency_id
-            and self.currency_id != self.company_id.currency_id
-        ):
+        if self.currency_id and self.currency_id != self.company_id.currency_id:
             # the debit and credit we are reading are in the currency of the
             # journal: use the amount in the amount_currency field, and set
             # credit / debit to the value in company currency at the date of
@@ -239,12 +226,8 @@ class AccountJournal(models.Model):
             currency = self.currency_id.with_context(date=move.date)
             company_currency = self.company_id.currency_id
             values["amount_currency"] = values["debit"] - values["credit"]
-            values["debit"] = currency.compute(
-                values["debit"], company_currency
-            )
-            values["credit"] = currency.compute(
-                values["credit"], company_currency
-            )
+            values["debit"] = currency.compute(values["debit"], company_currency)
+            values["credit"] = currency.compute(values["credit"], company_currency)
         if account.reconcile:
             values["amount_residual"] = values["debit"] - values["credit"]
         else:
@@ -294,16 +277,12 @@ class AccountJournal(models.Model):
         res = self.env["account.move"]
         for result_row_list in parser.parse(file_stream):
             move = self._move_import(
-                parser,
-                file_stream,
-                result_row_list=result_row_list,
-                ftype=ftype,
+                parser, file_stream, result_row_list=result_row_list, ftype=ftype,
             )
             res |= move
         return res
 
-    def _move_import(
-            self, parser, file_stream, result_row_list=None, ftype="csv"):
+    def _move_import(self, parser, file_stream, result_row_list=None, ftype="csv"):
         """Create a bank statement with the given profile and parser. It will
         fulfill the bank statement with the values of the file provided, but
         will not complete data (like finding the partner, or the right
@@ -323,9 +302,7 @@ class AccountJournal(models.Model):
         # Check all key are present in account.bank.statement.line!!
         if not result_row_list:
             raise UserError(_("Nothing to import: " "The file is empty"))
-        parsed_cols = list(
-            parser.get_move_line_vals(result_row_list[0]).keys()
-        )
+        parsed_cols = list(parser.get_move_line_vals(result_row_list[0]).keys())
         for col in parsed_cols:
             if col not in move_line_obj._fields:
                 raise UserError(
@@ -344,9 +321,7 @@ class AccountJournal(models.Model):
                 parser_vals = parser.get_move_line_vals(line)
                 values = self.prepare_move_line_vals(parser_vals, move)
                 move_store.append(values)
-            move_line_obj.with_context(check_move_validity=False).create(
-                move_store
-            )
+            move_line_obj.with_context(check_move_validity=False).create(move_store)
             self._write_extra_move_lines(parser, move)
             if self.create_counterpart:
                 self._create_counterpart(parser, move)
@@ -358,7 +333,7 @@ class AccountJournal(models.Model):
             attachment_data = {
                 "name": "statement file",
                 "datas": file_stream,
-                "datas_fname": "%s.%s" % (fields.Date.today(), ftype),
+                "datas_fname": "{}.{}".format(fields.Date.today(), ftype),
                 "res_model": "account.move",
                 "res_id": move.id,
             }
@@ -373,16 +348,11 @@ class AccountJournal(models.Model):
             raise
         except Exception:
             error_type, error_value, trbk = sys.exc_info()
-            st = "Error: %s\nDescription: %s\nTraceback:" % (
-                error_type.__name__,
-                error_value,
+            st = "Error: {}\nDescription: {}\nTraceback:".format(
+                error_type.__name__, error_value,
             )
             st += "".join(traceback.format_tb(trbk, 30))
             raise ValidationError(
-                _(
-                    "Statement import error "
-                    "The statement cannot be created: %s"
-                )
-                % st
+                _("Statement import error " "The statement cannot be created: %s") % st
             )
         return move
