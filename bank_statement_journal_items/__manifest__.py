@@ -4,7 +4,7 @@
 {
     "name": "Bank Statement Journal Items",
     "summary": "Add Journal Items button in the bank statements",
-    "version": "13.0.1.0.0",
+    "version": "13.0.1.0.1",
     "depends": ["account"],
     "author": "Camptocamp, Odoo Community Association (OCA)",
     "website": "http://www.github.com/OCA/account-reconcile",
