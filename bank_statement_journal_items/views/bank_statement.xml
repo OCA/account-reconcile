@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="view_bank_statement_journal_items_form" model="ir.ui.view">
+        <field name="name">account.bank.statement.journal.items.form</field>
+        <field name="model">account.bank.statement</field>
+        <field name="inherit_id" ref="account.view_bank_statement_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//button[@name='button_journal_entries']" position="before">
+                <button
+                    class="oe_stat_button"
+                    name="button_journal_items"
+                    string="Journal Items"
+                    type="object"
+                    icon="fa-bars"
+                />
+            </xpath>
+        </field>
+    </record>
+</odoo>
