@@ -20,6 +20,7 @@ setuptools.setup(
         'odoo12-addon-account_reconcile_reconciliation_date',
         'odoo12-addon-account_reconcile_restrict_partner_mismatch',
         'odoo12-addon-account_reconcile_rule',
+        'odoo12-addon-account_reconciliation_widget_partial',
         'odoo12-addon-account_set_reconcilable',
         'odoo12-addon-account_skip_bank_reconciliation',
         'odoo12-addon-bank_statement_foreign_currency',
