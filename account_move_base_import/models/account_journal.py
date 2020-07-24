@@ -152,7 +152,7 @@ class AccountJournal(models.Model):
         global_commission_amount = 0
         for row in parser.result_row_list:
             global_commission_amount += float(
-                row.get("commission_amount", "0.0")
+                row.get("commission_amount") or 0.0
             )
         partner_id = self.partner_id.id
         # Commission line
