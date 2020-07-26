@@ -9,6 +9,7 @@ class MassReconciledAdvancedRefDeepSearch(models.TransientModel):
 
     _name = "mass.reconcile.advanced.ref.deep.search"
     _inherit = "mass.reconcile.advanced.ref"
+    _description = "Advanced. Partner and Ref. Deep Search"
 
     @staticmethod
     def _compare_values(key, value, opposite_value):
