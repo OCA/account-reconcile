@@ -18,6 +18,7 @@ class TestAccountReconcileRefDeepSearch(SavepointCase):
                 )
             ],
             limit=1,
+            order="id",
         )
         account_revenue = cls.env["account.account"].search(
             [
@@ -33,32 +34,40 @@ class TestAccountReconcileRefDeepSearch(SavepointCase):
             [("type", "=", "sale")], limit=1
         )
         # Create invoice
-        cls.cust_invoice = cls.env["account.invoice"].create(
-            {
-                "partner_id": cls.partner.id,
-                "type": "out_invoice",
-                "account_id": cls.account_receivable.id,
-                "journal_id": sales_journal.id,
-                "invoice_line_ids": [
-                    (
-                        0,
-                        0,
-                        {
-                            "name": "[CONS_DEL01] Server",
-                            "product_id": cls.env.ref("product.consu_delivery_01").id,
-                            "account_id": account_revenue.id,
-                            "price_unit": 1000.0,
-                            "quantity": 1.0,
-                        },
-                    )
-                ],
-                "name": "test_deep_search",
-            }
+        cls.cust_invoice = (
+            cls.env["account.move"]
+            .with_context(default_type="out_invoice")
+            .create(
+                {
+                    "partner_id": cls.partner.id,
+                    "company_id": cls.env.ref("base.main_company"),
+                    "type": "out_invoice",
+                    "journal_id": sales_journal.id,
+                    "invoice_line_ids": [
+                        (
+                            0,
+                            0,
+                            {
+                                "name": "[CONS_DEL01] Server",
+                                "product_id": cls.env.ref(
+                                    "product.consu_delivery_01"
+                                ).id,
+                                "account_id": account_revenue.id,
+                                "price_unit": 1000.0,
+                                "quantity": 1.0,
+                            },
+                        )
+                    ],
+                    "name": "test_deep_search",
+                    "ref": "test_deep_search",
+                }
+            )
         )
-        cls.cust_invoice.action_invoice_open()
+        cls.cust_invoice.action_post()
 
     def test_account_reconcile_ref_deep_search(self):
-        self.assertEqual(self.cust_invoice.state, "open")
+        self.assertEqual(self.cust_invoice.state, "posted")
+        self.assertEqual(self.cust_invoice.invoice_payment_state, "not_paid")
         bank_journal = self.env["account.journal"].search(
             [("type", "=", "bank")], limit=1
         )
@@ -99,5 +108,6 @@ class TestAccountReconcileRefDeepSearch(SavepointCase):
         )
         count = reconcile.unreconciled_count
         reconcile.run_reconcile()
-        self.assertEqual(self.cust_invoice.state, "paid")
+        self.cust_invoice.invalidate_cache()
+        self.assertEqual(self.cust_invoice.invoice_payment_state, "paid")
         self.assertEqual(reconcile.unreconciled_count, count - 2)
