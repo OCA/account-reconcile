@@ -5,12 +5,14 @@ from odoo import models
 
 class AccountMassReconcileMethod(models.Model):
 
-    _inherit = 'account.mass.reconcile.method'
+    _inherit = "account.mass.reconcile.method"
 
     def _selection_name(self):
         methods = super()._selection_name()
         methods += [
-            ('mass.reconcile.advanced.ref.deep.search',
-             'Advanced. Partner and Ref. Deep Search'),
+            (
+                "mass.reconcile.advanced.ref.deep.search",
+                "Advanced. Partner and Ref. Deep Search",
+            ),
         ]
         return methods
