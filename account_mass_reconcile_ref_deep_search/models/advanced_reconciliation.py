@@ -1,13 +1,14 @@
 # Copyright 2015-2019 Camptocamp SA
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html)
-from odoo import _, models
 from itertools import product
+
+from odoo import _, models
 
 
 class MassReconciledAdvancedRefDeepSearch(models.TransientModel):
 
-    _name = 'mass.reconcile.advanced.ref.deep.search'
-    _inherit = 'mass.reconcile.advanced.ref'
+    _name = "mass.reconcile.advanced.ref.deep.search"
+    _inherit = "mass.reconcile.advanced.ref"
 
     @staticmethod
     def _compare_values(key, value, opposite_value):
@@ -21,8 +22,7 @@ class MassReconciledAdvancedRefDeepSearch(models.TransientModel):
         if not (value and opposite_value):
             return False
 
-        if value == opposite_value or \
-                (key == 'ref' and value in opposite_value):
+        if value == opposite_value or (key == "ref" and value in opposite_value):
             return True
         return False
 
@@ -34,8 +34,7 @@ class MassReconciledAdvancedRefDeepSearch(models.TransientModel):
         for value, ovalue in product(values, opposite_values):
             # we do not need to compare all values, if one matches
             # we are done
-            if MassReconciledAdvancedRefDeepSearch._compare_values(
-                    key, value, ovalue):
+            if MassReconciledAdvancedRefDeepSearch._compare_values(key, value, ovalue):
                 return True
         return False
 
@@ -46,12 +45,14 @@ class MassReconciledAdvancedRefDeepSearch(models.TransientModel):
         """
         mkey, mvalue = matcher
         omkey, omvalue = opposite_matcher
-        assert mkey == omkey, \
-            (_("A matcher %s is compared with a matcher %s, the _matchers and "
-               "_opposite_matchers are probably wrong") % (mkey, omkey))
+        assert mkey == omkey, _(
+            "A matcher %s is compared with a matcher %s, the _matchers and "
+            "_opposite_matchers are probably wrong"
+        ) % (mkey, omkey)
         if not isinstance(mvalue, (list, tuple)):
-            mvalue = mvalue,
+            mvalue = (mvalue,)
         if not isinstance(omvalue, (list, tuple)):
-            omvalue = omvalue,
-        return MassReconciledAdvancedRefDeepSearch.\
-            _compare_matcher_values(mkey, mvalue, omvalue)
+            omvalue = (omvalue,)
+        return MassReconciledAdvancedRefDeepSearch._compare_matcher_values(
+            mkey, mvalue, omvalue
+        )
