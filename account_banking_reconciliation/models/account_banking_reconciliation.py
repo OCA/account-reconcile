@@ -93,6 +93,9 @@ class BankAccRecStatement(models.Model):
         self.write({'state': 'to_be_reviewed'})
         return True
 
+    def reconcile_payment(self, line):
+        line.filtered(lambda l: l.cleared_bank_account).mapped("payment_id").write({"state": "reconciled"})
+
     @api.multi
     def action_process(self):
         """Set the account move lines as 'Cleared' and
@@ -114,6 +117,7 @@ class BankAccRecStatement(models.Model):
                 statement_line.move_line_id.write({
                     'cleared_bank_account': cleared_bank_account,
                     'bank_acc_rec_statement_id': statement_id})
+                self.reconcile_payment(statement_line.move_line_id)
 
             statement.write({'state': 'done',
                              'verified_by_user_id': self.env.uid,
