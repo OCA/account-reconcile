@@ -34,35 +34,41 @@ class TestInvoice(SingleTransactionCase):
         self.account_id = self.env.ref("account.a_recv")
         # I create a customer Invoice to be found by the completion.
         product_3 = self.env.ref("product.product_product_3")
-        self.invoice_for_completion_1 = self.env["account.move"].with_context(default_type='out_invoice').create(
-            {
-                "currency_id": self.env.ref("base.EUR").id,
-                "type": "out_invoice",
-                "invoice_line_ids": [
-                    (
-                        0,
-                        0,
-                        {
-                            "name": "[PCSC234] PC Assemble SC234",
-                            "product_id": product_3.id,
-                            "price_unit": 210.0,
-                            "quantity": 1.0,
-                            "uom_id": self.env.ref("uom.product_uom_unit").id,
-                            "account_id": self.env.ref("account.a_sale").id,
-                        },
-                    )
-                ],
-                "journal_id": self.journal.id,
-                "partner_id": self.partner.id,
-            }
+        self.invoice_for_completion_1 = (
+            self.env["account.move"]
+            .with_context(default_type="out_invoice")
+            .create(
+                {
+                    "currency_id": self.env.ref("base.EUR").id,
+                    "type": "out_invoice",
+                    "invoice_line_ids": [
+                        (
+                            0,
+                            0,
+                            {
+                                "name": "[PCSC234] PC Assemble SC234",
+                                "product_id": product_3.id,
+                                "price_unit": 210.0,
+                                "quantity": 1.0,
+                                "product_uom_id": self.env.ref(
+                                    "uom.product_uom_unit"
+                                ).id,
+                                "account_id": self.env.ref("account.a_sale").id,
+                            },
+                        )
+                    ],
+                    "journal_id": self.journal.id,
+                    "partner_id": self.partner.id,
+                }
+            )
         )
         # I confirm the Invoice
         self.invoice_for_completion_1.post()
         # I check that the invoice state is "Open"
-        self.assertEqual(self.invoice_for_completion_1.state, "open")
+        self.assertEqual(self.invoice_for_completion_1.state, "posted")
         # I check that it is given the number "TBNK/%Y/0001"
         self.assertEqual(
-            self.invoice_for_completion_1.number,
+            self.invoice_for_completion_1.name,
             fields.Date.today().strftime("TBNK/%Y/0001"),
         )
 
@@ -71,55 +77,61 @@ class TestInvoice(SingleTransactionCase):
         product_delivery = self.env.ref("product.product_delivery_01")
         product_order = self.env.ref("product.product_order_01")
         exp_account = self.env.ref("account.a_expense")
-        rec_account = self.env.ref("account.a_recv")
-        demo_invoice_0 = self.env["account.move"].with_context(default_type='in_invoice').create(
-            {
-                "partner_id": self.partner.id,
-                "type": "in_invoice",
-                "payment_term_id": self.env.ref("account.account_payment_term").id,
-                "type": "in_invoice",
-                "date_invoice": fields.Date.today().replace(day=1),
-                "invoice_line_ids": [
-                    (
-                        0,
-                        0,
-                        {
-                            "price_unit": 10.0,
-                            "quantity": 1.0,
-                            "product_id": product_delivery.id,
-                            "name": product_delivery.name,
-                            "uom_id": self.env.ref("uom.product_uom_unit").id,
-                            "account_id": exp_account.id,
-                        },
-                    ),
-                    (
-                        0,
-                        0,
-                        {
-                            "price_unit": 4.0,
-                            "quantity": 1.0,
-                            "product_id": product_order.id,
-                            "name": product_order.name,
-                            "uom_id": self.env.ref("uom.product_uom_unit").id,
-                            "account_id": exp_account.id,
-                        },
-                    ),
-                ],
-            }
+        demo_invoice_0 = (
+            self.env["account.move"]
+            .with_context(default_type="in_invoice")
+            .create(
+                {
+                    "partner_id": self.partner.id,
+                    "invoice_payment_term_id": self.env.ref(
+                        "account.account_payment_term_advance"
+                    ).id,
+                    "type": "in_invoice",
+                    "invoice_date": fields.Date.today().replace(day=1),
+                    "invoice_line_ids": [
+                        (
+                            0,
+                            0,
+                            {
+                                "price_unit": 10.0,
+                                "quantity": 1.0,
+                                "product_id": product_delivery.id,
+                                "product_uom_id": self.env.ref(
+                                    "uom.product_uom_unit"
+                                ).id,
+                                "name": product_delivery.name,
+                                "account_id": exp_account.id,
+                            },
+                        ),
+                        (
+                            0,
+                            0,
+                            {
+                                "price_unit": 4.0,
+                                "quantity": 1.0,
+                                "product_id": product_order.id,
+                                "name": product_order.name,
+                                "product_uom_id": self.env.ref(
+                                    "uom.product_uom_unit"
+                                ).id,
+                                "account_id": exp_account.id,
+                            },
+                        ),
+                    ],
+                }
+            )
         )
 
         # I check that my invoice is a supplier invoice
         self.assertEqual(demo_invoice_0.type, "in_invoice", msg="Check invoice type")
         # I add a reference to an existing supplier invoice
-        demo_invoice_0.write({"reference": "T2S12345"})
+        demo_invoice_0.write({"ref": "T2S12345"})
         # I check a second time that my invoice is still a supplier invoice
         self.assertEqual(demo_invoice_0.type, "in_invoice", msg="Check invoice type 2")
         # Now I confirm it
         demo_invoice_0.post()
         # I check that the supplier number is there
-        self.assertEqual(
-            demo_invoice_0.reference, "T2S12345", msg="Check supplier number"
-        )
+        self.assertEqual(demo_invoice_0.ref, "T2S12345", msg="Check supplier number")
         # I check a third time that my invoice is still a supplier invoice
         self.assertEqual(demo_invoice_0.type, "in_invoice", msg="Check invoice type 3")
 
@@ -129,44 +141,48 @@ class TestInvoice(SingleTransactionCase):
         res_partner_12_child = self.env["res.partner"].create(
             {
                 "name": "Child Partner",
-                "supplier": False,
-                "customer": True,
                 "is_company": False,
                 "parent_id": self.partner.id,
             }
         )
         # I create a customer refund to be found by the completion.
         product_3 = self.env.ref("product.product_product_3")
-        self.refund_for_completion_1 = self.env["account.move"].with_context(default_type="out_refund").create(
-            {
-                "currency_id": self.env.ref("base.EUR").id,
-                "invoice_line_ids": [
-                    (
-                        0,
-                        0,
-                        {
-                            "name": "[PCSC234] PC Assemble SC234",
-                            "product_id": product_3.id,
-                            "price_unit": 210.0,
-                            "quantity": 1.0,
-                            "uom_id": self.env.ref("uom.product_uom_unit").id,
-                            "account_id": self.env.ref("account.a_sale").id,
-                        },
-                    )
-                ],
-                "journal_id": self.env.ref("account.expenses_journal").id,
-                "partner_id": res_partner_12_child.id,
-                "type": "out_refund",
-            }
+        self.refund_for_completion_1 = (
+            self.env["account.move"]
+            .with_context(default_type="out_refund")
+            .create(
+                {
+                    "currency_id": self.env.ref("base.EUR").id,
+                    "invoice_line_ids": [
+                        (
+                            0,
+                            0,
+                            {
+                                "name": "[PCSC234] PC Assemble SC234",
+                                "product_id": product_3.id,
+                                "price_unit": 210.0,
+                                "quantity": 1.0,
+                                "product_uom_id": self.env.ref(
+                                    "uom.product_uom_unit"
+                                ).id,
+                                "account_id": self.env.ref("account.a_sale").id,
+                            },
+                        )
+                    ],
+                    "journal_id": self.env.ref("account.expenses_journal").id,
+                    "partner_id": res_partner_12_child.id,
+                    "type": "out_refund",
+                }
+            )
         )
         # I confirm the refund
         self.refund_for_completion_1.post()
 
         # I check that the refund state is "Open"
-        self.assertEqual(self.refund_for_completion_1.state, "open")
+        self.assertEqual(self.refund_for_completion_1.state, "posted")
         # I check that it is given the number "RTEXJ/%Y/0001"
         self.assertEqual(
-            self.refund_for_completion_1.number,
+            self.refund_for_completion_1.name,
             fields.Date.today().strftime("RTEXJ/%Y/0001"),
         )
 
@@ -202,58 +218,80 @@ class TestInvoice(SingleTransactionCase):
         )
         # Now I create a statement. I create statment lines separately because
         # I need to find each one by XML id
-        move_test1 = self.env["account.move"].create(
-            {"name": "Move 2", "journal_id": self.journal.id}
+        move_test1 = (
+            self.env["account.move"]
+            .with_context(check_move_validity=False)
+            .create({"name": "Move 2", "journal_id": self.journal.id})
         )
         # I create a move line for a CI
-        move_line_ci = self.env["account.move.line"].create(
-            {
-                "name": "\\",
-                "account_id": self.env.ref("account.a_sale").id,
-                "move_id": move_test1.id,
-                "date_maturity": fields.Date.from_string("2013-12-20"),
-                "credit": 0.0,
-            }
+        move_line_ci = (
+            self.env["account.move.line"]
+            .with_context(check_move_validity=False)
+            .create(
+                {
+                    "name": "\\",
+                    "account_id": self.env.ref("account.a_sale").id,
+                    "move_id": move_test1.id,
+                    "date_maturity": fields.Date.from_string("2013-12-20"),
+                    "credit": 0.0,
+                }
+            )
         )
         # I create a move line for a SI
-        move_line_si = self.env["account.move.line"].create(
-            {
-                "name": "\\",
-                "account_id": self.env.ref("account.a_expense").id,
-                "move_id": move_test1.id,
-                "date_maturity": fields.Date.from_string("2013-12-19"),
-                "debit": 0.0,
-            }
+        move_line_si = (
+            self.env["account.move.line"]
+            .with_context(check_move_validity=False)
+            .create(
+                {
+                    "name": "\\",
+                    "account_id": self.env.ref("account.a_expense").id,
+                    "move_id": move_test1.id,
+                    "date_maturity": fields.Date.from_string("2013-12-19"),
+                    "debit": 0.0,
+                }
+            )
         )
         # I create a move line for a CR
-        move_line_cr = self.env["account.move.line"].create(
-            {
-                "name": "\\",
-                "account_id": self.env.ref("account.a_expense").id,
-                "move_id": move_test1.id,
-                "date_maturity": fields.Date.from_string("2013-12-19"),
-                "debit": 0.0,
-            }
+        move_line_cr = (
+            self.env["account.move.line"]
+            .with_context(check_move_validity=False)
+            .create(
+                {
+                    "name": "\\",
+                    "account_id": self.env.ref("account.a_expense").id,
+                    "move_id": move_test1.id,
+                    "date_maturity": fields.Date.from_string("2013-12-19"),
+                    "debit": 0.0,
+                }
+            )
         )
         # I create a move line for the Partner Name
-        move_line_partner_name = self.env["account.move.line"].create(
-            {
-                "name": "Test autocompletion based on Partner Name Azure Interior",
-                "account_id": self.env.ref("account.a_sale").id,
-                "move_id": move_test1.id,
-                "date_maturity": fields.Date.from_string("2013-12-17"),
-                "credit": 0.0,
-            }
+        move_line_partner_name = (
+            self.env["account.move.line"]
+            .with_context(check_move_validity=False)
+            .create(
+                {
+                    "name": "Test autocompletion based on Partner Name Azure Interior",
+                    "account_id": self.env.ref("account.a_sale").id,
+                    "move_id": move_test1.id,
+                    "date_maturity": fields.Date.from_string("2013-12-17"),
+                    "credit": 0.0,
+                }
+            )
         )
         # I create a move line for the Partner Label
-        move_line_partner_label = self.env["account.move.line"].create(
-            {
-                "name": "XXX66Z",
-                "account_id": self.env.ref("account.a_sale").id,
-                "move_id": move_test1.id,
-                "date_maturity": "2013-12-24",
-                "debit": 0.0,
-            }
+        move_line_partner_label = (
+            self.env["account.move.line"]
+            .with_context(check_move_validity=False)
+            .create(
+                {
+                    "name": "XXX66Z",
+                    "account_id": self.env.ref("account.a_sale").id,
+                    "move_id": move_test1.id,
+                    "date_maturity": "2013-12-24",
+                    "debit": 0.0,
+                }
+            )
         )
         # and add the correct name
         move_line_ci.with_context(check_move_validity=False).write(
