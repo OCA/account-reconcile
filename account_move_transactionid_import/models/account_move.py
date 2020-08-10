@@ -67,7 +67,7 @@ class AccountMoveCompletionRule(models.Model):
             ...}
             """
         res = {}
-        invoice_obj = self.env["account.invoice"]
+        invoice_obj = self.env["account.move"]
         invoices = invoice_obj.search([("transaction_id", "=", line.ref)])
         partners = invoices.mapped("partner_id.commercial_partner_id")
         accounts = invoices.mapped("account_id")
