@@ -4,9 +4,8 @@ import base64
 import os
 
 from odoo.modules.module import get_module_resource
-from odoo.addons.account_move_base_import.tests.test_base_import import (
-    TestCodaImport,
-)
+
+from odoo.addons.account_move_base_import.tests.test_base_import import TestCodaImport
 
 
 class TestTransactionIdImport(TestCodaImport):
@@ -55,10 +54,7 @@ class TestTransactionIdImport(TestCodaImport):
             }
         )
         file_name = get_module_resource(
-            "account_move_transactionid_import",
-            "tests",
-            "data",
-            "statement.csv"
+            "account_move_transactionid_import", "tests", "data", "statement.csv"
         )
         import_action = self._import_file_multi(file_name)
         move = self.account_move_obj.browse(import_action["res_id"])
@@ -73,10 +69,7 @@ class TestTransactionIdImport(TestCodaImport):
             }
         )
         file_name = get_module_resource(
-            "account_move_transactionid_import",
-            "tests",
-            "data",
-            "statement.xls"
+            "account_move_transactionid_import", "tests", "data", "statement.xls"
         )
         import_action = self._import_file_multi(file_name)
         move = self.account_move_obj.browse(import_action["res_id"])
