@@ -1,7 +1,9 @@
 # © 2011-2019 Camptocamp SA
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html)
 import datetime
+
 from odoo.tools import ustr
+
 from odoo.addons.account_move_base_import.parser.file_parser import (
     FileParser,
     float_or_zero,
@@ -13,13 +15,7 @@ class TransactionIDFileParser(FileParser):
     bank statement.
     """
 
-    def __init__(
-            self,
-            profile,
-            ftype="csv",
-            extra_fields=None,
-            header=None,
-            **kwargs):
+    def __init__(self, profile, ftype="csv", extra_fields=None, header=None, **kwargs):
         """Add transaction_id in header keys
             :param char: profile: Reference to the profile
             :param char: ftype: extension of the file (could be csv or xls)
@@ -36,11 +32,7 @@ class TransactionIDFileParser(FileParser):
             "commission_amount": float_or_zero,
         }
         super().__init__(
-            profile,
-            extra_fields=conversion_dict,
-            ftype=ftype,
-            header=header,
-            **kwargs
+            profile, extra_fields=conversion_dict, ftype=ftype, header=header, **kwargs
         )
         self.support_multi_moves = True
 

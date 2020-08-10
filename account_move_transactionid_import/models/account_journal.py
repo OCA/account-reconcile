@@ -8,6 +8,9 @@ class AccountJournal(models.Model):
 
     import_type = fields.Selection(
         selection_add=[
-            ('generic_csvxls_transaction',
-             'Generic .csv/.xls based on SO transaction ID')
-        ])
+            (
+                "generic_csvxls_transaction",
+                "Generic .csv/.xls based on SO transaction ID",
+            )
+        ]
+    )
