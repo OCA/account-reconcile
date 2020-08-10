@@ -76,7 +76,6 @@ class AccountJournal(models.Model):
         "the refunds and one for the payments",
     )
 
-    @api.multi
     def _prepare_counterpart_line(self, move, amount, date):
         if amount > 0.0:
             account_id = self.default_debit_account_id.id
@@ -102,7 +101,6 @@ class AccountJournal(models.Model):
         }
         return counterpart_values
 
-    @api.multi
     def _create_counterpart(self, parser, move):
         move_line_obj = self.env["account.move.line"]
         refund = 0.0
@@ -132,7 +130,6 @@ class AccountJournal(models.Model):
                 vals
             )
 
-    @api.multi
     def _write_extra_move_lines(self, parser, move):
         """Insert extra lines after the main statement lines.
 
@@ -186,7 +183,6 @@ class AccountJournal(models.Model):
                     comm_values
                 )
 
-    @api.multi
     def write_logs_after_import(self, move, num_lines):
         """Write the log in the logger
 

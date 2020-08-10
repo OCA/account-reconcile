@@ -73,7 +73,7 @@ class AccountMoveCompletionRule(models.Model):
 
     def _find_invoice(self, line, inv_type):
         """Find invoice related to statement line"""
-        inv_obj = self.env["account.invoice"]
+        inv_obj = self.env["account.move"]
         if inv_type == "supplier":
             type_domain = ("in_invoice", "in_refund")
             number_field = "reference"
@@ -351,7 +351,6 @@ class AccountMove(models.Model):
         self.message_post(body=body)
         return True
 
-    @api.multi
     def button_auto_completion(self):
         """Complete line with values given by rules and tic the
         already_completed checkbox so we won't compute them again unless the
