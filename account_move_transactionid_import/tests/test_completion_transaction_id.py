@@ -115,30 +115,37 @@ class TestCompletionTransactionId(SingleTransactionCase):
                 False,
             )
         ]
-        invoice = self.env["account.invoice"].create(
-            {
-                "currency_id": self.env.ref("base.EUR").id,
-                "partner_id": self.partner.id,
-                "transaction_id": "XXX77Z",
-                "reference_type": "none",
-                "journal_id": self.journal.id,
-                "invoice_line_ids": [
-                    (
-                        0,
-                        0,
-                        {
-                            "name": "[PCSC234] PC Assemble SC234",
-                            "price_unit": 450.0,
-                            "quantity": 1.0,
-                            "product_id": self.env.ref("product.product_product_3").id,
-                            "uom_id": self.env.ref("uom.product_uom_unit").id,
-                            "account_id": self.env.ref("account.a_sale").id,
-                        },
-                    )
-                ],
-            }
+        invoice = (
+            self.env["account.move"]
+            .with_context(default_type="out_invoice")
+            .create(
+                {
+                    "currency_id": self.env.ref("base.EUR").id,
+                    "type": "out_invoice",
+                    "partner_id": self.partner.id,
+                    "transaction_id": "XXX77Z",
+                    "reference_type": "none",
+                    "journal_id": self.journal.id,
+                    "invoice_line_ids": [
+                        (
+                            0,
+                            0,
+                            {
+                                "name": "[PCSC234] PC Assemble SC234",
+                                "price_unit": 450.0,
+                                "quantity": 1.0,
+                                "product_id": self.env.ref(
+                                    "product.product_product_3"
+                                ).id,
+                                "uom_id": self.env.ref("uom.product_uom_unit").id,
+                                "account_id": self.env.ref("account.a_sale").id,
+                            },
+                        )
+                    ],
+                }
+            )
         )
-        invoice.action_invoice_open()
+        invoice.post()
         self.assertEqual(invoice.state, "open")
         self.move.button_auto_completion()
         self.assertEqual(self.move_line.partner_id, self.partner)
