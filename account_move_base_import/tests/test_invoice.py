@@ -34,9 +34,10 @@ class TestInvoice(SingleTransactionCase):
         self.account_id = self.env.ref("account.a_recv")
         # I create a customer Invoice to be found by the completion.
         product_3 = self.env.ref("product.product_product_3")
-        self.invoice_for_completion_1 = self.env["account.invoice"].create(
+        self.invoice_for_completion_1 = self.env["account.move"].with_context(default_type='out_invoice').create(
             {
                 "currency_id": self.env.ref("base.EUR").id,
+                "type": "out_invoice",
                 "invoice_line_ids": [
                     (
                         0,
@@ -53,11 +54,10 @@ class TestInvoice(SingleTransactionCase):
                 ],
                 "journal_id": self.journal.id,
                 "partner_id": self.partner.id,
-                "account_id": self.env.ref("account.a_recv").id,
             }
         )
         # I confirm the Invoice
-        self.invoice_for_completion_1.action_invoice_open()
+        self.invoice_for_completion_1.post()
         # I check that the invoice state is "Open"
         self.assertEqual(self.invoice_for_completion_1.state, "open")
         # I check that it is given the number "TBNK/%Y/0001"
@@ -72,13 +72,13 @@ class TestInvoice(SingleTransactionCase):
         product_order = self.env.ref("product.product_order_01")
         exp_account = self.env.ref("account.a_expense")
         rec_account = self.env.ref("account.a_recv")
-        demo_invoice_0 = self.env["account.invoice"].create(
+        demo_invoice_0 = self.env["account.move"].with_context(default_type='in_invoice').create(
             {
                 "partner_id": self.partner.id,
+                "type": "in_invoice",
                 "payment_term_id": self.env.ref("account.account_payment_term").id,
                 "type": "in_invoice",
                 "date_invoice": fields.Date.today().replace(day=1),
-                "account_id": rec_account.id,
                 "invoice_line_ids": [
                     (
                         0,
@@ -115,7 +115,7 @@ class TestInvoice(SingleTransactionCase):
         # I check a second time that my invoice is still a supplier invoice
         self.assertEqual(demo_invoice_0.type, "in_invoice", msg="Check invoice type 2")
         # Now I confirm it
-        demo_invoice_0.action_invoice_open()
+        demo_invoice_0.post()
         # I check that the supplier number is there
         self.assertEqual(
             demo_invoice_0.reference, "T2S12345", msg="Check supplier number"
@@ -137,7 +137,7 @@ class TestInvoice(SingleTransactionCase):
         )
         # I create a customer refund to be found by the completion.
         product_3 = self.env.ref("product.product_product_3")
-        self.refund_for_completion_1 = self.env["account.invoice"].create(
+        self.refund_for_completion_1 = self.env["account.move"].with_context(default_type="out_refund").create(
             {
                 "currency_id": self.env.ref("base.EUR").id,
                 "invoice_line_ids": [
@@ -157,11 +157,10 @@ class TestInvoice(SingleTransactionCase):
                 "journal_id": self.env.ref("account.expenses_journal").id,
                 "partner_id": res_partner_12_child.id,
                 "type": "out_refund",
-                "account_id": self.env.ref("account.a_recv").id,
             }
         )
         # I confirm the refund
-        self.refund_for_completion_1.action_invoice_open()
+        self.refund_for_completion_1.post()
 
         # I check that the refund state is "Open"
         self.assertEqual(self.refund_for_completion_1.state, "open")
