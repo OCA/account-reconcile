@@ -7,7 +7,7 @@ import os
 import sys
 import traceback
 
-from odoo import _, api, fields, models
+from odoo import _, fields, models
 from odoo.exceptions import UserError, ValidationError
 
 from ..parser.parser import new_move_parser
@@ -234,14 +234,16 @@ class AccountJournal(models.Model):
                 "currency_id": self.currency_id.id,
                 "company_currency_id": self.company_id.currency_id.id,
                 "journal_id": self.id,
+                "account_id": account.id,
                 "move_id": move.id,
                 "date": move.date,
                 "balance": values["debit"] - values["credit"],
                 "amount_residual_currency": 0,
-                "user_type_id": account.user_type_id.id,
                 "reconciled": False,
             }
         )
+        if self.currency_id and self.currency_id == self.company_id.currency_id:
+            del values["currency_id"]
         values = move_line_obj._add_missing_default_values(values)
         return values
 
@@ -251,7 +253,7 @@ class AccountJournal(models.Model):
         """
         vals = {
             "journal_id": self.id,
-            "currency_id": self.currency_id.id,
+            "currency_id": self.currency_id.id or self.company_id.currency_id.id,
             "import_partner_id": self.partner_id.id,
         }
         vals.update(parser.get_move_vals())
@@ -322,14 +324,14 @@ class AccountJournal(models.Model):
             if self.create_counterpart:
                 self._create_counterpart(parser, move)
             # Check if move is balanced
-            move.assert_balanced()
+            move._check_balanced()
             # Computed total amount of the move
-            move._amount_compute()
+            # move._amount_compute()
             # Attach data to the move
             attachment_data = {
                 "name": "statement file",
                 "datas": file_stream,
-                "datas_fname": "{}.{}".format(fields.Date.today(), ftype),
+                "store_fname": "{}.{}".format(fields.Date.today(), ftype),
                 "res_model": "account.move",
                 "res_id": move.id,
             }
