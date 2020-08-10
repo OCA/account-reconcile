@@ -48,7 +48,6 @@ class CreditPartnerStatementImporter(models.TransientModel):
         readonly=True,
     )
 
-    @api.multi
     def _check_extension(self):
         self.ensure_one()
         (__, ftype) = os.path.splitext(self.file_name)
@@ -56,7 +55,6 @@ class CreditPartnerStatementImporter(models.TransientModel):
             raise UserError(_("Please use a file with an extension"))
         return ftype
 
-    @api.multi
     def import_statement(self):
         """This Function import credit card agency statement"""
         moves = self.env["account.move"]

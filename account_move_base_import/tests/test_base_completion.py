@@ -93,7 +93,7 @@ class BaseCompletion(common.TransactionCase):
             self.assertFalse(
                 self.move_line.partner_id, "Partner_id must be blank before completion"
             )
-            self.move.button_auto_completion()
+            self.move.with_context(check_move_validity=False).button_auto_completion()
             if case.should_match:
                 self.assertEqual(
                     self.partner,

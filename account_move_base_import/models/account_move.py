@@ -73,13 +73,13 @@ class AccountMoveCompletionRule(models.Model):
 
     def _find_invoice(self, line, inv_type):
         """Find invoice related to statement line"""
-        inv_obj = self.env["account.invoice"]
+        inv_obj = self.env["account.move"]
         if inv_type == "supplier":
             type_domain = ("in_invoice", "in_refund")
-            number_field = "reference"
+            number_field = "ref"
         elif inv_type == "customer":
             type_domain = ("out_invoice", "out_refund")
-            number_field = "number"
+            number_field = "name"
         else:
             raise ValidationError(
                 _("Invalid invoice type for completion: %s") % inv_type
@@ -111,7 +111,7 @@ class AccountMoveCompletionRule(models.Model):
         invoice = self._find_invoice(line, inv_type)
         if invoice:
             partner_id = invoice.commercial_partner_id.id
-            res = {"partner_id": partner_id, "account_id": invoice.account_id.id}
+            res = {"partner_id": partner_id}
         return res
 
     # Should be private but data are initialised with no update XML
@@ -351,7 +351,6 @@ class AccountMove(models.Model):
         self.message_post(body=body)
         return True
 
-    @api.multi
     def button_auto_completion(self):
         """Complete line with values given by rules and tic the
         already_completed checkbox so we won't compute them again unless the
