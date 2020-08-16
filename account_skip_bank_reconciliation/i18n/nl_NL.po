@@ -30,7 +30,6 @@ msgstr ""
 #: model:ir.model.fields,field_description:account_skip_bank_reconciliation.field_account_bank_statement_import_journal_creation__account_reconciliation_ids
 #: model:ir.model.fields,field_description:account_skip_bank_reconciliation.field_account_journal__account_reconciliation_ids
 #, fuzzy
-#| msgid "Exclude from Bank Reconciliation"
 msgid "Accounts to consider in reconciliation"
 msgstr "Sluit uit in bankafschrift"
 
