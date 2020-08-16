@@ -19,7 +19,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. module: account_move_base_import
-#: code:addons/account_move_base_import/models/account_move.py:364
+#: code:addons/account_move_base_import/models/account_move.py:370
 #, python-format
 msgid ""
 "%s Account Move %s has %s/%s lines completed by %s \n"
@@ -95,7 +95,7 @@ msgid ""
 msgstr ""
 
 #. module: account_move_base_import
-#: code:addons/account_move_base_import/parser/file_parser.py:85
+#: code:addons/account_move_base_import/parser/file_parser.py:91
 #, python-format
 msgid "Column %s not present in file"
 msgstr ""
@@ -107,13 +107,13 @@ msgid "Commission account"
 msgstr ""
 
 #. module: account_move_base_import
-#: code:addons/account_move_base_import/models/account_journal.py:182
+#: code:addons/account_move_base_import/models/account_journal.py:181
 #, python-format
 msgid "Commission amount should not be positive."
 msgstr ""
 
 #. module: account_move_base_import
-#: code:addons/account_move_base_import/models/account_journal.py:190
+#: code:addons/account_move_base_import/models/account_journal.py:189
 #, python-format
 msgid "Commission line"
 msgstr ""
@@ -126,6 +126,11 @@ msgstr ""
 #. module: account_move_base_import
 #: model:ir.ui.view,arch_db:account_move_base_import.view_move_importer_form
 msgid "Completion Logs"
+msgstr ""
+
+#. module: account_move_base_import
+#: model:ir.model,name:account_move_base_import.model_res_partner
+msgid "Contact"
 msgstr ""
 
 #. module: account_move_base_import
@@ -146,7 +151,7 @@ msgid "Created on"
 msgstr "Създадено на"
 
 #. module: account_move_base_import
-#: code:addons/account_move_base_import/parser/file_parser.py:132
+#: code:addons/account_move_base_import/parser/file_parser.py:138
 #, python-format
 msgid ""
 "Date format is not valid. It should be YYYY-MM-DD for column: %s value: %s \n"
@@ -158,7 +163,7 @@ msgid ""
 msgstr ""
 
 #. module: account_move_base_import
-#: code:addons/account_move_base_import/parser/file_parser.py:162
+#: code:addons/account_move_base_import/parser/file_parser.py:168
 #, python-format
 msgid ""
 "Date format is not valid. Please modify the cell formatting to date format "
@@ -186,7 +191,7 @@ msgstr ""
 
 #. module: account_move_base_import
 #: model:ir.model.fields,field_description:account_move_base_import.field_credit_statement_import_file_name
-msgid "File name"
+msgid "File Name"
 msgstr ""
 
 #. module: account_move_base_import
@@ -262,7 +267,7 @@ msgid "Import related infos"
 msgstr ""
 
 #. module: account_move_base_import
-#: code:addons/account_move_base_import/parser/file_parser.py:45
+#: code:addons/account_move_base_import/parser/file_parser.py:51
 #, python-format
 msgid "Invalid file type %s. Please use csv, xls or xlsx"
 msgstr ""
@@ -358,23 +363,23 @@ msgid "Method"
 msgstr ""
 
 #. module: account_move_base_import
-#: code:addons/account_move_base_import/parser/file_parser.py:136
-#: code:addons/account_move_base_import/parser/file_parser.py:145
-#: code:addons/account_move_base_import/parser/file_parser.py:166
-#: code:addons/account_move_base_import/parser/file_parser.py:175
+#: code:addons/account_move_base_import/parser/file_parser.py:142
+#: code:addons/account_move_base_import/parser/file_parser.py:151
+#: code:addons/account_move_base_import/parser/file_parser.py:172
+#: code:addons/account_move_base_import/parser/file_parser.py:181
 #, python-format
 msgid "Missing"
 msgstr ""
 
 #. module: account_move_base_import
-#: code:addons/account_move_base_import/models/account_journal.py:309
+#: code:addons/account_move_base_import/models/account_journal.py:338
 #, python-format
 msgid ""
 "Missing column! Column %s you try to import is not present in the move line!"
 msgstr ""
 
 #. module: account_move_base_import
-#: code:addons/account_move_base_import/models/account_journal.py:213
+#: code:addons/account_move_base_import/models/account_journal.py:226
 #, python-format
 msgid "Move %s have been imported with %s lines."
 msgstr ""
@@ -397,34 +402,29 @@ msgid "Name"
 msgstr "Име"
 
 #. module: account_move_base_import
-#: code:addons/account_move_base_import/parser/parser.py:148
+#: code:addons/account_move_base_import/parser/parser.py:147
 #, python-format
 msgid "No buffer file given."
 msgstr ""
 
 #. module: account_move_base_import
-#: code:addons/account_move_base_import/models/account_journal.py:186
+#: code:addons/account_move_base_import/models/account_journal.py:185
 #, python-format
 msgid "No commission account is set on the journal."
 msgstr ""
 
 #. module: account_move_base_import
-#: code:addons/account_move_base_import/models/account_journal.py:303
+#: code:addons/account_move_base_import/models/account_journal.py:330
 #, python-format
 msgid "Nothing to import: The file is empty"
 msgstr ""
 
 #. module: account_move_base_import
-#: code:addons/account_move_base_import/models/account_move.py:306
-#: code:addons/account_move_base_import/models/account_move.py:322
+#: code:addons/account_move_base_import/models/account_move.py:315
+#: code:addons/account_move_base_import/models/account_move.py:331
 #, python-format
 msgid "ORM bypass error: %s"
 msgstr ""
-
-#. module: account_move_base_import
-#: model:ir.model,name:account_move_base_import.model_res_partner
-msgid "Partner"
-msgstr "Партньор"
 
 #. module: account_move_base_import
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_move_import_partner_id
@@ -432,13 +432,7 @@ msgid "Partner from import"
 msgstr ""
 
 #. module: account_move_base_import
-#: code:addons/account_move_base_import/parser/file_parser.py:15
-#, python-format
-msgid "Please install python lib xlrd"
-msgstr ""
-
-#. module: account_move_base_import
-#: code:addons/account_move_base_import/wizard/import_statement.py:56
+#: code:addons/account_move_base_import/wizard/import_statement.py:55
 #, python-format
 msgid "Please use a file with an extension"
 msgstr ""
@@ -479,7 +473,7 @@ msgid "Split Counterpart"
 msgstr ""
 
 #. module: account_move_base_import
-#: code:addons/account_move_base_import/models/account_move.py:370
+#: code:addons/account_move_base_import/models/account_move.py:376
 #, python-format
 msgid "Statement ID %s auto-completed for %s/%s lines completed"
 msgstr ""
@@ -490,7 +484,7 @@ msgid "Statement file"
 msgstr ""
 
 #. module: account_move_base_import
-#: code:addons/account_move_base_import/models/account_journal.py:348
+#: code:addons/account_move_base_import/models/account_journal.py:383
 #, python-format
 msgid "Statement import error The statement cannot be created: %s"
 msgstr ""
@@ -525,8 +519,8 @@ msgid "Type of import"
 msgstr ""
 
 #. module: account_move_base_import
-#: code:addons/account_move_base_import/parser/file_parser.py:143
-#: code:addons/account_move_base_import/parser/file_parser.py:173
+#: code:addons/account_move_base_import/parser/file_parser.py:149
+#: code:addons/account_move_base_import/parser/file_parser.py:179
 #, python-format
 msgid ""
 "Value %s of column %s is not valid.\n"
@@ -546,3 +540,6 @@ msgstr ""
 #: model:ir.model,name:account_move_base_import.model_account_move_completion_rule
 msgid "account.move.completion.rule"
 msgstr ""
+
+#~ msgid "Partner"
+#~ msgstr "Партньор"
