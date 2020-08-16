@@ -138,7 +138,6 @@ msgstr "Şirket"
 #. module: account_mass_reconcile
 #: model:ir.model,name:account_mass_reconcile.model_res_config_settings
 #, fuzzy
-#| msgid "Configuration"
 msgid "Config Settings"
 msgstr "Yapılandırma"
 

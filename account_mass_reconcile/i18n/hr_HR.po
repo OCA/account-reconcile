@@ -510,7 +510,6 @@ msgstr ""
 #. module: account_mass_reconcile
 #: model:ir.model,name:account_mass_reconcile.model_mass_reconcile_options
 #, fuzzy
-#| msgid "Date of reconciliation"
 msgid "Options of a reconciliation profile"
 msgstr "Datum zatvaranja"
 

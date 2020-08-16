@@ -438,10 +438,6 @@ msgstr "Verlauf zum massenhaften automatischen Ausgleich"
 #. module: account_mass_reconcile
 #: model_terms:ir.ui.view,arch_db:account_mass_reconcile.account_mass_reconcile_form
 #, fuzzy
-#| msgid ""
-#| "Match multiple debit vs multiple credit entries. Allow partial "
-#| "reconciliation. The lines should have the partner, the credit entry ref. "
-#| "is matched vs the debit entry ref. or name."
 msgid ""
 "Match multiple debit vs multiple credit entries. Allow partial "
 "reconciliation. The lines should have the same partner, and the credit entry "
@@ -532,7 +528,6 @@ msgstr ""
 #. module: account_mass_reconcile
 #: model:ir.model,name:account_mass_reconcile.model_mass_reconcile_options
 #, fuzzy
-#| msgid "Click to add a reconciliation profile."
 msgid "Options of a reconciliation profile"
 msgstr "Klicken Sie, um ein Ausgleichsprofil hinzuzufügen."
 
