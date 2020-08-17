@@ -94,7 +94,8 @@ class BankAccRecStatement(models.Model):
         return True
 
     def reconcile_payment(self, line):
-        line.filtered(lambda l: l.cleared_bank_account).mapped("payment_id").write({"state": "reconciled"})
+        cleared = line.filtered(lambda l: l.cleared_bank_account)
+        cleared.mapped("payment_id").write({"state": "reconciled"})
 
     @api.multi
     def action_process(self):
