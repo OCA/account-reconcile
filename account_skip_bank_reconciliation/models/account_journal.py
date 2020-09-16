@@ -13,5 +13,5 @@ class AccountJournal(models.Model):
         string="Accounts to consider in reconciliation",
         domain=[("reconcile", "=", True)],
         help="If you enter accounts here they will be the only ones"
-             "to be considered during the reconciliation"
+        "to be considered during the reconciliation",
     )

@@ -4,16 +4,13 @@
 {
     "name": "Account Skip Bank Reconciliation",
     "summary": "Allows to exclude from bank statement reconciliation "
-               "all journal items of a reconcilable account",
+    "all journal items of a reconcilable account",
     "version": "12.0.1.1.0",
     "depends": ["account"],
     "author": "ForgeFlow, Odoo Community Association (OCA)",
     "website": "http://www.github.com/OCA/account-reconcile",
     "category": "Finance",
-    "data": [
-        "views/account_view.xml",
-        "views/account_journal_view.xml",
-    ],
-    'license': 'AGPL-3',
-    'installable': True,
+    "data": ["views/account_view.xml", "views/account_journal_view.xml",],
+    "license": "AGPL-3",
+    "installable": True,
 }

@@ -9,7 +9,8 @@ class AccountReconcileModel(models.Model):
 
     @api.multi
     def _apply_conditions(self, query, params):
-        query, params = super(
-            AccountReconcileModel, self)._apply_conditions(query, params)
-        query += ' AND account.exclude_bank_reconcile IS NOT TRUE'
+        query, params = super(AccountReconcileModel, self)._apply_conditions(
+            query, params
+        )
+        query += " AND account.exclude_bank_reconcile IS NOT TRUE"
         return query, params

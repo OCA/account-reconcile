@@ -8,8 +8,9 @@ class AccountAccount(models.Model):
     _inherit = "account.account"
 
     exclude_bank_reconcile = fields.Boolean(
-        string='Exclude from Bank Reconciliation',
+        string="Exclude from Bank Reconciliation",
         default=False,
         help="Check this box if the journal items of this account "
-             "should not appear in the list of journal items to match "
-             "a statement line.")
+        "should not appear in the list of journal items to match "
+        "a statement line.",
+    )
