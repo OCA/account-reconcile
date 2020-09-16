@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2020 CorporateHub (https://corporatehub.eu)
+    License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
+-->
+<odoo>
+
+    <record id="view_bank_statement_form" model="ir.ui.view">
+        <field name="name">account.bank.statement.form</field>
+        <field name="model">account.bank.statement</field>
+        <field name="inherit_id" ref="account.view_bank_statement_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='line_ids']/tree/field[@name='currency_id']" position="after">
+                <field name="original_amount_currency" invisible="1"/>
+                <field name="original_currency_id" invisible="1"/>
+                <field name="ignore_currency" invisible="1"/>
+                <button
+                    name="action_ignore_currency"
+                    string="Ignore Currency"
+                    type="object"
+                    icon="fa-money text-info"
+                    attrs="{'invisible': ['|', ('ignore_currency', '=', True), ('original_currency_id', '=', False)]}"
+                />
+                <button
+                    name="action_unignore_currency"
+                    string="Un-Ignore Currency"
+                    type="object"
+                    icon="fa-money text-muted"
+                    attrs="{'invisible': ['|', ('ignore_currency', '=', False), ('original_currency_id', '=', False)]}"
+                />
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

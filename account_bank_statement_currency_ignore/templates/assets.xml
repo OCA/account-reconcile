@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2020 CorporateHub (https://corporatehub.eu)
+    License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
+-->
+<odoo>
+    <template id="assets_backend" name="account_bank_statement_currency_ignore assets" inherit_id="account.assets_backend">
+        <xpath expr="." position="inside">
+            <script type="text/javascript" src="/account_bank_statement_currency_ignore/static/src/js/reconciliation_renderer.js"/>
+            <script type="text/javascript" src="/account_bank_statement_currency_ignore/static/src/js/reconciliation_client_action.js"/>
+            <!-- TODO: https://github.com/OCA/account-reconcile/blob/12.0/account_reconciliation_widget_partial/static/src/js/reconciliation_model.js -->
+        </xpath>
+    </template>
+</odoo>

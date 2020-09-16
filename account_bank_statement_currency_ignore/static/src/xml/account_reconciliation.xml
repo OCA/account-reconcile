@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2020 CorporateHub (https://corporatehub.eu)
+    License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
+-->
+<templates>
+
+    <t t-extend="reconciliation.line">
+        <t t-jquery=".o_reconciliation_line" t-operation="attributes">
+            <attribute name="t-att-data-line-id">state.st_line.id</attribute>
+        </t>
+        <t t-jquery=".o_reconciliation_line .accounting_view thead td.cell_left > t" t-operation="prepend">
+            <span
+                t-if="state.st_line.original_currency_id"
+                t-attf-class="toggle_currency_ignore fa fa-money text-#{!state.st_line.ignore_currency ? 'info' : 'muted'}"
+            />
+        </t>
+        <t t-jquery=".o_reconciliation_line .accounting_view thead td.cell_right > t" t-operation="prepend">
+            <span
+                t-if="state.st_line.original_currency_id"
+                t-attf-class="toggle_currency_ignore fa fa-money text-#{!state.st_line.ignore_currency ? 'info' : 'muted'}"
+            />
+        </t>
+    </t>
+
+    <t t-extend="reconciliation.line.statement_line.details">
+        <!-- <table class='details'>
+            <tr><td>Date</td><td><t t-esc="state.st_line.date"/></td></tr>
+            <tr t-if="state.st_line.partner_name"><td>Partner</td><td><t t-esc="state.st_line.partner_name"/></td></tr>
+            <tr t-if="state.st_line.ref"><td>Transaction</td><td><t t-esc="state.st_line.ref"/></td></tr>
+            <tr><td>Description</td><td><t t-esc="state.st_line.name"/></td></tr>
+            <tr><td>Amount</td><td><t t-raw="state.st_line.amount_str"/><t t-if="state.st_line.amount_currency_str"> (<t t-esc="state.st_line.amount_currency_str"/>)</t></td></tr>
+            <tr><td>Account</td><td><t t-esc="state.st_line.account_code"/> <t t-esc="state.st_line.account_name"/></td></tr>
+            <tr t-if="state.st_line.note"><td>Note</td><td style="white-space: pre;"><t t-esc="state.st_line.note"/></td></tr>
+        </table> -->
+    </t>
+
+</templates>

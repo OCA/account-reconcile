@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2020 CorporateHub (https://corporatehub.eu)
+    License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
+-->
+<odoo>
+
+    <record id="view_bank_statement_line_form" model="ir.ui.view">
+        <field name="name">account.bank.statement.line.form</field>
+        <field name="model">account.bank.statement.line</field>
+        <field name="inherit_id" ref="account.view_bank_statement_line_form"/>
+        <field name="arch" type="xml">
+            <field name="journal_currency_id" position="after">
+                <label for="original_amount_currency"/>
+                <div class="o_row" name="original_amount_currency">
+                    <field name="original_amount_currency" nolabel="1"/>
+                    <field name="original_currency_id" class="oe_edit_only"/>
+                </div>
+                <field name="ignore_currency" attrs="{'invisible': [('original_currency_id', '=', 'False')]}"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="view_bank_statement_line_tree" model="ir.ui.view">
+        <field name="name">account.bank.statement.line.tree</field>
+        <field name="model">account.bank.statement.line</field>
+        <field name="inherit_id" ref="account.view_bank_statement_line_tree"/>
+        <field name="arch" type="xml">
+            <field name="journal_currency_id" position="after">
+                <field name="original_amount_currency" invisible="1"/>
+                <field name="original_currency_id" invisible="1"/>
+                <field name="ignore_currency" invisible="1"/>
+                <button
+                    name="action_ignore_currency"
+                    string="Ignore Currency"
+                    type="object"
+                    icon="fa-money text-info"
+                    attrs="{'invisible': ['|', ('ignore_currency', '=', True), ('original_currency_id', '=', False)]}"
+                />
+                <button
+                    name="action_unignore_currency"
+                    string="Un-Ignore Currency"
+                    type="object"
+                    icon="fa-money text-muted"
+                    attrs="{'invisible': ['|', ('ignore_currency', '=', False), ('original_currency_id', '=', False)]}"
+                />
+            </field>
+        </field>
+    </record>
+
+    <record id="action_account_confirm_payments" model="ir.actions.server">
+        <field name="name">Toggle Ignore Currency</field>
+        <field name="type">ir.actions.server</field>
+        <field name="state">code</field>
+        <field name="model_id" ref="account.model_account_bank_statement_line"/>
+        <field name="binding_model_id" ref="account.model_account_bank_statement_line"/>
+        <field name="code">
+            if records:
+                records.action_toggle_ignore_currency()
+        </field>
+    </record>
+
+</odoo>
