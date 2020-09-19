@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2020 CorporateHub (https://corporatehub.eu)
+    License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
+-->
+<odoo>
+
+    <record id="action_account_bank_statement_postprocess" model="ir.actions.server">
+        <field name="name">Apply Post-Processing</field>
+        <field name="type">ir.actions.server</field>
+        <field name="state">code</field>
+        <field name="model_id" ref="account.model_account_bank_statement"/>
+        <field name="binding_model_id" ref="account.model_account_bank_statement"/>
+        <field name="code">
+            if records:
+                records.action_apply_postprocessing()
+        </field>
+    </record>
+
+</odoo>
