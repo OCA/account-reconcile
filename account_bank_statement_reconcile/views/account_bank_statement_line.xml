@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2020 CorporateHub (https://corporatehub.eu)
+    License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
+-->
+<odoo>
+
+    <record id="action_account_bank_statement_line_reconcile" model="ir.actions.server">
+        <field name="name">Reconcile</field>
+        <field name="type">ir.actions.server</field>
+        <field name="state">code</field>
+        <field name="model_id" ref="account.model_account_bank_statement_line"/>
+        <field name="binding_model_id" ref="account.model_account_bank_statement_line"/>
+        <field name="code">
+            if records:
+                action = records.action_open_reconcile()
+        </field>
+    </record>
+
+    <record id="action_account_bank_statement_line_unreconcile" model="ir.actions.server">
+        <field name="name">Unreconcile</field>
+        <field name="type">ir.actions.server</field>
+        <field name="state">code</field>
+        <field name="model_id" ref="account.model_account_bank_statement_line"/>
+        <field name="binding_model_id" ref="account.model_account_bank_statement_line"/>
+        <field name="code">
+            if records:
+                action = records.action_unreconcile()
+        </field>
+    </record>
+
+</odoo>

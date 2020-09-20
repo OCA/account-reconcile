@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2020 CorporateHub (https://corporatehub.eu)
+    License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
+-->
+<odoo>
+
+    <record id="action_account_bank_statement_reconcile" model="ir.actions.server">
+        <field name="name">Reconcile</field>
+        <field name="type">ir.actions.server</field>
+        <field name="state">code</field>
+        <field name="model_id" ref="account.model_account_bank_statement"/>
+        <field name="binding_model_id" ref="account.model_account_bank_statement"/>
+        <field name="code">
+            if records:
+                action = records.action_open_reconcile()
+        </field>
+    </record>
+
+    <record id="action_account_bank_statement_unreconcile" model="ir.actions.server">
+        <field name="name">Unreconcile</field>
+        <field name="type">ir.actions.server</field>
+        <field name="state">code</field>
+        <field name="model_id" ref="account.model_account_bank_statement"/>
+        <field name="binding_model_id" ref="account.model_account_bank_statement"/>
+        <field name="code">
+            if records:
+                action = records.action_unreconcile()
+        </field>
+    </record>
+
+    <record id="action_account_bank_statement_reset_to_new" model="ir.actions.server">
+        <field name="name">Reset to New</field>
+        <field name="type">ir.actions.server</field>
+        <field name="state">code</field>
+        <field name="model_id" ref="account.model_account_bank_statement"/>
+        <field name="binding_model_id" ref="account.model_account_bank_statement"/>
+        <field name="code">
+            if records:
+                action = records.action_reset_to_new()
+        </field>
+    </record>
+
+    <record id="action_account_bank_statement_validate" model="ir.actions.server">
+        <field name="name">Validate</field>
+        <field name="type">ir.actions.server</field>
+        <field name="state">code</field>
+        <field name="model_id" ref="account.model_account_bank_statement"/>
+        <field name="binding_model_id" ref="account.model_account_bank_statement"/>
+        <field name="code">
+            if records:
+                action = records.action_validate()
+        </field>
+    </record>
+
+    <record id="action_account_bank_statement_confirm_balance_and_validate" model="ir.actions.server">
+        <field name="name">Confirm Balance &amp; Validate</field>
+        <field name="type">ir.actions.server</field>
+        <field name="state">code</field>
+        <field name="model_id" ref="account.model_account_bank_statement"/>
+        <field name="binding_model_id" ref="account.model_account_bank_statement"/>
+        <field name="code">
+            if records:
+                action = records.action_confirm_balance_and_validate()
+        </field>
+    </record>
+
+</odoo>
