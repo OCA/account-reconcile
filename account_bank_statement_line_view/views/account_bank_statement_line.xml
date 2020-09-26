@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Copyright 2020 CorporateHub (https://corporatehub.eu)
+    License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
+-->
+<odoo>
+
+    <record id="view_bank_statement_line_search" model="ir.ui.view">
+        <field name="name">account.bank.statement.line.search</field>
+        <field name="model">account.bank.statement.line</field>
+        <field name="inherit_id" ref="account.view_bank_statement_line_search"/>
+        <field name="arch" type="xml">
+            <search>
+                <filter name="filter_date" string="Date" date="date"/>
+                <filter name="filter_unreconciled" string="Unreconciled" domain="[('journal_entry_ids', '=', False)]"/>
+                <group expand="0" string="Group By...">
+                    <filter name="Journal" context="{'group_by': 'journal_id'}"/>
+                    <filter name="Statement" context="{'group_by': 'statement_id'}"/>
+                    <filter name="Date" context="{'group_by': 'date'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <menuitem
+        id="menu_accounting_transactions"
+        action="account.action_bank_statement_line"
+        parent="account_menu.menu_accounting_bank_and_cash"
+        sequence="30"
+        name="Operations"
+    />
+
+</odoo>
