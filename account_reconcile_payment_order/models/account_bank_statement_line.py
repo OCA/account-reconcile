@@ -13,7 +13,7 @@ class AccountBankStatementLine(models.Model):
         line.
         """
         return self.env['account.payment.order'].search([
-            ('total_company_currency', '=', self.amount),
+            ('total_company_currency', '=', -self.amount),
             ('state', 'in', ['done', 'uploaded']),
         ])
 
