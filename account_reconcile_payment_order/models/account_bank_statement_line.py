@@ -13,8 +13,14 @@ class AccountBankStatementLine(models.Model):
         line.
         """
         return self.env['account.payment.order'].search([
+            ('payment_type', '=', 'inbound'),
             ('total_company_currency', '=', self.amount),
-            ('state', 'in', ['done', 'uploaded']),
+            ('state', 'in', ['done', 'uploaded'])
+        ]),
+        self.env['account.payment.order'].search([
+            ('payment_type', '=', 'outbound'),
+            ('total_company_currency', '=', -self.amount),
+            ('state', 'in', ['done', 'uploaded'])
         ])
 
     def prepare_proposition_from_orders(self, orders, excluded_ids=None):
