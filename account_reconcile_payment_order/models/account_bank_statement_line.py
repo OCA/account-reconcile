@@ -12,7 +12,7 @@ class AccountBankStatementLine(models.Model):
         """Find orders that might be candidates for matching a statement
         line.
         """
-        return self.env['account.payment.order'].search([
+        return [self.env['account.payment.order'].search([
             ('total_company_currency', '=', self.amount),
             ('state', 'in', ['done', 'uploaded']),
             ('payment_type', '=', 'inbound'),
@@ -21,7 +21,7 @@ class AccountBankStatementLine(models.Model):
             ('total_company_currency', '=', -self.amount),
             ('state', 'in', ['done', 'uploaded']),
             ('payment_type', '=', 'outbound'),
-        ])
+        ])]
 
     def prepare_proposition_from_orders(self, orders, excluded_ids=None):
         """Fill with the expected format the reconciliation proposition
