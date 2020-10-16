@@ -12,7 +12,7 @@
         'base_transaction_id'
     ],
     'data': [
-        'data/completion_rule_data.xml'
+        'data/completion_rule_data.xml',
     ],
     'website': 'http://www.camptocamp.com',
     'installable': True,
