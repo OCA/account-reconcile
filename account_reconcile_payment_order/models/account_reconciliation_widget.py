@@ -12,11 +12,19 @@ class AccountReconciliationWidget(models.AbstractModel):
         """Find orders that might be candidates for matching a statement
         line.
         """
-        return self.env['account.payment.order'].search([
+        inbound_apo = self.env['account.payment.order'].search([
+            ('payment_type', '=', 'inbound'),
             ('total_company_currency', '=', st_line.amount),
-            ('state', 'in', ['done', 'uploaded']),
+            ('state', 'in', ['done', 'uploaded'])
         ])
-
+        outbound_apo = self.env['account.payment.order'].search([
+            ('payment_type', '=', 'outbound'),
+            ('total_company_currency', '=', -st_line.amount),
+            ('state', 'in', ['done', 'uploaded'])
+        ])
+        matched_apo = inbound_apo + outbound_apo
+        return matched_apo
+    
     @api.model
     def _get_reconcile_lines_from_order(self, st_line, order,
                                         excluded_ids=None):
