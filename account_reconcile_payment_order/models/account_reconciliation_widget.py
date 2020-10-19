@@ -10,7 +10,7 @@ class AccountReconciliationWidget(models.AbstractModel):
     @api.model
     def _get_possible_payment_orders_for_statement_line(self, st_line):
         """Find orders that might be candidates for matching a statement
-        line. Inbound and outbound.
+        line. Inbound and outbound. Rerun build
         """
         inbound_apo = self.env['account.payment.order'].search([
             ('payment_type', '=', 'inbound'),
