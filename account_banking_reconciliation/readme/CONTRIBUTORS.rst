@@ -3,3 +3,4 @@
 * Bhavesh Odedra <bodedra@opensourceintegrators.com>
 * Sandeep Mangukiya <smangukiya@opensourceintegrators.com>
 * Murtuza Saleh <murtuza.saleh@serpentcs.com>
+* Jevin Dement <jdement@opensourceintegrators.com>
