@@ -13,7 +13,7 @@
     "Open Source Integrators, "
     "Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/account-reconcile",
-    "depends": ["account_voucher"],
+    "depends": ["account"],
     "data": [
         "security/account_banking_reconciliation.xml",
         "security/ir.model.access.csv",
