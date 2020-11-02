@@ -24,21 +24,25 @@ class TestCompletionTransactionId(SingleTransactionCase):
         cls.journal = cls.env.ref('account.bank_journal')
         cls.journal.used_for_completion = True
         cls.move = cls.env['account.move'].create(
-            {'name': 'Move with transaction ID', 'journal_id': cls.journal.id}
+            {
+                'name': 'Move with transaction ID',
+                'ref': 'credit card remittance',
+                'journal_id': cls.journal.id,
+            }
         )
         cls.move_line = cls.env['account.move.line'].create(
             {
-                'name': 'Test autocompletion on invoice with transaction ID',
+                'name': 'XXX66Z',
                 'account_id': cls.env.ref('account.a_sale').id,
                 'move_id': cls.move.id,
-                'ref': 'XXX66Z',
+                'ref': 'some reference',
                 'date_maturity': '{}-01-06'.format(datetime.now().year),
                 'credit': 0.0,
             }
         )
 
     def test_sale_order_transaction_id(self):
-        self.move_line.ref = 'XXX66Z'
+        self.move_line.name = 'XXX66Z'
         self.journal.rule_ids = [
             (
                 4,
@@ -104,7 +108,7 @@ class TestCompletionTransactionId(SingleTransactionCase):
         self.assertEqual(self.move_line.partner_id.name, self.partner.name)
 
     def test_new_invoice_with_transaction_id(self):
-        self.move_line.ref = 'XXX77Z'
+        self.move_line.name = 'XXX77Z'
         self.move_line.partner_id = None
         self.journal.rule_ids = [
             (
