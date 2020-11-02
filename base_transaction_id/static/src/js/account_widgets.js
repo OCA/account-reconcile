@@ -8,7 +8,7 @@ odoo.define('base_transaction_id.base_transaction_id', function (require) {
             if (line.transaction_ref) {
                 line.q_label += ' (' + line.transaction_ref + ')';
             }
-        },
+        }
     });
 
 });
