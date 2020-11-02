@@ -34,12 +34,18 @@ msgid "Journal Item"
 msgstr ""
 
 #. module: base_transaction_id
+#: model:ir.model,name:base_transaction_id.model_account_payment
+msgid "Payments"
+msgstr ""
+
+#. module: base_transaction_id
 #: model:ir.model,name:base_transaction_id.model_sale_order
 msgid "Sales Order"
 msgstr "销售订单"
 
 #. module: base_transaction_id
 #: model:ir.model.fields,field_description:base_transaction_id.field_account_invoice_transaction_id
+#: model:ir.model.fields,field_description:base_transaction_id.field_account_payment_transaction_id
 #: model:ir.model.fields,field_description:base_transaction_id.field_sale_order_transaction_id
 msgid "Transaction ID"
 msgstr ""
@@ -55,6 +61,7 @@ msgid "Transaction Ref."
 msgstr ""
 
 #. module: base_transaction_id
+#: model:ir.model.fields,help:base_transaction_id.field_account_payment_transaction_id
 #: model:ir.model.fields,help:base_transaction_id.field_sale_order_transaction_id
 msgid "Transaction id from the financial institute"
 msgstr ""
