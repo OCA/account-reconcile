@@ -73,8 +73,6 @@ class TransactionIDFileParser(FileParser):
 
     def get_move_vals(self):
         res = super().get_move_vals()
-        if "ref" in res:
-            res.pop("ref")
         if res.get("name") == "/":
             res["name"] = self.move_ref
         return res
@@ -109,7 +107,7 @@ class TransactionIDFileParserMulti(TransactionIDFileParser):
 
     def get_move_line_vals(self, line, *args, **kwargs):
         res = super().get_move_line_vals(line, *args, **kwargs)
-        res["ref"] = line.get("transaction_id", "/")
+        res["name"] = line.get("transaction_id", "/")
         return res
 
 
@@ -125,9 +123,9 @@ class TransactionIDFileParserSingle(TransactionIDFileParser):
 
     def get_move_vals(self):
         res = super().get_move_vals()
-        transaction_ids = [
-            row.get("transaction_id") for row in self.result_row_list
-        ]
-        if transaction_ids:
-            res["ref"] = " ".join(transaction_ids)
+        return res
+
+    def get_move_line_vals(self, line, *args, **kwargs):
+        res = super().get_move_line_vals(line, *args, **kwargs)
+        res["name"] = line.get("transaction_id", "/")
         return res

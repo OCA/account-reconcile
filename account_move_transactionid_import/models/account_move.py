@@ -34,7 +34,7 @@ class AccountMoveCompletionRule(models.Model):
             """
         res = {}
         so_obj = self.env['sale.order']
-        sales = so_obj.search([('transaction_id', '=', line.ref)])
+        sales = so_obj.search([('transaction_id', '=', line.name)])
         partners = sales.mapped('partner_id')
         if len(partners) > 1:
             raise ErrorTooManyPartner(
@@ -63,7 +63,7 @@ class AccountMoveCompletionRule(models.Model):
         res = {}
         invoice_obj = self.env['account.invoice']
         invoices = invoice_obj.search(
-            [('transaction_id', '=', line.ref)])
+            [('transaction_id', '=', line.name)])
         partners = invoices.mapped('partner_id.commercial_partner_id')
         accounts = invoices.mapped('account_id')
         if len(partners) > 1:

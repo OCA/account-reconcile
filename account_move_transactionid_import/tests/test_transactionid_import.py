@@ -102,13 +102,14 @@ class TestTransactionIdImport(TestCodaImport):
         self.assertEqual(len(moves), 3)
         transaction_ids = ["50969286", "51065326", "51179306"]
         for i, move in enumerate(moves):
-            self.assertEqual(move.ref, transaction_ids[i])
-            self.assertEqual(move.name, "statement")
+            self.assertEqual(move.name, transaction_ids[i])
+            self.assertEqual(move.ref, "statement")
             self.assertEqual(3, len(move.line_ids))
 
     def _validate_transactionid_imported_move(self, move):
         self.assertEqual(len(move), 1)
         transaction_ids = ["50969286", "51065326", "51179306"]
-        self.assertEqual(move.ref, " ".join(transaction_ids))
-        self.assertEqual(move.name, "statement")
+        self.assertEqual(move.ref, "statement")
+        for idx, line in enumerate(move.line_ids):
+            self.assertEqual(line.name, transaction_ids[idx])
         self.assertEqual(len(move.line_ids), 5)
