@@ -1,4 +1,4 @@
-# Copyright 2012-2016 Camptocamp SA
+# Copyright 2012-2020 Camptocamp SA
 # Copyright 2010 Sébastien Beau
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
@@ -94,11 +94,32 @@ class MassReconcileAdvancedRef(models.TransientModel):
         yield ('ref', (move_line['ref'], move_line['name'])
 
         An OR is used between the values for the same key.
-        An AND is used between the differents keys.
+        An AND is used between the different keys.
 
         :param dict move_line: values of the move_line
         :yield: matchers as tuple ('matcher key', value(s))
         """
         yield ('partner_id', move_line['partner_id'])
-        yield ('ref', ((move_line['ref'] or '').lower().strip(),
-                       move_line['name'].lower().strip()))
+        yield ('ref', ((move_line['name'] or '').lower().strip(),
+                       (move_line['ref'] or '').lower().strip()))
+
+
+class MassReconcileAdvancedLabel(models.TransientModel):
+
+    _name = 'mass.reconcile.advanced.label'
+    _inherit = 'mass.reconcile.advanced'
+
+    @staticmethod
+    def _skip_line(move_line):
+        return not (move_line.get('name') and move_line.get('partner_id'))
+
+    @staticmethod
+    def _matchers(move_line):
+        return (('partner_id', move_line['partner_id']),
+                ('name', move_line['name'].lower().strip()))
+
+    @staticmethod
+    def _opposite_matchers(move_line):
+        yield ('partner_id', move_line['partner_id'])
+        yield ('name', ((move_line['ref'] or '').lower().strip(),
+                        move_line['name'].lower().strip()))

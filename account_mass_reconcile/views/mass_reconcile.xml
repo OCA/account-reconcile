@@ -58,7 +58,12 @@ The lines should have the same amount (with the write-off) and the same referenc
                           <group colspan="2" col="2">
                               <separator colspan="4" string="Advanced. Partner and Ref"/>
                               <label for="reconcile_method" string="Match multiple debit vs multiple credit entries. Allow partial reconciliation.
-The lines should have the same partner, and the credit entry ref. is matched with the debit entry ref. or name." colspan="4"/>
+The lines should have the same partner, and the credit entry Reference (ref) is matched with the debit entry Label (name) or Reference (ref)." colspan="4"/>
+                          </group>
+                          <group colspan="2" col="2">
+                              <separator colspan="4" string="Advanced. Partner and Label"/>
+                              <label for="reconcile_method" string="Match multiple debit vs multiple credit entries. Allow partial reconciliation.
+The lines should have the same partner, and the credit entry Label (name) is matched with the debit entry Reference (ref) or Label (name)." colspan="4"/>
                           </group>
                         </page>
                     </notebook>

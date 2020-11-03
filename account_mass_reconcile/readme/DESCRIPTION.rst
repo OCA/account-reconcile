@@ -16,3 +16,7 @@ in this module, the simple reconciliations works
 on 2 lines (1 debit / 1 credit) and do not allow
 partial reconciliation, they also match on 1 key,
 partner or Journal item name.
+
+2 advanced reconciliation methods are also available, which can make full
+reconcilations, based on the account move lines' Label and Reference, for moves
+with the same partner.
