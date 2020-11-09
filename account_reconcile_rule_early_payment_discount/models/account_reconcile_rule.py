@@ -7,15 +7,14 @@ from odoo import api, fields, models
 
 
 class AccountReconcileRule(models.Model):
-    _inherit = 'account.reconcile.rule'
+    _inherit = "account.reconcile.rule"
 
     rule_type = fields.Selection(
-        selection_add=[('early_payment_discount', 'Early Payment Discount')],
+        selection_add=[("early_payment_discount", "Early Payment Discount")],
     )
 
     @api.multi
-    def _is_valid_early_payment_discount(self, statement_line, move_lines,
-                                         balance):
+    def _is_valid_early_payment_discount(self, statement_line, move_lines, balance):
         """Return True if *move_lines* are linked to only one invoice
         with a payment term which has an early payment discount
         and if *balance* and the *statement_line* date match the
@@ -30,7 +29,7 @@ class AccountReconcileRule(models.Model):
         if not move_lines or balance >= 0:
             return False
         else:
-            invoice = move_lines.mapped('invoice_id')
+            invoice = move_lines.mapped("invoice_id")
 
             if len(invoice) != 1:
                 return False
@@ -42,8 +41,7 @@ class AccountReconcileRule(models.Model):
                 )
 
     @api.multi
-    def _check_early_payment_discount(self, statement_line, invoice,
-                                      balance):
+    def _check_early_payment_discount(self, statement_line, invoice, balance):
         """ Return True if *balance* and the *statement_line* date match the
         early payment discount rules for *invoice*.
 
@@ -69,7 +67,10 @@ class AccountReconcileRule(models.Model):
 
         return self._between_with_bounds(
             # Balance is negative in our case
-            0, -balance, discount_balance, statement_line.currency_for_rules()
+            0,
+            -balance,
+            discount_balance,
+            statement_line.currency_for_rules(),
         )
 
     @api.multi
@@ -77,7 +78,7 @@ class AccountReconcileRule(models.Model):
         """ Override account.operation.rule is_valid for early_payment_discount
         case
         """
-        if self.rule_type == 'early_payment_discount':
+        if self.rule_type == "early_payment_discount":
             return self._is_valid_early_payment_discount(
                 statement_line, move_lines, balance
             )
