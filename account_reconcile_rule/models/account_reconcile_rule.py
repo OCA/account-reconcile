@@ -2,44 +2,36 @@
 # Copyright 2014 Camptocamp SA
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-from odoo import models, fields, api
+from odoo import api, fields, models
+
 from odoo.addons import decimal_precision as dp
 
 
 class AccountReconcileRule(models.Model):
-    _name = 'account.reconcile.rule'
-    _description = 'Rules for reconciliation'
-    _order = 'sequence ASC, id ASC'
+    _name = "account.reconcile.rule"
+    _description = "Rules for reconciliation"
+    _order = "sequence ASC, id ASC"
 
     name = fields.Char()
     rule_type = fields.Selection(
-        selection=[('rounding', 'Roundings'),
-                   ('currency', 'Currencies')],
-        string='Type',
-        default='rounding',
+        selection=[("rounding", "Roundings"), ("currency", "Currencies")],
+        string="Type",
+        default="rounding",
         required=True,
     )
     reconcile_model_ids = fields.Many2many(
-        comodel_name='account.reconcile.model',
-        string='Reconciliation models',
+        comodel_name="account.reconcile.model", string="Reconciliation models",
     )
-    amount_min = fields.Float(
-        string='Min. Amount',
-        digits=dp.get_precision('Account'),
-    )
-    amount_max = fields.Float(
-        string='Max. Amount',
-        digits=dp.get_precision('Account'),
-    )
+    amount_min = fields.Float(string="Min. Amount", digits=dp.get_precision("Account"),)
+    amount_max = fields.Float(string="Max. Amount", digits=dp.get_precision("Account"),)
     currency_ids = fields.Many2many(
-        comodel_name='res.currency',
-        string='Currencies',
+        comodel_name="res.currency",
+        string="Currencies",
         help="For 'Currencies' rules, you can choose for which currencies "
-             "the rule will be applicable.",
+        "the rule will be applicable.",
     )
     sequence = fields.Integer(
-        default=20,
-        help="If several rules match, the first one is used.",
+        default=20, help="If several rules match, the first one is used.",
     )
 
     @staticmethod
@@ -57,8 +49,9 @@ class AccountReconcileRule(models.Model):
 
     @api.multi
     def _balance_in_range(self, balance, currency):
-        return self._between_with_bounds(self.amount_min, balance,
-                                         self.amount_max, currency)
+        return self._between_with_bounds(
+            self.amount_min, balance, self.amount_max, currency
+        )
 
     @api.model
     def _is_multicurrency(self, statement_line):
@@ -118,12 +111,10 @@ class AccountReconcileRule(models.Model):
                         rule when called on multiple rules.
         """
         self.ensure_one()
-        if self.rule_type == 'rounding':
+        if self.rule_type == "rounding":
             return self._is_valid_balance(statement_line, balance)
-        elif self.rule_type == 'currency':
-            return self._is_valid_multicurrency(statement_line,
-                                                move_lines,
-                                                balance)
+        elif self.rule_type == "currency":
+            return self._is_valid_multicurrency(statement_line, move_lines, balance)
 
     @api.model
     def find_first_rule(self, statement_line, move_lines):
@@ -148,7 +139,7 @@ class AccountReconcileRule(models.Model):
         return self.browse()
 
     @api.model
-    @api.returns('account.reconcile.model')
+    @api.returns("account.reconcile.model")
     def models_for_reconciliation(self, statement_line_id, move_line_ids):
         """Find the reconcile models for the for given statement and move lines.
 
@@ -157,8 +148,8 @@ class AccountReconcileRule(models.Model):
 
         Called from the javascript reconciliation view.
         """
-        line_obj = self.env['account.bank.statement.line']
-        move_line_obj = self.env['account.move.line']
+        line_obj = self.env["account.bank.statement.line"]
+        move_line_obj = self.env["account.move.line"]
         statement_line = line_obj.browse(statement_line_id)
         move_lines = move_line_obj.browse(move_line_ids)
         rules = self.find_first_rule(statement_line, move_lines)

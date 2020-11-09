@@ -6,91 +6,95 @@ from .common import AccountReconciliationModelTestCase
 
 
 class TestRuleCurrency(AccountReconciliationModelTestCase):
-
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
 
-        cls.aed = cls.env.ref('base.AED')
+        cls.aed = cls.env.ref("base.AED")
         cls.aed.active = True
-        cls.afn = cls.env.ref('base.AFN')
+        cls.afn = cls.env.ref("base.AFN")
         cls.afn.active = True
-        cls.all = cls.env.ref('base.ALL')
+        cls.all = cls.env.ref("base.ALL")
         cls.all.active = True
-        cls.amd = cls.env.ref('base.AMD')
+        cls.amd = cls.env.ref("base.AMD")
         cls.amd.active = True
-        cls.aoa = cls.env.ref('base.AOA')
+        cls.aoa = cls.env.ref("base.AOA")
         cls.aoa.active = True
 
-        cls.reconcile_model_currency_1 = cls.reconcile_model_obj.create({
-            'name': 'Currency AED, AFR, ALL -1.0 to 0.0',
-            'label': 'Currency',
-            'account_id': cls.account_receivable.id,
-            'amount_type': 'percentage',
-            'amount': 100.0,
-        })
-        cls.rule_currency_1 = cls.rule_obj.create({
-            'name': 'Currency AED, AFR, ALL -1.0 to 0.0',
-            'rule_type': 'currency',
-            'reconcile_model_ids': [
-                (6, 0, (cls.reconcile_model_currency_1.id,))],
-            'amount_min': -1.0,
-            'amount_max': 0,
-            'sequence': 1,
-            'currency_ids': [(6, 0, [cls.aed.id, cls.afn.id, cls.all.id])],
-        })
+        cls.reconcile_model_currency_1 = cls.reconcile_model_obj.create(
+            {
+                "name": "Currency AED, AFR, ALL -1.0 to 0.0",
+                "label": "Currency",
+                "account_id": cls.account_receivable.id,
+                "amount_type": "percentage",
+                "amount": 100.0,
+            }
+        )
+        cls.rule_currency_1 = cls.rule_obj.create(
+            {
+                "name": "Currency AED, AFR, ALL -1.0 to 0.0",
+                "rule_type": "currency",
+                "reconcile_model_ids": [(6, 0, (cls.reconcile_model_currency_1.id,))],
+                "amount_min": -1.0,
+                "amount_max": 0,
+                "sequence": 1,
+                "currency_ids": [(6, 0, [cls.aed.id, cls.afn.id, cls.all.id])],
+            }
+        )
 
-        cls.reconcile_model_currency_2 = cls.reconcile_model_obj.create({
-            'name': 'Currency AED, AFR, ALL -2.0 to -1.0',
-            'label': 'Currency',
-            'amount_type': 'percentage',
-            'amount': 100.0,
-        })
-        cls.rule_currency_2 = cls.rule_obj.create({
-            'name': 'Currency AED, AFR, ALL -2.0 to 1.0',
-            'rule_type': 'currency',
-            'reconcile_model_ids': [
-                (6, 0, (cls.reconcile_model_currency_2.id, ))],
-            'amount_min': -2.0,
-            'amount_max': -1.0,
-            'sequence': 2,
-            'currency_ids': [(6, 0, [cls.aed.id, cls.afn.id, cls.all.id])],
-        })
+        cls.reconcile_model_currency_2 = cls.reconcile_model_obj.create(
+            {
+                "name": "Currency AED, AFR, ALL -2.0 to -1.0",
+                "label": "Currency",
+                "amount_type": "percentage",
+                "amount": 100.0,
+            }
+        )
+        cls.rule_currency_2 = cls.rule_obj.create(
+            {
+                "name": "Currency AED, AFR, ALL -2.0 to 1.0",
+                "rule_type": "currency",
+                "reconcile_model_ids": [(6, 0, (cls.reconcile_model_currency_2.id,))],
+                "amount_min": -2.0,
+                "amount_max": -1.0,
+                "sequence": 2,
+                "currency_ids": [(6, 0, [cls.aed.id, cls.afn.id, cls.all.id])],
+            }
+        )
 
-        cls.reconcile_model_currency_3 = cls.reconcile_model_obj.create({
-            'name': 'Currency AMD, AOA -2.0 to 0.0',
-            'label': 'Currency',
-            'amount_type': 'percentage',
-            'amount': 100.0,
-
-        })
-        cls.rule_currency_3 = cls.rule_obj.create({
-            'name': 'Currency AMD, AOA -2.0 to 0.0',
-            'rule_type': 'currency',
-            'reconcile_model_ids': [
-                (6, 0, (cls.reconcile_model_currency_3.id, ))],
-            'amount_min': -2,
-            'amount_max': 0,
-            'sequence': 2,
-            'currency_ids': [(6, 0, [cls.amd.id, cls.aoa.id])],
-        })
+        cls.reconcile_model_currency_3 = cls.reconcile_model_obj.create(
+            {
+                "name": "Currency AMD, AOA -2.0 to 0.0",
+                "label": "Currency",
+                "amount_type": "percentage",
+                "amount": 100.0,
+            }
+        )
+        cls.rule_currency_3 = cls.rule_obj.create(
+            {
+                "name": "Currency AMD, AOA -2.0 to 0.0",
+                "rule_type": "currency",
+                "reconcile_model_ids": [(6, 0, (cls.reconcile_model_currency_3.id,))],
+                "amount_min": -2,
+                "amount_max": 0,
+                "sequence": 2,
+                "currency_ids": [(6, 0, [cls.amd.id, cls.aoa.id])],
+            }
+        )
 
     def test_no_currency_match(self):
         """No rules for the current currency"""
-        sek = self.browse_ref('base.SEK')
+        sek = self.browse_ref("base.SEK")
         statement_line, move_line = self.prepare_statement(
-            -0.5,
-            statement_line_currency=sek,
-            move_line_currency=sek)
-        ops = self.rule_obj.models_for_reconciliation(statement_line.id,
-                                                      move_line.ids)
+            -0.5, statement_line_currency=sek, move_line_currency=sek
+        )
+        ops = self.rule_obj.models_for_reconciliation(statement_line.id, move_line.ids)
         self.assertFalse(ops)
 
     def test_rounding_lines(self):
         """No Currencies rules on lines with company currency"""
         statement_line, move_line = self.prepare_statement(-0.5)
-        ops = self.rule_obj.models_for_reconciliation(statement_line.id,
-                                                      move_line.ids)
+        ops = self.rule_obj.models_for_reconciliation(statement_line.id, move_line.ids)
         self.assertFalse(ops)
 
     def test_currency_rule_1(self):
@@ -99,7 +103,8 @@ class TestRuleCurrency(AccountReconciliationModelTestCase):
             -0.5,
             statement_line_currency=self.aed,
             move_line_currency=self.aed,
-            amount_currency_difference=0)
+            amount_currency_difference=0,
+        )
         rule = self.rule_obj.find_first_rule(statement_line, [move_line])
         self.assertEqual(rule, self.rule_currency_1)
 
@@ -109,7 +114,8 @@ class TestRuleCurrency(AccountReconciliationModelTestCase):
             -2,
             statement_line_currency=self.aed,
             move_line_currency=self.aed,
-            amount_currency_difference=0)
+            amount_currency_difference=0,
+        )
         rule = self.rule_obj.find_first_rule(statement_line, [move_line])
         self.assertEqual(rule, self.rule_currency_2)
 
@@ -119,7 +125,8 @@ class TestRuleCurrency(AccountReconciliationModelTestCase):
             -2,
             statement_line_currency=self.aoa,
             move_line_currency=self.aoa,
-            amount_currency_difference=0)
+            amount_currency_difference=0,
+        )
         rule = self.rule_obj.find_first_rule(statement_line, [move_line])
         self.assertEqual(rule, self.rule_currency_3)
 
@@ -129,7 +136,8 @@ class TestRuleCurrency(AccountReconciliationModelTestCase):
             -3,
             statement_line_currency=self.aoa,
             move_line_currency=self.aoa,
-            amount_currency_difference=0)
+            amount_currency_difference=0,
+        )
         rule = self.rule_obj.find_first_rule(statement_line, [move_line])
         self.assertFalse(rule)
 
@@ -139,7 +147,8 @@ class TestRuleCurrency(AccountReconciliationModelTestCase):
             -0.5,
             statement_line_currency=self.aed,
             move_line_currency=self.aed,
-            amount_currency_difference=0.5)
+            amount_currency_difference=0.5,
+        )
         rule = self.rule_obj.find_first_rule(statement_line, [move_line])
         self.assertFalse(rule)
 
@@ -149,6 +158,7 @@ class TestRuleCurrency(AccountReconciliationModelTestCase):
             -0.5,
             statement_line_currency=self.aed,
             move_line_currency=self.aed,
-            amount_currency_difference=-0.001)
+            amount_currency_difference=-0.001,
+        )
         rule = self.rule_obj.find_first_rule(statement_line, [move_line])
         self.assertEqual(rule, self.rule_currency_1)
