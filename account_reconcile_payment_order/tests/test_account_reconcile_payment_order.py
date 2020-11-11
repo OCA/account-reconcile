@@ -21,13 +21,14 @@ class TestAccountReconcilePaymentOrder(TestPaymentOrderInboundBase):
             limit=1,
         )
         # Create second invoice for being sure it handles the payment order
-        cls.invoice2 = cls._create_customer_invoice()
-        cls.partner2 = cls.env["res.partner"].create({"name": "Test partner 2",})
+        cls.invoice2 = cls._create_customer_invoice(cls)
+        cls.partner2 = cls.env["res.partner"].create({"name": "Test partner 2"})
         cls.invoice2.partner_id = cls.partner2.id
-        cls.invoice2.action_invoice_open()
+        cls.invoice2.payment_mode_id = cls.inbound_mode
+        cls.invoice2.action_post()
         # Add to payment order using the wizard
         cls.env["account.invoice.payment.line.multi"].with_context(
-            active_model="account.invoice", active_ids=cls.invoice2.ids,
+            active_model="account.move", active_ids=cls.invoice2.ids,
         ).create({}).run()
         # Prepare statement
         cls.statement = cls.env["account.bank.statement"].create(
@@ -36,7 +37,7 @@ class TestAccountReconcilePaymentOrder(TestPaymentOrderInboundBase):
                 "date": "2019-01-01",
                 "journal_id": cls.bank_journal.id,
                 "line_ids": [
-                    (0, 0, {"date": "2019-01-01", "name": "Test line", "amount": 200,}),
+                    (0, 0, {"date": "2019-01-01", "name": "Test line", "amount": 200}),
                 ],
             }
         )
@@ -44,7 +45,7 @@ class TestAccountReconcilePaymentOrder(TestPaymentOrderInboundBase):
     def test_reconcile_payment_order_bank(self):
         self.assertEqual(len(self.inbound_order.payment_line_ids), 2)
         self.inbound_mode.write(
-            {"offsetting_account": "bank_account", "move_option": "line",}
+            {"offsetting_account": "bank_account", "move_option": "line"}
         )
         # Prepare payment order
         self.inbound_order.draft2open()
@@ -89,7 +90,7 @@ class TestAccountReconcilePaymentOrder(TestPaymentOrderInboundBase):
             data=[
                 {
                     "type": "",
-                    "mv_line_ids": [proposition[0]["id"], proposition[1]["id"],],
+                    "mv_line_ids": [proposition[0]["id"], proposition[1]["id"]],
                     "new_mv_line_dicts": [
                         {
                             "name": st_line_vals["name"],
