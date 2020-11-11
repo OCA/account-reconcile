@@ -16,7 +16,7 @@ class TestEarlyPaymentDiscountRule(SavepointCase):
         cls.env = cls.env(context=dict(cls.env.context, tracking_disable=True))
 
         # Customer Partner
-        cls.partner = cls.env["res.partner"].create({"name": "Customer partner",})
+        cls.partner = cls.env["res.partner"].create({"name": "Customer partner"})
 
         cls.rule_model = cls.env["account.reconcile.rule"]
         # Delete existing rules
@@ -36,7 +36,7 @@ class TestEarlyPaymentDiscountRule(SavepointCase):
             {
                 "name": "Unittest Early Payment Discount",
                 "rule_type": "early_payment_discount",
-                "operations": [(6, 0, (cls.operation.id,))],
+                "reconcile_model_ids": [(6, 0, (cls.operation.id,))],
                 "sequence": 1,
             }
         )
@@ -69,10 +69,10 @@ class TestEarlyPaymentDiscountRule(SavepointCase):
             }
         )
         cls.cash_journal = cls.env["account.journal"].create(
-            {"name": "Unittest Cash journal", "code": "CASH", "type": "cash",}
+            {"name": "Unittest Cash journal", "code": "CASH", "type": "cash"}
         )
         cls.sale_journal = cls.env["account.journal"].create(
-            {"name": "Unittest Customer Invoices", "code": "INV", "type": "sale",}
+            {"name": "Unittest Customer Invoices", "code": "INV", "type": "sale"}
         )
         # Early payment discount payment term.
         cls.payment_term = cls.env["account.payment.term"].create(
@@ -84,15 +84,15 @@ class TestEarlyPaymentDiscountRule(SavepointCase):
             }
         )
         # Product and invoice with price = 1000
-        product_test = cls.env["product.product"].create({"name": "Unittest product",})
-        cls.date_invoice = date(2016, 5, 10)
-        cls.invoice = cls.env["account.invoice"].create(
+        product_test = cls.env["product.product"].create({"name": "Unittest product"})
+        cls.invoice_date = date(2016, 5, 10)
+        cls.invoice = cls.env["account.move"].create(
             {
                 "name": "Test Customer Invoice",
-                "date_invoice": cls.date_invoice,
-                "account_id": cls.account_customer.id,
+                "invoice_date": cls.invoice_date,
+                "journal_id": cls.sale_journal.id,
                 "partner_id": cls.partner.id,
-                "payment_term_id": cls.payment_term.id,
+                "invoice_payment_term_id": cls.payment_term.id,
                 "invoice_line_ids": [
                     (
                         0,
@@ -108,10 +108,10 @@ class TestEarlyPaymentDiscountRule(SavepointCase):
                 ],
             }
         )
+
         # Create move
         debit_line_vals = {
             "name": "001",
-            "invoice_id": cls.invoice.id,
             "account_id": cls.account_customer.id,
             "debit": 1000.0,
         }
@@ -120,17 +120,19 @@ class TestEarlyPaymentDiscountRule(SavepointCase):
             "account_id": cls.account_sale.id,
             "credit": 1000.0,
         }
-        cls.move = cls.env["account.move"].create(
+
+        cls.invoice.write(
             {
-                "journal_id": cls.sale_journal.id,
+                "invoice_payment_term_id": cls.payment_term.id,
                 "line_ids": [(0, 0, debit_line_vals), (0, 0, credit_line_vals)],
             }
         )
-        cls.debit_move = cls.move.line_ids.filtered(lambda l: l.debit != 0.0)
+
+        cls.debit_move = cls.invoice.line_ids.filtered(lambda l: l.debit != 0.0)
 
     def create_statement_line(self, amount, delta_days=0):
         statement = self.env["account.bank.statement"].create(
-            {"name": "/", "journal_id": self.cash_journal.id,}
+            {"name": "/", "journal_id": self.cash_journal.id}
         )
 
         return self.env["account.bank.statement.line"].create(
@@ -138,7 +140,7 @@ class TestEarlyPaymentDiscountRule(SavepointCase):
                 "statement_id": statement.id,
                 "name": "001",
                 "amount": amount,
-                "date": self.date_invoice + timedelta(days=delta_days),
+                "date": self.invoice_date + timedelta(days=delta_days),
             }
         )
 
@@ -186,7 +188,7 @@ class TestEarlyPaymentDiscountRule(SavepointCase):
         self.assertFalse(rule)
 
     def test_no_invoice(self):
-        self.debit_move.invoice_id = False
+        self.debit_move.move_id = False
 
         statement = self.create_statement_line(990)
         rule = self.rule_model.find_first_rule(statement, self.debit_move)

@@ -1,1 +1,3 @@
 bank-payment
+account_reconcile_rule https://github.com/trobz/account-reconcile.git 13.0-mig-account_reconcile_rule
+account_early_payment_discount https://github.com/trobz/account-payment.git 13.0-mig-account_early_payment_discount

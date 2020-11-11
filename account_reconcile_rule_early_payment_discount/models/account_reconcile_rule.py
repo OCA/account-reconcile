@@ -3,7 +3,7 @@
 
 from datetime import timedelta
 
-from odoo import api, fields, models
+from odoo import fields, models
 
 
 class AccountReconcileRule(models.Model):
@@ -13,7 +13,6 @@ class AccountReconcileRule(models.Model):
         selection_add=[("early_payment_discount", "Early Payment Discount")],
     )
 
-    @api.multi
     def _is_valid_early_payment_discount(self, statement_line, move_lines, balance):
         """Return True if *move_lines* are linked to only one invoice
         with a payment term which has an early payment discount
@@ -29,30 +28,29 @@ class AccountReconcileRule(models.Model):
         if not move_lines or balance >= 0:
             return False
         else:
-            invoice = move_lines.mapped("invoice_id")
+            invoice = move_lines.mapped("move_id")
 
             if len(invoice) != 1:
                 return False
-            elif not invoice.payment_term_id.early_payment_discount:
+            elif not invoice.invoice_payment_term_id.early_payment_discount:
                 return False
             else:
                 return self._check_early_payment_discount(
                     statement_line, invoice, balance
                 )
 
-    @api.multi
     def _check_early_payment_discount(self, statement_line, invoice, balance):
         """ Return True if *balance* and the *statement_line* date match the
         early payment discount rules for *invoice*.
 
         :type statement_line: AccountBankStatementLine
-        :type invoice: AccountInvoice
+        :type invoice: AccountMove
         :type balance: float
         :rtype: bool
         """
-        payment_term = invoice.payment_term_id
+        payment_term = invoice.invoice_payment_term_id
 
-        max_date = fields.Date.from_string(invoice.date_invoice) + timedelta(
+        max_date = fields.Date.from_string(invoice.invoice_date) + timedelta(
             days=payment_term.epd_nb_days
         )
 
@@ -73,7 +71,6 @@ class AccountReconcileRule(models.Model):
             statement_line.currency_for_rules(),
         )
 
-    @api.multi
     def is_valid(self, statement_line, move_lines, balance):
         """ Override account.operation.rule is_valid for early_payment_discount
         case
