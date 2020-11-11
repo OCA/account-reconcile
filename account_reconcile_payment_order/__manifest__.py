@@ -5,16 +5,12 @@
 {
     "name": "Reconcile payment orders",
     "version": "12.0.1.0.0",
-    "author": "Therp BV,"
-              "Tecnativa,"
-              "Odoo Community Association (OCA)",
+    "author": "Therp BV," "Tecnativa," "Odoo Community Association (OCA)",
     "license": "AGPL-3",
     "website": "https://github.com/OCA/account-reconcile",
     "category": "Invoicing Management",
     "summary": "Automatically propose all lines generated from payment orders",
-    "depends": [
-        'account_payment_order',
-    ],
+    "depends": ["account_payment_order",],
     "installable": True,
-    "maintainers": ['pedrobaeza'],
+    "maintainers": ["pedrobaeza"],
 }
