@@ -1,7 +1,6 @@
 odoo.define("account_reconcile_rule", function(require) {
     "use strict";
 
-    var core = require("web.core");
     var reconciliation_renderer = require("account.ReconciliationRenderer");
 
     /**
@@ -35,7 +34,6 @@ odoo.define("account_reconcile_rule", function(require) {
          * Add the write off entries after the the line renderer is ready
          */
         start: function() {
-            var self = this;
             var deferred = this._super();
             if (deferred) {
                 deferred.done(this.reconciliation_rule_models());

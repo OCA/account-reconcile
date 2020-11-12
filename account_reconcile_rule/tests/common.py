@@ -15,13 +15,13 @@ class AccountReconciliationModelTestCase(SavepointCase):
         cls.account_type_obj = cls.env["account.account.type"]
         cls.account_obj = cls.env["account.account"]
         cls.cash_journal = cls.journal_obj.create(
-            {"name": "Unittest Cash journal", "code": "CASH", "type": "cash",}
+            {"name": "Unittest Cash journal", "code": "CASH", "type": "cash"}
         )
         cls.sale_journal = cls.journal_obj.create(
-            {"name": "Unittest Customer Invoices", "code": "INV", "type": "sale",}
+            {"name": "Unittest Customer Invoices", "code": "INV", "type": "sale"}
         )
         receivable_type = cls.account_type_obj.create(
-            {"name": "Receivable", "type": "receivable"}
+            {"name": "Receivable", "type": "receivable", "internal_group": "expense"}
         )
         cls.account_receivable = cls.account_obj.create(
             {
@@ -32,7 +32,7 @@ class AccountReconciliationModelTestCase(SavepointCase):
             }
         )
         income_type = cls.account_type_obj.create(
-            {"name": "Unittest Income", "type": "other"}
+            {"name": "Unittest Income", "type": "other", "internal_group": "income"}
         )
         cls.account_sale = cls.account_obj.create(
             {

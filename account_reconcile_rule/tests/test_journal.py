@@ -10,4 +10,3 @@ class TestJournal(TransactionCase):
 
         result = self.env["account.journal"].open_reconciliation_rules()
         self.assertEqual("account.reconcile.rule", result["res_model"])
-        self.assertEqual("form", result["view_type"])
