@@ -303,7 +303,6 @@ msgstr ""
 #. module: account_move_base_import
 #: model:ir.model,name:account_move_base_import.model_account_move
 #, fuzzy
-#| msgid "Journal Item"
 msgid "Journal Entries"
 msgstr "Écriture comptable"
 

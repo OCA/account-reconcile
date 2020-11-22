@@ -198,7 +198,6 @@ msgstr ""
 #. module: account_move_base_import
 #: model:ir.model.fields,field_description:account_move_base_import.field_credit_statement_import__file_name
 #, fuzzy
-#| msgid "Display Name"
 msgid "File Name"
 msgstr "ชื่อที่ใช้แสดง"
 

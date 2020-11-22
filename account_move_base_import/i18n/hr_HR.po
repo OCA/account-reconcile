@@ -33,7 +33,6 @@ msgstr ""
 #. module: account_move_base_import
 #: model:ir.model,name:account_move_base_import.model_account_move_completion_rule
 #, fuzzy
-#| msgid "account.move.completion.rule"
 msgid "Account move completion method"
 msgstr "account.move.completion.rule"
 
@@ -203,7 +202,6 @@ msgstr ""
 #. module: account_move_base_import
 #: model:ir.model.fields,field_description:account_move_base_import.field_credit_statement_import__file_name
 #, fuzzy
-#| msgid "File name"
 msgid "File Name"
 msgstr "Naziv datoteke"
 
@@ -310,7 +308,6 @@ msgstr "Dnevnik"
 #. module: account_move_base_import
 #: model:ir.model,name:account_move_base_import.model_account_move
 #, fuzzy
-#| msgid "Journal Item"
 msgid "Journal Entries"
 msgstr "Stavka devnika"
 
