@@ -26,7 +26,6 @@ msgstr "Écriture comptable"
 #. module: account_move_reconcile_helper
 #: model:ir.model.fields,field_description:account_move_reconcile_helper.field_account_move_line__partial_reconciliation_in_progress
 #, fuzzy
-#| msgid "Partial reconciliation in progress"
 msgid "Partial Reconciliation In Progress"
 msgstr "Lettrage partiel en cours"
 
