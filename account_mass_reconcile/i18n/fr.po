@@ -217,7 +217,6 @@ msgstr "Nom à afficher"
 #: model:ir.ui.view,arch_db:account_mass_reconcile.account_mass_reconcile_form
 #: model:ir.ui.view,arch_db:account_mass_reconcile.account_mass_reconcile_tree
 #, fuzzy
-#| msgid "Display items reconciled on the last run"
 msgid "Display items fully reconciled on the last run"
 msgstr "Voir les entrées lettrées au dernier lettrage"
 
@@ -225,7 +224,6 @@ msgstr "Voir les entrées lettrées au dernier lettrage"
 #: model:ir.ui.view,arch_db:account_mass_reconcile.account_mass_reconcile_form
 #: model:ir.ui.view,arch_db:account_mass_reconcile.account_mass_reconcile_tree
 #, fuzzy
-#| msgid "Display items reconciled on the last run"
 msgid "Display items partially reconciled on the last run"
 msgstr "Voir les entrées lettrées au dernier lettrage"
 
@@ -275,7 +273,6 @@ msgstr "Compte de gain de change"
 #: model:ir.ui.view,arch_db:account_mass_reconcile.account_mass_reconcile_form
 #: model:ir.ui.view,arch_db:account_mass_reconcile.mass_reconcile_history_tree
 #, fuzzy
-#| msgid "Go to unreconciled items"
 msgid "Go to fully reconciled items"
 msgstr "Aller aux éléments non reconciliés"
 
@@ -283,7 +280,6 @@ msgstr "Aller aux éléments non reconciliés"
 #: model:ir.ui.view,arch_db:account_mass_reconcile.account_mass_reconcile_form
 #: model:ir.ui.view,arch_db:account_mass_reconcile.mass_reconcile_history_tree
 #, fuzzy
-#| msgid "Go to reconciled items"
 msgid "Go to partially reconciled items"
 msgstr "Voir les entrées lettrées"
 
@@ -495,7 +491,6 @@ msgstr "Options"
 #. module: account_mass_reconcile
 #: model:ir.ui.view,arch_db:account_mass_reconcile.mass_reconcile_history_form
 #, fuzzy
-#| msgid "Full Reconciliations"
 msgid "Partial Reconciliations"
 msgstr "Réconciliations complètes"
 
@@ -503,7 +498,6 @@ msgstr "Réconciliations complètes"
 #: code:addons/account_mass_reconcile/models/mass_reconcile_history.py:90
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_history_partial_reconcile_ids
 #, fuzzy, python-format
-#| msgid "Date of reconciliation"
 msgid "Partial reconciliations"
 msgstr "Date de lettrage"
 

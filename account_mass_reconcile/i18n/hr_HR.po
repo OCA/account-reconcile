@@ -471,7 +471,6 @@ msgstr "Opcije"
 #. module: account_mass_reconcile
 #: model:ir.ui.view,arch_db:account_mass_reconcile.mass_reconcile_history_form
 #, fuzzy
-#| msgid "Date of reconciliation"
 msgid "Partial Reconciliations"
 msgstr "Datum zatvaranja"
 
@@ -479,7 +478,6 @@ msgstr "Datum zatvaranja"
 #: code:addons/account_mass_reconcile/models/mass_reconcile_history.py:90
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_history_partial_reconcile_ids
 #, fuzzy, python-format
-#| msgid "Date of reconciliation"
 msgid "Partial reconciliations"
 msgstr "Datum zatvaranja"
 
