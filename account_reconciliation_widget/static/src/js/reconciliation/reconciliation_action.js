@@ -32,7 +32,6 @@ odoo.define("account.ReconciliationClientAction", function (require) {
             close_statement: "_onCloseStatement",
             load_more: "_onLoadMore",
             reload: "reload",
-            search: "_onSearch",
             navigation_move: "_onNavigationMove",
         },
         config: _.extend({}, AbstractAction.prototype.config, {
@@ -52,6 +51,7 @@ odoo.define("account.ReconciliationClientAction", function (require) {
 
         _onNavigationMove: function (ev) {
             var non_reconciled_keys = _.keys(
+                // eslint-disable-next-line no-unused-vars
                 _.pick(this.model.lines, function (value, key, object) {
                     return !value.reconciled;
                 })
@@ -86,7 +86,8 @@ odoo.define("account.ReconciliationClientAction", function (require) {
             this._super.apply(this, arguments);
             this.action_manager = parent;
             this.params = params;
-            this.controlPanelParams.modelName = "account.bank.statement.line";
+            this.searchModelConfig.modelName = "account.bank.statement.line";
+            this.controlPanelProps.cp_content = {};
             this.model = new this.config.Model(this, {
                 modelName: "account.reconciliation.widget",
                 defaultDisplayQty:
@@ -191,7 +192,10 @@ odoo.define("account.ReconciliationClientAction", function (require) {
                     initialState.valuenow = valuenow;
                     initialState.context = self.model.getContext();
                     self.renderer.showRainbowMan(initialState);
-                    self.remove_cp();
+                    self.controlPanelProps.cp_content = {
+                        $buttons: $(),
+                        $pager: $(),
+                    };
                 } else {
                     // Create a notification if some lines have been reconciled automatically.
                     if (initialState.valuenow > 0)
@@ -234,24 +238,17 @@ odoo.define("account.ReconciliationClientAction", function (require) {
                 this.$pager = $(
                     QWeb.render("reconciliation.control.pager", {widget: this.renderer})
                 );
-                this.updateControlPanel({
-                    clear: true,
-                    cp_content: {
-                        $pager: this.$pager,
-                    },
-                });
+
+                this.controlPanelProps.cp_content = {
+                    $buttons: $(),
+                    $pager: this.$pager,
+                };
                 this.renderer.$progress = this.$pager;
                 $(this.renderer.$progress)
                     .parent()
                     .css("width", "100%")
                     .css("padding-left", "0");
             }
-        },
-
-        remove_cp: function () {
-            this.updateControlPanel({
-                clear: true,
-            });
         },
 
         // --------------------------------------------------------------------------
@@ -384,12 +381,11 @@ odoo.define("account.ReconciliationClientAction", function (require) {
 
         /**
          * @private
-         * @param {OdooEvent} ev
+         * @param {Object} searchQuery
          */
-        _onSearch: function (ev) {
+        _onSearch: function (searchQuery) {
             var self = this;
-            ev.stopPropagation();
-            this.model.domain = ev.data.domain;
+            this.model.domain = searchQuery.domain;
             this.model.display_context = "search";
             self.reload().then(function () {
                 self.renderer._updateProgressBar({
@@ -402,7 +398,6 @@ odoo.define("account.ReconciliationClientAction", function (require) {
         _onActionPartialAmount: function (event) {
             var self = this;
             var handle = event.target.handle;
-            var line = this.model.getLine(handle);
             var amount = this.model.getPartialReconcileAmount(handle, event.data);
             self._getWidget(handle).updatePartialAmount(event.data.data, amount);
         },
@@ -413,12 +408,13 @@ odoo.define("account.ReconciliationClientAction", function (require) {
          * @private
          * @param {OdooEvent} event
          */
+        // eslint-disable-next-line no-unused-vars
         _onCloseStatement: function (event) {
             var self = this;
             return this.model.closeStatement().then(function (result) {
                 self.do_action({
                     name: "Bank Statements",
-                    res_model: "account.bank.statement.line",
+                    res_model: "account.bank.statement",
                     res_id: result,
                     views: [[false, "form"]],
                     type: "ir.actions.act_window",
@@ -432,6 +428,7 @@ odoo.define("account.ReconciliationClientAction", function (require) {
          *
          * @param {OdooEvent} event
          */
+        // eslint-disable-next-line no-unused-vars
         _onLoadMore: function (event) {
             return this._loadMore(this.model.defaultDisplayQty);
         },
@@ -466,7 +463,7 @@ odoo.define("account.ReconciliationClientAction", function (require) {
                         self.widgets.splice(index, 1);
                     }
                 });
-                // Get number of widget and if less than constant and if there are more to laod, load until constant
+                // Get number of widget and if less than constant and if there are more to load, load until constant
                 if (
                     self.widgets.length < self.model.defaultDisplayQty &&
                     self.model.valuemax - self.model.valuenow >=
