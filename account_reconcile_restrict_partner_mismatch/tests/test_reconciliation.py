@@ -53,12 +53,13 @@ class TestReconciliation(SavepointCase):
             "journal_id": cls.bank_journal.id,
             "line_ids": [(0, 0, debit_line_vals), (0, 0, credit_line_vals)],
         }
-        return (
+        move = (
             cls.env["account.move"]
             .with_context(default_journal_id=cls.bank_journal.id)
             .create(vals)
-            .id
         )
+        move.action_post()
+        return move.id
 
     @classmethod
     def init_moves(cls):
