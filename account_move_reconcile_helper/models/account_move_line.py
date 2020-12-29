@@ -1,28 +1,18 @@
 # Copyright 2017 ACSONE SA/NV
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from odoo import api, fields, models
+from odoo import fields, models
 
 
 class AccountMoveLine(models.Model):
 
     _inherit = "account.move.line"
 
-    partial_reconciliation_in_progress = fields.Boolean(
-        compute="_compute_partial_reconciliation_in_progress"
-    )
     reconcile_line_ids = fields.One2many(
         compute="_compute_reconciled_lines",
         comodel_name="account.move.line",
         string="Reconciled lines",
     )
-
-    @api.depends("matched_debit_ids", "matched_credit_ids")
-    def _compute_partial_reconciliation_in_progress(self):
-        for rec in self:
-            rec.partial_reconciliation_in_progress = bool(
-                rec.matched_debit_ids
-            ) or bool(rec.matched_credit_ids)
 
     def _compute_reconciled_lines(self):
         for rec in self:
