@@ -37,8 +37,7 @@ class TestAccountMoveReconcileHelper(TransactionCase):
                 "name": "Sales journal",
                 "code": "MRH-SAJT",
                 "type": "sale",
-                "default_credit_account_id": self.account_sale.id,
-                "default_debit_account_id": self.account_sale.id,
+                "default_account_id": self.account_sale.id,
             }
         )
 
@@ -82,13 +81,13 @@ class TestAccountMoveReconcileHelper(TransactionCase):
                 ("account_id", "=", self.account_recv.id),
             ]
         )
-
+        lines.mapped("move_id").action_post()
         lines.reconcile()
         # For v13, need to force compute
         lines._compute_reconciled_lines()
 
         for line in lines:
-            self.assertEquals(line.reconcile_line_ids, lines)
+            self.assertEqual(line.reconcile_line_ids, lines)
 
     def test_02_full_reconcile(self):
         base_move = self.create_account_move(5000, self.account_recv, self.account_sale)
@@ -102,13 +101,13 @@ class TestAccountMoveReconcileHelper(TransactionCase):
                 ("account_id", "=", self.account_recv.id),
             ]
         )
-
+        lines.mapped("move_id").action_post()
         lines.reconcile()
         # For v13, need to force compute
         lines._compute_reconciled_lines()
 
         for line in lines:
-            self.assertEquals(line.reconcile_line_ids, lines)
-            self.assertEquals(
+            self.assertEqual(line.reconcile_line_ids, lines)
+            self.assertEqual(
                 line.full_reconcile_id.reconciled_line_ids, line.reconcile_line_ids
             )
