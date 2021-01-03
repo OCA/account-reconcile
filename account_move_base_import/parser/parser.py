@@ -6,7 +6,7 @@
 import base64
 import csv
 
-from openerp import _, fields
+from odoo import _, fields
 
 
 def UnicodeDictReader(utf8_data, **kwargs):

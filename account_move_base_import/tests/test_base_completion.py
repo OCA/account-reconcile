@@ -5,9 +5,10 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html)
 from collections import namedtuple
 
-from odoo import fields, tools
-from odoo.modules import get_resource_path
-from odoo.tests import common
+import odoo.tests
+from odoo import fields
+
+from odoo.addons.account.tests.common import AccountTestInvoicingCommon
 
 name_completion_case = namedtuple(
     "name_completion_case", ["partner_name", "line_label", "should_match"]
@@ -39,24 +40,16 @@ NAMES_COMPLETION_CASES = [
 ]
 
 
-class BaseCompletion(common.TransactionCase):
-    def setUp(self):
-        super().setUp()
-        tools.convert_file(
-            self.cr,
-            "account",
-            get_resource_path("account", "test", "account_minimal_test.xml"),
-            {},
-            "init",
-            False,
-            "test",
-        )
-        self.account_move_obj = self.env["account.move"]
-        self.account_move_line_obj = self.env["account.move.line"]
-        self.company_a = self.browse_ref("base.main_company")
-        self.journal = self.browse_ref("account.bank_journal")
-        self.partner = self.browse_ref("base.res_partner_12")
-        self.account_id = self.ref("account.a_recv")
+@odoo.tests.tagged("post_install", "-at_install")
+class BaseCompletion(AccountTestInvoicingCommon):
+    @classmethod
+    def setUpClass(cls, chart_template_ref=None):
+        super().setUpClass(chart_template_ref=chart_template_ref)
+        cls.account_move_obj = cls.env["account.move"]
+        cls.account_move_line_obj = cls.env["account.move.line"]
+        cls.journal = cls.company_data["default_journal_bank"]
+        cls.partner = cls.env.ref("base.res_partner_12")
+        cls.account_id = cls.journal.default_account_id.id
 
     def test_name_completion(self):
         """Test complete partner_id from statement line label
@@ -73,7 +66,7 @@ class BaseCompletion(common.TransactionCase):
                 "rule_ids": [(6, 0, [self.completion_rule_id])],
             }
         )
-        # Create a bank statement
+        # Create an account move
         self.move = self.account_move_obj.create(
             {"date": fields.Date.today(), "journal_id": self.journal.id}
         )

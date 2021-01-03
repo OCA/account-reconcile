@@ -7,37 +7,31 @@ import base64
 import os
 from operator import attrgetter
 
-from odoo import fields, tools
+import odoo.tests
+from odoo import fields
 from odoo.modules import get_resource_path
-from odoo.tests import common
+
+from odoo.addons.account.tests.common import AccountTestInvoicingCommon
 
 
-class TestCodaImport(common.TransactionCase):
-    def setUp(self):
-        super().setUp()
-        self.company_a = self.browse_ref("base.main_company")
-        tools.convert_file(
-            self.cr,
-            "account",
-            get_resource_path("account", "test", "account_minimal_test.xml"),
-            {},
-            "init",
-            False,
-            "test",
-        )
-        self.account_move_obj = self.env["account.move"]
-        self.account_move_line_obj = self.env["account.move.line"]
-        self.account_id = self.ref("account.a_recv")
-        self.journal = self.browse_ref("account.bank_journal")
-        self.import_wizard_obj = self.env["credit.statement.import"]
-        self.partner = self.browse_ref("base.res_partner_12")
-        self.journal.write(
+@odoo.tests.tagged("post_install", "-at_install")
+class TestCodaImport(AccountTestInvoicingCommon):
+    @classmethod
+    def setUpClass(cls, chart_template_ref=None):
+        super().setUpClass(chart_template_ref=chart_template_ref)
+        cls.account_move_obj = cls.env["account.move"]
+        cls.account_move_line_obj = cls.env["account.move.line"]
+        cls.journal = cls.company_data["default_journal_bank"]
+        cls.partner = cls.env.ref("base.res_partner_12")
+        cls.account_id = cls.journal.default_account_id.id
+        cls.import_wizard_obj = cls.env["credit.statement.import"]
+        cls.journal.write(
             {
                 "used_for_import": True,
                 "import_type": "generic_csvxls_so",
-                "partner_id": self.partner.id,
-                "commission_account_id": self.account_id,
-                "receivable_account_id": self.account_id,
+                "partner_id": cls.partner.id,
+                "commission_account_id": cls.account_id,
+                "receivable_account_id": cls.account_id,
                 "create_counterpart": True,
             }
         )

@@ -123,7 +123,7 @@ class FileParser(AccountMoveImportParser):
         csv_file = tempfile.NamedTemporaryFile()
         csv_file.write(self.filebuffer)
         csv_file.flush()
-        with open(csv_file.name, "rU") as fobj:
+        with open(csv_file.name, "r") as fobj:
             reader = UnicodeDictReader(
                 fobj, fieldnames=self.fieldnames, dialect=self.dialect
             )
