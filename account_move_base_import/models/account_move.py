@@ -14,7 +14,7 @@ _logger = logging.getLogger(__name__)
 
 
 class ErrorTooManyPartner(Exception):
-    """ New Exception definition that is raised when more than one partner is
+    """New Exception definition that is raised when more than one partner is
     matched by the completion rule.
     """
 
@@ -165,7 +165,7 @@ class AccountMoveCompletionRule(models.Model):
             'account_id': value,
 
             ...}
-            """
+        """
         res = {}
         partner_obj = self.env["res.partner"]
         or_regex = ".*;? *%s *;?.*" % line.name
@@ -197,7 +197,7 @@ class AccountMoveCompletionRule(models.Model):
             'account_id': value,
 
             ...}
-            """
+        """
         res = {}
         # The regexp_replace() escapes the name to avoid false positive
         # example: 'John J. Doe (No 1)' is escaped to 'John J\. Doe \(No 1\)'
@@ -371,7 +371,8 @@ class AccountMove(models.Model):
                     msg_lines.append(repr(exc))
                     error_type, error_value, trbk = sys.exc_info()
                     st = "Error: {}\nDescription: {}\nTraceback:".format(
-                        error_type.__name__, error_value,
+                        error_type.__name__,
+                        error_value,
                     )
                     st += "".join(traceback.format_tb(trbk, 30))
                     _logger.error(st)
@@ -382,7 +383,8 @@ class AccountMove(models.Model):
                         msg_lines.append(repr(exc))
                         error_type, error_value, trbk = sys.exc_info()
                         st = "Error: {}\nDescription: {}\nTraceback:".format(
-                            error_type.__name__, error_value,
+                            error_type.__name__,
+                            error_value,
                         )
                         st += "".join(traceback.format_tb(trbk, 30))
                         _logger.error(st)

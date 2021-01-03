@@ -9,7 +9,7 @@
     "author": "Akretion,Camptocamp,Odoo Community Association (OCA)",
     "category": "Finance",
     "depends": ["account"],
-    "website": "http://www.camptocamp.com",
+    "website": "https://github.com/OCA/account-reconcile",
     "data": [
         "security/ir.model.access.csv",
         "data/completion_rule_data.xml",

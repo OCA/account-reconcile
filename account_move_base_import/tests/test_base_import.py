@@ -43,7 +43,7 @@ class TestCodaImport(common.TransactionCase):
         )
 
     def _import_file(self, file_name):
-        """ import a file using the wizard
+        """import a file using the wizard
         return the create account.bank.statement object
         """
         with open(file_name, "rb") as f:
@@ -59,8 +59,7 @@ class TestCodaImport(common.TransactionCase):
             return self.account_move_obj.browse(res["res_id"])
 
     def test_simple_xls(self):
-        """Test import from xls
-        """
+        """Test import from xls"""
         file_name = get_resource_path(
             "account_move_base_import", "tests", "data", "statement.xls"
         )
@@ -68,8 +67,7 @@ class TestCodaImport(common.TransactionCase):
         self._validate_imported_move(move)
 
     def test_simple_csv(self):
-        """Test import from csv
-        """
+        """Test import from csv"""
         file_name = get_resource_path(
             "account_move_base_import", "tests", "data", "statement.csv"
         )

@@ -22,7 +22,7 @@ except (ImportError, IOError) as err:
 
 
 def float_or_zero(val):
-    """ Conversion function used to manage
+    """Conversion function used to manage
     empty string into float usecase"""
     return float(val) if val else 0.0
 
@@ -43,14 +43,14 @@ class FileParser(AccountMoveImportParser):
         **kwargs
     ):
         """
-            :param char: parse_name: The name of the parser
-            :param char: ftype: extension of the file (could be csv, xls or
-              xlsx)
-            :param dict: extra_fields: extra fields to put into the conversion
-              dict. In the format {fieldname: fieldtype}
-            :param list: header : specify header fields if the csv file has no
-              header
-            """
+        :param char: parse_name: The name of the parser
+        :param char: ftype: extension of the file (could be csv, xls or
+          xlsx)
+        :param dict: extra_fields: extra fields to put into the conversion
+          dict. In the format {fieldname: fieldtype}
+        :param list: header : specify header fields if the csv file has no
+          header
+        """
         super().__init__(journal, **kwargs)
         if ftype in ("csv", "xls", "xlsx"):
             self.ftype = ftype[0:3]
