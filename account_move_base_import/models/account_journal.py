@@ -84,11 +84,11 @@ class AccountJournal(models.Model):
 
     def _prepare_counterpart_line(self, move, amount, date):
         if amount > 0.0:
-            account_id = self.default_debit_account_id.id
+            account_id = self.default_account_id.id
             credit = 0.0
             debit = amount
         else:
-            account_id = self.default_credit_account_id.id
+            account_id = self.default_account_id.id
             credit = -amount
             debit = 0.0
         counterpart_values = {

@@ -1,195 +1,51 @@
 # Copyright 2019 Camptocamp SA
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl)
+import odoo.tests
 from odoo import fields
-from odoo.modules import get_resource_path
-from odoo.tests import SingleTransactionCase
-from odoo.tools import convert_file
+
+from odoo.addons.account.tests.common import TestAccountReconciliationCommon
 
 
-class TestInvoice(SingleTransactionCase):
-    def setUp(self):
-        super().setUp()
-        self.account_move_obj = self.env["account.move"]
-        self.account_move_line_obj = self.env["account.move.line"]
-        self.company_a = self.env.ref("base.main_company")
-        self.partner = self.env.ref("base.res_partner_12")
+@odoo.tests.tagged("post_install", "-at_install")
+class TestInvoice(TestAccountReconciliationCommon):
+    @classmethod
+    def setUpClass(cls, chart_template_ref=None):
+        super().setUpClass(chart_template_ref=chart_template_ref)
+        cls.account_move_obj = cls.env["account.move"]
+        cls.account_move_line_obj = cls.env["account.move.line"]
+        cls.journal = cls.company_data["default_journal_bank"]
+        cls.account_id = cls.journal.default_account_id.id
 
-    def test_01_partner(self):
+    def test_all_completion_rules(self):
         # I fill in the field Bank Statement Label in a Partner
         self.partner_4 = self.env.ref("base.res_partner_4")
         self.partner_4.bank_statement_label = "XXX66Z"
         self.assertEqual(self.partner_4.bank_statement_label, "XXX66Z")
 
-    def test_02_invoice(self):
-        convert_file(
-            self.cr,
-            "account",
-            get_resource_path("account", "test", "account_minimal_test.xml"),
-            {},
-            "init",
-            False,
-            "test",
+        self.invoice_for_completion_1 = self._create_invoice(
+            date_invoice=fields.Date.today(), auto_validate=True
         )
-        self.journal = self.env.ref("account.bank_journal")
-        self.account_id = self.env.ref("account.a_recv")
-        # I create a customer Invoice to be found by the completion.
-        product_3 = self.env.ref("product.product_product_3")
-        self.invoice_for_completion_1 = (
-            self.env["account.move"]
-            .with_context(default_type="out_invoice")
-            .create(
-                {
-                    "currency_id": self.env.ref("base.EUR").id,
-                    "type": "out_invoice",
-                    "invoice_line_ids": [
-                        (
-                            0,
-                            0,
-                            {
-                                "name": "[PCSC234] PC Assemble SC234",
-                                "product_id": product_3.id,
-                                "price_unit": 210.0,
-                                "quantity": 1.0,
-                                "product_uom_id": self.env.ref(
-                                    "uom.product_uom_unit"
-                                ).id,
-                                "account_id": self.env.ref("account.a_sale").id,
-                            },
-                        )
-                    ],
-                    "journal_id": self.journal.id,
-                    "partner_id": self.partner.id,
-                }
-            )
-        )
-        # I confirm the Invoice
-        self.invoice_for_completion_1.post()
-        # I check that the invoice state is "Open"
         self.assertEqual(self.invoice_for_completion_1.state, "posted")
-        # I check that it is given the number "TBNK/%Y/0001"
         self.assertEqual(
             self.invoice_for_completion_1.name,
-            fields.Date.today().strftime("TBNK/%Y/0001"),
+            fields.Date.today().strftime("INV/%Y/%m/0001"),
         )
 
-    def test_03_supplier_invoice(self):
-        # I create a demo invoice
-        product_delivery = self.env.ref("product.product_delivery_01")
-        product_order = self.env.ref("product.product_order_01")
-        exp_account = self.env.ref("account.a_expense")
-        demo_invoice_0 = (
-            self.env["account.move"]
-            .with_context(default_type="in_invoice")
-            .create(
-                {
-                    "partner_id": self.partner.id,
-                    "invoice_payment_term_id": self.env.ref(
-                        "account.account_payment_term_advance"
-                    ).id,
-                    "type": "in_invoice",
-                    "invoice_date": fields.Date.today().replace(day=1),
-                    "invoice_line_ids": [
-                        (
-                            0,
-                            0,
-                            {
-                                "price_unit": 10.0,
-                                "quantity": 1.0,
-                                "product_id": product_delivery.id,
-                                "product_uom_id": self.env.ref(
-                                    "uom.product_uom_unit"
-                                ).id,
-                                "name": product_delivery.name,
-                                "account_id": exp_account.id,
-                            },
-                        ),
-                        (
-                            0,
-                            0,
-                            {
-                                "price_unit": 4.0,
-                                "quantity": 1.0,
-                                "product_id": product_order.id,
-                                "name": product_order.name,
-                                "product_uom_id": self.env.ref(
-                                    "uom.product_uom_unit"
-                                ).id,
-                                "account_id": exp_account.id,
-                            },
-                        ),
-                    ],
-                }
-            )
+        self.demo_invoice_0 = self._create_invoice(
+            move_type="in_invoice", auto_validate=True
         )
+        self.demo_invoice_0.ref = "T2S12345"
 
-        # I check that my invoice is a supplier invoice
-        self.assertEqual(demo_invoice_0.type, "in_invoice", msg="Check invoice type")
-        # I add a reference to an existing supplier invoice
-        demo_invoice_0.write({"ref": "T2S12345"})
-        # I check a second time that my invoice is still a supplier invoice
-        self.assertEqual(demo_invoice_0.type, "in_invoice", msg="Check invoice type 2")
-        # Now I confirm it
-        demo_invoice_0.post()
-        # I check that the supplier number is there
-        self.assertEqual(demo_invoice_0.ref, "T2S12345", msg="Check supplier number")
-        # I check a third time that my invoice is still a supplier invoice
-        self.assertEqual(demo_invoice_0.type, "in_invoice", msg="Check invoice type 3")
-
-    def test_04_refund(self):
-        # I create a "child" partner, to use in the invoice
-        # (and have a different commercial_partner_id than itself)
-        res_partner_12_child = self.env["res.partner"].create(
-            {
-                "name": "Child Partner",
-                "is_company": False,
-                "parent_id": self.partner.id,
-            }
+        self.refund_for_completion_1 = self._create_invoice(
+            move_type="out_refund", date_invoice=fields.Date.today(), auto_validate=True
         )
-        # I create a customer refund to be found by the completion.
-        product_3 = self.env.ref("product.product_product_3")
-        self.refund_for_completion_1 = (
-            self.env["account.move"]
-            .with_context(default_type="out_refund")
-            .create(
-                {
-                    "currency_id": self.env.ref("base.EUR").id,
-                    "invoice_line_ids": [
-                        (
-                            0,
-                            0,
-                            {
-                                "name": "[PCSC234] PC Assemble SC234",
-                                "product_id": product_3.id,
-                                "price_unit": 210.0,
-                                "quantity": 1.0,
-                                "product_uom_id": self.env.ref(
-                                    "uom.product_uom_unit"
-                                ).id,
-                                "account_id": self.env.ref("account.a_sale").id,
-                            },
-                        )
-                    ],
-                    "journal_id": self.env.ref("account.expenses_journal").id,
-                    "partner_id": res_partner_12_child.id,
-                    "type": "out_refund",
-                }
-            )
-        )
-        # I confirm the refund
-        self.refund_for_completion_1.post()
-
-        # I check that the refund state is "Open"
-        self.assertEqual(self.refund_for_completion_1.state, "posted")
-        # I check that it is given the number "RTEXJ/%Y/0001"
         self.assertEqual(
             self.refund_for_completion_1.name,
-            fields.Date.today().strftime("RTEXJ/%Y/0001"),
+            fields.Date.today().strftime("RINV/%Y/%m/0001"),
         )
 
-    def test_05_completion(self):
         # In order to test the banking framework, I first need to create a
         # journal
-        self.journal = self.env.ref("account.bank_journal")
         completion_rule_4 = self.env.ref(
             "account_move_base_import.bank_statement_completion_rule_4"
         )
@@ -230,7 +86,7 @@ class TestInvoice(SingleTransactionCase):
             .create(
                 {
                     "name": "\\",
-                    "account_id": self.env.ref("account.a_sale").id,
+                    "account_id": self.company_data["default_account_receivable"].id,
                     "move_id": move_test1.id,
                     "date_maturity": fields.Date.from_string("2013-12-20"),
                     "credit": 0.0,
@@ -244,7 +100,7 @@ class TestInvoice(SingleTransactionCase):
             .create(
                 {
                     "name": "\\",
-                    "account_id": self.env.ref("account.a_expense").id,
+                    "account_id": self.company_data["default_account_expense"].id,
                     "move_id": move_test1.id,
                     "date_maturity": fields.Date.from_string("2013-12-19"),
                     "debit": 0.0,
@@ -258,7 +114,7 @@ class TestInvoice(SingleTransactionCase):
             .create(
                 {
                     "name": "\\",
-                    "account_id": self.env.ref("account.a_expense").id,
+                    "account_id": self.company_data["default_account_expense"].id,
                     "move_id": move_test1.id,
                     "date_maturity": fields.Date.from_string("2013-12-19"),
                     "debit": 0.0,
@@ -271,8 +127,8 @@ class TestInvoice(SingleTransactionCase):
             .with_context(check_move_validity=False)
             .create(
                 {
-                    "name": "Test autocompletion based on Partner Name Azure Interior",
-                    "account_id": self.env.ref("account.a_sale").id,
+                    "name": "Test autocompletion based on Partner Name Deco Addict",
+                    "account_id": self.company_data["default_account_receivable"].id,
                     "move_id": move_test1.id,
                     "date_maturity": fields.Date.from_string("2013-12-17"),
                     "credit": 0.0,
@@ -286,7 +142,7 @@ class TestInvoice(SingleTransactionCase):
             .create(
                 {
                     "name": "XXX66Z",
-                    "account_id": self.env.ref("account.a_sale").id,
+                    "account_id": self.company_data["default_account_receivable"].id,
                     "move_id": move_test1.id,
                     "date_maturity": "2013-12-24",
                     "debit": 0.0,
@@ -295,13 +151,13 @@ class TestInvoice(SingleTransactionCase):
         )
         # and add the correct name
         move_line_ci.with_context(check_move_validity=False).write(
-            {"name": fields.Date.today().strftime("TBNK/%Y/0001"), "credit": 210.0}
+            {"name": fields.Date.today().strftime("INV/%Y/%m/0001"), "credit": 210.0}
         )
         move_line_si.with_context(check_move_validity=False).write(
             {"name": "T2S12345", "debit": 65.0}
         )
         move_line_cr.with_context(check_move_validity=False).write(
-            {"name": fields.Date.today().strftime("RTEXJ/%Y/0001"), "debit": 210.0}
+            {"name": fields.Date.today().strftime("RINV/%Y/%m/0001"), "debit": 210.0}
         )
         move_line_partner_name.with_context(check_move_validity=False).write(
             {"credit": 600.0}
@@ -316,25 +172,29 @@ class TestInvoice(SingleTransactionCase):
         # I Use _ref, because ref conflicts with the field ref of the
         # statement line
         self.assertEqual(
-            move_line_ci.partner_id, self.partner, msg="Check completion by CI number"
+            move_line_ci.partner_id.id,
+            self.partner_agrolait_id,
+            msg="Check completion by CI number",
         )
         # Line 2. I expect the Supplier invoice number to be recognised. The
         # supplier invoice was created by the account module demo data, and we
         # confirmed it here.
         self.assertEqual(
-            move_line_si.partner_id, self.partner, msg="Check completion by SI number"
+            move_line_si.partner_id.id,
+            self.partner_agrolait_id,
+            msg="Check completion by SI number",
         )
         # Line 3. I expect the Customer refund number to be recognised. It
         # should be the commercial partner, and not the regular partner.
         self.assertEqual(
-            move_line_cr.partner_id,
-            self.partner,
+            move_line_cr.partner_id.id,
+            self.partner_agrolait_id,
             msg="Check completion by CR number and commercial partner",
         )
         # Line 4. I check that the partner name has been recognised.
         self.assertEqual(
             move_line_partner_name.partner_id.name,
-            "Azure Interior",
+            "Deco Addict",
             msg="Check completion by partner name",
         )
         # Line 5. I check that the partner special label has been recognised.
