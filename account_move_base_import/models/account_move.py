@@ -86,7 +86,7 @@ class AccountMoveCompletionRule(models.Model):
             )
 
         invoices = inv_obj.search(
-            [(number_field, "=", line.name.strip()), ("type", "in", type_domain)]
+            [(number_field, "=", line.name.strip()), ("move_type", "in", type_domain)]
         )
         if invoices:
             if len(invoices) == 1:
@@ -169,6 +169,7 @@ class AccountMoveCompletionRule(models.Model):
         res = {}
         partner_obj = self.env["res.partner"]
         or_regex = ".*;? *%s *;?.*" % line.name
+        self.env["res.partner"].flush(["bank_statement_label"])
         sql = "SELECT id from res_partner" " WHERE bank_statement_label ~* %s"
         self.env.cr.execute(sql, (or_regex,))
         partner_ids = self.env.cr.fetchall()
@@ -207,6 +208,7 @@ class AccountMoveCompletionRule(models.Model):
         # to:
         #  http://www.postgresql.org/docs/9.0/static/functions-matching.html
         # in chapter 9.7.3.6. Limits and Compatibility
+        self.env["res.partner"].flush(["name"])
         sql = r"""
         SELECT id FROM (
             SELECT id,

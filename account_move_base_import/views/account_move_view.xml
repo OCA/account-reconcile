@@ -8,7 +8,7 @@
             <field name="journal_id" position="after">
                 <field name="used_for_completion" invisible="1" />
             </field>
-            <button name="action_duplicate" position="after">
+            <button name="action_reverse" position="after">
                 <button
                     name="button_auto_completion"
                     string="Auto Completion"
@@ -67,7 +67,7 @@
         <field name="view_mode">tree,form</field>
     </record>
     <menuitem
-        string="Move Completion Rule"
+        name="Move Completion Rule"
         action="action_move_completion_rule_tree"
         id="menu_action_move_completion_rule_tree_menu"
         parent="account.account_management_menu"
