@@ -285,7 +285,10 @@ class AccountJournal(models.Model):
         res = self.env["account.move"]
         for result_row_list in parser.parse(file_stream):
             move = self._move_import(
-                parser, file_stream, result_row_list=result_row_list, ftype=ftype,
+                parser,
+                file_stream,
+                result_row_list=result_row_list,
+                ftype=ftype,
             )
             res |= move
         return res
@@ -357,7 +360,8 @@ class AccountJournal(models.Model):
         except Exception:
             error_type, error_value, trbk = sys.exc_info()
             st = "Error: {}\nDescription: {}\nTraceback:".format(
-                error_type.__name__, error_value,
+                error_type.__name__,
+                error_value,
             )
             st += "".join(traceback.format_tb(trbk, 30))
             raise ValidationError(
