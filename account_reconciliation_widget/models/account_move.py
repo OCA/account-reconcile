@@ -13,7 +13,7 @@ class AccountMoveLine(models.Model):
 
         :param writeoff_vals: list of dicts containing values suitable for
             account_move_line.create(). The data in vals will be processed to
-            create bot writeoff account.move.line and their enclosing
+            create both writeoff account.move.line and their enclosing
             account.move.
         """
 
