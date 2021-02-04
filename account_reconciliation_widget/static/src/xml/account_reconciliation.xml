@@ -569,8 +569,8 @@
         <tr><td>Account</td><td><t t-esc="state.st_line.account_code" /> <t
                         t-esc="state.st_line.account_name"
                     /></td></tr>
-        <tr t-if="state.st_line.note"><td>Note</td><td style="white-space: pre;"><t
-                        t-esc="state.st_line.note"
+        <tr t-if="state.st_line.narration"><td>Note</td><td style="white-space: pre;"><t
+                        t-esc="state.st_line.narration"
                     /></td></tr>
     </table>
 </t>

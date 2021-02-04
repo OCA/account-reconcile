@@ -1030,8 +1030,7 @@ class AccountReconciliation(models.AbstractModel):
         data = {
             "id": st_line.id,
             "ref": st_line.ref,
-            # FIXME: where to fill?
-            # 'note': st_line.note or "",
+            "narration": st_line.narration or "",
             "name": st_line.name,
             "payment_ref": st_line.payment_ref,
             "date": format_date(self.env, st_line.date),
