@@ -1033,6 +1033,7 @@ class AccountReconciliation(models.AbstractModel):
             # FIXME: where to fill?
             # 'note': st_line.note or "",
             "name": st_line.name,
+            "payment_ref": st_line.payment_ref,
             "date": format_date(self.env, st_line.date),
             "amount": amount,
             "amount_str": amount_str,  # Amount in the statement line currency
