@@ -149,8 +149,8 @@
                             /></td>
                     <td class="cell_due_date"><t t-esc="state.st_line.date" /></td>
                     <td class="cell_label"><t
-                                t-if="state.st_line.name"
-                                t-esc="state.st_line.name"
+                                t-if="state.st_line.payment_ref"
+                                t-esc="state.st_line.payment_ref"
                             /> <t t-if="state.st_line.amount_currency_str"> (<t
                                     t-esc="state.st_line.amount_currency_str"
                                 />)</t></td>
@@ -562,7 +562,7 @@
         <tr t-if="state.st_line.ref"><td>Transaction</td><td><t
                         t-esc="state.st_line.ref"
                     /></td></tr>
-        <tr><td>Description</td><td><t t-esc="state.st_line.name" /></td></tr>
+        <tr><td>Description</td><td><t t-esc="state.st_line.payment_ref" /></td></tr>
         <tr><td>Amount</td><td><t t-raw="state.st_line.amount_str" /><t
                         t-if="state.st_line.amount_currency_str"
                     > (<t t-esc="state.st_line.amount_currency_str" />)</t></td></tr>
