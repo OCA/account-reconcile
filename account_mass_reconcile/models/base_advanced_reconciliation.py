@@ -137,7 +137,7 @@ class MassReconcileAdvanced(models.AbstractModel):
 
     @classmethod
     def _compare_matcher_values(cls, key, values, opposite_values):
-        """ Compare every values from a matcher vs an opposite matcher
+        """Compare every values from a matcher vs an opposite matcher
         and return True if it matches
         """
         for value, ovalue in product(values, opposite_values):
@@ -165,7 +165,7 @@ class MassReconcileAdvanced(models.AbstractModel):
         return MassReconcileAdvanced._compare_matcher_values(mkey, mvalue, omvalue)
 
     def _compare_opposite(self, move_line, opposite_move_line, matchers):
-        """ Iterate over the matchers of the move lines vs opposite move lines
+        """Iterate over the matchers of the move lines vs opposite move lines
         and if they all match, return True.
 
         If all the matchers match for a move line and an opposite move line,
