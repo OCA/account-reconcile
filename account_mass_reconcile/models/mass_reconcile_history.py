@@ -5,7 +5,7 @@ from odoo import _, api, fields, models
 
 
 class MassReconcileHistory(models.Model):
-    """ Store an history of the runs per profile
+    """Store an history of the runs per profile
 
     Each history stores the list of reconciliations done
     """
@@ -45,7 +45,7 @@ class MassReconcileHistory(models.Model):
     )
 
     def _open_move_lines(self):
-        """ For an history record, open the view of move line with
+        """For an history record, open the view of move line with
         the reconciled move lines
 
         :param history_id: id of the history
@@ -66,7 +66,7 @@ class MassReconcileHistory(models.Model):
         }
 
     def open_reconcile(self):
-        """ For an history record, open the view of move line
+        """For an history record, open the view of move line
         with the reconciled move lines
 
         :param history_ids: id of the record as int or long
