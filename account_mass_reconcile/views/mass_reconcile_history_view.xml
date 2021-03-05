@@ -87,12 +87,4 @@
         <field name="res_model">mass.reconcile.history</field>
         <field name="view_mode">tree,form</field>
     </record>
-    <act_window
-        context="{'search_default_mass_reconcile_id': [active_id], 'default_mass_reconcile_id': active_id}"
-        id="act_mass_reconcile_to_history"
-        name="History Details"
-        groups=""
-        res_model="mass.reconcile.history"
-        binding_model="account.mass.reconcile"
-    />
 </odoo>
