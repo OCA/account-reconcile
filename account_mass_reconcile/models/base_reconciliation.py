@@ -23,7 +23,7 @@ class MassReconcileBase(models.AbstractModel):
     # other fields are inherited from mass.reconcile.options
 
     def automatic_reconcile(self):
-        """ Reconciliation method called from the view.
+        """Reconciliation method called from the view.
 
         :return: list of reconciled ids
         """
@@ -31,7 +31,7 @@ class MassReconcileBase(models.AbstractModel):
         return self._action_rec()
 
     def _action_rec(self):
-        """ Must be inherited to implement the reconciliation
+        """Must be inherited to implement the reconciliation
 
         :return: list of reconciled ids
         """
@@ -39,7 +39,7 @@ class MassReconcileBase(models.AbstractModel):
 
     @staticmethod
     def _base_columns():
-        """ Mandatory columns for move lines queries
+        """Mandatory columns for move lines queries
         An extra column aliased as ``key`` should be defined
         in each query."""
         aml_cols = (
@@ -129,7 +129,7 @@ class MassReconcileBase(models.AbstractModel):
         return None
 
     def _reconcile_lines(self, lines, allow_partial=False):
-        """ Try to reconcile given lines
+        """Try to reconcile given lines
 
         :param list lines: list of dict of move lines, they must at least
                            contain values for : id, debit, credit
