@@ -213,7 +213,7 @@ class AccountMassReconcile(models.Model):
         return True
 
     def _no_history(self):
-        """ Raise an `orm.except_orm` error, supposed to
+        """Raise an `orm.except_orm` error, supposed to
         be called when there is no history on the reconciliation
         task.
         """
@@ -246,7 +246,7 @@ class AccountMassReconcile(models.Model):
         return self._open_move_line_list(lines.ids or [], name)
 
     def last_history_reconcile(self):
-        """ Get the last history record for this reconciliation profile
+        """Get the last history record for this reconciliation profile
         and return the action which opens move lines reconciled
         """
         if not self.last_history:
@@ -255,7 +255,7 @@ class AccountMassReconcile(models.Model):
 
     @api.model
     def run_scheduler(self, run_all=None):
-        """ Launch the reconcile with the oldest run
+        """Launch the reconcile with the oldest run
         This function is mostly here to be used with cron task
 
         :param run_all: if set it will ingore lookup and launch
