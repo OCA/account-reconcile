@@ -12,14 +12,8 @@ class TestAccountReconcilePaymentOrder(TestPaymentOrderInboundBase):
     def setUpClass(cls):
         super().setUpClass()
         cls.widget_obj = cls.env["account.reconciliation.widget"]
-        cls.bank_journal = cls.env["account.journal"].search(
-            [
-                ("type", "=", "bank"),
-                "|",
-                ("company_id", "=", cls.env.company.id),
-                ("company_id", "=", False),
-            ],
-            limit=1,
+        cls.bank_journal = cls.env["account.journal"].create(
+            {"name": "Test bank journal", "type": "bank"}
         )
         # Create second invoice for being sure it handles the payment order
         cls.invoice2 = cls._create_customer_invoice(cls)
@@ -32,7 +26,7 @@ class TestAccountReconcilePaymentOrder(TestPaymentOrderInboundBase):
         cls.invoice2.action_post()
         # Add to payment order using the wizard
         cls.env["account.invoice.payment.line.multi"].with_context(
-            active_model="account.move", active_ids=cls.invoice2.ids,
+            active_model="account.move", active_ids=cls.invoice2.ids
         ).create({}).run()
         # Prepare statement
         cls.statement = cls.env["account.bank.statement"].create(
@@ -41,7 +35,15 @@ class TestAccountReconcilePaymentOrder(TestPaymentOrderInboundBase):
                 "date": "2019-01-01",
                 "journal_id": cls.bank_journal.id,
                 "line_ids": [
-                    (0, 0, {"date": "2019-01-01", "name": "Test line", "amount": 230}),
+                    (
+                        0,
+                        0,
+                        {
+                            "date": "2019-01-01",
+                            "name": "Test line",
+                            "amount": 200,  # 100 * 2
+                        },
+                    ),
                 ],
             }
         )
@@ -56,7 +58,7 @@ class TestAccountReconcilePaymentOrder(TestPaymentOrderInboundBase):
         self.inbound_order.open2generated()
         self.inbound_order.generated2uploaded()
         # Check widget result
-        res = self.widget_obj.get_bank_statement_line_data(self.statement.line_ids.ids,)
+        res = self.widget_obj.get_bank_statement_line_data(self.statement.line_ids.ids)
         self.assertEqual(len(res["lines"][0]["reconciliation_proposition"]), 2)
 
     def test_reconcile_payment_order_transfer_account(self):
