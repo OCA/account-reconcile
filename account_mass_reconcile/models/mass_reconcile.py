@@ -5,9 +5,10 @@
 import logging
 from datetime import datetime
 
+import psycopg2
 from psycopg2.extensions import AsIs
 
-from odoo import _, api, fields, models, sql_db
+from odoo import _, api, exceptions, fields, models, sql_db
 from odoo.exceptions import Warning as UserError
 
 _logger = logging.getLogger(__name__)
@@ -40,12 +41,6 @@ class MassReconcileOptions(models.AbstractModel):
         default="newest",
     )
     _filter = fields.Char(string="Filter")
-    income_exchange_account_id = fields.Many2one(
-        "account.account", string="Gain Exchange Rate Account"
-    )
-    expense_exchange_account_id = fields.Many2one(
-        "account.account", string="Loss Exchange Rate Account"
-    )
 
 
 class AccountMassReconcileMethod(models.Model):
@@ -61,6 +56,7 @@ class AccountMassReconcileMethod(models.Model):
             ("mass.reconcile.simple.partner", "Simple. Amount and Partner"),
             ("mass.reconcile.simple.reference", "Simple. Amount and Reference"),
             ("mass.reconcile.advanced.ref", "Advanced. Partner and Ref."),
+            ("mass.reconcile.advanced.name", "Advanced. Partner and Name."),
         ]
 
     def _selection_name(self):
@@ -136,12 +132,15 @@ class AccountMassReconcile(models.Model):
             "write_off": rec_method.write_off,
             "account_lost_id": (rec_method.account_lost_id.id),
             "account_profit_id": (rec_method.account_profit_id.id),
-            "income_exchange_account_id": (rec_method.income_exchange_account_id.id),
-            "expense_exchange_account_id": (rec_method.income_exchange_account_id.id),
             "journal_id": (rec_method.journal_id.id),
             "date_base_on": rec_method.date_base_on,
             "_filter": rec_method._filter,
         }
+
+    def _run_reconcile_method(self, reconcile_method):
+        rec_model = self.env[reconcile_method.name]
+        auto_rec_id = rec_model.create(self._prepare_run_transient(reconcile_method))
+        return auto_rec_id.automatic_reconcile()
 
     def run_reconcile(self):
         def find_reconcile_ids(fieldname, move_line_ids):
@@ -163,21 +162,36 @@ class AccountMassReconcile(models.Model):
         # does not.
 
         for rec in self:
+            # SELECT FOR UPDATE the mass reconcile row ; this is done in order
+            # to avoid 2 processes on the same mass reconcile method.
+            try:
+                self.env.cr.execute(
+                    "SELECT id FROM account_mass_reconcile"
+                    " WHERE id = %s"
+                    " FOR UPDATE NOWAIT",
+                    (rec.id,),
+                )
+            except psycopg2.OperationalError:
+                raise exceptions.UserError(
+                    _(
+                        "A mass reconcile is already ongoing for this account, "
+                        "please try again later."
+                    )
+                )
             ctx = self.env.context.copy()
             ctx["commit_every"] = rec.account.company_id.reconciliation_commit_every
             if ctx["commit_every"]:
                 new_cr = sql_db.db_connect(self.env.cr.dbname).cursor()
+                new_env = api.Environment(new_cr, self.env.uid, ctx)
             else:
                 new_cr = self.env.cr
+                new_env = self.env
 
             try:
                 all_ml_rec_ids = []
 
                 for method in rec.reconcile_method:
-                    rec_model = self.env[method.name]
-                    auto_rec_id = rec_model.create(self._prepare_run_transient(method))
-
-                    ml_rec_ids = auto_rec_id.automatic_reconcile()
+                    ml_rec_ids = self.with_env(new_env)._run_reconcile_method(method)
 
                     all_ml_rec_ids += ml_rec_ids
 

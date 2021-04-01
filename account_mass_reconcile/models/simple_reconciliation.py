@@ -2,7 +2,11 @@
 # Copyright 2010 Sébastien Beau
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
+import logging
+
 from odoo import models
+
+_logger = logging.getLogger(__name__)
 
 
 class MassReconcileSimple(models.AbstractModel):
@@ -40,6 +44,15 @@ class MassReconcileSimple(models.AbstractModel):
                 if reconciled:
                     res += [credit_line["id"], debit_line["id"]]
                     del lines[i]
+                    if (
+                        self.env.context.get("commit_every", 0)
+                        and len(res) % self.env.context["commit_every"] == 0
+                    ):
+                        # new cursor is already open in cron
+                        self.env.cr.commit()  # pylint: disable=invalid-commit
+                        _logger.info(
+                            "Commit the reconciliations after %d groups", len(res)
+                        )
                     break
             count += 1
         return res
@@ -58,7 +71,7 @@ class MassReconcileSimple(models.AbstractModel):
         query = " ".join(
             (select, self._from_query(), where, where2, self._simple_order())
         )
-
+        self.flush()
         self.env.cr.execute(query, params + params2)
         lines = self.env.cr.dictfetchall()
         return self.rec_auto_lines_simple(lines)

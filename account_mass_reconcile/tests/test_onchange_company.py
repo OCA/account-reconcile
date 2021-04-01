@@ -1,8 +1,6 @@
 # © 2014-2016 Camptocamp SA (Damien Crier)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from odoo import tools
-from odoo.modules import get_module_resource
 from odoo.tests import common
 
 
@@ -10,15 +8,6 @@ class TestOnChange(common.SavepointCase):
     @classmethod
     def setUpClass(cls):
         super(TestOnChange, cls).setUpClass()
-        tools.convert_file(
-            cls.cr,
-            "account",
-            get_module_resource("account", "test", "account_minimal_test.xml"),
-            {},
-            "init",
-            False,
-            "test",
-        )
         acc_setting = cls.env["res.config.settings"]
         cls.acc_setting_obj = acc_setting.create({})
         cls.company_obj = cls.env["res.company"]
