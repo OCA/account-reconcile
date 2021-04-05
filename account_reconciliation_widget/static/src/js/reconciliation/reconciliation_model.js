@@ -559,40 +559,53 @@ odoo.define("account.ReconciliationModel", function (require) {
             });
         },
         _loadReconciliationModel: function (params) {
-            var self = this;
-            return this._rpc({
+            const def = $.Deferred();
+            this._rpc({
                 model: "account.reconcile.model",
                 method: "search_read",
                 domain: params.domainReconcile || [],
-            }).then(function (reconcileModels) {
-                var analyticTagIds = [];
-                for (var i = 0; i < reconcileModels.length; i++) {
-                    var modelTags = reconcileModels[i].analytic_tag_ids || [];
-                    for (var j = 0; j < modelTags.length; j++) {
-                        if (analyticTagIds.indexOf(modelTags[j]) === -1) {
-                            analyticTagIds.push(modelTags[j]);
-                        }
-                    }
+            }).then((reconcileModels) => {
+                const recIds = _.map(reconcileModels, "id");
+                // Clean
+                for (const reconcileModel of reconcileModels) {
+                    reconcileModel.line_ids = [];
                 }
-                return self
-                    ._readAnalyticTags({res_ids: analyticTagIds})
-                    .then(function () {
-                        for (var i = 0; i < reconcileModels.length; i++) {
-                            var recModel = reconcileModels[i];
+                this._rpc({
+                    model: "account.reconcile.model.line",
+                    method: "search_read",
+                    domain: [["model_id", "in", recIds]],
+                }).then((reconcileModelLines) => {
+                    let analyticTagIds = [];
+                    for (const reconcileModelLine of reconcileModelLines) {
+                        const reconcileModelByLine = _.findWhere(reconcileModels, {
+                            id: reconcileModelLine.model_id[0],
+                        });
+                        reconcileModelByLine.line_ids.push(reconcileModelLine);
+                        analyticTagIds = analyticTagIds.concat(
+                            reconcileModelLine.analytic_tag_ids || []
+                        );
+                    }
+                    analyticTagIds = _.unique(analyticTagIds);
+                    this._readAnalyticTags({res_ids: analyticTagIds}).then(() => {
+                        for (const reconcileModel of reconcileModels) {
                             var analyticTagData = [];
-                            var modelTags = reconcileModels[i].analytic_tag_ids || [];
-                            for (var j = 0; j < modelTags.length; j++) {
-                                var tagId = modelTags[j];
+                            var modelTags = reconcileModel.analytic_tag_ids || [];
+                            for (const tagId of modelTags) {
                                 analyticTagData.push([
                                     tagId,
-                                    self.analyticTags[tagId].display_name,
+                                    this.analyticTags[tagId].display_name,
                                 ]);
                             }
-                            recModel.analytic_tag_ids = analyticTagData;
+                            reconcileModel.analytic_tag_ids = analyticTagData;
                         }
-                        self.reconcileModels = reconcileModels;
+
+                        this.reconcileModels = reconcileModels;
+                        return def.resolve();
                     });
+                });
             });
+
+            return def;
         },
         _loadTaxes: function () {
             var self = this;
@@ -624,7 +637,6 @@ odoo.define("account.ReconciliationModel", function (require) {
          * @returns {Promise}
          */
         quickCreateProposition: function (handle, reconcileModelId) {
-            var self = this;
             var line = this.getLine(handle);
             var reconcileModel = _.find(this.reconcileModels, function (r) {
                 return r.id === reconcileModelId;
@@ -640,34 +652,41 @@ odoo.define("account.ReconciliationModel", function (require) {
                 "tax_ids",
                 "analytic_tag_ids",
                 "to_check",
-                "amount_from_label_regex",
+                "amount_string",
                 "decimal_separator",
             ];
             this._blurProposition(handle);
-            var focus = this._formatQuickCreate(line, _.pick(reconcileModel, fields));
-            focus.reconcileModelId = reconcileModelId;
-            line.reconciliation_proposition.push(focus);
-            var defs = [];
-            if (reconcileModel.has_second_line) {
-                defs.push(
-                    self._computeLine(line).then(function () {
-                        var second = {};
-                        _.each(fields, function (key) {
-                            second[key] =
-                                "second_" + key in reconcileModel
-                                    ? reconcileModel["second_" + key]
-                                    : reconcileModel[key];
-                        });
-                        var second_focus = self._formatQuickCreate(line, second);
-                        second_focus.reconcileModelId = reconcileModelId;
-                        line.reconciliation_proposition.push(second_focus);
-                        self._computeReconcileModels(handle, reconcileModelId);
-                    })
-                );
+            let focus = null;
+            const defs = [];
+            for (const reconcileModelLineIndex in reconcileModel.line_ids) {
+                const reconcileModelLine =
+                    reconcileModel.line_ids[reconcileModelLineIndex];
+                if (reconcileModelLineIndex === "0") {
+                    focus = this._formatQuickCreate(
+                        line,
+                        _.pick(reconcileModelLine, fields),
+                        reconcileModel
+                    );
+                    focus.reconcileModelId = reconcileModelId;
+                    line.reconciliation_proposition.push(focus);
+                } else {
+                    defs.push(
+                        this._computeLine(line).then(() => {
+                            const second_focus = this._formatQuickCreate(
+                                line,
+                                _.pick(reconcileModelLine, fields),
+                                reconcileModel
+                            );
+                            second_focus.reconcileModelId = reconcileModelId;
+                            line.reconciliation_proposition.push(second_focus);
+                            this._computeReconcileModels(handle, reconcileModelId);
+                        })
+                    );
+                }
             }
-            return Promise.all(defs).then(function () {
-                line.createForm = _.pick(focus, self.quickCreateFields);
-                return self._computeLine(line);
+            return Promise.all(defs).then(() => {
+                line.createForm = _.pick(focus, this.quickCreateFields);
+                return this._computeLine(line);
             });
         },
         /**
@@ -1566,7 +1585,7 @@ odoo.define("account.ReconciliationModel", function (require) {
          * @param {Object} values
          * @returns {Object}
          */
-        _formatQuickCreate: function (line, values) {
+        _formatQuickCreate: function (line, values, reconcileModel) {
             values = values || {};
             var today = new moment().utc().format();
             var account = this._formatNameGet(values.account_id);
@@ -1580,14 +1599,17 @@ odoo.define("account.ReconciliationModel", function (require) {
                     break;
                 case "regex":
                     var matching = line.st_line.name.match(
-                        new RegExp(values.amount_from_label_regex)
+                        new RegExp(values.amount_string)
                     );
                     if (matching && matching.length == 2) {
                         matching = matching[1].replace(
-                            new RegExp("\\D" + values.decimal_separator, "g"),
+                            new RegExp("\\D" + reconcileModel.decimal_separator, "g"),
                             ""
                         );
-                        matching = matching.replace(values.decimal_separator, ".");
+                        matching = matching.replace(
+                            reconcileModel.decimal_separator,
+                            "."
+                        );
                         amount = parseFloat(matching) || 0;
                         amount = line.balance.amount > 0 ? amount : -amount;
                     }
