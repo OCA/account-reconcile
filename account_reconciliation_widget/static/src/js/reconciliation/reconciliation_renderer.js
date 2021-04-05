@@ -514,11 +514,11 @@ odoo.define("account.ReconciliationRenderer", function (require) {
 
             // Create form
             if (state.createForm) {
-                var createPromise = null;
+                var createPromise = Promise.resolve();
                 if (!this.fields.account_id) {
                     createPromise = this._renderCreate(state);
                 }
-                Promise.resolve(createPromise).then(function () {
+                createPromise.then(function () {
                     var data = self.model.get(self.handleCreateRecord).data;
                     return self.model
                         .notifyChanges(self.handleCreateRecord, state.createForm)
