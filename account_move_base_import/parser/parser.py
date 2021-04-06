@@ -47,6 +47,8 @@ class AccountMoveImportParser(object):
         self.move_name = None
         self.move_ref = None
         self.support_multi_moves = None
+        self.commission_field = None
+        self.commission_sign = "+"
 
     @classmethod
     def parser_for(cls, parser_name):
