@@ -391,5 +391,9 @@ class AccountMove(models.Model):
                         st += "".join(traceback.format_tb(trbk, 30))
                         _logger.error(st)
             msg = "\n".join(msg_lines)
-            self.write_completion_log(msg, compl_lines)
+            move.write_completion_log(msg, compl_lines)
+            if move.journal_id.autovalidate_completed_move and all(
+                [line.already_completed for line in move.line_ids]
+            ):
+                move._post()
         return True
