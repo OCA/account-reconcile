@@ -65,7 +65,8 @@ class CreditPartnerStatementImporter(models.TransientModel):
                 file_name=importer.file_name
             ).multi_move_import(importer.input_statement, ftype.replace(".", ""))
         action = action = self.env["ir.actions.actions"]._for_xml_id(
-            "account.action_move_journal_line")
+            "account.action_move_journal_line"
+        )
         if len(moves) > 1:
             action["domain"] = [("id", "in", moves.ids)]
         else:
