@@ -21,6 +21,10 @@
                                                                                      ('used_for_import', '=', False),
                                                                                      ('used_for_completion', '=', False)]}"
                         />
+                        <field
+                            name="autovalidate_completed_move"
+                            attrs="{'invisible': [('launch_import_completion', '=', False)]}"
+                        />
                         <field name="last_import_date" readonly="1" />
                         <field
                             name="import_type"

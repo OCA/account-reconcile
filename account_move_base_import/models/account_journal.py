@@ -60,7 +60,7 @@ class AccountJournal(models.Model):
 
     launch_import_completion = fields.Boolean(
         string="Launch completion after import",
-        help="Tic that box to automatically launch the completion "
+        help="Tick that box to automatically launch the completion "
         "on each imported file using this journal.",
     )
 
@@ -80,6 +80,11 @@ class AccountJournal(models.Model):
         comodel_name="account.analytic.account",
         string="Commission Analytic Account",
         help="Choose an analytic account to be used on the commission line.",
+    )
+    autovalidate_completed_move = fields.Boolean(
+        string="Validate fully completed moves",
+        help="Tick that box to automatically validate the journal entries "
+        "after the completion",
     )
 
     def _prepare_counterpart_line(self, move, amount, date):
@@ -269,6 +274,16 @@ class AccountJournal(models.Model):
         vals.update(parser.get_move_vals())
         return vals
 
+    def _get_attachment_data(self, moves, file_stream, ftype):
+        attachment_data = {
+            "name": "statement file",
+            "datas": file_stream,
+            "store_fname": "{}.{}".format(fields.Date.today(), ftype),
+            "res_model": "account.move",
+            "res_id": moves[0].id,
+        }
+        return attachment_data
+
     def multi_move_import(self, file_stream, ftype="csv"):
         """Create multiple bank statements from values given by the parser for
         the given profile.
@@ -279,6 +294,7 @@ class AccountJournal(models.Model):
         :return: list: list of ids of the created account.bank.statement
         """
         filename = self._context.get("file_name", None)
+        attachment_obj = self.env["ir.attachment"]
         if filename:
             (filename, __) = os.path.splitext(filename)
         parser = new_move_parser(self, ftype=ftype, move_ref=filename)
@@ -291,6 +307,10 @@ class AccountJournal(models.Model):
                 ftype=ftype,
             )
             res |= move
+        if res:
+            attachment_vals = self._get_attachment_data(res, file_stream, ftype)
+            if attachment_vals:
+                attachment_obj.create(attachment_vals)
         return res
 
     def _move_import(self, parser, file_stream, result_row_list=None, ftype="csv"):
