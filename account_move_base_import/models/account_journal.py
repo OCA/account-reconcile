@@ -28,7 +28,6 @@ class AccountJournal(models.Model):
         [("generic_csvxls_so", "Generic .csv/.xls based on SO Name")],
         string="Type of import",
         default="generic_csvxls_so",
-        required=True,
         help="Choose here the method by which you want to import account "
         "moves for this journal.",
     )
@@ -116,17 +115,24 @@ class AccountJournal(models.Model):
         move_line_obj = self.env["account.move.line"]
         refund = 0.0
         payment = 0.0
+        commission = 0.0
         transfer_lines = []
         for move_line in move.line_ids:
-            refund -= move_line.debit
-            payment += move_line.credit
+            if (
+                move_line.account_id == self.commission_account_id
+                and move_line.already_completed
+            ):
+                commission -= move_line.debit
+            else:
+                refund -= move_line.debit
+                payment += move_line.credit
         if self.split_counterpart:
             if refund:
                 transfer_lines.append(refund)
             if payment:
-                transfer_lines.append(payment)
+                transfer_lines.append(payment + commission)
         else:
-            total_amount = refund + payment
+            total_amount = refund + payment + commission
             if total_amount:
                 transfer_lines.append(total_amount)
         counterpart_date = parser.get_move_vals().get("date") or fields.Date.today()
@@ -156,8 +162,13 @@ class AccountJournal(models.Model):
         """
         move_line_obj = self.env["account.move.line"]
         global_commission_amount = 0
-        for row in parser.result_row_list:
-            global_commission_amount += float(row.get("commission_amount", "0.0"))
+        commmission_field = parser.commission_field
+        if commmission_field:
+            for row in parser.result_row_list:
+                global_commission_amount += float(row.get(commmission_field, "0.0"))
+            # If commission amount is positive in field, inverse the sign
+            if parser.commission_sign == "+":
+                global_commission_amount = -global_commission_amount
         partner_id = self.partner_id.id
         # Commission line
         if global_commission_amount > 0.0:
