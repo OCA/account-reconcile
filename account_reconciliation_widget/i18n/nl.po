@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 14.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2021-04-14 21:46+0000\n"
+"PO-Revision-Date: 2021-04-15 14:46+0000\n"
 "Last-Translator: Bosd <c5e2fd43-d292-4c90-9d1f-74ff3436329a@anonaddy.me>\n"
 "Language-Team: none\n"
 "Language: nl\n"
@@ -27,7 +27,7 @@ msgstr ""
 #: code:addons/account_reconciliation_widget/models/account_bank_statement.py:0
 #, python-format
 msgid "A selected move line was already reconciled."
-msgstr ""
+msgstr "De geselecteerde transactie regel is reeds afgeletterd."
 
 #. module: account_reconciliation_widget
 #. openerp-web
@@ -87,7 +87,7 @@ msgstr ""
 #: code:addons/account_reconciliation_widget/static/src/js/reconciliation/reconciliation_action.js:0
 #, python-format
 msgid "Bank Reconciliation"
-msgstr ""
+msgstr "Bankafschrift aflettering"
 
 #. module: account_reconciliation_widget
 #: model:ir.model.fields,field_description:account_reconciliation_widget.field_res_company__account_bank_reconciliation_start
@@ -116,7 +116,7 @@ msgstr "Controleer alle"
 #: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
 #, python-format
 msgid "Check that you have no bank statement lines to"
-msgstr "Controleer of er geen bankafschrift regels zijn om"
+msgstr "Controleren of er geen bankafschrift regels zijn om"
 
 #. module: account_reconciliation_widget
 #. openerp-web
@@ -233,7 +233,7 @@ msgstr ""
 #: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
 #, python-format
 msgid "From now on, you may want to:"
-msgstr ""
+msgstr "Vanaf nu, wilt u misschien:"
 
 #. module: account_reconciliation_widget
 #. openerp-web
@@ -620,7 +620,7 @@ msgstr "Valideer"
 #: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
 #, python-format
 msgid "Verify"
-msgstr "Verifiëren"
+msgstr "Verifiër"
 
 #. module: account_reconciliation_widget
 #: code:addons/account_reconciliation_widget/models/account_move.py:0
@@ -648,7 +648,7 @@ msgstr "U letterde"
 #: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
 #, python-format
 msgid "and follow-up customers"
-msgstr ""
+msgstr "en betaal herinneringen"
 
 #. module: account_reconciliation_widget
 #. openerp-web
@@ -716,7 +716,7 @@ msgstr "onbetaalde facturen"
 #: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
 #, python-format
 msgid "unreconciled entries"
-msgstr "niet afgeletterde invoeren"
+msgstr "niet afgeletterde items"
 
 #. module: account_reconciliation_widget
 #. openerp-web
