@@ -252,7 +252,10 @@ class AccountBankStatementLine(models.Model):
             aml_to_reconcile.append((new_aml, counterpart_move_line))
 
         # Post to allow reconcile
-        self.move_id.with_context(skip_account_move_synchronization=True).action_post()
+        if self.move_id.state != "posted":
+            self.move_id.with_context(
+                skip_account_move_synchronization=True
+            ).action_post()
 
         # Reconcile new lines with counterpart
         for new_aml, counterpart_move_line in aml_to_reconcile:
@@ -262,7 +265,6 @@ class AccountBankStatementLine(models.Model):
 
         # Needs to be called manually as lines were created 1 by 1
         self.move_id.update_lines_tax_exigibility()
-        self.move_id.with_context(skip_account_move_synchronization=True).action_post()
         # record the move name on the statement line to be able to retrieve
         # it in case of unreconciliation
         self.write({"move_name": self.move_id.name})
