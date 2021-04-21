@@ -19,7 +19,7 @@ Available addons
 ----------------
 addon | version | summary
 --- | --- | ---
-[account_reconciliation_widget](account_reconciliation_widget/) | 14.0.1.1.3 | Account reconciliation widget
+[account_reconciliation_widget](account_reconciliation_widget/) | 14.0.1.1.4 | Account reconciliation widget
 
 [//]: # (end addons)
 
