@@ -1626,7 +1626,7 @@ odoo.define("account.ReconciliationModel", function (require) {
 
             var prop = {
                 id: _.uniqueId("createLine"),
-                label: values.label || line.st_line.name,
+                label: values.label || line.st_line.payment_ref,
                 account_id: account,
                 account_code: account ? this.accounts[account.id] : "",
                 analytic_account_id: this._formatNameGet(values.analytic_account_id),
