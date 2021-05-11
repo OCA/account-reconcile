@@ -71,25 +71,41 @@ class TestCompliteSO(SavepointCase):
             ],
             limit=1,
         )
+        cls.account_bank = cls.env["account.account"].search(
+            [
+                (
+                    "user_type_id",
+                    "=",
+                    cls.env.ref("account.data_account_type_liquidity").id,
+                ),
+            ],
+            limit=1,
+        )
 
     def test_completion_so(self):
         self.order.action_confirm()
-        aml = self.env["account.move.line"].create(
-            {
-                "name": self.order.name,
-                "account_id": self.account_payable.id,
-                "move_id": self.move.id,
-                "credit": 0.0,
-            }
+        self.env["account.move.line"].create(
+            [
+                {
+                    "name": self.order.name,
+                    "account_id": self.account_payable.id,
+                    "move_id": self.move.id,
+                    "credit": 1,
+                },
+                {
+                    "name": "counter part",
+                    "account_id": self.account_bank.id,
+                    "move_id": self.move.id,
+                    "debit": 1,
+                },
+            ]
         )
-        aml.with_context(check_move_validity=False).write(
-            {
-                "credit": 1,
-            }
+        payable_aml = self.move.line_ids.filtered(
+            lambda line: line.account_id == self.account_payable
         )
         self.assertFalse(self.move.partner_id)
         self.move.button_auto_completion()
         self.assertEqual(
-            self.move.partner_id,
+            payable_aml.partner_id,
             self.partner,
         )
