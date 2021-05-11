@@ -1,8 +1,8 @@
 # Copyright 2011-2019 Camptocamp SA
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html)
 from odoo import _, fields, models
-from odoo.addons.account_move_base_import.models.account_move \
-    import ErrorTooManyPartner
+
+from odoo.addons.account_move_base_import.models.account_move import ErrorTooManyPartner
 
 
 class AccountMoveCompletionRule(models.Model):
@@ -11,9 +11,8 @@ class AccountMoveCompletionRule(models.Model):
     _inherit = "account.move.completion.rule"
 
     function_to_call = fields.Selection(
-        selection_add=[
-            ('get_from_name_and_so', 'From line name (based on SO number)')
-        ])
+        selection_add=[("get_from_name_and_so", "From line name (based on SO number)")]
+    )
 
     # Should be private but data are initialized with no update XML
     def get_from_name_and_so(self, line):
@@ -35,13 +34,16 @@ class AccountMoveCompletionRule(models.Model):
             ...}
         """
         res = {}
-        so_obj = self.env['sale.order']
-        orders = so_obj.search([('name', '=', line.name)])
+        so_obj = self.env["sale.order"]
+        orders = so_obj.search([("name", "=", line.name)])
         if len(orders) > 1:
             raise ErrorTooManyPartner(
-                _('Line named "%s"  was matched by more '
-                  'than one partner while looking on SO by ref.') %
-                line.name)
+                _(
+                    'Line named "%s"  was matched by more '
+                    "than one partner while looking on SO by ref."
+                )
+                % line.name
+            )
         if len(orders) == 1:
-            res['partner_id'] = orders[0].partner_id.id
+            res["partner_id"] = orders[0].partner_id.id
         return res
