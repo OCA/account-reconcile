@@ -1,0 +1,17 @@
+<odoo>
+
+    <record id="account_move_reconciliation_date" model="ir.ui.view">
+        <field name="name">account.move.reconciliation.date</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_move_form" />
+        <field name="arch" type="xml">
+            <field name="invoice_date" position="after">
+                <field
+                    name="reconciliation_date"
+                    attrs="{'invisible': [('reconciliation_date', '=', False)]}"
+                />
+            </field>
+        </field>
+    </record>
+
+</odoo>

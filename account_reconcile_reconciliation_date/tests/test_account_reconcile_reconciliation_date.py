@@ -1,20 +1,20 @@
-# Copyright (C) 2019, Open Source Integrators
+# Copyright (C) 2021, Open Source Integrators
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 import time
 
-from odoo.addons.account.tests.account_test_classes import AccountingTestCase
+from odoo.addons.account.tests.common import AccountTestInvoicingCommon
 
 
-class TestAccountReconcileReconciliationDate(AccountingTestCase):
+class TestAccountReconcileReconciliationDate(AccountTestInvoicingCommon):
     def setUp(self):
         super(TestAccountReconcileReconciliationDate, self).setUp()
         self.register_payments_model = self.env[
-            "account.register.payments"
-        ].with_context(active_model="account.invoice")
+            "account.payment.register"
+        ].with_context(active_model="account.move")
         self.payment_model = self.env["account.payment"]
-        self.invoice_model = self.env["account.invoice"]
-        self.invoice_line_model = self.env["account.invoice.line"]
+        self.invoice_model = self.env["account.move"]
+        self.invoice_line_model = self.env["account.move.line"]
         self.acc_bank_stmt_model = self.env["account.bank.statement"]
         self.acc_bank_stmt_line_model = self.env["account.bank.statement.line"]
 
@@ -68,10 +68,10 @@ class TestAccountReconcileReconciliationDate(AccountingTestCase):
             limit=1,
         )
 
-        self.bank_journal_euro = self.env["account.journal"].create(
-            {"name": "Bank", "type": "bank", "code": "BNK67"}
+        self.bank_journal_euro = self.env["account.journal"].search(
+            [("type", "=", "bank")], limit=1
         )
-        self.account_eur = self.bank_journal_euro.default_debit_account_id
+        self.account_eur = self.bank_journal_euro.default_account_id
 
         self.bank_journal_usd = self.env["account.journal"].create(
             {
@@ -81,8 +81,10 @@ class TestAccountReconcileReconciliationDate(AccountingTestCase):
                 "currency_id": self.currency_usd_id,
             }
         )
-        self.account_usd = self.bank_journal_usd.default_debit_account_id
-
+        self.account_usd = self.bank_journal_usd.default_account_id
+        self.journal_id = self.env["account.journal"].search(
+            [("type", "=", "sale")], limit=1
+        )
         self.transfer_account = (
             self.env["res.users"].browse(self.env.uid).company_id.transfer_account_id
         )
@@ -100,7 +102,7 @@ class TestAccountReconcileReconciliationDate(AccountingTestCase):
     def create_invoice(
         self,
         amount=100,
-        type="out_invoice",
+        move_type="out_invoice",
         currency_id=None,
         partner=None,
         account_id=None,
@@ -110,23 +112,25 @@ class TestAccountReconcileReconciliationDate(AccountingTestCase):
             {
                 "partner_id": partner or self.partner_agrolait.id,
                 "currency_id": currency_id or self.currency_eur_id,
-                "name": type,
-                "account_id": account_id or self.account_receivable.id,
-                "type": type,
-                "date_invoice": time.strftime("%Y") + "-06-26",
+                "journal_id": self.journal_id.id,
+                "move_type": move_type,
+                "invoice_date": time.strftime("%Y") + "-06-26",
+                "invoice_line_ids": [
+                    (
+                        0,
+                        0,
+                        {
+                            "product_id": self.product.id,
+                            "quantity": 1,
+                            "price_unit": amount,
+                            "name": "something",
+                            "account_id": self.journal_id.default_account_id.id,
+                        },
+                    )
+                ],
             }
         )
-        self.invoice_line_model.create(
-            {
-                "product_id": self.product.id,
-                "quantity": 1,
-                "price_unit": amount,
-                "invoice_id": invoice.id,
-                "name": "something",
-                "account_id": self.account_revenue.id,
-            }
-        )
-        invoice.action_invoice_open()
+        invoice.action_post()
         return invoice
 
     def reconcile(
@@ -169,56 +173,39 @@ class TestAccountReconcileReconciliationDate(AccountingTestCase):
             partner=self.partner_agrolait.id,
         )
 
-        ctx = {"active_model": "account.invoice", "active_ids": [inv_1.id, inv_2.id]}
+        ctx = {"active_model": "account.move", "active_ids": [inv_1.id, inv_2.id]}
         register_payments = self.register_payments_model.with_context(ctx).create(
             {
                 "payment_date": time.strftime("%Y") + "-07-15",
                 "journal_id": self.bank_journal_euro.id,
                 "payment_method_id": self.payment_method_manual_in.id,
-                "group_invoices": True,
             }
         )
-        register_payments.create_payments()
+        register_payments.flush()
+        register_payments.action_create_payments()
         payment = self.payment_model.search([], order="id desc", limit=1)
 
-        self.assertAlmostEquals(payment.amount, 300)
+        self.assertAlmostEqual(payment.amount, 200)
         self.assertEqual(payment.state, "posted")
         self.assertEqual(payment.state, "posted")
-        self.assertEqual(inv_1.state, "paid")
-        self.assertEqual(inv_2.state, "paid")
+        self.assertEqual(inv_1.payment_state, "paid")
+        self.assertEqual(inv_2.payment_state, "paid")
 
         self.assertRecordValues(
-            payment.move_line_ids,
+            payment.line_ids,
             [
                 {
-                    "account_id": self.account_eur.id,
-                    "debit": 300.0,
+                    "journal_id": self.bank_journal_euro.id,
+                    "debit": 200.0,
                     "credit": 0.0,
-                    "amount_currency": 0,
-                    "currency_id": False,
                 },
                 {
-                    "account_id": inv_1.account_id.id,
+                    "journal_id": self.bank_journal_euro.id,
                     "debit": 0.0,
-                    "credit": 300.0,
-                    "amount_currency": 0,
-                    "currency_id": False,
+                    "credit": 200.0,
                 },
             ],
         )
-        self.assertTrue(
-            payment.move_line_ids.filtered(lambda l: l.account_id == inv_1.account_id)[
-                0
-            ].full_reconcile_id
-        )
 
-        liquidity_aml = payment.move_line_ids.filtered(
-            lambda r: r.account_id == self.account_eur
-        )
-        bank_statement = self.reconcile(liquidity_aml, 200, 0, False)
-
-        self.assertEqual(liquidity_aml.statement_id, bank_statement)
-        self.assertEqual(liquidity_aml.statement_line_id, bank_statement.line_ids[0])
-
-        self.assertEqual(payment.state, "reconciled")
+        self.assertEqual(payment.state, "posted")
         self.assertEqual(payment.reconciliation_date, inv_1.reconciliation_date)
