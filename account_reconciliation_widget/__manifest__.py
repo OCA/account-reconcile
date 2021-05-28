@@ -13,9 +13,9 @@
     "data": [
         "security/ir.model.access.csv",
         "views/assets.xml",
-        "views/account_view.xml",
-        "views/account_bank_statement_view.xml",
-        "views/account_journal_dashboard_view.xml",
+        "views/account_bank_statement.xml",
+        "views/account_bank_statement_line.xml",
+        "views/account_journal.xml",
     ],
     "qweb": [
         "static/src/xml/account_reconciliation.xml",
