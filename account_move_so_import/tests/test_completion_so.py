@@ -16,6 +16,7 @@ class TestCompliteSO(SavepointCase):
             {
                 "name": "Test order",
                 "partner_id": cls.partner.id,
+                "reference": "test payment ref",
                 "order_line": [
                     (
                         0,
@@ -47,6 +48,9 @@ class TestCompliteSO(SavepointCase):
         )
         rule_ids += cls.env.ref(
             "account_move_so_import." "bank_statement_completion_rule_1"
+        )
+        rule_ids += cls.env.ref(
+            "account_move_so_import." "bank_statement_completion_rule_2"
         )
         # create journal with profile
         cls.journal = cls.env["account.journal"].create(
@@ -81,13 +85,40 @@ class TestCompliteSO(SavepointCase):
             ],
             limit=1,
         )
+        cls.order.action_confirm()
 
-    def test_completion_so(self):
-        self.order.action_confirm()
+    def test_completion_so_name(self):
         self.env["account.move.line"].create(
             [
                 {
                     "name": self.order.name,
+                    "account_id": self.account_payable.id,
+                    "move_id": self.move.id,
+                    "credit": 1,
+                },
+                {
+                    "name": "counter part",
+                    "account_id": self.account_bank.id,
+                    "move_id": self.move.id,
+                    "debit": 1,
+                },
+            ]
+        )
+        payable_aml = self.move.line_ids.filtered(
+            lambda line: line.account_id == self.account_payable
+        )
+        self.assertFalse(self.move.partner_id)
+        self.move.button_auto_completion()
+        self.assertEqual(
+            payable_aml.partner_id,
+            self.partner,
+        )
+
+    def test_completion_so_payment_ref(self):
+        self.env["account.move.line"].create(
+            [
+                {
+                    "name": self.order.reference,
                     "account_id": self.account_payable.id,
                     "move_id": self.move.id,
                     "credit": 1,
