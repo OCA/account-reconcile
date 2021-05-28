@@ -5,7 +5,7 @@
         <field name="model">account.payment</field>
         <field name="inherit_id" ref="account.view_account_payment_form" />
         <field name="arch" type="xml">
-            <field name="payment_date" position="after">
+            <field name="date" position="after">
                 <field
                     name="reconciliation_date"
                     attrs="{'invisible': [('reconciliation_date', '=', False)]}"
