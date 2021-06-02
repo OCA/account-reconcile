@@ -24,6 +24,7 @@
     "data": [
         "wizards/import_statement_view.xml",
         "data/cron.xml",
+        "data/completion_rule_data.xml",
     ],
     "demo": [
     ],

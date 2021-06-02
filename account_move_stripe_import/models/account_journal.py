@@ -43,7 +43,8 @@ class StripeParser(AccountMoveImportParser):
 
     def _get_account(self):
         return self.env['payment.acquirer'].search(
-            [('provider', '=', 'stripe')])
+            [('provider', '=', 'stripe'),
+            ('company_id', '=', self.journal.company_id.id)])
 
     def _skip(self, payout_id):
         return bool(self.env['account.move'].search([
