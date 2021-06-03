@@ -27,8 +27,11 @@ class AccountJournal(models.Model):
 
     @api.model
     def run_import_stripe_deposit(self):
-        for journal in self.search([('import_type', '=', 'stripe')]):
-            journal.multi_move_import(None, None)
+        moves = self.env["account.move"]
+        for journal in self.search([('import_type', '=', 'stripe'),
+                                    ('used_for_import', '=', True)]):
+            moves |= journal.multi_move_import(None, None)
+        return moves
 
 
 class StripeParser(AccountMoveImportParser):
@@ -44,7 +47,7 @@ class StripeParser(AccountMoveImportParser):
     def _get_account(self):
         return self.env['payment.acquirer'].search(
             [('provider', '=', 'stripe'),
-            ('company_id', '=', self.journal.company_id.id)])
+             ('company_id', '=', self.journal.company_id.id)])
 
     def _skip(self, payout_id):
         return bool(self.env['account.move'].search([
