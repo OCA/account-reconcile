@@ -27,6 +27,9 @@
                         <group>
                             <field name="name" select="1" />
                             <field name="account" />
+                            <field name="date" />
+                            <field name="three_way_limit" />
+                            <field name="non_rec_entry" invisible="1"/>
                             <field
                                 name="company_id"
                                 groups="base.group_multi_company"
@@ -79,6 +82,15 @@ The lines should have the same amount (with the write-off) and the same name to 
 The lines should have the same amount (with the write-off) and the same partner to be reconciled."
                                 colspan="4"
                             />
+                          <separator
+                                colspan="4"
+                                string="Simple. Amount, Partner and Product"
+                           />
+                          <label
+                              for="reconcile_method"
+                              string="Match one debit line vs one credit line. Do not allow partial reconciliation.
+The lines should have the same amount (with the write-off), the same partner and the same product to be reconciled."
+                              colspan="4"/>
                             <separator
                                 colspan="4"
                                 string="Simple. Amount and Reference"
@@ -164,6 +176,7 @@ The lines should have the same partner, and the credit entry ref. is matched wit
             <tree editable="top" string="Automatic Mass Reconcile Method">
                 <field name="sequence" widget="handle" />
                 <field name="name" />
+                <field name="matching_type" required="1"/>
                 <field name="write_off" />
                 <field
                     name="account_lost_id"
@@ -172,6 +185,14 @@ The lines should have the same partner, and the credit entry ref. is matched wit
                 <field
                     name="account_profit_id"
                     attrs="{'required':[('write_off','>',0)]}"
+                />
+                <field
+                    name="income_exchange_account_id"
+                    groups="base.group_multi_currency"
+                />
+                <field
+                    name="expense_exchange_account_id"
+                    groups="base.group_multi_currency"
                 />
                 <field name="journal_id" attrs="{'required':[('write_off','>',0)]}" />
                 <field name="date_base_on" />

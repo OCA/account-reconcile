@@ -15,6 +15,7 @@
         "views/mass_reconcile.xml",
         "views/mass_reconcile_history_view.xml",
         "views/res_config_view.xml",
+        "views/account_view.xml",
     ],
     "license": "AGPL-3",
 }
