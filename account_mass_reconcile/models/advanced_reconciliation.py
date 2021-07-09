@@ -167,7 +167,7 @@ class MassReconcileAdvancedName(models.TransientModel):
         """
         return (
             ("partner_id", move_line["partner_id"]),
-            ("name", move_line["name"].lower().strip()),
+            ("name", (move_line["name"] or "").lower().strip()),
         )
 
     @staticmethod
