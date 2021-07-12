@@ -8,6 +8,7 @@ setuptools.setup(
     description="Meta package for oca-account-reconcile Odoo addons",
     version=version,
     install_requires=[
+        'odoo14-addon-account_reconcile_reconciliation_date',
         'odoo14-addon-account_reconciliation_widget',
     ],
     classifiers=[
