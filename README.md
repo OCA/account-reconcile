@@ -19,6 +19,7 @@ Available addons
 ----------------
 addon | version | summary
 --- | --- | ---
+[account_reconcile_reconciliation_date](account_reconcile_reconciliation_date/) | 14.0.1.0.0 | Track Reconciliation Date of Payments and Invoices
 [account_reconciliation_widget](account_reconciliation_widget/) | 14.0.1.1.5 | Account reconciliation widget
 
 [//]: # (end addons)
