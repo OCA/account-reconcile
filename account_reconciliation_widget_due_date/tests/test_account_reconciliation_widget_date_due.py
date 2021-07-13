@@ -95,13 +95,10 @@ class TestAccountReconciliationWidgetDueDate(TransactionCase):
         ]
         res = reconciliation_widget.process_bank_statement_line(
             [line_b.id],
-            [
-                {
-                    "partner_id": line_b.partner_id.id,
-                    "new_aml_dicts": new_aml_dicts,
-                    "date_due": line_b.date_due,
-                }
-            ],
+            [{"partner_id": line_b.partner_id.id, "new_aml_dicts": new_aml_dicts}],
+        )
+        reconciliation_widget.update_bank_statement_line_due_date(
+            res["moves"], [line_b.id], [line_b.date_due],
         )
         self.assertEqual(len(res["moves"]), 1)
         move = account_move_model.browse(res["moves"][0])
@@ -123,13 +120,10 @@ class TestAccountReconciliationWidgetDueDate(TransactionCase):
         ]
         res = reconciliation_widget.process_bank_statement_line(
             [line_c.id],
-            [
-                {
-                    "partner_id": line_c.partner_id.id,
-                    "new_aml_dicts": new_aml_dicts,
-                    "date_due": "2021-02-05",
-                }
-            ],
+            [{"partner_id": line_c.partner_id.id, "new_aml_dicts": new_aml_dicts}],
+        )
+        reconciliation_widget.update_bank_statement_line_due_date(
+            res["moves"], [line_c.id], ["2021-02-05"],
         )
         self.assertEqual(line_c.date_due, date(2021, 2, 5))
         self.assertEqual(len(res["moves"]), 1)
