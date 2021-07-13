@@ -6,8 +6,6 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 13.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-05-31 07:14+0000\n"
-"PO-Revision-Date: 2021-05-31 07:14+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -28,13 +26,6 @@ msgstr ""
 #. module: account_reconciliation_widget_due_date
 #: model:ir.model.fields,field_description:account_reconciliation_widget_due_date.field_account_bank_statement_line__date_due
 msgid "Due date"
-msgstr ""
-
-#. module: account_reconciliation_widget_due_date
-#. openerp-web
-#: code:addons/account_reconciliation_widget_due_date/static/src/js/reconciliation_model.js:0
-#, python-format
-msgid "Open balance"
 msgstr ""
 
 #. module: account_reconciliation_widget_due_date
