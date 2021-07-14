@@ -269,14 +269,19 @@ class AccountReconciliation(models.AbstractModel):
                     and matching_amls[line.id]["model"].id,
                     "write_off": matching_amls[line.id].get("status") == "write_off",
                 }
-                if not line.partner_id and partner_map.get(line.id):
-                    partner = self.env["res.partner"].browse(partner_map[line.id])
-                    line_vals.update(
-                        {
-                            "partner_id": partner.id,
-                            "partner_name": partner.name,
-                        }
-                    )
+                if not line.partner_id:
+                    partner = False
+                    if matching_amls[line.id].get("partner"):
+                        partner = matching_amls[line.id]["partner"]
+                    elif partner_map.get(line.id):
+                        partner = self.env["res.partner"].browse(partner_map[line.id])
+                    if partner:
+                        line_vals.update(
+                            {
+                                "partner_id": partner.id,
+                                "partner_name": partner.name,
+                            }
+                        )
                 results["lines"].append(line_vals)
 
         return results
