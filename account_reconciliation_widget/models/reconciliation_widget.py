@@ -102,14 +102,13 @@ class AccountReconciliation(models.AbstractModel):
             search_str=search_str,
             mode=mode,
         )
-        recs_count = self.env["account.move.line"].search_count(domain)
 
         from_clause, where_clause, where_clause_params = (
             self.env["account.move.line"]._where_calc(domain).get_sql()
         )
         query_str = sql.SQL(
             """
-            SELECT "account_move_line".id FROM {from_clause}
+            SELECT "account_move_line".id, COUNT(*) OVER() FROM {from_clause}
             {where_str}
             ORDER BY ("account_move_line".debit -
                       "account_move_line".credit) = {amount} DESC,
@@ -129,7 +128,11 @@ class AccountReconciliation(models.AbstractModel):
         self.env["account.bank.statement"].flush()
         self._cr.execute(query_str, params)
         res = self._cr.fetchall()
-
+        try:
+            # All records will have the same count value, just get the 1st one
+            recs_count = res[0][1]
+        except IndexError:
+            recs_count = 0
         aml_recs = self.env["account.move.line"].browse([i[0] for i in res])
         target_currency = (
             st_line.currency_id
