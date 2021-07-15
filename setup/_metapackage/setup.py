@@ -12,6 +12,7 @@ setuptools.setup(
         'odoo13-addon-account_partner_reconcile',
         'odoo13-addon-account_reconcile_payment_order',
         'odoo13-addon-account_reconcile_restrict_partner_mismatch',
+        'odoo13-addon-account_reconciliation_widget_due_date',
         'odoo13-addon-account_skip_bank_reconciliation',
         'odoo13-addon-bank_statement_journal_items',
     ],
