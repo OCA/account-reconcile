@@ -5,10 +5,10 @@ from odoo import models
 
 
 class MassReconcileAdvanced(models.AbstractModel):
-    _inherit = 'mass.reconcile.advanced'
+    _inherit = "mass.reconcile.advanced"
 
     def _selection_columns(self):
         aml_cols = super(MassReconcileAdvanced, self)._selection_columns()
-        aml_cols.append('account_move_line.purchase_line_id')
-        aml_cols.append('account_move_line.product_id')
+        aml_cols.append("account_move_line.purchase_line_id")
+        aml_cols.append("account_move_line.product_id")
         return aml_cols
