@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="move_importer_view" model="ir.ui.view">
+        <field name="name">credit.statement.import.config.view</field>
+        <field name="model">credit.statement.import</field>
+        <field name="arch" type="xml">
+            <form string="Import move">
+                <group name="main">
+                    <field
+                        name="journal_id"
+                        domain="[('used_for_import', '=', True)]"
+                    />
+                    <field name="input_statement" filename="file_name" />
+                    <field name="file_name" invisible="1" />
+                </group>
+                <group string="Import Parameters Summary" name="params">
+                    <field name="partner_id" />
+                    <field name="receivable_account_id" />
+                    <field name="commission_account_id" />
+                </group>
+                <footer>
+                    <button
+                        name="import_statement"
+                        string="Import file"
+                        type="object"
+                        class="oe_highlight"
+                    />
+                    <button special="cancel" string="Cancel" class="oe_link" />
+                </footer>
+            </form>
+        </field>
+    </record>
+    <record id="move_importer_action" model="ir.actions.act_window">
+        <field name="name">Import Batch File</field>
+        <field name="res_model">credit.statement.import</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+    <menuitem
+        id="move_importer_menu"
+        name="Import Batch File"
+        action="move_importer_action"
+        parent="account.menu_finance_entries"
+    />
+</odoo>

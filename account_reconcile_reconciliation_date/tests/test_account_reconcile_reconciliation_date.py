@@ -69,7 +69,7 @@ class TestAccountReconcileReconciliationDate(AccountTestInvoicingCommon):
         )
 
         self.bank_journal_euro = self.env["account.journal"].search(
-            [("type", "=", "bank")], limit=1
+            [("type", "=", "bank"), ("company_id", "=", self.env.company.id)], limit=1
         )
         self.account_eur = self.bank_journal_euro.default_account_id
 
@@ -83,7 +83,7 @@ class TestAccountReconcileReconciliationDate(AccountTestInvoicingCommon):
         )
         self.account_usd = self.bank_journal_usd.default_account_id
         self.journal_id = self.env["account.journal"].search(
-            [("type", "=", "sale")], limit=1
+            [("type", "=", "sale"), ("company_id", "=", self.env.company.id)], limit=1
         )
         self.transfer_account = (
             self.env["res.users"].browse(self.env.uid).company_id.transfer_account_id
