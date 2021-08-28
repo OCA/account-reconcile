@@ -19,6 +19,7 @@ Available addons
 ----------------
 addon | version | maintainers | summary
 --- | --- | --- | ---
+[account_move_base_import](account_move_base_import/) | 14.0.1.0.0 |  | Journal Entry base import
 [account_reconcile_reconciliation_date](account_reconcile_reconciliation_date/) | 14.0.1.0.0 |  | Track Reconciliation Date of Payments and Invoices
 [account_reconciliation_widget](account_reconciliation_widget/) | 14.0.1.1.7 |  | Account reconciliation widget
 
