@@ -312,7 +312,7 @@ class AccountReconciliation(models.AbstractModel):
              FROM account_bank_statement_line line
              LEFT JOIN res_partner p on p.id = line.partner_id
              INNER JOIN account_bank_statement st ON line.statement_id = st.id
-                AND st.state = 'posted'
+                AND st.state IN ('posted', 'open')
              WHERE line.is_reconciled = FALSE
              AND line.amount != 0.0
              AND line.id IN %(ids)s

@@ -12,7 +12,7 @@
                         string="Reconcile"
                         type="object"
                         class="oe_highlight"
-                        attrs="{'invisible':['|','|',('all_lines_reconciled','=',True),('line_ids','=',[]),('state', '!=', 'posted')]}"
+                        attrs="{'invisible':['|','|',('all_lines_reconciled','=',True),('line_ids','=',[]),('state', 'not in', ('posted','open'))]}"
                     />
                 </xpath>
                 <xpath expr="//field[@name='date']" position="after">
