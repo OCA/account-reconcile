@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 14.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2021-03-22 11:46+0000\n"
-"Last-Translator: Yves Le Doeuff <yld@alliasys.fr>\n"
+"PO-Revision-Date: 2021-09-20 12:24+0000\n"
+"Last-Translator: Rémi <remi@le-filament.com>\n"
 "Language-Team: none\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
@@ -80,7 +80,7 @@ msgstr "Compte ana."
 #: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
 #, python-format
 msgid "Analytic Tags."
-msgstr ""
+msgstr "Étiquettes Analytiques."
 
 #. module: account_reconciliation_widget
 #. openerp-web
@@ -340,7 +340,7 @@ msgstr "Dernière modification le"
 #: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
 #, python-format
 msgid "Last Reconciliation:"
-msgstr "Dernier lettrage:"
+msgstr "Dernier lettrage :"
 
 #. module: account_reconciliation_widget
 #. openerp-web
@@ -425,7 +425,7 @@ msgid ""
 " make a regular revert of it in case you want to cancel it."
 msgstr ""
 "Opération non autorisée. Puisque votre ligne de relevé a déjà reçu un nombre "
-"(% s), vous ne pouvez pas la lettrer entièrement avec les écritures de "
+"(%s), vous ne pouvez pas la lettrer entièrement avec les écritures de "
 "journal existantes, sinon cela créerait un vide dans la numérotation. Vous "
 "devez réserver une entrée et en faire une annulation au cas où vous voudriez "
 "l'annuler."
@@ -479,7 +479,7 @@ msgstr "Rapprochement bancaire"
 #: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
 #, python-format
 msgid "Ref"
-msgstr ""
+msgstr "Réf"
 
 #. module: account_reconciliation_widget
 #. openerp-web
