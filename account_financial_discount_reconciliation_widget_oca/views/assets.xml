@@ -8,7 +8,7 @@
         <xpath expr="." position="inside">
             <script
                 type="text/javascript"
-                src="/account_financial_discount/static/src/js/reconciliation_model.js"
+                src="/account_financial_discount_reconciliation_widget_oca/static/src/js/reconciliation_model.js"
             />
         </xpath>
     </template>

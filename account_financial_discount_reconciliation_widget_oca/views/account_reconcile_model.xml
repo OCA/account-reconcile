@@ -11,7 +11,7 @@
                     attrs="{'invisible': [('rule_type', '!=', 'invoice_matching')]}"
                 />
             </field>
-            <group name="second_line" position="after">
+            <xpath expr="//sheet" position="inside">
                 <group
                     string="Financial discount"
                     name="financial_discount"
@@ -26,7 +26,7 @@
                         <field name="financial_discount_revenue_account_id" />
                     </group>
                 </group>
-            </group>
+            </xpath>
         </field>
     </record>
 </odoo>
