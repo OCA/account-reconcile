@@ -79,6 +79,7 @@ class TestReconciliation(SavepointCase):
         return aml_recs
 
     def test_reconcile_no_partner(self):
+        self.aml.move_id.action_post()
         self.aml.reconcile()
         self.assertTrue(all(self.aml.mapped("reconciled")))
 
@@ -88,6 +89,7 @@ class TestReconciliation(SavepointCase):
             self.aml.reconcile()
         # all lines with same partner allowed
         self.aml.write({"partner_id": self.partner.id})
+        self.aml.move_id.action_post()
         self.aml.reconcile()
         self.assertTrue(all(self.aml.mapped("reconciled")))
 
@@ -112,5 +114,6 @@ class TestReconciliation(SavepointCase):
         # reconciliation for different partners allowed
         # for not forbidden types
         self.aml.write({"account_id": account.id})
+        self.aml.move_id.action_post()
         self.aml.reconcile()
         self.assertTrue(all(self.aml.mapped("reconciled")))
