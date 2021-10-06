@@ -9,9 +9,9 @@ from odoo.tools import config
 class AccountMoveLine(models.Model):
     _inherit = "account.move.line"
 
-    def reconcile(self, writeoff_acc_id=False, writeoff_journal_id=False):
+    def reconcile(self):
         if config["test_enable"] and not self.env.context.get("test_partner_mismatch"):
-            return super().reconcile(writeoff_acc_id, writeoff_journal_id)
+            return super().reconcile()
 
         # to be consistent with parent method
         if not self:
@@ -27,4 +27,4 @@ class AccountMoveLine(models.Model):
                     " lines for receivable and payable accounts!"
                 )
             )
-        return super().reconcile(writeoff_acc_id, writeoff_journal_id)
+        return super().reconcile()
