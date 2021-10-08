@@ -1,0 +1,105 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* account_reconcile_restrict_partner_mismatch
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 13.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: account_reconcile_restrict_partner_mismatch
+#: model:ir.model.fields,field_description:account_reconcile_restrict_partner_mismatch.field_account_reconcile_partner_mismatch_report__account_id
+msgid "Account"
+msgstr ""
+
+#. module: account_reconcile_restrict_partner_mismatch
+#: model:ir.model,name:account_reconcile_restrict_partner_mismatch.model_account_reconcile_partner_mismatch_report
+msgid "Account Reconcile Partner Mismatch Report"
+msgstr ""
+
+#. module: account_reconcile_restrict_partner_mismatch
+#: model:ir.model.fields,field_description:account_reconcile_restrict_partner_mismatch.field_account_reconcile_partner_mismatch_report__account_type_id
+msgid "Account type"
+msgstr ""
+
+#. module: account_reconcile_restrict_partner_mismatch
+#: model:ir.model.fields,field_description:account_reconcile_restrict_partner_mismatch.field_account_reconcile_partner_mismatch_report__credit_amount
+msgid "Credit amount"
+msgstr ""
+
+#. module: account_reconcile_restrict_partner_mismatch
+#: model:ir.model.fields,field_description:account_reconcile_restrict_partner_mismatch.field_account_reconcile_partner_mismatch_report__credit_move_id
+msgid "Credit move"
+msgstr ""
+
+#. module: account_reconcile_restrict_partner_mismatch
+#: model:ir.model.fields,field_description:account_reconcile_restrict_partner_mismatch.field_account_reconcile_partner_mismatch_report__credit_partner_id
+msgid "Credit partner"
+msgstr ""
+
+#. module: account_reconcile_restrict_partner_mismatch
+#: model:ir.model.fields,field_description:account_reconcile_restrict_partner_mismatch.field_account_reconcile_partner_mismatch_report__debit_amount
+msgid "Debit amount"
+msgstr ""
+
+#. module: account_reconcile_restrict_partner_mismatch
+#: model:ir.model.fields,field_description:account_reconcile_restrict_partner_mismatch.field_account_reconcile_partner_mismatch_report__debit_move_id
+msgid "Debit move"
+msgstr ""
+
+#. module: account_reconcile_restrict_partner_mismatch
+#: model:ir.model.fields,field_description:account_reconcile_restrict_partner_mismatch.field_account_reconcile_partner_mismatch_report__debit_partner_id
+msgid "Debit partner"
+msgstr ""
+
+#. module: account_reconcile_restrict_partner_mismatch
+#: model:ir.model.fields,field_description:account_reconcile_restrict_partner_mismatch.field_account_reconcile_partner_mismatch_report__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: account_reconcile_restrict_partner_mismatch
+#: model:ir.model.fields,field_description:account_reconcile_restrict_partner_mismatch.field_account_reconcile_partner_mismatch_report__full_reconcile_id
+msgid "Full Reconcile"
+msgstr ""
+
+#. module: account_reconcile_restrict_partner_mismatch
+#: model:ir.model.fields,field_description:account_reconcile_restrict_partner_mismatch.field_account_reconcile_partner_mismatch_report__id
+msgid "ID"
+msgstr ""
+
+#. module: account_reconcile_restrict_partner_mismatch
+#: model:ir.model,name:account_reconcile_restrict_partner_mismatch.model_account_move_line
+msgid "Journal Item"
+msgstr ""
+
+#. module: account_reconcile_restrict_partner_mismatch
+#: model:ir.model.fields,field_description:account_reconcile_restrict_partner_mismatch.field_account_reconcile_partner_mismatch_report____last_update
+msgid "Last Modified on"
+msgstr ""
+
+#. module: account_reconcile_restrict_partner_mismatch
+#: model:ir.model.fields,field_description:account_reconcile_restrict_partner_mismatch.field_account_reconcile_partner_mismatch_report__partial_reconcile_id
+msgid "Partial Reconcile"
+msgstr ""
+
+#. module: account_reconcile_restrict_partner_mismatch
+#: model:ir.actions.act_window,name:account_reconcile_restrict_partner_mismatch.action_account_reconcile_partner_mismatch_report
+#: model:ir.ui.menu,name:account_reconcile_restrict_partner_mismatch.menu_account_reconcile_partner_mismatch_report
+#: model_terms:ir.ui.view,arch_db:account_reconcile_restrict_partner_mismatch.account_reconcile_partner_mismatch_report_view_form
+#: model_terms:ir.ui.view,arch_db:account_reconcile_restrict_partner_mismatch.view_account_move_reconciled_report_tree
+msgid "Reconciled items with partner mismatch"
+msgstr ""
+
+#. module: account_reconcile_restrict_partner_mismatch
+#: code:addons/account_reconcile_restrict_partner_mismatch/models/account_move_line.py:0
+#, python-format
+msgid ""
+"The partner has to be the same on all lines for receivable and payable "
+"accounts!"
+msgstr ""
