@@ -28,11 +28,12 @@ class AccountReconcileModel(models.Model):
                     substring(REGEXP_REPLACE(aml.name, '[^0-9|^\s]', '', 'g'), '\S(?:.*\S)*') != ''
                     AND
                         regexp_split_to_array(substring(REGEXP_REPLACE(aml.name, '[^0-9|^\s]', '', 'g'), '\S(?:.*\S)*'),'\s+')
-                        && regexp_split_to_array(substring(REGEXP_REPLACE(st_line.name, '[^0-9|^\s]', '', 'g'), '\S(?:.*\S)*'), '\s+')
+                        && regexp_split_to_array(substring(REGEXP_REPLACE(st_line.payment_ref, '[^0-9|^\s]', '', 'g'), '\S(?:.*\S)*'), '\s+')
                 )
                 OR
                     regexp_split_to_array(substring(REGEXP_REPLACE(move.name, '[^0-9|^\s]', '', 'g'), '\S(?:.*\S)*'),'\s+')
-                    && regexp_split_to_array(substring(REGEXP_REPLACE(st_line.name, '[^0-9|^\s]', '', 'g'), '\S(?:.*\S)*'), '\s+')
+                    &&
+                    regexp_split_to_array(substring(REGEXP_REPLACE(st_line.payment_ref, '[^0-9|^\s]', '', 'g'), '\S(?:.*\S)*'), '\s+')
                 OR
                 (
                     move.ref IS NOT NULL
@@ -40,7 +41,8 @@ class AccountReconcileModel(models.Model):
                     substring(REGEXP_REPLACE(move.ref, '[^0-9|^\s]', '', 'g'), '\S(?:.*\S)*') != ''
                     AND
                         regexp_split_to_array(substring(REGEXP_REPLACE(move.ref, '[^0-9|^\s]', '', 'g'), '\S(?:.*\S)*'),'\s+')
-                        && regexp_split_to_array(substring(REGEXP_REPLACE(st_line.name, '[^0-9|^\s]', '', 'g'), '\S(?:.*\S)*'), '\s+')
+                        &&
+                        regexp_split_to_array(substring(REGEXP_REPLACE(st_line.payment_ref, '[^0-9|^\s]', '', 'g'), '\S(?:.*\S)*'), '\s+')
                 )
                 , FALSE)
                 AND
@@ -48,7 +50,7 @@ class AccountReconcileModel(models.Model):
                     WHEN abs(st_line.amount) < abs(aml.balance) THEN abs(st_line.amount) / abs(aml.balance) * 100
                     WHEN abs(st_line.amount) > abs(aml.balance) THEN abs(aml.balance) / abs(st_line.amount) * 100
                     ELSE 100
-                END >= {match_total_amount_param} AS communication_flag
+                END >= {match_total_amount_param}
             """.format(
                 match_total_amount_param=self.match_total_amount_param
             )
@@ -58,19 +60,20 @@ class AccountReconcileModel(models.Model):
             return super()._get_select_payment_reference_flag()
         else:
             return r"""
-                -- Determine a matching or not with the statement line communication using the move.invoice_payment_ref.
+                -- Determine a matching or not with the statement line communication using the move.payment_reference.
                 COALESCE
                 (
-                    move.invoice_payment_ref IS NOT NULL
+                    move.payment_reference IS NOT NULL
                     AND
-                    regexp_replace(move.invoice_payment_ref, '\s+', '', 'g') = regexp_replace(st_line.name, '\s+', '', 'g')
+                    regexp_replace(move.payment_reference, '\s+', '', 'g') =
+                    regexp_replace(st_line.payment_ref, '\s+', '', 'g')
                 , FALSE)
                 AND
                 CASE
                     WHEN abs(st_line.amount) < abs(aml.balance) THEN abs(st_line.amount) / abs(aml.balance) * 100
                     WHEN abs(st_line.amount) > abs(aml.balance) THEN abs(aml.balance) / abs(st_line.amount) * 100
                     ELSE 100
-                END >= {match_total_amount_param} AS payment_reference_flag
+                END >= {match_total_amount_param}
             """.format(
                 match_total_amount_param=self.match_total_amount_param
             )
