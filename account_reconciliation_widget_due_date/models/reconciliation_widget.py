@@ -24,4 +24,5 @@ class AccountReconciliation(models.AbstractModel):
             move_record = account_move_obj.browse(move_id)
             st_line = st_line_move_obj.browse(st_line_ids[index])
             st_line.date_due = parse_date(self.env, dates[index])
-            move_record.line_ids.date_maturity = st_line.date_due
+            if st_line.date_due:
+                move_record.line_ids.date_maturity = st_line.date_due

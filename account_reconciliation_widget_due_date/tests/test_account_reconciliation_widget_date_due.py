@@ -81,6 +81,12 @@ class TestAccountReconciliationWidgetDueDate(TransactionCase):
         move_line_credit = move.line_ids.filtered(lambda x: x.debit > 0)
         self.assertFalse(move_line_credit.date_maturity)
         self.assertEqual(move_line_credit.partner_id, self.partner_a)
+        # Check that the date_maturity does not change
+        move_line_credit.date_maturity = date(2021, 2, 5)
+        reconciliation_widget.update_bank_statement_line_due_date(
+            res["moves"], [line_a.id], [line_a.date_due],
+        )
+        self.assertEqual(move_line_credit.date_maturity, date(2021, 2, 5))
         # line_b
         line_b = self.statement.line_ids.filtered(
             lambda x: x.partner_id == self.partner_b
