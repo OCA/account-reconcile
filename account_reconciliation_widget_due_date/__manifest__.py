@@ -3,7 +3,7 @@
 
 {
     "name": "Account Reconciliation Widget Due Date",
-    "version": "13.0.1.0.0",
+    "version": "13.0.1.0.1",
     "website": "https://github.com/OCA/account-reconcile",
     "author": "Tecnativa, Odoo Community Association (OCA)",
     "license": "AGPL-3",
