@@ -245,7 +245,7 @@ class AccountMoveLine(models.Model):
     """
 
     _inherit = "account.move.line"
-    _order = "already_completed desc, date asc"
+    _order = "already_completed desc, date asc, id"
 
     already_completed = fields.Boolean(
         string="Auto-Completed",
