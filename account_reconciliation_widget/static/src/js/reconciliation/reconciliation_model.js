@@ -1350,7 +1350,12 @@ odoo.define("account.ReconciliationModel", function (require) {
         _formatMany2ManyTags: function (value) {
             var res = [];
             for (var i = 0, len = value.length; i < len; i++) {
-                res[i] = {id: value[i][0], display_name: value[i][1]};
+                res.push({
+                    id: value[i],
+                    display_name: this.analyticTags[value[i]]
+                        ? this.analyticTags[value[i]].display_name
+                        : "",
+                });
             }
             return res;
         },
@@ -1598,18 +1603,19 @@ odoo.define("account.ReconciliationModel", function (require) {
                     amount = (line.balance.amount * values.amount) / 100;
                     break;
                 case "regex":
-                    var matching = line.st_line.name.match(
+                    var matching = line.st_line.payment_ref.match(
                         new RegExp(values.amount_string)
                     );
                     if (matching && matching.length == 2) {
                         matching = matching[1].replace(
-                            new RegExp("\\D" + reconcileModel.decimal_separator, "g"),
-                            ""
-                        );
-                        matching = matching.replace(
                             reconcileModel.decimal_separator,
                             "."
                         );
+                        matching = matching.replace(
+                            new RegExp("[^0-9.-]", "g"),
+                            ""
+                        );
+
                         amount = parseFloat(matching) || 0;
                         amount = line.balance.amount > 0 ? amount : -amount;
                     }
