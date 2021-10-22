@@ -1606,6 +1606,16 @@ odoo.define("account.ReconciliationModel", function (require) {
                     var matching = line.st_line.payment_ref.match(
                         new RegExp(values.amount_string)
                     );
+                    if (!matching || !matching.length == 2) { // if we have no match on payment_ref we try on other fields
+                        var matching = line.st_line.ref.match(
+                            new RegExp(values.amount_string)
+                        );
+                    }
+                    if (!matching || !matching.length == 2) { // if we have no match on payment_ref we try on other fields
+                        var matching = line.st_line.narration.match(
+                            new RegExp(values.amount_string)
+                        );
+                    }
                     if (matching && matching.length == 2) {
                         matching = matching[1].replace(
                             reconcileModel.decimal_separator,
