@@ -1604,7 +1604,7 @@ odoo.define("account.ReconciliationModel", function (require) {
                     if (matching && matching.length == 2) {
                         matching = matching[1].replace(
                             new RegExp(
-                                "[^-d" + reconcileModel.decimal_separator + "]",
+                                "[^-\\d" + reconcileModel.decimal_separator + "]",
                                 "g"
                             ),
                             ""
