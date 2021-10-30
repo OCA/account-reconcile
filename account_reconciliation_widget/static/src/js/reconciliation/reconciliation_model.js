@@ -1603,7 +1603,10 @@ odoo.define("account.ReconciliationModel", function (require) {
                     );
                     if (matching && matching.length === 2) {
                         matching = matching[1].replace(
-                            new RegExp("\\D" + reconcileModel.decimal_separator, "g"),
+                            new RegExp(
+                                "[^-\\d" + reconcileModel.decimal_separator + "]",
+                                "g"
+                            ),
                             ""
                         );
                         matching = matching.replace(
