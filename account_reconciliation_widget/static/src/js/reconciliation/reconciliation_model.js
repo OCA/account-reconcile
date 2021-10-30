@@ -1598,7 +1598,7 @@ odoo.define("account.ReconciliationModel", function (require) {
                     amount = (line.balance.amount * values.amount) / 100;
                     break;
                 case "regex":
-                    var matching = line.st_line.name.match(
+                    var matching = line.st_line.payment_ref.match(
                         new RegExp(values.amount_string)
                     );
                     if (matching && matching.length == 2) {
