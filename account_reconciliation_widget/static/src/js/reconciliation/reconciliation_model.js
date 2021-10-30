@@ -1350,7 +1350,12 @@ odoo.define("account.ReconciliationModel", function (require) {
         _formatMany2ManyTags: function (value) {
             var res = [];
             for (var i = 0, len = value.length; i < len; i++) {
-                res[i] = {id: value[i][0], display_name: value[i][1]};
+                res.push({
+                    id: value[i],
+                    display_name: this.analyticTags[value[i]]
+                        ? this.analyticTags[value[i]].display_name
+                        : "",
+                });
             }
             return res;
         },
