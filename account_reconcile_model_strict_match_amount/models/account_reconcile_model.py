@@ -14,66 +14,50 @@ class AccountReconcileModel(models.Model):
     )
 
     # flake8: noqa
-
     def _get_select_communication_flag(self):
+        comm_flag = super()._get_select_communication_flag()
         if not self.match_total_amount or not self.strict_match_total_amount:
-            return super()._get_select_communication_flag()
-        else:
-            return r"""
-                -- Determine a matching or not with the statement line communication using the aml.name, move.name or move.ref.
-                COALESCE(
-                (
-                    aml.name IS NOT NULL
-                    AND
-                    substring(REGEXP_REPLACE(aml.name, '[^0-9|^\s]', '', 'g'), '\S(?:.*\S)*') != ''
-                    AND
-                        regexp_split_to_array(substring(REGEXP_REPLACE(aml.name, '[^0-9|^\s]', '', 'g'), '\S(?:.*\S)*'),'\s+')
-                        && regexp_split_to_array(substring(REGEXP_REPLACE(st_line.payment_ref, '[^0-9|^\s]', '', 'g'), '\S(?:.*\S)*'), '\s+')
-                )
-                OR
-                    regexp_split_to_array(substring(REGEXP_REPLACE(move.name, '[^0-9|^\s]', '', 'g'), '\S(?:.*\S)*'),'\s+')
-                    &&
-                    regexp_split_to_array(substring(REGEXP_REPLACE(st_line.payment_ref, '[^0-9|^\s]', '', 'g'), '\S(?:.*\S)*'), '\s+')
-                OR
-                (
-                    move.ref IS NOT NULL
-                    AND
-                    substring(REGEXP_REPLACE(move.ref, '[^0-9|^\s]', '', 'g'), '\S(?:.*\S)*') != ''
-                    AND
-                        regexp_split_to_array(substring(REGEXP_REPLACE(move.ref, '[^0-9|^\s]', '', 'g'), '\S(?:.*\S)*'),'\s+')
-                        &&
-                        regexp_split_to_array(substring(REGEXP_REPLACE(st_line.payment_ref, '[^0-9|^\s]', '', 'g'), '\S(?:.*\S)*'), '\s+')
-                )
-                , FALSE)
-                AND
-                CASE
-                    WHEN abs(st_line.amount) < abs(aml.balance) THEN abs(st_line.amount) / abs(aml.balance) * 100
-                    WHEN abs(st_line.amount) > abs(aml.balance) THEN abs(aml.balance) / abs(st_line.amount) * 100
-                    ELSE 100
-                END >= {match_total_amount_param}
-            """.format(
+            return comm_flag
+        # comm_flag.replace is for 13.0
+        comm_flag = (
+            r"""
+            COALESCE(
+            """
+            + comm_flag.replace("AS communication_flag", "")
+            + r"""
+            , FALSE)
+            AND
+            CASE
+                WHEN abs(st_line.amount) < abs(aml.balance) THEN abs(st_line.amount) / abs(aml.balance) * 100
+                WHEN abs(st_line.amount) > abs(aml.balance) THEN abs(aml.balance) / abs(st_line.amount) * 100
+                ELSE 100
+            END >= {match_total_amount_param}
+        """.format(
                 match_total_amount_param=self.match_total_amount_param
             )
+        )
+        return comm_flag
 
     def _get_select_payment_reference_flag(self):
+        ref_flag = super()._get_select_payment_reference_flag()
         if not self.match_total_amount or not self.strict_match_total_amount:
-            return super()._get_select_payment_reference_flag()
-        else:
-            return r"""
-                -- Determine a matching or not with the statement line communication using the move.payment_reference.
-                COALESCE
-                (
-                    move.payment_reference IS NOT NULL
-                    AND
-                    regexp_replace(move.payment_reference, '\s+', '', 'g') =
-                    regexp_replace(st_line.payment_ref, '\s+', '', 'g')
-                , FALSE)
-                AND
-                CASE
-                    WHEN abs(st_line.amount) < abs(aml.balance) THEN abs(st_line.amount) / abs(aml.balance) * 100
-                    WHEN abs(st_line.amount) > abs(aml.balance) THEN abs(aml.balance) / abs(st_line.amount) * 100
-                    ELSE 100
-                END >= {match_total_amount_param}
-            """.format(
+            return ref_flag
+        # ref_flag.replace is for 13.0
+        ref_flag = (
+            r"""
+            COALESCE(
+            """
+            + ref_flag.replace("AS reference_flag", "")
+            + r"""
+            , FALSE)
+            AND
+            CASE
+                WHEN abs(st_line.amount) < abs(aml.balance) THEN abs(st_line.amount) / abs(aml.balance) * 100
+                WHEN abs(st_line.amount) > abs(aml.balance) THEN abs(aml.balance) / abs(st_line.amount) * 100
+                ELSE 100
+            END >= {match_total_amount_param}
+        """.format(
                 match_total_amount_param=self.match_total_amount_param
             )
+        )
+        return ref_flag
