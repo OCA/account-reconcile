@@ -52,6 +52,7 @@ class AccountMoveLine(models.Model):
         return move_lines
 
     def open_full_reconcile_view(self):
-        action = self.env.ref("account.action_account_moves_all_a").read()[0]
+        view = "account.action_account_moves_all_a"
+        action = self.env["ir.actions.act_window"]._for_xml_id(view)
         action["domain"] = [("id", "in", self.mapped("reconcile_line_ids").ids)]
         return action
