@@ -208,7 +208,7 @@ class AccountMassReconcile(models.Model):
 
                 for method in rec.reconcile_method:
 
-                    ml_rec_ids = self.with_context(matching_type = method.matching_type, three_way_limit = self.three_way_limit,non_rec_entry=self.non_rec_entry, rec_id=rec).with_env(new_env)._run_reconcile_method(method)
+                    ml_rec_ids = self.with_env(new_env).with_context(matching_type = method.matching_type, three_way_limit = self.three_way_limit,non_rec_entry=self.non_rec_entry, rec_id=rec)._run_reconcile_method(method)
 
                     all_ml_rec_ids += ml_rec_ids
 
