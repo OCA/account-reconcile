@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 14.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2021-11-19 15:36+0000\n"
+"PO-Revision-Date: 2021-11-23 12:36+0000\n"
 "Last-Translator: Simon S <simon.stromberg@vertel.se>\n"
 "Language-Team: none\n"
 "Language: sv\n"
@@ -293,7 +293,7 @@ msgstr "Journal"
 #. module: account_reconciliation_widget
 #: model:ir.model.fields,field_description:account_reconciliation_widget.field_account_bank_statement_line__move_name
 msgid "Journal Entry Name"
-msgstr ""
+msgstr "Verifikatnamn"
 
 #. module: account_reconciliation_widget
 #: model:ir.model,name:account_reconciliation_widget.model_account_move_line
