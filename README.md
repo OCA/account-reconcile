@@ -20,6 +20,7 @@ Available addons
 addon | version | maintainers | summary
 --- | --- | --- | ---
 [account_move_base_import](account_move_base_import/) | 14.0.1.0.1 |  | Journal Entry base import
+[account_move_reconcile_helper](account_move_reconcile_helper/) | 14.0.1.0.0 |  | Provides tools to facilitate reconciliation
 [account_partner_reconcile](account_partner_reconcile/) | 14.0.1.0.0 |  | Account Partner Reconcile
 [account_reconcile_reconciliation_date](account_reconcile_reconciliation_date/) | 14.0.1.0.0 |  | Track Reconciliation Date of Payments and Invoices
 [account_reconcile_restrict_partner_mismatch](account_reconcile_restrict_partner_mismatch/) | 14.0.1.0.0 |  | Restrict reconciliation on receivable and payable accounts to the same partner
