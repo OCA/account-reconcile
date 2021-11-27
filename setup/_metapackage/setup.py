@@ -9,6 +9,7 @@ setuptools.setup(
     version=version,
     install_requires=[
         'odoo13-addon-account_mass_reconcile',
+        'odoo13-addon-account_move_reconcile_helper',
         'odoo13-addon-account_partner_reconcile',
         'odoo13-addon-account_reconcile_model_strict_match_amount',
         'odoo13-addon-account_reconcile_payment_order',
