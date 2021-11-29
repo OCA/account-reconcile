@@ -26,6 +26,9 @@
         'test/refund.yml',
         'test/completion_test.yml'
     ],
+    'external_dependencies': {
+        'python' : ['xlrd'],
+    },
     'installable': True,
     'license': 'AGPL-3',
 }
