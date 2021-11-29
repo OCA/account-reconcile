@@ -86,7 +86,7 @@ msgid "Choose here the method by which you want to import account moves for this
 msgstr ""
 
 #. module: account_move_base_import
-#: code:addons/account_move_base_import/parser/file_parser.py:85
+#: code:addons/account_move_base_import/parser/file_parser.py:90
 #, python-format
 msgid "Column %s not present in file"
 msgstr ""
@@ -137,7 +137,7 @@ msgid "Created on"
 msgstr ""
 
 #. module: account_move_base_import
-#: code:addons/account_move_base_import/parser/file_parser.py:132
+#: code:addons/account_move_base_import/parser/file_parser.py:137
 #, python-format
 msgid "Date format is not valid. It should be YYYY-MM-DD for column: %s value: %s \n"
 " \n"
@@ -148,7 +148,7 @@ msgid "Date format is not valid. It should be YYYY-MM-DD for column: %s value: %
 msgstr ""
 
 #. module: account_move_base_import
-#: code:addons/account_move_base_import/parser/file_parser.py:162
+#: code:addons/account_move_base_import/parser/file_parser.py:167
 #, python-format
 msgid "Date format is not valid. Please modify the cell formatting to date format for column: %s value: %s\n"
 " Please check the line with ref: %s\n"
@@ -246,7 +246,7 @@ msgid "Import related infos"
 msgstr ""
 
 #. module: account_move_base_import
-#: code:addons/account_move_base_import/parser/file_parser.py:45
+#: code:addons/account_move_base_import/parser/file_parser.py:50
 #, python-format
 msgid "Invalid file type %s. Please use csv, xls or xlsx"
 msgstr ""
@@ -336,10 +336,10 @@ msgid "Method"
 msgstr ""
 
 #. module: account_move_base_import
-#: code:addons/account_move_base_import/parser/file_parser.py:136
-#: code:addons/account_move_base_import/parser/file_parser.py:145
-#: code:addons/account_move_base_import/parser/file_parser.py:166
-#: code:addons/account_move_base_import/parser/file_parser.py:175
+#: code:addons/account_move_base_import/parser/file_parser.py:141
+#: code:addons/account_move_base_import/parser/file_parser.py:150
+#: code:addons/account_move_base_import/parser/file_parser.py:171
+#: code:addons/account_move_base_import/parser/file_parser.py:180
 #, python-format
 msgid "Missing"
 msgstr ""
@@ -406,12 +406,6 @@ msgstr ""
 #. module: account_move_base_import
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_move_import_partner_id
 msgid "Partner from import"
-msgstr ""
-
-#. module: account_move_base_import
-#: code:addons/account_move_base_import/parser/file_parser.py:15
-#, python-format
-msgid "Please install python lib xlrd"
 msgstr ""
 
 #. module: account_move_base_import
@@ -495,8 +489,8 @@ msgid "Type of import"
 msgstr ""
 
 #. module: account_move_base_import
-#: code:addons/account_move_base_import/parser/file_parser.py:143
-#: code:addons/account_move_base_import/parser/file_parser.py:173
+#: code:addons/account_move_base_import/parser/file_parser.py:148
+#: code:addons/account_move_base_import/parser/file_parser.py:178
 #, python-format
 msgid "Value %s of column %s is not valid.\n"
 " Please check the line with ref %s:\n"
