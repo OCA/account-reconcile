@@ -1,0 +1,14 @@
+<odoo>
+
+    <record id="account_invoice_reconciliation_date" model="ir.ui.view">
+        <field name="name">account.invoice.reconciliation.date</field>
+        <field name="model">account.invoice</field>
+        <field name="inherit_id" ref="account.invoice_form"/>
+        <field name="arch" type="xml">
+            <field name="date_due" position="after">
+                <field name="reconciliation_date" attrs="{'invisible': [('reconciliation_date', '=', False)]}"/>
+            </field>
+        </field>
+    </record>
+
+</odoo>

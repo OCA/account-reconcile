@@ -15,19 +15,10 @@ class AccountInvoice(models.Model):
                                       "financial institute")
 
     @api.multi
-    def finalize_invoice_move_lines(self, move_lines):
-        """Propagate the transaction_id from the invoice to the move lines.
-
-        The transaction ID is written on the move lines only if the account is
-        the same than the invoice's one.
-        """
-        move_lines = super().finalize_invoice_move_lines(
-            move_lines)
+    def action_move_create(self):
+        """Propagate the transaction_id from the invoice to the move ref."""
+        res = super().action_move_create()
         for invoice in self:
             if invoice.transaction_id:
-                invoice_account_id = invoice.account_id.id
-                for line in move_lines:
-                    # line is a tuple (0, 0, {values})
-                    if invoice_account_id == line[2]['account_id']:
-                        line[2]['transaction_ref'] = invoice.transaction_id
-        return move_lines
+                invoice.move_id.ref = invoice.transaction_id
+        return res

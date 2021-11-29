@@ -1,0 +1,603 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="Docutils 0.15.1: http://docutils.sourceforge.net/" />
+<title>Bank Account Reconciliation</title>
+<style type="text/css">
+
+/*
+:Author: David Goodger (goodger@python.org)
+:Id: $Id: html4css1.css 7952 2016-07-26 18:15:59Z milde $
+:Copyright: This stylesheet has been placed in the public domain.
+
+Default cascading style sheet for the HTML output of Docutils.
+
+See http://docutils.sf.net/docs/howto/html-stylesheets.html for how to
+customize this style sheet.
+*/
+
+/* used to remove borders from tables and images */
+.borderless, table.borderless td, table.borderless th {
+  border: 0 }
+
+table.borderless td, table.borderless th {
+  /* Override padding for "table.docutils td" with "! important".
+     The right padding separates the table cells. */
+  padding: 0 0.5em 0 0 ! important }
+
+.first {
+  /* Override more specific margin styles with "! important". */
+  margin-top: 0 ! important }
+
+.last, .with-subtitle {
+  margin-bottom: 0 ! important }
+
+.hidden {
+  display: none }
+
+.subscript {
+  vertical-align: sub;
+  font-size: smaller }
+
+.superscript {
+  vertical-align: super;
+  font-size: smaller }
+
+a.toc-backref {
+  text-decoration: none ;
+  color: black }
+
+blockquote.epigraph {
+  margin: 2em 5em ; }
+
+dl.docutils dd {
+  margin-bottom: 0.5em }
+
+object[type="image/svg+xml"], object[type="application/x-shockwave-flash"] {
+  overflow: hidden;
+}
+
+/* Uncomment (and remove this text!) to get bold-faced definition list terms
+dl.docutils dt {
+  font-weight: bold }
+*/
+
+div.abstract {
+  margin: 2em 5em }
+
+div.abstract p.topic-title {
+  font-weight: bold ;
+  text-align: center }
+
+div.admonition, div.attention, div.caution, div.danger, div.error,
+div.hint, div.important, div.note, div.tip, div.warning {
+  margin: 2em ;
+  border: medium outset ;
+  padding: 1em }
+
+div.admonition p.admonition-title, div.hint p.admonition-title,
+div.important p.admonition-title, div.note p.admonition-title,
+div.tip p.admonition-title {
+  font-weight: bold ;
+  font-family: sans-serif }
+
+div.attention p.admonition-title, div.caution p.admonition-title,
+div.danger p.admonition-title, div.error p.admonition-title,
+div.warning p.admonition-title, .code .error {
+  color: red ;
+  font-weight: bold ;
+  font-family: sans-serif }
+
+/* Uncomment (and remove this text!) to get reduced vertical space in
+   compound paragraphs.
+div.compound .compound-first, div.compound .compound-middle {
+  margin-bottom: 0.5em }
+
+div.compound .compound-last, div.compound .compound-middle {
+  margin-top: 0.5em }
+*/
+
+div.dedication {
+  margin: 2em 5em ;
+  text-align: center ;
+  font-style: italic }
+
+div.dedication p.topic-title {
+  font-weight: bold ;
+  font-style: normal }
+
+div.figure {
+  margin-left: 2em ;
+  margin-right: 2em }
+
+div.footer, div.header {
+  clear: both;
+  font-size: smaller }
+
+div.line-block {
+  display: block ;
+  margin-top: 1em ;
+  margin-bottom: 1em }
+
+div.line-block div.line-block {
+  margin-top: 0 ;
+  margin-bottom: 0 ;
+  margin-left: 1.5em }
+
+div.sidebar {
+  margin: 0 0 0.5em 1em ;
+  border: medium outset ;
+  padding: 1em ;
+  background-color: #ffffee ;
+  width: 40% ;
+  float: right ;
+  clear: right }
+
+div.sidebar p.rubric {
+  font-family: sans-serif ;
+  font-size: medium }
+
+div.system-messages {
+  margin: 5em }
+
+div.system-messages h1 {
+  color: red }
+
+div.system-message {
+  border: medium outset ;
+  padding: 1em }
+
+div.system-message p.system-message-title {
+  color: red ;
+  font-weight: bold }
+
+div.topic {
+  margin: 2em }
+
+h1.section-subtitle, h2.section-subtitle, h3.section-subtitle,
+h4.section-subtitle, h5.section-subtitle, h6.section-subtitle {
+  margin-top: 0.4em }
+
+h1.title {
+  text-align: center }
+
+h2.subtitle {
+  text-align: center }
+
+hr.docutils {
+  width: 75% }
+
+img.align-left, .figure.align-left, object.align-left, table.align-left {
+  clear: left ;
+  float: left ;
+  margin-right: 1em }
+
+img.align-right, .figure.align-right, object.align-right, table.align-right {
+  clear: right ;
+  float: right ;
+  margin-left: 1em }
+
+img.align-center, .figure.align-center, object.align-center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+table.align-center {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.align-left {
+  text-align: left }
+
+.align-center {
+  clear: both ;
+  text-align: center }
+
+.align-right {
+  text-align: right }
+
+/* reset inner alignment in figures */
+div.align-right {
+  text-align: inherit }
+
+/* div.align-center * { */
+/*   text-align: left } */
+
+.align-top    {
+  vertical-align: top }
+
+.align-middle {
+  vertical-align: middle }
+
+.align-bottom {
+  vertical-align: bottom }
+
+ol.simple, ul.simple {
+  margin-bottom: 1em }
+
+ol.arabic {
+  list-style: decimal }
+
+ol.loweralpha {
+  list-style: lower-alpha }
+
+ol.upperalpha {
+  list-style: upper-alpha }
+
+ol.lowerroman {
+  list-style: lower-roman }
+
+ol.upperroman {
+  list-style: upper-roman }
+
+p.attribution {
+  text-align: right ;
+  margin-left: 50% }
+
+p.caption {
+  font-style: italic }
+
+p.credits {
+  font-style: italic ;
+  font-size: smaller }
+
+p.label {
+  white-space: nowrap }
+
+p.rubric {
+  font-weight: bold ;
+  font-size: larger ;
+  color: maroon ;
+  text-align: center }
+
+p.sidebar-title {
+  font-family: sans-serif ;
+  font-weight: bold ;
+  font-size: larger }
+
+p.sidebar-subtitle {
+  font-family: sans-serif ;
+  font-weight: bold }
+
+p.topic-title {
+  font-weight: bold }
+
+pre.address {
+  margin-bottom: 0 ;
+  margin-top: 0 ;
+  font: inherit }
+
+pre.literal-block, pre.doctest-block, pre.math, pre.code {
+  margin-left: 2em ;
+  margin-right: 2em }
+
+pre.code .ln { color: grey; } /* line numbers */
+pre.code, code { background-color: #eeeeee }
+pre.code .comment, code .comment { color: #5C6576 }
+pre.code .keyword, code .keyword { color: #3B0D06; font-weight: bold }
+pre.code .literal.string, code .literal.string { color: #0C5404 }
+pre.code .name.builtin, code .name.builtin { color: #352B84 }
+pre.code .deleted, code .deleted { background-color: #DEB0A1}
+pre.code .inserted, code .inserted { background-color: #A3D289}
+
+span.classifier {
+  font-family: sans-serif ;
+  font-style: oblique }
+
+span.classifier-delimiter {
+  font-family: sans-serif ;
+  font-weight: bold }
+
+span.interpreted {
+  font-family: sans-serif }
+
+span.option {
+  white-space: nowrap }
+
+span.pre {
+  white-space: pre }
+
+span.problematic {
+  color: red }
+
+span.section-subtitle {
+  /* font-size relative to parent (h1..h6 element) */
+  font-size: 80% }
+
+table.citation {
+  border-left: solid 1px gray;
+  margin-left: 1px }
+
+table.docinfo {
+  margin: 2em 4em }
+
+table.docutils {
+  margin-top: 0.5em ;
+  margin-bottom: 0.5em }
+
+table.footnote {
+  border-left: solid 1px black;
+  margin-left: 1px }
+
+table.docutils td, table.docutils th,
+table.docinfo td, table.docinfo th {
+  padding-left: 0.5em ;
+  padding-right: 0.5em ;
+  vertical-align: top }
+
+table.docutils th.field-name, table.docinfo th.docinfo-name {
+  font-weight: bold ;
+  text-align: left ;
+  white-space: nowrap ;
+  padding-left: 0 }
+
+/* "booktabs" style (no vertical lines) */
+table.docutils.booktabs {
+  border: 0px;
+  border-top: 2px solid;
+  border-bottom: 2px solid;
+  border-collapse: collapse;
+}
+table.docutils.booktabs * {
+  border: 0px;
+}
+table.docutils.booktabs th {
+  border-bottom: thin solid;
+  text-align: left;
+}
+
+h1 tt.docutils, h2 tt.docutils, h3 tt.docutils,
+h4 tt.docutils, h5 tt.docutils, h6 tt.docutils {
+  font-size: 100% }
+
+ul.auto-toc {
+  list-style-type: none }
+
+</style>
+</head>
+<body>
+<div class="document" id="bank-account-reconciliation">
+<h1 class="title">Bank Account Reconciliation</h1>
+
+<!-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!! This file is generated by oca-gen-addon-readme !!
+!! changes will be overwritten.                   !!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
+<p><a class="reference external" href="http://www.gnu.org/licenses/agpl-3.0-standalone.html"><img alt="License: AGPL-3" src="https://img.shields.io/badge/licence-AGPL--3-blue.png" /></a> <a class="reference external" href="https://github.com/OCA/account-reconcile/tree/12.0/account_banking_reconciliation"><img alt="OCA/account-reconcile" src="https://img.shields.io/badge/github-OCA%2Faccount--reconcile-lightgray.png?logo=github" /></a> <a class="reference external" href="https://translation.odoo-community.org/projects/account-reconcile-12-0/account-reconcile-12-0-account_banking_reconciliation"><img alt="Translate me on Weblate" src="https://img.shields.io/badge/weblate-Translate%20me-F47D42.png" /></a> <a class="reference external" href="https://runbot.odoo-community.org/runbot/98/12.0"><img alt="Try me on Runbot" src="https://img.shields.io/badge/runbot-Try%20me-875A7B.png" /></a></p>
+<p>This module is designed to provide an easy method in which Odoo accounting users
+can manually reconcile/validate their financial transactions from their financial
+institution/transaction providers (e.g. Paypal, A financial institution, google
+wallet, etc) against Odoo GL Chart of Account bank accounts.</p>
+<p>Users will be able to validate and indicate if a transaction has “Cleared the
+Bank” using a checkmark on a new Reconcile Financial Account Statement view on
+each individual financial transaction. Users will also be able to mark
+transactions on a bank account for future research.</p>
+<p>The idea is that as a first step users will manually look at their paper statement
+and line-by-line check off which financial transactions have cleared the bank in
+Odoo using the new Bank Reconciliation Wizard. These changes will be displayed on
+the  new Reconcile Financial Account Statement tree view screen. This is the
+process in which many companies reconcile (aka Audit) their bank account statements
+and accounting system today and represents good segregation of duties.</p>
+<p>Users can save their in-process reconciliations.</p>
+<div class="section" id="background">
+<h1>Background</h1>
+<p>Using the search view filters - users will also be able to effectively sort,
+filter the transactions on a particular GL Financial Account. This new screen
+will display the journal items associated with a particular bank account.
+Several of the field labels have been relabeled to a more common vernacular.</p>
+<p>The need for this module is driven by the following:</p>
+<ul class="simple">
+<li>Users want to easily record whether bank transactions sent to their bank have
+“cleared the bank”- definition of “cleared the bank”: presented to the bank for
+payment and paid by the bank - added/subtracted funds on a bank account.</li>
+<li>Users want the ability to validate if the bank processed the transactions them
+correctly (e.g. properly encoded transaction - e.g. company sent a payment of
+$20.20 to the bank. Was it processed for $20.20?). This can be considered
+“Auditing the bank statement”. We don’t assume the bank correctly processed any
+transaction.</li>
+<li>Users want to understand what payments they’ve made are still outstanding and
+have not been paid by the bank.</li>
+<li>The financial auditing segregation standard of separating the duties of:
+recording customer payments and making deposits; recording supplier payments
+and writing checks; and monitoring bank account activity. This segregation of
+duties is necessary to monitor and help prevent fraud.</li>
+</ul>
+</div>
+<div class="section" id="assumptions">
+<h1>Assumptions</h1>
+<ol class="arabic">
+<li><p class="first">Companies using Odoo have setup a one-to-one relationship between their
+bank accounts and their Odoo GL accounts. Each bank account should have a
+corresponding GL account that is not shared with another account.
+Example:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="27%" />
+<col width="73%" />
+</colgroup>
+<thead valign="bottom">
+<tr><th class="head">Odoo GL Account #</th>
+<th class="head">Corresponding Bank Account</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td>10100</td>
+<td>Bank (AR) Account Checking 5434 (held at Institution A)</td>
+</tr>
+<tr><td>10200</td>
+<td>Master Bank Account 2343 (held at Institution A)</td>
+</tr>
+<tr><td>10300</td>
+<td>Bank Payable Account Checking  5678 (held at Institution A)</td>
+</tr>
+<tr><td>10400</td>
+<td>Bank Payroll Account 6656 (held at Institution B)</td>
+</tr>
+<tr><td>10500</td>
+<td>Paypal Account 3343 (held at Paypal)</td>
+</tr>
+<tr><td>10600</td>
+<td>Google Wallet Account 6788</td>
+</tr>
+<tr><td>10700</td>
+<td>AMEX Corporate Card Account 9989</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li><p class="first">Companies have included a Non-Deposited Funds Account in their GL account
+(typically in current assets in their bank account areas). This account is
+used to store payments that have been recorded in Odoo - but not yet
+deposited into the financial institution. (NOTE: this account is important to
+have if the user “batches check deposits”- which is the process of making a
+large single deposits of customer payment into the bank (e.g. $20,000USD), but
+it is made up of smaller checks (e.g. 20 checks of $1,000 each). Many banks
+just record the total deposit amount ($20,000) and don￢ﾀﾙt provide the
+breakdown of the individual checks that make up the larger deposit. This
+setup approach enables users to drill down and see the individual checks that
+make up a larger deposit.</p>
+</li>
+</ol>
+</div>
+<div class="section" id="recommendations">
+<h1>Recommendations</h1>
+<p>From a cash management and financial control perspective, it is recommended that
+users establish the following four (4) bank accounts at their financial
+institution at a minimum to handle financial transactions. (NOTE: we recommend
+users place the last 4 digits of their bank account in the GL account name of the
+account. It helps accountants in their management of the system):</p>
+<ul class="simple">
+<li>Bank (AR) Account Checking 5434. This is a checking account designated as the
+account where payments made to the company are deposited (e.g. a customer
+payment made by check is deposited here, or a customer paying by electronic
+transaction EFT/ACH is deposited into this GL).</li>
+<li>Master Bank Account 2343. This is the master account in which the company
+keeps the majority of their funds. Often with the most limited access.</li>
+<li>Bank Payable Account Checking  5678. This is a checking account designated for
+the company to pay their expenses from. (e.g. Company writes a check to pay a
+supplier for their office supplies).</li>
+<li>Bank Payroll Account 6656. This is a checking account designated for a company
+to pay their employees and payroll.</li>
+</ul>
+</div>
+<div class="section" id="note">
+<h1>Note</h1>
+<p>There has been common confusion in the Odoo community about managing bank
+statements in the base Odoo system. This module hopes to alleviate this gap and
+provide users with a sound alternative to maintain fiscal control, be easy to
+understand, and allow for future growth.</p>
+</div>
+<div class="section" id="why-this-approach">
+<h1>Why this approach?</h1>
+<p>Users in Odoo have several options in which to record financial transactions that
+affect the balances of a bank account (GL Bank Account entries). We believe our
+approach allows these to work in conjunction with each other: Import Electronic
+Bank Statements to enter payments (this approach follows the philosophy that you
+first find out that a transaction has occurred from your bank which is very
+common in Europe due to the electronic nature of transactions).</p>
+<ul class="simple">
+<li>Payment Order Payments (using the direct Method) - Payments are instantly recorded
+and financial transactions posted into the GL</li>
+<li>Voucher Payments - Payments are instantly recorded and financial transactions
+posted into the GL</li>
+<li>Sales Receipts/Refunds</li>
+<li>Transfers between accounts (a new module is being developed to help manage this)</li>
+<li>Funds moved from the Undeposited Funds GL account to a Bank Account GL account.</li>
+<li>Direct Journal Entries</li>
+</ul>
+<p><strong>Table of contents</strong></p>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><a class="reference internal" href="#configuration" id="id1">Configuration</a></li>
+<li><a class="reference internal" href="#usage" id="id2">Usage</a></li>
+<li><a class="reference internal" href="#bug-tracker" id="id3">Bug Tracker</a></li>
+<li><a class="reference internal" href="#credits" id="id4">Credits</a><ul>
+<li><a class="reference internal" href="#authors" id="id5">Authors</a></li>
+<li><a class="reference internal" href="#contributors" id="id6">Contributors</a></li>
+<li><a class="reference internal" href="#other-credits" id="id7">Other credits</a></li>
+<li><a class="reference internal" href="#maintainers" id="id8">Maintainers</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="configuration">
+<h2><a class="toc-backref" href="#id1">Configuration</a></h2>
+<p>To configure this module</p>
+<ul class="simple">
+<li>Go to Settings and activate the developer mode</li>
+<li>Go to Settings &gt; Users and Companies &gt; Users</li>
+<li>Add users who will prepare the bank statements to the “Bank Statement Preparer”</li>
+<li>Add users who will verify them to the “Bank Statement Manager” group</li>
+</ul>
+</div>
+<div class="section" id="usage">
+<h2><a class="toc-backref" href="#id2">Usage</a></h2>
+<p>To use this module:</p>
+<ul class="simple">
+<li>Go to Accounting &gt; Adviser &gt; Bank Statements</li>
+<li>Create a new bank statement</li>
+<li>Select the account and provide a name</li>
+<li>Enter the ending balance from the bank statement</li>
+<li>Check the transactions that cleared the bank</li>
+<li>Check the balances</li>
+<li>Save and submit for review</li>
+<li>As a reviewer, check the transactions, totals and balances</li>
+<li>Click on Process</li>
+</ul>
+</div>
+<div class="section" id="bug-tracker">
+<h2><a class="toc-backref" href="#id3">Bug Tracker</a></h2>
+<p>Bugs are tracked on <a class="reference external" href="https://github.com/OCA/account-reconcile/issues">GitHub Issues</a>.
+In case of trouble, please check there if your issue has already been reported.
+If you spotted it first, help us smashing it by providing a detailed and welcomed
+<a class="reference external" href="https://github.com/OCA/account-reconcile/issues/new?body=module:%20account_banking_reconciliation%0Aversion:%2012.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**">feedback</a>.</p>
+<p>Do not contact contributors directly about support or help with technical issues.</p>
+</div>
+<div class="section" id="credits">
+<h2><a class="toc-backref" href="#id4">Credits</a></h2>
+<div class="section" id="authors">
+<h3><a class="toc-backref" href="#id5">Authors</a></h3>
+<ul class="simple">
+<li>NovaPoint Group LLC</li>
+<li>Open Source Integrators</li>
+</ul>
+</div>
+<div class="section" id="contributors">
+<h3><a class="toc-backref" href="#id6">Contributors</a></h3>
+<ul class="simple">
+<li>Nova Point Group &lt;<a class="reference external" href="mailto:info&#64;novapointgroup.com">info&#64;novapointgroup.com</a>&gt;</li>
+<li>Balaji Kannan &lt;<a class="reference external" href="mailto:bkannan&#64;opensourceintegrators.com">bkannan&#64;opensourceintegrators.com</a>&gt;</li>
+<li>Bhavesh Odedra &lt;<a class="reference external" href="mailto:bodedra&#64;opensourceintegrators.com">bodedra&#64;opensourceintegrators.com</a>&gt;</li>
+<li>Sandeep Mangukiya &lt;<a class="reference external" href="mailto:smangukiya&#64;opensourceintegrators.com">smangukiya&#64;opensourceintegrators.com</a>&gt;</li>
+<li>Murtuza Saleh &lt;<a class="reference external" href="mailto:murtuza.saleh&#64;serpentcs.com">murtuza.saleh&#64;serpentcs.com</a>&gt;</li>
+</ul>
+</div>
+<div class="section" id="other-credits">
+<h3><a class="toc-backref" href="#id7">Other credits</a></h3>
+<ul class="simple">
+<li>Nova Point Group &lt;<a class="reference external" href="https://www.novapointgroup.com">https://www.novapointgroup.com</a>&gt;</li>
+<li>Open Source Integrators &lt;<a class="reference external" href="https://www.opensourceintegrators.com">https://www.opensourceintegrators.com</a>&gt;</li>
+<li>Serpent Consulting Services Pvt. Ltd. &lt;<a class="reference external" href="https://www.serpentcs.com">https://www.serpentcs.com</a>&gt;</li>
+</ul>
+</div>
+<div class="section" id="maintainers">
+<h3><a class="toc-backref" href="#id8">Maintainers</a></h3>
+<p>This module is maintained by the OCA.</p>
+<a class="reference external image-reference" href="https://odoo-community.org"><img alt="Odoo Community Association" src="https://odoo-community.org/logo.png" /></a>
+<p>OCA, or the Odoo Community Association, is a nonprofit organization whose
+mission is to support the collaborative development of Odoo features and
+promote its widespread use.</p>
+<p>Current <a class="reference external" href="https://odoo-community.org/page/maintainer-role">maintainer</a>:</p>
+<p><a class="reference external" href="https://github.com/max3903"><img alt="max3903" src="https://github.com/max3903.png?size=40px" /></a></p>
+<p>This module is part of the <a class="reference external" href="https://github.com/OCA/account-reconcile/tree/12.0/account_banking_reconciliation">OCA/account-reconcile</a> project on GitHub.</p>
+<p>You are welcome to contribute. To learn how please visit <a class="reference external" href="https://odoo-community.org/page/Contribute">https://odoo-community.org/page/Contribute</a>.</p>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

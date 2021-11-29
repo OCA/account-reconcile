@@ -1,0 +1,186 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# * account_operation_rule
+#
+# Translators:
+# OCA Transbot <transbot@odoo-community.org>, 2016
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 9.0c\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-09-12 11:12+0000\n"
+"PO-Revision-Date: 2020-04-07 20:19+0000\n"
+"Last-Translator: alvarorib <alvaro.ribeiro@exo.pt>\n"
+"Language-Team: Portuguese (https://www.transifex.com/oca/teams/23907/pt/)\n"
+"Language: pt\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Weblate 3.10\n"
+
+#. module: account_reconcile_rule
+#: model_terms:ir.ui.view,arch_db:account_reconcile_rule.view_account_reconcile_rule_form
+msgid "And"
+msgstr "E"
+
+#. module: account_reconcile_rule
+#: model_terms:ir.ui.view,arch_db:account_reconcile_rule.view_account_reconcile_rule_form
+msgid "And the currency is one of"
+msgstr "E a divisa é uma de"
+
+#. module: account_reconcile_rule
+#: model:ir.model,name:account_reconcile_rule.model_account_bank_statement_line
+msgid "Bank Statement Line"
+msgstr "Linha de Extrato Bancário"
+
+#. module: account_reconcile_rule
+#: model_terms:ir.actions.act_window,help:account_reconcile_rule.action_account_reconcile_rule
+msgid "Click to create a reconciliation rule."
+msgstr "Clique para criar uma regra de reconciliação."
+
+#. module: account_reconcile_rule
+#: model:ir.model.fields,field_description:account_reconcile_rule.field_account_reconcile_rule__create_uid
+msgid "Created by"
+msgstr "Criado por"
+
+#. module: account_reconcile_rule
+#: model:ir.model.fields,field_description:account_reconcile_rule.field_account_reconcile_rule__create_date
+msgid "Created on"
+msgstr "Criado em"
+
+#. module: account_reconcile_rule
+#: selection:account.reconcile.rule,rule_type:0
+#: model:ir.model.fields,field_description:account_reconcile_rule.field_account_reconcile_rule__currency_ids
+msgid "Currencies"
+msgstr "Divisas"
+
+#. module: account_reconcile_rule
+#: model:ir.model.fields,field_description:account_reconcile_rule.field_account_reconcile_rule__display_name
+msgid "Display Name"
+msgstr "Exibir Nome"
+
+#. module: account_reconcile_rule
+#: model:ir.model.fields,help:account_reconcile_rule.field_account_reconcile_rule__currency_ids
+msgid ""
+"For 'Currencies' rules, you can choose for which currencies the rule will be "
+"applicable."
+msgstr ""
+"Para regras de 'Divisas' pode escolher para que divisa a regra é aplicável."
+
+#. module: account_reconcile_rule
+#: model:ir.model.fields,field_description:account_reconcile_rule.field_account_reconcile_rule__id
+msgid "ID"
+msgstr "ID"
+
+#. module: account_reconcile_rule
+#: model:ir.model.fields,help:account_reconcile_rule.field_account_reconcile_rule__sequence
+msgid "If several rules match, the first one is used."
+msgstr "Se várias regras coincidem, é usada a primeira."
+
+#. module: account_reconcile_rule
+#: model:ir.model,name:account_reconcile_rule.model_account_journal
+msgid "Journal"
+msgstr "Diário"
+
+#. module: account_reconcile_rule
+#: model:ir.model.fields,field_description:account_reconcile_rule.field_account_reconcile_rule____last_update
+msgid "Last Modified on"
+msgstr "Última Modificação em"
+
+#. module: account_reconcile_rule
+#: model:ir.model.fields,field_description:account_reconcile_rule.field_account_reconcile_rule__write_uid
+msgid "Last Updated by"
+msgstr "Última Atualização por"
+
+#. module: account_reconcile_rule
+#: model:ir.model.fields,field_description:account_reconcile_rule.field_account_reconcile_rule__write_date
+msgid "Last Updated on"
+msgstr "Última Atualização em"
+
+#. module: account_reconcile_rule
+#: model:ir.model.fields,field_description:account_reconcile_rule.field_account_reconcile_rule__amount_max
+msgid "Max. Amount"
+msgstr "Montante Max"
+
+#. module: account_reconcile_rule
+#: model:ir.model.fields,field_description:account_reconcile_rule.field_account_reconcile_rule__amount_min
+msgid "Min. Amount"
+msgstr "Montante Min"
+
+#. module: account_reconcile_rule
+#: model:ir.model.fields,field_description:account_reconcile_rule.field_account_reconcile_rule__name
+msgid "Name"
+msgstr "Nome"
+
+#. module: account_reconcile_rule
+#: model:ir.actions.act_window,name:account_reconcile_rule.action_account_reconcile_rule
+#: model_terms:ir.ui.view,arch_db:account_reconcile_rule.account_journal_dashboard_kanban_view
+msgid "Reconciliation Rules"
+msgstr "Regras de Reconciliação"
+
+#. module: account_reconcile_rule
+#: model:ir.model.fields,field_description:account_reconcile_rule.field_account_reconcile_rule__reconcile_model_ids
+msgid "Reconciliation models"
+msgstr "Modelos de Reconciliação"
+
+#. module: account_reconcile_rule
+#: model_terms:ir.ui.view,arch_db:account_reconcile_rule.view_account_reconcile_rule_form
+msgid "Result"
+msgstr "Resultado"
+
+#. module: account_reconcile_rule
+#: selection:account.reconcile.rule,rule_type:0
+msgid "Roundings"
+msgstr "Arredondamentos"
+
+#. module: account_reconcile_rule
+#: model_terms:ir.ui.view,arch_db:account_reconcile_rule.view_account_reconcile_rule_form
+msgid "Rule"
+msgstr "Regra"
+
+#. module: account_reconcile_rule
+#: model:ir.model,name:account_reconcile_rule.model_account_reconcile_rule
+msgid "Rules for reconciliation"
+msgstr "Regras de reconciliação"
+
+#. module: account_reconcile_rule
+#: model:ir.model.fields,field_description:account_reconcile_rule.field_account_reconcile_rule__sequence
+msgid "Sequence"
+msgstr "Sequência"
+
+#. module: account_reconcile_rule
+#: model_terms:ir.ui.view,arch_db:account_reconcile_rule.view_account_reconcile_rule_form
+msgid "Statement Operation Rule"
+msgstr "Regra de Operação do Extrato"
+
+#. module: account_reconcile_rule
+#: model_terms:ir.ui.view,arch_db:account_reconcile_rule.view_account_reconcile_rule_search
+#: model_terms:ir.ui.view,arch_db:account_reconcile_rule.view_account_reconcile_rule_tree
+msgid "Statement Operation Rules"
+msgstr "Regras de Operação do Extrato"
+
+#. module: account_reconcile_rule
+#: model_terms:ir.ui.view,arch_db:account_reconcile_rule.view_account_reconcile_rule_form
+msgid "Then the following reconciliation models will be applied:"
+msgstr "Serão aplicadas os seguintes modelos de reconciliação:"
+
+#. module: account_reconcile_rule
+#: model_terms:ir.actions.act_window,help:account_reconcile_rule.action_account_reconcile_rule
+msgid ""
+"Those can be used to automatically create a move line when reconciling\n"
+"          your bank statements."
+msgstr ""
+"Podem ser usados para criar automaticamente uma linha de movimento na "
+"reconciliação\n"
+"          dos extratos bancários."
+
+#. module: account_reconcile_rule
+#: model:ir.model.fields,field_description:account_reconcile_rule.field_account_reconcile_rule__rule_type
+msgid "Type"
+msgstr "Tipo"
+
+#. module: account_reconcile_rule
+#: model_terms:ir.ui.view,arch_db:account_reconcile_rule.view_account_reconcile_rule_form
+msgid "When the balance is between"
+msgstr "Quando o saldo está entre"

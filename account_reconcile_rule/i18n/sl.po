@@ -1,0 +1,187 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# * account_operation_rule
+#
+# Translators:
+# OCA Transbot <transbot@odoo-community.org>, 2016
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 9.0c\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-09-12 11:12+0000\n"
+"PO-Revision-Date: 2016-09-12 11:12+0000\n"
+"Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2016\n"
+"Language-Team: Slovenian (https://www.transifex.com/oca/teams/23907/sl/)\n"
+"Language: sl\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=4; plural=(n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n"
+"%100==4 ? 2 : 3);\n"
+
+#. module: account_reconcile_rule
+#: model_terms:ir.ui.view,arch_db:account_reconcile_rule.view_account_reconcile_rule_form
+msgid "And"
+msgstr "in"
+
+#. module: account_reconcile_rule
+#: model_terms:ir.ui.view,arch_db:account_reconcile_rule.view_account_reconcile_rule_form
+msgid "And the currency is one of"
+msgstr "in je valuta ena izmed"
+
+#. module: account_reconcile_rule
+#: model:ir.model,name:account_reconcile_rule.model_account_bank_statement_line
+msgid "Bank Statement Line"
+msgstr "Postavka bančnega izpiska"
+
+#. module: account_reconcile_rule
+#: model_terms:ir.actions.act_window,help:account_reconcile_rule.action_account_reconcile_rule
+msgid "Click to create a reconciliation rule."
+msgstr ""
+
+#. module: account_reconcile_rule
+#: model:ir.model.fields,field_description:account_reconcile_rule.field_account_reconcile_rule__create_uid
+msgid "Created by"
+msgstr "Ustvaril"
+
+#. module: account_reconcile_rule
+#: model:ir.model.fields,field_description:account_reconcile_rule.field_account_reconcile_rule__create_date
+msgid "Created on"
+msgstr "Ustvarjeno"
+
+#. module: account_reconcile_rule
+#: selection:account.reconcile.rule,rule_type:0
+#: model:ir.model.fields,field_description:account_reconcile_rule.field_account_reconcile_rule__currency_ids
+msgid "Currencies"
+msgstr "Valute"
+
+#. module: account_reconcile_rule
+#: model:ir.model.fields,field_description:account_reconcile_rule.field_account_reconcile_rule__display_name
+msgid "Display Name"
+msgstr "Prikazni naziv"
+
+#. module: account_reconcile_rule
+#: model:ir.model.fields,help:account_reconcile_rule.field_account_reconcile_rule__currency_ids
+msgid ""
+"For 'Currencies' rules, you can choose for which currencies the rule will be "
+"applicable."
+msgstr ""
+"Pri pravilih 'valut' lahko izberete, na katere valute se pravilo nanaša."
+
+#. module: account_reconcile_rule
+#: model:ir.model.fields,field_description:account_reconcile_rule.field_account_reconcile_rule__id
+msgid "ID"
+msgstr "ID"
+
+#. module: account_reconcile_rule
+#: model:ir.model.fields,help:account_reconcile_rule.field_account_reconcile_rule__sequence
+msgid "If several rules match, the first one is used."
+msgstr "Če se ujema več pravil, se uporabi prvo."
+
+#. module: account_reconcile_rule
+#: model:ir.model,name:account_reconcile_rule.model_account_journal
+msgid "Journal"
+msgstr ""
+
+#. module: account_reconcile_rule
+#: model:ir.model.fields,field_description:account_reconcile_rule.field_account_reconcile_rule____last_update
+msgid "Last Modified on"
+msgstr "Zadnjič spremenjeno"
+
+#. module: account_reconcile_rule
+#: model:ir.model.fields,field_description:account_reconcile_rule.field_account_reconcile_rule__write_uid
+msgid "Last Updated by"
+msgstr "Zadnji posodobil"
+
+#. module: account_reconcile_rule
+#: model:ir.model.fields,field_description:account_reconcile_rule.field_account_reconcile_rule__write_date
+msgid "Last Updated on"
+msgstr "Zadnjič posodobljeno"
+
+#. module: account_reconcile_rule
+#: model:ir.model.fields,field_description:account_reconcile_rule.field_account_reconcile_rule__amount_max
+msgid "Max. Amount"
+msgstr "Maks. znesek"
+
+#. module: account_reconcile_rule
+#: model:ir.model.fields,field_description:account_reconcile_rule.field_account_reconcile_rule__amount_min
+msgid "Min. Amount"
+msgstr "Min. znesek"
+
+#. module: account_reconcile_rule
+#: model:ir.model.fields,field_description:account_reconcile_rule.field_account_reconcile_rule__name
+msgid "Name"
+msgstr "Naziv"
+
+#. module: account_reconcile_rule
+#: model:ir.actions.act_window,name:account_reconcile_rule.action_account_reconcile_rule
+#: model_terms:ir.ui.view,arch_db:account_reconcile_rule.account_journal_dashboard_kanban_view
+msgid "Reconciliation Rules"
+msgstr ""
+
+#. module: account_reconcile_rule
+#: model:ir.model.fields,field_description:account_reconcile_rule.field_account_reconcile_rule__reconcile_model_ids
+msgid "Reconciliation models"
+msgstr ""
+
+#. module: account_reconcile_rule
+#: model_terms:ir.ui.view,arch_db:account_reconcile_rule.view_account_reconcile_rule_form
+msgid "Result"
+msgstr "Rezultat"
+
+#. module: account_reconcile_rule
+#: selection:account.reconcile.rule,rule_type:0
+msgid "Roundings"
+msgstr "Zaokroževanja"
+
+#. module: account_reconcile_rule
+#: model_terms:ir.ui.view,arch_db:account_reconcile_rule.view_account_reconcile_rule_form
+msgid "Rule"
+msgstr "Pravilo"
+
+#. module: account_reconcile_rule
+#: model:ir.model,name:account_reconcile_rule.model_account_reconcile_rule
+msgid "Rules for reconciliation"
+msgstr ""
+
+#. module: account_reconcile_rule
+#: model:ir.model.fields,field_description:account_reconcile_rule.field_account_reconcile_rule__sequence
+msgid "Sequence"
+msgstr "Zaporedje"
+
+#. module: account_reconcile_rule
+#: model_terms:ir.ui.view,arch_db:account_reconcile_rule.view_account_reconcile_rule_form
+msgid "Statement Operation Rule"
+msgstr "Pravilo operacij z izpiski"
+
+#. module: account_reconcile_rule
+#: model_terms:ir.ui.view,arch_db:account_reconcile_rule.view_account_reconcile_rule_search
+#: model_terms:ir.ui.view,arch_db:account_reconcile_rule.view_account_reconcile_rule_tree
+msgid "Statement Operation Rules"
+msgstr "Pravilo operacij z izpiski"
+
+#. module: account_reconcile_rule
+#: model_terms:ir.ui.view,arch_db:account_reconcile_rule.view_account_reconcile_rule_form
+#, fuzzy
+msgid "Then the following reconciliation models will be applied:"
+msgstr "se izvedejo naslednje operacije"
+
+#. module: account_reconcile_rule
+#: model_terms:ir.actions.act_window,help:account_reconcile_rule.action_account_reconcile_rule
+msgid ""
+"Those can be used to automatically create a move line when reconciling\n"
+"          your bank statements."
+msgstr ""
+
+#. module: account_reconcile_rule
+#: model:ir.model.fields,field_description:account_reconcile_rule.field_account_reconcile_rule__rule_type
+msgid "Type"
+msgstr "Tip"
+
+#. module: account_reconcile_rule
+#: model_terms:ir.ui.view,arch_db:account_reconcile_rule.view_account_reconcile_rule_form
+msgid "When the balance is between"
+msgstr "Ko je stanje med"
+
+#~ msgid "Operations"
+#~ msgstr "Operacije"

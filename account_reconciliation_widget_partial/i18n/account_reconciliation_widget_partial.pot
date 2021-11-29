@@ -1,0 +1,29 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* account_reconciliation_widget_partial
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 12.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: account_reconciliation_widget_partial
+#. openerp-web
+#: code:addons/account_reconciliation_widget_partial/static/src/js/reconciliation_model.js:42
+#, python-format
+msgid "The amount %s is not a valid partial amount"
+msgstr ""
+
+#. module: account_reconciliation_widget_partial
+#. openerp-web
+#: code:addons/account_reconciliation_widget_partial/static/src/xml/account_reconciliation.xml:37
+#, python-format
+msgid "state.balance.amount_currency"
+msgstr ""
+
