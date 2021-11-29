@@ -36,7 +36,7 @@ addon | version | maintainers | summary
 [account_mass_reconcile_partner](account_mass_reconcile_partner/) | 10.0.1.0.0 |  | Mass Reconcile Partner
 [account_mass_reconcile_ref_deep_search](account_mass_reconcile_ref_deep_search/) | 10.0.1.0.0 |  | Mass Reconcile Ref Deep Search
 [account_mass_reconcile_transaction_ref](account_mass_reconcile_transaction_ref/) | 10.0.1.1.0 |  | Mass Reconcile Transaction Ref
-[account_move_base_import](account_move_base_import/) | 10.0.1.1.0 |  | Journal Entry base import
+[account_move_base_import](account_move_base_import/) | 10.0.1.1.1 |  | Journal Entry base import
 [account_move_reconcile_helper](account_move_reconcile_helper/) | 10.0.1.0.0 |  | Provides tools to facilitate reconciliation
 [account_reconcile_restrict_partner_mismatch](account_reconcile_restrict_partner_mismatch/) | 10.0.1.0.0 |  | Restrict reconciliation on receivable and payable accounts to the same partner
 [account_reconcile_structured_ref_auto](account_reconcile_structured_ref_auto/) | 10.0.1.0.0 |  | Adds a second automatic reconciliation button, which is based on a structured ref
