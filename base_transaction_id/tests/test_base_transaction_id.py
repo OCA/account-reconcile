@@ -16,8 +16,9 @@ class TestInvoice(TestAccountReconciliationCommon):
                 "transaction_id": "12345",
             }
         )
-        self.assertEqual(move._get_computed_reference(), "12345")
-
+        move2 = self.env["account.move"].create({"name": "ABC"})
+        self.assertEqual(move2._get_invoice_computed_reference(), "ABC")
+        self.assertEqual(move._get_invoice_computed_reference(), "12345")
         order = self.env["sale.order"].create(
             {"partner_id": self.partner_id.id, "transaction_id": "54321"}
         )

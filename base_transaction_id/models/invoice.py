@@ -15,7 +15,7 @@ class AccountMove(models.Model):
         help="Transaction ID from the financial institute",
     )
 
-    def _get_computed_reference(self):
+    def _get_invoice_reference_odoo_invoice(self):
         if self.transaction_id:
             return self.transaction_id
-        return super()._get_computed_reference()
+        return super()._get_invoice_reference_odoo_invoice()
