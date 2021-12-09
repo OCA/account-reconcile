@@ -29,7 +29,7 @@ class MassReconciledAdvancedRefDeepSearch(models.TransientModel):
 
     @staticmethod
     def _compare_matcher_values(key, values, opposite_values):
-        """ Compare every values from a matcher vs an opposite matcher
+        """Compare every values from a matcher vs an opposite matcher
         and return True if it matches
         """
         for value, ovalue in product(values, opposite_values):
