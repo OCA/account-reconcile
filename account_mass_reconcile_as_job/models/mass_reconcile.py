@@ -4,20 +4,14 @@
 import ast
 import logging
 
-from odoo import api, models
+from odoo import models
 
 _logger = logging.getLogger(__name__)
-
-try:
-    from odoo.addons.queue_job.job import job
-except ImportError:
-    _logger.debug("Can not `import queue_job`.")
 
 
 class AccountMassReconcile(models.Model):
     _inherit = "account.mass.reconcile"
 
-    @api.multi
     def run_reconcile(self):
         as_job = (
             self.env["ir.config_parameter"]
@@ -36,7 +30,6 @@ class AccountMassReconcile(models.Model):
         else:
             return super().run_reconcile()
 
-    @job(default_channel="root.mass_reconcile")
     def reconcile_as_job(self):
         """Run reconciliation on a single account"""
-        self.with_context(mass_reconcile_as_job=False).run_reconcile()
+        return self.with_context(mass_reconcile_as_job=False).run_reconcile()
