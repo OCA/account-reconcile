@@ -36,12 +36,12 @@ class TestAccountReconcileRefDeepSearch(SavepointCase):
         # Create invoice
         cls.cust_invoice = (
             cls.env["account.move"]
-            .with_context(default_type="out_invoice")
+            .with_context(default_move_type="out_invoice")
             .create(
                 {
                     "partner_id": cls.partner.id,
                     "company_id": cls.env.ref("base.main_company"),
-                    "type": "out_invoice",
+                    "move_type": "out_invoice",
                     "journal_id": sales_journal.id,
                     "invoice_line_ids": [
                         (
@@ -67,7 +67,7 @@ class TestAccountReconcileRefDeepSearch(SavepointCase):
 
     def test_account_reconcile_ref_deep_search(self):
         self.assertEqual(self.cust_invoice.state, "posted")
-        self.assertEqual(self.cust_invoice.invoice_payment_state, "not_paid")
+        self.assertEqual(self.cust_invoice.payment_state, "not_paid")
         bank_journal = self.env["account.journal"].search(
             [("type", "=", "bank")], limit=1
         )
@@ -80,14 +80,14 @@ class TestAccountReconcileRefDeepSearch(SavepointCase):
                 "partner_id": self.partner.id,
                 "journal_id": bank_journal.id,
                 "amount": 1000.0,
-                "communication": "test_deep_search",
+                "ref": "test_deep_search",
                 "payment_method_id": self.env["account.payment.method"]
                 .search([("name", "=", "Manual")], limit=1)
                 .id,
             }
         )
         self.assertEqual(payment.state, "draft")
-        payment.post()
+        payment.action_post()
         self.assertEqual(payment.state, "posted")
 
         reconcile = self.env["account.mass.reconcile"].create(
@@ -109,5 +109,5 @@ class TestAccountReconcileRefDeepSearch(SavepointCase):
         count = reconcile.unreconciled_count
         reconcile.run_reconcile()
         self.cust_invoice.invalidate_cache()
-        self.assertEqual(self.cust_invoice.invoice_payment_state, "paid")
+        self.assertEqual(self.cust_invoice.payment_state, "paid")
         self.assertEqual(reconcile.unreconciled_count, count - 2)
