@@ -39,20 +39,7 @@ class AccountMoveCompletionRule(models.Model):
 
             ...}
         """
-        res = {}
-        so_obj = self.env["sale.order"]
-        orders = so_obj.search([("name", "=", line.name)])
-        if len(orders) > 1:
-            raise ErrorTooManyPartner(
-                _(
-                    'Line named "%s"  was matched by more '
-                    "than one partner while looking on SO by ref."
-                )
-                % line.name
-            )
-        if len(orders) == 1:
-            res["partner_id"] = orders[0].partner_id.id
-        return res
+        return self._get_from_name_and_so_generic(line, "name")
 
     # Should be private but data are initialized with no update XML
     def get_from_name_and_so_payment_ref(self, line):
@@ -68,13 +55,16 @@ class AccountMoveCompletionRule(models.Model):
 
             ...}
         """
+        return self._get_from_name_and_so_generic(line, "reference")
+
+    def _get_from_name_and_so_generic(self, line, search_by):
         res = {}
         so_obj = self.env["sale.order"]
-        orders = so_obj.search([("reference", "=", line.name)])
+        orders = so_obj.search([(search_by, "=", line.name)])
         if len(orders) > 1:
             raise ErrorTooManyPartner(
                 _(
-                    'Line named "%s"  was matched by more '
+                    'Line named "%s" was matched by more '
                     "than one partner while looking on SO by ref."
                 )
                 % line.name
