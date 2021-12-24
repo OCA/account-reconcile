@@ -57,6 +57,7 @@ class AccountMassReconcileMethod(models.Model):
             ("mass.reconcile.simple.reference", "Simple. Amount and Reference"),
             ("mass.reconcile.advanced.ref", "Advanced. Partner and Ref."),
             ("mass.reconcile.advanced.name", "Advanced. Partner and Name."),
+            ("mass.reconcile.advanced.label", "Advanced. Partner and Label."),
         ]
 
     def _selection_name(self):
