@@ -12,3 +12,4 @@ access_mass_reconcile_simple_partner,mass.reconcile.simple.partner,model_mass_re
 access_mass_reconcile_simple_reference,mass.reconcile.simple.reference,model_mass_reconcile_simple_reference,account.group_account_user,1,1,1,1
 access_mass_reconcile_advanced_ref_acc_user,mass.reconcile.advanced.ref,model_mass_reconcile_advanced_ref,account.group_account_user,1,1,1,1
 access_mass_reconcile_advanced_name_acc_user,mass.reconcile.advanced.name,model_mass_reconcile_advanced_name,account.group_account_user,1,1,1,1
+access_mass_reconcile_advanced_label,mass.reconcile.advanced.label,model_mass_reconcile_advanced_label,account.group_account_user,1,1,1,1
