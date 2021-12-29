@@ -34,6 +34,8 @@ class TransactionIDFileParser(FileParser):
         super().__init__(
             profile, extra_fields=conversion_dict, ftype=ftype, header=header, **kwargs
         )
+        self.commission_field = "commission_amount"
+        self.commission_sign = "-"
 
     def get_move_line_vals(self, line, *args, **kwargs):
         """This method must return a dict of vals that can be passed to create
@@ -86,9 +88,10 @@ class TransactionIDFileParserMulti(TransactionIDFileParser):
         """
         return parser_name == "generic_csvxls_transaction"
 
-    def get_move_line_vals(self, line, *args, **kwargs):
-        res = super().get_move_line_vals(line, *args, **kwargs)
-        res["name"] = line.get("transaction_id", "/")
+    def _parse(self, *args, **kwargs):
+        res = super()._parse(*args, **kwargs)
+        result_row = self.parsed_file[self.current_line - 1]
+        self.move_name = result_row["transaction_id"]
         return res
 
 

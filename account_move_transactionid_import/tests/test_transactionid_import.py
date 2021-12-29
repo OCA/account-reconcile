@@ -4,10 +4,12 @@ import base64
 import os
 
 from odoo.modules.module import get_module_resource
+from odoo.tests.common import tagged
 
 from odoo.addons.account_move_base_import.tests.test_base_import import TestCodaImport
 
 
+@tagged("post_install", "-at_install")
 class TestTransactionIdImport(TestCodaImport):
     def test_multiline_csv_multi_move(self):
         """Test import from csv"""
@@ -69,7 +71,6 @@ class TestTransactionIdImport(TestCodaImport):
         """import a file using the wizard
         return the create account.bank.statement object
         """
-        content = ""
         with open(file_name, "rb") as f:
             content = f.read()
         self.wizard = self.import_wizard_obj.create(
@@ -91,7 +92,7 @@ class TestTransactionIdImport(TestCodaImport):
 
     def _validate_transactionid_imported_move(self, move):
         self.assertEqual(len(move), 1)
-        transaction_ids = ["50969286", "51065326", "51179306"]
+        transaction_ids = ["50969286", "51065326", "51179306", "Commission line", False]
         self.assertEqual(move.ref, "statement")
         for idx, line in enumerate(move.line_ids):
             self.assertEqual(line.name, transaction_ids[idx])

@@ -3,38 +3,30 @@
 
 from datetime import datetime
 
-from odoo.modules import get_resource_path
-from odoo.tests import SingleTransactionCase
-from odoo.tools import convert_file
+from odoo.tests.common import tagged
+
+from odoo.addons.account.tests.common import TestAccountReconciliationCommon
 
 
-class TestCompletionTransactionId(SingleTransactionCase):
+@tagged("post_install", "-at_install")
+class TestCompletionTransactionId(TestAccountReconciliationCommon):
     @classmethod
-    def setUpClass(cls):
-        super().setUpClass()
-        convert_file(
-            cls.cr,
-            "account",
-            get_resource_path("account", "test", "account_minimal_test.xml"),
-            {},
-            "init",
-            False,
-            "test",
-        )
+    def setUpClass(cls, chart_template_ref=None):
+        super().setUpClass(chart_template_ref=chart_template_ref)
         cls.partner = cls.env.ref("base.res_partner_2")
-        cls.journal = cls.env.ref("account.bank_journal")
-        cls.journal.used_for_completion = True
+        cls.sale_journal = cls.company_data["default_journal_sale"]
+        cls.sale_journal.used_for_completion = True
         cls.move = cls.env["account.move"].create(
             {
                 "name": "Move with transaction ID",
                 "ref": "credit card remittance",
-                "journal_id": cls.journal.id,
+                "journal_id": cls.sale_journal.id,
             }
         )
         cls.move_line = cls.env["account.move.line"].create(
             {
                 "name": "XXX66Z",
-                "account_id": cls.env.ref("account.a_sale").id,
+                "account_id": cls.account_euro.id,
                 "move_id": cls.move.id,
                 "ref": "some reference",
                 "date_maturity": "{}-01-06".format(datetime.now().year),
@@ -44,7 +36,7 @@ class TestCompletionTransactionId(SingleTransactionCase):
 
     def test_sale_order_transaction_id(self):
         self.move_line.name = "XXX66Z"
-        self.journal.rule_ids = [
+        self.sale_journal.rule_ids = [
             (
                 4,
                 self.env.ref(
@@ -82,8 +74,27 @@ class TestCompletionTransactionId(SingleTransactionCase):
                 False,
             ),
         ]
-        self.move_line.with_context({"check_move_validity": False}).write(
-            {"credit": 118.4}
+
+        lines = self.move.line_ids.sorted("debit")
+
+        self.move.with_context({"check_move_validity": False}).write(
+            {
+                "line_ids": [
+                    (1, lines[0].id, {"credit": lines[0].credit + 118.4}),
+                    (
+                        0,
+                        None,
+                        {
+                            "name": "line 1",
+                            "account_id": self.company_data[
+                                "default_account_revenue"
+                            ].id,
+                            "debit": 118.4,
+                            "credit": 0.0,
+                        },
+                    ),
+                ],
+            }
         )
         so = self.env["sale.order"].create(
             {
@@ -109,7 +120,8 @@ class TestCompletionTransactionId(SingleTransactionCase):
     def test_new_invoice_with_transaction_id(self):
         self.move_line.name = "XXX77Z"
         self.move_line.partner_id = None
-        self.journal.rule_ids = [
+        self.sale_journal.used_for_completion = True
+        self.sale_journal.rule_ids = [
             (
                 4,
                 self.env.ref(
@@ -121,15 +133,15 @@ class TestCompletionTransactionId(SingleTransactionCase):
         ]
         invoice = (
             self.env["account.move"]
-            .with_context(default_type="out_invoice")
-            .create(
+            # ir.attachment.type changed from out_invoice to url
+            .with_context(default_type="url").create(
                 {
                     "currency_id": self.env.ref("base.EUR").id,
-                    "type": "out_invoice",
+                    "move_type": "out_invoice",
                     "partner_id": self.partner.id,
                     "transaction_id": "XXX77Z",
-                    "reference_type": "none",
-                    "journal_id": self.journal.id,
+                    "ref": "none",
+                    "journal_id": self.sale_journal.id,
                     "invoice_line_ids": [
                         (
                             0,
@@ -141,15 +153,18 @@ class TestCompletionTransactionId(SingleTransactionCase):
                                 "product_id": self.env.ref(
                                     "product.product_product_3"
                                 ).id,
-                                "uom_id": self.env.ref("uom.product_uom_unit").id,
-                                "account_id": self.env.ref("account.a_sale").id,
+                                "product_uom_id": self.env.ref(
+                                    "uom.product_uom_unit"
+                                ).id,
+                                "account_id": self.account_euro.id,
                             },
                         )
                     ],
                 }
             )
         )
-        invoice.post()
-        self.assertEqual(invoice.state, "open")
+        self.assertEqual(invoice.state, "draft")
         self.move.button_auto_completion()
+        invoice.action_post()
+        self.assertEqual(invoice.state, "posted")
         self.assertEqual(self.move_line.partner_id, self.partner)
