@@ -1,0 +1,1 @@
+odoo14-addon-base_transaction_id @git+https://github.com/OCA/account-reconcile@refs/pull/422/head#subdirectory=setup/base_transaction_id
