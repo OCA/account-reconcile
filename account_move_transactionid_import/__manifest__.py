@@ -9,7 +9,7 @@
     "complexity": "normal",
     "depends": ["account_move_base_import", "base_transaction_id"],
     "data": ["data/completion_rule_data.xml"],
-    "website": "http://www.camptocamp.com",
+    "website": "https://github.com/OCA/account-reconcile",
     "installable": True,
     "auto_install": False,
     "license": "AGPL-3",

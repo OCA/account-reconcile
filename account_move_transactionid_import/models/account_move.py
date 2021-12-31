@@ -36,7 +36,7 @@ class AccountMoveCompletionRule(models.Model):
            {'partner_id': value,
             'account_id' : value,
             ...}
-            """
+        """
         res = {}
         so_obj = self.env["sale.order"]
         sales = so_obj.search([("transaction_id", "=", line.ref)])
@@ -65,7 +65,7 @@ class AccountMoveCompletionRule(models.Model):
            {'partner_id': value,
             'account_id' : value,
             ...}
-            """
+        """
         res = {}
         invoice_obj = self.env["account.move"]
         invoices = invoice_obj.search([("transaction_id", "=", line.ref)])

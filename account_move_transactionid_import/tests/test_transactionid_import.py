@@ -10,44 +10,35 @@ from odoo.addons.account_move_base_import.tests.test_base_import import TestCoda
 
 class TestTransactionIdImport(TestCodaImport):
     def test_multiline_csv_multi_move(self):
-        """Test import from csv
-        """
+        """Test import from csv"""
         self.journal.write(
             {
                 "import_type": "generic_csvxls_transaction",
             }
         )
         file_name = get_module_resource(
-            "account_move_transactionid_import",
-            "tests",
-            "data",
-            "statement.csv"
+            "account_move_transactionid_import", "tests", "data", "statement.csv"
         )
         import_action = self._import_file_multi(file_name)
         moves = self.account_move_obj.browse(import_action["domain"][0][2])
         self._validate_transactionid_imported_moves(moves)
 
     def test_multiline_xls_multi_move(self):
-        """Test import from xls
-        """
+        """Test import from xls"""
         self.journal.write(
             {
                 "import_type": "generic_csvxls_transaction",
             }
         )
         file_name = get_module_resource(
-            "account_move_transactionid_import",
-            "tests",
-            "data",
-            "statement.xls"
+            "account_move_transactionid_import", "tests", "data", "statement.xls"
         )
         import_action = self._import_file_multi(file_name)
         moves = self.account_move_obj.browse(import_action["domain"][0][2])
         self._validate_transactionid_imported_moves(moves)
 
     def test_multiline_csv_single_move(self):
-        """Test import from csv
-        """
+        """Test import from csv"""
         self.journal.write(
             {
                 "import_type": "generic_csvxls_transaction_single",
@@ -61,8 +52,7 @@ class TestTransactionIdImport(TestCodaImport):
         self._validate_transactionid_imported_move(move)
 
     def test_multiline_xls_single_move(self):
-        """Test import from xls
-        """
+        """Test import from xls"""
         self.journal.write(
             {
                 "import_type": "generic_csvxls_transaction_single",
@@ -76,7 +66,7 @@ class TestTransactionIdImport(TestCodaImport):
         self._validate_transactionid_imported_move(move)
 
     def _import_file_multi(self, file_name):
-        """ import a file using the wizard
+        """import a file using the wizard
         return the create account.bank.statement object
         """
         content = ""
