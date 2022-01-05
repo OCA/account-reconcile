@@ -131,6 +131,95 @@ class TestScenarioReconcile(common.SavepointCase):
             invoice.state
         )
 
+    def test_scenario_reconcile_advanced(self):
+        # create invoice
+        invoice = self.invoice_obj.create(
+            {
+                'type': 'out_invoice',
+                'account_id': self.ref('account.a_recv'),
+                'company_id': self.ref('base.main_company'),
+                'journal_id': self.ref('account.sales_journal'),
+                'partner_id': self.ref('base.res_partner_12'),
+                'name': "REF001",
+                'invoice_line_ids': [
+                    (0, 0, {
+                        'name': '[PCSC234] PC Assemble SC234',
+                        'account_id': self.ref('account.a_sale'),
+                        'price_unit': 1000.0,
+                        'quantity': 1.0,
+                        'product_id': self.ref('product.product_product_3'),
+                    }
+                    )
+                ]
+            }
+        )
+        # validate invoice
+        invoice.action_invoice_open()
+        self.assertEqual('open', invoice.state)
+
+        # create bank_statement
+        statement = self.bk_stmt_obj.create(
+            {
+                'balance_end_real': 0.0,
+                'balance_start': 0.0,
+                'date': fields.Date.today(),
+                'journal_id': self.ref('account.bank_journal'),
+                'line_ids': [
+                    (0, 0, {
+                        'amount': 1000.0,
+                        'partner_id': self.ref('base.res_partner_12'),
+                        'name': invoice.number,
+                        'ref': "REF001",
+                    })
+                ]
+            }
+        )
+
+        # reconcile
+        line_id = None
+        for l in invoice.move_id.line_ids:
+            if l.account_id.id == self.ref('account.a_recv'):
+                line_id = l
+                break
+
+        for statement_line in statement.line_ids:
+            statement_line.process_reconciliation(
+                [
+                    {
+                        'move_line': line_id,
+                        'credit': 1000.0,
+                        'debit': 0.0,
+                        'name': invoice.number,
+                    }
+                ]
+            )
+
+        # unreconcile journal item created by previous reconciliation
+        lines_to_unreconcile = self.acc_move_line_obj.search(
+            [('reconciled', '=', True),
+             ('statement_id', '=', statement.id)]
+        )
+        lines_to_unreconcile.remove_move_reconcile()
+
+        # create the mass reconcile record
+        mass_rec = self.mass_rec_obj.create(
+            {
+                'name': 'mass_reconcile_1',
+                'account': self.ref('account.a_recv'),
+                'reconcile_method': [
+                    (0, 0, {
+                        'name': 'mass.reconcile.advanced.ref',
+                    })
+                ]
+            }
+        )
+        # call the automatic reconcilation method
+        mass_rec.run_reconcile()
+        self.assertEqual(
+            'paid',
+            invoice.state
+        )
+
     def test_scenario_reconcile_currency(self):
         # create currency rate
         self.env['res.currency.rate'].create({
