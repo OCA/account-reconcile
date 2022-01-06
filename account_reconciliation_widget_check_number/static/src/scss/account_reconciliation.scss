@@ -1,0 +1,12 @@
+.o_reconciliation {
+    .o_reconciliation_line {
+        .cell_check_number {
+            width: 100px;
+        }
+        table.accounting_view {
+            .cell_check_number {
+                box-shadow: 0 1px 0 #eaeaea;
+            }
+        }
+    }
+}

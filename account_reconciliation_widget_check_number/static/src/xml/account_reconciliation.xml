@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates xml:space="preserve">
+
+    <t
+        t-inherit="account_reconciliation_widget.reconciliation.line"
+        t-inherit-mode="extension"
+    >
+        <xpath expr="//table//td[hasclass('cell_label')]" position="after">
+            <td class="cell_check_number">
+                <t
+                    t-if="state.st_line.check_number"
+                    t-esc="state.st_line.check_number"
+                />
+            </td>
+        </xpath>
+    </t>
+    <t
+        t-inherit="account_reconciliation_widget.reconciliation.line.mv_line"
+        t-inherit-mode="extension"
+    >
+        <xpath expr="//td[hasclass('cell_label')]" position="after">
+            <td class="cell_check_number">
+                <t t-if="line.check_number" t-esc="line.check_number" />
+            </td>
+        </xpath>
+    </t>
+    <t
+        t-inherit="account_reconciliation_widget.reconciliation.line.balance"
+        t-inherit-mode="extension"
+    >
+        <xpath expr="//td[hasclass('cell_label')]" position="after">
+            <td class="cell_check_number">
+                <t
+                    t-if="state.st_line.check_number"
+                    t-esc="state.st_line.check_number"
+                />
+            </td>
+        </xpath>
+    </t>
+    <t
+        t-inherit="account_reconciliation_widget.reconciliation.line.mv_line.details"
+        t-inherit-mode="extension"
+    >
+        <xpath expr="table" position="inside">
+            <tr t-if="line.check_number"><td>Check Number</td><td><t
+                        t-esc="line.check_number"
+                    /></td></tr>
+        </xpath>
+    </t>
+    <t
+        t-inherit="account_reconciliation_widget.reconciliation.line.statement_line.details"
+        t-inherit-mode="extension"
+    >
+        <xpath expr="table" position="inside">
+            <tr t-if="state.st_line.check_number"><td>Check Number</td><td><t
+                        t-esc="state.st_line.check_number"
+                    /></td></tr>
+        </xpath>
+    </t>
+
+</templates>

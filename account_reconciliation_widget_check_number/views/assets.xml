@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <template
+        id="assets_backend"
+        name="account_reconciliation_widget_check_number assets"
+        inherit_id="web.assets_backend"
+    >
+        <xpath expr="." position="inside">
+
+            <link
+                rel="stylesheet"
+                type="text/scss"
+                href="/account_reconciliation_widget_check_number/static/src/scss/account_reconciliation.scss"
+            />
+
+        </xpath>
+    </template>
+</odoo>
