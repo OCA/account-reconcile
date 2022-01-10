@@ -253,13 +253,18 @@ class MassReconcileAdvanced(models.AbstractModel):
                 self_env = self.with_env(new_env)
                 rec = self_env.create(self.copy_data())
         for i in range(0, len(reconcile_groups), chunk_size):
-            with odoo.api.Environment.manage():
-                with odoo.registry(self.env.cr.dbname).cursor() as new_cr:
-                    new_env = api.Environment(new_cr, self.env.uid, self.env.context)
-                    chunk = reconcile_groups[i:i + chunk_size]
-                    # Re-use the commited transient we just commited
-                    self_env = self.with_env(new_env).browse(rec.id)
-                    reconciled_ids += self_env._rec_group(chunk, lines_by_id)
+            chunk = reconcile_groups[i:i + chunk_size]
+            _logger.debug("Reconcile group chunk %s", chunk)
+            try:
+                with odoo.api.Environment.manage():
+                    with odoo.registry(self.env.cr.dbname).cursor() as new_cr:
+                        new_env = api.Environment(new_cr, self.env.uid, self.env.context)
+                        # Re-use the commited transient we just commited
+                        self_env = self.with_env(new_env).browse(rec.id)
+                        reconciled_ids += self_env._rec_group(chunk, lines_by_id)
+            except Exception as e:
+                msg = "Reconciliation failed for group chunk %s with error:\n%s"
+                _logger.exception(msg, chunk, e)
         return reconciled_ids
 
     @api.multi
