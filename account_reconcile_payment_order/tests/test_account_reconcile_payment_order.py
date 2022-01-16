@@ -5,9 +5,12 @@
 from odoo.addons.account_payment_order.tests.test_payment_order_inbound import (
     TestPaymentOrderInboundBase,
 )
+from odoo.addons.account_payment_order.tests.test_payment_order_outbound import (
+    TestPaymentOrderOutboundBase,
+)
 
 
-class TestAccountReconcilePaymentOrder(TestPaymentOrderInboundBase):
+class TestAccountReconcilePaymentOrderInbound(TestPaymentOrderInboundBase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
@@ -113,3 +116,53 @@ class TestAccountReconcilePaymentOrder(TestPaymentOrderInboundBase):
             self.statement.line_ids.ids,
         )
         self.assertNotEqual(res, res2)
+
+
+class TestAccountReconcilePaymentOrderOutbound(TestPaymentOrderOutboundBase):
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        cls.widget_obj = cls.env["account.reconciliation.widget"]
+        cls.bank_journal = cls.env["account.journal"].create(
+            {"name": "Test bank journal", "type": "bank"}
+        )
+        cls.invoice_02 = cls._create_supplier_invoice(cls)
+        cls.invoice_02.payment_mode_id = cls.mode
+        cls.invoice_02.action_post()
+        cls.outbound_order = cls.env["account.payment.order"].create(
+            {
+                "payment_type": "outbound",
+                "payment_mode_id": cls.mode.id,
+                "journal_id": cls.bank_journal.id,
+            }
+        )
+        # Add to payment order using the wizard
+        cls.env["account.invoice.payment.line.multi"].with_context(
+            active_model="account.move", active_ids=cls.invoice_02.ids
+        ).create({}).run()
+        # Prepare statement
+        cls.statement = cls.env["account.bank.statement"].create(
+            {
+                "name": "Test statement",
+                "date": "2019-01-01",
+                "journal_id": cls.bank_journal.id,
+                "line_ids": [
+                    (
+                        0,
+                        0,
+                        {"date": "2019-01-01", "name": "Test line", "amount": -100},
+                    ),
+                ],
+            }
+        )
+
+    def test_reconcile_payment_order_bank(self):
+        self.assertEqual(len(self.outbound_order.payment_line_ids), 1)
+        self.mode.write({"offsetting_account": "bank_account", "move_option": "line"})
+        # Prepare payment order
+        self.outbound_order.draft2open()
+        self.outbound_order.open2generated()
+        self.outbound_order.generated2uploaded()
+        # Check widget result
+        res = self.widget_obj.get_bank_statement_line_data(self.statement.line_ids.ids)
+        self.assertEqual(len(res["lines"][0]["reconciliation_proposition"]), 1)
