@@ -1,5 +1,5 @@
-# © 2015-18 Eficent Business and IT Consulting Services S.L. (www.eficent.com)
-# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
+# Copyright 2020 ForgeFlow S.L.
+# License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 
 from odoo import models
 
@@ -7,6 +7,7 @@ from odoo import models
 class MassReconcileAdvancedByPurchaseLine(models.TransientModel):
     _name = "mass.reconcile.advanced.by.purchase.line"
     _inherit = "mass.reconcile.advanced"
+    _description = "Mass Reconcile By Purchase Line"
 
     @staticmethod
     def _skip_line(move_line):
