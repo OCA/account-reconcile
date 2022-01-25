@@ -216,7 +216,7 @@ class AccountBankStatementLine(models.Model):
         elif self.move_name:
             raise UserError(
                 _(
-                    "Operation not allowed. Since your statement line already received a number (%s), you cannot reconcile it entirely with existing journal entries otherwise it would make a gap in the numbering. You should book an entry and make a regular revert of it in case you want to cancel it."
+                    "Operation not allowed. Since your statement line already received a number (%s), you cannot reconcile it entirely with existing journal entries otherwise it would make a gap in the numbering. You should book an entry and make a regular revert of it in case you want to cancel it. "
                 )
                 % (self.move_name)
             )
