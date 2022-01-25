@@ -33,11 +33,17 @@ class AccountBankStatementLine(models.Model):
 
     _inherit = "account.bank.statement.line"
 
-    move_name = fields.Char(string='Journal Entry Name', readonly=True,
-                            default=False, copy=False,
-                            help="Technical field holding the number given to the journal entry, automatically set when the statement line is reconciled then stored to set the same number again if the line is cancelled, set to draft and re-processed again.")
+    move_name = fields.Char(
+        string="Journal Entry Name",
+        readonly=True,
+        default=False,
+        copy=False,
+        help="Technical field holding the number given to the journal entry, automatically set when the statement line is reconciled then stored to set the same number again if the line is cancelled, set to draft and re-processed again.",
+    )
 
-    def process_reconciliation(self, counterpart_aml_dicts=None, payment_aml_rec=None, new_aml_dicts=None):
+    def process_reconciliation(
+        self, counterpart_aml_dicts=None, payment_aml_rec=None, new_aml_dicts=None
+    ):
         """Match statement lines with existing payments (eg. checks) and/or
         payables/receivables (eg. invoices and credit notes) and/or new move
         lines (eg. write-offs).
@@ -132,7 +138,8 @@ class AccountBankStatementLine(models.Model):
                 balance, currency, aml_rec.company_id, aml_rec.date
             )
             aml_rec.with_context(check_move_validity=False).write(
-                {"statement_line_id": self.id})
+                {"statement_line_id": self.id}
+            )
             counterpart_moves = counterpart_moves | aml_rec.move_id
             # Update
             if aml_rec.payment_id and aml_rec.move_id.state == "draft":
@@ -179,15 +186,17 @@ class AccountBankStatementLine(models.Model):
                 aml_dict["account_id"] = aml_dict["move_line"].account_id.id
 
                 counterpart_move_line = aml_dict.pop("move_line")
-                new_aml = aml_obj.with_context(
-                    check_move_validity=False).create(aml_dict)
+                new_aml = aml_obj.with_context(check_move_validity=False).create(
+                    aml_dict
+                )
 
                 aml_to_reconcile.append((new_aml, counterpart_move_line))
 
             # Post to allow reconcile
-            if self.move_id.state == 'draft':
+            if self.move_id.state == "draft":
                 self.move_id.with_context(
-                    skip_account_move_synchronization=True).action_post()
+                    skip_account_move_synchronization=True
+                ).action_post()
 
             # Reconcile new lines with counterpart
             for new_aml, counterpart_move_line in aml_to_reconcile:
@@ -196,15 +205,21 @@ class AccountBankStatementLine(models.Model):
                 self._check_invoice_state(counterpart_move_line.move_id)
 
             # Needs to be called manually as lines were created 1 by 1
-            if self.move_id.state == 'draft':
+            if self.move_id.state == "draft":
                 self.move_id.with_context(
-                    skip_account_move_synchronization=True).action_post()
+                    skip_account_move_synchronization=True
+                ).action_post()
             # record the move name on the statement line to be able to retrieve
             # it in case of unreconciliation
             self.write({"move_name": self.move_id.name})
 
         elif self.move_name:
-            raise UserError(_('Operation not allowed. Since your statement line already received a number (%s), you cannot reconcile it entirely with existing journal entries otherwise it would make a gap in the numbering. You should book an entry and make a regular revert of it in case you want to cancel it.') % (self.move_name))
+            raise UserError(
+                _(
+                    "Operation not allowed. Since your statement line already received a number (%s), you cannot reconcile it entirely with existing journal entries otherwise it would make a gap in the numbering. You should book an entry and make a regular revert of it in case you want to cancel it."
+                )
+                % (self.move_name)
+            )
 
         # create the res.partner.bank if needed
         if self.account_number and self.partner_id and not self.bank_account_id:
@@ -220,37 +235,55 @@ class AccountBankStatementLine(models.Model):
         company_currency = self.journal_id.company_id.currency_id
         statement_currency = self.journal_id.currency_id or company_currency
         st_line_currency = self.currency_id or statement_currency
-        st_line_currency_rate = self.currency_id and (
-            self.amount_currency / self.amount) or False
+        st_line_currency_rate = (
+            self.currency_id and (self.amount_currency / self.amount) or False
+        )
         company = self.company_id
 
         if st_line_currency.id != company_currency.id:
-            aml_dict['amount_currency'] = aml_dict['debit'] - aml_dict['credit']
-            aml_dict['currency_id'] = st_line_currency.id
-            if self.currency_id and statement_currency.id == company_currency.id and st_line_currency_rate:
+            aml_dict["amount_currency"] = aml_dict["debit"] - aml_dict["credit"]
+            aml_dict["currency_id"] = st_line_currency.id
+            if (
+                self.currency_id
+                and statement_currency.id == company_currency.id
+                and st_line_currency_rate
+            ):
                 # Statement is in company currency but the transaction is in foreign currency
-                aml_dict['debit'] = company_currency.round(
-                    aml_dict['debit'] / st_line_currency_rate)
-                aml_dict['credit'] = company_currency.round(
-                    aml_dict['credit'] / st_line_currency_rate)
+                aml_dict["debit"] = company_currency.round(
+                    aml_dict["debit"] / st_line_currency_rate
+                )
+                aml_dict["credit"] = company_currency.round(
+                    aml_dict["credit"] / st_line_currency_rate
+                )
             elif self.currency_id and st_line_currency_rate:
                 # Statement is in foreign currency and the transaction is in another one
-                aml_dict['debit'] = statement_currency._convert(
-                    aml_dict['debit'] / st_line_currency_rate, company_currency, company, date)
-                aml_dict['credit'] = statement_currency._convert(
-                    aml_dict['credit'] / st_line_currency_rate, company_currency, company, date)
+                aml_dict["debit"] = statement_currency._convert(
+                    aml_dict["debit"] / st_line_currency_rate,
+                    company_currency,
+                    company,
+                    date,
+                )
+                aml_dict["credit"] = statement_currency._convert(
+                    aml_dict["credit"] / st_line_currency_rate,
+                    company_currency,
+                    company,
+                    date,
+                )
             else:
                 # Statement is in foreign currency and no extra currency is given for the transaction
-                aml_dict['debit'] = st_line_currency._convert(
-                    aml_dict['debit'], company_currency, company, date)
-                aml_dict['credit'] = st_line_currency._convert(
-                    aml_dict['credit'], company_currency, company, date)
+                aml_dict["debit"] = st_line_currency._convert(
+                    aml_dict["debit"], company_currency, company, date
+                )
+                aml_dict["credit"] = st_line_currency._convert(
+                    aml_dict["credit"], company_currency, company, date
+                )
         elif statement_currency.id != company_currency.id:
             # Statement is in foreign currency but the transaction is in company currency
-            prorata_factor = (aml_dict['debit']
-                              - aml_dict['credit']) / self.amount_currency
-            aml_dict['amount_currency'] = prorata_factor * self.amount
-            aml_dict['currency_id'] = statement_currency.id
+            prorata_factor = (
+                aml_dict["debit"] - aml_dict["credit"]
+            ) / self.amount_currency
+            aml_dict["amount_currency"] = prorata_factor * self.amount
+            aml_dict["currency_id"] = statement_currency.id
 
     def _check_invoice_state(self, invoice):
         if invoice.is_invoice(include_receipts=True):

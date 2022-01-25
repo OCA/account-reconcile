@@ -16,17 +16,17 @@
         "views/account_bank_statement_view.xml",
         "views/account_journal_dashboard_view.xml",
     ],
-    'assets': {
-        'web.assets_backend': [
-            'account_reconciliation_widget/static/src/scss/account_reconciliation.scss',
-            'account_reconciliation_widget/static/src/js/reconciliation/reconciliation_action.js',
-            'account_reconciliation_widget/static/src/js/reconciliation/reconciliation_model.js',
-            'account_reconciliation_widget/static/src/js/reconciliation/reconciliation_renderer.js',
+    "assets": {
+        "web.assets_backend": [
+            "account_reconciliation_widget/static/src/scss/account_reconciliation.scss",
+            "account_reconciliation_widget/static/src/js/reconciliation/reconciliation_action.js",
+            "account_reconciliation_widget/static/src/js/reconciliation/reconciliation_model.js",
+            "account_reconciliation_widget/static/src/js/reconciliation/reconciliation_renderer.js",
         ],
-        'web.qunit_suite_tests': [
-            'account_reconciliation_widget/static/tests/account_reconciliation_tests.js',
+        "web.qunit_suite_tests": [
+            "account_reconciliation_widget/static/tests/account_reconciliation_tests.js",
         ],
-         'web.assets_qweb': [
+        "web.assets_qweb": [
             "account_reconciliation_widget/static/src/xml/account_reconciliation.xml",
         ],
     },

@@ -1010,12 +1010,13 @@ odoo.define("account.ReconciliationModel", function (require) {
 
                 _.each(self.lines, function (other_line) {
                     if (other_line != line) {
-                        var filtered_prop = other_line.reconciliation_proposition.filter(
-                            (p) =>
-                                !line.reconciliation_proposition
-                                    .map((l) => l.id)
-                                    .includes(p.id)
-                        );
+                        var filtered_prop =
+                            other_line.reconciliation_proposition.filter(
+                                (p) =>
+                                    !line.reconciliation_proposition
+                                        .map((l) => l.id)
+                                        .includes(p.id)
+                            );
                         if (
                             filtered_prop.length !=
                             other_line.reconciliation_proposition.length
@@ -1441,9 +1442,8 @@ odoo.define("account.ReconciliationModel", function (require) {
                                     return self.changePartner(
                                         line.handle,
                                         {
-                                            id:
-                                                line.reconciliation_proposition[0]
-                                                    .partner_id,
+                                            id: line.reconciliation_proposition[0]
+                                                .partner_id,
                                             display_name:
                                                 line.reconciliation_proposition[0]
                                                     .partner_name,
