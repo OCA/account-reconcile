@@ -20,12 +20,8 @@ class MassReconcileAdvancedBySaleLine(models.TransientModel):
 
     @staticmethod
     def _matchers(move_line):
-        return (
-            ("product_id", move_line["product_id"]),
-            ("sale_line_id", move_line["sale_line_id"]),
-        )
+        return (("sale_line_id", move_line["sale_line_id"]),)
 
     @staticmethod
     def _opposite_matchers(move_line):
-        yield ("product_id", move_line["product_id"])
         yield ("sale_line_id", move_line["sale_line_id"])
