@@ -850,7 +850,7 @@ class AccountReconciliation(models.AbstractModel):
     def _domain_move_lines_for_manual_reconciliation(
         self, account_id, partner_id=False, excluded_ids=None, search_str=False
     ):
-        """ Create domain criteria that are relevant to manual reconciliation. """
+        """Create domain criteria that are relevant to manual reconciliation."""
         domain = [
             "&",
             "&",
@@ -1076,7 +1076,7 @@ class AccountReconciliation(models.AbstractModel):
 
     @api.model
     def _get_move_line_reconciliation_proposition(self, account_id, partner_id=None):
-        """ Returns two lines whose amount are opposite """
+        """Returns two lines whose amount are opposite"""
 
         Account_move_line = self.env["account.move.line"]
 

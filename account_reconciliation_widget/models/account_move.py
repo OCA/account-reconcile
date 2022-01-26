@@ -73,7 +73,7 @@ class AccountMoveLine(models.Model):
                     )
                 # compute the writeoff amount if not given
                 if "credit" not in vals and "debit" not in vals:
-                    amount = sum([r.amount_residual for r in self])
+                    amount = sum(r.amount_residual for r in self)
                     vals["credit"] = amount > 0 and amount or 0.0
                     vals["debit"] = amount < 0 and abs(amount) or 0.0
                 vals["partner_id"] = partner_id
@@ -85,7 +85,7 @@ class AccountMoveLine(models.Model):
                     vals["currency_id"] = writeoff_currency.id
                     sign = 1 if vals["debit"] > 0 else -1
                     vals["amount_currency"] = sign * abs(
-                        sum([r.amount_residual_currency for r in self])
+                        sum(r.amount_residual_currency for r in self)
                     )
                     total_currency += vals["amount_currency"]
 
