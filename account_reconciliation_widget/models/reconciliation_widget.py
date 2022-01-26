@@ -1,4 +1,5 @@
 import copy
+import logging
 
 from psycopg2 import sql
 
@@ -6,6 +7,8 @@ from odoo import _, api, models
 from odoo.exceptions import UserError
 from odoo.osv import expression
 from odoo.tools.misc import format_date, formatLang, parse_date
+
+_logger = logging.getLogger(__name__)
 
 
 class AccountReconciliation(models.AbstractModel):
@@ -46,7 +49,7 @@ class AccountReconciliation(models.AbstractModel):
                 st_line.write({"partner_id": datum["partner_id"]})
 
             ctx["default_to_check"] = datum.get("to_check")
-            moves = st_line.with_context(ctx).process_reconciliation(
+            moves = st_line.with_context(**ctx).process_reconciliation(
                 datum.get("counterpart_aml_dicts", []),
                 payment_aml_rec,
                 datum.get("new_aml_dicts", []),
@@ -135,7 +138,7 @@ class AccountReconciliation(models.AbstractModel):
             recs_count = 0
         aml_recs = self.env["account.move.line"].browse([i[0] for i in res])
         target_currency = (
-            st_line.foreign_currency_id
+            st_line.currency_id
             or st_line.journal_id.currency_id
             or st_line.journal_id.company_id.currency_id
         )
@@ -157,9 +160,7 @@ class AccountReconciliation(models.AbstractModel):
         self.env["res.partner.bank"]._apply_ir_rules(ir_rules_query, "read")
         from_clause, where_clause, where_clause_params = ir_rules_query.get_sql()
         if where_clause:
-            where_bank = ("AND %s" % where_clause).replace(
-                '"res_partner_bank"', '"bank"'
-            )
+            where_bank = ("AND %s" % where_clause).replace("res_partner_bank", "bank")
             params += where_clause_params
         else:
             where_bank = ""
@@ -171,7 +172,7 @@ class AccountReconciliation(models.AbstractModel):
         self.env["res.partner"]._apply_ir_rules(ir_rules_query, "read")
         from_clause, where_clause, where_clause_params = ir_rules_query.get_sql()
         if where_clause:
-            where_partner = ("AND %s" % where_clause).replace('"res_partner"', '"p3"')
+            where_partner = ("AND %s" % where_clause).replace("res_partner", "p3")
             params += where_clause_params
         else:
             where_partner = ""
@@ -257,7 +258,7 @@ class AccountReconciliation(models.AbstractModel):
                 aml_ids = matching_amls[line.id]["aml_ids"]
                 bank_statements_left += line.statement_id
                 target_currency = (
-                    line.foreign_currency_id
+                    line.currency_id
                     or line.journal_id.currency_id
                     or line.journal_id.company_id.currency_id
                 )
@@ -710,7 +711,7 @@ class AccountReconciliation(models.AbstractModel):
                     ]
                     str_domain = expression.OR([str_domain, amount_domain])
             except Exception:
-                pass
+                _logger.warning(Exception)
         else:
             try:
                 amount = float(search_str)
@@ -735,7 +736,7 @@ class AccountReconciliation(models.AbstractModel):
                 ]
                 str_domain = expression.OR([str_domain, amount_domain])
             except Exception:
-                pass
+                _logger.warning(Exception)
         return str_domain
 
     @api.model
@@ -1021,7 +1022,7 @@ class AccountReconciliation(models.AbstractModel):
         statement_currency = (
             st_line.journal_id.currency_id or st_line.journal_id.company_id.currency_id
         )
-        if st_line.amount_currency and st_line.foreign_currency_id:
+        if st_line.amount_currency and st_line.currency_id:
             amount = st_line.amount_currency
             amount_currency = st_line.amount
             amount_currency_str = formatLang(
@@ -1034,7 +1035,7 @@ class AccountReconciliation(models.AbstractModel):
         amount_str = formatLang(
             self.env,
             abs(amount),
-            currency_obj=st_line.foreign_currency_id or statement_currency,
+            currency_obj=st_line.currency_id or statement_currency,
         )
 
         data = {
@@ -1046,7 +1047,7 @@ class AccountReconciliation(models.AbstractModel):
             "date": format_date(self.env, st_line.date),
             "amount": amount,
             "amount_str": amount_str,  # Amount in the statement line currency
-            "currency_id": st_line.foreign_currency_id.id or statement_currency.id,
+            "currency_id": st_line.currency_id.id or statement_currency.id,
             "partner_id": st_line.partner_id.id,
             "journal_id": st_line.journal_id.id,
             "statement_id": st_line.statement_id.id,
