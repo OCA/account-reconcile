@@ -763,19 +763,21 @@ odoo.define("account.ReconciliationRenderer", function (require) {
                         }
                     );
 
-                    self.fields.analytic_account_id = new relational_fields.FieldMany2One(
-                        self,
-                        "analytic_account_id",
-                        record,
-                        {mode: "edit"}
-                    );
+                    self.fields.analytic_account_id =
+                        new relational_fields.FieldMany2One(
+                            self,
+                            "analytic_account_id",
+                            record,
+                            {mode: "edit"}
+                        );
 
-                    self.fields.analytic_tag_ids = new relational_fields.FieldMany2ManyTags(
-                        self,
-                        "analytic_tag_ids",
-                        record,
-                        {mode: "edit"}
-                    );
+                    self.fields.analytic_tag_ids =
+                        new relational_fields.FieldMany2ManyTags(
+                            self,
+                            "analytic_tag_ids",
+                            record,
+                            {mode: "edit"}
+                        );
 
                     self.fields.force_tax_included = new basic_fields.FieldBoolean(
                         self,
@@ -1139,12 +1141,13 @@ odoo.define("account.ReconciliationRenderer", function (require) {
                         },
                     ])
                     .then(function (recordID) {
-                        self.fields.title_account_id = new relational_fields.FieldMany2One(
-                            self,
-                            "account_id",
-                            self.model.get(recordID),
-                            {mode: "readonly"}
-                        );
+                        self.fields.title_account_id =
+                            new relational_fields.FieldMany2One(
+                                self,
+                                "account_id",
+                                self.model.get(recordID),
+                                {mode: "readonly"}
+                            );
                     })
                     .then(function () {
                         return self.fields.title_account_id.appendTo(
