@@ -241,14 +241,14 @@ odoo.define(
                             }
                         );
 
-                        if (rep_ln.repartition_type == "base") {
+                        if (rep_ln.repartition_type === "base") {
                             tax_base =
                                 (tax.price_include
                                     ? (amount * 100) / (100 + tax.amount)
                                     : amount) *
                                 (rep_ln.factor_percent / 100);
                             base_tags = rep_ln.tag_ids;
-                        } else if (rep_ln.repartition_type == "tax") {
+                        } else if (rep_ln.repartition_type === "tax") {
                             /*
                     IMPORTANT :
                     For simplicity of testing, we assume there is ALWAYS a
@@ -625,7 +625,8 @@ odoo.define(
                     var excluded_ids = args.splice(1, 1)[0];
                     var mode = args.splice(-1, 1)[0];
                     if (mode === "other") return Promise.resolve([]);
-                    args.splice(-1, 1); // Ignore limit
+                    // Ignore limit
+                    args.splice(-1, 1);
                     var key = JSON.stringify(args);
                     if (!Datas.used.mv_lines[key]) {
                         throw new Error(
@@ -668,7 +669,8 @@ odoo.define(
                 },
                 get_move_lines_for_manual_reconciliation: function (args) {
                     var excluded_ids = args.splice(2, 1)[0];
-                    args.splice(-1, 1); // Ignore limit
+                    // Ignore limit
+                    args.splice(-1, 1);
                     var key = JSON.stringify(args);
                     if (!Datas.used.move_lines_for_manual_reconciliation[key]) {
                         throw new Error(
@@ -2426,7 +2428,7 @@ odoo.define("account_reconciliation_widget.reconciliation_tests", function (requ
                     "call_service",
                     function (event) {
                         if (
-                            event.data.args[1].method == "process_bank_statement_line"
+                            event.data.args[1].method === "process_bank_statement_line"
                         ) {
                             assert.deepEqual(
                                 event.data.args[1].args,
@@ -2672,7 +2674,7 @@ odoo.define("account_reconciliation_widget.reconciliation_tests", function (requ
                                         [
                                             {
                                                 partner_id:
-                                                    lines.length == 1
+                                                    lines.length === 1
                                                         ? lines[0].partner_id
                                                         : false,
                                                 counterpart_aml_dicts: [
@@ -3655,9 +3657,12 @@ odoo.define("account_reconciliation_widget.reconciliation_tests", function (requ
                     assert.expect(1);
 
                     testUtilsMock.patch(this.params.options.context, {
-                        active_model: "account.journal", // On account dashboard, click "Reconcile" on a journal
-                        active_ids: [1, 2], // Active journals
-                        company_ids: [3, 4], // Active companies
+                        // On account dashboard, click "Reconcile" on a journal
+                        active_model: "account.journal",
+                        // Active journals
+                        active_ids: [1, 2],
+                        //  Active journals
+                        company_ids: [3, 4],
                     });
 
                     var clientAction = new ReconciliationClientAction.StatementAction(
@@ -3895,7 +3900,8 @@ odoo.define("account_reconciliation_widget.reconciliation_tests", function (requ
                                 assert.deepEqual(
                                     args.args,
                                     [
-                                        [5], // Id of the bank statement line
+                                        // Id of the bank statement line
+                                        [5],
 
                                         [
                                             {
@@ -4069,7 +4075,8 @@ odoo.define("account_reconciliation_widget.reconciliation_tests", function (requ
                                 assert.deepEqual(
                                     args.args,
                                     [
-                                        [5], // Id of the bank statement line
+                                        // Id of the bank statement line
+                                        [5],
 
                                         [
                                             {
@@ -4271,7 +4278,8 @@ odoo.define("account_reconciliation_widget.reconciliation_tests", function (requ
                                 assert.deepEqual(
                                     args.args,
                                     [
-                                        [5], // Id of the bank statement line
+                                        // Id of the bank statement line
+                                        [5],
 
                                         [
                                             {

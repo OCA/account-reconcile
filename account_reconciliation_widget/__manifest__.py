@@ -19,12 +19,10 @@
     "assets": {
         "web.assets_backend": [
             "account_reconciliation_widget/static/src/scss/account_reconciliation.scss",
-            "account_reconciliation_widget/static/src/js/reconciliation/reconciliation_action.js",
-            "account_reconciliation_widget/static/src/js/reconciliation/reconciliation_model.js",
-            "account_reconciliation_widget/static/src/js/reconciliation/reconciliation_renderer.js",
+            "account_reconciliation_widget/static/src/js/reconciliation**/*",
         ],
         "web.qunit_suite_tests": [
-            "account_reconciliation_widget/static/tests/account_reconciliation_tests.js",
+            "account_reconciliation_widget/static/tests/**/*",
         ],
         "web.assets_qweb": [
             "account_reconciliation_widget/static/src/xml/account_reconciliation.xml",

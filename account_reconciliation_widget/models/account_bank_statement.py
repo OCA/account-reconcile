@@ -7,7 +7,7 @@ class AccountBankStatement(models.Model):
     _inherit = "account.bank.statement"
 
     accounting_date = fields.Date(
-        string="Accounting Date",
+        string="Financial Date",
         help="If set, the accounting entries created during the bank statement "
         "reconciliation process will be created at this date.\n"
         "This is useful if the accounting period in which the entries should "
@@ -38,7 +38,10 @@ class AccountBankStatementLine(models.Model):
         readonly=True,
         default=False,
         copy=False,
-        help="Technical field holding the number given to the journal entry, automatically set when the statement line is reconciled then stored to set the same number again if the line is cancelled, set to draft and re-processed again.",
+        help="Technical field holding the number given to the journal entry,"
+        "automatically set when the statement line is reconciled then stored"
+        "to set the same number again if the line is cancelled,"
+        "set to draft and re-processed again.",
     )
 
     def process_reconciliation(
@@ -152,8 +155,9 @@ class AccountBankStatementLine(models.Model):
                 for invoice in aml_rec.payment_id.reconciled_invoice_ids:
                     self._check_invoice_state(invoice)
 
-        # Create move line(s). Either matching an existing journal entry  (eg. invoice), in which
-        # case we reconcile the existing and the new move lines together, or being a write-off.
+        # Create move line(s). Either matching an existing journal entry
+        # (eg. invoice), in which case we reconcile the existing and the
+        # new move lines together, or being a write-off.
         if counterpart_aml_dicts or new_aml_dicts:
             aml_obj = self.env["account.move.line"]
             self.move_id.line_ids.with_context(force_delete=True).unlink()
@@ -223,8 +227,8 @@ class AccountBankStatementLine(models.Model):
 
         # create the res.partner.bank if needed
         if self.account_number and self.partner_id and not self.bank_account_id:
-            # Search bank account without partner to handle the case the res.partner.bank already exists but is set
-            # on a different partner.
+            # Search bank account without partner to handle the case the res.partner.bank
+            # already exists but is set on a different partner.
             self.partner_bank_id = self._find_or_create_bank_account()
 
         counterpart_moves._check_balanced()
@@ -270,7 +274,8 @@ class AccountBankStatementLine(models.Model):
                     date,
                 )
             else:
-                # Statement is in foreign currency and no extra currency is given for the transaction
+                # Statement is in foreign currency and no extra currency is given
+                # for the transaction
                 aml_dict["debit"] = st_line_currency._convert(
                     aml_dict["debit"], company_currency, company, date
                 )
