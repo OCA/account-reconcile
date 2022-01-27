@@ -89,30 +89,33 @@
     </t>
 </t>
 
-<div t-name="reconciliation.done" class="done_message">
+<div t-name="reconciliation.done" class="done_message" owl="1">
     <h2>Congrats, you're all done!</h2>
-    <p>You reconciled <strong><t t-esc="number" /></strong> transactions in <strong><t
-                    t-esc="duration"
+    <p>You reconciled <strong><t
+                    t-esc="props.number"
+                /></strong> transactions in <strong><t
+                    t-esc="props.duration"
                 /></strong>.
-        <t t-if="number > 1">
+        <t t-if="props.number > 1">
             <br />That's on average <t
-                    t-esc="timePerTransaction"
+                    t-esc="props.timePerTransaction"
                 /> seconds per transaction.
         </t>
     </p>
-    <t t-if="context &amp;&amp; context.active_model">
+    <t t-if="props.context &amp;&amp; props.context.active_model">
         <p
-                t-if="context['active_model'] === 'account.journal' || context['active_model'] === 'account.bank.statement' || context['active_model'] === 'account.bank.statement.import'"
+                t-if="props.context['active_model'] === 'account.journal' || props.context['active_model'] === 'account.bank.statement' || props.context['active_model'] === 'account.bank.statement.import'"
                 class="actions_buttons"
             >
-            <t t-if="context.journal_id">
+            <t t-if="props.context.journal_id">
                 <button
+                        t-on-click="props.onButtonBackToStatementClicked(props.context.journal_id)"
                         class="button_back_to_statement btn btn-secondary"
-                        t-att-data_journal_id='context.journal_id'
                     >Go to bank statement(s)</button>
             </t>
-            <t t-if="context['active_model'] === 'account.bank.statement'">
+            <t t-if="props.bank_statement_id">
                 <button
+                        t-on-click="props.onButtonCloseStatementClicked"
                         class="button_close_statement btn btn-primary"
                         style="display: inline-block;"
                     >Close statement</button>

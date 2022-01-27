@@ -19,7 +19,7 @@
     "assets": {
         "web.assets_backend": [
             "account_reconciliation_widget/static/src/scss/account_reconciliation.scss",
-            "account_reconciliation_widget/static/src/js/reconciliation**/*",
+            "account_reconciliation_widget/static/src/js/reconciliation/**/*",
         ],
         "web.qunit_suite_tests": [
             "account_reconciliation_widget/static/tests/**/*",
