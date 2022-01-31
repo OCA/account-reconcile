@@ -1635,7 +1635,7 @@ odoo.define("account.ReconciliationModel", function (require) {
                 ),
                 journal_id: this._formatNameGet(values.journal_id),
                 tax_ids: this._formatMany2ManyTagsTax(values.tax_ids || []),
-                tag_ids: values.tag_ids,
+                tax_tag_ids: this._formatMany2ManyTagsTax(values.tax_tag_ids || []),
                 tax_repartition_line_id: values.tax_repartition_line_id,
                 debit: 0,
                 credit: 0,
@@ -1790,8 +1790,8 @@ odoo.define("account.ReconciliationModel", function (require) {
             if (prop.tax_ids && prop.tax_ids.length)
                 result.tax_ids = [[6, null, _.pluck(prop.tax_ids, "id")]];
 
-            if (prop.tag_ids && prop.tag_ids.length)
-                result.tag_ids = [[6, null, prop.tag_ids]];
+            if (prop.tax_tag_ids && prop.tax_tag_ids.length)
+                result.tax_tag_ids = [[6, null, _.pluck(prop.tax_tag_ids, "id")]];
             if (prop.tax_repartition_line_id)
                 result.tax_repartition_line_id = prop.tax_repartition_line_id;
             if (prop.reconcileModelId)
