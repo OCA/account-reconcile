@@ -3,7 +3,7 @@
 
 {
     "name": "account_reconciliation_widget",
-    "version": "14.0.1.2.0",
+    "version": "14.0.1.2.1",
     "category": "Accounting",
     "license": "AGPL-3",
     "summary": "Account reconciliation widget",
