@@ -91,7 +91,11 @@ class AccountMassReconcile(models.Model):
         obj_move_line = self.env["account.move.line"]
         for rec in self:
             rec.unreconciled_count = obj_move_line.search_count(
-                [("account_id", "=", rec.account.id), ("reconciled", "=", False)]
+                [
+                    ("account_id", "=", rec.account.id),
+                    ("reconciled", "=", False),
+                    ("parent_state", "=", "posted"),
+                ]
             )
 
     @api.depends("history_ids")
@@ -254,7 +258,11 @@ class AccountMassReconcile(models.Model):
         self.ensure_one()
         obj_move_line = self.env["account.move.line"]
         lines = obj_move_line.search(
-            [("account_id", "=", self.account.id), ("reconciled", "=", False)]
+            [
+                ("account_id", "=", self.account.id),
+                ("reconciled", "=", False),
+                ("parent_state", "=", "posted"),
+            ]
         )
         name = _("Unreconciled items")
         return self._open_move_line_list(lines.ids or [], name)
