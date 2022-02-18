@@ -213,8 +213,12 @@ class AccountBankStatementLine(models.Model):
             self._prepare_move_line_for_currency(aml_dict, date)
 
         # Create write-offs
+        wo_aml = self.env["account.move.line"]
         for aml_dict in new_aml_dicts:
-            aml_obj.with_context(check_move_validity=False).create(aml_dict)
+            wo_aml |= aml_obj.with_context(check_move_validity=False).create(aml_dict)
+        analytic_wo_aml = wo_aml.filtered(
+            lambda l: l.analytic_account_id or l.analytic_tag_ids
+        )
 
         # Create counterpart move lines and reconcile them
         aml_to_reconcile = []
@@ -235,6 +239,9 @@ class AccountBankStatementLine(models.Model):
             self.move_id.with_context(
                 skip_account_move_synchronization=True
             ).action_post()
+        elif analytic_wo_aml:
+            # if already posted the analytic entry has to be created
+            analytic_wo_aml.create_analytic_lines()
 
         # Reconcile new lines with counterpart
         for new_aml, counterpart_move_line in aml_to_reconcile:
