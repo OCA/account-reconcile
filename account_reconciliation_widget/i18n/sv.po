@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 14.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2021-11-23 12:36+0000\n"
+"PO-Revision-Date: 2022-02-23 14:16+0000\n"
 "Last-Translator: Simon S <simon.stromberg@vertel.se>\n"
 "Language-Team: none\n"
 "Language: sv\n"
@@ -27,7 +27,7 @@ msgstr "En avstämning måste involvera åtminstone 2 rader."
 #: code:addons/account_reconciliation_widget/models/account_bank_statement.py:0
 #, python-format
 msgid "A selected move line was already reconciled."
-msgstr ""
+msgstr "En av de valda journalraderna var redan avstämd."
 
 #. module: account_reconciliation_widget
 #. openerp-web
@@ -81,7 +81,7 @@ msgstr "Objektkonto"
 #: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
 #, python-format
 msgid "Analytic Tags."
-msgstr "Objekttaggar."
+msgstr "Objektetiketter"
 
 #. module: account_reconciliation_widget
 #. openerp-web
@@ -117,7 +117,7 @@ msgstr "Kontrollera alla"
 #: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
 #, python-format
 msgid "Check that you have no bank statement lines to"
-msgstr ""
+msgstr "Kontrollera att du inte har några bankutdragsrader att"
 
 #. module: account_reconciliation_widget
 #. openerp-web
@@ -266,6 +266,10 @@ msgid ""
 "If set, the accounting entries created during the bank statement reconciliation process will be created at this date.\n"
 "This is useful if the accounting period in which the entries should normally be booked is already closed."
 msgstr ""
+"Om inställd kommer de verifikat som skapas under bankavstämningen att skapas "
+"vid detta datum.\n"
+"Detta är användbart om den redovisningsperiod som posterna normalt ska "
+"bokföras under redan är stängd."
 
 #. module: account_reconciliation_widget
 #: code:addons/account_reconciliation_widget/models/account_move.py:0
@@ -298,20 +302,20 @@ msgstr "Verifikatnamn"
 #. module: account_reconciliation_widget
 #: model:ir.model,name:account_reconciliation_widget.model_account_move_line
 msgid "Journal Item"
-msgstr ""
+msgstr "Journalrad"
 
 #. module: account_reconciliation_widget
 #: code:addons/account_reconciliation_widget/models/reconciliation_widget.py:0
 #, python-format
 msgid "Journal Items"
-msgstr ""
+msgstr "Journalrader"
 
 #. module: account_reconciliation_widget
 #. openerp-web
 #: code:addons/account_reconciliation_widget/static/src/js/reconciliation/reconciliation_action.js:0
 #, python-format
 msgid "Journal Items to Reconcile"
-msgstr ""
+msgstr "Journalrader att stämma av"
 
 #. module: account_reconciliation_widget
 #. openerp-web
@@ -420,6 +424,10 @@ msgid ""
 "otherwise it would make a gap in the numbering. You should book an entry and"
 " make a regular revert of it in case you want to cancel it."
 msgstr ""
+"Åtgärden är inte tillåten. Eftersom din utdragsrad redan har fått ett nummer "
+"(%s) kan du inte stämma av den helt och hållet med befintliga journalposter, "
+"eftersom det skulle skapa en lucka i numreringen. Du bör bokföra en post och "
+"göra en vanlig återföring av den om du vill annullera den."
 
 #. module: account_reconciliation_widget
 #. openerp-web
@@ -427,7 +435,7 @@ msgstr ""
 #: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
 #, python-format
 msgid "Partner"
-msgstr "Partner"
+msgstr "Kontakt"
 
 #. module: account_reconciliation_widget
 #. openerp-web
@@ -711,7 +719,7 @@ msgstr "att kontrollera"
 #: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
 #, python-format
 msgid "transactions in"
-msgstr ""
+msgstr "transaktioner på"
 
 #. module: account_reconciliation_widget
 #. openerp-web
