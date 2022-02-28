@@ -17,7 +17,7 @@ account_reconciliation_widget
     :target: https://github.com/OCA/account-reconcile/tree/15.0/account_reconciliation_widget
     :alt: OCA/account-reconcile
 .. |badge4| image:: https://img.shields.io/badge/weblate-Translate%20me-F47D42.png
-    :target: https://translation.odoo-community.org/projects/account-reconcile-14-0/account-reconcile-14-0-account_reconciliation_widget
+    :target: https://translation.odoo-community.org/projects/account-reconcile-15-0/account-reconcile-15-0-account_reconciliation_widget
     :alt: Translate me on Weblate
 .. |badge5| image:: https://img.shields.io/badge/runbot-Try%20me-875A7B.png
     :target: https://runbot.odoo-community.org/runbot/98/15.0
@@ -25,7 +25,7 @@ account_reconciliation_widget
 
 |badge1| |badge2| |badge3| |badge4| |badge5| 
 
-This module restores account reconciliation widget moved from Odoo community to enterpise in V. 15.0
+This module restores account reconciliation widget moved from Odoo community to enterpise in V. 14.0
 Provides two widgets designed to reconcile move lines in a easy way: one focused on bank statements and another for generic use.
 
 **Table of contents**
