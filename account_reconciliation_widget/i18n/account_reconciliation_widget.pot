@@ -43,11 +43,6 @@ msgid "Account Reconciliation widget"
 msgstr ""
 
 #. module: account_reconciliation_widget
-#: model:ir.model.fields,field_description:account_reconciliation_widget.field_account_bank_statement__accounting_date
-msgid "Accounting Date"
-msgstr ""
-
-#. module: account_reconciliation_widget
 #. openerp-web
 #: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
 #, python-format
@@ -151,6 +146,15 @@ msgstr ""
 
 #. module: account_reconciliation_widget
 #. openerp-web
+#: code:addons/account_reconciliation_widget/static/src/js/reconciliation/reconciliation_renderer.js:0
+#, python-format
+msgid ""
+"Congrats, you're all done! You reconciled %s transactions in %s. That's on "
+"average %s seconds per transaction."
+msgstr ""
+
+#. module: account_reconciliation_widget
+#. openerp-web
 #: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
 #, python-format
 msgid "Create a counterpart"
@@ -186,16 +190,6 @@ msgid "Description"
 msgstr ""
 
 #. module: account_reconciliation_widget
-#: model:ir.model.fields,field_description:account_reconciliation_widget.field_account_bank_statement__display_name
-#: model:ir.model.fields,field_description:account_reconciliation_widget.field_account_bank_statement_line__display_name
-#: model:ir.model.fields,field_description:account_reconciliation_widget.field_account_journal__display_name
-#: model:ir.model.fields,field_description:account_reconciliation_widget.field_account_move_line__display_name
-#: model:ir.model.fields,field_description:account_reconciliation_widget.field_account_reconciliation_widget__display_name
-#: model:ir.model.fields,field_description:account_reconciliation_widget.field_res_company__display_name
-msgid "Display Name"
-msgstr ""
-
-#. module: account_reconciliation_widget
 #. openerp-web
 #: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
 #, python-format
@@ -226,6 +220,11 @@ msgid "Filter on account, label, partner, amount,..."
 msgstr ""
 
 #. module: account_reconciliation_widget
+#: model:ir.model.fields,field_description:account_reconciliation_widget.field_account_bank_statement__accounting_date
+msgid "Financial Date"
+msgstr ""
+
+#. module: account_reconciliation_widget
 #. openerp-web
 #: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
 #, python-format
@@ -244,16 +243,6 @@ msgstr ""
 #: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
 #, python-format
 msgid "Good Job!"
-msgstr ""
-
-#. module: account_reconciliation_widget
-#: model:ir.model.fields,field_description:account_reconciliation_widget.field_account_bank_statement__id
-#: model:ir.model.fields,field_description:account_reconciliation_widget.field_account_bank_statement_line__id
-#: model:ir.model.fields,field_description:account_reconciliation_widget.field_account_journal__id
-#: model:ir.model.fields,field_description:account_reconciliation_widget.field_account_move_line__id
-#: model:ir.model.fields,field_description:account_reconciliation_widget.field_account_reconciliation_widget__id
-#: model:ir.model.fields,field_description:account_reconciliation_widget.field_res_company__id
-msgid "ID"
 msgstr ""
 
 #. module: account_reconciliation_widget
@@ -314,16 +303,6 @@ msgstr ""
 #: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
 #, python-format
 msgid "Label"
-msgstr ""
-
-#. module: account_reconciliation_widget
-#: model:ir.model.fields,field_description:account_reconciliation_widget.field_account_bank_statement____last_update
-#: model:ir.model.fields,field_description:account_reconciliation_widget.field_account_bank_statement_line____last_update
-#: model:ir.model.fields,field_description:account_reconciliation_widget.field_account_journal____last_update
-#: model:ir.model.fields,field_description:account_reconciliation_widget.field_account_move_line____last_update
-#: model:ir.model.fields,field_description:account_reconciliation_widget.field_account_reconciliation_widget____last_update
-#: model:ir.model.fields,field_description:account_reconciliation_widget.field_res_company____last_update
-msgid "Last Modified on"
 msgstr ""
 
 #. module: account_reconciliation_widget
@@ -531,9 +510,9 @@ msgstr ""
 #. module: account_reconciliation_widget
 #: model:ir.model.fields,help:account_reconciliation_widget.field_account_bank_statement_line__move_name
 msgid ""
-"Technical field holding the number given to the journal entry, automatically"
-" set when the statement line is reconciled then stored to set the same "
-"number again if the line is cancelled, set to draft and re-processed again."
+"Technical field holding the number given to the journal entry,automatically "
+"set when the statement line is reconciled then storedto set the same number "
+"again if the line is cancelled,set to draft and re-processed again."
 msgstr ""
 
 #. module: account_reconciliation_widget
