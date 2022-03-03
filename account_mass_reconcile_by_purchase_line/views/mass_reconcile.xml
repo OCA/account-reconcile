@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="account_mass_reconcile_form" model="ir.ui.view">
+        <field name="name">account.mass.reconcile.form</field>
+        <field name="priority">20</field>
+        <field name="model">account.mass.reconcile</field>
+        <field
+            name="inherit_id"
+            ref="account_mass_reconcile.account_mass_reconcile_form"
+        />
+        <field name="arch" type="xml">
+            <page name="information" position="inside">
+                <group colspan="2" col="2">
+                    <separator colspan="4" string="Advanced. Purchase Order Line" />
+                    <label
+                        for="reconcile_method"
+                        string="Match multiple debit vs multiple credit entries. Allow partial reconciliation.
+The lines should have the same partner, product and PO lines to be reconciled."
+                        colspan="4"
+                    />
+                </group>
+            </page>
+        </field>
+    </record>
+</odoo>
