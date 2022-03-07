@@ -778,7 +778,7 @@ class AccountReconciliation(models.AbstractModel):
             ("account_id", "in", aml_accounts),
             ("payment_id", "<>", False),
             ("balance", "!=", 0.0),
-            ("parent_state","=","paid")
+            ("parent_state","=","paid"),
         ]
 
         # default domain matching
