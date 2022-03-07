@@ -83,7 +83,7 @@ class AccountReconciliation(models.AbstractModel):
         :param offset: useless but kept in stable to preserve api
         :param limit: number of the result to search
         :param mode: 'rp' for receivable/payable or 'other'
-        """
+        """ 
         st_line = self.env["account.bank.statement.line"].browse(st_line_id)
 
         # Blue lines = payment on bank account not assigned to a statement yet
