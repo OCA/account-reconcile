@@ -111,7 +111,6 @@ class AccountReconciliation(models.AbstractModel):
             SELECT "account_move_line".id, COUNT(*) OVER() FROM {from_clause}
             JOIN account_move move ON "account_move_line".move_id = move.id
             {where_str}
-            AND "account_move_line".parent_state = "paid"
             ORDER BY ("account_move_line".debit -
                       "account_move_line".credit) = {amount} DESC,
                 "account_move_line".date_maturity ASC,
@@ -772,12 +771,14 @@ class AccountReconciliation(models.AbstractModel):
 
         domain_reconciliation = [
             "&",
+            "&"
             "&",
             "&",
             ("statement_line_id", "=", False),
             ("account_id", "in", aml_accounts),
             ("payment_id", "<>", False),
             ("balance", "!=", 0.0),
+            ("parent_state","=","paid")
         ]
 
         # default domain matching
