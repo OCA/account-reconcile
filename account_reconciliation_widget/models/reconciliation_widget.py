@@ -103,6 +103,8 @@ class AccountReconciliation(models.AbstractModel):
             mode=mode,
         )
 
+        domain.append(('move_id.state','=','posted'))
+
         from_clause, where_clause, where_clause_params = (
             self.env["account.move.line"]._where_calc(domain).get_sql()
         )
@@ -771,14 +773,12 @@ class AccountReconciliation(models.AbstractModel):
 
         domain_reconciliation = [
             "&",
-            "&"
             "&",
             "&",
             ("statement_line_id", "=", False),
             ("account_id", "in", aml_accounts),
             ("payment_id", "<>", False),
             ("balance", "!=", 0.0),
-            ("move_id.state", "=", "posted"),
         ]
 
         # default domain matching
