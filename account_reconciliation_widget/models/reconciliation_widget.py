@@ -110,7 +110,7 @@ class AccountReconciliation(models.AbstractModel):
             """
             SELECT "account_move_line".id, COUNT(*) OVER() FROM {from_clause}
             JOIN account_move move ON "account_move_line".move_id = move.id
-            {where_str}
+            {where_str} AND move.state = 'posted' 
             ORDER BY ("account_move_line".debit -
                       "account_move_line".credit) = {amount} DESC,
                 "account_move_line".date_maturity ASC,
