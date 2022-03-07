@@ -109,9 +109,7 @@ class AccountReconciliation(models.AbstractModel):
         query_str = sql.SQL(
             """
             SELECT "account_move_line".id, COUNT(*) OVER() FROM {from_clause}
-            JOIN account_move move ON "account_move_line".move_id = move.id
-            {where_str} 
-            
+            {where_str}
             ORDER BY ("account_move_line".debit -
                       "account_move_line".credit) = {amount} DESC,
                 "account_move_line".date_maturity ASC,
@@ -119,7 +117,7 @@ class AccountReconciliation(models.AbstractModel):
             {limit_str}
         """.format(
                 from_clause=from_clause,
-                where_str=where_clause and (" WHERE %s AND %s" % (where_clause, 'move.state = "paid"')) or "",
+                where_str=where_clause and (" WHERE %s AND %s" % (where_clause, '"account_move_line".parent_state = "paid"')) or "",
                 amount=st_line.amount,
                 limit_str=limit and " LIMIT %s" or "",
             )
