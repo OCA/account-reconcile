@@ -119,7 +119,7 @@ class AccountReconciliation(models.AbstractModel):
             {limit_str}
         """.format(
                 from_clause=from_clause,
-                where_str=where_clause and (" WHERE %s %s" % (where_clause, 'move.state = "paid"')) or "",
+                where_str=where_clause and (" WHERE %s AND %s" % (where_clause, 'move.state = "paid"')) or "",
                 amount=st_line.amount,
                 limit_str=limit and " LIMIT %s" or "",
             )
