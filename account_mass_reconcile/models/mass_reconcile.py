@@ -98,8 +98,11 @@ class AccountMassReconcile(models.Model):
     def _compute_total_unrec(self):
         obj_move_line = self.env["account.move.line"]
         for rec in self:
-            search_domain = [('account_id', '=', rec.account.id),
-                 ('reconciled', '=', False)]
+            search_domain = [
+              ('account_id', '=', self.account.id),
+              ('reconciled', '=', False),
+              ("parent_state", "=", "posted"),
+            ]
             if rec.date:
                 search_domain.append(('date','<=',rec.date))
             rec.unreconciled_count = obj_move_line.search_count(search_domain)
@@ -270,8 +273,12 @@ class AccountMassReconcile(models.Model):
         """ Open the view of move line with the unreconciled move lines"""
         self.ensure_one()
         obj_move_line = self.env["account.move.line"]
-        search_domain = [('account_id', '=', self.account.id),
-                 ('reconciled', '=', False)]
+
+        search_domain = [
+          ('account_id', '=', self.account.id),
+          ('reconciled', '=', False),
+          ("parent_state", "=", "posted"),
+        ]
         if self.date:
             search_domain.append(('date','<=',self.date))
         lines = obj_move_line.search(search_domain)

@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_account_bank_st_cmpl_user,account.move.completion.rule.user,model_account_move_completion_rule,account.group_account_user,1,0,0,0
+access_account_bank_st_cmpl_manager,account.move.completion.rule.manager,model_account_move_completion_rule,account.group_account_manager,1,1,1,1
+access_credit_statement_mport_user,credit.statement.import.rule.user,model_credit_statement_import,account.group_account_user,1,1,1,1

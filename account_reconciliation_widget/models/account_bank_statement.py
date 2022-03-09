@@ -150,7 +150,7 @@ class AccountBankStatementLine(models.Model):
 
         # Fully reconciled moves are just linked to the bank statement
         total = self.amount
-        currency = self.currency_id or statement_currency
+        currency = self.foreign_currency_id or statement_currency
         for aml_rec in payment_aml_rec:
             balance = (
                 aml_rec.amount_currency if aml_rec.currency_id else aml_rec.balance
@@ -200,7 +200,7 @@ class AccountBankStatementLine(models.Model):
             )
 
         # create the res.partner.bank if needed
-        if self.account_number and self.partner_id and not self.bank_account_id:
+        if self.account_number and self.partner_id and not self.partner_bank_id:
             # Search bank account without partner to handle the case the
             # res.partner.bank already exists but is set on a different partner.
             self.partner_bank_id = self._find_or_create_bank_account()
@@ -252,7 +252,10 @@ class AccountBankStatementLine(models.Model):
             aml_to_reconcile.append((new_aml, counterpart_move_line))
 
         # Post to allow reconcile
-        self.move_id.with_context(skip_account_move_synchronization=True).action_post()
+        if self.move_id.state != "posted":
+            self.move_id.with_context(
+                skip_account_move_synchronization=True
+            ).action_post()
 
         # Reconcile new lines with counterpart
         for new_aml, counterpart_move_line in aml_to_reconcile:
@@ -262,7 +265,6 @@ class AccountBankStatementLine(models.Model):
 
         # Needs to be called manually as lines were created 1 by 1
         self.move_id.update_lines_tax_exigibility()
-        self.move_id.with_context(skip_account_move_synchronization=True).action_post()
         # record the move name on the statement line to be able to retrieve
         # it in case of unreconciliation
         self.write({"move_name": self.move_id.name})
@@ -273,9 +275,9 @@ class AccountBankStatementLine(models.Model):
         self.ensure_one()
         company_currency = self.journal_id.company_id.currency_id
         statement_currency = self.journal_id.currency_id or company_currency
-        st_line_currency = self.currency_id or statement_currency
+        st_line_currency = self.foreign_currency_id or statement_currency
         st_line_currency_rate = (
-            self.currency_id and (self.amount_currency / self.amount) or False
+            self.foreign_currency_id and (self.amount_currency / self.amount) or False
         )
         company = self.company_id
 
@@ -283,7 +285,7 @@ class AccountBankStatementLine(models.Model):
             aml_dict["amount_currency"] = aml_dict["debit"] - aml_dict["credit"]
             aml_dict["currency_id"] = st_line_currency.id
             if (
-                self.currency_id
+                self.foreign_currency_id
                 and statement_currency.id == company_currency.id
                 and st_line_currency_rate
             ):
@@ -295,7 +297,7 @@ class AccountBankStatementLine(models.Model):
                 aml_dict["credit"] = company_currency.round(
                     aml_dict["credit"] / st_line_currency_rate
                 )
-            elif self.currency_id and st_line_currency_rate:
+            elif self.foreign_currency_id and st_line_currency_rate:
                 # Statement is in foreign currency and the transaction is in
                 # another one
                 aml_dict["debit"] = statement_currency._convert(

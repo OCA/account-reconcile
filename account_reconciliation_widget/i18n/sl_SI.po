@@ -1,0 +1,744 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* account_reconciliation_widget
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 14.0\n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: 2022-02-28 17:16+0000\n"
+"Last-Translator: laznikd <laznik@mentis.si>\n"
+"Language-Team: none\n"
+"Language: sl_SI\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n"
+"%100==4 ? 2 : 3;\n"
+"X-Generator: Weblate 4.3.2\n"
+
+#. module: account_reconciliation_widget
+#: code:addons/account_reconciliation_widget/models/reconciliation_widget.py:0
+#, python-format
+msgid "A reconciliation must involve at least 2 move lines."
+msgstr "Uskladitev mora vsebovati vsaj dve postavki."
+
+#. module: account_reconciliation_widget
+#: code:addons/account_reconciliation_widget/models/account_bank_statement.py:0
+#: code:addons/account_reconciliation_widget/models/account_bank_statement.py:0
+#, python-format
+msgid "A selected move line was already reconciled."
+msgstr "Izbrana postavka je že usklajena."
+
+#. module: account_reconciliation_widget
+#. openerp-web
+#: code:addons/account_reconciliation_widget/static/src/js/reconciliation/reconciliation_renderer.js:0
+#: code:addons/account_reconciliation_widget/static/src/js/reconciliation/reconciliation_renderer.js:0
+#: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
+#: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
+#: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
+#, python-format
+msgid "Account"
+msgstr "Konto"
+
+#. module: account_reconciliation_widget
+#: model:ir.model,name:account_reconciliation_widget.model_account_reconciliation_widget
+msgid "Account Reconciliation widget"
+msgstr "Pripomoček za usklajevanje"
+
+#. module: account_reconciliation_widget
+#: model:ir.model.fields,field_description:account_reconciliation_widget.field_account_bank_statement__accounting_date
+msgid "Accounting Date"
+msgstr "Datum"
+
+#. module: account_reconciliation_widget
+#. openerp-web
+#: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
+#, python-format
+msgid ""
+"All invoices and payments have been matched, your accounts' balances are "
+"clean."
+msgstr "Vsi računi in plačila so usklajeni."
+
+#. module: account_reconciliation_widget
+#. openerp-web
+#: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
+#: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
+#: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
+#, python-format
+msgid "Amount"
+msgstr "Znesek"
+
+#. module: account_reconciliation_widget
+#. openerp-web
+#: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
+#, python-format
+msgid "Analytic Acc."
+msgstr "Anal. Konto"
+
+#. module: account_reconciliation_widget
+#. openerp-web
+#: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
+#, python-format
+msgid "Analytic Tags."
+msgstr "Anal. Oznake"
+
+#. module: account_reconciliation_widget
+#. openerp-web
+#: code:addons/account_reconciliation_widget/static/src/js/reconciliation/reconciliation_action.js:0
+#, python-format
+msgid "Bank Reconciliation"
+msgstr "Usklajevanje banke"
+
+#. module: account_reconciliation_widget
+#: model:ir.model.fields,field_description:account_reconciliation_widget.field_res_company__account_bank_reconciliation_start
+msgid "Bank Reconciliation Threshold"
+msgstr "Prag usklajevanja"
+
+#. module: account_reconciliation_widget
+#: model:ir.model,name:account_reconciliation_widget.model_account_bank_statement
+msgid "Bank Statement"
+msgstr "Bančni izpisek"
+
+#. module: account_reconciliation_widget
+#: model:ir.model,name:account_reconciliation_widget.model_account_bank_statement_line
+msgid "Bank Statement Line"
+msgstr "Postavka bančnega izpiska"
+
+#. module: account_reconciliation_widget
+#. openerp-web
+#: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
+#, python-format
+msgid "Check all"
+msgstr "Preveri vse"
+
+#. module: account_reconciliation_widget
+#. openerp-web
+#: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
+#, python-format
+msgid "Check that you have no bank statement lines to"
+msgstr "Preverite, da ni nobenih postavk"
+
+#. module: account_reconciliation_widget
+#. openerp-web
+#: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
+#, python-format
+msgid "Choose counterpart or Create Write-off"
+msgstr "Izberite protipostavko ali ustvarite odpis"
+
+#. module: account_reconciliation_widget
+#. openerp-web
+#: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
+#: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
+#, python-format
+msgid "Close"
+msgstr "Zapri"
+
+#. module: account_reconciliation_widget
+#. openerp-web
+#: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
+#, python-format
+msgid "Close statement"
+msgstr "Zapri bančni izpisek"
+
+#. module: account_reconciliation_widget
+#: model:ir.model,name:account_reconciliation_widget.model_res_company
+msgid "Companies"
+msgstr "Podjetja"
+
+#. module: account_reconciliation_widget
+#. openerp-web
+#: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
+#, python-format
+msgid "Congrats, you're all done!"
+msgstr "Čestitke, končali ste!"
+
+#. module: account_reconciliation_widget
+#. openerp-web
+#: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
+#, python-format
+msgid "Create a counterpart"
+msgstr "Ustvari proti vknjižbo"
+
+#. module: account_reconciliation_widget
+#. openerp-web
+#: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
+#, python-format
+msgid "Create model"
+msgstr "Ustvari model"
+
+#. module: account_reconciliation_widget
+#. openerp-web
+#: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
+#, python-format
+msgid "Customer/Vendor Matching"
+msgstr "Ujemanje Kupec/Dobavitelj"
+
+#. module: account_reconciliation_widget
+#. openerp-web
+#: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
+#: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
+#, python-format
+msgid "Date"
+msgstr "Datum"
+
+#. module: account_reconciliation_widget
+#. openerp-web
+#: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
+#, python-format
+msgid "Description"
+msgstr "Opis"
+
+#. module: account_reconciliation_widget
+#: model:ir.model.fields,field_description:account_reconciliation_widget.field_account_bank_statement__display_name
+#: model:ir.model.fields,field_description:account_reconciliation_widget.field_account_bank_statement_line__display_name
+#: model:ir.model.fields,field_description:account_reconciliation_widget.field_account_journal__display_name
+#: model:ir.model.fields,field_description:account_reconciliation_widget.field_account_move_line__display_name
+#: model:ir.model.fields,field_description:account_reconciliation_widget.field_account_reconciliation_widget__display_name
+#: model:ir.model.fields,field_description:account_reconciliation_widget.field_res_company__display_name
+msgid "Display Name"
+msgstr "Ime prikaza"
+
+#. module: account_reconciliation_widget
+#. openerp-web
+#: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
+#, python-format
+msgid "Due Date"
+msgstr "DUR"
+
+#. module: account_reconciliation_widget
+#: code:addons/account_reconciliation_widget/models/account_move.py:0
+#, python-format
+msgid "Either pass both debit and credit or none."
+msgstr "Vnesite tako breme kot dobro ali nič."
+
+#. module: account_reconciliation_widget
+#. openerp-web
+#: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
+#: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
+#: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
+#: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
+#, python-format
+msgid "External link"
+msgstr "Zunanja povezava"
+
+#. module: account_reconciliation_widget
+#. openerp-web
+#: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
+#, python-format
+msgid "Filter on account, label, partner, amount,..."
+msgstr "Filter po kontu, oznaki, partnerju, znesku,..."
+
+#. module: account_reconciliation_widget
+#. openerp-web
+#: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
+#, python-format
+msgid "From now on, you may want to:"
+msgstr "Od sedaj naprej, boste morda želeli:"
+
+#. module: account_reconciliation_widget
+#. openerp-web
+#: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
+#, python-format
+msgid "Go to bank statement(s)"
+msgstr "Pojdi na bančni izpisek(e)"
+
+#. module: account_reconciliation_widget
+#. openerp-web
+#: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
+#, python-format
+msgid "Good Job!"
+msgstr "Dobro opravljeno!"
+
+#. module: account_reconciliation_widget
+#: model:ir.model.fields,field_description:account_reconciliation_widget.field_account_bank_statement__id
+#: model:ir.model.fields,field_description:account_reconciliation_widget.field_account_bank_statement_line__id
+#: model:ir.model.fields,field_description:account_reconciliation_widget.field_account_journal__id
+#: model:ir.model.fields,field_description:account_reconciliation_widget.field_account_move_line__id
+#: model:ir.model.fields,field_description:account_reconciliation_widget.field_account_reconciliation_widget__id
+#: model:ir.model.fields,field_description:account_reconciliation_widget.field_res_company__id
+msgid "ID"
+msgstr "ID"
+
+#. module: account_reconciliation_widget
+#: model:ir.model.fields,help:account_reconciliation_widget.field_account_bank_statement__accounting_date
+msgid ""
+"If set, the accounting entries created during the bank statement reconciliation process will be created at this date.\n"
+"This is useful if the accounting period in which the entries should normally be booked is already closed."
+msgstr ""
+"Če je nastavljeno, bodo računovodski vnosi, ustvarjeni med postopkom "
+"usklajevanja bančnega izpiska, ustvarjeni na ta datum.\n"
+"To je uporabno, če je obračunsko obdobje, v katerem bi se vnosi običajno "
+"knjižili, že zaključeno."
+
+#. module: account_reconciliation_widget
+#: code:addons/account_reconciliation_widget/models/account_move.py:0
+#, python-format
+msgid ""
+"It is mandatory to specify an account and a journal to create a write-off."
+msgstr "Obvezno je navesti konto in dnevnik za ustvarjanje odpisa."
+
+#. module: account_reconciliation_widget
+#: model_terms:ir.ui.view,arch_db:account_reconciliation_widget.account_journal_dashboard_kanban_view
+msgid "Items"
+msgstr "Postavke"
+
+#. module: account_reconciliation_widget
+#. openerp-web
+#: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
+#: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
+#: model:ir.model,name:account_reconciliation_widget.model_account_journal
+#, python-format
+msgid "Journal"
+msgstr "Dnevnik"
+
+#. module: account_reconciliation_widget
+#: model:ir.model.fields,field_description:account_reconciliation_widget.field_account_bank_statement_line__move_name
+msgid "Journal Entry Name"
+msgstr "Ime vnosa v dnevnik"
+
+#. module: account_reconciliation_widget
+#: model:ir.model,name:account_reconciliation_widget.model_account_move_line
+msgid "Journal Item"
+msgstr "Postavka dnevnika"
+
+#. module: account_reconciliation_widget
+#: code:addons/account_reconciliation_widget/models/reconciliation_widget.py:0
+#, python-format
+msgid "Journal Items"
+msgstr "Postavke dnevnika"
+
+#. module: account_reconciliation_widget
+#. openerp-web
+#: code:addons/account_reconciliation_widget/static/src/js/reconciliation/reconciliation_action.js:0
+#, python-format
+msgid "Journal Items to Reconcile"
+msgstr "Postavke, ki jih je potrebno uskladiti"
+
+#. module: account_reconciliation_widget
+#. openerp-web
+#: code:addons/account_reconciliation_widget/static/src/js/reconciliation/reconciliation_renderer.js:0
+#: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
+#: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
+#, python-format
+msgid "Label"
+msgstr "Oznaka"
+
+#. module: account_reconciliation_widget
+#: model:ir.model.fields,field_description:account_reconciliation_widget.field_account_bank_statement____last_update
+#: model:ir.model.fields,field_description:account_reconciliation_widget.field_account_bank_statement_line____last_update
+#: model:ir.model.fields,field_description:account_reconciliation_widget.field_account_journal____last_update
+#: model:ir.model.fields,field_description:account_reconciliation_widget.field_account_move_line____last_update
+#: model:ir.model.fields,field_description:account_reconciliation_widget.field_account_reconciliation_widget____last_update
+#: model:ir.model.fields,field_description:account_reconciliation_widget.field_res_company____last_update
+msgid "Last Modified on"
+msgstr "Nazadnje spremenjeno"
+
+#. module: account_reconciliation_widget
+#. openerp-web
+#: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
+#, python-format
+msgid "Last Reconciliation:"
+msgstr "Zadnja uskladitev:"
+
+#. module: account_reconciliation_widget
+#. openerp-web
+#: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
+#, python-format
+msgid "Load more"
+msgstr "Več"
+
+#. module: account_reconciliation_widget
+#. openerp-web
+#: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
+#, python-format
+msgid "Load more... ("
+msgstr "Več... ("
+
+#. module: account_reconciliation_widget
+#. openerp-web
+#: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
+#, python-format
+msgid "Manual Operations"
+msgstr "Ročne operacije"
+
+#. module: account_reconciliation_widget
+#. openerp-web
+#: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
+#, python-format
+msgid "Match with entries that are not from receivable/payable accounts"
+msgstr "Uskladite z vnosi, ki niso na kontih terjatev/obveznosti"
+
+#. module: account_reconciliation_widget
+#. openerp-web
+#: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
+#, python-format
+msgid "Miscellaneous Matching"
+msgstr "Razno ujemanje"
+
+#. module: account_reconciliation_widget
+#. openerp-web
+#: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
+#, python-format
+msgid "Modify models"
+msgstr "Spremeni model"
+
+#. module: account_reconciliation_widget
+#. openerp-web
+#: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
+#, python-format
+msgid "New"
+msgstr "Novo"
+
+#. module: account_reconciliation_widget
+#. openerp-web
+#: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
+#, python-format
+msgid "Note"
+msgstr "Opomba"
+
+#. module: account_reconciliation_widget
+#. openerp-web
+#: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
+#, python-format
+msgid "Nothing to do!"
+msgstr "NI kaj usklajevati!"
+
+#. module: account_reconciliation_widget
+#. openerp-web
+#: code:addons/account_reconciliation_widget/static/src/js/reconciliation/reconciliation_model.js:0
+#: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
+#, python-format
+msgid "Open balance"
+msgstr "Odprto stanje"
+
+#. module: account_reconciliation_widget
+#: code:addons/account_reconciliation_widget/models/account_bank_statement.py:0
+#, python-format
+msgid ""
+"Operation not allowed. Since your statement line already received a number "
+"(%s), you cannot reconcile it entirely with existing journal entries "
+"otherwise it would make a gap in the numbering. You should book an entry and"
+" make a regular revert of it in case you want to cancel it."
+msgstr ""
+"Operacija ni dovoljena. Ker je vaša vrstica izpiska že prejela številko (%s)"
+", je ne morete v celoti uskladiti z obstoječimi vnosi v dnevnik, sicer bi "
+"naredili vrzel v oštevilčenju. Vnos morate rezervirati in ga redno vrniti, "
+"če ga želite preklicati."
+
+#. module: account_reconciliation_widget
+#. openerp-web
+#: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
+#: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
+#, python-format
+msgid "Partner"
+msgstr "Partner"
+
+#. module: account_reconciliation_widget
+#. openerp-web
+#: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
+#, python-format
+msgid "Pay your"
+msgstr "Plačajte"
+
+#. module: account_reconciliation_widget
+#. openerp-web
+#: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
+#, python-format
+msgid "Presets config"
+msgstr "Pred nastavitve konfiguracije"
+
+#. module: account_reconciliation_widget
+#. openerp-web
+#: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
+#: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
+#: model:ir.actions.client,name:account_reconciliation_widget.action_view_account_move_line_reconcile
+#: model_terms:ir.ui.view,arch_db:account_reconciliation_widget.account_journal_dashboard_kanban_view
+#: model_terms:ir.ui.view,arch_db:account_reconciliation_widget.view_bank_statement_form
+#, python-format
+msgid "Reconcile"
+msgstr "Uskladi"
+
+#. module: account_reconciliation_widget
+#: model:ir.actions.client,name:account_reconciliation_widget.action_manual_reconciliation
+#: model:ir.ui.menu,name:account_reconciliation_widget.menu_action_manual_reconciliation
+msgid "Reconciliation"
+msgstr "Usklajevanje"
+
+#. module: account_reconciliation_widget
+#: model:ir.actions.client,name:account_reconciliation_widget.action_bank_reconcile
+msgid "Reconciliation on Bank Statements"
+msgstr "Usklajevanje bančnih izpiskov"
+
+#. module: account_reconciliation_widget
+#. openerp-web
+#: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
+#, python-format
+msgid "Ref"
+msgstr "Ref"
+
+#. module: account_reconciliation_widget
+#. openerp-web
+#: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
+#, python-format
+msgid "Residual"
+msgstr "Preostanek"
+
+#. module: account_reconciliation_widget
+#. openerp-web
+#: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
+#, python-format
+msgid "Save and New"
+msgstr "Shrani in Novo"
+
+#. module: account_reconciliation_widget
+#. openerp-web
+#: code:addons/account_reconciliation_widget/static/src/js/reconciliation/reconciliation_renderer.js:0
+#, python-format
+msgid "Select Partner"
+msgstr "Izberite Partnerja"
+
+#. module: account_reconciliation_widget
+#. openerp-web
+#: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
+#, python-format
+msgid "Select a partner or choose a counterpart"
+msgstr "Izberite Partnerja ali nasprotno vknjižbo"
+
+#. module: account_reconciliation_widget
+#. openerp-web
+#: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
+#, python-format
+msgid "Settings"
+msgstr "Nastavitve"
+
+#. module: account_reconciliation_widget
+#. openerp-web
+#: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
+#, python-format
+msgid "Skip"
+msgstr "Preskoči"
+
+#. module: account_reconciliation_widget
+#. openerp-web
+#: code:addons/account_reconciliation_widget/static/src/js/reconciliation/reconciliation_renderer.js:0
+#, python-format
+msgid "Some fields are undefined"
+msgstr "Nekatera polja so nedefinirana"
+
+#. module: account_reconciliation_widget
+#. openerp-web
+#: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
+#, python-format
+msgid "Tax Included in Price"
+msgstr "Davek vključen v ceno"
+
+#. module: account_reconciliation_widget
+#. openerp-web
+#: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
+#, python-format
+msgid "Taxes"
+msgstr "Davki"
+
+#. module: account_reconciliation_widget
+#: model:ir.model.fields,help:account_reconciliation_widget.field_account_bank_statement_line__move_name
+msgid ""
+"Technical field holding the number given to the journal entry, automatically"
+" set when the statement line is reconciled then stored to set the same "
+"number again if the line is cancelled, set to draft and re-processed again."
+msgstr ""
+"Tehnično polje, ki vsebuje številko, dano temeljnici, samodejno nastavljeno, "
+"ko je vrstica izpiska usklajena, nato pa shranjeno, da se ponovno nastavi "
+"ista številka, če je vrstica preklicana, nastavljena na osnutek in ponovno "
+"obdelana."
+
+#. module: account_reconciliation_widget
+#. openerp-web
+#: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
+#, python-format
+msgid "That's on average"
+msgstr "To je v povprečju"
+
+#. module: account_reconciliation_widget
+#. openerp-web
+#: code:addons/account_reconciliation_widget/static/src/js/reconciliation/reconciliation_model.js:0
+#, python-format
+msgid "The amount %s is not a valid partial amount"
+msgstr "Znesek %s ni veljaven delni znesek"
+
+#. module: account_reconciliation_widget
+#: model:ir.model.fields,help:account_reconciliation_widget.field_res_company__account_bank_reconciliation_start
+msgid ""
+"The bank reconciliation widget won't ask to reconcile payments older than this date.\n"
+"This is useful if you install accounting after having used invoicing for some time and don't want to reconcile all the past payments with bank statements."
+msgstr ""
+"Pripomoček za uskladitev banke ne bo zahteval uskladitve plačil, starejših "
+"od tega datuma.\n"
+"To je uporabno, če namestite računovodstvo, potem ko ste že nekaj časa "
+"uporabljali izdajanje računov in ne želite uskladiti vseh preteklih plačil z "
+"bančnimi izpiski."
+
+#. module: account_reconciliation_widget
+#. openerp-web
+#: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
+#, python-format
+msgid "There is nothing to reconcile."
+msgstr "Nič ni za uskladiti."
+
+#. module: account_reconciliation_widget
+#. openerp-web
+#: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
+#, python-format
+msgid ""
+"This page displays all the bank transactions that are to be reconciled and "
+"provides with a neat interface to do so."
+msgstr ""
+"Na tej strani so prikazane vse bančne transakcije, ki jih je treba "
+"uskladiti, in imajo za to urejen vmesnik."
+
+#. module: account_reconciliation_widget
+#. openerp-web
+#: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
+#, python-format
+msgid "This payment is registered but not reconciled."
+msgstr "To plačilo je registrirano, vendar ni usklajeno."
+
+#. module: account_reconciliation_widget
+#. openerp-web
+#: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
+#, python-format
+msgid "To Check"
+msgstr "Preveriti"
+
+#. module: account_reconciliation_widget
+#. openerp-web
+#: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
+#, python-format
+msgid "To speed up reconciliation, define"
+msgstr "Za pospešitev usklajevanja opredelite"
+
+#. module: account_reconciliation_widget
+#. openerp-web
+#: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
+#, python-format
+msgid "Transaction"
+msgstr "Transakcija"
+
+#. module: account_reconciliation_widget
+#. openerp-web
+#: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
+#: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
+#: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
+#, python-format
+msgid "Validate"
+msgstr "Potrditev"
+
+#. module: account_reconciliation_widget
+#. openerp-web
+#: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
+#, python-format
+msgid "Verify"
+msgstr "Potrdi"
+
+#. module: account_reconciliation_widget
+#: code:addons/account_reconciliation_widget/models/account_move.py:0
+#: code:addons/account_reconciliation_widget/models/account_move.py:0
+#, python-format
+msgid "Write-Off"
+msgstr "Odpis"
+
+#. module: account_reconciliation_widget
+#. openerp-web
+#: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
+#, python-format
+msgid "Writeoff Date"
+msgstr "Datum odpisa"
+
+#. module: account_reconciliation_widget
+#. openerp-web
+#: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
+#, python-format
+msgid "You reconciled"
+msgstr "Vaše uskladitve"
+
+#. module: account_reconciliation_widget
+#. openerp-web
+#: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
+#, python-format
+msgid "and follow-up customers"
+msgstr "in nadaljnje stranke"
+
+#. module: account_reconciliation_widget
+#. openerp-web
+#: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
+#, python-format
+msgid "have been reconciled automatically."
+msgstr "so bile samodejno usklajene."
+
+#. module: account_reconciliation_widget
+#. openerp-web
+#: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
+#, python-format
+msgid "reconcile"
+msgstr "uskladi"
+
+#. module: account_reconciliation_widget
+#. openerp-web
+#: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
+#, python-format
+msgid "reconciliation models"
+msgstr "modeli usklajevanje"
+
+#. module: account_reconciliation_widget
+#. openerp-web
+#: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
+#, python-format
+msgid "remaining)"
+msgstr "preostali)"
+
+#. module: account_reconciliation_widget
+#. openerp-web
+#: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
+#, python-format
+msgid "seconds per transaction."
+msgstr "sekund na transakcijo."
+
+#. module: account_reconciliation_widget
+#. openerp-web
+#: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
+#, python-format
+msgid "statement lines"
+msgstr "postavke izpiska"
+
+#. module: account_reconciliation_widget
+#: model_terms:ir.ui.view,arch_db:account_reconciliation_widget.account_journal_dashboard_kanban_view
+msgid "to check"
+msgstr "preveriti"
+
+#. module: account_reconciliation_widget
+#. openerp-web
+#: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
+#, python-format
+msgid "transactions in"
+msgstr "transakcij v"
+
+#. module: account_reconciliation_widget
+#. openerp-web
+#: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
+#, python-format
+msgid "unpaid invoices"
+msgstr "odprti računi"
+
+#. module: account_reconciliation_widget
+#. openerp-web
+#: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
+#, python-format
+msgid "unreconciled entries"
+msgstr "neusklajene postavke"
+
+#. module: account_reconciliation_widget
+#. openerp-web
+#: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
+#, python-format
+msgid "vendor bills"
+msgstr "računi dobaviteljev"

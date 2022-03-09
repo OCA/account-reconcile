@@ -102,14 +102,13 @@ class AccountReconciliation(models.AbstractModel):
             search_str=search_str,
             mode=mode,
         )
-        recs_count = self.env["account.move.line"].search_count(domain)
 
         from_clause, where_clause, where_clause_params = (
             self.env["account.move.line"]._where_calc(domain).get_sql()
         )
         query_str = sql.SQL(
             """
-            SELECT "account_move_line".id FROM {from_clause}
+            SELECT "account_move_line".id, COUNT(*) OVER() FROM {from_clause}
             {where_str}
             ORDER BY ("account_move_line".debit -
                       "account_move_line".credit) = {amount} DESC,
@@ -129,10 +128,14 @@ class AccountReconciliation(models.AbstractModel):
         self.env["account.bank.statement"].flush()
         self._cr.execute(query_str, params)
         res = self._cr.fetchall()
-
+        try:
+            # All records will have the same count value, just get the 1st one
+            recs_count = res[0][1]
+        except IndexError:
+            recs_count = 0
         aml_recs = self.env["account.move.line"].browse([i[0] for i in res])
         target_currency = (
-            st_line.currency_id
+            st_line.foreign_currency_id
             or st_line.journal_id.currency_id
             or st_line.journal_id.company_id.currency_id
         )
@@ -154,7 +157,9 @@ class AccountReconciliation(models.AbstractModel):
         self.env["res.partner.bank"]._apply_ir_rules(ir_rules_query, "read")
         from_clause, where_clause, where_clause_params = ir_rules_query.get_sql()
         if where_clause:
-            where_bank = ("AND %s" % where_clause).replace("res_partner_bank", "bank")
+            where_bank = ("AND %s" % where_clause).replace(
+                '"res_partner_bank"', '"bank"'
+            )
             params += where_clause_params
         else:
             where_bank = ""
@@ -166,7 +171,7 @@ class AccountReconciliation(models.AbstractModel):
         self.env["res.partner"]._apply_ir_rules(ir_rules_query, "read")
         from_clause, where_clause, where_clause_params = ir_rules_query.get_sql()
         if where_clause:
-            where_partner = ("AND %s" % where_clause).replace("res_partner", "p3")
+            where_partner = ("AND %s" % where_clause).replace('"res_partner"', '"p3"')
             params += where_clause_params
         else:
             where_partner = ""
@@ -252,7 +257,7 @@ class AccountReconciliation(models.AbstractModel):
                 aml_ids = matching_amls[line.id]["aml_ids"]
                 bank_statements_left += line.statement_id
                 target_currency = (
-                    line.currency_id
+                    line.foreign_currency_id
                     or line.journal_id.currency_id
                     or line.journal_id.company_id.currency_id
                 )
@@ -269,14 +274,19 @@ class AccountReconciliation(models.AbstractModel):
                     and matching_amls[line.id]["model"].id,
                     "write_off": matching_amls[line.id].get("status") == "write_off",
                 }
-                if not line.partner_id and partner_map.get(line.id):
-                    partner = self.env["res.partner"].browse(partner_map[line.id])
-                    line_vals.update(
-                        {
-                            "partner_id": partner.id,
-                            "partner_name": partner.name,
-                        }
-                    )
+                if not line.partner_id:
+                    partner = False
+                    if matching_amls[line.id].get("partner"):
+                        partner = matching_amls[line.id]["partner"]
+                    elif partner_map.get(line.id):
+                        partner = self.env["res.partner"].browse(partner_map[line.id])
+                    if partner:
+                        line_vals.update(
+                            {
+                                "partner_id": partner.id,
+                                "partner_name": partner.name,
+                            }
+                        )
                 results["lines"].append(line_vals)
 
         return results
@@ -1011,7 +1021,7 @@ class AccountReconciliation(models.AbstractModel):
         statement_currency = (
             st_line.journal_id.currency_id or st_line.journal_id.company_id.currency_id
         )
-        if st_line.amount_currency and st_line.currency_id:
+        if st_line.amount_currency and st_line.foreign_currency_id:
             amount = st_line.amount_currency
             amount_currency = st_line.amount
             amount_currency_str = formatLang(
@@ -1024,7 +1034,7 @@ class AccountReconciliation(models.AbstractModel):
         amount_str = formatLang(
             self.env,
             abs(amount),
-            currency_obj=st_line.currency_id or statement_currency,
+            currency_obj=st_line.foreign_currency_id or statement_currency,
         )
 
         data = {
@@ -1036,7 +1046,7 @@ class AccountReconciliation(models.AbstractModel):
             "date": format_date(self.env, st_line.date),
             "amount": amount,
             "amount_str": amount_str,  # Amount in the statement line currency
-            "currency_id": st_line.currency_id.id or statement_currency.id,
+            "currency_id": st_line.foreign_currency_id.id or statement_currency.id,
             "partner_id": st_line.partner_id.id,
             "journal_id": st_line.journal_id.id,
             "statement_id": st_line.statement_id.id,

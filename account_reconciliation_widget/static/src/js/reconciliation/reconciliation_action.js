@@ -244,11 +244,12 @@ odoo.define("account.ReconciliationClientAction", function (require) {
                     $pager: this.$pager,
                 };
                 this.renderer.$progress = this.$pager;
-                $(this.renderer.$progress)
-                    .parent()
-                    .css("width", "100%")
-                    .css("padding-left", "0");
             }
+        },
+
+        on_attach_callback: function () {
+            this._super.apply(this, arguments);
+            $(this.$pager).parent().css("width", "100%").css("padding-left", "0");
         },
 
         // --------------------------------------------------------------------------
