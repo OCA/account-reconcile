@@ -111,7 +111,6 @@ class AccountReconciliation(models.AbstractModel):
         query_str = sql.SQL(
             """
             SELECT "account_move_line".id, COUNT(*) OVER() FROM {from_clause}
-            JOIN account_move move ON "account_move_line".move_id = move.id
             {where_str}
             ORDER BY ("account_move_line".debit -
                       "account_move_line".credit) = {amount} DESC,
