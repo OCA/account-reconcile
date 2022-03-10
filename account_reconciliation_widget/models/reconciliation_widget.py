@@ -83,7 +83,7 @@ class AccountReconciliation(models.AbstractModel):
         :param offset: useless but kept in stable to preserve api
         :param limit: number of the result to search
         :param mode: 'rp' for receivable/payable or 'other'
-        """
+        """ 
         st_line = self.env["account.bank.statement.line"].browse(st_line_id)
 
         # Blue lines = payment on bank account not assigned to a statement yet
@@ -102,6 +102,8 @@ class AccountReconciliation(models.AbstractModel):
             search_str=search_str,
             mode=mode,
         )
+
+        domain.append(('move_id.state','=','posted'))
 
         from_clause, where_clause, where_clause_params = (
             self.env["account.move.line"]._where_calc(domain).get_sql()
