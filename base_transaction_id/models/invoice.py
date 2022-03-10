@@ -2,17 +2,18 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl)
 
 
-from odoo import models, fields, api
+from odoo import api, fields, models
 
 
 class AccountInvoice(models.Model):
-    _inherit = 'account.invoice'
+    _inherit = "account.invoice"
 
-    transaction_id = fields.Char(string='Transaction ID',
-                                 index=True,
-                                 copy=False,
-                                 help="Transaction ID from the "
-                                      "financial institute")
+    transaction_id = fields.Char(
+        string="Transaction ID",
+        index=True,
+        copy=False,
+        help="Transaction ID from the " "financial institute",
+    )
 
     @api.multi
     def action_move_create(self):
