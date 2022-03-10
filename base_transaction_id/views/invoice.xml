@@ -2,24 +2,25 @@
 <odoo>
 
   <record model="ir.ui.view" id="invoice_view_custom">
-    <field name="name">customer.invoice.transaction.inherit</field>
-    <field name="model">account.invoice</field>
-    <field name="inherit_id" ref="account.invoice_form" />
+    <field name="name">Add transaction_id to account move form view</field>
+    <field name="model">account.move</field>
+    <field name="inherit_id" ref="account.view_move_form" />
     <field name="arch" type="xml">
-      <!-- target account.invoice.origin
-           the first `origin` field of the view is declared in invoice lines -->
-      <xpath expr="//page[@name='other_info']//field[@name='origin']" position="after">
+      <xpath
+                expr="//page[@name='other_info']//field[@name='invoice_origin']"
+                position="after"
+            >
           <field name="transaction_id" />
       </xpath>
     </field>
   </record>
 
   <record model="ir.ui.view" id="invoice_tree_custom">
-    <field name="name">account.invoice.tree_inherit</field>
-    <field name="model">account.invoice</field>
-    <field name="inherit_id" ref="account.invoice_tree" />
+    <field name="name">Add transaction_id to account move tree view</field>
+    <field name="model">account.move</field>
+    <field name="inherit_id" ref="account.view_invoice_tree" />
     <field name="arch" type="xml">
-      <field name="origin" position="after">
+      <field name="invoice_origin" position="after">
         <field name="transaction_id" />
       </field>
     </field>

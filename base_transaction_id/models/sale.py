@@ -2,7 +2,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl)
 
 
-from odoo import api, fields, models
+from odoo import fields, models
 
 
 class SaleOrder(models.Model):
@@ -15,7 +15,6 @@ class SaleOrder(models.Model):
         help="Transaction id from the financial institute",
     )
 
-    @api.multi
     def _prepare_invoice(self):
         """Propagate the transaction_id from the sale order to the invoice."""
         invoice_vals = super()._prepare_invoice()

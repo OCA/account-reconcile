@@ -5,3 +5,4 @@
 * Lorenzo Battistini <lorenzo.battistini@agilebg.com>
 * Iryna Vyshnevska <i.vyshnevska@mobilunity.com>
 * Mykhailo Panarin <m.panarin@mobilunity.com>
+* Simone Rubino <simone.rubino@agilebg.com>
