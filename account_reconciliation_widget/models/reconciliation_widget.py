@@ -786,7 +786,7 @@ class AccountReconciliation(models.AbstractModel):
             ("reconciled", "=", False),
             ("account_id.reconcile", "=", True),
             ("balance", "!=", 0.0),
-            ("parent_state", "=", "posted")
+            ("parent_state", "=", "posted"),
         ]
 
         domain = expression.OR([domain_reconciliation, domain_matching])
