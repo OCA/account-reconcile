@@ -2,6 +2,7 @@
 # Copyright 2010 Sébastien Beau
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
+import datetime
 from operator import itemgetter
 
 from odoo import _, fields, models
@@ -206,6 +207,10 @@ class MassReconcileBase(models.AbstractModel):
             same_curr,
         ) = self._below_writeoff_limit(lines, self.write_off)
         rec_date = self._get_rec_date(lines, self.date_base_on)
+        if rec_date <= self.env.company.fiscalyear_lock_date:
+            rec_date = self.env.company.fiscalyear_lock_date + datetime.timedelta(
+                days=1
+            )
         line_rs = ml_obj.browse([line["id"] for line in lines]).with_context(
             date_p=rec_date, comment=_("Automatic Write Off")
         )
