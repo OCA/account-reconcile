@@ -125,6 +125,9 @@ class AccountMassReconcile(models.Model):
                 [('account_id', '=', rec.account.id),
                  ('reconciled', '=', False)])
 
+    # For retro compatibility
+    _get_total_unrec = _compute_total_unrec
+
     @api.multi
     @api.depends('history_ids')
     def _compute_last_history(self):
@@ -138,6 +141,9 @@ class AccountMassReconcile(models.Model):
                 limit=1, order='date desc'
                 )
             rec.last_history = last_history_rs or False
+
+    # For retro compatibility
+    _last_history = _compute_last_history
 
     name = fields.Char(
         string='Name',

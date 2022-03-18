@@ -22,6 +22,9 @@ class MassReconcileHistory(models.Model):
                 'reconcile_ids.reconciled_line_ids'
             ).ids
 
+    # For retro compatibility
+    _get_reconcile_line_ids = _compute_reconcile_line_ids
+
     mass_reconcile_id = fields.Many2one(
         'account.mass.reconcile',
         string='Reconcile Profile',
