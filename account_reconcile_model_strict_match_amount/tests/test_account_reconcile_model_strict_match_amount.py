@@ -15,6 +15,10 @@ class TestAccountReconcileModelStrictMatchAmount(TestReconciliationMatchingRules
         cls.partner_6 = cls.env["res.partner"].create({"name": "partner_6"})
         cls.invoice_line_5 = cls._create_invoice_line(150, cls.partner_3, "out_invoice")
         cls.invoice_line_5.ref = "ABC001XYZ"
+        # Explicitly set the ref on the account.move after field on the line
+        # was defined as readonly and value is not written anymore
+        # cf https://github.com/odoo/odoo/commit/38c13bbef39e3e82a77cfd4a316be94280e3cee5  # noqa
+        cls.invoice_line_5.move_id.ref = "ABC001XYZ"
         cls.invoice_line_6 = cls._create_invoice_line(300, cls.partner_4, "out_invoice")
         cls.invoice_line_6.name = "ABC002XYZ"
         cls.invoice_line_7 = cls._create_invoice_line(450, cls.partner_5, "out_invoice")
