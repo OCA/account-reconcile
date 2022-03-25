@@ -1,10 +1,13 @@
 # Copyright 2020 Camptocamp SA
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl)
+from odoo.tests import tagged
+
 from odoo.addons.account.tests.test_reconciliation_matching_rules import (
     TestReconciliationMatchingRules,
 )
 
 
+@tagged("post_install", "-at_install")
 class TestAccountReconcileModelStrictMatchAmount(TestReconciliationMatchingRules):
     @classmethod
     def setUpClass(cls):
@@ -16,7 +19,10 @@ class TestAccountReconcileModelStrictMatchAmount(TestReconciliationMatchingRules
         cls.invoice_line_s_5 = cls._create_invoice_line(
             150, cls.partner_s_3, "out_invoice"
         )
-        cls.invoice_line_s_5.ref = "ABC001XYZ"
+        # Explicitly set the ref on the account.move after field on the line
+        # was defined as readonly and value is not written anymore
+        # cf https://github.com/odoo/odoo/commit/38c13bbef39e3e82a77cfd4a316be94280e3cee5  # noqa
+        cls.invoice_line_s_5.move_id.ref = "ABC001XYZ"
         cls.invoice_line_s_6 = cls._create_invoice_line(
             300, cls.partner_s_4, "out_invoice"
         )
