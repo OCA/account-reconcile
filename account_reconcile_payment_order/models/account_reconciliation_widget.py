@@ -43,7 +43,9 @@ class AccountReconciliationWidget(models.AbstractModel):
         )
         for order in orders:
             elegible_lines = self._get_reconcile_lines_from_order(
-                st_line, order, excluded_ids=excluded_ids,
+                st_line,
+                order,
+                excluded_ids=excluded_ids,
             )
             if elegible_lines:
                 return self._prepare_move_lines(
@@ -55,14 +57,17 @@ class AccountReconciliationWidget(models.AbstractModel):
 
     def get_bank_statement_line_data(self, st_line_ids, excluded_ids=None):
         res = super().get_bank_statement_line_data(
-            st_line_ids, excluded_ids=excluded_ids,
+            st_line_ids,
+            excluded_ids=excluded_ids,
         )
         st_line_obj = self.env["account.bank.statement.line"]
         for line_vals in res.get("lines", []):
             st_line = st_line_obj.browse(line_vals["st_line"]["id"])
             orders = self._get_possible_payment_orders_for_statement_line(st_line)
             proposition_vals = self._prepare_proposition_from_orders(
-                st_line, orders, excluded_ids=excluded_ids,
+                st_line,
+                orders,
+                excluded_ids=excluded_ids,
             )
             if proposition_vals:
                 line_vals["reconciliation_proposition"] = proposition_vals
