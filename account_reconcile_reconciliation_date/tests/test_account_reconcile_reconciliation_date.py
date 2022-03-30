@@ -107,7 +107,7 @@ class TestAccountReconcileReconciliationDate(AccountTestInvoicingCommon):
         partner=None,
         account_id=None,
     ):
-        """ Returns an open invoice """
+        """Returns an open invoice"""
         invoice = self.invoice_model.create(
             {
                 "partner_id": partner or self.partner_agrolait.id,

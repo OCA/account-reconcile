@@ -254,7 +254,7 @@ class AccountMassReconcile(models.Model):
         }
 
     def open_unreconcile(self):
-        """ Open the view of move line with the unreconciled move lines"""
+        """Open the view of move line with the unreconciled move lines"""
         self.ensure_one()
         obj_move_line = self.env["account.move.line"]
         lines = obj_move_line.search(

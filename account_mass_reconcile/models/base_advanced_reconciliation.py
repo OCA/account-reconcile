@@ -17,7 +17,7 @@ class MassReconcileAdvanced(models.AbstractModel):
     _description = "Mass Reconcile Advanced"
 
     def _query_debit(self):
-        """Select all move (debit>0) as candidate. """
+        """Select all move (debit>0) as candidate."""
         select = self._select_query()
         sql_from = self._from_query()
         where, params = self._where_query()
@@ -28,7 +28,7 @@ class MassReconcileAdvanced(models.AbstractModel):
         return self.env.cr.dictfetchall()
 
     def _query_credit(self):
-        """Select all move (credit>0) as candidate. """
+        """Select all move (credit>0) as candidate."""
         select = self._select_query()
         sql_from = self._from_query()
         where, params = self._where_query()
@@ -220,7 +220,7 @@ class MassReconcileAdvanced(models.AbstractModel):
         return False
 
     def _rec_auto_lines_advanced(self, credit_lines, debit_lines):
-        """ Advanced reconciliation main loop """
+        """Advanced reconciliation main loop"""
         # pylint: disable=invalid-commit
         reconciled_ids = []
         reconcile_groups = []
