@@ -42,6 +42,7 @@ class TestAccountReconcilePaymentOrder(TestPaymentOrderInboundBase):
                             "date": "2019-01-01",
                             "name": "Test line",
                             "amount": 200,  # 100 * 2
+                            "payment_ref": "payment",
                         },
                     ),
                 ],
@@ -50,9 +51,7 @@ class TestAccountReconcilePaymentOrder(TestPaymentOrderInboundBase):
 
     def test_reconcile_payment_order_bank(self):
         self.assertEqual(len(self.inbound_order.payment_line_ids), 2)
-        self.inbound_mode.write(
-            {"offsetting_account": "bank_account", "move_option": "line"}
-        )
+        self.inbound_mode.write({"move_option": "line"})
         # Prepare payment order
         self.inbound_order.draft2open()
         self.inbound_order.open2generated()
@@ -63,21 +62,9 @@ class TestAccountReconcilePaymentOrder(TestPaymentOrderInboundBase):
 
     def test_reconcile_payment_order_transfer_account(self):
         self.assertEqual(len(self.inbound_order.payment_line_ids), 2)
-        receivable_account = self.env["account.account"].create(
-            {
-                "name": "Extra receivable account",
-                "code": "TEST_ERA",
-                "reconcile": True,
-                "user_type_id": (
-                    self.env.ref("account.data_account_type_receivable").id
-                ),
-            }
-        )
         self.inbound_mode.write(
             {
-                "offsetting_account": "transfer_account",
-                "transfer_account_id": receivable_account.id,
-                "transfer_journal_id": self.bank_journal.id,
+                "default_journal_ids": [(4, self.bank_journal.id)],
                 "move_option": "line",
             }
         )
