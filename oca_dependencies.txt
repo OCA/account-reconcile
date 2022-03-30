@@ -1,1 +1,2 @@
 # See https://github.com/OCA/odoo-community.org/blob/master/website/Contribution/CONTRIBUTING.rst#oca_dependencies-txt
+account_move_line_repair_info https://github.com/ForgeFlow/account-financial-tools 14.0-add-account_move_line_repair_info
