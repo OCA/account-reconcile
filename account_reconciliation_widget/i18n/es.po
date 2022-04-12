@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 14.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2022-04-11 19:05+0000\n"
+"PO-Revision-Date: 2022-04-12 18:05+0000\n"
 "Last-Translator: Dept. Técnico <tecnico@extrememicro.es>\n"
 "Language-Team: none\n"
 "Language: es\n"
@@ -267,7 +267,7 @@ msgid ""
 "If set, the accounting entries created during the bank statement reconciliation process will be created at this date.\n"
 "This is useful if the accounting period in which the entries should normally be booked is already closed."
 msgstr ""
-"Si se establece, la contabilidad  los asientos contables creados durante el "
+"Si se establece, la contabilidad los asientos contables creados durante el "
 "proceso de conciliación de los extractos bancarios se creará en esta fecha.\n"
 "Esto es útil si el período contable en el que normalmente deberían "
 "contabilizarse los asientos ya está cerrado."
@@ -478,7 +478,7 @@ msgstr "Reconciliación en los extractos bancarios"
 #: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
 #, python-format
 msgid "Ref"
-msgstr "Ref"
+msgstr "Referencia"
 
 #. module: account_reconciliation_widget
 #. openerp-web
