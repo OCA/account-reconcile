@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-03-24 03:37+0000\n"
-"PO-Revision-Date: 2022-04-11 19:05+0000\n"
+"PO-Revision-Date: 2022-04-12 18:05+0000\n"
 "Last-Translator: Dept. Técnico <tecnico@extrememicro.es>\n"
 "Language-Team: Spanish (https://www.transifex.com/oca/teams/23907/es/)\n"
 "Language: es\n"
@@ -677,7 +677,7 @@ msgstr "El campo de secuencia se usa para ordenar los métodos de conciliación"
 #: code:addons/account_mass_reconcile/models/mass_reconcile.py:0
 #, python-format
 msgid "There is no history of reconciled items on the task: %s."
-msgstr "No hay histórico de elementos conciliados en la tarea: %s"
+msgstr "No hay histórico de elementos conciliados en la tarea: %s."
 
 #. module: account_mass_reconcile
 #: code:addons/account_mass_reconcile/models/mass_reconcile.py:0
