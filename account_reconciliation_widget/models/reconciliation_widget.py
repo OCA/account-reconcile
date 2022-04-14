@@ -793,9 +793,11 @@ class AccountReconciliation(models.AbstractModel):
         domain_matching = [
             "&",
             "&",
+            "&",
             ("reconciled", "=", False),
             ("account_id.reconcile", "=", True),
             ("balance", "!=", 0.0),
+            ("parent_state", "=", "posted"),
         ]
 
         domain = expression.OR([domain_reconciliation, domain_matching])
