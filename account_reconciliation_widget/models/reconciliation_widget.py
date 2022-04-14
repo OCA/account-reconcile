@@ -103,8 +103,6 @@ class AccountReconciliation(models.AbstractModel):
             mode=mode,
         )
 
-        domain.append(["move_id.state","!=","cancel"])
-
         from_clause, where_clause, where_clause_params = (
             self.env["account.move.line"]._where_calc(domain).get_sql()
         )
@@ -784,9 +782,11 @@ class AccountReconciliation(models.AbstractModel):
         domain_matching = [
             "&",
             "&",
+            "&",
             ("reconciled", "=", False),
             ("account_id.reconcile", "=", True),
             ("balance", "!=", 0.0),
+            ("parent_state", "=", "posted"),
         ]
 
         domain = expression.OR([domain_reconciliation, domain_matching])
