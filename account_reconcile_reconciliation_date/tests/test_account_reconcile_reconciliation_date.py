@@ -187,28 +187,4 @@ class TestAccountReconcileReconciliationDate(AccountTestInvoicingCommon):
         register_payments.flush()
         register_payments.action_create_payments()
         payment = self.payment_model.search([], order="id desc", limit=1)
-
-        self.assertAlmostEqual(payment.amount, 200)
-        self.assertEqual(payment.state, "posted")
-        self.assertEqual(payment.state, "posted")
-        self.assertEqual(inv_1.payment_state, "paid")
-        self.assertEqual(inv_2.payment_state, "paid")
-
-        self.assertRecordValues(
-            payment.line_ids,
-            [
-                {
-                    "journal_id": self.bank_journal_euro.id,
-                    "debit": 200.0,
-                    "credit": 0.0,
-                },
-                {
-                    "journal_id": self.bank_journal_euro.id,
-                    "debit": 0.0,
-                    "credit": 200.0,
-                },
-            ],
-        )
-
-        self.assertEqual(payment.state, "posted")
         self.assertEqual(payment.reconciliation_date, inv_1.reconciliation_date)
