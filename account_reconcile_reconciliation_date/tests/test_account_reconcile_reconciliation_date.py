@@ -3,9 +3,12 @@
 
 import time
 
+import odoo.tests
+
 from odoo.addons.account.tests.common import AccountTestInvoicingCommon
 
 
+@odoo.tests.tagged("post_install", "-at_install")
 class TestAccountReconcileReconciliationDate(AccountTestInvoicingCommon):
     def setUp(self):
         super(TestAccountReconcileReconciliationDate, self).setUp()
