@@ -2,11 +2,14 @@
 # Copyright 2021 Tecnativa - João Marques
 # License AGPL-3 - See http://www.gnu.org/licenses/agpl-3.0.html
 
+import odoo.tests
+
 from odoo.addons.account_payment_order.tests.test_payment_order_inbound import (
     TestPaymentOrderInboundBase,
 )
 
 
+@odoo.tests.tagged("post_install", "-at_install")
 class TestAccountReconcilePaymentOrder(TestPaymentOrderInboundBase):
     @classmethod
     def setUpClass(cls):
