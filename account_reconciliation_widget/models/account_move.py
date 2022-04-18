@@ -1,5 +1,16 @@
-from odoo import _, fields, models
+from odoo import _, api, fields, models
 from odoo.exceptions import UserError
+
+
+class AccountMove(models.Model):
+    _inherit = "account.move"
+
+    @api.model
+    def _get_invoice_in_payment_state(self):
+        """Use this state on invoices when required (instead of "paid") for having full
+        flows with the reconciliation widget.
+        """
+        return "in_payment"
 
 
 class AccountMoveLine(models.Model):
