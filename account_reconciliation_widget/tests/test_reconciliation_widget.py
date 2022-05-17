@@ -4,6 +4,7 @@ import time
 import requests
 
 import odoo.tests
+from odoo.tools.misc import NON_BREAKING_SPACE
 
 from odoo.addons.account.tests.common import TestAccountReconciliationCommon
 
@@ -99,7 +100,8 @@ class TestReconciliationWidget(TestAccountReconciliationCommon):
             bank_stmt_line.ids
         )
         self.assertEqual(
-            result["lines"][0]["reconciliation_proposition"][0]["amount_str"], "$ 50.00"
+            result["lines"][0]["reconciliation_proposition"][0]["amount_str"],
+            f"${NON_BREAKING_SPACE}50.00",
         )
 
     def test_filter_partner1(self):
