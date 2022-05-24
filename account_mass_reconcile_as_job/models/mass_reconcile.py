@@ -5,6 +5,7 @@ import ast
 import logging
 
 from odoo import models
+from odoo.addons.queue_job.job import identity_exact
 
 _logger = logging.getLogger(__name__)
 
@@ -25,7 +26,8 @@ class AccountMassReconcile(models.Model):
 
         if as_job and self.env.context.get("mass_reconcile_as_job", True):
             for rec in self:
-                rec.with_delay().reconcile_as_job()
+                job_options = {"identity_key": identity_exact}
+                rec.with_delay(**job_options).reconcile_as_job()
             return True
         else:
             return super().run_reconcile()
