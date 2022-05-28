@@ -178,7 +178,7 @@ class AccountBankStatementLine(models.Model):
             )
 
         # create the res.partner.bank if needed
-        if self.account_number and self.partner_id and not self.bank_account_id:
+        if self.account_number and self.partner_id and not self.partner_bank_id:
             # Search bank account without partner to handle the case the res.partner.bank
             # already exists but is set on a different partner.
             self.partner_bank_id = self._find_or_create_bank_account()
