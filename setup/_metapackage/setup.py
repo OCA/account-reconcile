@@ -10,6 +10,7 @@ setuptools.setup(
     install_requires=[
         'odoo12-addon-account_banking_reconciliation',
         'odoo12-addon-account_mass_reconcile',
+        'odoo12-addon-account_mass_reconcile_by_purchase_line',
         'odoo12-addon-account_mass_reconcile_ref_deep_search',
         'odoo12-addon-account_move_base_import',
         'odoo12-addon-account_move_reconcile_helper',
