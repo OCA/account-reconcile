@@ -25,6 +25,6 @@
         "report/report_bank_statement_summary.xml",
         "report/report_bank_statement_detail.xml"],
     "installable": True,
-    "development_status": "Stable",
+    "development_status": "Production/Stable",
     "maintainers": ["max3903"],
 }
