@@ -14,9 +14,9 @@ class TestAccountReconcileModelStrictMatchAmount(TestReconciliationMatchingRules
         cls.partner_5 = cls.env["res.partner"].create({"name": "partner_5"})
         cls.partner_6 = cls.env["res.partner"].create({"name": "partner_6"})
         cls.invoice_line_5 = cls._create_invoice_line(150, cls.partner_3, "out_invoice")
-        cls.invoice_line_5.ref = "ABC001XYZ"
+        cls.invoice_line_5.name = "ABC001XYZ"
         cls.invoice_line_6 = cls._create_invoice_line(300, cls.partner_4, "out_invoice")
-        cls.invoice_line_6.name = "ABC002XYZ"
+        cls.invoice_line_6.move_id.name = "ABC002XYZ"
         cls.invoice_line_7 = cls._create_invoice_line(450, cls.partner_5, "out_invoice")
         cls.invoice_line_7.move_id.ref = "ABC003XYZ"
         cls.invoice_line_8 = cls._create_invoice_line(600, cls.partner_6, "out_invoice")

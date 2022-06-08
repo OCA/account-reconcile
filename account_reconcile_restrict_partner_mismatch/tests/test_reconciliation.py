@@ -53,12 +53,13 @@ class TestReconciliation(SavepointCase):
             "journal_id": cls.bank_journal.id,
             "line_ids": [(0, 0, debit_line_vals), (0, 0, credit_line_vals)],
         }
-        return (
+        move = (
             cls.env["account.move"]
             .with_context(default_journal_id=cls.bank_journal.id)
             .create(vals)
-            .id
         )
+        move.post()
+        return move.id
 
     @classmethod
     def init_moves(cls):
@@ -95,7 +96,7 @@ class TestReconciliation(SavepointCase):
         self.aml[0].partner_id = self.partner.id
         with self.assertRaises(UserError):
             self.aml.reconcile()
-        # reconciliation forbiden only for certain types of accounts
+        # reconciliation forbidden only for certain types of accounts
         account = self.env["account.account"].create(
             {
                 "code": "CAA1000",

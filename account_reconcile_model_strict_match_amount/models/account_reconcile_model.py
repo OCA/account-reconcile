@@ -45,9 +45,9 @@ class AccountReconcileModel(models.Model):
                 , FALSE)
                 AND
                 CASE
-                    WHEN abs(st_line.amount) < abs(aml.balance) THEN abs(st_line.amount) / abs(aml.balance) * 100
-                    WHEN abs(st_line.amount) > abs(aml.balance) THEN abs(aml.balance) / abs(st_line.amount) * 100
-                    ELSE 100
+                    WHEN abs(st_line.amount) < abs(aml.balance) THEN abs(st_line.amount) / abs(aml.balance) * 100.0
+                    WHEN abs(st_line.amount) > abs(aml.balance) THEN abs(aml.balance) / abs(st_line.amount) * 100.0
+                    ELSE 100.0
                 END >= {match_total_amount_param} AS communication_flag
             """.format(
                 match_total_amount_param=self.match_total_amount_param
@@ -67,9 +67,9 @@ class AccountReconcileModel(models.Model):
                 , FALSE)
                 AND
                 CASE
-                    WHEN abs(st_line.amount) < abs(aml.balance) THEN abs(st_line.amount) / abs(aml.balance) * 100
-                    WHEN abs(st_line.amount) > abs(aml.balance) THEN abs(aml.balance) / abs(st_line.amount) * 100
-                    ELSE 100
+                    WHEN abs(st_line.amount) < abs(aml.balance) THEN abs(st_line.amount) / abs(aml.balance) * 100.0
+                    WHEN abs(st_line.amount) > abs(aml.balance) THEN abs(aml.balance) / abs(st_line.amount) * 100.0
+                    ELSE 100.0
                 END >= {match_total_amount_param} AS payment_reference_flag
             """.format(
                 match_total_amount_param=self.match_total_amount_param
