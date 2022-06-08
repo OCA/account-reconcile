@@ -7,7 +7,7 @@
     "version": "13.0.1.0.1",
     "depends": ["account"],
     "author": "Camptocamp, Odoo Community Association (OCA)",
-    "website": "http://www.github.com/OCA/account-reconcile",
+    "website": "https://github.com/OCA/account-reconcile",
     "category": "Finance",
     "data": ["views/bank_statement.xml"],
     "license": "AGPL-3",
