@@ -5,7 +5,7 @@ from odoo.tests.common import TransactionCase
 
 
 class TestAccountPartnerReconcile(TransactionCase):
-    """ Tests for Account Partner Reconcile."""
+    """Tests for Account Partner Reconcile."""
 
     def setUp(self):
         super(TestAccountPartnerReconcile, self).setUp()
