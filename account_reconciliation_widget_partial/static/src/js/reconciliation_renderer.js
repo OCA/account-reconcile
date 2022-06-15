@@ -50,5 +50,15 @@ odoo.define('account_reconcile_partial.ReconciliationRenderer', function (requir
             }
             return this._super.apply(this, arguments);
         },
+        _onSelectProposition: function (event) {
+            var $el = $(event.target);
+            if ($el.hasClass('edit_amount_input')) {
+                // When the input is clicked, it is not to select the line
+                // but simply to write in the input field.
+                // so there is no need to call super that usually removes the line
+                return;
+            }
+            return this._super.apply(this, arguments);
+        },
     });
 });
