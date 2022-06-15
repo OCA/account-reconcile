@@ -1,6 +1,7 @@
 odoo.define('account_reconcile_partial.ReconciliationRenderer', function (require) {
     "use strict";
 
+    var field_utils = require('web.field_utils');
     var renderer = require('account.ReconciliationRenderer')
 
     renderer.LineRenderer.include({
@@ -15,12 +16,22 @@ odoo.define('account_reconcile_partial.ReconciliationRenderer', function (requir
                 {'data': $line.closest('.mv_line').data('line-id')}
             );
         },
-        updatePartialAmount: function(line_id, amount) {
+        updatePartialAmount: function(event, amount) {
+            var line_id = event.data.data;
             var $line = this.$('.mv_line[data-line-id='+line_id+']');
+            var handle = event.target.handle;
+            var line = this.model.getLine(handle);
+            var format_options = {
+                currency_id: line.st_line.currency_id,
+                noSymbol: true,
+            };
+            var amount = field_utils.format.monetary(
+                    amount, {}, format_options);
+
             $line.find('.line_info_edit').addClass('o_hidden');
             $line.find('.edit_amount_input').removeClass('o_hidden');
             $line.find('.edit_amount_input').focus();
-            $line.find('.edit_amount_input').val(amount.toFixed(2));
+            $line.find('.edit_amount_input').val(amount);
             $line.find('.edit_amount_input').select();
             $line.find('.line_amount').addClass('o_hidden');
         },
