@@ -63,19 +63,34 @@ class TestScenarioReconcile(TestAccountReconciliationCommon):
                 "reconcile_method": [(0, 0, {"name": "mass.reconcile.simple.partner"})],
             }
         )
-        # call the automatic reconcilation method
+        # call the automatic reconciliation method
         mass_rec.run_reconcile()
         self.assertEqual("paid", invoice.payment_state)
 
     def test_scenario_reconcile_currency(self):
-        # create currency rate
-        self.env["res.currency.rate"].create(
-            {
-                "name": fields.Date.today(),
-                "currency_id": self.ref("base.USD"),
-                "rate": 1.25,
-            }
+        currency_rate = (
+            self.env["res.currency.rate"]
+            .sudo()
+            .search(
+                [
+                    ("currency_id", "=", self.ref("base.USD")),
+                    ("company_id", "=", self.ref("base.main_company")),
+                ]
+            )
+            .filtered(lambda r: r.name == fields.Date.today())
         )
+        if not currency_rate:
+            # create currency rate
+            self.env["res.currency.rate"].create(
+                {
+                    "name": fields.Date.today(),
+                    "currency_id": self.ref("base.USD"),
+                    "rate": 1.5,
+                }
+            )
+        else:
+            currency_rate = fields.first(currency_rate)
+            currency_rate.rate = 1.5
         # create invoice
         invoice = self._create_invoice(
             currency_id=self.ref("base.USD"),
