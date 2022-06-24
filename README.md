@@ -23,6 +23,7 @@ addon | version | maintainers | summary
 --- | --- | --- | ---
 [account_mass_reconcile](account_mass_reconcile/) | 13.0.1.0.0 |  | Account Mass Reconcile
 [account_mass_reconcile_by_purchase_line](account_mass_reconcile_by_purchase_line/) | 13.0.1.0.0 |  | Allows to reconcile based on the PO line
+[account_move_reconcile_forbid_cancel](account_move_reconcile_forbid_cancel/) | 13.0.1.0.0 |  | Account Move Reconcile Forbid Cancel
 [account_move_reconcile_helper](account_move_reconcile_helper/) | 13.0.1.0.0 |  | Provides tools to facilitate reconciliation
 [account_partner_reconcile](account_partner_reconcile/) | 13.0.1.0.0 |  | Account Partner Reconcile
 [account_reconcile_model_strict_match_amount](account_reconcile_model_strict_match_amount/) | 13.0.1.0.0 |  | Restrict reconciliation propositions to matching amount parameter
