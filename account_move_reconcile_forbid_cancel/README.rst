@@ -25,8 +25,8 @@ Account Move Reconcile Forbid Cancel
 
 |badge1| |badge2| |badge3| |badge4| |badge5| 
 
-This module extends the functionality of account invoicing to restrict
-'reset to draft' or 'cancel' an invoice that has been reconciled.
+This module restricts to cancel or reset to draft any invoice/journal entry that
+has been reconciled (aka paid).
 
 **Table of contents**
 
@@ -38,11 +38,11 @@ Usage
 
 To use this module, you need to:
 
-#. Go to *Invoicing > Customers > invoices*
-#. Edit an invoice that has a payment.
-#. Click the 'Reset to Draft' button and you will get a validation error
+#. Go to *Invoicing > Customers > Invoices*
+#. Access an invoice that has a payment.
+#. Click on the 'Reset to Draft' button and you will get an error
    message to prevent you from resetting the invoice to draft state because
-   it already has an associated payment.
+   it has already an associated payment.
 
 Bug Tracker
 ===========
