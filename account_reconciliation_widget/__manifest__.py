@@ -12,6 +12,7 @@
     "depends": ["account"],
     "data": [
         "security/ir.model.access.csv",
+        "wizards/res_config_settings_views.xml",
         "views/assets.xml",
         "views/account_view.xml",
         "views/account_bank_statement_view.xml",
