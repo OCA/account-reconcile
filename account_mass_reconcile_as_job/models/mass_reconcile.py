@@ -5,6 +5,7 @@ import ast
 import logging
 
 from odoo import models
+
 from odoo.addons.queue_job.job import identity_exact
 
 _logger = logging.getLogger(__name__)
