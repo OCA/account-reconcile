@@ -76,8 +76,8 @@ class TestAccountMoveReconcileForbidCancel(SavepointCase):
 
     def test_reset_invoice_to_draft(self):
         with self.assertRaises(ValidationError):
-            self.invoice.button_draft()
+            self.invoice.with_context(test_reconcile_forbid_cancel=True).button_draft()
 
     def test_cancel_invoice(self):
         with self.assertRaises(ValidationError):
-            self.invoice.button_cancel()
+            self.invoice.with_context(test_reconcile_forbid_cancel=True).button_cancel()
