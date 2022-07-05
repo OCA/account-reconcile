@@ -10,7 +10,7 @@ class AccountMove(models.Model):
 
     def _get_receivable_payable_lines(self):
         return self.line_ids.filtered(
-            lambda l: l.account_internal_type in ["receivable", "acc_type_pay"],
+            lambda l: l.account_internal_type in ["receivable", "payable"],
         )
 
     def button_draft(self):
