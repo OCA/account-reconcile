@@ -24,7 +24,6 @@ msgstr "Een aflettering moet minstens 2 mutatieregels hebben."
 
 #. module: account_reconciliation_widget
 #: code:addons/account_reconciliation_widget/models/account_bank_statement.py:0
-#: code:addons/account_reconciliation_widget/models/account_bank_statement.py:0
 #, python-format
 msgid "A selected move line was already reconciled."
 msgstr "Een geselecteerde boeking is al afgeletterd."
@@ -32,9 +31,6 @@ msgstr "Een geselecteerde boeking is al afgeletterd."
 #. module: account_reconciliation_widget
 #. openerp-web
 #: code:addons/account_reconciliation_widget/static/src/js/reconciliation/reconciliation_renderer.js:0
-#: code:addons/account_reconciliation_widget/static/src/js/reconciliation/reconciliation_renderer.js:0
-#: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
-#: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
 #: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
 #, python-format
 msgid "Account"
@@ -64,8 +60,6 @@ msgstr ""
 #. module: account_reconciliation_widget
 #. openerp-web
 #: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
-#: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
-#: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
 #, python-format
 msgid "Amount"
 msgstr "Bedrag"
@@ -93,6 +87,7 @@ msgstr "Bankafschrift aflettering"
 
 #. module: account_reconciliation_widget
 #: model:ir.model.fields,field_description:account_reconciliation_widget.field_res_company__account_bank_reconciliation_start
+#: model:ir.model.fields,field_description:account_reconciliation_widget.field_res_config_settings__account_bank_reconciliation_start
 msgid "Bank Reconciliation Threshold"
 msgstr "Bank aflevering drempel"
 
@@ -130,7 +125,6 @@ msgstr "Kies een tegenrekening of maak een afschrijving"
 #. module: account_reconciliation_widget
 #. openerp-web
 #: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
-#: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
 #, python-format
 msgid "Close"
 msgstr "sluiten"
@@ -146,6 +140,11 @@ msgstr "afschrift afsluiten"
 #: model:ir.model,name:account_reconciliation_widget.model_res_company
 msgid "Companies"
 msgstr "Bedrijven"
+
+#. module: account_reconciliation_widget
+#: model:ir.model,name:account_reconciliation_widget.model_res_config_settings
+msgid "Config Settings"
+msgstr ""
 
 #. module: account_reconciliation_widget
 #. openerp-web
@@ -178,10 +177,16 @@ msgstr "Klant/Leverancier matching"
 #. module: account_reconciliation_widget
 #. openerp-web
 #: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
-#: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
 #, python-format
 msgid "Date"
 msgstr "Datum"
+
+#. module: account_reconciliation_widget
+#: model_terms:ir.ui.view,arch_db:account_reconciliation_widget.res_config_settings_view_form
+msgid ""
+"Date from which you started using bank statements in Odoo. Leave empty if "
+"you've been using bank statements in Odoo from the start."
+msgstr ""
 
 #. module: account_reconciliation_widget
 #. openerp-web
@@ -197,6 +202,7 @@ msgstr "Omschrijving"
 #: model:ir.model.fields,field_description:account_reconciliation_widget.field_account_move_line__display_name
 #: model:ir.model.fields,field_description:account_reconciliation_widget.field_account_reconciliation_widget__display_name
 #: model:ir.model.fields,field_description:account_reconciliation_widget.field_res_company__display_name
+#: model:ir.model.fields,field_description:account_reconciliation_widget.field_res_config_settings__display_name
 msgid "Display Name"
 msgstr "Weergavenaam"
 
@@ -215,9 +221,6 @@ msgstr "Of beide debet en credit passeren of geen."
 
 #. module: account_reconciliation_widget
 #. openerp-web
-#: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
-#: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
-#: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
 #: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
 #, python-format
 msgid "External link"
@@ -258,14 +261,17 @@ msgstr "Goed gedaan!"
 #: model:ir.model.fields,field_description:account_reconciliation_widget.field_account_move_line__id
 #: model:ir.model.fields,field_description:account_reconciliation_widget.field_account_reconciliation_widget__id
 #: model:ir.model.fields,field_description:account_reconciliation_widget.field_res_company__id
+#: model:ir.model.fields,field_description:account_reconciliation_widget.field_res_config_settings__id
 msgid "ID"
 msgstr "ID"
 
 #. module: account_reconciliation_widget
 #: model:ir.model.fields,help:account_reconciliation_widget.field_account_bank_statement__accounting_date
 msgid ""
-"If set, the accounting entries created during the bank statement reconciliation process will be created at this date.\n"
-"This is useful if the accounting period in which the entries should normally be booked is already closed."
+"If set, the accounting entries created during the bank statement "
+"reconciliation process will be created at this date.\n"
+"This is useful if the accounting period in which the entries should normally "
+"be booked is already closed."
 msgstr ""
 "Indien ingesteld, worden de boekhoudingsboekingen die tijdens het "
 "aflettersproces voor bankafschriften zijn gemaakt, op deze datum gemaakt.\n"
@@ -288,7 +294,6 @@ msgstr "Items"
 
 #. module: account_reconciliation_widget
 #. openerp-web
-#: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
 #: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
 #: model:ir.model,name:account_reconciliation_widget.model_account_journal
 #, python-format
@@ -322,7 +327,6 @@ msgstr "Dagboek Items om afteletteren"
 #. openerp-web
 #: code:addons/account_reconciliation_widget/static/src/js/reconciliation/reconciliation_renderer.js:0
 #: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
-#: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
 #, python-format
 msgid "Label"
 msgstr "Label"
@@ -334,6 +338,7 @@ msgstr "Label"
 #: model:ir.model.fields,field_description:account_reconciliation_widget.field_account_move_line____last_update
 #: model:ir.model.fields,field_description:account_reconciliation_widget.field_account_reconciliation_widget____last_update
 #: model:ir.model.fields,field_description:account_reconciliation_widget.field_res_company____last_update
+#: model:ir.model.fields,field_description:account_reconciliation_widget.field_res_config_settings____last_update
 msgid "Last Modified on"
 msgstr "Laatst bijgewerkt op"
 
@@ -370,7 +375,8 @@ msgstr "Handmatige acties"
 #: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
 #, python-format
 msgid "Match with entries that are not from receivable/payable accounts"
-msgstr "Match met boekingen die niet van debiteuren/crediteuren rekeningen zijn"
+msgstr ""
+"Match met boekingen die niet van debiteuren/crediteuren rekeningen zijn"
 
 #. module: account_reconciliation_widget
 #. openerp-web
@@ -421,8 +427,8 @@ msgstr "Openingsbalans"
 msgid ""
 "Operation not allowed. Since your statement line already received a number "
 "(%s), you cannot reconcile it entirely with existing journal entries "
-"otherwise it would make a gap in the numbering. You should book an entry and"
-" make a regular revert of it in case you want to cancel it."
+"otherwise it would make a gap in the numbering. You should book an entry and "
+"make a regular revert of it in case you want to cancel it."
 msgstr ""
 "Bewerking niet toegelaten. Aangezien uw bankafschriftregel reeds een nummer "
 "(%s) heeft gekregen, kunt u het niet compleet afletteren tegen bestaande "
@@ -431,7 +437,6 @@ msgstr ""
 
 #. module: account_reconciliation_widget
 #. openerp-web
-#: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
 #: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
 #, python-format
 msgid "Partner"
@@ -453,7 +458,6 @@ msgstr "Voorinstellingen"
 
 #. module: account_reconciliation_widget
 #. openerp-web
-#: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
 #: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
 #: model:ir.actions.client,name:account_reconciliation_widget.action_view_account_move_line_reconcile
 #: model_terms:ir.ui.view,arch_db:account_reconciliation_widget.account_journal_dashboard_kanban_view
@@ -546,9 +550,9 @@ msgstr "Belastingen"
 #. module: account_reconciliation_widget
 #: model:ir.model.fields,help:account_reconciliation_widget.field_account_bank_statement_line__move_name
 msgid ""
-"Technical field holding the number given to the journal entry, automatically"
-" set when the statement line is reconciled then stored to set the same "
-"number again if the line is cancelled, set to draft and re-processed again."
+"Technical field holding the number given to the journal entry, automatically "
+"set when the statement line is reconciled then stored to set the same number "
+"again if the line is cancelled, set to draft and re-processed again."
 msgstr ""
 "Technisch veld welke het nummer geeft aan de boeking, automatisch ingesteld "
 "wanneer de bankafschriftregel is afgeletterd en dan opgeslagen zodat het "
@@ -571,9 +575,13 @@ msgstr "Het bedrag %s is geen geldig deelbedrag"
 
 #. module: account_reconciliation_widget
 #: model:ir.model.fields,help:account_reconciliation_widget.field_res_company__account_bank_reconciliation_start
+#: model:ir.model.fields,help:account_reconciliation_widget.field_res_config_settings__account_bank_reconciliation_start
 msgid ""
-"The bank reconciliation widget won't ask to reconcile payments older than this date.\n"
-"This is useful if you install accounting after having used invoicing for some time and don't want to reconcile all the past payments with bank statements."
+"The bank reconciliation widget won't ask to reconcile payments older than "
+"this date.\n"
+"This is useful if you install accounting after having used invoicing for "
+"some time and don't want to reconcile all the past payments with bank "
+"statements."
 msgstr ""
 "De bank afletterfunctie zal niet vragen om de betalingen af te letteren "
 "welke ouder zijn dan deze datum.\n"
@@ -630,8 +638,6 @@ msgstr "Transactie"
 #. module: account_reconciliation_widget
 #. openerp-web
 #: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
-#: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
-#: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
 #, python-format
 msgid "Validate"
 msgstr "Valideer"
@@ -644,7 +650,6 @@ msgid "Verify"
 msgstr "Verifiër"
 
 #. module: account_reconciliation_widget
-#: code:addons/account_reconciliation_widget/models/account_move.py:0
 #: code:addons/account_reconciliation_widget/models/account_move.py:0
 #, python-format
 msgid "Write-Off"
