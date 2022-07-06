@@ -24,7 +24,6 @@ msgstr "Uma reconciliação deve envolver pelo menos 2 linhas de movimento."
 
 #. module: account_reconciliation_widget
 #: code:addons/account_reconciliation_widget/models/account_bank_statement.py:0
-#: code:addons/account_reconciliation_widget/models/account_bank_statement.py:0
 #, python-format
 msgid "A selected move line was already reconciled."
 msgstr "A linha de movimento selecionada já foi reconciliada."
@@ -32,9 +31,6 @@ msgstr "A linha de movimento selecionada já foi reconciliada."
 #. module: account_reconciliation_widget
 #. openerp-web
 #: code:addons/account_reconciliation_widget/static/src/js/reconciliation/reconciliation_renderer.js:0
-#: code:addons/account_reconciliation_widget/static/src/js/reconciliation/reconciliation_renderer.js:0
-#: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
-#: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
 #: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
 #, python-format
 msgid "Account"
@@ -44,11 +40,6 @@ msgstr "Conta"
 #: model:ir.model,name:account_reconciliation_widget.model_account_reconciliation_widget
 msgid "Account Reconciliation widget"
 msgstr "Widget de Reconciliação de Conta"
-
-#. module: account_reconciliation_widget
-#: model:ir.model.fields,field_description:account_reconciliation_widget.field_account_bank_statement__accounting_date
-msgid "Accounting Date"
-msgstr "Data Contábil"
 
 #. module: account_reconciliation_widget
 #. openerp-web
@@ -63,8 +54,6 @@ msgstr ""
 
 #. module: account_reconciliation_widget
 #. openerp-web
-#: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
-#: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
 #: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
 #, python-format
 msgid "Amount"
@@ -93,6 +82,7 @@ msgstr "Reconciliação Bancária"
 
 #. module: account_reconciliation_widget
 #: model:ir.model.fields,field_description:account_reconciliation_widget.field_res_company__account_bank_reconciliation_start
+#: model:ir.model.fields,field_description:account_reconciliation_widget.field_res_config_settings__account_bank_reconciliation_start
 msgid "Bank Reconciliation Threshold"
 msgstr "Limite de Reconciliação Bancária"
 
@@ -130,7 +120,6 @@ msgstr "Escolha a contraparte ou Crie uma Baixa"
 #. module: account_reconciliation_widget
 #. openerp-web
 #: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
-#: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
 #, python-format
 msgid "Close"
 msgstr "Fechar"
@@ -148,11 +137,25 @@ msgid "Companies"
 msgstr "Empresas"
 
 #. module: account_reconciliation_widget
+#: model:ir.model,name:account_reconciliation_widget.model_res_config_settings
+msgid "Config Settings"
+msgstr ""
+
+#. module: account_reconciliation_widget
 #. openerp-web
 #: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
 #, python-format
 msgid "Congrats, you're all done!"
 msgstr "Parabéns, você concluiu tudo!"
+
+#. module: account_reconciliation_widget
+#. openerp-web
+#: code:addons/account_reconciliation_widget/static/src/js/reconciliation/reconciliation_renderer.js:0
+#, python-format
+msgid ""
+"Congrats, you're all done! You reconciled %s transactions in %s. That's on "
+"average %s seconds per transaction."
+msgstr ""
 
 #. module: account_reconciliation_widget
 #. openerp-web
@@ -178,10 +181,16 @@ msgstr "Correspondencia de Cliente/Fornecedor"
 #. module: account_reconciliation_widget
 #. openerp-web
 #: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
-#: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
 #, python-format
 msgid "Date"
 msgstr "Data"
+
+#. module: account_reconciliation_widget
+#: model_terms:ir.ui.view,arch_db:account_reconciliation_widget.res_config_settings_view_form
+msgid ""
+"Date from which you started using bank statements in Odoo. Leave empty if "
+"you've been using bank statements in Odoo from the start."
+msgstr ""
 
 #. module: account_reconciliation_widget
 #. openerp-web
@@ -189,16 +198,6 @@ msgstr "Data"
 #, python-format
 msgid "Description"
 msgstr "Descrição"
-
-#. module: account_reconciliation_widget
-#: model:ir.model.fields,field_description:account_reconciliation_widget.field_account_bank_statement__display_name
-#: model:ir.model.fields,field_description:account_reconciliation_widget.field_account_bank_statement_line__display_name
-#: model:ir.model.fields,field_description:account_reconciliation_widget.field_account_journal__display_name
-#: model:ir.model.fields,field_description:account_reconciliation_widget.field_account_move_line__display_name
-#: model:ir.model.fields,field_description:account_reconciliation_widget.field_account_reconciliation_widget__display_name
-#: model:ir.model.fields,field_description:account_reconciliation_widget.field_res_company__display_name
-msgid "Display Name"
-msgstr "Nome de Exibição"
 
 #. module: account_reconciliation_widget
 #. openerp-web
@@ -216,9 +215,6 @@ msgstr "Ou passar tanto de débito e de crédito ou nenhum."
 #. module: account_reconciliation_widget
 #. openerp-web
 #: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
-#: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
-#: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
-#: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
 #, python-format
 msgid "External link"
 msgstr "Link Externo"
@@ -229,6 +225,11 @@ msgstr "Link Externo"
 #, python-format
 msgid "Filter on account, label, partner, amount,..."
 msgstr "Fitro em conta, rótulo, parceiro, valor,..."
+
+#. module: account_reconciliation_widget
+#: model:ir.model.fields,field_description:account_reconciliation_widget.field_account_bank_statement__accounting_date
+msgid "Financial Date"
+msgstr ""
 
 #. module: account_reconciliation_widget
 #. openerp-web
@@ -252,20 +253,12 @@ msgid "Good Job!"
 msgstr "Bom Trabalho!"
 
 #. module: account_reconciliation_widget
-#: model:ir.model.fields,field_description:account_reconciliation_widget.field_account_bank_statement__id
-#: model:ir.model.fields,field_description:account_reconciliation_widget.field_account_bank_statement_line__id
-#: model:ir.model.fields,field_description:account_reconciliation_widget.field_account_journal__id
-#: model:ir.model.fields,field_description:account_reconciliation_widget.field_account_move_line__id
-#: model:ir.model.fields,field_description:account_reconciliation_widget.field_account_reconciliation_widget__id
-#: model:ir.model.fields,field_description:account_reconciliation_widget.field_res_company__id
-msgid "ID"
-msgstr "ID"
-
-#. module: account_reconciliation_widget
 #: model:ir.model.fields,help:account_reconciliation_widget.field_account_bank_statement__accounting_date
 msgid ""
-"If set, the accounting entries created during the bank statement reconciliation process will be created at this date.\n"
-"This is useful if the accounting period in which the entries should normally be booked is already closed."
+"If set, the accounting entries created during the bank statement "
+"reconciliation process will be created at this date.\n"
+"This is useful if the accounting period in which the entries should normally "
+"be booked is already closed."
 msgstr ""
 "Se definido, os lançamentos contábeis criados durante o processo de "
 "reconciliação do extrato bancário serão criados nesta data.\n"
@@ -286,7 +279,6 @@ msgstr "Ítens"
 
 #. module: account_reconciliation_widget
 #. openerp-web
-#: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
 #: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
 #: model:ir.model,name:account_reconciliation_widget.model_account_journal
 #, python-format
@@ -320,20 +312,9 @@ msgstr "Ítens de Diário para Reconciliar"
 #. openerp-web
 #: code:addons/account_reconciliation_widget/static/src/js/reconciliation/reconciliation_renderer.js:0
 #: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
-#: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
 #, python-format
 msgid "Label"
 msgstr "Rótulo"
-
-#. module: account_reconciliation_widget
-#: model:ir.model.fields,field_description:account_reconciliation_widget.field_account_bank_statement____last_update
-#: model:ir.model.fields,field_description:account_reconciliation_widget.field_account_bank_statement_line____last_update
-#: model:ir.model.fields,field_description:account_reconciliation_widget.field_account_journal____last_update
-#: model:ir.model.fields,field_description:account_reconciliation_widget.field_account_move_line____last_update
-#: model:ir.model.fields,field_description:account_reconciliation_widget.field_account_reconciliation_widget____last_update
-#: model:ir.model.fields,field_description:account_reconciliation_widget.field_res_company____last_update
-msgid "Last Modified on"
-msgstr "Última Modificação em"
 
 #. module: account_reconciliation_widget
 #. openerp-web
@@ -419,18 +400,17 @@ msgstr "Saldo Aberto"
 msgid ""
 "Operation not allowed. Since your statement line already received a number "
 "(%s), you cannot reconcile it entirely with existing journal entries "
-"otherwise it would make a gap in the numbering. You should book an entry and"
-" make a regular revert of it in case you want to cancel it."
+"otherwise it would make a gap in the numbering. You should book an entry and "
+"make a regular revert of it in case you want to cancel it."
 msgstr ""
 "Operação não permitida. Visto que sua linha de extrato já recebeu um número "
 "(%s), você não pode reconciliá-la totalmente com as entradas de diário "
 "existentes, caso contrário haveria uma lacuna na numeração. Você deve "
-"reservar uma entrada e fazer uma reversão regular no caso de querer "
-"cancelá-la."
+"reservar uma entrada e fazer uma reversão regular no caso de querer cancelá-"
+"la."
 
 #. module: account_reconciliation_widget
 #. openerp-web
-#: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
 #: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
 #, python-format
 msgid "Partner"
@@ -452,7 +432,6 @@ msgstr "Configuração predefinida"
 
 #. module: account_reconciliation_widget
 #. openerp-web
-#: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
 #: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
 #: model:ir.actions.client,name:account_reconciliation_widget.action_view_account_move_line_reconcile
 #: model_terms:ir.ui.view,arch_db:account_reconciliation_widget.account_journal_dashboard_kanban_view
@@ -545,14 +524,10 @@ msgstr "Impostos"
 #. module: account_reconciliation_widget
 #: model:ir.model.fields,help:account_reconciliation_widget.field_account_bank_statement_line__move_name
 msgid ""
-"Technical field holding the number given to the journal entry, automatically"
-" set when the statement line is reconciled then stored to set the same "
-"number again if the line is cancelled, set to draft and re-processed again."
+"Technical field holding the number given to the journal entry,automatically "
+"set when the statement line is reconciled then storedto set the same number "
+"again if the line is cancelled,set to draft and re-processed again."
 msgstr ""
-"Campo técnico que contém o número atribuído ao lançamento no diário, "
-"automaticamente definido quando a linha de instrução é reconciliada e "
-"armazenada para definir o mesmo número novamente se a linha for cancelada, "
-"definido como rascunho e reprocessado novamente."
 
 #. module: account_reconciliation_widget
 #. openerp-web
@@ -570,9 +545,13 @@ msgstr "O valor %s não é um valor parcial válido\""
 
 #. module: account_reconciliation_widget
 #: model:ir.model.fields,help:account_reconciliation_widget.field_res_company__account_bank_reconciliation_start
+#: model:ir.model.fields,help:account_reconciliation_widget.field_res_config_settings__account_bank_reconciliation_start
 msgid ""
-"The bank reconciliation widget won't ask to reconcile payments older than this date.\n"
-"This is useful if you install accounting after having used invoicing for some time and don't want to reconcile all the past payments with bank statements."
+"The bank reconciliation widget won't ask to reconcile payments older than "
+"this date.\n"
+"This is useful if you install accounting after having used invoicing for "
+"some time and don't want to reconcile all the past payments with bank "
+"statements."
 msgstr ""
 "O widget de reconciliação bancária não solicitará a reconciliação de "
 "pagamentos anteriores a esta data.\n"
@@ -629,8 +608,6 @@ msgstr "Transação"
 #. module: account_reconciliation_widget
 #. openerp-web
 #: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
-#: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
-#: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
 #, python-format
 msgid "Validate"
 msgstr "Validar"
@@ -643,7 +620,6 @@ msgid "Verify"
 msgstr "Verificar"
 
 #. module: account_reconciliation_widget
-#: code:addons/account_reconciliation_widget/models/account_move.py:0
 #: code:addons/account_reconciliation_widget/models/account_move.py:0
 #, python-format
 msgid "Write-Off"
@@ -744,3 +720,26 @@ msgstr "entradas não reconciliadas"
 #, python-format
 msgid "vendor bills"
 msgstr "faturas de fornecedor"
+
+#~ msgid "Accounting Date"
+#~ msgstr "Data Contábil"
+
+#~ msgid "Display Name"
+#~ msgstr "Nome de Exibição"
+
+#~ msgid "ID"
+#~ msgstr "ID"
+
+#~ msgid "Last Modified on"
+#~ msgstr "Última Modificação em"
+
+#~ msgid ""
+#~ "Technical field holding the number given to the journal entry, "
+#~ "automatically set when the statement line is reconciled then stored to "
+#~ "set the same number again if the line is cancelled, set to draft and re-"
+#~ "processed again."
+#~ msgstr ""
+#~ "Campo técnico que contém o número atribuído ao lançamento no diário, "
+#~ "automaticamente definido quando a linha de instrução é reconciliada e "
+#~ "armazenada para definir o mesmo número novamente se a linha for "
+#~ "cancelada, definido como rascunho e reprocessado novamente."

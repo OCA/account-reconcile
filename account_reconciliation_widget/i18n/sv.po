@@ -24,7 +24,6 @@ msgstr "En avstämning måste involvera åtminstone 2 rader."
 
 #. module: account_reconciliation_widget
 #: code:addons/account_reconciliation_widget/models/account_bank_statement.py:0
-#: code:addons/account_reconciliation_widget/models/account_bank_statement.py:0
 #, python-format
 msgid "A selected move line was already reconciled."
 msgstr ""
@@ -32,9 +31,6 @@ msgstr ""
 #. module: account_reconciliation_widget
 #. openerp-web
 #: code:addons/account_reconciliation_widget/static/src/js/reconciliation/reconciliation_renderer.js:0
-#: code:addons/account_reconciliation_widget/static/src/js/reconciliation/reconciliation_renderer.js:0
-#: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
-#: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
 #: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
 #, python-format
 msgid "Account"
@@ -44,11 +40,6 @@ msgstr "Konto"
 #: model:ir.model,name:account_reconciliation_widget.model_account_reconciliation_widget
 msgid "Account Reconciliation widget"
 msgstr "Kontoavstämningswidget"
-
-#. module: account_reconciliation_widget
-#: model:ir.model.fields,field_description:account_reconciliation_widget.field_account_bank_statement__accounting_date
-msgid "Accounting Date"
-msgstr "Bokföringsdatum"
 
 #. module: account_reconciliation_widget
 #. openerp-web
@@ -62,8 +53,6 @@ msgstr ""
 
 #. module: account_reconciliation_widget
 #. openerp-web
-#: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
-#: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
 #: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
 #, python-format
 msgid "Amount"
@@ -92,6 +81,7 @@ msgstr "Bankavstämning"
 
 #. module: account_reconciliation_widget
 #: model:ir.model.fields,field_description:account_reconciliation_widget.field_res_company__account_bank_reconciliation_start
+#: model:ir.model.fields,field_description:account_reconciliation_widget.field_res_config_settings__account_bank_reconciliation_start
 msgid "Bank Reconciliation Threshold"
 msgstr "Tröskelvärde för bankavstämning"
 
@@ -129,7 +119,6 @@ msgstr "Välj motpart eller skapa avskrivning"
 #. module: account_reconciliation_widget
 #. openerp-web
 #: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
-#: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
 #, python-format
 msgid "Close"
 msgstr "Stäng"
@@ -147,11 +136,25 @@ msgid "Companies"
 msgstr "Bolag"
 
 #. module: account_reconciliation_widget
+#: model:ir.model,name:account_reconciliation_widget.model_res_config_settings
+msgid "Config Settings"
+msgstr ""
+
+#. module: account_reconciliation_widget
 #. openerp-web
 #: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
 #, python-format
 msgid "Congrats, you're all done!"
 msgstr "Grattis, du är klar!"
+
+#. module: account_reconciliation_widget
+#. openerp-web
+#: code:addons/account_reconciliation_widget/static/src/js/reconciliation/reconciliation_renderer.js:0
+#, python-format
+msgid ""
+"Congrats, you're all done! You reconciled %s transactions in %s. That's on "
+"average %s seconds per transaction."
+msgstr ""
 
 #. module: account_reconciliation_widget
 #. openerp-web
@@ -177,10 +180,16 @@ msgstr "Kund-/leverantörsmatchning"
 #. module: account_reconciliation_widget
 #. openerp-web
 #: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
-#: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
 #, python-format
 msgid "Date"
 msgstr "Datum"
+
+#. module: account_reconciliation_widget
+#: model_terms:ir.ui.view,arch_db:account_reconciliation_widget.res_config_settings_view_form
+msgid ""
+"Date from which you started using bank statements in Odoo. Leave empty if "
+"you've been using bank statements in Odoo from the start."
+msgstr ""
 
 #. module: account_reconciliation_widget
 #. openerp-web
@@ -188,16 +197,6 @@ msgstr "Datum"
 #, python-format
 msgid "Description"
 msgstr "Beskrivning"
-
-#. module: account_reconciliation_widget
-#: model:ir.model.fields,field_description:account_reconciliation_widget.field_account_bank_statement__display_name
-#: model:ir.model.fields,field_description:account_reconciliation_widget.field_account_bank_statement_line__display_name
-#: model:ir.model.fields,field_description:account_reconciliation_widget.field_account_journal__display_name
-#: model:ir.model.fields,field_description:account_reconciliation_widget.field_account_move_line__display_name
-#: model:ir.model.fields,field_description:account_reconciliation_widget.field_account_reconciliation_widget__display_name
-#: model:ir.model.fields,field_description:account_reconciliation_widget.field_res_company__display_name
-msgid "Display Name"
-msgstr "Visningsnamn"
 
 #. module: account_reconciliation_widget
 #. openerp-web
@@ -215,9 +214,6 @@ msgstr ""
 #. module: account_reconciliation_widget
 #. openerp-web
 #: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
-#: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
-#: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
-#: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
 #, python-format
 msgid "External link"
 msgstr "Extern länk"
@@ -228,6 +224,11 @@ msgstr "Extern länk"
 #, python-format
 msgid "Filter on account, label, partner, amount,..."
 msgstr "Filtrera efter konto, etikett, partner, belopp, ..."
+
+#. module: account_reconciliation_widget
+#: model:ir.model.fields,field_description:account_reconciliation_widget.field_account_bank_statement__accounting_date
+msgid "Financial Date"
+msgstr ""
 
 #. module: account_reconciliation_widget
 #. openerp-web
@@ -251,20 +252,12 @@ msgid "Good Job!"
 msgstr "Bra jobbat!"
 
 #. module: account_reconciliation_widget
-#: model:ir.model.fields,field_description:account_reconciliation_widget.field_account_bank_statement__id
-#: model:ir.model.fields,field_description:account_reconciliation_widget.field_account_bank_statement_line__id
-#: model:ir.model.fields,field_description:account_reconciliation_widget.field_account_journal__id
-#: model:ir.model.fields,field_description:account_reconciliation_widget.field_account_move_line__id
-#: model:ir.model.fields,field_description:account_reconciliation_widget.field_account_reconciliation_widget__id
-#: model:ir.model.fields,field_description:account_reconciliation_widget.field_res_company__id
-msgid "ID"
-msgstr "ID"
-
-#. module: account_reconciliation_widget
 #: model:ir.model.fields,help:account_reconciliation_widget.field_account_bank_statement__accounting_date
 msgid ""
-"If set, the accounting entries created during the bank statement reconciliation process will be created at this date.\n"
-"This is useful if the accounting period in which the entries should normally be booked is already closed."
+"If set, the accounting entries created during the bank statement "
+"reconciliation process will be created at this date.\n"
+"This is useful if the accounting period in which the entries should normally "
+"be booked is already closed."
 msgstr ""
 
 #. module: account_reconciliation_widget
@@ -283,7 +276,6 @@ msgstr "poster"
 
 #. module: account_reconciliation_widget
 #. openerp-web
-#: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
 #: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
 #: model:ir.model,name:account_reconciliation_widget.model_account_journal
 #, python-format
@@ -317,20 +309,9 @@ msgstr ""
 #. openerp-web
 #: code:addons/account_reconciliation_widget/static/src/js/reconciliation/reconciliation_renderer.js:0
 #: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
-#: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
 #, python-format
 msgid "Label"
 msgstr "Etikett"
-
-#. module: account_reconciliation_widget
-#: model:ir.model.fields,field_description:account_reconciliation_widget.field_account_bank_statement____last_update
-#: model:ir.model.fields,field_description:account_reconciliation_widget.field_account_bank_statement_line____last_update
-#: model:ir.model.fields,field_description:account_reconciliation_widget.field_account_journal____last_update
-#: model:ir.model.fields,field_description:account_reconciliation_widget.field_account_move_line____last_update
-#: model:ir.model.fields,field_description:account_reconciliation_widget.field_account_reconciliation_widget____last_update
-#: model:ir.model.fields,field_description:account_reconciliation_widget.field_res_company____last_update
-msgid "Last Modified on"
-msgstr "Senast ändrad den"
 
 #. module: account_reconciliation_widget
 #. openerp-web
@@ -417,13 +398,12 @@ msgstr "Öppen balans"
 msgid ""
 "Operation not allowed. Since your statement line already received a number "
 "(%s), you cannot reconcile it entirely with existing journal entries "
-"otherwise it would make a gap in the numbering. You should book an entry and"
-" make a regular revert of it in case you want to cancel it."
+"otherwise it would make a gap in the numbering. You should book an entry and "
+"make a regular revert of it in case you want to cancel it."
 msgstr ""
 
 #. module: account_reconciliation_widget
 #. openerp-web
-#: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
 #: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
 #, python-format
 msgid "Partner"
@@ -445,7 +425,6 @@ msgstr ""
 
 #. module: account_reconciliation_widget
 #. openerp-web
-#: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
 #: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
 #: model:ir.actions.client,name:account_reconciliation_widget.action_view_account_move_line_reconcile
 #: model_terms:ir.ui.view,arch_db:account_reconciliation_widget.account_journal_dashboard_kanban_view
@@ -538,9 +517,9 @@ msgstr "Moms"
 #. module: account_reconciliation_widget
 #: model:ir.model.fields,help:account_reconciliation_widget.field_account_bank_statement_line__move_name
 msgid ""
-"Technical field holding the number given to the journal entry, automatically"
-" set when the statement line is reconciled then stored to set the same "
-"number again if the line is cancelled, set to draft and re-processed again."
+"Technical field holding the number given to the journal entry,automatically "
+"set when the statement line is reconciled then storedto set the same number "
+"again if the line is cancelled,set to draft and re-processed again."
 msgstr ""
 
 #. module: account_reconciliation_widget
@@ -559,9 +538,13 @@ msgstr "Beloppet %s är inte ett giltigt delbelopp"
 
 #. module: account_reconciliation_widget
 #: model:ir.model.fields,help:account_reconciliation_widget.field_res_company__account_bank_reconciliation_start
+#: model:ir.model.fields,help:account_reconciliation_widget.field_res_config_settings__account_bank_reconciliation_start
 msgid ""
-"The bank reconciliation widget won't ask to reconcile payments older than this date.\n"
-"This is useful if you install accounting after having used invoicing for some time and don't want to reconcile all the past payments with bank statements."
+"The bank reconciliation widget won't ask to reconcile payments older than "
+"this date.\n"
+"This is useful if you install accounting after having used invoicing for "
+"some time and don't want to reconcile all the past payments with bank "
+"statements."
 msgstr ""
 "Widgeten för bankavstämning kommer inte försöka stämma av betalningar som är "
 "äldre än detta datum.\n"
@@ -618,8 +601,6 @@ msgstr "Transaktion"
 #. module: account_reconciliation_widget
 #. openerp-web
 #: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
-#: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
-#: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
 #, python-format
 msgid "Validate"
 msgstr "Validera"
@@ -632,7 +613,6 @@ msgid "Verify"
 msgstr "Verifiera"
 
 #. module: account_reconciliation_widget
-#: code:addons/account_reconciliation_widget/models/account_move.py:0
 #: code:addons/account_reconciliation_widget/models/account_move.py:0
 #, python-format
 msgid "Write-Off"
@@ -733,3 +713,15 @@ msgstr "oavstämda poster"
 #, python-format
 msgid "vendor bills"
 msgstr "leverantörsfakturor"
+
+#~ msgid "Accounting Date"
+#~ msgstr "Bokföringsdatum"
+
+#~ msgid "Display Name"
+#~ msgstr "Visningsnamn"
+
+#~ msgid "ID"
+#~ msgstr "ID"
+
+#~ msgid "Last Modified on"
+#~ msgstr "Senast ändrad den"
