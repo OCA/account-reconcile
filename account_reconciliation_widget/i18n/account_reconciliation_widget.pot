@@ -83,6 +83,7 @@ msgstr ""
 
 #. module: account_reconciliation_widget
 #: model:ir.model.fields,field_description:account_reconciliation_widget.field_res_company__account_bank_reconciliation_start
+#: model:ir.model.fields,field_description:account_reconciliation_widget.field_res_config_settings__account_bank_reconciliation_start
 msgid "Bank Reconciliation Threshold"
 msgstr ""
 
@@ -138,6 +139,11 @@ msgid "Companies"
 msgstr ""
 
 #. module: account_reconciliation_widget
+#: model:ir.model,name:account_reconciliation_widget.model_res_config_settings
+msgid "Config Settings"
+msgstr ""
+
+#. module: account_reconciliation_widget
 #. openerp-web
 #: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
 #, python-format
@@ -180,6 +186,13 @@ msgstr ""
 #: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
 #, python-format
 msgid "Date"
+msgstr ""
+
+#. module: account_reconciliation_widget
+#: model_terms:ir.ui.view,arch_db:account_reconciliation_widget.res_config_settings_view_form
+msgid ""
+"Date from which you started using bank statements in Odoo. Leave empty if "
+"you've been using bank statements in Odoo from the start."
 msgstr ""
 
 #. module: account_reconciliation_widget
@@ -531,6 +544,7 @@ msgstr ""
 
 #. module: account_reconciliation_widget
 #: model:ir.model.fields,help:account_reconciliation_widget.field_res_company__account_bank_reconciliation_start
+#: model:ir.model.fields,help:account_reconciliation_widget.field_res_config_settings__account_bank_reconciliation_start
 msgid ""
 "The bank reconciliation widget won't ask to reconcile payments older than this date.\n"
 "This is useful if you install accounting after having used invoicing for some time and don't want to reconcile all the past payments with bank statements."
