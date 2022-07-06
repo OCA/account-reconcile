@@ -21,7 +21,7 @@ Available addons
 ----------------
 addon | version | maintainers | summary
 --- | --- | --- | ---
-[account_reconciliation_widget](account_reconciliation_widget/) | 15.0.1.1.6 |  | Account reconciliation widget
+[account_reconciliation_widget](account_reconciliation_widget/) | 15.0.1.2.0 |  | Account reconciliation widget
 
 [//]: # (end addons)
 
