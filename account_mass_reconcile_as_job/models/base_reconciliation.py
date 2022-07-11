@@ -4,19 +4,13 @@
 import ast
 import logging
 
-from odoo import models
+from odoo import api, models
 
 _logger = logging.getLogger(__name__)
 
 
 class MassReconcileBase(models.AbstractModel):
     _inherit = "mass.reconcile.base"
-
-    # WARNING: this has limitation as it creates a job based on an object wizard
-    # when the transient model will be garbadge collected the job won't
-    # be able to run anymore.
-    # FIXME: move or copy wizard data configuration in a standard model or refactor
-    # to have it as a parameter.
 
     def _reconcile_lines(self, lines, allow_partial=False):
         as_job = (
@@ -30,14 +24,22 @@ class MassReconcileBase(models.AbstractModel):
             as_job = False
 
         if as_job and self.env.context.get("reconcile_lines_as_job", True):
+            wiz_data = self.copy_data()[0]
             self.with_delay().reconcile_lines_as_job(
                 lines,
-                allow_partial=allow_partial
+                allow_partial=allow_partial,
+                wiz_creation_data=(self._name, wiz_data),
             )
             # Report is not available with reconcile jobs
             return False, False
         else:
             return super()._reconcile_lines(lines, allow_partial=allow_partial)
 
-    def reconcile_lines_as_job(self, lines, allow_partial=False):
-        self.with_context(reconcile_lines_as_job=False)._reconcile_lines(lines, allow_partial=allow_partial)
+    @api.model
+    def reconcile_lines_as_job(
+        self, lines, allow_partial=False, wiz_creation_data=False
+    ):
+        new_wiz = self.env[wiz_creation_data[0]].create(wiz_creation_data[1])
+        return new_wiz.with_context(reconcile_lines_as_job=False)._reconcile_lines(
+            lines, allow_partial=allow_partial
+        )
