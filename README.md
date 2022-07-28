@@ -21,6 +21,7 @@ Available addons
 ----------------
 addon | version | maintainers | summary
 --- | --- | --- | ---
+[account_partner_reconcile](account_partner_reconcile/) | 15.0.1.0.0 |  | Account Partner Reconcile
 [account_reconciliation_widget](account_reconciliation_widget/) | 15.0.1.2.1 |  | Account reconciliation widget
 
 [//]: # (end addons)
