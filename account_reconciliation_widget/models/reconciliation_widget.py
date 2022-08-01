@@ -42,8 +42,13 @@ class AccountReconciliation(models.AbstractModel):
                 )
                 del aml_dict["counterpart_aml_id"]
 
+            vals = {}
             if datum.get("partner_id") is not None:
-                st_line.write({"partner_id": datum["partner_id"]})
+                vals["partner_id"] = datum["partner_id"]
+            if datum.get("ref") is not None:
+                vals["ref"] = datum["ref"]
+            if vals:
+                st_line.write(vals)
 
             ctx["default_to_check"] = datum.get("to_check")
             moves = st_line.with_context(ctx).process_reconciliation(

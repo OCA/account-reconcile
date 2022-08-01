@@ -56,6 +56,16 @@
         .strike_amount {
             text-decoration: line-through;
         }
+        .move_name {
+            font-size: 80%;
+            margin-left: 1em;
+            display: flex;
+            align-items: center;
+        }
+        .caption-input {
+            margin-left: 1em;
+            display: inline-flex;
+        }
         tbody tr:hover .cell_account_code::before {
             content: "\f068";
             font-family: FontAwesome;

@@ -21,6 +21,7 @@ odoo.define("account.ReconciliationClientAction", function (require) {
             change_filter: "_onAction",
             change_offset: "_onAction",
             change_partner: "_onAction",
+            change_ref: "_onAction",
             add_proposition: "_onAction",
             remove_proposition: "_onAction",
             update_proposition: "_onAction",

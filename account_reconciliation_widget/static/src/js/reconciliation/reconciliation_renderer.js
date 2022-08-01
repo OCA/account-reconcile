@@ -325,10 +325,31 @@ odoo.define("account.ReconciliationRenderer", function (require) {
                         }
                     ),
                 };
-                self.fields.partner_id.insertAfter(
-                    self.$(".accounting_view caption .o_buttons")
+                self.fields.partner_id.insertBefore(
+                    self.$(".accounting_view caption .caption-input")
                 );
             });
+            // Ref
+            var def5 = this._makeRefRecord(this._initialState.st_line.ref).then(
+                function (recordID) {
+                    self.fields.ref = new basic_fields.FieldChar(
+                        self,
+                        "ref",
+                        self.model.get(recordID),
+                        {
+                            mode: "edit",
+                            attrs: {
+                                placeholder:
+                                    self._initialState.st_line.ref || _t("Reference"),
+                            },
+                        }
+                    );
+                    self.fields.ref.prependTo(
+                        self.$(".accounting_view caption .caption-input")
+                    );
+                }
+            );
+
             var def3 = session
                 .user_has_group("analytic.group_analytic_tags")
                 .then(function (has_group) {
@@ -360,7 +381,7 @@ odoo.define("account.ReconciliationRenderer", function (require) {
                 toggle: "popover",
             });
             var def2 = this._super.apply(this, arguments);
-            return Promise.all([def1, def2, def3, def4]);
+            return Promise.all([def1, def2, def3, def4, def5]);
         },
 
         // --------------------------------------------------------------------------
@@ -400,6 +421,12 @@ odoo.define("account.ReconciliationRenderer", function (require) {
             ).then(function (recordID) {
                 self.fields.partner_id.reset(self.model.get(recordID));
                 self.$el.attr("data-partner", state.st_line.partner_id);
+            });
+
+            // Ref
+            this._makeRefRecord(state.st_line.ref).then(function (recordID) {
+                self.fields.ref.reset(self.model.get(recordID));
+                self.$el.attr("data-ref", state.st_line.ref);
             });
 
             // Mode
@@ -662,6 +689,17 @@ odoo.define("account.ReconciliationRenderer", function (require) {
             });
         },
 
+        _makeRefRecord: function (ref) {
+            var field = {
+                type: "char",
+                name: "ref",
+            };
+            if (ref) {
+                field.value = ref;
+            }
+            return this.model.makeRecord("account.bank.statement.line", [field], {});
+        },
+
         /**
          * Create account_id, tax_ids, analytic_account_id, analytic_tag_ids, label and amount fields
          *
@@ -713,6 +751,10 @@ odoo.define("account.ReconciliationRenderer", function (require) {
                         {
                             type: "char",
                             name: "label",
+                        },
+                        {
+                            type: "char",
+                            name: "ref",
                         },
                         {
                             type: "float",
@@ -945,6 +987,9 @@ odoo.define("account.ReconciliationRenderer", function (require) {
             if (fieldName === "partner_id") {
                 var partner_id = event.data.changes.partner_id;
                 this.trigger_up("change_partner", {data: partner_id});
+            } else if (fieldName === "ref") {
+                var ref = event.data.changes.ref;
+                this.trigger_up("change_ref", {data: ref});
             } else {
                 if (event.data.changes.amount && isNaN(event.data.changes.amount)) {
                     return;

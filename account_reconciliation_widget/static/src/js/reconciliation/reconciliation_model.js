@@ -298,6 +298,13 @@ odoo.define("account.ReconciliationModel", function (require) {
                     );
                 });
         },
+        // eslint-disable-next-line no-unused-vars
+        changeRef: function (handle, ref, preserveMode) {
+            var line = this.getLine(handle);
+            line.st_line.ref = ref;
+            return Promise.resolve();
+        },
+
         /**
          * Close the statement
          * @returns {Promise<Number>} resolves to the res_id of the closed statements
@@ -479,6 +486,7 @@ odoo.define("account.ReconciliationModel", function (require) {
                     self.lines[handle] = {
                         id: res.st_line.id,
                         partner_id: res.st_line.partner_id,
+                        ref: res.st_line.ref,
                         handle: handle,
                         reconciled: false,
                         mode: "inactive",
@@ -967,6 +975,7 @@ odoo.define("account.ReconciliationModel", function (require) {
                     Promise.resolve(computeLinePromise).then(function () {
                         var values_dict = {
                             partner_id: line.st_line.partner_id,
+                            ref: line.st_line.ref,
                             counterpart_aml_dicts: _.map(
                                 _.filter(props, function (prop) {
                                     return !isNaN(prop.id) && !prop.is_liquidity_line;

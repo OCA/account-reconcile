@@ -126,6 +126,9 @@
     <div class="o_reconciliation_line" t-att-data-mode="state.mode" tabindex="0">
         <table class="accounting_view">
             <caption style="caption-side: top;">
+                <div class="caption-input">
+                    <span class="move_name"><t t-esc="state.st_line.name" /></span>
+                </div>
                 <div class="float-right o_buttons">
                     <button
                             t-attf-class="o_no_valid btn btn-secondary #{state.balance.type &lt; 0 ? '' : 'd-none'}"
