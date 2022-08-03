@@ -7,4 +7,4 @@ from odoo import fields, models
 class AccountPayment(models.Model):
     _inherit = "account.payment"
 
-    reconciliation_date = fields.Date(string="Reconciliation Date")
+    reconciliation_date = fields.Date(string="Reconciliation Date", copy=False)
