@@ -9,14 +9,15 @@ msgstr ""
 "Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-03-24 03:37+0000\n"
-"PO-Revision-Date: 2017-03-24 03:37+0000\n"
-"Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2017\n"
+"PO-Revision-Date: 2022-08-04 18:06+0000\n"
+"Last-Translator: Luis D. Lafaurie <luislafaurie@hotmail.com>\n"
 "Language-Team: Spanish (https://www.transifex.com/oca/teams/23907/es/)\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.3.2\n"
 
 #. module: account_mass_reconcile
 #: code:addons/account_mass_reconcile/models/base_advanced_reconciliation.py:0
@@ -97,7 +98,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:account_mass_reconcile.account_mass_reconcile_form
 #: model_terms:ir.ui.view,arch_db:account_mass_reconcile.account_mass_reconcile_tree
 msgid "Automatic Mass Reconcile"
-msgstr "Conciliación automática sencilla"
+msgstr "Conciliación automática masiva"
 
 #. module: account_mass_reconcile
 #: model_terms:ir.ui.view,arch_db:account_mass_reconcile.account_mass_reconcile_form
@@ -105,12 +106,12 @@ msgstr "Conciliación automática sencilla"
 #: model_terms:ir.ui.view,arch_db:account_mass_reconcile.mass_reconcile_history_tree
 #: model_terms:ir.ui.view,arch_db:account_mass_reconcile.view_mass_reconcile_history_search
 msgid "Automatic Mass Reconcile History"
-msgstr "Historial de conciliación automática sencilla"
+msgstr "Historial de conciliación automática masiva"
 
 #. module: account_mass_reconcile
 #: model_terms:ir.ui.view,arch_db:account_mass_reconcile.account_mass_reconcile_method_tree
 msgid "Automatic Mass Reconcile Method"
-msgstr "Método de conciliación automática sencilla"
+msgstr "Método de conciliación automática masiva"
 
 #. module: account_mass_reconcile
 #: code:addons/account_mass_reconcile/models/base_reconciliation.py:0
