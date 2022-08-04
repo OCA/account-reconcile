@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 14.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2022-04-12 18:05+0000\n"
-"Last-Translator: Dept. Técnico <tecnico@extrememicro.es>\n"
+"PO-Revision-Date: 2022-08-04 18:06+0000\n"
+"Last-Translator: Luis D. Lafaurie <luislafaurie@hotmail.com>\n"
 "Language-Team: none\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
@@ -24,7 +24,8 @@ msgstr "Cuenta"
 #. module: account_reconcile_restrict_partner_mismatch
 #: model:ir.model,name:account_reconcile_restrict_partner_mismatch.model_account_reconcile_partner_mismatch_report
 msgid "Account Reconcile Partner Mismatch Report"
-msgstr "Informe sobre la falta de coincidencia de cuentas de los socios"
+msgstr ""
+"Informe sobre la falta de coincidencia de cuentas conciliadas de los socios"
 
 #. module: account_reconcile_restrict_partner_mismatch
 #: model:ir.model.fields,field_description:account_reconcile_restrict_partner_mismatch.field_account_reconcile_partner_mismatch_report__account_type_id
@@ -70,7 +71,7 @@ msgstr "Nombre de la pantalla"
 #. module: account_reconcile_restrict_partner_mismatch
 #: model:ir.model.fields,field_description:account_reconcile_restrict_partner_mismatch.field_account_reconcile_partner_mismatch_report__full_reconcile_id
 msgid "Full Reconcile"
-msgstr "Reconciliación completa"
+msgstr "Conciliación completa"
 
 #. module: account_reconcile_restrict_partner_mismatch
 #: model:ir.model.fields,field_description:account_reconcile_restrict_partner_mismatch.field_account_move_line__id
@@ -92,7 +93,7 @@ msgstr "Ultima modificación en"
 #. module: account_reconcile_restrict_partner_mismatch
 #: model:ir.model.fields,field_description:account_reconcile_restrict_partner_mismatch.field_account_reconcile_partner_mismatch_report__partial_reconcile_id
 msgid "Partial Reconcile"
-msgstr "Reconciliación parcial"
+msgstr "Conciliación parcial"
 
 #. module: account_reconcile_restrict_partner_mismatch
 #: model:ir.actions.act_window,name:account_reconcile_restrict_partner_mismatch.action_account_reconcile_partner_mismatch_report
@@ -100,7 +101,7 @@ msgstr "Reconciliación parcial"
 #: model_terms:ir.ui.view,arch_db:account_reconcile_restrict_partner_mismatch.account_reconcile_partner_mismatch_report_view_form
 #: model_terms:ir.ui.view,arch_db:account_reconcile_restrict_partner_mismatch.view_account_move_reconciled_report_tree
 msgid "Reconciled items with partner mismatch"
-msgstr "Artículos reconciliados con desajuste de socio"
+msgstr "Artículos conciliados sin coincidencia de socio"
 
 #. module: account_reconcile_restrict_partner_mismatch
 #: code:addons/account_reconcile_restrict_partner_mismatch/models/account_move_line.py:0
