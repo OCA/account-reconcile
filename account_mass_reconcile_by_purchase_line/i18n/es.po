@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 14.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2022-04-12 18:05+0000\n"
-"Last-Translator: Dept. Técnico <tecnico@extrememicro.es>\n"
+"PO-Revision-Date: 2022-08-04 18:06+0000\n"
+"Last-Translator: Luis D. Lafaurie <luislafaurie@hotmail.com>\n"
 "Language-Team: none\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
@@ -95,12 +95,12 @@ msgstr "Última actualización en"
 #. module: account_mass_reconcile_by_purchase_line
 #: model:ir.model,name:account_mass_reconcile_by_purchase_line.model_mass_reconcile_advanced
 msgid "Mass Reconcile Advanced"
-msgstr "Reconciliación masiva avanzada"
+msgstr "Conciliación masiva avanzada"
 
 #. module: account_mass_reconcile_by_purchase_line
 #: model:ir.model,name:account_mass_reconcile_by_purchase_line.model_mass_reconcile_advanced_by_purchase_line
 msgid "Mass Reconcile By Purchase Line"
-msgstr "Reconciliación masiva por línea de compra"
+msgstr "Conciliación masiva por línea de compra"
 
 #. module: account_mass_reconcile_by_purchase_line
 #: model_terms:ir.ui.view,arch_db:account_mass_reconcile_by_purchase_line.account_mass_reconcile_form
@@ -109,14 +109,14 @@ msgid ""
 "reconciliation. The lines should have the same partner, product and PO lines"
 " to be reconciled."
 msgstr ""
-"Reconciliar múltiples entradas de débito contra múltiples entradas de "
-"crédito. Permitir la reconciliación parcial. Las líneas deben tener el mismo "
-"socio, producto y líneas de PO para ser reconciliadas."
+"Casar múltiples entradas de débito con múltiples entradas de crédito. "
+"Permitir la conciliación parcial. Las líneas deben tener el mismo socio, "
+"producto y líneas de PO para ser conciliadas."
 
 #. module: account_mass_reconcile_by_purchase_line
 #: model:ir.model,name:account_mass_reconcile_by_purchase_line.model_account_mass_reconcile_method
 msgid "Reconcile Method for account_mass_reconcile"
-msgstr "Método para reconciliar account_mass_reconcile"
+msgstr "Método para conciliar account_mass_reconcile"
 
 #. module: account_mass_reconcile_by_purchase_line
 #: model:ir.model.fields,field_description:account_mass_reconcile_by_purchase_line.field_mass_reconcile_advanced_by_purchase_line__partner_ids
