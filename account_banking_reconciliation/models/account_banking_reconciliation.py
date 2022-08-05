@@ -1,4 +1,4 @@
-# Copyright (C) 2019 Open Source Integrators
+# Copyright (C) 2022 Open Source Integrators
 # <https://www.opensourceintegrators.com>
 # Copyright (C) 2011 NovaPoint Group LLC (<http://www.novapointgroup.com>)
 # Copyright (C) 2004-2010 OpenERP SA (<http://www.openerp.com>)
@@ -27,8 +27,8 @@ class BankAccRecStatement(models.Model):
         Bank Statement Verifier."""
         model_data_obj = self.env["ir.model.data"]
         res_groups_obj = self.env["res.groups"]
-        group_verifier_id = model_data_obj._get_id(
-            "account_banking_reconciliation", "group_bank_stmt_verifier"
+        group_verifier_id = model_data_obj._xmlid_to_res_id(
+            "account_banking_reconciliation.group_bank_stmt_verifier"
         )
 
         for statement in self:
@@ -39,11 +39,10 @@ class BankAccRecStatement(models.Model):
                 if statement.state != "draft" and self.env.uid not in group_user_ids:
                     raise UserError(
                         _(
-                            "Only a member of '%s' "
-                            "group may delete/edit "
-                            "bank statements when not in draft "
-                            "state!" % (group_verifier.name)
+                            """Only a member of '%s' group may delete/edit bank
+                               statements when not in draft state!"""
                         )
+                        % group_verifier.name
                     )
         return True
 
@@ -286,7 +285,7 @@ class BankAccRecStatement(models.Model):
                 vals = statement.onchange_account_id()
                 # list of credit lines
                 outlist = []
-                for cr_item in vals["value"]["credit_move_line_ids"]:
+                for cr_item in vals["credit_move_line_ids"]:
                     cr_item["cleared_bank_account"] = (
                         refdict and refdict.get(cr_item["move_line_id"], False) or False
                     )
@@ -295,7 +294,7 @@ class BankAccRecStatement(models.Model):
                     outlist.append(item)
                 # list of debit lines
                 inlist = []
-                for dr_item in vals["value"]["debit_move_line_ids"]:
+                for dr_item in vals["debit_move_line_ids"]:
                     dr_item["cleared_bank_account"] = (
                         refdict and refdict.get(dr_item["move_line_id"], False) or False
                     )
@@ -305,8 +304,8 @@ class BankAccRecStatement(models.Model):
                 # write it to the record so it is visible on the form
                 retval = self.write(
                     {
-                        "last_ending_date": vals["value"]["last_ending_date"],
-                        "starting_balance": vals["value"]["starting_balance"],
+                        "last_ending_date": vals["last_ending_date"],
+                        "starting_balance": vals["starting_balance"],
                         "credit_move_line_ids": outlist,
                         "debit_move_line_ids": inlist,
                     }
@@ -334,7 +333,7 @@ class BankAccRecStatement(models.Model):
     def onchange_account_id(self):
         account_move_line_obj = self.env["account.move.line"]
         statement_line_obj = self.env["bank.acc.rec.statement.line"]
-        val = {"value": {"credit_move_line_ids": [], "debit_move_line_ids": []}}
+        val = {"credit_move_line_ids": [], "debit_move_line_ids": []}
         if self.ending_date and self.account_id:
             for statement in self:
                 statement_line_ids = statement_line_obj.search(
@@ -375,22 +374,22 @@ class BankAccRecStatement(models.Model):
                     "move_line_id": line.id,
                     "type": line.credit and "cr" or "dr",
                 }
+
                 if res["type"] == "cr":
-                    val["value"]["credit_move_line_ids"].append(res)
+                    val["credit_move_line_ids"].append(res)
                 else:
-                    val["value"]["debit_move_line_ids"].append(res)
+                    val["debit_move_line_ids"].append(res)
             # look for previous statement for the account to
             # pull ending balance as starting balance
             prev_stmt = self.get_starting_balance(self.account_id.id, self.ending_date)
-            val["value"]["last_ending_date"] = prev_stmt[0]
-            val["value"]["starting_balance"] = prev_stmt[1]
+            val["last_ending_date"] = prev_stmt[0]
+            val["starting_balance"] = prev_stmt[1]
         return val
 
     def get_default_company_id(self):
         return self.env["res.users"].browse([self.env.uid]).company_id.id
 
     name = fields.Char(
-        "Name",
         required=True,
         size=64,
         states={"done": [("readonly", True)]},
@@ -406,7 +405,6 @@ class BankAccRecStatement(models.Model):
         help="The Bank/Gl Account that is being " "reconciled.",
     )
     ending_date = fields.Date(
-        "Ending Date",
         required=True,
         states={"done": [("readonly", True)]},
         default=time.strftime("%Y-%m-%d"),
@@ -416,14 +414,12 @@ class BankAccRecStatement(models.Model):
         "Last Stmt Date", help="The previous statement date " "of your bank statement."
     )
     starting_balance = fields.Float(
-        "Starting Balance",
         required=True,
         digits="Account",
         help="The Starting Balance on your " "bank statement.",
         states={"done": [("readonly", True)]},
     )
     ending_balance = fields.Float(
-        "Ending Balance",
         required=True,
         digits="Account",
         help="The Ending Balance on your " "bank statement.",
@@ -437,9 +433,8 @@ class BankAccRecStatement(models.Model):
         default=get_default_company_id,
         help="The Company for which the " "deposit ticket is made to",
     )
-    notes = fields.Text("Notes")
+    notes = fields.Text()
     verified_date = fields.Date(
-        "Verified Date",
         states={"done": [("readonly", True)]},
         copy=False,
         help="Date in which Deposit " "Ticket was verified.",
@@ -471,7 +466,6 @@ class BankAccRecStatement(models.Model):
     )
     cleared_balance = fields.Float(
         compute="_compute_get_balance",
-        string="Cleared Balance",
         digits="Account",
         help="Total Sum of the Deposit Amount "
         "Cleared – Total Sum of Checks, "
@@ -480,7 +474,6 @@ class BankAccRecStatement(models.Model):
     )
     difference = fields.Float(
         compute="_compute_get_balance",
-        string="Difference",
         digits="Account",
         help="(Ending Balance – Beginning Balance) - " "Cleared Balance.",
     )
@@ -501,7 +494,6 @@ class BankAccRecStatement(models.Model):
     )
     uncleared_balance = fields.Float(
         compute="_compute_get_balance",
-        string="Uncleared Balance",
         digits="Account",
         help="Total Sum of the Deposit "
         "Amount Uncleared – Total Sum of "
@@ -545,6 +537,7 @@ class BankAccRecStatement(models.Model):
     )
     sum_of_credits_lines = fields.Integer(
         compute="_compute_get_balance",
+        store=True,
         string="""Checks, Withdrawals,
                                           Debits, and Service Charges # of
                                           Items""",
@@ -552,6 +545,7 @@ class BankAccRecStatement(models.Model):
     )
     sum_of_debits_lines = fields.Integer(
         compute="_compute_get_balance",
+        store=True,
         string="""Deposits, Credits, and
                                          Interest # of Items""",
         help="Total of number of lines with" " Cleared = True",
@@ -584,6 +578,7 @@ class BankAccRecStatement(models.Model):
     )
     sum_of_ucredits_lines = fields.Integer(
         compute="_compute_get_balance",
+        store=True,
         string="Uncleared - Checks, "
         "Withdrawals, Debits, and "
         "Service Charges # of Items",
@@ -591,6 +586,7 @@ class BankAccRecStatement(models.Model):
     )
     sum_of_udebits_lines = fields.Integer(
         compute="_compute_get_balance",
+        store=True,
         string="""Uncleared - Deposits,
                                           Credits, and Interest # of Items""",
         help="Total of number of lines " "with Cleared = False",
@@ -612,7 +608,6 @@ class BankAccRecStatement(models.Model):
             ("done", "Done"),
             ("cancel", "Cancelled"),
         ],
-        "State",
         index=True,
         readonly=True,
         default="draft",
@@ -640,14 +635,13 @@ class BankAccRecStatementLine(models.Model):
     _description = "Statement Line"
 
     name = fields.Char(
-        "Name", size=64, help="Derived from the related Journal Item.", required=True
+        size=64, help="Derived from the related Journal Item.", required=True
     )
     ref = fields.Char("Reference", size=64, help="Derived from related Journal Item.")
     partner_id = fields.Many2one(
         "res.partner", string="Partner", help="Derived from related Journal Item."
     )
     amount = fields.Float(
-        "Amount",
         digits="Account",
         help="Derived from the 'debit' amount from " "related Journal Item.",
     )
@@ -656,7 +650,7 @@ class BankAccRecStatementLine(models.Model):
         digits="Account",
         help="Derived from the 'amount currency' " "amount from related Journal Item.",
     )
-    date = fields.Date("Date", required=True, help="Derived from related Journal Item.")
+    date = fields.Date(required=True, help="Derived from related Journal Item.")
     statement_id = fields.Many2one(
         "bank.acc.rec.statement", "Statement", required=True, ondelete="cascade"
     )

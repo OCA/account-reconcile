@@ -1,4 +1,4 @@
-# Copyright (C) 2019 Open Source Integrators
+# Copyright (C) 2022 Open Source Integrators
 # <https://www.opensourceintegrators.com>
 # Copyright (C) 2011 NovaPoint Group LLC (<http://www.novapointgroup.com>)
 # Copyright (C) 2004-2010 OpenERP SA (<http://www.openerp.com>)
