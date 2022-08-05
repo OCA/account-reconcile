@@ -1,4 +1,4 @@
-# Copyright (C) 2019 Open Source Integrators
+# Copyright (C) 2022 Open Source Integrators
 # <https://www.opensourceintegrators.com>
 # Copyright (C) 2011 NovaPoint Group LLC (<http://www.novapointgroup.com>)
 # Copyright (C) 2004-2010 OpenERP SA (<http://www.openerp.com>)
@@ -6,7 +6,7 @@
 {
     "name": "Bank Account Reconciliation",
     "summary": "Check transactions that cleared the bank",
-    "version": "13.0.1.0.0",
+    "version": "15.0.1.0.0",
     "license": "AGPL-3",
     "category": "Accounting and Financial Management",
     "author": "NovaPoint Group LLC, "
@@ -24,6 +24,6 @@
         "report/report_bank_statement_detail.xml",
     ],
     "installable": True,
-    "development_status": "Stable",
+    "development_status": "Production/Stable",
     "maintainers": ["max3903"],
 }

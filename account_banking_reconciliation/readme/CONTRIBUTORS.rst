@@ -4,3 +4,4 @@
 * Sandeep Mangukiya <smangukiya@opensourceintegrators.com>
 * Murtuza Saleh <murtuza.saleh@serpentcs.com>
 * Jevin Dement <jdement@opensourceintegrators.com>
+* Hardik Suthar <hsuthar@opensourceintegrators.com>

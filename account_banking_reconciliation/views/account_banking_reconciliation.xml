@@ -8,7 +8,6 @@
         <field name="priority">2</field>
         <field name="arch" type="xml">
             <tree
-                string="Bank Account Reconciliation Statements"
                 decoration-muted="state == 'cancel'"
                 decoration-info="state in ('to_be_reviewed')"
             >
@@ -102,7 +101,7 @@
                     <notebook colspan="5">
                         <page string="Journal Items">
                             <label
-                                for='account_label'
+                                for='debit_move_line_ids'
                                 string='Deposits, Credits, and Interest'
                             />
                             <field
@@ -155,7 +154,6 @@
                                     </group>
                                 </form>
                                 <tree
-                                    string="Deposits, Credits, and Interest"
                                     editable="top"
                                     mute_additem="draft,to_be_reviewed,done, cancel"
                                     create="0"
@@ -189,7 +187,7 @@
                                 </tree>
                             </field>
                             <label
-                                for='account_label2'
+                                for='credit_move_line_ids'
                                 string='Checks, Withdrawals, Debits, and Service Charges'
                             />
                             <field
@@ -244,7 +242,6 @@
                                     </group>
                                 </form>
                                 <tree
-                                    string="Checks, Withdrawals, Debits, and Service Charges"
                                     editable="top"
                                     mute_additem="draft,to_be_reviewed,done, cancel"
                                     create="0"
@@ -301,7 +298,7 @@
                             </group>
                             <group name="totals" string="Totals">
                                 <group name="total1" string="Cleared">
-                                    <field name="sum_of_debits" />
+<!--                                    <field name="sum_of_debits" />-->
                                     <field name="sum_of_debits_cur" />
                                     <field name="sum_of_debits_lines" />
                                     <field name="sum_of_credits" />
@@ -438,31 +435,39 @@
     </record>
     <menuitem
         id="bank_acc_rec_statement_menu"
-        icon="STOCK_JUSTIFY_FILL"
-        action="action_bank_acc_rec_statement"
+        action="account_banking_reconciliation.action_bank_acc_rec_statement"
         parent="account.menu_finance_entries"
         sequence="5"
     />
-    <act_window
-        id="act_account_move_line_to_add"
-        name="Journal Items"
-        res_model="account.move.line"
-        binding_model="bank.acc.rec.statement"
-    />
-    <act_window
-        id="act_supplier_payment_to_add"
-        name="Supplier Payment"
-        domain="[('voucher_type', 'in', ['bank', 'cash'])]"
-        context="{'type':'payment'}"
-        res_model="account.move"
-        binding_model="bank.acc.rec.statement"
-    />
-    <act_window
-        id="act_customer_payment_to_add"
-        name="Customer Payment"
-        domain="[('voucher_type', 'in', ['bank', 'cash'])]"
-        context="{'type':'receipt'}"
-        res_model="account.move"
-        binding_model="bank.acc.rec.statement"
-    />
+    <record id="act_account_move_line_to_add" model="ir.actions.act_window">
+        <field name="name">Journal Items</field>
+        <field name="res_model">account.move.line</field>
+        <field
+            name="binding_model_id"
+            ref="account_banking_reconciliation.model_bank_acc_rec_statement"
+        />
+    </record>
+
+    <record id="act_supplier_payment_to_add" model="ir.actions.act_window">
+        <field name="name">Supplier Payment</field>
+        <field name="domain">[('voucher_type', 'in', ['bank', 'cash'])]</field>
+        <field name="context">{'type':'payment'}</field>
+        <field name="res_model">account.move</field>
+        <field
+            name="binding_model_id"
+            ref="account_banking_reconciliation.model_bank_acc_rec_statement"
+        />
+    </record>
+
+    <record id="act_customer_payment_to_add" model="ir.actions.act_window">
+        <field name="name">Customer Payment</field>
+        <field name="domain">[('voucher_type', 'in', ['bank', 'cash'])]</field>
+        <field name="context">{'type':'receipt'}</field>
+        <field name="res_model">account.move</field>
+        <field
+            name="binding_model_id"
+            ref="account_banking_reconciliation.model_bank_acc_rec_statement"
+        />
+    </record>
+
 </odoo>
