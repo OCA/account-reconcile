@@ -601,6 +601,7 @@ odoo.define("account.ReconciliationRenderer", function (require) {
                                 }
                                 if (fieldName === "tax_ids") {
                                     if (
+                                        state.createForm[fieldName] === undefined ||
                                         !state.createForm[fieldName].length ||
                                         state.createForm[fieldName].length > 1
                                     ) {
