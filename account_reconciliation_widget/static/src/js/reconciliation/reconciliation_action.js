@@ -87,6 +87,7 @@ odoo.define("account.ReconciliationClientAction", function (require) {
             this._super.apply(this, arguments);
             this.action_manager = parent;
             this.params = params;
+            this.notifications = params.context.notifications || [];
             this.searchModelConfig.modelName = "account.bank.statement.line";
             this.controlPanelProps.cp_content = {};
             this.model = new this.config.Model(this, {
@@ -158,6 +159,7 @@ odoo.define("account.ReconciliationClientAction", function (require) {
                         valuemax: self.model.valuemax,
                         defaultDisplayQty: self.model.defaultDisplayQty,
                         title: title,
+                        notifications: self.notifications,
                     });
                 });
             });

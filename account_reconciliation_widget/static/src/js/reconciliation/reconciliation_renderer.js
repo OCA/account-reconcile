@@ -38,6 +38,9 @@ odoo.define("account.ReconciliationRenderer", function (require) {
             var defs = [this._super.apply(this, arguments)];
             this.time = Date.now();
             this.$progress = $("");
+            if (this._initialState.notifications.length > 0) {
+                this._renderNotifications(this._initialState.notifications);
+            }
 
             return Promise.all(defs);
         },
