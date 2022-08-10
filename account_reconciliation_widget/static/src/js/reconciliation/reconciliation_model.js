@@ -529,11 +529,22 @@ odoo.define("account.ReconciliationModel", function (require) {
                     _.pluck(accounts, "code")
                 );
             });
+            var def_analytic_account = this._rpc({
+                model: "account.analytic.account",
+                method: "search_read",
+                fields: ["display_name"],
+            }).then(function (accounts) {
+                self.analytic_accounts = _.object(
+                    _.pluck(accounts, "id"),
+                    _.pluck(accounts, "display_name")
+                );
+            });
             var def_taxes = self._loadTaxes();
             return Promise.all([
                 def_statement,
                 def_reconcileModel,
                 def_account,
+                def_analytic_account,
                 def_taxes,
             ]).then(function () {
                 _.each(self.lines, function (line) {
@@ -896,6 +907,12 @@ odoo.define("account.ReconciliationModel", function (require) {
                     ? this.accounts[prop.account_id.id]
                     : "";
             }
+            if ("analytic_account_id" in values) {
+                prop.analytic_account_code = prop.analytic_account_id
+                    ? this.analytic_accounts[prop.analytic_account_id.id]
+                    : "";
+            }
+
             if ("amount" in values) {
                 prop.base_amount = values.amount;
                 if (prop.reconcileModelId) {
@@ -1598,6 +1615,7 @@ odoo.define("account.ReconciliationModel", function (require) {
             values = values || {};
             var today = new moment().utc().format();
             var account = this._formatNameGet(values.account_id);
+            var analytic_account = this._formatNameGet(values.analytic_account_id);
             var formatOptions = {
                 currency_id: line.st_line.currency_id,
             };
@@ -1641,7 +1659,10 @@ odoo.define("account.ReconciliationModel", function (require) {
                 label: values.label || line.st_line.payment_ref,
                 account_id: account,
                 account_code: account ? this.accounts[account.id] : "",
-                analytic_account_id: this._formatNameGet(values.analytic_account_id),
+                analytic_account_id: analytic_account,
+                analytic_account_code: analytic_account
+                    ? this.analytic_accounts[analytic_account.id]
+                    : "",
                 analytic_tag_ids: this._formatMany2ManyTags(
                     values.analytic_tag_ids || []
                 ),

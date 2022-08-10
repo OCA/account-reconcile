@@ -245,6 +245,9 @@ class AccountBankStatementLine(models.Model):
             if aml_dict["move_line"].partner_id.id:
                 aml_dict["partner_id"] = aml_dict["move_line"].partner_id.id
             aml_dict["account_id"] = aml_dict["move_line"].account_id.id
+            aml_dict["analytic_account_id"] = (
+                aml_dict["move_line"].analytic_account_id.id or False
+            )
 
             counterpart_move_line = aml_dict.pop("move_line")
             new_aml = aml_obj.with_context(check_move_validity=False).create(aml_dict)
