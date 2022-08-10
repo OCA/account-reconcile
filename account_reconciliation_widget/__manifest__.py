@@ -8,6 +8,7 @@
     "license": "AGPL-3",
     "summary": "Account reconciliation widget",
     "author": "Odoo, Ozono Multimedia, Odoo Community Association (OCA)",
+    "development_status": "Mature",
     "website": "https://github.com/OCA/account-reconcile",
     "depends": ["account"],
     "data": [
