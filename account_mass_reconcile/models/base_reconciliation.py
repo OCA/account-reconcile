@@ -6,6 +6,7 @@ from functools import reduce
 from operator import itemgetter
 
 from odoo import _, fields, models
+from odoo.tools import float_compare
 from odoo.tools.safe_eval import safe_eval
 
 
@@ -104,7 +105,14 @@ class MassReconcileBase(models.AbstractModel):
         )
         debit, credit = sums["debit"], sums["credit"]
         writeoff_amount = round(debit - credit, precision)
-        return bool(writeoff_limit >= abs(writeoff_amount)), debit, credit
+        return (
+            float_compare(
+                writeoff_limit, abs(writeoff_amount), precision_digits=precision
+            )
+            >= 0,
+            debit,
+            credit,
+        )
 
     def _get_rec_date(self, lines, based_on="end_period_last_credit"):
         self.ensure_one()
