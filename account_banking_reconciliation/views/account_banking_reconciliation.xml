@@ -450,9 +450,9 @@
 
     <record id="act_supplier_payment_to_add" model="ir.actions.act_window">
         <field name="name">Supplier Payment</field>
-        <field name="domain">[('voucher_type', 'in', ['bank', 'cash'])]</field>
-        <field name="context">{'type':'payment'}</field>
-        <field name="res_model">account.move</field>
+        <field name="domain">[('journal_id.type', 'in', ['bank', 'cash'])]</field>
+        <field name="context">{'payment_type':'outbound'}</field>
+        <field name="res_model">account.payment</field>
         <field
             name="binding_model_id"
             ref="account_banking_reconciliation.model_bank_acc_rec_statement"
@@ -461,9 +461,9 @@
 
     <record id="act_customer_payment_to_add" model="ir.actions.act_window">
         <field name="name">Customer Payment</field>
-        <field name="domain">[('voucher_type', 'in', ['bank', 'cash'])]</field>
-        <field name="context">{'type':'receipt'}</field>
-        <field name="res_model">account.move</field>
+        <field name="domain">[('journal_id.type', 'in', ['bank', 'cash'])]</field>
+        <field name="context">{'payment_type':'inbound'}</field>
+        <field name="res_model">account.payment</field>
         <field
             name="binding_model_id"
             ref="account_banking_reconciliation.model_bank_acc_rec_statement"
