@@ -162,13 +162,13 @@
                                 <td class="text-right">
                                     <span
                                         t-field="debit.amount"
-                                        t-options='{"widget": "monetary", "display_currency": o.account_id.currency_id}'
+                                        t-options='{"widget": "monetary", "display_currency": o.company_id.currency_id}'
                                     />
                                 </td>
                                 <td class="text-right">
                                     <span
                                         t-field="debit.amountcur"
-                                        t-options='{"widget": "monetary", "display_currency": o.account_id.currency_id}'
+                                        t-options='{"widget": "monetary", "display_currency": o.company_id.currency_id}'
                                     />
                                 </td>
                             </tr>
@@ -205,7 +205,7 @@
                                 <td class="text-right">
                                     <span
                                         t-field="debit.amount"
-                                        t-options='{"widget": "monetary", "display_currency": o.account_id.currency_id}'
+                                        t-options='{"widget": "monetary", "display_currency": o.company_id.currency_id}'
                                     />
                                 </td>
                             </tr>
@@ -227,14 +227,14 @@
                                         <span
                                             t-if="o.sum_of_debits"
                                             t-field="o.sum_of_debits"
-                                            t-options='{"widget": "monetary", "display_currency": o.account_id.currency_id}'
+                                            t-options='{"widget": "monetary", "display_currency": o.company_id.currency_id}'
                                         />
                                     </td>
                                     <td class="text-right">
                                         <span
                                             t-if="o.sum_of_debits_cur"
                                             t-field="o.sum_of_debits_cur"
-                                            t-options='{"widget": "monetary", "display_currency": o.account_id.currency_id}'
+                                            t-options='{"widget": "monetary", "display_currency": o.company_id.currency_id}'
                                         />
                                     </td>
                                 </tr>
@@ -272,7 +272,7 @@
                                         <span
                                             t-if="o.sum_of_debits"
                                             t-field="o.sum_of_debits"
-                                            t-options='{"widget": "monetary", "display_currency": o.account_id.currency_id}'
+                                            t-options='{"widget": "monetary", "display_currency": o.company_id.currency_id}'
                                         />
                                     </td>
                                 </tr>
@@ -325,13 +325,13 @@
                                 <td class="text-right">
                                     <span
                                         t-field="credit.amount"
-                                        t-options='{"widget": "monetary", "display_currency": o.account_id.currency_id}'
+                                        t-options='{"widget": "monetary", "display_currency": o.company_id.currency_id}'
                                     />
                                 </td>
                                 <td class="text-right">
                                     <span
                                         t-field="credit.amountcur"
-                                        t-options='{"widget": "monetary", "display_currency": o.account_id.currency_id}'
+                                        t-options='{"widget": "monetary", "display_currency": o.company_id.currency_id}'
                                     />
                                 </td>
                             </tr>
@@ -368,7 +368,7 @@
                                 <td class="text-right">
                                     <span
                                         t-field="credit.amount"
-                                        t-options='{"widget": "monetary", "display_currency": o.account_id.currency_id}'
+                                        t-options='{"widget": "monetary", "display_currency": o.company_id.currency_id}'
                                     />
                                 </td>
                             </tr>
@@ -389,14 +389,14 @@
                                         <span
                                             t-if="o.sum_of_credits"
                                             t-field="o.sum_of_credits"
-                                            t-options='{"widget": "monetary", "display_currency": o.account_id.currency_id}'
+                                            t-options='{"widget": "monetary", "display_currency": o.company_id.currency_id}'
                                         />
                                     </td>
                                     <td class="text-right">
                                         <span
                                             t-if="o.sum_of_credits_cur"
                                             t-field="o.sum_of_credits_cur"
-                                            t-options='{"widget": "monetary", "display_currency": o.account_id.currency_id}'
+                                            t-options='{"widget": "monetary", "display_currency": o.company_id.currency_id}'
                                         />
                                     </td>
                                 </tr>
@@ -415,13 +415,13 @@
                                     <td class="text-right">
                                         <span
                                             t-esc="o.sum_of_debits - o.sum_of_credits"
-                                            t-options='{"widget": "monetary", "display_currency": o.account_id.currency_id}'
+                                            t-options='{"widget": "monetary", "display_currency": o.company_id.currency_id}'
                                         />
                                     </td>
                                     <td class="text-right">
                                         <span
                                             t-esc="o.sum_of_debits_cur - o.sum_of_credits_cur"
-                                            t-options='{"widget": "monetary", "display_currency": o.account_id.currency_id}'
+                                            t-options='{"widget": "monetary", "display_currency": o.company_id.currency_id}'
                                         />
                                     </td>
                                 </tr>
@@ -435,13 +435,13 @@
                                     <td class="text-right">
                                         <span
                                             t-field="o.cleared_balance"
-                                            t-options='{"widget": "monetary", "display_currency": o.account_id.currency_id}'
+                                            t-options='{"widget": "monetary", "display_currency": o.company_id.currency_id}'
                                         />
                                     </td>
                                     <td class="text-right">
                                         <span
                                             t-field="o.cleared_balance_cur"
-                                            t-options='{"widget": "monetary", "display_currency": o.account_id.currency_id}'
+                                            t-options='{"widget": "monetary", "display_currency": o.company_id.currency_id}'
                                         />
                                     </td>
                                 </tr>
@@ -456,14 +456,14 @@
                                     <td class="text-right">
                                         <span
                                             t-field="o.ending_balance"
-                                            t-options='{"widget": "monetary", "display_currency": o.account_id.currency_id}'
+                                            t-options='{"widget": "monetary", "display_currency": o.company_id.currency_id}'
                                         />
                                     </td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
-                    <div t-if="o.account_id.currency_id">
+                    <div t-if="o.company_id.currency_id">
                         <table class="table table-condensed">
                             <tbody class="invoice_tbody">
                                 <tr>
@@ -479,7 +479,7 @@
                                         <span
                                             t-if="o.sum_of_credits"
                                             t-field="o.sum_of_credits"
-                                            t-options='{"widget": "monetary", "display_currency": o.account_id.currency_id}'
+                                            t-options='{"widget": "monetary", "display_currency": o.company_id.currency_id}'
                                         />
                                     </td>
                                 </tr>
@@ -498,7 +498,7 @@
                                     <td class="text-right">
                                         <span
                                             t-esc="o.sum_of_debits - o.sum_of_credits"
-                                            t-options='{"widget": "monetary", "display_currency": o.account_id.currency_id}'
+                                            t-options='{"widget": "monetary", "display_currency": o.company_id.currency_id}'
                                         />
                                     </td>
                                 </tr>
@@ -512,7 +512,7 @@
                                     <td class="text-right">
                                         <span
                                             t-field="o.cleared_balance"
-                                            t-options='{"widget": "monetary", "display_currency": o.account_id.currency_id}'
+                                            t-options='{"widget": "monetary", "display_currency": o.company_id.currency_id}'
                                         />
                                     </td>
                                 </tr>
@@ -527,7 +527,7 @@
                                     <td class="text-right">
                                         <span
                                             t-field="o.ending_balance"
-                                            t-options='{"widget": "monetary", "display_currency": o.account_id.currency_id}'
+                                            t-options='{"widget": "monetary", "display_currency": o.company_id.currency_id}'
                                         />
                                     </td>
                                 </tr>
