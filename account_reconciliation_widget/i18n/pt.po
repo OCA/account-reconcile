@@ -483,6 +483,13 @@ msgstr "Ref."
 
 #. module: account_reconciliation_widget
 #. openerp-web
+#: code:addons/account_reconciliation_widget/static/src/js/reconciliation/reconciliation_renderer.js:0
+#, python-format
+msgid "Reference"
+msgstr ""
+
+#. module: account_reconciliation_widget
+#. openerp-web
 #: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
 #, python-format
 msgid "Residual"
