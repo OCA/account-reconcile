@@ -126,6 +126,9 @@
     <div class="o_reconciliation_line" t-att-data-mode="state.mode" tabindex="0">
         <table class="accounting_view">
             <caption style="caption-side: top;">
+                <div class="caption-input">
+                    <span class="move_name"><t t-esc="state.st_line.name" /></span>
+                </div>
                 <div class="float-right o_buttons">
                     <button
                             t-attf-class="o_no_valid btn btn-secondary #{state.balance.type &lt; 0 ? '' : 'd-none'}"
@@ -148,6 +151,12 @@
                                 t-esc="state.st_line.account_code"
                             /></td>
                     <td class="cell_due_date"><t t-esc="state.st_line.date" /></td>
+                    <td
+                            class="cell_analytic_account"
+                            t-if="state.st_line.group_analytic_accounting"
+                        >
+                        <t t-esc="state.st_line.analytic_account_code" />
+                    </td>
                     <td class="cell_label"><t
                                 t-if="state.st_line.payment_ref"
                                 t-esc="state.st_line.payment_ref"
@@ -280,6 +289,12 @@
     <tr t-if="state.balance.show_balance">
         <td class="cell_account_code"><t t-esc="state.balance.account_code" /></td>
         <td class="cell_due_date" />
+        <td
+                class="cell_analytic_account"
+                t-if="state.st_line.group_analytic_accounting"
+            >
+            <t t-esc="state.balance.analytic_account_code" />
+        </td>
         <td class="cell_label"><t t-if="state.st_line.partner_id">Open balance</t><t
                     t-else=""
                 >Choose counterpart or Create Write-off</t></td>
@@ -384,13 +399,19 @@
                                 >Taxes</label></td>
                     <td class="o_td_field" />
                 </tr>
-                <tr class="create_analytic_account_id" t-if="group_acc">
+                <tr
+                            class="create_analytic_account_id"
+                            t-if="state.st_line.group_analytic_accounting"
+                        >
                     <td class="o_td_label"><label
                                     class="o_form_label"
                                 >Analytic Acc.</label></td>
                     <td class="o_td_field" />
                 </tr>
-                <tr class="create_analytic_tag_ids" t-if="group_tags">
+                <tr
+                            class="create_analytic_tag_ids"
+                            t-if="state.st_line.group_analytic_tags"
+                        >
                     <td class="o_td_label"><label
                                     class="o_form_label"
                                 >Analytic Tags.</label></td>
@@ -497,6 +518,12 @@
                 <span class="badge badge-secondary">New</span>
             </t>
             <t t-else="" t-esc="line.date_maturity || line.date" />
+        </td>
+        <td
+                class="cell_analytic_account"
+                t-if="state.st_line.group_analytic_accounting"
+            >
+            <t t-esc="line.analytic_account_code" />
         </td>
         <td class="cell_label">
             <t

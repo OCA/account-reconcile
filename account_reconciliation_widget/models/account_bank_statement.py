@@ -222,7 +222,6 @@ class AccountBankStatementLine(models.Model):
         aml_obj.with_context(check_move_validity=False).create(liquidity_aml_dict)
 
         self.sequence = self.statement_id.line_ids.ids.index(self.id) + 1
-        self.move_id.ref = self._get_move_ref(self.statement_id.name)
         counterpart_moves = counterpart_moves | self.move_id
 
         # Complete dicts to create both counterpart move lines and write-offs
@@ -246,6 +245,9 @@ class AccountBankStatementLine(models.Model):
             if aml_dict["move_line"].partner_id.id:
                 aml_dict["partner_id"] = aml_dict["move_line"].partner_id.id
             aml_dict["account_id"] = aml_dict["move_line"].account_id.id
+            aml_dict["analytic_account_id"] = (
+                aml_dict["move_line"].analytic_account_id.id or False
+            )
 
             counterpart_move_line = aml_dict.pop("move_line")
             new_aml = aml_obj.with_context(check_move_validity=False).create(aml_dict)
@@ -271,12 +273,6 @@ class AccountBankStatementLine(models.Model):
         self.write({"move_name": self.move_id.name})
 
         return counterpart_moves
-
-    def _get_move_ref(self, move_ref):
-        ref = move_ref or ""
-        if self.ref:
-            ref = move_ref + " - " + self.ref if move_ref else self.ref
-        return ref
 
     def _prepare_move_line_for_currency(self, aml_dict, date):
         self.ensure_one()

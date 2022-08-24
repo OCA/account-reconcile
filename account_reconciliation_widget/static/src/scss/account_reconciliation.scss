@@ -56,6 +56,16 @@
         .strike_amount {
             text-decoration: line-through;
         }
+        .move_name {
+            font-size: 80%;
+            margin-left: 1em;
+            display: flex;
+            align-items: center;
+        }
+        .caption-input {
+            margin-left: 1em;
+            display: inline-flex;
+        }
         tbody tr:hover .cell_account_code::before {
             content: "\f068";
             font-family: FontAwesome;
@@ -146,6 +156,9 @@
             width: 80px;
             padding-left: 5px;
         }
+        .cell_analytic_account {
+            width: 230px;
+        }
         .cell_due_date {
             width: 100px;
         }
@@ -177,6 +190,7 @@
             .cell_label,
             .cell_due_date,
             .cell_account_code,
+            .cell_analytic_account,
             .cell_info_popover {
                 box-shadow: 0 1px 0 #eaeaea;
             }
