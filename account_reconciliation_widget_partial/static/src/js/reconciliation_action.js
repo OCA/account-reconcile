@@ -12,7 +12,7 @@ odoo.define("account_reconcile_partial.ReconciliationClientAction", function (re
             var handle = event.target.handle;
             var line = this.model.getLine(handle);
             var amount = this.model.getPartialReconcileAmount(handle, event.data);
-            self._getWidget(handle).updatePartialAmount(event.data.data, amount);
+            self._getWidget(handle).updatePartialAmount(event, amount);
         },
     });
 });

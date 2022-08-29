@@ -36,6 +36,7 @@ odoo.define("account_reconcile_partial.ReconciliationModel", function (require) 
                     amount >= Math.abs(prop.amount)
                     || amount <= 0 || isNaN(amount)
                 ) {
+                    prop.partial_reconcile = false;
                     delete prop.partial_amount_str;
                     delete prop.partial_amount;
                     if (isNaN(amount) || amount < 0) {
