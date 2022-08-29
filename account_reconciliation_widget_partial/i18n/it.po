@@ -1,6 +1,6 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-#	* account_reconciliation_widget_partial
+# 	* account_reconciliation_widget_partial
 #
 msgid ""
 msgstr ""
@@ -18,7 +18,7 @@ msgstr ""
 
 #. module: account_reconciliation_widget_partial
 #. openerp-web
-#: code:addons/account_reconciliation_widget_partial/static/src/js/reconciliation_model.js:42
+#: code:addons/account_reconciliation_widget_partial/static/src/js/reconciliation_model.js:43
 #, python-format
 msgid "The amount %s is not a valid partial amount"
 msgstr "L'importo %s non è un importo parziale valido"
