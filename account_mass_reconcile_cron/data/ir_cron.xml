@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo noupdate="1">
+    <record
+        id="ir_cron_start_auto_reconciliation_action"
+        model="ir.cron"
+        forcecreate="True"
+    >
+        <field name="name">Start Auto Reconciliation</field>
+        <field name="state">code</field>
+        <field name="user_id" ref="base.user_root" />
+        <field name="interval_number">8</field>
+        <field name="interval_type">hours</field>
+        <field name="numbercall">-1</field>
+        <field name="priority">6</field>
+        <field eval="False" name="doall" />
+        <field name="model_id" ref="model_account_mass_reconcile" />
+        <field name="code">model.reconcile_as_cron()</field>
+    </record>
+</odoo>
