@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 14.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2022-08-04 18:06+0000\n"
-"Last-Translator: Luis D. Lafaurie <luislafaurie@hotmail.com>\n"
+"PO-Revision-Date: 2022-09-26 15:47+0000\n"
+"Last-Translator: Pedro M. Baeza <pedro.baeza@gmail.com>\n"
 "Language-Team: none\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
@@ -471,12 +471,12 @@ msgstr "Conciliar"
 #: model:ir.actions.client,name:account_reconciliation_widget.action_manual_reconciliation
 #: model:ir.ui.menu,name:account_reconciliation_widget.menu_action_manual_reconciliation
 msgid "Reconciliation"
-msgstr "Reconciliación"
+msgstr "Conciliación"
 
 #. module: account_reconciliation_widget
 #: model:ir.actions.client,name:account_reconciliation_widget.action_bank_reconcile
 msgid "Reconciliation on Bank Statements"
-msgstr "Reconciliación en los extractos bancarios"
+msgstr "Conciliación en los extractos bancarios"
 
 #. module: account_reconciliation_widget
 #. openerp-web
@@ -511,14 +511,14 @@ msgstr "Guardar y Nuevo"
 #: code:addons/account_reconciliation_widget/static/src/js/reconciliation/reconciliation_renderer.js:0
 #, python-format
 msgid "Select Partner"
-msgstr "Seleccione un socio"
+msgstr "Seleccione una empresa"
 
 #. module: account_reconciliation_widget
 #. openerp-web
 #: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
 #, python-format
 msgid "Select a partner or choose a counterpart"
-msgstr "Seleccione un socio o escoja un contraparte"
+msgstr "Seleccione una empresa o escoja un contrapartida"
 
 #. module: account_reconciliation_widget
 #. openerp-web
@@ -634,7 +634,7 @@ msgstr "Para revisar"
 #: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
 #, python-format
 msgid "To speed up reconciliation, define"
-msgstr "Para acelerar la reconciliación, defina"
+msgstr "Para acelerar la conciliación, defina"
 
 #. module: account_reconciliation_widget
 #. openerp-web
@@ -703,7 +703,7 @@ msgstr "conciliar"
 #: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
 #, python-format
 msgid "reconciliation models"
-msgstr "modelos de reconciliación"
+msgstr "modelos de conciliación"
 
 #. module: account_reconciliation_widget
 #. openerp-web
