@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 15.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2022-08-04 19:06+0000\n"
-"Last-Translator: Luis D. Lafaurie <luislafaurie@hotmail.com>\n"
+"PO-Revision-Date: 2022-09-26 16:01+0000\n"
+"Last-Translator: Pedro M. Baeza <pedro.baeza@gmail.com>\n"
 "Language-Team: none\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
@@ -39,7 +39,7 @@ msgstr "Cuenta"
 #. module: account_reconciliation_widget
 #: model:ir.model,name:account_reconciliation_widget.model_account_reconciliation_widget
 msgid "Account Reconciliation widget"
-msgstr "Widget de conciliación contable"
+msgstr "Pantalla de conciliación contable"
 
 #. module: account_reconciliation_widget
 #. openerp-web
@@ -156,6 +156,8 @@ msgid ""
 "Congrats, you're all done! You reconciled %s transactions in %s. That's on "
 "average %s seconds per transaction."
 msgstr ""
+"Enhorabuena. ¡Ya está todo hecho! Ha conciliado %s transacciones en %s. Eso "
+"hace de media %s segundos por transacción."
 
 #. module: account_reconciliation_widget
 #. openerp-web
@@ -191,6 +193,8 @@ msgid ""
 "Date from which you started using bank statements in Odoo. Leave empty if "
 "you've been using bank statements in Odoo from the start."
 msgstr ""
+"Fecha desde la que comienza a usar extractos bancarios en Odoo. Déjela vacío "
+"y si ha estado usándolos en Odoo desde el principio."
 
 #. module: account_reconciliation_widget
 #. openerp-web
@@ -229,7 +233,7 @@ msgstr "Filtrar en cuenta, etiqueta, empresa, importe..."
 #. module: account_reconciliation_widget
 #: model:ir.model.fields,field_description:account_reconciliation_widget.field_account_bank_statement__accounting_date
 msgid "Financial Date"
-msgstr ""
+msgstr "Fecha financiera"
 
 #. module: account_reconciliation_widget
 #. openerp-web
@@ -260,6 +264,10 @@ msgid ""
 "This is useful if the accounting period in which the entries should normally "
 "be booked is already closed."
 msgstr ""
+"Si está establecido, los asientos contables creados durante el proceso de "
+"conciliación bancario serán creados en esta fecha.\n"
+"Esto útil si el periodo contable en el que normalmente serían registrados ya "
+"está cerrado."
 
 #. module: account_reconciliation_widget
 #: code:addons/account_reconciliation_widget/models/account_move.py:0
@@ -267,6 +275,7 @@ msgstr ""
 msgid ""
 "It is mandatory to specify an account and a journal to create a write-off."
 msgstr ""
+"Es obligatorio especificar una cuenta y un diario para crear un desajuste."
 
 #. module: account_reconciliation_widget
 #: model_terms:ir.ui.view,arch_db:account_reconciliation_widget.account_journal_dashboard_kanban_view
@@ -310,7 +319,7 @@ msgstr "Apuntes a conciliar"
 #: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
 #, python-format
 msgid "Label"
-msgstr "Descripción"
+msgstr "Etiqueta"
 
 #. module: account_reconciliation_widget
 #. openerp-web
@@ -324,7 +333,7 @@ msgstr "Última conciliación:"
 #: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
 #, python-format
 msgid "Load more"
-msgstr "Cargar mas"
+msgstr "Cargar más"
 
 #. module: account_reconciliation_widget
 #. openerp-web
@@ -345,7 +354,7 @@ msgstr "Operaciones manuales"
 #: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
 #, python-format
 msgid "Match with entries that are not from receivable/payable accounts"
-msgstr ""
+msgstr "Casar con asientos que no son de cuentas a cobrar/a pagar"
 
 #. module: account_reconciliation_widget
 #. openerp-web
@@ -399,6 +408,11 @@ msgid ""
 "otherwise it would make a gap in the numbering. You should book an entry and "
 "make a regular revert of it in case you want to cancel it."
 msgstr ""
+"Operación no permitida. Debido a que su línea de extracto ya recibió un "
+"número (%s), no puede conciliarla completamente con asientos contables "
+"existentes, o de lo contrario, creará un agujero en la numeración. Debe "
+"registrar un asiento, y realizar una reversión regular de él en caso de que "
+"quiera cancelarlo."
 
 #. module: account_reconciliation_widget
 #. openerp-web
@@ -412,14 +426,14 @@ msgstr "Contacto"
 #: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
 #, python-format
 msgid "Pay your"
-msgstr ""
+msgstr "Pague su"
 
 #. module: account_reconciliation_widget
 #. openerp-web
 #: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
 #, python-format
 msgid "Presets config"
-msgstr ""
+msgstr "Configuración de prestablecidos"
 
 #. module: account_reconciliation_widget
 #. openerp-web
@@ -454,28 +468,28 @@ msgstr "Ref"
 #: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
 #, python-format
 msgid "Residual"
-msgstr ""
+msgstr "Residual"
 
 #. module: account_reconciliation_widget
 #. openerp-web
 #: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
 #, python-format
 msgid "Save and New"
-msgstr ""
+msgstr "Guardar y nuevo"
 
 #. module: account_reconciliation_widget
 #. openerp-web
 #: code:addons/account_reconciliation_widget/static/src/js/reconciliation/reconciliation_renderer.js:0
 #, python-format
 msgid "Select Partner"
-msgstr ""
+msgstr "Escoja empresa"
 
 #. module: account_reconciliation_widget
 #. openerp-web
 #: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
 #, python-format
 msgid "Select a partner or choose a counterpart"
-msgstr ""
+msgstr "Escoja una empresa o una contrapartida"
 
 #. module: account_reconciliation_widget
 #. openerp-web
@@ -496,7 +510,7 @@ msgstr "Saltar"
 #: code:addons/account_reconciliation_widget/static/src/js/reconciliation/reconciliation_renderer.js:0
 #, python-format
 msgid "Some fields are undefined"
-msgstr ""
+msgstr "Algunos campos no están definidos"
 
 #. module: account_reconciliation_widget
 #. openerp-web
@@ -519,20 +533,24 @@ msgid ""
 "set when the statement line is reconciled then storedto set the same number "
 "again if the line is cancelled,set to draft and re-processed again."
 msgstr ""
+"Campo técnico almacenando el número dado al asiento contable, establecido "
+"automáticamente cuando la línea del extracto es conciliada para luego "
+"establecer el mismo número otra vez si la línea es cancelada, vuelta a "
+"borrador y re-procesada de nuevo."
 
 #. module: account_reconciliation_widget
 #. openerp-web
 #: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
 #, python-format
 msgid "That's on average"
-msgstr ""
+msgstr "Esto es de media"
 
 #. module: account_reconciliation_widget
 #. openerp-web
 #: code:addons/account_reconciliation_widget/static/src/js/reconciliation/reconciliation_model.js:0
 #, python-format
 msgid "The amount %s is not a valid partial amount"
-msgstr ""
+msgstr "El importe %s no es un importe parcial válido"
 
 #. module: account_reconciliation_widget
 #: model:ir.model.fields,help:account_reconciliation_widget.field_res_company__account_bank_reconciliation_start
@@ -544,6 +562,11 @@ msgid ""
 "some time and don't want to reconcile all the past payments with bank "
 "statements."
 msgstr ""
+"La pantalla de conciliación bancaria no pedirá conciliar pagos más antiguos "
+"que esta fecha.\n"
+"Esto es útil si ha instalado contabilidad después de haber usado la "
+"facturación durante algún tiempo y no quiere conciliar todos los movimientos "
+"pasados con los extractos bancarios."
 
 #. module: account_reconciliation_widget
 #. openerp-web
@@ -560,6 +583,8 @@ msgid ""
 "This page displays all the bank transactions that are to be reconciled and "
 "provides with a neat interface to do so."
 msgstr ""
+"Esta página muestra todas las transacciones bancarias que deben conciliarse "
+"y provee un interfaz pulcro para hacerlo."
 
 #. module: account_reconciliation_widget
 #. openerp-web
@@ -607,14 +632,14 @@ msgstr "Verificar"
 #: code:addons/account_reconciliation_widget/models/account_move.py:0
 #, python-format
 msgid "Write-Off"
-msgstr ""
+msgstr "Desajuste"
 
 #. module: account_reconciliation_widget
 #. openerp-web
 #: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
 #, python-format
 msgid "Writeoff Date"
-msgstr ""
+msgstr "Fecha de desajuste"
 
 #. module: account_reconciliation_widget
 #. openerp-web
@@ -628,7 +653,7 @@ msgstr "Ha conciliado"
 #: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
 #, python-format
 msgid "and follow-up customers"
-msgstr ""
+msgstr "y seguimiento de clientes"
 
 #. module: account_reconciliation_widget
 #. openerp-web
@@ -663,14 +688,14 @@ msgstr "restante)"
 #: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
 #, python-format
 msgid "seconds per transaction."
-msgstr ""
+msgstr "segundos por transacción."
 
 #. module: account_reconciliation_widget
 #. openerp-web
 #: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
 #, python-format
 msgid "statement lines"
-msgstr ""
+msgstr "líneas de extracto"
 
 #. module: account_reconciliation_widget
 #: model_terms:ir.ui.view,arch_db:account_reconciliation_widget.account_journal_dashboard_kanban_view
@@ -682,14 +707,14 @@ msgstr "por revisar"
 #: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
 #, python-format
 msgid "transactions in"
-msgstr ""
+msgstr "transacciones de entrada"
 
 #. module: account_reconciliation_widget
 #. openerp-web
 #: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
 #, python-format
 msgid "unpaid invoices"
-msgstr ""
+msgstr "facturas sin pagar"
 
 #. module: account_reconciliation_widget
 #. openerp-web
@@ -703,7 +728,7 @@ msgstr "asientos sin conciliar"
 #: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
 #, python-format
 msgid "vendor bills"
-msgstr ""
+msgstr "facturas de proveedor"
 
 #~ msgid "Accounting Date"
 #~ msgstr "Fecha contable"
