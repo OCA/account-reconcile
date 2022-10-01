@@ -1,0 +1,156 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* account_mass_reconcile_by_mrp_production
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 14.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: account_mass_reconcile_by_mrp_production
+#: model:ir.model.fields,field_description:account_mass_reconcile_by_mrp_production.field_mass_reconcile_advanced_by_mrp_production__account_id
+#: model:ir.model.fields,field_description:account_mass_reconcile_by_mrp_production.field_mass_reconcile_advanced_by_unbuild__account_id
+msgid "Account"
+msgstr ""
+
+#. module: account_mass_reconcile_by_mrp_production
+#: model:ir.model.fields,field_description:account_mass_reconcile_by_mrp_production.field_mass_reconcile_advanced_by_mrp_production__account_lost_id
+#: model:ir.model.fields,field_description:account_mass_reconcile_by_mrp_production.field_mass_reconcile_advanced_by_unbuild__account_lost_id
+msgid "Account Lost"
+msgstr ""
+
+#. module: account_mass_reconcile_by_mrp_production
+#: model:ir.model.fields,field_description:account_mass_reconcile_by_mrp_production.field_mass_reconcile_advanced_by_mrp_production__account_profit_id
+#: model:ir.model.fields,field_description:account_mass_reconcile_by_mrp_production.field_mass_reconcile_advanced_by_unbuild__account_profit_id
+msgid "Account Profit"
+msgstr ""
+
+#. module: account_mass_reconcile_by_mrp_production
+#: model_terms:ir.ui.view,arch_db:account_mass_reconcile_by_mrp_production.account_mass_reconcile_form
+msgid "Advanced. Mrp Production"
+msgstr ""
+
+#. module: account_mass_reconcile_by_mrp_production
+#: model_terms:ir.ui.view,arch_db:account_mass_reconcile_by_mrp_production.account_mass_reconcile_form
+msgid "Advanced. Unbuild Order"
+msgstr ""
+
+#. module: account_mass_reconcile_by_mrp_production
+#: model:ir.model.fields,field_description:account_mass_reconcile_by_mrp_production.field_mass_reconcile_advanced_by_mrp_production__create_uid
+#: model:ir.model.fields,field_description:account_mass_reconcile_by_mrp_production.field_mass_reconcile_advanced_by_unbuild__create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: account_mass_reconcile_by_mrp_production
+#: model:ir.model.fields,field_description:account_mass_reconcile_by_mrp_production.field_mass_reconcile_advanced_by_mrp_production__create_date
+#: model:ir.model.fields,field_description:account_mass_reconcile_by_mrp_production.field_mass_reconcile_advanced_by_unbuild__create_date
+msgid "Created on"
+msgstr ""
+
+#. module: account_mass_reconcile_by_mrp_production
+#: model:ir.model.fields,field_description:account_mass_reconcile_by_mrp_production.field_mass_reconcile_advanced_by_mrp_production__date_base_on
+#: model:ir.model.fields,field_description:account_mass_reconcile_by_mrp_production.field_mass_reconcile_advanced_by_unbuild__date_base_on
+msgid "Date of reconciliation"
+msgstr ""
+
+#. module: account_mass_reconcile_by_mrp_production
+#: model:ir.model.fields,field_description:account_mass_reconcile_by_mrp_production.field_account_mass_reconcile_method__display_name
+#: model:ir.model.fields,field_description:account_mass_reconcile_by_mrp_production.field_mass_reconcile_advanced__display_name
+#: model:ir.model.fields,field_description:account_mass_reconcile_by_mrp_production.field_mass_reconcile_advanced_by_mrp_production__display_name
+#: model:ir.model.fields,field_description:account_mass_reconcile_by_mrp_production.field_mass_reconcile_advanced_by_unbuild__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: account_mass_reconcile_by_mrp_production
+#: model:ir.model.fields,field_description:account_mass_reconcile_by_mrp_production.field_mass_reconcile_advanced_by_mrp_production___filter
+#: model:ir.model.fields,field_description:account_mass_reconcile_by_mrp_production.field_mass_reconcile_advanced_by_unbuild___filter
+msgid "Filter"
+msgstr ""
+
+#. module: account_mass_reconcile_by_mrp_production
+#: model:ir.model.fields,field_description:account_mass_reconcile_by_mrp_production.field_account_mass_reconcile_method__id
+#: model:ir.model.fields,field_description:account_mass_reconcile_by_mrp_production.field_mass_reconcile_advanced__id
+#: model:ir.model.fields,field_description:account_mass_reconcile_by_mrp_production.field_mass_reconcile_advanced_by_mrp_production__id
+#: model:ir.model.fields,field_description:account_mass_reconcile_by_mrp_production.field_mass_reconcile_advanced_by_unbuild__id
+msgid "ID"
+msgstr ""
+
+#. module: account_mass_reconcile_by_mrp_production
+#: model:ir.model.fields,field_description:account_mass_reconcile_by_mrp_production.field_mass_reconcile_advanced_by_mrp_production__journal_id
+#: model:ir.model.fields,field_description:account_mass_reconcile_by_mrp_production.field_mass_reconcile_advanced_by_unbuild__journal_id
+msgid "Journal"
+msgstr ""
+
+#. module: account_mass_reconcile_by_mrp_production
+#: model:ir.model.fields,field_description:account_mass_reconcile_by_mrp_production.field_account_mass_reconcile_method____last_update
+#: model:ir.model.fields,field_description:account_mass_reconcile_by_mrp_production.field_mass_reconcile_advanced____last_update
+#: model:ir.model.fields,field_description:account_mass_reconcile_by_mrp_production.field_mass_reconcile_advanced_by_mrp_production____last_update
+#: model:ir.model.fields,field_description:account_mass_reconcile_by_mrp_production.field_mass_reconcile_advanced_by_unbuild____last_update
+msgid "Last Modified on"
+msgstr ""
+
+#. module: account_mass_reconcile_by_mrp_production
+#: model:ir.model.fields,field_description:account_mass_reconcile_by_mrp_production.field_mass_reconcile_advanced_by_mrp_production__write_uid
+#: model:ir.model.fields,field_description:account_mass_reconcile_by_mrp_production.field_mass_reconcile_advanced_by_unbuild__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: account_mass_reconcile_by_mrp_production
+#: model:ir.model.fields,field_description:account_mass_reconcile_by_mrp_production.field_mass_reconcile_advanced_by_mrp_production__write_date
+#: model:ir.model.fields,field_description:account_mass_reconcile_by_mrp_production.field_mass_reconcile_advanced_by_unbuild__write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: account_mass_reconcile_by_mrp_production
+#: model:ir.model,name:account_mass_reconcile_by_mrp_production.model_mass_reconcile_advanced
+msgid "Mass Reconcile Advanced"
+msgstr ""
+
+#. module: account_mass_reconcile_by_mrp_production
+#: model:ir.model,name:account_mass_reconcile_by_mrp_production.model_mass_reconcile_advanced_by_mrp_production
+msgid "Mass Reconcile By Mrp Production"
+msgstr ""
+
+#. module: account_mass_reconcile_by_mrp_production
+#: model:ir.model,name:account_mass_reconcile_by_mrp_production.model_mass_reconcile_advanced_by_unbuild
+msgid "Mass Reconcile By Unbuild Order"
+msgstr ""
+
+#. module: account_mass_reconcile_by_mrp_production
+#: model_terms:ir.ui.view,arch_db:account_mass_reconcile_by_mrp_production.account_mass_reconcile_form
+msgid ""
+"Match multiple debit vs multiple credit entries. Allow partial "
+"reconciliation.                             The lines should have the same "
+"partner, product and MO lines to be reconciled."
+msgstr ""
+
+#. module: account_mass_reconcile_by_mrp_production
+#: model_terms:ir.ui.view,arch_db:account_mass_reconcile_by_mrp_production.account_mass_reconcile_form
+msgid ""
+"Match multiple debit vs multiple credit entries. Allow partial "
+"reconciliation.                             The lines should have the same "
+"unbuild order lines to be reconciled."
+msgstr ""
+
+#. module: account_mass_reconcile_by_mrp_production
+#: model:ir.model,name:account_mass_reconcile_by_mrp_production.model_account_mass_reconcile_method
+msgid "Reconcile Method for account_mass_reconcile"
+msgstr ""
+
+#. module: account_mass_reconcile_by_mrp_production
+#: model:ir.model.fields,field_description:account_mass_reconcile_by_mrp_production.field_mass_reconcile_advanced_by_mrp_production__partner_ids
+#: model:ir.model.fields,field_description:account_mass_reconcile_by_mrp_production.field_mass_reconcile_advanced_by_unbuild__partner_ids
+msgid "Restrict on partners"
+msgstr ""
+
+#. module: account_mass_reconcile_by_mrp_production
+#: model:ir.model.fields,field_description:account_mass_reconcile_by_mrp_production.field_mass_reconcile_advanced_by_mrp_production__write_off
+#: model:ir.model.fields,field_description:account_mass_reconcile_by_mrp_production.field_mass_reconcile_advanced_by_unbuild__write_off
+msgid "Write off allowed"
+msgstr ""
