@@ -1,0 +1,13 @@
+<odoo noupdate="1">
+    <record id="job_function_reconcile_as_job" model="queue.job.function">
+        <field
+            name="model_id"
+            ref="account_mass_reconcile_as_job.model_account_mass_reconcile"
+        />
+        <field
+            name="channel_id"
+            ref="account_mass_reconcile_as_job.channel_mass_reconcile"
+        />
+        <field name="method">reconcile_as_job</field>
+    </record>
+</odoo>
