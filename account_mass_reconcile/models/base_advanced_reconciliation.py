@@ -6,7 +6,7 @@ import logging
 from itertools import product
 
 import odoo
-from odoo import models, api, sql_db
+from odoo import models, api
 from odoo.tools.translate import _
 
 _logger = logging.getLogger(__name__)
@@ -258,7 +258,9 @@ class MassReconcileAdvanced(models.AbstractModel):
             try:
                 with odoo.api.Environment.manage():
                     with odoo.registry(self.env.cr.dbname).cursor() as new_cr:
-                        new_env = api.Environment(new_cr, self.env.uid, self.env.context)
+                        new_env = api.Environment(
+                            new_cr, self.env.uid, self.env.context
+                        )
                         # Re-use the commited transient we just commited
                         self_env = self.with_env(new_env).browse(rec.id)
                         reconciled_ids += self_env._rec_group(chunk, lines_by_id)
