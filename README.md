@@ -38,6 +38,7 @@ addon | version | maintainers | summary
 [account_mass_reconcile_transaction_ref](account_mass_reconcile_transaction_ref/) | 10.0.1.1.0 |  | Mass Reconcile Transaction Ref
 [account_move_base_import](account_move_base_import/) | 10.0.1.1.1 |  | Journal Entry base import
 [account_move_reconcile_helper](account_move_reconcile_helper/) | 10.0.1.0.0 |  | Provides tools to facilitate reconciliation
+[account_payment_mode_auto_reconcile](account_payment_mode_auto_reconcile/) | 10.0.1.0.0 |  | Reconcile outstanding credits according to payment mode
 [account_reconcile_restrict_partner_mismatch](account_reconcile_restrict_partner_mismatch/) | 10.0.1.0.0 |  | Restrict reconciliation on receivable and payable accounts to the same partner
 [account_reconcile_structured_ref_auto](account_reconcile_structured_ref_auto/) | 10.0.1.0.0 |  | Adds a second automatic reconciliation button, which is based on a structured ref
 [account_set_reconcilable](account_set_reconcilable/) | 10.0.1.0.0 |  | Allows to set as reconcilable a non reconcilableaccount that already have journal items.
