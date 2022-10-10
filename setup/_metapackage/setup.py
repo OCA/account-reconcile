@@ -17,6 +17,7 @@ setuptools.setup(
         'odoo10-addon-account_mass_reconcile_transaction_ref',
         'odoo10-addon-account_move_base_import',
         'odoo10-addon-account_move_reconcile_helper',
+        'odoo10-addon-account_payment_mode_auto_reconcile',
         'odoo10-addon-account_reconcile_restrict_partner_mismatch',
         'odoo10-addon-account_reconcile_structured_ref_auto',
         'odoo10-addon-account_set_reconcilable',
