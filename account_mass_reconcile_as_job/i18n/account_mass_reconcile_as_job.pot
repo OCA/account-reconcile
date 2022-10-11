@@ -20,15 +20,23 @@ msgstr ""
 
 #. module: account_mass_reconcile_as_job
 #: model:ir.model.fields,field_description:account_mass_reconcile_as_job.field_account_mass_reconcile__display_name
+#: model:ir.model.fields,field_description:account_mass_reconcile_as_job.field_mass_reconcile_base__display_name
 msgid "Display Name"
 msgstr ""
 
 #. module: account_mass_reconcile_as_job
 #: model:ir.model.fields,field_description:account_mass_reconcile_as_job.field_account_mass_reconcile__id
+#: model:ir.model.fields,field_description:account_mass_reconcile_as_job.field_mass_reconcile_base__id
 msgid "ID"
 msgstr ""
 
 #. module: account_mass_reconcile_as_job
 #: model:ir.model.fields,field_description:account_mass_reconcile_as_job.field_account_mass_reconcile____last_update
+#: model:ir.model.fields,field_description:account_mass_reconcile_as_job.field_mass_reconcile_base____last_update
 msgid "Last Modified on"
+msgstr ""
+
+#. module: account_mass_reconcile_as_job
+#: model:ir.model,name:account_mass_reconcile_as_job.model_mass_reconcile_base
+msgid "Mass Reconcile Base"
 msgstr ""
