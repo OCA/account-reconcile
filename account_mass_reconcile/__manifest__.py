@@ -4,7 +4,7 @@
 
 {
     "name": "Account Mass Reconcile",
-    "version": "14.0.1.0.2",
+    "version": "14.0.1.1.0",
     "depends": ["account"],
     "author": "Akretion,Camptocamp,Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/account-reconcile",
