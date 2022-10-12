@@ -16,6 +16,7 @@ setuptools.setup(
         'odoo14-addon-account_move_base_import',
         'odoo14-addon-account_move_reconcile_helper',
         'odoo14-addon-account_partner_reconcile',
+        'odoo14-addon-account_reconcile_model_strict_match_amount',
         'odoo14-addon-account_reconcile_payment_order',
         'odoo14-addon-account_reconcile_reconciliation_date',
         'odoo14-addon-account_reconcile_restrict_partner_mismatch',
