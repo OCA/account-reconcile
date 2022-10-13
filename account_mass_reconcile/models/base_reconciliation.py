@@ -70,7 +70,8 @@ class MassReconcileBase(models.AbstractModel):
         self.ensure_one()
         where = (
             "WHERE account_move_line.account_id = %s "
-            "AND NOT account_move_line.reconciled"
+            "AND NOT account_move_line.reconciled "
+            "AND parent_state = 'posted'"
         )
         # it would be great to use dict for params
         # but as we use _where_calc in _get_filter
