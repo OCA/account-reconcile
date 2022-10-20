@@ -8,6 +8,7 @@ setuptools.setup(
     description="Meta package for oca-account-reconcile Odoo addons",
     version=version,
     install_requires=[
+        'odoo14-addon-account_bank_statement_reopen_skip_undo_reconciliation',
         'odoo14-addon-account_mass_reconcile',
         'odoo14-addon-account_mass_reconcile_as_job',
         'odoo14-addon-account_mass_reconcile_by_mrp_production',
