@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2022 CreuBlanca
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
+<odoo>
+
+    <record model="ir.ui.view" id="account_move_form_view">
+        <field name="name">account.move.form (in account_reconcile_oca)</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_move_form" />
+        <field name="arch" type="xml">
+            <div name="button_box" position="inside">
+                <button
+                    type="action"
+                    name="%(account_reconcile_oca.action_bank_statement_line_move_view_reconcile)s"
+                    string="Bank reconcile"
+                    class="btn btn-primary"
+                    icon="fa-list"
+                    attrs="{'invisible': [('statement_line_id', '=', False)]}"
+                />
+            </div>
+        </field>
+    </record>
+
+
+
+</odoo>
