@@ -3,14 +3,19 @@
 
 {
     "name": "Account Reconciliation Widget Due Date",
-    "version": "13.0.1.0.1",
+    "version": "15.0.1.0.0",
     "website": "https://github.com/OCA/account-reconcile",
     "author": "Tecnativa, Odoo Community Association (OCA)",
     "license": "AGPL-3",
     "application": False,
     "installable": True,
-    "depends": ["account"],
+    "depends": ["account_reconciliation_widget"],
     "maintainers": ["victoralmau"],
     "development_status": "Production/Stable",
-    "data": ["views/account_bank_statement_line_view.xml", "views/assets.xml"],
+    "data": ["views/account_bank_statement_line_view.xml"],
+    "assets": {
+        "web.assets_backend": [
+            "/account_reconciliation_widget_due_date/static/src/js/*",
+        ],
+    },
 }
