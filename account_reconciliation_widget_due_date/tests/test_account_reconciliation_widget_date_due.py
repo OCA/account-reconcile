@@ -38,24 +38,26 @@ class TestAccountReconciliationWidgetDueDate(TransactionCase):
         statement_form.balance_end_real = 600.00
         with statement_form.line_ids.new() as line_form:
             line_form.date = "2021-01-01"
-            line_form.name = "LINE_A"
+            line_form.payment_ref = "LINE_A"
             line_form.partner_id = self.partner_a
             line_form.amount = 100.00
         with statement_form.line_ids.new() as line_form:
             line_form.date = "2021-02-01"
             line_form.date_due = "2021-02-05"
-            line_form.name = "LINE_B"
+            line_form.payment_ref = "LINE_B"
             line_form.partner_id = self.partner_b
             line_form.amount = 200.00
         with statement_form.line_ids.new() as line_form:
             line_form.date = "2021-03-01"
-            line_form.name = "LINE_C"
+            line_form.payment_ref = "LINE_C"
             line_form.partner_id = self.partner_c
             line_form.amount = 300.00
         return statement_form.save()
 
     def test_account_reconciliation_widget(self):
         self.assertEqual(self.statement.state, "open")
+        self.statement.button_post()
+        self.assertEqual(self.statement.state, "posted")
         self.assertEqual(len(self.statement.line_ids), 3)
         reconciliation_widget = self.env["account.reconciliation.widget"]
         account_move_model = self.env["account.move"]
@@ -77,7 +79,7 @@ class TestAccountReconciliationWidgetDueDate(TransactionCase):
         )
         self.assertEqual(len(res["moves"]), 1)
         move = account_move_model.browse(res["moves"][0])
-        self.assertEqual(move.line_ids, line_a.journal_entry_ids)
+        self.assertEqual(move.line_ids, line_a.line_ids)
         move_line_credit = move.line_ids.filtered(lambda x: x.debit > 0)
         self.assertFalse(move_line_credit.date_maturity)
         self.assertEqual(move_line_credit.partner_id, self.partner_a)
@@ -112,7 +114,7 @@ class TestAccountReconciliationWidgetDueDate(TransactionCase):
         )
         self.assertEqual(len(res["moves"]), 1)
         move = account_move_model.browse(res["moves"][0])
-        self.assertEqual(move.line_ids, line_b.journal_entry_ids)
+        self.assertEqual(move.line_ids, line_b.line_ids)
         move_line_credit = move.line_ids.filtered(lambda x: x.debit > 0)
         self.assertEqual(move_line_credit.date_maturity, date(2021, 2, 5))
         self.assertEqual(move_line_credit.partner_id, self.partner_b)
@@ -140,10 +142,10 @@ class TestAccountReconciliationWidgetDueDate(TransactionCase):
         self.assertEqual(line_c.date_due, date(2021, 2, 5))
         self.assertEqual(len(res["moves"]), 1)
         move = account_move_model.browse(res["moves"][0])
-        self.assertEqual(move.line_ids, line_c.journal_entry_ids)
+        self.assertEqual(move.line_ids, line_c.line_ids)
         move_line_credit = move.line_ids.filtered(lambda x: x.debit > 0)
         self.assertEqual(move_line_credit.date_maturity, date(2021, 2, 5))
         self.assertEqual(move_line_credit.partner_id, self.partner_c)
         # Confirm statement
-        self.statement.check_confirm_bank()
+        self.statement.button_validate_or_action()
         self.assertEqual(self.statement.state, "confirm")
