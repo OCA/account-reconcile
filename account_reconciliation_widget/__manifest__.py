@@ -10,6 +10,7 @@
     "author": "Odoo, Ozono Multimedia, Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/account-reconcile",
     "depends": ["account"],
+    "development_status": "Production/Stable",
     "data": [
         "security/ir.model.access.csv",
         "wizards/res_config_settings_views.xml",
