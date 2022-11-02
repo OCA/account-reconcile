@@ -84,7 +84,9 @@ class TestAccountReconciliationWidgetDueDate(TransactionCase):
         # Check that the date_maturity does not change
         move_line_credit.date_maturity = date(2021, 2, 5)
         reconciliation_widget.update_bank_statement_line_due_date(
-            res["moves"], [line_a.id], [line_a.date_due],
+            res["moves"],
+            [line_a.id],
+            [line_a.date_due],
         )
         self.assertEqual(move_line_credit.date_maturity, date(2021, 2, 5))
         # line_b
@@ -104,7 +106,9 @@ class TestAccountReconciliationWidgetDueDate(TransactionCase):
             [{"partner_id": line_b.partner_id.id, "new_aml_dicts": new_aml_dicts}],
         )
         reconciliation_widget.update_bank_statement_line_due_date(
-            res["moves"], [line_b.id], [line_b.date_due],
+            res["moves"],
+            [line_b.id],
+            [line_b.date_due],
         )
         self.assertEqual(len(res["moves"]), 1)
         move = account_move_model.browse(res["moves"][0])
@@ -129,7 +133,9 @@ class TestAccountReconciliationWidgetDueDate(TransactionCase):
             [{"partner_id": line_c.partner_id.id, "new_aml_dicts": new_aml_dicts}],
         )
         reconciliation_widget.update_bank_statement_line_due_date(
-            res["moves"], [line_c.id], ["2021-02-05"],
+            res["moves"],
+            [line_c.id],
+            ["2021-02-05"],
         )
         self.assertEqual(line_c.date_due, date(2021, 2, 5))
         self.assertEqual(len(res["moves"]), 1)

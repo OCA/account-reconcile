@@ -3,7 +3,7 @@
 
 odoo.define(
     "account_reconciliation_widget_due_date.ReconciliationClientAction",
-    function(require) {
+    function (require) {
         "use strict";
 
         const ReconciliationClientAction = require("account.ReconciliationClientAction");
