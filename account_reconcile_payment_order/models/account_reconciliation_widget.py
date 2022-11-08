@@ -23,14 +23,15 @@ class AccountReconciliationWidget(models.AbstractModel):
     def _get_reconcile_lines_from_order(self, st_line, order, excluded_ids=None):
         """Return lines to reconcile our statement line with."""
         aml_obj = self.env["account.move.line"]
-        reconciled_lines = aml_obj.search(
-            [("bank_payment_line_id", "in", order.bank_line_ids.ids)]
+        lines = aml_obj
+        for payment in order.payment_ids:
+            lines |= payment.move_id.line_ids.filtered(
+                lambda x: x.account_id != payment.destination_account_id
+                and x.partner_id == payment.partner_id
+            )
+        return (lines - aml_obj.browse(excluded_ids)).filtered(
+            lambda x: not x.reconciled
         )
-        return (
-            reconciled_lines.mapped("move_id.line_ids")
-            - reconciled_lines
-            - aml_obj.browse(excluded_ids)
-        ).filtered(lambda x: not x.reconciled)
 
     def _prepare_proposition_from_orders(self, st_line, orders, excluded_ids=None):
         """Fill with the expected format the reconciliation proposition
