@@ -23,7 +23,7 @@ class AccountMove(models.Model):
                 raise ValidationError(
                     _("You cannot reset to draft reconciled entries.")
                 )
-        super().button_draft()
+        return super().button_draft()
 
     def button_cancel(self):
         if not self.env.context.get("skip_reconcile_forbid_cancel") and (
@@ -33,4 +33,4 @@ class AccountMove(models.Model):
             rec_pay_lines = self._get_receivable_payable_lines()
             if rec_pay_lines.matched_debit_ids or rec_pay_lines.matched_credit_ids:
                 raise ValidationError(_("You cannot cancel reconciled entries."))
-        super().button_cancel()
+        return super().button_cancel()
