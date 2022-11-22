@@ -106,7 +106,8 @@ class TestAccountMoveReconcileForbidCancel(SavepointCase):
         # Create payment from invoice
         payment_register_form = Form(
             cls.env["account.payment"].with_context(
-                active_model="account.move", active_ids=cls.purchase_invoice.ids,
+                active_model="account.move",
+                active_ids=cls.purchase_invoice.ids,
             )
         )
         payment = payment_register_form.save()
@@ -125,7 +126,8 @@ class TestAccountMoveReconcileForbidCancel(SavepointCase):
         # Create payment from invoice
         payment_register_form = Form(
             cls.env["account.payment"].with_context(
-                active_model="account.move", active_ids=cls.sale_invoice.ids,
+                active_model="account.move",
+                active_ids=cls.sale_invoice.ids,
             )
         )
         payment = payment_register_form.save()
