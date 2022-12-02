@@ -42,8 +42,8 @@ class AccountMoveCompletionRule(models.Model):
     _order = "sequence asc"
     _description = "Account move completion method"
 
-    sequence = fields.Integer(string="Sequence", help="Lower means parsed first.")
-    name = fields.Char(string="Name")
+    sequence = fields.Integer(help="Lower means parsed first.")
+    name = fields.Char()
     journal_ids = fields.Many2many(
         comodel_name="account.journal",
         relation="account_journal_completion_rule_rel",
@@ -94,10 +94,10 @@ class AccountMoveCompletionRule(models.Model):
             else:
                 raise ErrorTooManyPartner(
                     _(
-                        'Line named "%s" was matched by more than one '
-                        "partner while looking on %s invoices"
+                        'Line named "%(line_name)s" was matched by more than one '
+                        "partner while looking on %(inv_type)s invoices"
                     )
-                    % (line.name, inv_type)
+                    % {"line_name": line.name, "inv_type": inv_type}
                 )
         return False
 
@@ -177,9 +177,12 @@ class AccountMoveCompletionRule(models.Model):
         if partners:
             if len(partners) > 1:
                 msg = _(
-                    'Line named "%s" was matched by more than '
-                    "one partner while looking on partner label: %s"
-                ) % (line.name, ",".join([x.name for x in partners]))
+                    'Line named "%(line_name)s" was matched by more than '
+                    "one partner while looking on partner label: %(partner_labels)s"
+                ) % {
+                    "line_name": line.name,
+                    "partner_labels": ",".join([x.name for x in partners]),
+                }
                 raise ErrorTooManyPartner(msg)
             res["partner_id"] = partners[0].id
         return res
@@ -316,6 +319,7 @@ class AccountMove(models.Model):
                 move.partner_id = move.import_partner_id
             else:
                 super(AccountMove, move)._compute_partner_id()
+        return
 
     def write_completion_log(self, error_msg, number_imported):
         """Write the log in the completion_logs field of the bank statement to
@@ -332,22 +336,31 @@ class AccountMove(models.Model):
         log = self.completion_logs or ""
         completion_date = fields.Datetime.now()
         message = _(
-            "%s Account Move %s has %s/%s lines completed by " "%s \n%s\n%s\n"
-        ) % (
-            completion_date,
-            self.name,
-            number_imported,
-            number_line,
-            user_name,
-            error_msg,
-            log,
-        )
+            "%(completion_date)s Account Move %(move_name)s has %(num_imported)s/"
+            "%(number_line)s lines completed by "
+            "%(user_name)s \n%(error_msg)s\n%(log)s\n"
+        ) % {
+            "completion_date": completion_date,
+            "move_name": self.name,
+            "num_imported": number_imported,
+            "number_line": number_line,
+            "user_name": user_name,
+            "error_msg": error_msg,
+            "log": log,
+        }
         self.write({"completion_logs": message})
 
         body = (
             (
-                _("Statement ID %s auto-completed for %s/%s lines completed")
-                % (self.name, number_imported, number_line)
+                _(
+                    "Statement ID %(move_name)s auto-completed for %(num_imported)s/"
+                    "%(number_line)s lines completed"
+                )
+                % {
+                    "move_name": self.name,
+                    "num_imported": number_imported,
+                    "number_line": number_line,
+                }
             ),
         )
         self.message_post(body=body)

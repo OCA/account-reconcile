@@ -14,7 +14,6 @@ class ResPartner(models.Model):
     _inherit = "res.partner"
 
     bank_statement_label = fields.Char(
-        string="Bank Statement Label",
         help="Enter the various label found on your bank statement "
         "separated by a ; If one of this label is include in the "
         "bank statement line, the partner will be automatically "
