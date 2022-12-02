@@ -28,7 +28,7 @@ class TestInvoice(TestAccountReconciliationCommon):
         self.assertEqual(self.invoice_for_completion_1.state, "posted")
         self.assertEqual(
             self.invoice_for_completion_1.name,
-            fields.Date.today().strftime("INV/%Y/%m/0001"),
+            fields.Date.today().strftime("INV/%Y/00001"),
         )
 
         self.demo_invoice_0 = self._create_invoice(
@@ -41,7 +41,7 @@ class TestInvoice(TestAccountReconciliationCommon):
         )
         self.assertEqual(
             self.refund_for_completion_1.name,
-            fields.Date.today().strftime("RINV/%Y/%m/0001"),
+            fields.Date.today().strftime("RINV/%Y/00001"),
         )
 
         # In order to test the banking framework, I first need to create a
@@ -151,13 +151,13 @@ class TestInvoice(TestAccountReconciliationCommon):
         )
         # and add the correct name
         move_line_ci.with_context(check_move_validity=False).write(
-            {"name": fields.Date.today().strftime("INV/%Y/%m/0001"), "credit": 210.0}
+            {"name": fields.Date.today().strftime("INV/%Y/00001"), "credit": 210.0}
         )
         move_line_si.with_context(check_move_validity=False).write(
             {"name": "T2S12345", "debit": 65.0}
         )
         move_line_cr.with_context(check_move_validity=False).write(
-            {"name": fields.Date.today().strftime("RINV/%Y/%m/0001"), "debit": 210.0}
+            {"name": fields.Date.today().strftime("RINV/%Y/00001"), "debit": 210.0}
         )
         move_line_partner_name.with_context(check_move_validity=False).write(
             {"credit": 600.0}

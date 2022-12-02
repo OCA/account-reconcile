@@ -1,11 +1,11 @@
-# Copyright 2011-2016 Akretion
+# Copyright 2011-2022 Akretion
 # Copyright 2011-2019 Camptocamp SA
 # Copyright 2013 Savoir-faire Linux
 # Copyright 2014 ACSONE SA/NV
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html)
 {
     "name": "Journal Entry base import",
-    "version": "14.0.1.0.1",
+    "version": "16.0.1.0.1",
     "author": "Akretion,Camptocamp,Odoo Community Association (OCA)",
     "category": "Finance",
     "depends": ["account"],

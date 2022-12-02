@@ -103,27 +103,27 @@ class AccountJournal(models.Model):
             "already_completed": True,
             "journal_id": self.id,
             "company_id": self.company_id.id,
-            "currency_id": self.currency_id.id,
+            "currency_id": self.currency_id.id or move.currency_id.id,
             "company_currency_id": self.company_id.currency_id.id,
             "amount_residual": amount,
         }
         return counterpart_values
 
-    def _create_counterpart(self, parser, move):
-        move_line_obj = self.env["account.move.line"]
+    def _get_counterpart_vals_list(self, parser, move, line_vals_list):
         refund = 0.0
         payment = 0.0
         commission = 0.0
         transfer_lines = []
-        for move_line in move.line_ids:
-            if (
-                move_line.account_id == self.commission_account_id
-                and move_line.already_completed
+        for move_line_vals in line_vals_list:
+            if move_line_vals[
+                "account_id"
+            ] == self.commission_account_id.id and move_line_vals.get(
+                "already_completed"
             ):
-                commission -= move_line.debit
+                commission -= move_line_vals["debit"]
             else:
-                refund -= move_line.debit
-                payment += move_line.credit
+                refund -= move_line_vals["debit"]
+                payment += move_line_vals["credit"]
         if self.split_counterpart:
             if refund:
                 transfer_lines.append(refund)
@@ -135,17 +135,15 @@ class AccountJournal(models.Model):
                 transfer_lines.append(total_amount)
         counterpart_date = parser.get_move_vals().get("date") or fields.Date.today()
         transfer_line_count = len(transfer_lines)
-        check_move_validity = False
+        vals_list = []
         for amount in transfer_lines:
             transfer_line_count -= 1
-            if not transfer_line_count:
-                check_move_validity = True
-            vals = self._prepare_counterpart_line(move, amount, counterpart_date)
-            move_line_obj.with_context(check_move_validity=check_move_validity).create(
-                vals
+            vals_list.append(
+                self._prepare_counterpart_line(move, amount, counterpart_date)
             )
+        return vals_list
 
-    def _write_extra_move_lines(self, parser, move):
+    def _get_extra_move_line_vals_list(self, parser, move):
         """Insert extra lines after the main statement lines.
 
         After the main statement lines have been created, you can override this
@@ -158,9 +156,9 @@ class AccountJournal(models.Model):
               statement ID
             :param:    context: global context
         """
-        move_line_obj = self.env["account.move.line"]
         global_commission_amount = 0
         commmission_field = parser.commission_field
+        vals_list = []
         if commmission_field:
             for row in parser.result_row_list:
                 global_commission_amount += float(row.get(commmission_field, "0.0"))
@@ -203,9 +201,8 @@ class AccountJournal(models.Model):
                     comm_values.update(
                         {"analytic_account_id": self.commission_analytic_account_id.id}
                     )
-                move_line_obj.with_context(check_move_validity=False).create(
-                    comm_values
-                )
+                vals_list.append(comm_values)
+        return vals_list
 
     def write_logs_after_import(self, move, num_lines):
         """Write the log in the logger
@@ -255,7 +252,7 @@ class AccountJournal(models.Model):
         values.update(
             {
                 "company_id": self.company_id.id,
-                "currency_id": self.currency_id.id,
+                "currency_id": self.currency_id.id or move.currency_id.id,
                 "company_currency_id": self.company_id.currency_id.id,
                 "journal_id": self.id,
                 "account_id": account.id,
@@ -266,8 +263,6 @@ class AccountJournal(models.Model):
                 "reconciled": False,
             }
         )
-        if self.currency_id and self.currency_id == self.company_id.currency_id:
-            del values["currency_id"]
         values = move_line_obj._add_missing_default_values(values)
         return values
 
@@ -361,12 +356,13 @@ class AccountJournal(models.Model):
                 parser_vals = parser.get_move_line_vals(line)
                 values = self.prepare_move_line_vals(parser_vals, move)
                 move_store.append(values)
-            move_line_obj.with_context(check_move_validity=False).create(move_store)
-            self._write_extra_move_lines(parser, move)
+            move_store += self._get_extra_move_line_vals_list(parser, move)
             if self.create_counterpart:
-                self._create_counterpart(parser, move)
+                move_store += self._get_counterpart_vals_list(parser, move, move_store)
             # Check if move is balanced
-            move._check_balanced()
+            container = {"records": move}
+            with move._check_balanced(container):
+                move_line_obj.create(move_store)
             # Computed total amount of the move
             # move._amount_compute()
             # Attach data to the move
