@@ -158,33 +158,35 @@ class FileParser(AccountMoveImportParser):
                         raise UserError(
                             _(
                                 "Date format is not valid."
-                                " It should be YYYY-MM-DD for column: %s"
-                                " value: %s \n \n \n Please check"
-                                " the line with ref: %s \n \n Detail: %s"
+                                " It should be YYYY-MM-DD for column: %(rule)s"
+                                " value: %(line_value)s \n \n \n Please check"
+                                " the line with ref: %(ref_value)s \n \n Detail: "
+                                "%(error)s"
                             )
-                            % (
-                                rule,
-                                line.get(rule, _("Missing")),
-                                line.get("ref", line),
-                                repr(err),
-                            )
-                        )
+                            % {
+                                "rule": rule,
+                                "line_value": line.get(rule, _("Missing")),
+                                "ref_value": line.get("ref", line),
+                                "error": repr(err),
+                            }
+                        ) from err
                 else:
                     try:
                         line[rule] = conversion_rules[rule](line[rule])
                     except Exception as err:
                         raise UserError(
                             _(
-                                "Value %s of column %s is not valid.\n Please "
-                                "check the line with ref %s:\n \n Detail: %s"
+                                "Value %(line_value)s of column %(rule)s is not valid."
+                                "\n Please check the line with ref %(value_ref)s:\n "
+                                "\n Detail: %(error)s"
                             )
-                            % (
-                                line.get(rule, _("Missing")),
-                                rule,
-                                line.get("ref", line),
-                                repr(err),
-                            )
-                        )
+                            % {
+                                "line_value": line.get(rule, _("Missing")),
+                                "rule": rule,
+                                "value_ref": line.get("ref", line),
+                                "error": repr(err),
+                            }
+                        ) from err
         return result_set
 
     def _from_xls(self, result_set, conversion_rules):
@@ -202,32 +204,34 @@ class FileParser(AccountMoveImportParser):
                             _(
                                 "Date format is not valid. "
                                 "Please modify the cell formatting to date "
-                                "format for column: %s value: %s\n Please"
-                                " check the line with ref: %s\n \n Detail: %s"
+                                "format for column: %(rule)s value: %(line_value)s\n "
+                                "Please check the line with ref: %(value_ref)s\n "
+                                "\n Detail: %(error)s"
                             )
-                            % (
-                                rule,
-                                line.get(rule, _("Missing")),
-                                line.get("ref", line),
-                                repr(err),
-                            )
-                        )
+                            % {
+                                "rule": rule,
+                                "line_value": line.get(rule, _("Missing")),
+                                "value_ref": line.get("ref", line),
+                                "error": repr(err),
+                            }
+                        ) from err
                 else:
                     try:
                         line[rule] = conversion_rules[rule](line[rule])
                     except Exception as err:
                         raise UserError(
                             _(
-                                "Value %s of column %s is not valid.\n Please "
-                                "check the line with ref %s:\n \n Detail: %s"
+                                "Value %(line_value)s of column %(rule)s is not valid."
+                                "\n Please check the line with ref %(value_ref)s:\n "
+                                "\n Detail: %(error)s"
                             )
-                            % (
-                                line.get(rule, _("Missing")),
-                                rule,
-                                line.get("ref", line),
-                                repr(err),
-                            )
-                        )
+                            % {
+                                "line_value": line.get(rule, _("Missing")),
+                                "rule": rule,
+                                "value_ref": line.get("ref", line),
+                                "error": repr(err),
+                            }
+                        ) from err
         return result_set
 
     def _cast_rows(self, *args, **kwargs):

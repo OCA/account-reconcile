@@ -32,7 +32,7 @@ class AccountJournal(models.Model):
         "moves for this journal.",
     )
 
-    last_import_date = fields.Datetime(string="Last Import Date")
+    last_import_date = fields.Datetime()
 
     partner_id = fields.Many2one(
         comodel_name="res.partner",
@@ -64,13 +64,11 @@ class AccountJournal(models.Model):
     )
 
     create_counterpart = fields.Boolean(
-        string="Create Counterpart",
         help="Tick that box to automatically create the move counterpart",
         default=True,
     )
 
     split_counterpart = fields.Boolean(
-        string="Split Counterpart",
         help="Two counterparts will be automatically created : one for "
         "the refunds and one for the payments",
     )
@@ -218,8 +216,8 @@ class AccountJournal(models.Model):
         :return: True
         """
         self.message_post(
-            body=_("Move %s have been imported with %s " "lines.")
-            % (move.name, num_lines)
+            body=_("Move %(move_name)s have been imported with %(num_lines)s " "lines.")
+            % {"move_name": move.name, "num_lines": num_lines}
         )
         return True
 
@@ -397,5 +395,5 @@ class AccountJournal(models.Model):
             st += "".join(traceback.format_tb(trbk, 30))
             raise ValidationError(
                 _("Statement import error " "The statement cannot be created: %s") % st
-            )
+            ) from None
         return move
