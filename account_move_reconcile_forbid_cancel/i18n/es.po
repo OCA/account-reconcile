@@ -19,8 +19,8 @@ msgstr ""
 
 #. module: account_move_reconcile_forbid_cancel
 #: model:ir.model,name:account_move_reconcile_forbid_cancel.model_account_move
-msgid "Journal Entries"
-msgstr "Asientos contables"
+msgid "Journal Entry"
+msgstr ""
 
 #. module: account_move_reconcile_forbid_cancel
 #: code:addons/account_move_reconcile_forbid_cancel/models/account_move.py:0
@@ -33,3 +33,6 @@ msgstr "No puede cancelar asientos conciliados"
 #, python-format
 msgid "You cannot reset to draft reconciled entries."
 msgstr "No puede cambiar a borrador asientos conciliados"
+
+#~ msgid "Journal Entries"
+#~ msgstr "Asientos contables"
