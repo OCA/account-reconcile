@@ -6,15 +6,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 15.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2021-07-23 11:49+0000\n"
-"Last-Translator: Sergio Zanchetta <primes2h@gmail.com>\n"
+"PO-Revision-Date: 2022-12-28 20:45+0000\n"
+"Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.3.2\n"
+"X-Generator: Weblate 4.14.1\n"
 
 #. module: account_reconciliation_widget
 #: code:addons/account_reconciliation_widget/models/reconciliation_widget.py:0
@@ -71,7 +71,7 @@ msgstr "Conto analitico"
 #: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
 #, python-format
 msgid "Analytic Tags."
-msgstr "Etichette analitiche"
+msgstr "Etichette analitiche."
 
 #. module: account_reconciliation_widget
 #. openerp-web
@@ -139,7 +139,7 @@ msgstr "Aziende"
 #. module: account_reconciliation_widget
 #: model:ir.model,name:account_reconciliation_widget.model_res_config_settings
 msgid "Config Settings"
-msgstr ""
+msgstr "Impostazioni configurazione"
 
 #. module: account_reconciliation_widget
 #. openerp-web
@@ -156,6 +156,8 @@ msgid ""
 "Congrats, you're all done! You reconciled %s transactions in %s. That's on "
 "average %s seconds per transaction."
 msgstr ""
+"Congratulazioni, tutto eseguito! Sono state riconciliate %s transizioni in "
+"%s. Una media di %s secondi per transizione."
 
 #. module: account_reconciliation_widget
 #. openerp-web
@@ -191,6 +193,8 @@ msgid ""
 "Date from which you started using bank statements in Odoo. Leave empty if "
 "you've been using bank statements in Odoo from the start."
 msgstr ""
+"Dada da cui si è iniziato ad utilizzare il rendiconto bancario in Odoo. "
+"Lasciare vuoto se si è utilizzato il rendiconto bancario in Odoo dall'inizio."
 
 #. module: account_reconciliation_widget
 #. openerp-web
@@ -229,7 +233,7 @@ msgstr "Filtra per conto, etichetta, partner, importo..."
 #. module: account_reconciliation_widget
 #: model:ir.model.fields,field_description:account_reconciliation_widget.field_account_bank_statement__accounting_date
 msgid "Financial Date"
-msgstr ""
+msgstr "Data finanziaria"
 
 #. module: account_reconciliation_widget
 #. openerp-web
@@ -529,6 +533,10 @@ msgid ""
 "set when the statement line is reconciled then storedto set the same number "
 "again if the line is cancelled,set to draft and re-processed again."
 msgstr ""
+"Campo tecnico che contiene il numero dato alla registrazione contabile, "
+"impostato automaticamente quando la riga contabile è riconciliata, poi "
+"salvato allo stesso valore se la riga viene cancellata, impostata a bozza e "
+"riprocessata."
 
 #. module: account_reconciliation_widget
 #. openerp-web
