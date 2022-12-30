@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: bank-statement-reconcile (9.0)\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-08-16 10:09+0000\n"
-"PO-Revision-Date: 2022-12-28 22:45+0000\n"
-"Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
+"PO-Revision-Date: 2022-12-30 11:56+0000\n"
+"Last-Translator: Francesco Foresti <francesco.foresti@ooops404.com>\n"
 "Language-Team: Italian (http://www.transifex.com/oca/"
 "OCA-bank-statement-reconcile-9-0/language/it/)\n"
 "Language: it\n"
@@ -604,12 +604,12 @@ msgstr "Tipo"
 #. module: account_mass_reconcile
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile_message_unread
 msgid "Unread Messages"
-msgstr "Unread Messages"
+msgstr "Messaggi non letti"
 
 #. module: account_mass_reconcile
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile_message_unread_counter
 msgid "Unread Messages Counter"
-msgstr "Contatore Messaggi non letti"
+msgstr "Numero messaggi non letti"
 
 #. module: account_mass_reconcile
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile_unreconciled_count
