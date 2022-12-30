@@ -27,6 +27,7 @@ addon | version | maintainers | summary
 [account_mass_reconcile_by_mrp_production](account_mass_reconcile_by_mrp_production/) | 14.0.1.0.0 |  | Allows to reconcile based on the MO line
 [account_mass_reconcile_by_purchase_line](account_mass_reconcile_by_purchase_line/) | 14.0.1.0.0 |  | Allows to reconcile based on the PO line
 [account_mass_reconcile_by_sale_line](account_mass_reconcile_by_sale_line/) | 14.0.1.0.0 |  | Allows to reconcile based on the SO line
+[account_mass_reconcile_ref_deep_search](account_mass_reconcile_ref_deep_search/) | 14.0.1.0.0 |  | Mass Reconcile Ref Deep Search
 [account_move_base_import](account_move_base_import/) | 14.0.1.0.1 |  | Journal Entry base import
 [account_move_reconcile_helper](account_move_reconcile_helper/) | 14.0.1.0.0 |  | Provides tools to facilitate reconciliation
 [account_partner_reconcile](account_partner_reconcile/) | 14.0.1.0.0 |  | Account Partner Reconcile
