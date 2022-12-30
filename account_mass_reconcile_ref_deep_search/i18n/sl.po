@@ -21,7 +21,7 @@ msgstr ""
 "%100==4 ? 2 : 3);\n"
 
 #. module: account_mass_reconcile_ref_deep_search
-#: code:addons/account_mass_reconcile_ref_deep_search/models/advanced_reconciliation.py:50
+#: code:addons/account_mass_reconcile_ref_deep_search/models/advanced_reconciliation.py:0
 #, python-format
 msgid ""
 "A matcher %s is compared with a matcher %s, the _matchers and "
@@ -51,6 +51,11 @@ msgid "Advanced. Partner and Ref Deep Search"
 msgstr ""
 
 #. module: account_mass_reconcile_ref_deep_search
+#: model:ir.model,name:account_mass_reconcile_ref_deep_search.model_mass_reconcile_advanced_ref_deep_search
+msgid "Advanced. Partner and Ref. Deep Search"
+msgstr ""
+
+#. module: account_mass_reconcile_ref_deep_search
 #: model:ir.model.fields,field_description:account_mass_reconcile_ref_deep_search.field_mass_reconcile_advanced_ref_deep_search__create_uid
 msgid "Created by"
 msgstr "Ustvaril"
@@ -66,6 +71,7 @@ msgid "Date of reconciliation"
 msgstr "Datum uskladitve"
 
 #. module: account_mass_reconcile_ref_deep_search
+#: model:ir.model.fields,field_description:account_mass_reconcile_ref_deep_search.field_account_mass_reconcile_method__display_name
 #: model:ir.model.fields,field_description:account_mass_reconcile_ref_deep_search.field_mass_reconcile_advanced_ref_deep_search__display_name
 msgid "Display Name"
 msgstr "Prikazni naziv"
@@ -76,11 +82,7 @@ msgid "Filter"
 msgstr "Filter"
 
 #. module: account_mass_reconcile_ref_deep_search
-#: model:ir.model.fields,field_description:account_mass_reconcile_ref_deep_search.field_mass_reconcile_advanced_ref_deep_search__income_exchange_account_id
-msgid "Gain Exchange Rate Account"
-msgstr "Konto menjalnega tečaja dobička"
-
-#. module: account_mass_reconcile_ref_deep_search
+#: model:ir.model.fields,field_description:account_mass_reconcile_ref_deep_search.field_account_mass_reconcile_method__id
 #: model:ir.model.fields,field_description:account_mass_reconcile_ref_deep_search.field_mass_reconcile_advanced_ref_deep_search__id
 msgid "ID"
 msgstr "ID"
@@ -91,6 +93,7 @@ msgid "Journal"
 msgstr "Dnevnik"
 
 #. module: account_mass_reconcile_ref_deep_search
+#: model:ir.model.fields,field_description:account_mass_reconcile_ref_deep_search.field_account_mass_reconcile_method____last_update
 #: model:ir.model.fields,field_description:account_mass_reconcile_ref_deep_search.field_mass_reconcile_advanced_ref_deep_search____last_update
 msgid "Last Modified on"
 msgstr "Zadnjič spremenjeno"
@@ -106,16 +109,16 @@ msgid "Last Updated on"
 msgstr "Zadnjič posodobljeno"
 
 #. module: account_mass_reconcile_ref_deep_search
-#: model:ir.model.fields,field_description:account_mass_reconcile_ref_deep_search.field_mass_reconcile_advanced_ref_deep_search__expense_exchange_account_id
-msgid "Loss Exchange Rate Account"
-msgstr "Konto menjalnega tečaja izgube"
-
-#. module: account_mass_reconcile_ref_deep_search
 #: model_terms:ir.ui.view,arch_db:account_mass_reconcile_ref_deep_search.view_mass_reconcile_form
 msgid ""
 "Match multiple debit vs multiple credit entries. Allow partial "
 "reconciliation.                             The lines should have the "
 "partner, the credit entry ref is searched inside the debit entry ref."
+msgstr ""
+
+#. module: account_mass_reconcile_ref_deep_search
+#: model:ir.model,name:account_mass_reconcile_ref_deep_search.model_account_mass_reconcile_method
+msgid "Reconcile Method for account_mass_reconcile"
 msgstr ""
 
 #. module: account_mass_reconcile_ref_deep_search
@@ -128,12 +131,11 @@ msgstr "Omejitev na partnerjih"
 msgid "Write off allowed"
 msgstr "Dovoljen odpis"
 
-#. module: account_mass_reconcile_ref_deep_search
-#: model:ir.model,name:account_mass_reconcile_ref_deep_search.model_mass_reconcile_advanced_ref_deep_search
-msgid "mass.reconcile.advanced.ref.deep.search"
-msgstr ""
+#~ msgid "Gain Exchange Rate Account"
+#~ msgstr "Konto menjalnega tečaja dobička"
 
-#. module: account_mass_reconcile_ref_deep_search
-#: model:ir.model,name:account_mass_reconcile_ref_deep_search.model_account_mass_reconcile_method
-msgid "reconcile method for account_mass_reconcile"
-msgstr "metoda usklajevanja za preprosto usklajevanje konta"
+#~ msgid "Loss Exchange Rate Account"
+#~ msgstr "Konto menjalnega tečaja izgube"
+
+#~ msgid "reconcile method for account_mass_reconcile"
+#~ msgstr "metoda usklajevanja za preprosto usklajevanje konta"
