@@ -71,7 +71,7 @@ class MassReconcileSimple(models.AbstractModel):
         query = " ".join(
             (select, self._from_query(), where, where2, self._simple_order())
         )
-        self.flush()
+        self.env.flush_all()
         self.env.cr.execute(query, params + params2)
         lines = self.env.cr.dictfetchall()
         return self.rec_auto_lines_simple(lines)

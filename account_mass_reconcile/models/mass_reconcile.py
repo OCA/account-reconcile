@@ -9,7 +9,7 @@ import psycopg2
 from psycopg2.extensions import AsIs
 
 from odoo import _, api, exceptions, fields, models, sql_db
-from odoo.exceptions import Warning as UserError
+from odoo.exceptions import UserError
 
 _logger = logging.getLogger(__name__)
 
@@ -149,7 +149,7 @@ class AccountMassReconcile(models.Model):
         def find_reconcile_ids(fieldname, move_line_ids):
             if not move_line_ids:
                 return []
-            self.flush()
+            self.env.flush_all()
             sql = """
                 SELECT DISTINCT %s FROM account_move_line
                 WHERE %s IS NOT NULL AND id in %s
@@ -246,7 +246,7 @@ class AccountMassReconcile(models.Model):
             "view_id": False,
             "res_model": "account.move.line",
             "type": "ir.actions.act_window",
-            "nodestroy": True,
+            "context": {"nodestroy": True},
             "target": "current",
             "domain": [("id", "in", move_line_ids)],
         }
