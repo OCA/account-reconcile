@@ -43,7 +43,7 @@ class TestReconcile(TestAccountReconciliationCommon):
         self.assertEqual(False, mass_rec_last_hist)
 
     def test_last_history_full_no_history(self):
-        with self.assertRaises(exceptions.Warning):
+        with self.assertRaises(exceptions.UserError):
             self.mass_rec_no_history.last_history_reconcile()
 
     def test_open_unreconcile(self):

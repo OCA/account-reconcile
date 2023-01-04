@@ -17,3 +17,6 @@
 * Akim Juillerat <akim.juillerat@camptocamp.com>
 * Mykhailo Panarin <m.panarin@mobilunity.com>
 * Adrià Gil Sorribes <adria.gil@forgeflow.com>
+* `Trobz <https://trobz.com>`_:
+
+    * Son Ho <sonhd@trobz.com>

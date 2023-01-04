@@ -205,7 +205,7 @@ class MassReconcileAdvanced(models.AbstractModel):
         ]
 
     def _action_rec(self):
-        self.flush()
+        self.env.flush_all()
         credit_lines = self._query_credit()
         debit_lines = self._query_debit()
         result = self._rec_auto_lines_advanced(credit_lines, debit_lines)
