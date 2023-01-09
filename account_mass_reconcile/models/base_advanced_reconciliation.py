@@ -72,9 +72,9 @@ class MassReconcileAdvanced(models.AbstractModel):
 
         :return: tuple of tuples (key, value) where the keys are
             the matchers keys
-            (must be the same than `_opposite_matchers` returns,
+            (They must be the same that `_opposite_matchers` returns,
             and their values to match in the opposite lines.
-            A matching key can have multiples values.
+            A matching key can have multiples values.)
         """
         raise NotImplementedError
 
@@ -112,7 +112,7 @@ class MassReconcileAdvanced(models.AbstractModel):
         yield ('ref', (move_line['ref'], move_line['name'])
 
         An OR is used between the values for the same key.
-        An AND is used between the differents keys.
+        An AND is used between the different keys.
 
         :param dict move_line: values of the move_line
         :yield: matchers as tuple ('matcher key', value(s))
@@ -137,7 +137,7 @@ class MassReconcileAdvanced(models.AbstractModel):
 
     @classmethod
     def _compare_matcher_values(cls, key, values, opposite_values):
-        """Compare every values from a matcher vs an opposite matcher
+        """Compare every `values` from a matcher vs an opposite matcher
         and return True if it matches
         """
         for value, ovalue in product(values, opposite_values):
@@ -155,9 +155,9 @@ class MassReconcileAdvanced(models.AbstractModel):
         mkey, mvalue = matcher
         omkey, omvalue = opposite_matcher
         assert mkey == omkey, _(
-            "A matcher %s is compared with a matcher %s, the _matchers and "
+            "A matcher %(mkey)s is compared with a matcher %(omkey)s, the _matchers and "
             "_opposite_matchers are probably wrong"
-        ) % (mkey, omkey)
+        ) % {"mkey": mkey, "omkey": omkey}
         if not isinstance(mvalue, (list, tuple)):
             mvalue = (mvalue,)
         if not isinstance(omvalue, (list, tuple)):
@@ -175,10 +175,10 @@ class MassReconcileAdvanced(models.AbstractModel):
         for matcher in matchers:
             try:
                 opp_matcher = next(opp_matchers)
-            except StopIteration:
+            except StopIteration as e:
                 # if you fall here, you probably missed to put a `yield`
                 # in `_opposite_matchers()`
-                raise ValueError("Missing _opposite_matcher: %s" % matcher[0])
+                raise ValueError("Missing _opposite_matcher: %s" % matcher[0]) from e
 
             if not self._compare_matchers(matcher, opp_matcher):
                 # if any of the matcher fails, the opposite line
@@ -238,9 +238,9 @@ class MassReconcileAdvanced(models.AbstractModel):
     def _rec_group_by_chunk(self, reconcile_groups, lines_by_id, chunk_size):
         """Commit after each chunk
 
-        :param dict reconcile_grous: all groups to reconcile, will be splitted
+        :param list reconcile_groups: all groups to reconcile, will be split
         by chunk
-        :param list lines_by_id: list of dict of move lines values,
+        :param dict lines_by_id: dict of move lines values,
           the move lines we want to search for
         :return: list of reconciled lines
         """
@@ -251,23 +251,19 @@ class MassReconcileAdvanced(models.AbstractModel):
         # Copy and commit current transient model before creating a new cursor
         # This is required to avoid CacheMiss when using data from `self`
         # which is created during current transaction.
-        with api.Environment.manage():
-            with registry(self.env.cr.dbname).cursor() as new_cr:
-                new_env = api.Environment(new_cr, self.env.uid, self.env.context)
-                self_env = self.with_env(new_env)
-                rec = self_env.create(self.copy_data())
+        with registry(self.env.cr.dbname).cursor() as new_cr:
+            new_env = api.Environment(new_cr, self.env.uid, self.env.context)
+            self_env = self.with_env(new_env)
+            rec = self_env.create(self.copy_data())
         for i in range(0, len(reconcile_groups), chunk_size):
             chunk = reconcile_groups[i : i + chunk_size]
             _logger.debug("Reconcile group chunk %s", chunk)
             try:
-                with api.Environment.manage():
-                    with registry(self.env.cr.dbname).cursor() as new_cr:
-                        new_env = api.Environment(
-                            new_cr, self.env.uid, self.env.context
-                        )
-                        # Re-use the commited transient we just commited
-                        self_env = self.with_env(new_env).browse(rec.id)
-                        reconciled_ids += self_env._rec_group(chunk, lines_by_id)
+                with registry(self.env.cr.dbname).cursor() as new_cr:
+                    new_env = api.Environment(new_cr, self.env.uid, self.env.context)
+                    # Re-use the committed transient we just committed
+                    self_env = self.with_env(new_env).browse(rec.id)
+                    reconciled_ids += self_env._rec_group(chunk, lines_by_id)
             except Exception as e:
                 msg = "Reconciliation failed for group chunk %s with error:\n%s"
                 _logger.exception(msg, chunk, e)

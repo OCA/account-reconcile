@@ -64,7 +64,6 @@ class AccountMassReconcileMethod(models.Model):
 
     name = fields.Selection("_selection_name", string="Type", required=True)
     sequence = fields.Integer(
-        string="Sequence",
         default=1,
         required=True,
         help="The sequence field is used to order the reconcile method",
@@ -110,8 +109,8 @@ class AccountMassReconcile(models.Model):
             )
             rec.last_history = last_history_rs or False
 
-    name = fields.Char(string="Name", required=True)
-    account = fields.Many2one("account.account", string="Account", required=True)
+    name = fields.Char(required=True)
+    account = fields.Many2one("account.account", required=True)
     reconcile_method = fields.One2many(
         "account.mass.reconcile.method", "task_id", string="Method"
     )
@@ -134,9 +133,9 @@ class AccountMassReconcile(models.Model):
         return {
             "account_id": rec_method.task_id.account.id,
             "write_off": rec_method.write_off,
-            "account_lost_id": (rec_method.account_lost_id.id),
-            "account_profit_id": (rec_method.account_profit_id.id),
-            "journal_id": (rec_method.journal_id.id),
+            "account_lost_id": rec_method.account_lost_id.id,
+            "account_profit_id": rec_method.account_profit_id.id,
+            "journal_id": rec_method.journal_id.id,
             "date_base_on": rec_method.date_base_on,
             "_filter": rec_method._filter,
         }
@@ -175,13 +174,13 @@ class AccountMassReconcile(models.Model):
                     " FOR UPDATE NOWAIT",
                     (rec.id,),
                 )
-            except psycopg2.OperationalError:
+            except psycopg2.OperationalError as e:
                 raise exceptions.UserError(
                     _(
                         "A mass reconcile is already ongoing for this account, "
                         "please try again later."
                     )
-                )
+                ) from e
             ctx = self.env.context.copy()
             ctx["commit_every"] = rec.account.company_id.reconciliation_commit_every
             if ctx["commit_every"]:
@@ -245,7 +244,6 @@ class AccountMassReconcile(models.Model):
             "name": name,
             "view_mode": "tree,form",
             "view_id": False,
-            "view_type": "form",
             "res_model": "account.move.line",
             "type": "ir.actions.act_window",
             "nodestroy": True,
@@ -280,7 +278,7 @@ class AccountMassReconcile(models.Model):
         """Launch the reconcile with the oldest run
         This function is mostly here to be used with cron task
 
-        :param run_all: if set it will ingore lookup and launch
+        :param run_all: if set it will ignore lookup and launch
                     all reconciliation
         :returns: True in case of success or raises an exception
 
