@@ -130,7 +130,7 @@ class TestScenarioReconcile(TestAccountReconciliationCommon):
                 "reconcile_method": [(0, 0, {"name": "mass.reconcile.simple.partner"})],
             }
         )
-        # call the automatic reconcilation method
+        # call the automatic reconciliation method
         mass_rec.run_reconcile()
         self.assertEqual("paid", invoice.payment_state)
 
@@ -228,7 +228,7 @@ class TestScenarioReconcile(TestAccountReconciliationCommon):
                 ],
             }
         )
-        # call the automatic reconcilation method
+        # call the automatic reconciliation method
         mass_rec.run_reconcile()
         self.assertEqual("not_paid", invoice.payment_state)
         mass_rec.reconcile_method.write_off = 0.11
