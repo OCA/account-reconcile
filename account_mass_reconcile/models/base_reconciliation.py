@@ -77,7 +77,7 @@ class MassReconcileBase(models.AbstractModel):
         # it would be great to use dict for params
         # but as we use _where_calc in _get_filter
         # which returns a list, we have to
-        # accomodate with that
+        # accommodate with that
         params = [self.account_id.id]
         if self.partner_ids:
             where += " AND account_move_line.partner_id IN %s"

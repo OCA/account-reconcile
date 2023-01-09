@@ -69,7 +69,7 @@
         <field name="name">mass.reconcile.history.tree</field>
         <field name="model">mass.reconcile.history</field>
         <field name="arch" type="xml">
-            <tree string="Automatic Mass Reconcile History">
+            <tree>
                 <field name="mass_reconcile_id" />
                 <field name="date" />
                 <button
