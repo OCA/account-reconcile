@@ -6,7 +6,6 @@ from odoo import models
 
 
 class MassReconcileAdvancedRef(models.TransientModel):
-
     _name = "mass.reconcile.advanced.ref"
     _inherit = "mass.reconcile.advanced"
     _description = "Mass Reconcile Advanced Ref"
@@ -44,7 +43,7 @@ class MassReconcileAdvancedRef(models.TransientModel):
         to consider them as "opposite"
 
         The matchers will be evaluated in the same order as declared
-        vs the the opposite matchers, so you can gain performance by
+        vs the opposite matchers, so you can gain performance by
         declaring first the partners with the less computation.
 
         All matchers should match with their opposite to be considered
@@ -54,9 +53,9 @@ class MassReconcileAdvancedRef(models.TransientModel):
 
         :return: tuple of tuples (key, value) where the keys are
             the matchers keys
-            (must be the same than `_opposite_matchers` returns,
+            (They must be the same that `_opposite_matchers` returns,
             and their values to match in the opposite lines.
-            A matching key can have multiples values.
+            A matching key can have multiples values.)
         """
         return (
             ("partner_id", move_line["partner_id"]),
@@ -97,7 +96,7 @@ class MassReconcileAdvancedRef(models.TransientModel):
         yield ('ref', (move_line['ref'], move_line['name'])
 
         An OR is used between the values for the same key.
-        An AND is used between the differents keys.
+        An AND is used between the different keys.
 
         :param dict move_line: values of the move_line
         :yield: matchers as tuple ('matcher key', value(s))
@@ -151,7 +150,7 @@ class MassReconcileAdvancedName(models.TransientModel):
         to consider them as "opposite"
 
         The matchers will be evaluated in the same order as declared
-        vs the the opposite matchers, so you can gain performance by
+        vs the opposite matchers, so you can gain performance by
         declaring first the partners with the less computation.
 
         All matchers should match with their opposite to be considered
@@ -161,9 +160,9 @@ class MassReconcileAdvancedName(models.TransientModel):
 
         :return: tuple of tuples (key, value) where the keys are
             the matchers keys
-            (must be the same than `_opposite_matchers` returns,
+            (They must be the same that `_opposite_matchers` returns,
             and their values to match in the opposite lines.
-            A matching key can have multiples values.
+            A matching key can have multiples values.)
         """
         return (
             ("partner_id", move_line["partner_id"]),
@@ -204,7 +203,7 @@ class MassReconcileAdvancedName(models.TransientModel):
         yield ('ref', (move_line['ref'], move_line['name'])
 
         An OR is used between the values for the same key.
-        An AND is used between the differents keys.
+        An AND is used between the different keys.
 
         :param dict move_line: values of the move_line
         :yield: matchers as tuple ('matcher key', value(s))

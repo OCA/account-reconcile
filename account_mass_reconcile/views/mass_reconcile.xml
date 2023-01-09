@@ -50,7 +50,7 @@
                         </page>
                         <page name="history" string="History">
                             <field name="history_ids" nolabel="1">
-                                <tree string="Automatic Mass Reconcile History">
+                                <tree>
                                     <field name="date" />
                                     <button
                                         icon="fa-share"
@@ -116,7 +116,7 @@ The lines should have the same partner, and the credit entry ref. is matched wit
         <field name="priority">20</field>
         <field name="model">account.mass.reconcile</field>
         <field name="arch" type="xml">
-            <tree string="Automatic Mass Reconcile">
+            <tree>
                 <field name="name" />
                 <field name="account" />
                 <field name="company_id" groups="base.group_multi_company" />
@@ -161,7 +161,7 @@ The lines should have the same partner, and the credit entry ref. is matched wit
         <field name="priority">20</field>
         <field name="model">account.mass.reconcile.method</field>
         <field name="arch" type="xml">
-            <tree editable="top" string="Automatic Mass Reconcile Method">
+            <tree editable="top">
                 <field name="sequence" widget="handle" />
                 <field name="name" />
                 <field name="write_off" />
