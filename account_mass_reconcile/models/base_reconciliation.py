@@ -81,7 +81,7 @@ class MassReconcileBase(models.AbstractModel):
         params = [self.account_id.id]
         if self.partner_ids:
             where += " AND account_move_line.partner_id IN %s"
-            params.append(tuple([line.id for line in self.partner_ids]))
+            params.append(tuple(line.id for line in self.partner_ids))
         return where, params
 
     def _get_filter(self):
@@ -100,10 +100,10 @@ class MassReconcileBase(models.AbstractModel):
         precision = self.env["decimal.precision"].precision_get("Account")
 
         writeoff_amount = round(
-            sum([line["amount_residual"] for line in lines]), precision
+            sum(line["amount_residual"] for line in lines), precision
         )
         writeoff_amount_curr = round(
-            sum([line["amount_residual_currency"] for line in lines]), precision
+            sum(line["amount_residual_currency"] for line in lines), precision
         )
 
         first_currency = lines[0]["currency_id"]
