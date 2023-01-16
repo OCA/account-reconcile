@@ -93,7 +93,6 @@
                             <field name="suppress_ending_date_filter" />
                             <field
                                 name="company_id"
-                                groups="base.group_multi_company"
                                 placeholder="Select the company"
                             />
                         </group>
