@@ -91,10 +91,7 @@
                                 placeholder="Enter the starting balance"
                             />
                             <field name="suppress_ending_date_filter" />
-                            <field
-                                name="company_id"
-                                placeholder="Select the company"
-                            />
+                            <field name="company_id" placeholder="Select the company" />
                         </group>
                     </group>
                     <notebook colspan="5">
