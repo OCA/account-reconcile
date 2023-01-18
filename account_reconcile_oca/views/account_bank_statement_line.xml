@@ -3,31 +3,6 @@
      License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
 <odoo>
 
-    <record id="bank_statement_search_reconcile_view" model="ir.ui.view">
-        <field name="name">account.bank.statement.line.reconcile</field>
-        <field name="model">account.bank.statement.line</field>
-        <field name="arch" type="xml">
-            <search>
-                <field name="name" />
-                <field name="partner_id" />
-                <field name="payment_ref" />
-                <field name="id" invisible="1" />
-                <field name="move_id" invisible="1" />
-                <separator />
-                <filter
-                    name="reconciled"
-                    string="Reconciled"
-                    domain="[('is_reconciled', '=', True)]"
-                />
-                <filter
-                    name="not_reconciled"
-                    string="Not Reconciled"
-                    domain="[('is_reconciled', '=', False)]"
-                />
-                <separator />
-            </search>
-        </field>
-    </record>
     <record id="bank_statement_line_reconcile_view" model="ir.ui.view">
         <field name="name">account.bank.statement.line.reconcile</field>
         <field name="model">account.bank.statement.line</field>
@@ -84,15 +59,19 @@
     </record>
 
     <record id="bank_statement_line_form_add_view" model="ir.ui.view">
-        <field name="name">account.bank.statement.line.form</field>
+        <field
+            name="name"
+        >Simple form view to manually create an account.bank.statement.line</field>
         <field name="model">account.bank.statement.line</field>
+        <field name="priority">99</field>
         <field name="arch" type="xml">
             <form>
                 <group>
                     <group>
                         <field name="suitable_journal_ids" invisible="1" />
                         <field name="state" invisible="1" />
-                        <field name="currency_id" invisible="1" />
+                        <field name="currency_id" invisible="0" />
+                        <field name="company_id" invisible="0" />
                         <field name="date" />
                         <field name="payment_ref" required="1" />
                         <field name="partner_id" />
@@ -103,7 +82,6 @@
                         <field
                             name="journal_id"
                             invisible="context.get('default_journal_id')"
-                            required="1"
                         />
                     </group>
                     <group>
@@ -116,9 +94,6 @@
                         <field
                             name="amount_currency"
                             groups="base.group_multi_currency"
-                            widget="monetary"
-                            options="{'currency_field': 'foreign_currency_id'}"
-                            attrs="{'invisible': [('foreign_currency_id', '=', False)]}"
                         />
                     </group>
                 </group>
@@ -313,7 +288,7 @@
         </field>
     </record>
     <record id="action_bank_statement_line_create" model="ir.actions.act_window">
-        <field name="name">Add an Statement</field>
+        <field name="name">Add Bank Statement Line</field>
         <field name="res_model">account.bank.statement.line</field>
         <field name="view_mode">form</field>
         <field
