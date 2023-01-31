@@ -23,7 +23,7 @@ addon | version | maintainers | summary
 --- | --- | --- | ---
 [account_move_reconcile_forbid_cancel](account_move_reconcile_forbid_cancel/) | 15.0.1.0.0 |  | Account Move Reconcile Forbid Cancel
 [account_partner_reconcile](account_partner_reconcile/) | 15.0.1.0.0 |  | Account Partner Reconcile
-[account_reconciliation_widget](account_reconciliation_widget/) | 15.0.1.2.1 |  | Account reconciliation widget
+[account_reconciliation_widget](account_reconciliation_widget/) | 15.0.1.2.2 |  | Account reconciliation widget
 [account_reconciliation_widget_due_date](account_reconciliation_widget_due_date/) | 15.0.1.0.0 | [![victoralmau](https://github.com/victoralmau.png?size=30px)](https://github.com/victoralmau) | Account Reconciliation Widget Due Date
 
 [//]: # (end addons)
