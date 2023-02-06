@@ -14,14 +14,14 @@ Base transaction ID for financial institutes
     :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
     :alt: License: AGPL-3
 .. |badge3| image:: https://img.shields.io/badge/github-OCA%2Faccount--reconcile-lightgray.png?logo=github
-    :target: https://github.com/OCA/account-reconcile/tree/12.0/base_transaction_id
+    :target: https://github.com/OCA/account-reconcile/tree/16.0/base_transaction_id
     :alt: OCA/account-reconcile
 .. |badge4| image:: https://img.shields.io/badge/weblate-Translate%20me-F47D42.png
-    :target: https://translation.odoo-community.org/projects/account-reconcile-12-0/account-reconcile-12-0-base_transaction_id
+    :target: https://translation.odoo-community.org/projects/account-reconcile-16-0/account-reconcile-16-0-base_transaction_id
     :alt: Translate me on Weblate
-.. |badge5| image:: https://img.shields.io/badge/runbot-Try%20me-875A7B.png
-    :target: https://runbot.odoo-community.org/runbot/98/12.0
-    :alt: Try me on Runbot
+.. |badge5| image:: https://img.shields.io/badge/runboat-Try%20me-875A7B.png
+    :target: https://runboat.odoo-community.org/webui/builds.html?repo=OCA/account-reconcile&target_branch=16.0
+    :alt: Try me on Runboat
 
 |badge1| |badge2| |badge3| |badge4| |badge5| 
 
@@ -49,7 +49,7 @@ Bug Tracker
 Bugs are tracked on `GitHub Issues <https://github.com/OCA/account-reconcile/issues>`_.
 In case of trouble, please check there if your issue has already been reported.
 If you spotted it first, help us smashing it by providing a detailed and welcomed
-`feedback <https://github.com/OCA/account-reconcile/issues/new?body=module:%20base_transaction_id%0Aversion:%2012.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
+`feedback <https://github.com/OCA/account-reconcile/issues/new?body=module:%20base_transaction_id%0Aversion:%2016.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
 
 Do not contact contributors directly about support or help with technical issues.
 
@@ -71,6 +71,14 @@ Contributors
 * Lorenzo Battistini <lorenzo.battistini@agilebg.com>
 * Iryna Vyshnevska <i.vyshnevska@mobilunity.com>
 * Mykhailo Panarin <m.panarin@mobilunity.com>
+* Simone Rubino <simone.rubino@agilebg.com>
+* `Trobz <https://trobz.com>`_:
+    * Dzung Tran <dungtd@trobz.com>
+
+Other credits
+~~~~~~~~~~~~~
+
+The migration of this module from 14.0 to 16.0 was financially supported by Camptocamp
 
 Maintainers
 ~~~~~~~~~~~
@@ -85,6 +93,6 @@ OCA, or the Odoo Community Association, is a nonprofit organization whose
 mission is to support the collaborative development of Odoo features and
 promote its widespread use.
 
-This module is part of the `OCA/account-reconcile <https://github.com/OCA/account-reconcile/tree/12.0/base_transaction_id>`_ project on GitHub.
+This module is part of the `OCA/account-reconcile <https://github.com/OCA/account-reconcile/tree/16.0/base_transaction_id>`_ project on GitHub.
 
 You are welcome to contribute. To learn how please visit https://odoo-community.org/page/Contribute.

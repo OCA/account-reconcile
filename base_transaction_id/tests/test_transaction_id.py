@@ -2,11 +2,12 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
 from odoo.fields import first
-from odoo.tests import Form
+from odoo.tests import Form, tagged
 
 from odoo.addons.sale.tests.common import TestSaleCommon
 
 
+@tagged("post_install", "-at_install")
 class TestTransactionID(TestSaleCommon):
     @classmethod
     def setUpClass(cls, chart_template_ref=None):
