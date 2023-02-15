@@ -4,7 +4,7 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 14.0\n"
+"Project-Id-Version: Odoo Server 15.0\n"
 "Report-Msgid-Bugs-To: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -25,7 +25,7 @@ msgstr ""
 #: code:addons/account_mass_reconcile/models/base_advanced_reconciliation.py:0
 #, python-format
 msgid ""
-"A matcher %s is compared with a matcher %s, the _matchers and "
+"A matcher %(mkey)s is compared with a matcher %(omkey)s, the _matchers and "
 "_opposite_matchers are probably wrong"
 msgstr ""
 
@@ -101,21 +101,13 @@ msgstr ""
 
 #. module: account_mass_reconcile
 #: model_terms:ir.ui.view,arch_db:account_mass_reconcile.account_mass_reconcile_form
-#: model_terms:ir.ui.view,arch_db:account_mass_reconcile.account_mass_reconcile_tree
 msgid "Automatic Mass Reconcile"
 msgstr ""
 
 #. module: account_mass_reconcile
-#: model_terms:ir.ui.view,arch_db:account_mass_reconcile.account_mass_reconcile_form
 #: model_terms:ir.ui.view,arch_db:account_mass_reconcile.mass_reconcile_history_form
-#: model_terms:ir.ui.view,arch_db:account_mass_reconcile.mass_reconcile_history_tree
 #: model_terms:ir.ui.view,arch_db:account_mass_reconcile.view_mass_reconcile_history_search
 msgid "Automatic Mass Reconcile History"
-msgstr ""
-
-#. module: account_mass_reconcile
-#: model_terms:ir.ui.view,arch_db:account_mass_reconcile.account_mass_reconcile_method_tree
-msgid "Automatic Mass Reconcile Method"
 msgstr ""
 
 #. module: account_mass_reconcile
@@ -203,18 +195,12 @@ msgstr ""
 #. module: account_mass_reconcile
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile__display_name
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile_method__display_name
-#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_advanced__display_name
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_advanced_name__display_name
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_advanced_ref__display_name
-#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_base__display_name
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_history__display_name
-#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_options__display_name
-#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple__display_name
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_name__display_name
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_partner__display_name
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_reference__display_name
-#: model:ir.model.fields,field_description:account_mass_reconcile.field_res_company__display_name
-#: model:ir.model.fields,field_description:account_mass_reconcile.field_res_config_settings__display_name
 msgid "Display Name"
 msgstr ""
 
@@ -251,11 +237,6 @@ msgid "Followers"
 msgstr ""
 
 #. module: account_mass_reconcile
-#: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile__message_channel_ids
-msgid "Followers (Channels)"
-msgstr ""
-
-#. module: account_mass_reconcile
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile__message_partner_ids
 msgid "Followers (Partners)"
 msgstr ""
@@ -283,6 +264,11 @@ msgid "Group By..."
 msgstr ""
 
 #. module: account_mass_reconcile
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile__has_message
+msgid "Has Message"
+msgstr ""
+
+#. module: account_mass_reconcile
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile__history_ids
 #: model_terms:ir.ui.view,arch_db:account_mass_reconcile.account_mass_reconcile_form
 msgid "History"
@@ -304,18 +290,12 @@ msgstr ""
 #. module: account_mass_reconcile
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile__id
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile_method__id
-#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_advanced__id
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_advanced_name__id
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_advanced_ref__id
-#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_base__id
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_history__id
-#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_options__id
-#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple__id
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_name__id
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_partner__id
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_reference__id
-#: model:ir.model.fields,field_description:account_mass_reconcile.field_res_company__id
-#: model:ir.model.fields,field_description:account_mass_reconcile.field_res_config_settings__id
 msgid "ID"
 msgstr ""
 
@@ -358,18 +338,12 @@ msgstr ""
 #. module: account_mass_reconcile
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile____last_update
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile_method____last_update
-#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_advanced____last_update
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_advanced_name____last_update
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_advanced_ref____last_update
-#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_base____last_update
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_history____last_update
-#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_options____last_update
-#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple____last_update
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_name____last_update
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_partner____last_update
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_reference____last_update
-#: model:ir.model.fields,field_description:account_mass_reconcile.field_res_company____last_update
-#: model:ir.model.fields,field_description:account_mass_reconcile.field_res_config_settings____last_update
 msgid "Last Modified on"
 msgstr ""
 
