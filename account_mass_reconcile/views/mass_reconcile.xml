@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <!-- account.mass.reconcile view -->
+    <record id="account_mass_reconcile_form" model="ir.ui.view">
+        <field name="name">account.mass.reconcile.form</field>
+        <field name="priority">20</field>
+        <field name="model">account.mass.reconcile</field>
+        <field name="arch" type="xml">
+            <form string="Automatic Mass Reconcile" version="7.0">
+                <header>
+                    <button
+                        name="run_reconcile"
+                        class="oe_highlight"
+                        string="Start Auto Reconciliation"
+                        type="object"
+                    />
+                    <button
+                        icon="fa-share"
+                        name="last_history_reconcile"
+                        string="Display items reconciled on the last run"
+                        type="object"
+                    />
+                </header>
+                <sheet>
+                    <separator colspan="4" string="Profile Information" />
+                    <group>
+                        <group>
+                            <field name="name" select="1" />
+                            <field name="account" />
+                            <field
+                                name="company_id"
+                                groups="base.group_multi_company"
+                            />
+                        </group>
+                        <group>
+                            <group>
+                                <field name="unreconciled_count" />
+                                <button
+                                    icon="fa-share"
+                                    name="open_unreconcile"
+                                    string="Go to unreconciled items"
+                                    type="object"
+                                />
+                            </group>
+                        </group>
+                    </group>
+                    <notebook colspan="4">
+                        <page name="methods" string="Configuration">
+                            <field name="reconcile_method" colspan="4" nolabel="1" />
+                        </page>
+                        <page name="history" string="History">
+                            <field name="history_ids" nolabel="1">
+                                <tree>
+                                    <field name="date" />
+                                    <button
+                                        icon="fa-share"
+                                        name="open_reconcile"
+                                        string="Go to reconciled items"
+                                        type="object"
+                                    />
+                                </tree>
+                            </field>
+                        </page>
+                        <page name="information" string="Information">
+                            <separator colspan="4" string="Simple. Amount and Name" />
+                            <label
+                                for="reconcile_method"
+                                string="Match one debit line vs one credit line. Do not allow partial reconciliation.
+The lines should have the same amount (with the write-off) and the same name to be reconciled."
+                                colspan="4"
+                            />
+                            <separator
+                                colspan="4"
+                                string="Simple. Amount and Partner"
+                            />
+                            <label
+                                for="reconcile_method"
+                                string="Match one debit line vs one credit line. Do not allow partial reconciliation.
+The lines should have the same amount (with the write-off) and the same partner to be reconciled."
+                                colspan="4"
+                            />
+                            <separator
+                                colspan="4"
+                                string="Simple. Amount and Reference"
+                            />
+                            <label
+                                for="reconcile_method"
+                                string="Match one debit line vs one credit line. Do not allow partial reconciliation.
+The lines should have the same amount (with the write-off) and the same reference to be reconciled."
+                                colspan="4"
+                            />
+                            <group colspan="2" col="2">
+                                <separator
+                                    colspan="4"
+                                    string="Advanced. Partner and Ref"
+                                />
+                                <label
+                                    for="reconcile_method"
+                                    string="Match multiple debit vs multiple credit entries. Allow partial reconciliation.
+The lines should have the same partner, and the credit entry ref. is matched with the debit entry ref. or name."
+                                    colspan="4"
+                                />
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers" />
+                    <field name="message_ids" widget="mail_thread" />
+                </div>
+            </form>
+        </field>
+    </record>
+    <record id="account_mass_reconcile_tree" model="ir.ui.view">
+        <field name="name">account.mass.reconcile.tree</field>
+        <field name="priority">20</field>
+        <field name="model">account.mass.reconcile</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name" />
+                <field name="account" />
+                <field name="company_id" groups="base.group_multi_company" />
+                <field name="unreconciled_count" />
+                <button
+                    icon="fa-cogs"
+                    name="run_reconcile"
+                    colspan="4"
+                    string="Start Auto Reconcilation"
+                    type="object"
+                />
+                <button
+                    icon="fa-share"
+                    name="last_history_reconcile"
+                    colspan="2"
+                    string="Display items reconciled on the last run"
+                    type="object"
+                />
+            </tree>
+        </field>
+    </record>
+    <record id="action_account_mass_reconcile" model="ir.actions.act_window">
+        <field name="name">Mass Automatic Reconcile</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">account.mass.reconcile</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+            Click to add a reconciliation profile.
+          </p>
+            <p>
+            A reconciliation profile specifies, for one account, how
+            the entries should be reconciled.
+            You can select one or many reconciliation methods which will
+            be run sequentially to match the entries between them.
+          </p>
+        </field>
+    </record>
+    <!-- account.mass.reconcile.method view -->
+    <record id="account_mass_reconcile_method_tree" model="ir.ui.view">
+        <field name="name">account.mass.reconcile.method.tree</field>
+        <field name="priority">20</field>
+        <field name="model">account.mass.reconcile.method</field>
+        <field name="arch" type="xml">
+            <tree editable="top">
+                <field name="sequence" widget="handle" />
+                <field name="name" />
+                <field name="write_off" />
+                <field
+                    name="account_lost_id"
+                    attrs="{'required':[('write_off','>',0)]}"
+                />
+                <field
+                    name="account_profit_id"
+                    attrs="{'required':[('write_off','>',0)]}"
+                />
+                <field name="journal_id" attrs="{'required':[('write_off','>',0)]}" />
+                <field name="date_base_on" />
+            </tree>
+        </field>
+    </record>
+    <!-- menu item -->
+    <menuitem
+        action="action_account_mass_reconcile"
+        id="menu_mass_reconcile"
+        sequence="30"
+        parent="account.menu_finance_entries_actions"
+    />
+    <data noupdate="1">
+        <record forcecreate="True" id="ir_cron_run_reconciliations" model="ir.cron">
+            <field name="name">Do Automatic Reconciliations</field>
+            <field
+                name="model_id"
+                ref="account_mass_reconcile.model_account_mass_reconcile"
+            />
+            <field name="active" eval="False" />
+            <field name="user_id" ref="base.user_root" />
+            <field name="interval_number">3</field>
+            <field name="interval_type">hours</field>
+            <field name="numbercall">-1</field>
+            <field name="doall" eval="False" />
+            <field name="code">model.run_scheduler()</field>
+        </record>
+    </data>
+</odoo>

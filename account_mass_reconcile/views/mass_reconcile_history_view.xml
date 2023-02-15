@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="view_mass_reconcile_history_search" model="ir.ui.view">
+        <field name="name">mass.reconcile.history.search</field>
+        <field name="model">mass.reconcile.history</field>
+        <field name="arch" type="xml">
+            <search string="Automatic Mass Reconcile History">
+                <filter
+                    icon="terp-go-today"
+                    name="Today"
+                    domain="[('date','&lt;', time.strftime('%%Y-%%m-%%d 23:59:59')), ('date','&gt;=', time.strftime('%%Y-%%m-%%d 00:00:00'))]"
+                    help="Todays' Reconcilations"
+                />
+                <filter
+                    icon="terp-go-week"
+                    name="7 Days"
+                    help="Reconciliations of last 7 days"
+                    domain="[('date','&lt;', time.strftime('%%Y-%%m-%%d 23:59:59')),('date','&gt;=',(datetime.date.today()-datetime.timedelta(days=7)).strftime('%%Y-%%m-%%d 00:00:00'))]"
+                />
+                <separator orientation="vertical" />
+                <field name="mass_reconcile_id" />
+                <field name="date" />
+                <newline />
+                <group expand="0" string="Group By...">
+                    <filter
+                        name="Reconciliation Profile"
+                        icon="terp-stock_effects-object-colorize"
+                        domain="[]"
+                        context="{'group_by': 'mass_reconcile_id'}"
+                    />
+                    <filter
+                        name="Date"
+                        icon="terp-go-month"
+                        domain="[]"
+                        context="{'group_by': 'date'}"
+                    />
+                </group>
+            </search>
+        </field>
+    </record>
+    <record id="mass_reconcile_history_form" model="ir.ui.view">
+        <field name="name">mass.reconcile.history.form</field>
+        <field name="model">mass.reconcile.history</field>
+        <field name="arch" type="xml">
+            <form string="Automatic Mass Reconcile History" version="7.0">
+                <header>
+                    <button
+                        name="open_reconcile"
+                        string="Go to reconciled items"
+                        icon="fa-share"
+                        type="object"
+                    />
+                </header>
+                <sheet>
+                    <group>
+                        <field name="mass_reconcile_id" />
+                        <field name="date" />
+                        <field name="company_id" groups="base.group_multi_company" />
+                    </group>
+                    <group col="2">
+                        <separator colspan="2" string="Reconciliations" />
+                        <field name="reconcile_ids" nolabel="1" />
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="mass_reconcile_history_tree" model="ir.ui.view">
+        <field name="name">mass.reconcile.history.tree</field>
+        <field name="model">mass.reconcile.history</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="mass_reconcile_id" />
+                <field name="date" />
+                <button
+                    icon="fa-share"
+                    name="open_reconcile"
+                    string="Go to reconciled items"
+                    type="object"
+                />
+            </tree>
+        </field>
+    </record>
+    <record id="action_mass_reconcile_history" model="ir.actions.act_window">
+        <field name="name">Mass Automatic Reconcile History</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">mass.reconcile.history</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+</odoo>
