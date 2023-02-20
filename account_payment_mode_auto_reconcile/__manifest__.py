@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Copyright 2019 Camptocamp SA
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl)
 {
@@ -6,7 +5,7 @@
     "summary": "Reconcile outstanding credits according to payment mode",
     "version": "10.0.1.0.0",
     "category": "Banking addons",
-    "website": "https://github.com/OCA/bank-payment",
+    "website": "https://github.com/OCA/account-reconcile",
     "author": "Camptocamp, Odoo Community Association (OCA)",
     "license": "AGPL-3",
     "installable": True,
