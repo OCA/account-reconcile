@@ -20,6 +20,7 @@ msgstr ""
 "%100==4 ? 2 : 3);\n"
 
 #. module: account_mass_reconcile
+#. odoo-python
 #: code:addons/account_mass_reconcile/models/mass_reconcile.py:0
 #, python-format
 msgid ""
@@ -27,6 +28,7 @@ msgid ""
 msgstr ""
 
 #. module: account_mass_reconcile
+#. odoo-python
 #: code:addons/account_mass_reconcile/models/base_advanced_reconciliation.py:0
 #, python-format
 msgid ""
@@ -116,12 +118,14 @@ msgid "Automatic Mass Reconcile History"
 msgstr "Zgodovina samodejnih preprostih usklajevanj"
 
 #. module: account_mass_reconcile
+#. odoo-python
 #: code:addons/account_mass_reconcile/models/base_reconciliation.py:0
 #, python-format
 msgid "Automatic Write Off"
 msgstr ""
 
 #. module: account_mass_reconcile
+#. odoo-python
 #: code:addons/account_mass_reconcile/models/base_reconciliation.py:0
 #, python-format
 msgid "Automatic writeoff"
@@ -219,7 +223,6 @@ msgstr "Prikaz usklajenih postavk po zadnjem zagonu"
 #. module: account_mass_reconcile
 #: model:ir.actions.server,name:account_mass_reconcile.ir_cron_run_reconciliations_ir_actions_server
 #: model:ir.cron,cron_name:account_mass_reconcile.ir_cron_run_reconciliations
-#: model:ir.cron,name:account_mass_reconcile.ir_cron_run_reconciliations
 #, fuzzy
 msgid "Do Automatic Reconciliations"
 msgstr "Zagon samodejnega usklajevanja"
@@ -309,7 +312,6 @@ msgstr "ID"
 
 #. module: account_mass_reconcile
 #: model:ir.model.fields,help:account_mass_reconcile.field_account_mass_reconcile__message_needaction
-#: model:ir.model.fields,help:account_mass_reconcile.field_account_mass_reconcile__message_unread
 msgid "If checked, new messages require your attention."
 msgstr ""
 
@@ -532,11 +534,6 @@ msgid "Number of messages with delivery error"
 msgstr ""
 
 #. module: account_mass_reconcile
-#: model:ir.model.fields,help:account_mass_reconcile.field_account_mass_reconcile__message_unread_counter
-msgid "Number of unread messages"
-msgstr ""
-
-#. module: account_mass_reconcile
 #: model:ir.model,name:account_mass_reconcile.model_mass_reconcile_options
 #, fuzzy
 msgid "Options of a reconciliation profile"
@@ -568,6 +565,7 @@ msgid "Reconciliation"
 msgstr "Uskladitev"
 
 #. module: account_mass_reconcile
+#. odoo-python
 #: code:addons/account_mass_reconcile/models/mass_reconcile_history.py:0
 #: model_terms:ir.ui.view,arch_db:account_mass_reconcile.mass_reconcile_history_form
 #, python-format
@@ -647,12 +645,14 @@ msgid "The sequence field is used to order the reconcile method"
 msgstr "Polje zaporedja za razporejanje metod usklajevanja"
 
 #. module: account_mass_reconcile
+#. odoo-python
 #: code:addons/account_mass_reconcile/models/mass_reconcile.py:0
 #, python-format
 msgid "There is no history of reconciled items on the task: %s."
 msgstr "Usklajene postavke na opravilu: %s nimajo zgodovine."
 
 #. module: account_mass_reconcile
+#. odoo-python
 #: code:addons/account_mass_reconcile/models/mass_reconcile.py:0
 #, python-format
 msgid "There was an error during reconciliation : %s"
@@ -669,21 +669,12 @@ msgid "Type"
 msgstr "Tip"
 
 #. module: account_mass_reconcile
-#: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile__message_unread
-msgid "Unread Messages"
-msgstr ""
-
-#. module: account_mass_reconcile
-#: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile__message_unread_counter
-msgid "Unread Messages Counter"
-msgstr ""
-
-#. module: account_mass_reconcile
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile__unreconciled_count
 msgid "Unreconciled Items"
 msgstr ""
 
 #. module: account_mass_reconcile
+#. odoo-python
 #: code:addons/account_mass_reconcile/models/mass_reconcile.py:0
 #, python-format
 msgid "Unreconciled items"
