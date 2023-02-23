@@ -20,6 +20,7 @@ msgstr ""
 "X-Generator: Weblate 4.3.2\n"
 
 #. module: account_mass_reconcile
+#. odoo-python
 #: code:addons/account_mass_reconcile/models/mass_reconcile.py:0
 #, python-format
 msgid ""
@@ -27,6 +28,7 @@ msgid ""
 msgstr ""
 
 #. module: account_mass_reconcile
+#. odoo-python
 #: code:addons/account_mass_reconcile/models/base_advanced_reconciliation.py:0
 #, python-format
 msgid ""
@@ -121,12 +123,14 @@ msgid "Automatic Mass Reconcile History"
 msgstr "Historial de conciliación automática masiva"
 
 #. module: account_mass_reconcile
+#. odoo-python
 #: code:addons/account_mass_reconcile/models/base_reconciliation.py:0
 #, python-format
 msgid "Automatic Write Off"
 msgstr "Cancelación automática"
 
 #. module: account_mass_reconcile
+#. odoo-python
 #: code:addons/account_mass_reconcile/models/base_reconciliation.py:0
 #, python-format
 msgid "Automatic writeoff"
@@ -223,7 +227,6 @@ msgstr "Mostrar elementos conciliados en la última ejecucción"
 #. module: account_mass_reconcile
 #: model:ir.actions.server,name:account_mass_reconcile.ir_cron_run_reconciliations_ir_actions_server
 #: model:ir.cron,cron_name:account_mass_reconcile.ir_cron_run_reconciliations
-#: model:ir.cron,name:account_mass_reconcile.ir_cron_run_reconciliations
 msgid "Do Automatic Reconciliations"
 msgstr "Iniciar la reconciliación automática"
 
@@ -316,7 +319,6 @@ msgstr "ID"
 
 #. module: account_mass_reconcile
 #: model:ir.model.fields,help:account_mass_reconcile.field_account_mass_reconcile__message_needaction
-#: model:ir.model.fields,help:account_mass_reconcile.field_account_mass_reconcile__message_unread
 msgid "If checked, new messages require your attention."
 msgstr "Si se comprueba, nuevos mensajes requieren su atención."
 
@@ -539,11 +541,6 @@ msgid "Number of messages with delivery error"
 msgstr "Número de mensajes con error de entrada"
 
 #. module: account_mass_reconcile
-#: model:ir.model.fields,help:account_mass_reconcile.field_account_mass_reconcile__message_unread_counter
-msgid "Number of unread messages"
-msgstr "Número de mensajes no leíbles"
-
-#. module: account_mass_reconcile
 #: model:ir.model,name:account_mass_reconcile.model_mass_reconcile_options
 msgid "Options of a reconciliation profile"
 msgstr "Opciones de un perfil de reconciliación"
@@ -574,6 +571,7 @@ msgid "Reconciliation"
 msgstr "Reconciliación"
 
 #. module: account_mass_reconcile
+#. odoo-python
 #: code:addons/account_mass_reconcile/models/mass_reconcile_history.py:0
 #: model_terms:ir.ui.view,arch_db:account_mass_reconcile.mass_reconcile_history_form
 #, python-format
@@ -653,12 +651,14 @@ msgid "The sequence field is used to order the reconcile method"
 msgstr "El campo de secuencia se usa para ordenar los métodos de conciliación"
 
 #. module: account_mass_reconcile
+#. odoo-python
 #: code:addons/account_mass_reconcile/models/mass_reconcile.py:0
 #, python-format
 msgid "There is no history of reconciled items on the task: %s."
 msgstr "No hay histórico de elementos conciliados en la tarea: %s."
 
 #. module: account_mass_reconcile
+#. odoo-python
 #: code:addons/account_mass_reconcile/models/mass_reconcile.py:0
 #, python-format
 msgid "There was an error during reconciliation : %s"
@@ -675,21 +675,12 @@ msgid "Type"
 msgstr "Tipo"
 
 #. module: account_mass_reconcile
-#: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile__message_unread
-msgid "Unread Messages"
-msgstr "Mensajes no leíbles"
-
-#. module: account_mass_reconcile
-#: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile__message_unread_counter
-msgid "Unread Messages Counter"
-msgstr "Contador de mensajes no leíble"
-
-#. module: account_mass_reconcile
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile__unreconciled_count
 msgid "Unreconciled Items"
 msgstr "Artículos no conciliados"
 
 #. module: account_mass_reconcile
+#. odoo-python
 #: code:addons/account_mass_reconcile/models/mass_reconcile.py:0
 #, python-format
 msgid "Unreconciled items"
@@ -718,6 +709,15 @@ msgstr "Historia de la comunicación del sitio web"
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_reference__write_off
 msgid "Write off allowed"
 msgstr "Desajuste permitido"
+
+#~ msgid "Number of unread messages"
+#~ msgstr "Número de mensajes no leíbles"
+
+#~ msgid "Unread Messages"
+#~ msgstr "Mensajes no leíbles"
+
+#~ msgid "Unread Messages Counter"
+#~ msgstr "Contador de mensajes no leíble"
 
 #, python-format
 #~ msgid ""
