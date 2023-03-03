@@ -40,6 +40,7 @@ class AccountBankStatementLine(models.Model):
     )
     manual_partner_id = fields.Many2one(
         "res.partner",
+        domain=[('parent_id', '=', False)],
         check_company=True,
         store=False,
         default=False,
