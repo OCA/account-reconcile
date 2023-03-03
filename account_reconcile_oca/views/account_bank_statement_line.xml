@@ -155,6 +155,7 @@
                         />
                     </div>
                 </div>
+                <field name="id" invisible="1" />
                 <field name="name" invisible="1" />
                 <field name="can_reconcile" invisible="1" />
                 <field name="partner_id" invisible="1" />
@@ -188,7 +189,7 @@
                         <field
                             name="add_account_move_line_id"
                             widget="account_reconcile_oca_match"
-                            domain="[('parent_state', '=', 'posted'),('amount_residual', '!=', 0),('account_id.reconcile', '=', True), ('company_id', '=', company_id)]"
+                            domain="[('parent_state', '=', 'posted'),('amount_residual', '!=', 0),('account_id.reconcile', '=', True), ('company_id', '=', company_id), ('statement_line_id', '!=', id)]"
                             context="{'search_default_partner_id': partner_id, 'tree_view_ref': 'account_reconcile_oca.account_move_line_tree_reconcile_view', 'search_view_ref': 'account_reconcile_oca.account_move_line_search_reconcile_view'}"
                         />
                     </page>
