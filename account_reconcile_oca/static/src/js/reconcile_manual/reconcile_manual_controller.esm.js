@@ -1,14 +1,13 @@
 /** @odoo-module */
 
 import {FormController} from "@web/views/form/form_controller";
-import {formView} from "@web/views/form/form_view";
-import {registry} from "@web/core/registry";
 import {useViewButtons} from "@web/views/view_button/view_button_hook";
 const {useRef} = owl;
 
-export class FormManualReconcileController extends FormController {
+export class ReconcileManualController extends FormController {
     setup() {
         super.setup(...arguments);
+        this.env.exposeController(this);
         const rootRef = useRef("root");
         useViewButtons(this.model, rootRef, {
             reload: this.reloadFormController.bind(this),
@@ -29,10 +28,3 @@ export class FormManualReconcileController extends FormController {
         }
     }
 }
-
-export const FormManualReconcileView = {
-    ...formView,
-    Controller: FormManualReconcileController,
-};
-
-registry.category("views").add("reconcile_manual", FormManualReconcileView);

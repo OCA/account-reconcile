@@ -1,7 +1,7 @@
 /** @odoo-module **/
 
-import {registry} from "@web/core/registry";
 import {ChatterContainer} from "@mail/components/chatter_container/chatter_container";
+import {registry} from "@web/core/registry";
 
 const {Component} = owl;
 
