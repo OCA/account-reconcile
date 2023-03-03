@@ -17,6 +17,7 @@ export class ReconcileController extends KanbanController {
         this.effect = useService("effect");
         this.orm = useService("orm");
         this.action = useService("action");
+        this.router = useService("router");
         this.activeActions = this.props.archInfo.activeActions;
         this.model.addEventListener("update", () => this.selectRecord(), {once: true});
     }
@@ -55,7 +56,9 @@ export class ReconcileController extends KanbanController {
     }
     async selectRecord(record) {
         var resId = undefined;
-        if (record === undefined) {
+        if (record === undefined && this.props.resId) {
+            resId = this.props.resId;
+        } else if (record === undefined) {
             var records = this.model.root.records.filter(
                 (modelRecord) =>
                     !modelRecord.data.is_reconciled || modelRecord.data.to_check
@@ -85,9 +88,13 @@ export class ReconcileController extends KanbanController {
         if (!this.state.selectedRecordId || this.state.selectedRecordId !== resId) {
             this.state.selectedRecordId = resId;
         }
+        this.updateURL(resId);
     }
     async openRecord(record) {
         this.selectRecord(record);
+    }
+    updateURL(resId) {
+        this.router.pushState({id: resId});
     }
 }
 ReconcileController.components = {
