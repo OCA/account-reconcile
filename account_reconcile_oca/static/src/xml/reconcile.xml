@@ -74,7 +74,7 @@
                 >
                     <tr
                         t-on-click="(ev) => this.selectReconcileLine(ev, reconcile_line)"
-                        t-att-class="'o_reconcile_widget_line ' + reconcile_line.kind"
+                        t-att-class="'o_reconcile_widget_line ' + reconcile_line.kind + (props.record.data.manual_reference == reconcile_line.reference ? ' selected ' :  ' ')"
                     >
                         <td t-esc="reconcile_line.account_id[1]" />
                         <td>

@@ -11,6 +11,7 @@
                 <field name="is_reconciled" />
                 <field name="currency_id" />
                 <field name="foreign_currency_id" />
+                <field name="to_check" />
                 <templates>
                     <t t-name="kanban-box">
                         <div
@@ -43,6 +44,12 @@
                                     <field name="payment_ref" />
                                 </div>
                                 <div class="col-4" style="text-align:right">
+                                    <div
+                                        t-if="record.to_check.raw_value"
+                                        class="badge text-bg-warning"
+                                    >
+                                        To check
+                                    </div>
                                     <div
                                         t-if="record.is_reconciled.raw_value"
                                         class="badge text-bg-success"
@@ -121,7 +128,8 @@
                     <button
                             name="reconcile_bank_line"
                             type="object"
-                            string="Reconcile"
+                            string="Validate"
+                            accesskey="v"
                             class="btn btn-primary"
                             attrs="{'invisible': ['|', ('is_reconciled', '=', True), ('can_reconcile', '=', False)]}"
                         />
@@ -135,7 +143,8 @@
                         <button
                             name="unreconcile_bank_line"
                             type="object"
-                            string="Unreconcile"
+                            string="Reset"
+                            accesskey="r"
                             class="btn btn-warning"
                             attrs="{'invisible': [('is_reconciled', '=', False)]}"
                             confirm="Are you sure that the move should be unreconciled?"
@@ -148,8 +157,24 @@
                             attrs="{'invisible': [('is_reconciled', '=', True)]}"
                         />
                         <button
+                            name="action_to_check"
+                            string="To Check"
+                            class="btn btn-secondary"
+                            accesskey="c"
+                            type="object"
+                            attrs="{'invisible': [('to_check', '=', True)]}"
+                        />
+                            <button
+                            name="action_checked"
+                            string="Set as Checked"
+                            accesskey="c"
+                            type="object"
+                            attrs="{'invisible': [('to_check', '=', False)]}"
+                        />
+                        <button
                             name="action_show_move"
                             type="object"
+                            accesskey="m"
                             string="View move"
                             class="btn btn-info"
                         />
@@ -158,6 +183,7 @@
                 <field name="id" invisible="1" />
                 <field name="name" invisible="1" />
                 <field name="can_reconcile" invisible="1" />
+                <field name="to_check" invisible="1" />
                 <field name="partner_id" invisible="1" />
                 <field name="company_id" invisible="1" />
                 <field name="journal_id" invisible="1" />
@@ -208,6 +234,13 @@
                                     string="Partner"
                                     attrs="{'readonly': ['|', '|', ('manual_reference', '=', False), ('is_reconciled', '=', True), '&amp;', ('manual_line_id', '!=', False), ('manual_kind', '!=', 'liquidity')]}"
                                 />
+                                <field
+                                    name="analytic_distribution"
+                                    widget="analytic_distribution"
+                                    groups="analytic.group_analytic_accounting"
+                                    options="{'account_field': 'manual_account_id', 'business_domain': 'general'}"
+                                    attrs="{'invisible': ['|', ('manual_kind', '=', 'liquidity'), ('manual_reference', '=', False)], 'readonly': [('is_reconciled', '=', True)]}"
+                                />
                             </group>
                             <group>
                                 <field
@@ -220,6 +253,35 @@
                                     string="Amount"
                                     attrs="{'readonly': ['|', ('manual_reference', '=', False), ('is_reconciled', '=', True)]}"
                                 />
+                                <field name="manual_original_amount" invisible="1" />
+                                <field name="manual_move_type" invisible="1" />
+                                <label
+                                    for="manual_move_id"
+                                    string=""
+                                    attrs="{'invisible': ['|', ('manual_move_type', 'not in', ['in_invoice', 'in_refund', 'out_invoice', 'out_refund']), ('manual_original_amount', '=', 0)]}"
+                                />
+                                <div
+                                    attrs="{'invisible': ['|', ('manual_move_type', 'not in', ['in_invoice', 'in_refund', 'out_invoice', 'out_refund']), ('manual_original_amount', '=', 0)]}"
+                                >
+                                    Invoice <field
+                                        class="oe_inline"
+                                        name="manual_move_id"
+                                    />
+                                    with an open amount <field
+                                        class="oe_inline"
+                                        name="manual_original_amount"
+                                    /> will be reduced by <field
+                                        class="oe_inline"
+                                        name="manual_amount"
+                                        readonly="1"
+                                    />.
+                                    <br />
+                                You might want to set the invoice as <button
+                                        name="button_manual_reference_full_paid"
+                                        type="object"
+                                        method_args="[1]"
+                                    >fully paid</button>.
+                                </div>
                             </group>
                         </group>
                     </page>
@@ -265,6 +327,28 @@
         <field name="help" type="html">
             <p class="o_view_nocontent_smiling_face">
             Nothing to reconcile
+            </p>
+        </field>
+    </record>
+    <record
+        id="action_bank_statement_line_reconcile_to_check"
+        model="ir.actions.act_window"
+    >
+        <field name="name">Reconcile bank statement lines</field>
+        <field name="res_model">account.bank.statement.line</field>
+        <field name="domain">[('journal_id', '=', active_id)]</field>
+        <field
+            name="context"
+        >{'default_journal_id': active_id, 'search_default_to_check': True, 'view_ref': 'account_reconcile_oca.bank_statement_line_form_reconcile_view'}</field>
+        <field name="view_mode">tree</field>
+        <field
+            name="view_ids"
+            eval="[(5, 0, 0),
+            (0, 0, {'view_mode': 'tree', 'view_id': ref('bank_statement_line_reconcile_view')})]"
+        />
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+            Nothing to check
             </p>
         </field>
     </record>

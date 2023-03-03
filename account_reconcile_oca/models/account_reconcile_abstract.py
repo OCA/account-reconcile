@@ -53,12 +53,14 @@ class AccountReconcileAbstract(models.AbstractModel):
             "credit": -amount if amount < 0 else 0.0,
             "amount": amount,
             "currency_id": line.currency_id.id,
+            "analytic_distribution": line.analytic_distribution,
             "kind": kind,
         }
         if not float_is_zero(
             amount - original_amount, precision_digits=line.currency_id.decimal_places
         ):
             vals["original_amount"] = abs(original_amount)
+            vals["original_amount_unsigned"] = original_amount
         if is_counterpart:
             vals["counterpart_line_id"] = line.id
         return vals
