@@ -117,6 +117,12 @@
                     domain="[('is_reconciled', '=', False)]"
                 />
             <separator />
+            <filter
+                    name="to_check"
+                    string="To check"
+                    domain="[('to_check', '=', True)]"
+                />
+            <separator />
             <filter name="date" string="Date" date="date" />
             <group name="groupby">
                 <filter
