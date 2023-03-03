@@ -64,6 +64,87 @@ class TestReconciliationWidget(TestAccountReconciliationCommon):
 
     # Testing reconcile action
 
+    def test_reconcile_invoice_currency(self):
+        inv1 = self.create_invoice(currency_id=self.currency_usd_id, invoice_amount=100)
+        bank_stmt = self.acc_bank_stmt_model.create(
+            {
+                "company_id": self.env.ref("base.main_company").id,
+                "journal_id": self.bank_journal_euro.id,
+                "date": time.strftime("%Y-07-15"),
+                "name": "test",
+            }
+        )
+        bank_stmt_line = self.acc_bank_stmt_line_model.create(
+            {
+                "name": "testLine",
+                "journal_id": self.bank_journal_euro.id,
+                "statement_id": bank_stmt.id,
+                "amount": 50,
+                "amount_currency": 100,
+                "foreign_currency_id": self.currency_usd_id,
+                "date": time.strftime("%Y-07-15"),
+            }
+        )
+        with Form(
+            bank_stmt_line,
+            view="account_reconcile_oca.bank_statement_line_form_reconcile_view",
+        ) as f:
+            self.assertFalse(f.can_reconcile)
+            f.add_account_move_line_id = inv1.line_ids.filtered(
+                lambda l: l.account_id.account_type == "asset_receivable"
+            )
+            self.assertFalse(f.add_account_move_line_id)
+            self.assertTrue(f.can_reconcile)
+
+    def test_reconcile_invoice_reconcile_full(self):
+        """
+        We want to test the reconcile widget for bank statements on invoices.
+        As we use edit mode by default, we will also check what happens when
+        we press unreconcile
+        """
+        inv1 = self.create_invoice(
+            currency_id=self.currency_euro_id, invoice_amount=100
+        )
+        bank_stmt = self.acc_bank_stmt_model.create(
+            {
+                "company_id": self.env.ref("base.main_company").id,
+                "journal_id": self.bank_journal_euro.id,
+                "date": time.strftime("%Y-07-15"),
+                "name": "test",
+            }
+        )
+        bank_stmt_line = self.acc_bank_stmt_line_model.create(
+            {
+                "name": "testLine",
+                "journal_id": self.bank_journal_euro.id,
+                "statement_id": bank_stmt.id,
+                "amount": 50,
+                "date": time.strftime("%Y-07-15"),
+            }
+        )
+        receivable1 = inv1.line_ids.filtered(
+            lambda l: l.account_id.account_type == "asset_receivable"
+        )
+        with Form(
+            bank_stmt_line,
+            view="account_reconcile_oca.bank_statement_line_form_reconcile_view",
+        ) as f:
+            self.assertFalse(f.can_reconcile)
+            f.add_account_move_line_id = receivable1
+            self.assertFalse(f.add_account_move_line_id)
+            self.assertTrue(f.can_reconcile)
+            f.manual_reference = "account.move.line;%s" % receivable1.id
+            self.assertEqual(-50, f.manual_amount)
+        self.assertEqual(2, len(bank_stmt_line.reconcile_data_info["data"]))
+        bank_stmt_line.button_manual_reference_full_paid()
+        self.assertEqual(3, len(bank_stmt_line.reconcile_data_info["data"]))
+        with Form(
+            bank_stmt_line,
+            view="account_reconcile_oca.bank_statement_line_form_reconcile_view",
+        ) as f:
+            f.manual_reference = "account.move.line;%s" % receivable1.id
+            self.assertEqual(-100, f.manual_amount)
+
     def test_reconcile_invoice_unreconcile(self):
         """
         We want to test the reconcile widget for bank statements on invoices.
@@ -348,6 +429,85 @@ class TestReconciliationWidget(TestAccountReconciliationCommon):
         with self.assertRaises(UserError):
             bank_stmt_line.unreconcile_bank_line()
 
+    # Testing to check functionality
+
+    def test_reconcile_invoice_to_check_reconciled(self):
+        """
+        We want to test the reconcile widget for bank statements on invoices.
+        As we use edit mode by default, we will also check what happens when
+        we press unreconcile
+        """
+        inv1 = self.create_invoice(
+            currency_id=self.currency_euro_id, invoice_amount=100
+        )
+        bank_stmt = self.acc_bank_stmt_model.create(
+            {
+                "company_id": self.env.ref("base.main_company").id,
+                "journal_id": self.bank_journal_euro.id,
+                "date": time.strftime("%Y-07-15"),
+                "name": "test",
+            }
+        )
+        bank_stmt_line = self.acc_bank_stmt_line_model.create(
+            {
+                "name": "testLine",
+                "journal_id": self.bank_journal_euro.id,
+                "statement_id": bank_stmt.id,
+                "amount": 100,
+                "date": time.strftime("%Y-07-15"),
+            }
+        )
+        receivable1 = inv1.line_ids.filtered(
+            lambda l: l.account_id.account_type == "asset_receivable"
+        )
+        with Form(
+            bank_stmt_line,
+            view="account_reconcile_oca.bank_statement_line_form_reconcile_view",
+        ) as f:
+            self.assertFalse(f.can_reconcile)
+            f.add_account_move_line_id = receivable1
+            self.assertTrue(f.can_reconcile)
+        self.assertFalse(bank_stmt_line.is_reconciled)
+        self.assertFalse(bank_stmt_line.to_check)
+        bank_stmt_line.action_to_check()
+        self.assertTrue(bank_stmt_line.is_reconciled)
+        self.assertTrue(bank_stmt_line.to_check)
+        bank_stmt_line.action_checked()
+        self.assertTrue(bank_stmt_line.is_reconciled)
+        self.assertFalse(bank_stmt_line.to_check)
+
+    def test_reconcile_invoice_to_check_not_reconciled(self):
+        """
+        We want to test the reconcile widget for bank statements on invoices.
+        As we use edit mode by default, we will also check what happens when
+        we press unreconcile
+        """
+        bank_stmt = self.acc_bank_stmt_model.create(
+            {
+                "company_id": self.env.ref("base.main_company").id,
+                "journal_id": self.bank_journal_euro.id,
+                "date": time.strftime("%Y-07-15"),
+                "name": "test",
+            }
+        )
+        bank_stmt_line = self.acc_bank_stmt_line_model.create(
+            {
+                "name": "testLine",
+                "journal_id": self.bank_journal_euro.id,
+                "statement_id": bank_stmt.id,
+                "amount": 100,
+                "date": time.strftime("%Y-07-15"),
+            }
+        )
+        self.assertFalse(bank_stmt_line.is_reconciled)
+        self.assertFalse(bank_stmt_line.to_check)
+        bank_stmt_line.action_to_check()
+        self.assertFalse(bank_stmt_line.is_reconciled)
+        self.assertTrue(bank_stmt_line.to_check)
+        bank_stmt_line.action_checked()
+        self.assertFalse(bank_stmt_line.is_reconciled)
+        self.assertFalse(bank_stmt_line.to_check)
+
     # Testing widget
 
     def test_widget_invoice_clean(self):
@@ -544,10 +704,6 @@ class TestReconciliationWidget(TestAccountReconciliationCommon):
             self.assertTrue(f.can_reconcile)
 
     # Testing actions
-
-    def test_bank_statement_action_to_check(self):
-        action = self.bank_journal_euro.action_open_reconcile_to_check()
-        self.assertFalse(self.env[action["res_model"]].search(action["domain"]))
 
     def test_bank_statement_rainbowman(self):
         message = self.bank_journal_euro.get_rainbowman_message()

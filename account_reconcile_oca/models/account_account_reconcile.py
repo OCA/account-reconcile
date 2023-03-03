@@ -17,11 +17,11 @@ class AccountAccountReconcile(models.Model):
 
     reconcile_data_info = fields.Serialized(inverse="_inverse_reconcile_data_info")
 
-    partner_id = fields.Many2one("res.partner")
-    account_id = fields.Many2one("account.account")
-    name = fields.Char()
-    is_reconciled = fields.Boolean()
-    currency_id = fields.Many2one("res.currency")
+    partner_id = fields.Many2one("res.partner", readonly=True)
+    account_id = fields.Many2one("account.account", readonly=True)
+    name = fields.Char(readonly=True)
+    is_reconciled = fields.Boolean(readonly=True)
+    currency_id = fields.Many2one("res.currency", readonly=True)
 
     @property
     def _table_query(self):

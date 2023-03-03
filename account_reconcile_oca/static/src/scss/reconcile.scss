@@ -63,6 +63,9 @@
                 &.liquidity {
                     font-weight: bold;
                 }
+                &.selected {
+                    background-color: rgba($o-brand-primary, 0.2);
+                }
             }
         }
     }
