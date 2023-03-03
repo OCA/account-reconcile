@@ -44,7 +44,10 @@
                 <t t-if="dashboard.number_to_check > 0">
                     <div class="row">
                         <div class="col overflow-hidden text-left">
-                            <a type="object" name="action_open_reconcile_to_check">
+                            <a
+                                type="action"
+                                name="%(account_reconcile_oca.action_bank_statement_line_reconcile_to_check)s"
+                            >
                                 <t t-esc="dashboard.number_to_check" /> to check</a>
                         </div>
                         <div class="col-auto text-right">

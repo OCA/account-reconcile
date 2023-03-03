@@ -1,8 +1,8 @@
 /** @odoo-module **/
 
 import fieldUtils from "web.field_utils";
-import session from "web.session";
 import {registry} from "@web/core/registry";
+import session from "web.session";
 
 const {Component} = owl;
 
@@ -56,6 +56,13 @@ export class AccountReconcileDataWidget extends Component {
         this.props.record.update({
             manual_reference: line.reference,
         });
+        const triggerEv = new CustomEvent("reconcile-page-navigate", {
+            detail: {
+                name: "manual",
+                originalEv: ev,
+            },
+        });
+        this.env.bus.trigger("RECONCILE_PAGE_NAVIGATE", triggerEv);
     }
 }
 AccountReconcileDataWidget.template = "account_reconcile_oca.ReconcileDataWidget";

@@ -1,8 +1,6 @@
 /** @odoo-module */
 
 import {FormController} from "@web/views/form/form_controller";
-import {formView} from "@web/views/form/form_view";
-import {registry} from "@web/core/registry";
 import {useService} from "@web/core/utils/hooks";
 import {useViewButtons} from "@web/views/view_button/view_button_hook";
 const {useRef} = owl;
@@ -42,10 +40,3 @@ export class ReconcileFormController extends FormController {
         }
     }
 }
-
-export const ReconcileFormView = {
-    ...formView,
-    Controller: ReconcileFormController,
-};
-
-registry.category("views").add("reconcile_form", ReconcileFormView);
