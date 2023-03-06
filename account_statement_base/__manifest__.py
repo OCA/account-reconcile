@@ -10,6 +10,7 @@
     "summary": "Base module for Bank Statements",
     "author": "Akretion,Odoo Community Association (OCA)",
     "maintainers": ["alexis-via"],
+    "development_status": "Mature",
     "website": "https://github.com/OCA/account-reconcile",
     "depends": ["account"],
     "data": ["views/account_bank_statement_line.xml"],
