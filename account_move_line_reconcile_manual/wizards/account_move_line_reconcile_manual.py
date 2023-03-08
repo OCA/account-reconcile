@@ -199,6 +199,7 @@ class AccountMoveLineReconcileManual(models.TransientModel):
                     0,
                     0,
                     {
+                        "display_type": "payment_term",
                         "account_id": self.account_id.id,
                         "partner_id": self.partner_id and self.partner_id.id or False,
                         "debit": debit,
@@ -209,6 +210,7 @@ class AccountMoveLineReconcileManual(models.TransientModel):
                     0,
                     0,
                     {
+                        "display_type": "product",
                         "account_id": self.writeoff_account_id.id,
                         "partner_id": self.partner_id and self.partner_id.id or False,
                         "debit": credit,
@@ -229,7 +231,7 @@ class AccountMoveLineReconcileManual(models.TransientModel):
         self.move_line_ids.remove_move_reconcile()
         vals = self._prepare_writeoff_move()
         woff_move = self.env["account.move"].create(vals)
-        woff_move._post(soft=False)
+        woff_move.with_context(validate_analytic=True)._post(soft=False)
         to_rec_woff_line = woff_move.line_ids.filtered(
             lambda x: x.account_id.id == self.account_id.id
         )
