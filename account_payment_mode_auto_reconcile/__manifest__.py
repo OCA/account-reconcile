@@ -3,7 +3,7 @@
 {
     "name": "Account Payment Mode Auto Reconcile",
     "summary": "Reconcile outstanding credits according to payment mode",
-    "version": "10.0.1.0.0",
+    "version": "16.0.1.0.0",
     "category": "Banking addons",
     "website": "https://github.com/OCA/account-reconcile",
     "author": "Camptocamp, Odoo Community Association (OCA)",

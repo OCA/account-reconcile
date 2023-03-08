@@ -1,6 +1,6 @@
 # Copyright 2019 Camptocamp SA
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl)
-from odoo import api, fields, models
+from odoo import fields, models
 
 
 class AccountPartialReconcile(models.Model):
@@ -9,8 +9,8 @@ class AccountPartialReconcile(models.Model):
 
     payment_mode_auto_reconcile = fields.Boolean()
 
-    @api.model
     def create(self, vals):
         if self.env.context.get("_payment_mode_auto_reconcile"):
-            vals["payment_mode_auto_reconcile"] = True
+            for val in vals:
+                val["payment_mode_auto_reconcile"] = True
         return super(AccountPartialReconcile, self).create(vals)
