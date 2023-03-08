@@ -1,19 +1,18 @@
 # Copyright 2019 Camptocamp SA
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl)
-import json
 from operator import itemgetter
 
 from odoo import _, api, fields, models
 
 
-class AccountInvoice(models.Model):
+class AccountMove(models.Model):
 
-    _inherit = "account.invoice"
+    _inherit = "account.move"
 
     # Allow changing payment mode in open state
     # TODO: Check if must be done in account_payment_partner instead
     payment_mode_id = fields.Many2one(
-        states={"draft": [("readonly", False)], "open": [("readonly", False)]}
+        states={"draft": [("readonly", False)], "posted": [("readonly", False)]}
     )
     payment_mode_warning = fields.Char(
         compute="_compute_payment_mode_warning",
@@ -22,11 +21,10 @@ class AccountInvoice(models.Model):
         compute="_compute_payment_mode_warning",
     )
 
-    @api.multi
-    def invoice_validate(self):
-        res = super(AccountInvoice, self).invoice_validate()
+    def action_post(self):
+        res = super(AccountMove, self).action_post()
         for invoice in self:
-            if invoice.type != "out_invoice":
+            if invoice.move_type != "out_invoice":
                 continue
             if not invoice.payment_mode_id.auto_reconcile_outstanding_credits:
                 continue
@@ -36,16 +34,18 @@ class AccountInvoice(models.Model):
             ).auto_reconcile_credits(partial_allowed=partial)
         return res
 
-    @api.multi
     def write(self, vals):
-        res = super(AccountInvoice, self).write(vals)
-        if "payment_mode_id" in vals:
+        res = super(AccountMove, self).write(vals)
+        if "payment_mode_id" in vals or "state" in vals:
             for invoice in self:
                 # Do not auto reconcile anything else than open customer inv
-                if invoice.state != "open" or invoice.type != "out_invoice":
+                if invoice.state != "posted" or invoice.move_type != "out_invoice":
                     continue
-                payment_mode = invoice.payment_mode_id
+                invoice_lines = invoice.line_ids.filtered(
+                    lambda line: line.account_type == "asset_receivable"
+                )
                 # Auto reconcile if payment mode sets it
+                payment_mode = invoice.payment_mode_id
                 if payment_mode and payment_mode.auto_reconcile_outstanding_credits:
                     partial = payment_mode.auto_reconcile_allow_partial
                     invoice.with_context(
@@ -53,33 +53,41 @@ class AccountInvoice(models.Model):
                     ).auto_reconcile_credits(partial_allowed=partial)
                 # If the payment mode is not using auto reconcile we remove
                 #  the existing reconciliations
-                elif invoice.payment_move_line_ids:
+                elif any(
+                    [
+                        invoice_lines.mapped("matched_credit_ids"),
+                        invoice_lines.mapped("matched_debit_ids"),
+                    ]
+                ):
                     invoice.auto_unreconcile_credits()
         return res
 
-    @api.multi
     def auto_reconcile_credits(self, partial_allowed=True):
         for invoice in self:
-            if not invoice.has_outstanding:
+            invoice._compute_payments_widget_to_reconcile_info()
+
+            if not invoice.invoice_has_outstanding:
                 continue
-            credits_info = json.loads(invoice.outstanding_credits_debits_widget)
+            credits_info = invoice.invoice_outstanding_credits_debits_widget
             # Get outstanding credits in chronological order
             # (using reverse because aml is sorted by date desc as default)
-            credits_dict = credits_info.get("content")
+            credits_dict = credits_info.get("content", False)
             if invoice.payment_mode_id.auto_reconcile_same_journal:
                 credits_dict = invoice._filter_payment_same_journal(credits_dict)
             sorted_credits = self._sort_credits_dict(credits_dict)
             for credit in sorted_credits:
-                if not partial_allowed and credit.get("amount") > invoice.residual:
+                if (
+                    not partial_allowed
+                    and credit.get("amount") > invoice.amount_residual
+                ):
                     continue
-                invoice.assign_outstanding_credit(credit.get("id"))
+                invoice.js_assign_outstanding_line(credit.get("id"))
 
     @api.model
     def _sort_credits_dict(self, credits_dict):
         """Sort credits dict according to their id (oldest recs first)"""
         return sorted(credits_dict, key=itemgetter("id"))
 
-    @api.multi
     def _filter_payment_same_journal(self, credits_dict):
         """Keep only credits on the same journal than the invoice."""
         self.ensure_one()
@@ -89,34 +97,47 @@ class AccountInvoice(models.Model):
         )
         return [credit for credit in credits_dict if credit["id"] in lines.ids]
 
-    @api.multi
     def auto_unreconcile_credits(self):
         for invoice in self:
-            payments_info = json.loads(invoice.payments_widget or "{}")
+            payments_info = invoice.invoice_payments_widget
             for payment in payments_info.get("content", []):
-                aml = self.env["account.move.line"].browse(payment.get("payment_id"))
+                payment_aml = (
+                    self.env["account.payment"]
+                    .browse(payment.get("account_payment_id"))
+                    .line_ids
+                )
+
+                aml = payment_aml.filtered(lambda l: l.matched_debit_ids)
                 for apr in aml.matched_debit_ids:
                     if apr.amount != payment.get("amount"):
                         continue
                     if (
                         apr.payment_mode_auto_reconcile
-                        and apr.debit_move_id.invoice_id == invoice
+                        and apr.debit_move_id.move_id == invoice
                     ):
-                        aml.with_context(invoice_id=invoice.id).remove_move_reconcile()
+                        aml.remove_move_reconcile()
 
     @api.depends(
-        "type", "payment_mode_id", "payment_move_line_ids", "state", "has_outstanding"
+        "move_type", "payment_mode_id", "payment_id", "state", "invoice_has_outstanding"
     )
     def _compute_payment_mode_warning(self):
         # TODO Improve me but watch out
         for invoice in self:
-            if invoice.type != "out_invoice" or invoice.state == "paid":
+            existed_reconciliations = any(
+                [
+                    invoice.line_ids.mapped("matched_credit_ids"),
+                    invoice.line_ids.mapped("matched_debit_ids"),
+                ]
+            )
+            if invoice.move_type != "out_invoice" or (
+                invoice.state == "posted" and invoice.payment_state != "paid"
+            ):
                 invoice.payment_mode_warning = ""
                 invoice.display_payment_mode_warning = False
                 continue
             invoice.display_payment_mode_warning = True
             if (
-                invoice.state != "open"
+                invoice.state != "posted"
                 and invoice.payment_mode_id
                 and invoice.payment_mode_id.auto_reconcile_outstanding_credits
             ):
@@ -125,8 +146,9 @@ class AccountInvoice(models.Model):
                     " any outstanding credits."
                 )
             elif (
-                invoice.state == "open"
-                and invoice.payment_move_line_ids
+                invoice.state == "posted"
+                and invoice.payment_state != "paid"
+                and existed_reconciliations
                 and (
                     not invoice.payment_mode_id
                     or not invoice.payment_mode_id.auto_reconcile_outstanding_credits
@@ -137,11 +159,12 @@ class AccountInvoice(models.Model):
                     "reconciled payments."
                 )
             elif (
-                invoice.state == "open"
-                and not invoice.payment_move_line_ids
+                invoice.state == "posted"
+                and invoice.payment_state != "paid"
+                and not existed_reconciliations
                 and invoice.payment_mode_id
                 and invoice.payment_mode_id.auto_reconcile_outstanding_credits
-                and invoice.has_outstanding
+                and invoice.invoice_has_outstanding
             ):
                 invoice.payment_mode_warning = _(
                     "Changing payment mode will reconcile outstanding credits."
