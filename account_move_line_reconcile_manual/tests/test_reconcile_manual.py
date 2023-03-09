@@ -4,11 +4,11 @@
 
 from odoo.exceptions import UserError
 from odoo.tests import tagged
-from odoo.tests.common import TransactionCase
+from odoo.tests.common import SavepointCase
 
 
 @tagged("post_install", "-at_install")
-class TestReconcileManual(TransactionCase):
+class TestReconcileManual(SavepointCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
@@ -91,7 +91,11 @@ class TestReconcileManual(TransactionCase):
             [
                 ("company_id", "=", cls.company.id),
                 ("reconcile", "=", False),
-                ("account_type", "=", "expense"),
+                (
+                    "user_type_id",
+                    "=",
+                    cls.env.ref("account.data_account_type_expenses").id,
+                ),
             ],
             limit=1,
         )

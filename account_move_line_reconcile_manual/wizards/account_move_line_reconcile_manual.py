@@ -14,7 +14,6 @@ class AccountMoveLineReconcileManual(models.TransientModel):
     _name = "account.move.line.reconcile.manual"
     _description = "Manual Reconciliation Wizard"
     _check_company_auto = True
-    _inherit = "analytic.mixin"
 
     account_id = fields.Many2one(
         "account.account", required=True, readonly=True, check_company=True
@@ -64,24 +63,12 @@ class AccountMoveLineReconcileManual(models.TransientModel):
         domain="[('company_id', '=', company_id), ('deprecated', '=', False)]",
         check_company=True,
     )
-
-    @api.depends("writeoff_account_id", "partner_id")
-    def _compute_analytic_distribution(self):
-        aadmo = self.env["account.analytic.distribution.model"]
-        for wiz in self:
-            if wiz.writeoff_account_id:
-                partner = wiz.partner_id
-                distribution = aadmo._get_distribution(
-                    {
-                        "partner_id": partner and partner.id or False,
-                        "partner_category_id": partner
-                        and partner.category_id.ids
-                        or False,
-                        "account_prefix": wiz.writeoff_account_id.code,
-                        "company_id": wiz.company_id.id,
-                    }
-                )
-                wiz.analytic_distribution = distribution or wiz.analytic_distribution
+    writeoff_analytic_account_id = fields.Many2one(
+        "account.analytic.account",
+        string="Write-off Analytic Account",
+        domain="['|', ('company_id', '=', False), ('company_id', '=', company_id)]",
+        check_company=True,
+    )
 
     @api.model
     def default_get(self, fields_list):
@@ -217,7 +204,6 @@ class AccountMoveLineReconcileManual(models.TransientModel):
                     0,
                     0,
                     {
-                        "display_type": "payment_term",
                         "account_id": self.account_id.id,
                         "partner_id": self.partner_id and self.partner_id.id or False,
                         "debit": debit,
@@ -228,12 +214,12 @@ class AccountMoveLineReconcileManual(models.TransientModel):
                     0,
                     0,
                     {
-                        "display_type": "product",
                         "account_id": self.writeoff_account_id.id,
                         "partner_id": self.partner_id and self.partner_id.id or False,
                         "debit": credit,
                         "credit": debit,
-                        "analytic_distribution": self.analytic_distribution,
+                        "analytic_account_id": self.writeoff_analytic_account_id.id
+                        or False,
                     },
                 ),
             ],
@@ -249,7 +235,7 @@ class AccountMoveLineReconcileManual(models.TransientModel):
         self.move_line_ids.remove_move_reconcile()
         vals = self._prepare_writeoff_move()
         woff_move = self.env["account.move"].create(vals)
-        woff_move.with_context(validate_analytic=True)._post(soft=False)
+        woff_move._post(soft=False)
         to_rec_woff_line = woff_move.line_ids.filtered(
             lambda x: x.account_id.id == self.account_id.id
         )
@@ -279,7 +265,7 @@ class AccountMoveLineReconcileManual(models.TransientModel):
         if (
             self.writeoff_type in ("income", "expense")
             and account
-            and self.writeoff_type not in account.account_type
+            and self.writeoff_type != account.internal_group
         ):
             message = _(
                 "This is a/an '%(writeoff_type)s' write-off, "
@@ -289,9 +275,7 @@ class AccountMoveLineReconcileManual(models.TransientModel):
                     self.writeoff_type, self
                 ),
                 account_code=account.code,
-                account_type=account._fields["account_type"].convert_to_export(
-                    account.account_type, account
-                ),
+                account_type=account.user_type_id.name,
             )
             res = {
                 "warning": {

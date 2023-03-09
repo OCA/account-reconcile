@@ -49,8 +49,7 @@
                         attrs="{'required': [('state', '=', 'writeoff')]}"
                     />
                             <field
-                        name="analytic_distribution"
-                        widget="analytic_distribution"
+                        name="writeoff_analytic_account_id"
                         groups="analytic.group_analytic_accounting"
                     />
                     </group>
