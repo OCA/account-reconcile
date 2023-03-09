@@ -65,6 +65,24 @@ class AccountMoveLineReconcileManual(models.TransientModel):
         check_company=True,
     )
 
+    @api.depends("writeoff_account_id", "partner_id")
+    def _compute_analytic_distribution(self):
+        aadmo = self.env["account.analytic.distribution.model"]
+        for wiz in self:
+            if wiz.writeoff_account_id:
+                partner = wiz.partner_id
+                distribution = aadmo._get_distribution(
+                    {
+                        "partner_id": partner and partner.id or False,
+                        "partner_category_id": partner
+                        and partner.category_id.ids
+                        or False,
+                        "account_prefix": wiz.writeoff_account_id.code,
+                        "company_id": wiz.company_id.id,
+                    }
+                )
+                wiz.analytic_distribution = distribution or wiz.analytic_distribution
+
     @api.model
     def default_get(self, fields_list):
         res = super().default_get(fields_list)
