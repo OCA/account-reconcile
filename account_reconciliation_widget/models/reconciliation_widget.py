@@ -1023,11 +1023,11 @@ class AccountReconciliation(models.AbstractModel):
         st_line_currency = (
             st_line.foreign_currency_id or st_line.currency_id or statement_currency
         )
-        if st_line.amount_currency and st_line.foreign_currency_id:
+        if st_line.amount_currency and (st_line_currency != statement_currency):
             amount = st_line.amount
             amount_currency = st_line.amount_currency
             amount_currency_str = formatLang(
-                self.env, abs(amount_currency), currency_obj=st_line.foreign_currency_id
+                self.env, abs(amount_currency), currency_obj=st_line_currency
             )
         else:
             amount = st_line.amount
