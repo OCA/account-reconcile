@@ -9,6 +9,7 @@ setuptools.setup(
     version=version,
     install_requires=[
         'odoo-addon-account_mass_reconcile>=16.0dev,<16.1dev',
+        'odoo-addon-account_move_line_reconcile_manual>=16.0dev,<16.1dev',
         'odoo-addon-account_statement_base>=16.0dev,<16.1dev',
     ],
     classifiers=[
