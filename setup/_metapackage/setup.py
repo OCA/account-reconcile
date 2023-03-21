@@ -16,6 +16,7 @@ setuptools.setup(
         'odoo14-addon-account_mass_reconcile_by_sale_line',
         'odoo14-addon-account_mass_reconcile_ref_deep_search',
         'odoo14-addon-account_move_base_import',
+        'odoo14-addon-account_move_line_reconcile_manual',
         'odoo14-addon-account_move_reconcile_helper',
         'odoo14-addon-account_partner_reconcile',
         'odoo14-addon-account_reconcile_model_strict_match_amount',
