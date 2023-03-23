@@ -24,6 +24,7 @@ addon | version | maintainers | summary
 [account_mass_reconcile](account_mass_reconcile/) | 16.0.1.0.0 |  | Account Mass Reconcile
 [account_move_line_reconcile_manual](account_move_line_reconcile_manual/) | 16.0.1.0.0 | [![alexis-via](https://github.com/alexis-via.png?size=30px)](https://github.com/alexis-via) | Manually reconcile Journal Items
 [account_statement_base](account_statement_base/) | 16.0.1.2.0 | [![alexis-via](https://github.com/alexis-via.png?size=30px)](https://github.com/alexis-via) | Base module for Bank Statements
+[base_transaction_id](base_transaction_id/) | 16.0.1.0.0 |  | Base transaction ID for financial institutes
 
 [//]: # (end addons)
 
