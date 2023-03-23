@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+  <record model="ir.ui.view" id="invoice_view_custom">
+    <field name="name">Add transaction_id to account move form view</field>
+    <field name="model">account.move</field>
+    <field name="inherit_id" ref="account.view_move_form" />
+    <field name="arch" type="xml">
+      <xpath
+                expr="//page[@name='other_info']//field[@name='invoice_origin']"
+                position="after"
+            >
+          <field name="transaction_id" />
+      </xpath>
+    </field>
+  </record>
+
+  <record model="ir.ui.view" id="invoice_tree_custom">
+    <field name="name">Add transaction_id to account move tree view</field>
+    <field name="model">account.move</field>
+    <field name="inherit_id" ref="account.view_invoice_tree" />
+    <field name="arch" type="xml">
+      <field name="invoice_origin" position="after">
+        <field name="transaction_id" />
+      </field>
+    </field>
+  </record>
+
+</odoo>
