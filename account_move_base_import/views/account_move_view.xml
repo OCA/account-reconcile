@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="view_move_importer_form" model="ir.ui.view">
+        <field name="name">account.move.view</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_move_form" />
+        <field name="arch" type="xml">
+            <field name="journal_id" position="after">
+                <field name="used_for_completion" invisible="1" />
+            </field>
+            <button name="action_reverse" position="after">
+                <button
+                    name="button_auto_completion"
+                    string="Auto Completion"
+                    type="object"
+                    class="oe_highlight"
+                    groups="account.group_account_invoice"
+                    attrs="{'invisible': ['|', ('used_for_completion','=',False), ('state','not in', ['draft'])]}"
+                />
+            </button>
+            <xpath
+                expr="//field[@name='line_ids']/tree/field[@name='credit']"
+                position="after"
+            >
+                <field name="already_completed" />
+            </xpath>
+            <xpath expr="/form/sheet/notebook" position="inside">
+                <page
+                    string="Completion Logs"
+                    attrs="{'invisible':[('completion_logs','=',False)]}"
+                >
+                    <field name="completion_logs" colspan="4" nolabel="1" />
+                </page>
+            </xpath>
+        </field>
+    </record>
+    <record id="move_completion_rule_view_form" model="ir.ui.view">
+        <field name="name">account.move.completion.rule.view</field>
+        <field name="model">account.move.completion.rule</field>
+        <field name="arch" type="xml">
+            <form string="Move Completion Rule">
+                <group>
+                    <field name="sequence" />
+                    <field name="name" select="1" />
+                    <field name="function_to_call" />
+                </group>
+                <separator colspan="4" string="Related Profiles" />
+                <field name="journal_ids" nolabel="1" colspan="4" />
+            </form>
+        </field>
+    </record>
+    <record id="move_completion_rule_view_tree" model="ir.ui.view">
+        <field name="name">account.move.completion.rule.view</field>
+        <field name="model">account.move.completion.rule</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="sequence" />
+                <field name="name" select="1" />
+                <field name="journal_ids" />
+                <field name="function_to_call" />
+            </tree>
+        </field>
+    </record>
+    <record id="action_move_completion_rule_tree" model="ir.actions.act_window">
+        <field name="name">Move Completion Rules</field>
+        <field name="res_model">account.move.completion.rule</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <menuitem
+        name="Move Completion Rule"
+        action="action_move_completion_rule_tree"
+        id="menu_action_move_completion_rule_tree_menu"
+        parent="account.account_management_menu"
+    />
+    <record id="view_account_move_filter" model="ir.ui.view">
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_account_move_filter" />
+        <field name="arch" type="xml">
+            <separator position="after">
+                <filter
+                    name="to_complete"
+                    string="To Complete"
+                    domain="[
+                        ('state','!=','posted'),
+                        ('journal_id.used_for_completion', '=', True),
+                        ('line_ids.already_completed', '=', False)]"
+                    help="Account move that should be completed manually"
+                />
+                <separator />
+            </separator>
+        </field>
+    </record>
+</odoo>
