@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 14.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2022-02-28 17:16+0000\n"
-"Last-Translator: laznikd <laznik@mentis.si>\n"
+"PO-Revision-Date: 2023-03-30 14:27+0000\n"
+"Last-Translator: Matjaz Mozetic <matjaz@luxim.si>\n"
 "Language-Team: none\n"
 "Language: sl_SI\n"
 "MIME-Version: 1.0\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n"
 "%100==4 ? 2 : 3;\n"
-"X-Generator: Weblate 4.3.2\n"
+"X-Generator: Weblate 4.14.1\n"
 
 #. module: account_reconciliation_widget
 #: code:addons/account_reconciliation_widget/models/reconciliation_widget.py:0
@@ -45,7 +45,7 @@ msgstr "Pripomoček za usklajevanje"
 #. module: account_reconciliation_widget
 #: model:ir.model.fields,field_description:account_reconciliation_widget.field_account_bank_statement__accounting_date
 msgid "Accounting Date"
-msgstr "Datum"
+msgstr "Knjigovodski datum"
 
 #. module: account_reconciliation_widget
 #. openerp-web
@@ -138,12 +138,12 @@ msgstr "Zapri bančni izpisek"
 #. module: account_reconciliation_widget
 #: model:ir.model,name:account_reconciliation_widget.model_res_company
 msgid "Companies"
-msgstr "Podjetja"
+msgstr "Družbe"
 
 #. module: account_reconciliation_widget
 #: model:ir.model,name:account_reconciliation_widget.model_res_config_settings
 msgid "Config Settings"
-msgstr ""
+msgstr "Nastavitve konfiguracije"
 
 #. module: account_reconciliation_widget
 #. openerp-web
@@ -186,6 +186,8 @@ msgid ""
 "Date from which you started using bank statements in Odoo. Leave empty if "
 "you've been using bank statements in Odoo from the start."
 msgstr ""
+"Datum, od katerega ste začeli uporabljati bančne izpiske v Odoo. Pustite "
+"prazno, če bančne izpiske v Odoo uporabljate že od začetka."
 
 #. module: account_reconciliation_widget
 #. openerp-web
@@ -210,7 +212,7 @@ msgstr "Ime prikaza"
 #: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
 #, python-format
 msgid "Due Date"
-msgstr "DUR"
+msgstr "Datum zapadlosti"
 
 #. module: account_reconciliation_widget
 #: code:addons/account_reconciliation_widget/models/account_move.py:0
@@ -300,18 +302,18 @@ msgstr "Dnevnik"
 #. module: account_reconciliation_widget
 #: model:ir.model.fields,field_description:account_reconciliation_widget.field_account_bank_statement_line__move_name
 msgid "Journal Entry Name"
-msgstr "Ime vnosa v dnevnik"
+msgstr "Naziv vnosa v dnevnik"
 
 #. module: account_reconciliation_widget
 #: model:ir.model,name:account_reconciliation_widget.model_account_move_line
 msgid "Journal Item"
-msgstr "Postavka dnevnika"
+msgstr "Dnevniška postavka"
 
 #. module: account_reconciliation_widget
 #: code:addons/account_reconciliation_widget/models/reconciliation_widget.py:0
 #, python-format
 msgid "Journal Items"
-msgstr "Postavke dnevnika"
+msgstr "Dnevniške postavke"
 
 #. module: account_reconciliation_widget
 #. openerp-web
@@ -485,7 +487,7 @@ msgstr "Ref"
 #: code:addons/account_reconciliation_widget/static/src/js/reconciliation/reconciliation_renderer.js:0
 #, python-format
 msgid "Reference"
-msgstr ""
+msgstr "Sklic"
 
 #. module: account_reconciliation_widget
 #. openerp-web
@@ -499,21 +501,21 @@ msgstr "Preostanek"
 #: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
 #, python-format
 msgid "Save and New"
-msgstr "Shrani in Novo"
+msgstr "Shrani in novo"
 
 #. module: account_reconciliation_widget
 #. openerp-web
 #: code:addons/account_reconciliation_widget/static/src/js/reconciliation/reconciliation_renderer.js:0
 #, python-format
 msgid "Select Partner"
-msgstr "Izberite Partnerja"
+msgstr "Izberi partnerja"
 
 #. module: account_reconciliation_widget
 #. openerp-web
 #: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
 #, python-format
 msgid "Select a partner or choose a counterpart"
-msgstr "Izberite Partnerja ali nasprotno vknjižbo"
+msgstr "Izberite partnerja ali nasprotno vknjižbo"
 
 #. module: account_reconciliation_widget
 #. openerp-web
@@ -534,7 +536,7 @@ msgstr "Preskoči"
 #: code:addons/account_reconciliation_widget/static/src/js/reconciliation/reconciliation_renderer.js:0
 #, python-format
 msgid "Some fields are undefined"
-msgstr "Nekatera polja so nedefinirana"
+msgstr "Nekatera polja niso določena"
 
 #. module: account_reconciliation_widget
 #. openerp-web
@@ -643,14 +645,14 @@ msgstr "Transakcija"
 #: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
 #, python-format
 msgid "Validate"
-msgstr "Potrditev"
+msgstr "Potrdi"
 
 #. module: account_reconciliation_widget
 #. openerp-web
 #: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
 #, python-format
 msgid "Verify"
-msgstr "Potrdi"
+msgstr "Overi"
 
 #. module: account_reconciliation_widget
 #: code:addons/account_reconciliation_widget/models/account_move.py:0
@@ -677,7 +679,7 @@ msgstr "Vaše uskladitve"
 #: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
 #, python-format
 msgid "and follow-up customers"
-msgstr "in nadaljnje stranke"
+msgstr "in nadaljnje spremljanje kupcev"
 
 #. module: account_reconciliation_widget
 #. openerp-web
@@ -698,7 +700,7 @@ msgstr "uskladi"
 #: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
 #, python-format
 msgid "reconciliation models"
-msgstr "modeli usklajevanje"
+msgstr "modeli usklajevanja"
 
 #. module: account_reconciliation_widget
 #. openerp-web
@@ -752,4 +754,4 @@ msgstr "neusklajene postavke"
 #: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
 #, python-format
 msgid "vendor bills"
-msgstr "računi dobaviteljev"
+msgstr "prejeti računi"
