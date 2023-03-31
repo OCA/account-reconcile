@@ -1,0 +1,75 @@
+.o_account_reconcile_oca {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-flow: row wrap;
+    flex-flow: row wrap;
+    height: 100%;
+    .o_kanban_renderer.o_kanban_ungrouped .o_kanban_record {
+        margin: 0 0 0;
+        > div {
+            border-right: thick solid rgba(0, 0, 0, 0);
+        }
+        &.o_kanban_record_reconcile_oca_selected > div {
+            border-right: thick solid $o-brand-primary;
+        }
+    }
+    .o_account_reconcile_oca_selector {
+        width: 30%;
+        height: 100%;
+        padding: 0;
+        position: relative;
+        border-right: 1px solid $o-gray-300;
+    }
+    .o_account_reconcile_oca_info {
+        width: 70%;
+        height: 100%;
+    }
+    .o_form_view {
+        .btn-info:not(.dropdown-toggle):not(.dropdown-item) {
+            text-transform: uppercase;
+        }
+        .o_form_statusbar.o_account_reconcile_oca_statusbar {
+            .btn:not(.dropdown-toggle):not(.dropdown-item) {
+                text-transform: uppercase;
+            }
+            height: 40px;
+            > .o_statusbar_buttons {
+                height: 100%;
+                > .btn {
+                    margin: 0;
+                    height: 100%;
+                    padding: 10px;
+                    border-radius: 0;
+                }
+            }
+        }
+        .o_field_account_reconcile_oca_data {
+            .o_field_account_reconcile_oca_balance_float {
+                .o_field_account_reconcile_oca_balance_original_float {
+                    text-decoration: line-through;
+                }
+            }
+        }
+        .o_field_widget.o_field_account_reconcile_oca_match {
+            display: inline;
+        }
+        .o_field_account_reconcile_oca_move_line_selected {
+            background-color: rgba($o-brand-primary, 0.2);
+            color: #000;
+        }
+        .o_reconcile_widget_table {
+            .o_reconcile_widget_line {
+                &.liquidity {
+                    font-weight: bold;
+                }
+                &.selected {
+                    background-color: rgba($o-brand-primary, 0.2);
+                }
+            }
+        }
+    }
+}
+.o_field_account_reconcile_oca_chatter {
+    width: 100%;
+}
