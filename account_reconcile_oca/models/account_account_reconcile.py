@@ -36,13 +36,7 @@ class AccountAccountReconcile(models.Model):
     def _select(self):
         return """
             SELECT
-                CAST(
-                    (
-                        coalesce(aml.partner_id, 0) + a.id
-                    )*(
-                        COALESCE(aml.partner_id, 0)+a.id - 1
-                    )/2 + COALESCE(aml.partner_id, 0) AS INTEGER
-                ) as id,
+                min(aml.id) as id,
                 MAX(a.name) as name,
                 aml.partner_id,
                 a.id as account_id,
