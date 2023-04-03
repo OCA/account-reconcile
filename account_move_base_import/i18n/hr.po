@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-12-16 01:51+0000\n"
-"PO-Revision-Date: 2019-11-13 14:34+0000\n"
+"PO-Revision-Date: 2023-04-03 22:24+0000\n"
 "Last-Translator: Bole <bole@dajmi5.com>\n"
 "Language-Team: Croatian (https://www.transifex.com/oca/teams/23907/hr/)\n"
 "Language: hr\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Generator: Weblate 3.8\n"
+"X-Generator: Weblate 4.14.1\n"
 
 #. module: account_move_base_import
 #. odoo-python
@@ -45,18 +45,18 @@ msgstr "Temeljnica koja treba biti ručno dovršena"
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_journal__message_needaction
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_move__message_needaction
 msgid "Action Needed"
-msgstr ""
+msgstr "Potrebna radnja"
 
 #. module: account_move_base_import
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_journal__message_attachment_count
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_move__message_attachment_count
 msgid "Attachment Count"
-msgstr ""
+msgstr "Broj priloga"
 
 #. module: account_move_base_import
 #: model_terms:ir.ui.view,arch_db:account_move_base_import.view_move_importer_form
 msgid "Auto Completion"
-msgstr "Automatsko dovršavanja"
+msgstr "Automatsko dovršavanje"
 
 #. module: account_move_base_import
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_move_line__already_completed
@@ -71,29 +71,29 @@ msgstr "Pravila automatskog dovršavanja"
 #. module: account_move_base_import
 #: model_terms:ir.ui.view,arch_db:account_move_base_import.journal_importer_view_form
 msgid "Auto-Completion related infos"
-msgstr ""
+msgstr "Informacije povezane sa automatskim dovršavanjem"
 
 #. module: account_move_base_import
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_journal__rule_ids
 msgid "Auto-completion rules"
-msgstr ""
+msgstr "Pravila automatskog dovršavanja"
 
 #. module: account_move_base_import
 #: model:ir.model.fields,field_description:account_move_base_import.field_res_partner__bank_statement_label
 #: model:ir.model.fields,field_description:account_move_base_import.field_res_users__bank_statement_label
 msgid "Bank Statement Label"
-msgstr ""
+msgstr "Labela bankovnog izvoda"
 
 #. module: account_move_base_import
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_journal__partner_id
 #: model:ir.model.fields,field_description:account_move_base_import.field_credit_statement_import__partner_id
 msgid "Bank/Payment Office partner"
-msgstr ""
+msgstr "Partner Banke / Platnog ureda"
 
 #. module: account_move_base_import
 #: model_terms:ir.ui.view,arch_db:account_move_base_import.move_importer_view
 msgid "Cancel"
-msgstr ""
+msgstr "Odustani"
 
 #. module: account_move_base_import
 #: model:ir.model.fields,help:account_move_base_import.field_account_journal__receivable_account_id
@@ -101,26 +101,26 @@ msgstr ""
 msgid ""
 "Choose a receivable/payable account to use as the default debit/credit "
 "account."
-msgstr ""
+msgstr "Odaberite dugovni/potrežni konto za zadanu upotrebu."
 
 #. module: account_move_base_import
 #: model:ir.model.fields,help:account_move_base_import.field_account_journal__commission_analytic_account_id
 msgid "Choose an analytic account to be used on the commission line."
-msgstr ""
+msgstr "Odaberite analitički konto za korištenje na stavkama komisije."
 
 #. module: account_move_base_import
 #: model:ir.model.fields,help:account_move_base_import.field_account_journal__import_type
 msgid ""
 "Choose here the method by which you want to import account moves for this "
 "journal."
-msgstr ""
+msgstr "Ovdje odaberite metodu kojom želite uvoziti temeljnice u ovaj dnevnik."
 
 #. module: account_move_base_import
 #. odoo-python
 #: code:addons/account_move_base_import/parser/file_parser.py:0
 #, python-format
 msgid "Column %s not present in file"
-msgstr ""
+msgstr "Kolona %s nije pronađena u datoteci"
 
 #. module: account_move_base_import
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_journal__commission_analytic_account_id
@@ -162,24 +162,24 @@ msgstr ""
 #. module: account_move_base_import
 #: model:ir.model,name:account_move_base_import.model_res_partner
 msgid "Contact"
-msgstr ""
+msgstr "Kontakt"
 
 #. module: account_move_base_import
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_journal__create_counterpart
 msgid "Create Counterpart"
-msgstr ""
+msgstr "Kreiraj protustavku"
 
 #. module: account_move_base_import
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_move_completion_rule__create_uid
 #: model:ir.model.fields,field_description:account_move_base_import.field_credit_statement_import__create_uid
 msgid "Created by"
-msgstr ""
+msgstr "Kreirao"
 
 #. module: account_move_base_import
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_move_completion_rule__create_date
 #: model:ir.model.fields,field_description:account_move_base_import.field_credit_statement_import__create_date
 msgid "Created on"
-msgstr ""
+msgstr "Kreirano"
 
 #. module: account_move_base_import
 #. odoo-python
@@ -211,7 +211,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_move_completion_rule__display_name
 #: model:ir.model.fields,field_description:account_move_base_import.field_credit_statement_import__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Prikazani naziv"
 
 #. module: account_move_base_import
 #: model:ir.model.fields,help:account_move_base_import.field_res_partner__bank_statement_label
@@ -226,62 +226,62 @@ msgstr ""
 #. module: account_move_base_import
 #: model:ir.model.fields,field_description:account_move_base_import.field_credit_statement_import__file_name
 msgid "File Name"
-msgstr ""
+msgstr "Naziv datoteke"
 
 #. module: account_move_base_import
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_journal__message_follower_ids
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_move__message_follower_ids
 msgid "Followers"
-msgstr ""
+msgstr "Pratitelji"
 
 #. module: account_move_base_import
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_journal__message_partner_ids
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_move__message_partner_ids
 msgid "Followers (Partners)"
-msgstr ""
+msgstr "Pratitelji (Partneri)"
 
 #. module: account_move_base_import
 #: model:ir.model.fields.selection,name:account_move_base_import.selection__account_move_completion_rule__function_to_call__get_from_name_and_invoice
 msgid "From line name (based on customer invoice number)"
-msgstr ""
+msgstr "Iz naziva retka (bazirano na broju računa kupca)"
 
 #. module: account_move_base_import
 #: model:ir.model.fields.selection,name:account_move_base_import.selection__account_move_completion_rule__function_to_call__get_from_name_and_partner_field
 msgid "From line name (based on partner field)"
-msgstr ""
+msgstr "Iz naziva stavke (bazirano na polju partnera)"
 
 #. module: account_move_base_import
 #: model:ir.model.fields.selection,name:account_move_base_import.selection__account_move_completion_rule__function_to_call__get_from_name_and_partner_name
 msgid "From line name (based on partner name)"
-msgstr ""
+msgstr "Iz naziva stavke (bazirano na nazivu partnera)"
 
 #. module: account_move_base_import
 #: model:ir.model.fields.selection,name:account_move_base_import.selection__account_move_completion_rule__function_to_call__get_from_name_and_supplier_invoice
 msgid "From line name (based on supplier invoice number)"
-msgstr ""
+msgstr "Iz naziva datoteke (bazirano na broju računa dobavljača)"
 
 #. module: account_move_base_import
 #: model:ir.model.fields.selection,name:account_move_base_import.selection__account_journal__import_type__generic_csvxls_so
 msgid "Generic .csv/.xls based on SO Name"
-msgstr ""
+msgstr "Generički .csv/.xls bazirano na proju ponude"
 
 #. module: account_move_base_import
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_journal__has_message
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_move__has_message
 msgid "Has Message"
-msgstr ""
+msgstr "Ima poruka"
 
 #. module: account_move_base_import
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_move_completion_rule__id
 #: model:ir.model.fields,field_description:account_move_base_import.field_credit_statement_import__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: account_move_base_import
 #: model:ir.model.fields,help:account_move_base_import.field_account_journal__message_needaction
 #: model:ir.model.fields,help:account_move_base_import.field_account_move__message_needaction
 msgid "If checked, new messages require your attention."
-msgstr ""
+msgstr "Ako je označeno, nove poruke traže vašu pažnju."
 
 #. module: account_move_base_import
 #: model:ir.model.fields,help:account_move_base_import.field_account_journal__message_has_error
@@ -289,55 +289,55 @@ msgstr ""
 #: model:ir.model.fields,help:account_move_base_import.field_account_move__message_has_error
 #: model:ir.model.fields,help:account_move_base_import.field_account_move__message_has_sms_error
 msgid "If checked, some messages have a delivery error."
-msgstr ""
+msgstr "Ako je označeno, neke poruke imaju greške pri isporuci."
 
 #. module: account_move_base_import
 #: model:ir.actions.act_window,name:account_move_base_import.move_importer_action
 #: model:ir.ui.menu,name:account_move_base_import.move_importer_menu
 msgid "Import Batch File"
-msgstr ""
+msgstr "Uvezi skupnu datoteku"
 
 #. module: account_move_base_import
 #: model:ir.model,name:account_move_base_import.model_credit_statement_import
 msgid "Import Batch File wizard"
-msgstr ""
+msgstr "Čarobnjak za uvoz skupnih datoteka"
 
 #. module: account_move_base_import
 #: model_terms:ir.ui.view,arch_db:account_move_base_import.move_importer_view
 msgid "Import Parameters Summary"
-msgstr ""
+msgstr "Sažetak parametara za uvoz"
 
 #. module: account_move_base_import
 #: model_terms:ir.ui.view,arch_db:account_move_base_import.journal_importer_view_form
 msgid "Import batch file"
-msgstr ""
+msgstr "Uvoz skupne datoteke"
 
 #. module: account_move_base_import
 #: model:ir.model.fields,field_description:account_move_base_import.field_credit_statement_import__journal_id
 msgid "Import configuration parameter"
-msgstr ""
+msgstr "Konfiguracijski parametar uvoza"
 
 #. module: account_move_base_import
 #: model_terms:ir.ui.view,arch_db:account_move_base_import.move_importer_view
 msgid "Import file"
-msgstr ""
+msgstr "Uvoz datoteke"
 
 #. module: account_move_base_import
 #: model_terms:ir.ui.view,arch_db:account_move_base_import.move_importer_view
 msgid "Import move"
-msgstr ""
+msgstr "Uvoz knjiženja"
 
 #. module: account_move_base_import
 #: model_terms:ir.ui.view,arch_db:account_move_base_import.journal_importer_view_form
 msgid "Import related infos"
-msgstr ""
+msgstr "Informacije vezane za uvoz"
 
 #. module: account_move_base_import
 #. odoo-python
 #: code:addons/account_move_base_import/parser/file_parser.py:0
 #, python-format
 msgid "Invalid file type %s. Please use csv, xls or xlsx"
-msgstr ""
+msgstr "Neispravan tip datoteke %s. Molimo da koristite csv, xls ili xlsx"
 
 #. module: account_move_base_import
 #. odoo-python
