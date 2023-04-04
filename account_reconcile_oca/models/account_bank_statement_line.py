@@ -183,7 +183,7 @@ class AccountBankStatementLine(models.Model):
                     and self.partner_id.name_get()[0]
                     or False,
                     "date": fields.Date.to_string(self.date),
-                    "name": self.name,
+                    "name": self.payment_ref or self.name,
                     "amount": -total_amount,
                     "credit": total_amount if total_amount > 0 else 0.0,
                     "debit": -total_amount if total_amount < 0 else 0.0,
@@ -396,7 +396,7 @@ class AccountBankStatementLine(models.Model):
                     "account_id": account.name_get()[0],
                     "partner_id": False,
                     "date": fields.Date.to_string(self.date),
-                    "name": self.name,
+                    "name": self.payment_ref or self.name,
                     "amount": -amount,
                     "credit": amount if amount > 0 else 0.0,
                     "debit": -amount if amount < 0 else 0.0,
