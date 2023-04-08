@@ -14,7 +14,7 @@ class AccountReconciliationWidget(models.AbstractModel):
         """
         return self.env["account.payment.order"].search(
             [
-                ("total_company_currency", "=", st_line.amount),
+                ("total_company_currency", "=", -st_line.amount),
                 ("state", "in", ["done", "uploaded"]),
             ]
         )
