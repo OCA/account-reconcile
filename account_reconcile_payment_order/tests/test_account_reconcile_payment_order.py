@@ -54,7 +54,6 @@ class TestAccountReconcilePaymentOrder(TestPaymentOrderInboundBase):
 
     def test_reconcile_payment_order_bank(self):
         self.assertEqual(len(self.inbound_order.payment_line_ids), 2)
-        self.inbound_mode.write({"move_option": "line"})
         # Prepare payment order
         self.inbound_order.draft2open()
         self.inbound_order.open2generated()
@@ -68,7 +67,6 @@ class TestAccountReconcilePaymentOrder(TestPaymentOrderInboundBase):
         self.inbound_mode.write(
             {
                 "default_journal_ids": [(4, self.bank_journal.id)],
-                "move_option": "line",
             }
         )
         self.assertEqual(len(self.inbound_order.payment_line_ids), 2)
