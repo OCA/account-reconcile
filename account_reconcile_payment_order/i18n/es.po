@@ -21,17 +21,11 @@ msgstr ""
 msgid "Account Reconciliation widget"
 msgstr "Widget de reconciliación de cuentas"
 
-#. module: account_reconcile_payment_order
-#: model:ir.model.fields,field_description:account_reconcile_payment_order.field_account_reconciliation_widget__display_name
-msgid "Display Name"
-msgstr "Mostrar nombre"
+#~ msgid "Display Name"
+#~ msgstr "Mostrar nombre"
 
-#. module: account_reconcile_payment_order
-#: model:ir.model.fields,field_description:account_reconcile_payment_order.field_account_reconciliation_widget__id
-msgid "ID"
-msgstr "Identifiación"
+#~ msgid "ID"
+#~ msgstr "Identifiación"
 
-#. module: account_reconcile_payment_order
-#: model:ir.model.fields,field_description:account_reconcile_payment_order.field_account_reconciliation_widget____last_update
-msgid "Last Modified on"
-msgstr "Última modificación en"
+#~ msgid "Last Modified on"
+#~ msgstr "Última modificación en"
