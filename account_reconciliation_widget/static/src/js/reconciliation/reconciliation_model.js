@@ -49,7 +49,7 @@ odoo.define("account.ReconciliationModel", function (require) {
      *          label: string
      *          amount: number - real amount
      *          amount_str: string - formated amount
-     *          [is_liquidity_line]: boolean
+     *          [already_paid]: boolean
      *          [partner_id]: integer
      *          [partner_name]: string
      *          [account_code]: string
@@ -969,13 +969,13 @@ odoo.define("account.ReconciliationModel", function (require) {
                             partner_id: line.st_line.partner_id,
                             counterpart_aml_dicts: _.map(
                                 _.filter(props, function (prop) {
-                                    return !isNaN(prop.id) && !prop.is_liquidity_line;
+                                    return !isNaN(prop.id) && !prop.already_paid;
                                 }),
                                 self._formatToProcessReconciliation.bind(self, line)
                             ),
                             payment_aml_ids: _.pluck(
                                 _.filter(props, function (prop) {
-                                    return !isNaN(prop.id) && prop.is_liquidity_line;
+                                    return !isNaN(prop.id) && prop.already_paid;
                                 }),
                                 "id"
                             ),
@@ -1143,7 +1143,7 @@ odoo.define("account.ReconciliationModel", function (require) {
                     }
                     return;
                 }
-                if (!prop.is_liquidity_line && parseInt(prop.id)) {
+                if (!prop.already_paid && parseInt(prop.id)) {
                     prop.is_move_line = true;
                 }
                 reconciliation_proposition.push(prop);
