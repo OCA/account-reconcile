@@ -129,15 +129,18 @@ class AccountBankStatementLine(models.Model):
         # but the generated move on statement post should be removed and link the
         # payment one for not having double entry
         # TODO: To mix already done payments with new ones. Not sure if possible.
+        old_move = self.move_id.with_context(force_delete=True)
         for aml_rec in payment_aml_rec:
             aml_rec.with_context(check_move_validity=False).write(
                 {"statement_line_id": self.id}
             )
-            old_move = self.move_id.with_context(force_delete=True)
+            # This overwrites the value on each loop, so only one will be linked, but
+            # there's no better solution in this case
             self.move_id = aml_rec.move_id.id
+            counterpart_moves |= aml_rec.move_id
+        if payment_aml_rec:
             old_move.button_draft()
             old_move.unlink()
-            counterpart_moves |= aml_rec.move_id
         # Create move line(s). Either matching an existing journal entry
         # (eg. invoice), in which case we reconcile the existing and the
         # new move lines together, or being a write-off.
