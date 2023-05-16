@@ -9,15 +9,15 @@ msgstr ""
 "Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-03-24 03:37+0000\n"
-"PO-Revision-Date: 2022-08-04 18:06+0000\n"
-"Last-Translator: Luis D. Lafaurie <luislafaurie@hotmail.com>\n"
+"PO-Revision-Date: 2023-05-17 04:05+0000\n"
+"Last-Translator: gelo joga Rodríguez <gelo.joga@factorlibre.com>\n"
 "Language-Team: Spanish (https://www.transifex.com/oca/teams/23907/es/)\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.3.2\n"
+"X-Generator: Weblate 4.14.1\n"
 
 #. module: account_mass_reconcile
 #. odoo-python
@@ -26,6 +26,8 @@ msgstr ""
 msgid ""
 "A mass reconcile is already ongoing for this account, please try again later."
 msgstr ""
+"Existe una conciliación masiva en curso para esta cuenta actualmente, por "
+"favor inténtelo más tarde."
 
 #. module: account_mass_reconcile
 #. odoo-python
@@ -35,6 +37,8 @@ msgid ""
 "A matcher %(mkey)s is compared with a matcher %(omkey)s, the _matchers and "
 "_opposite_matchers are probably wrong"
 msgstr ""
+"Un matcher %(mkey)s se compara con un matcher %(omkey)s, los _matchers y "
+"_opposite_matchers probablemente estén equivocados"
 
 #. module: account_mass_reconcile
 #: model_terms:ir.actions.act_window,help:account_mass_reconcile.action_account_mass_reconcile
@@ -44,8 +48,8 @@ msgid ""
 "            You can select one or many reconciliation methods which will\n"
 "            be run sequentially to match the entries between them."
 msgstr ""
-"Un perfil de conciliación que especifica, para una cuenta, cómo\n"
-"            las entradas deben ser conciliadas.\n"
+"Un perfil de conciliación especifica, para una cuenta, cómo\n"
+"            los asientos deben ser conciliados.\n"
 "            Puede seleccionar uno o varios métodos de conciliación que\n"
 "            se ejecutarán secuencialmente para que las entradas coincidan "
 "entre sí."
@@ -134,7 +138,7 @@ msgstr "Cancelación automática"
 #: code:addons/account_mass_reconcile/models/base_reconciliation.py:0
 #, python-format
 msgid "Automatic writeoff"
-msgstr ""
+msgstr "Cancelación automática"
 
 #. module: account_mass_reconcile
 #: model_terms:ir.actions.act_window,help:account_mass_reconcile.action_account_mass_reconcile
@@ -279,7 +283,7 @@ msgstr "Agrupar por..."
 #. module: account_mass_reconcile
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile__has_message
 msgid "Has Message"
-msgstr ""
+msgstr "Tiene mensaje"
 
 #. module: account_mass_reconcile
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile__history_ids
@@ -423,7 +427,7 @@ msgstr "Conciliación masiva avanzada"
 #. module: account_mass_reconcile
 #: model:ir.model,name:account_mass_reconcile.model_mass_reconcile_advanced_name
 msgid "Mass Reconcile Advanced Name"
-msgstr ""
+msgstr "Nombre avanzado de conciliación masiva"
 
 #. module: account_mass_reconcile
 #: model:ir.model,name:account_mass_reconcile.model_mass_reconcile_advanced_ref
