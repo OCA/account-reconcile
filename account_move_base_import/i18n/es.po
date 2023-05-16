@@ -9,8 +9,8 @@ msgstr ""
 "Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-03-24 03:37+0000\n"
-"PO-Revision-Date: 2023-04-11 12:24+0000\n"
-"Last-Translator: ikedetoro <ike.detoro@factorlibre.com>\n"
+"PO-Revision-Date: 2023-05-17 04:05+0000\n"
+"Last-Translator: gelo joga Rodríguez <gelo.joga@factorlibre.com>\n"
 "Language-Team: Spanish (https://www.transifex.com/oca/teams/23907/es/)\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
@@ -29,6 +29,10 @@ msgid ""
 "%(error_msg)s\n"
 "%(log)s\n"
 msgstr ""
+"%(completion_date)s Asiento %(move_name)s tiene %(num_imported)s/"
+"%(number_line)s líneas completadas por %(user_name)s \n"
+"%(error_msg)s\n"
+"%(log)s\n"
 
 #. module: account_move_base_import
 #: model:ir.model,name:account_move_base_import.model_account_move_completion_rule
@@ -128,7 +132,7 @@ msgstr "La columna %s no está presente en el archivo"
 #. module: account_move_base_import
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_journal__commission_analytic_account_id
 msgid "Commission Analytic Account"
-msgstr ""
+msgstr "Cuenta analítica de comisiones"
 
 #. module: account_move_base_import
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_journal__commission_account_id
@@ -197,13 +201,13 @@ msgid ""
 " \n"
 " Detail: %(error)s"
 msgstr ""
-"El formato de la fecha no es válido. Debe ser AAAA-MM-DD para la columna: %s "
-"valor: %s\n"
-"\n"
-"\n"
-" Por favor, compruebe la línea con ref: %s\n"
-"\n"
-"Detalle: %s"
+"El formato no es válido. Debería ser AAAA-MM-DD para la columna: %(rule)s "
+"valor: %(line_value)s \n"
+" \n"
+" \n"
+" Por favor revisa la línea con referencia: %(ref_value)s \n"
+" \n"
+" Detalle: %(error)s"
 
 #. module: account_move_base_import
 #. odoo-python
@@ -216,6 +220,11 @@ msgid ""
 " \n"
 " Detail: %(error)s"
 msgstr ""
+"El formato de fecha no es válido. Modifique el formato de celda al formato "
+"de fecha para la columna: %(rule)s valor: %(line_value)s\n"
+" or favor revisa la línea con referencia: %(value_ref)s\n"
+" \n"
+" Detalle: %(error)s"
 
 #. module: account_move_base_import
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_move_completion_rule__display_name
@@ -431,6 +440,8 @@ msgid ""
 "Line named \"%(line_name)s\" was matched by more than one partner while "
 "looking on %(inv_type)s invoices"
 msgstr ""
+"La línea llamada \"%(line_name)s\" se ha conciliado con más de un partner al "
+"consultar las facturas de %(inv_type)s"
 
 #. module: account_move_base_import
 #. odoo-python
@@ -440,6 +451,8 @@ msgid ""
 "Line named \"%(line_name)s\" was matched by more than one partner while "
 "looking on partner label: %(partner_labels)s"
 msgstr ""
+"Línea denominada \"%(line_name)s\" se ha conciliado con más de un partner al "
+"consultar la etiqueta del partner %(partner_labels)s"
 
 #. module: account_move_base_import
 #. odoo-python
@@ -502,7 +515,7 @@ msgstr ""
 #: code:addons/account_move_base_import/models/account_journal.py:0
 #, python-format
 msgid "Move %(move_name)s have been imported with %(num_lines)s lines."
-msgstr ""
+msgstr "Asiento %(move_name)s se ha importado con %(num_lines)s líneas."
 
 #. module: account_move_base_import
 #: model:ir.ui.menu,name:account_move_base_import.menu_action_move_completion_rule_tree_menu
@@ -631,6 +644,8 @@ msgid ""
 "Statement ID %(move_name)s auto-completed for %(num_imported)s/"
 "%(number_line)s lines completed"
 msgstr ""
+"ID de extracto %(move_name)s autocompletado para %(num_imported)s "
+"%(number_line)s líneas completadas"
 
 #. module: account_move_base_import
 #: model:ir.model.fields,field_description:account_move_base_import.field_credit_statement_import__input_statement
@@ -657,6 +672,8 @@ msgid ""
 "Tick that box to automatically launch the completion on each imported file "
 "using this journal."
 msgstr ""
+"Marca esta casilla para ejecutar automáticamente la finalización en cada "
+"archivo importado utilizando este diario."
 
 #. module: account_move_base_import
 #: model:ir.model.fields,help:account_move_base_import.field_account_journal__autovalidate_completed_move
@@ -664,6 +681,8 @@ msgid ""
 "Tick that box to automatically validate the journal entries after the "
 "completion"
 msgstr ""
+"Marca esa casilla para validar automáticamente los asientos después de "
+"completarlos"
 
 #. module: account_move_base_import
 #: model_terms:ir.ui.view,arch_db:account_move_base_import.view_account_move_filter
@@ -687,7 +706,7 @@ msgstr "Tipo de importación"
 #. module: account_move_base_import
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_journal__autovalidate_completed_move
 msgid "Validate fully completed moves"
-msgstr ""
+msgstr "Valida los movimientos totalmente completados"
 
 #. module: account_move_base_import
 #. odoo-python
@@ -699,6 +718,10 @@ msgid ""
 " \n"
 " Detail: %(error)s"
 msgstr ""
+"Valor %(line_value)s de la columna %(rule)s ino es válido.\n"
+" Por favor revisa la línea con referencia %(value_ref)s:\n"
+" \n"
+" Detalle: %(error)s"
 
 #. module: account_move_base_import
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_journal__website_message_ids
