@@ -1,0 +1,308 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* account_move_line_reconcile_manual
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 16.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"Language: hr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+
+#. module: account_move_line_reconcile_manual
+#: model:ir.model.fields,field_description:account_move_line_reconcile_manual.field_account_move_line_reconcile_manual__count
+msgid "# of Journal Items"
+msgstr ""
+
+#. module: account_move_line_reconcile_manual
+#: model:ir.model.fields,field_description:account_move_line_reconcile_manual.field_account_move_line_reconcile_manual__account_id
+msgid "Account"
+msgstr ""
+
+#. module: account_move_line_reconcile_manual
+#. odoo-python
+#: code:addons/account_move_line_reconcile_manual/wizards/account_move_line_reconcile_manual.py:0
+#, python-format
+msgid "Account '%s' is not reconciliable."
+msgstr ""
+
+#. module: account_move_line_reconcile_manual
+#: model:ir.model.fields,field_description:account_move_line_reconcile_manual.field_account_move_line_reconcile_manual__writeoff_amount
+msgid "Amount"
+msgstr ""
+
+#. module: account_move_line_reconcile_manual
+#: model:ir.model.fields,field_description:account_move_line_reconcile_manual.field_account_move_line_reconcile_manual__analytic_distribution
+msgid "Analytic"
+msgstr ""
+
+#. module: account_move_line_reconcile_manual
+#: model:ir.model.fields,field_description:account_move_line_reconcile_manual.field_account_move_line_reconcile_manual__analytic_distribution_search
+msgid "Analytic Distribution Search"
+msgstr ""
+
+#. module: account_move_line_reconcile_manual
+#: model:ir.model.fields,field_description:account_move_line_reconcile_manual.field_account_move_line_reconcile_manual__analytic_precision
+msgid "Analytic Precision"
+msgstr ""
+
+#. module: account_move_line_reconcile_manual
+#. odoo-python
+#: code:addons/account_move_line_reconcile_manual/wizards/account_move_line_reconcile_manual.py:0
+#, python-format
+msgid "Bad write-off account type"
+msgstr ""
+
+#. module: account_move_line_reconcile_manual
+#: model_terms:ir.ui.view,arch_db:account_move_line_reconcile_manual.account_move_line_reconcile_manual_form
+msgid "Cancel"
+msgstr ""
+
+#. module: account_move_line_reconcile_manual
+#: model:ir.model.fields,field_description:account_move_line_reconcile_manual.field_account_move_line_reconcile_manual__company_id
+msgid "Company"
+msgstr ""
+
+#. module: account_move_line_reconcile_manual
+#: model:ir.model.fields,field_description:account_move_line_reconcile_manual.field_account_move_line_reconcile_manual__create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: account_move_line_reconcile_manual
+#: model:ir.model.fields,field_description:account_move_line_reconcile_manual.field_account_move_line_reconcile_manual__create_date
+msgid "Created on"
+msgstr ""
+
+#. module: account_move_line_reconcile_manual
+#: model:ir.model.fields,field_description:account_move_line_reconcile_manual.field_account_move_line_reconcile_manual__company_currency_id
+msgid "Currency"
+msgstr ""
+
+#. module: account_move_line_reconcile_manual
+#: model:ir.model.fields,field_description:account_move_line_reconcile_manual.field_account_move_line_reconcile_manual__writeoff_date
+msgid "Date"
+msgstr ""
+
+#. module: account_move_line_reconcile_manual
+#: model:ir.model.fields,field_description:account_move_line_reconcile_manual.field_account_move_line_reconcile_manual__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: account_move_line_reconcile_manual
+#: model:ir.model.fields.selection,name:account_move_line_reconcile_manual.selection__account_move_line_reconcile_manual__writeoff_type__expense
+msgid "Expense"
+msgstr ""
+
+#. module: account_move_line_reconcile_manual
+#: model_terms:ir.ui.view,arch_db:account_move_line_reconcile_manual.account_move_line_reconcile_manual_form
+msgid "Full Reconcile"
+msgstr ""
+
+#. module: account_move_line_reconcile_manual
+#. odoo-python
+#: code:addons/account_move_line_reconcile_manual/wizards/account_move_line_reconcile_manual.py:0
+#: code:addons/account_move_line_reconcile_manual/wizards/account_move_line_reconcile_manual.py:0
+#, python-format
+msgid "Full reconciliation failed. It should never happen!"
+msgstr ""
+
+#. module: account_move_line_reconcile_manual
+#: model:ir.model.fields,field_description:account_move_line_reconcile_manual.field_account_move_line_reconcile_manual__id
+msgid "ID"
+msgstr ""
+
+#. module: account_move_line_reconcile_manual
+#: model:ir.model.fields.selection,name:account_move_line_reconcile_manual.selection__account_move_line_reconcile_manual__writeoff_type__income
+msgid "Income"
+msgstr ""
+
+#. module: account_move_line_reconcile_manual
+#: model:ir.model.fields,field_description:account_move_line_reconcile_manual.field_account_move_line_reconcile_manual__writeoff_journal_id
+msgid "Journal"
+msgstr ""
+
+#. module: account_move_line_reconcile_manual
+#: model:ir.model.fields,field_description:account_move_line_reconcile_manual.field_account_move_line_reconcile_manual____last_update
+msgid "Last Modified on"
+msgstr ""
+
+#. module: account_move_line_reconcile_manual
+#: model:ir.model.fields,field_description:account_move_line_reconcile_manual.field_account_move_line_reconcile_manual__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: account_move_line_reconcile_manual
+#: model:ir.model.fields,field_description:account_move_line_reconcile_manual.field_account_move_line_reconcile_manual__write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: account_move_line_reconcile_manual
+#. odoo-python
+#: code:addons/account_move_line_reconcile_manual/wizards/account_move_line_reconcile_manual.py:0
+#, python-format
+msgid "Line '%s' is already fully reconciled."
+msgstr ""
+
+#. module: account_move_line_reconcile_manual
+#: model:ir.model,name:account_move_line_reconcile_manual.model_account_move_line_reconcile_manual
+msgid "Manual Reconciliation Wizard"
+msgstr ""
+
+#. module: account_move_line_reconcile_manual
+#: model:ir.model.fields,field_description:account_move_line_reconcile_manual.field_account_move_line_reconcile_manual__move_line_ids
+msgid "Move Line"
+msgstr ""
+
+#. module: account_move_line_reconcile_manual
+#: model:ir.model.fields.selection,name:account_move_line_reconcile_manual.selection__account_move_line_reconcile_manual__writeoff_type__none
+msgid "None"
+msgstr ""
+
+#. module: account_move_line_reconcile_manual
+#: model_terms:ir.ui.view,arch_db:account_move_line_reconcile_manual.account_move_line_reconcile_manual_form
+msgid "Partial Reconcile"
+msgstr ""
+
+#. module: account_move_line_reconcile_manual
+#: model:ir.model.fields,field_description:account_move_line_reconcile_manual.field_account_move_line_reconcile_manual__partner_id
+msgid "Partner"
+msgstr ""
+
+#. module: account_move_line_reconcile_manual
+#: model:ir.model.fields,field_description:account_move_line_reconcile_manual.field_account_move_line_reconcile_manual__partner_count
+msgid "Partner Count"
+msgstr ""
+
+#. module: account_move_line_reconcile_manual
+#: model:ir.actions.act_window,name:account_move_line_reconcile_manual.account_move_line_reconcile_manual_action
+#: model_terms:ir.ui.view,arch_db:account_move_line_reconcile_manual.view_move_line_tree
+msgid "Reconcile"
+msgstr ""
+
+#. module: account_move_line_reconcile_manual
+#. odoo-python
+#: code:addons/account_move_line_reconcile_manual/wizards/account_move_line_reconcile_manual.py:0
+#, python-format
+msgid "Reconcile mark: %s"
+msgstr ""
+
+#. module: account_move_line_reconcile_manual
+#: model_terms:ir.ui.view,arch_db:account_move_line_reconcile_manual.account_move_line_reconcile_manual_form
+msgid "Reconcile with Write-off"
+msgstr ""
+
+#. module: account_move_line_reconcile_manual
+#: model:ir.model.fields,field_description:account_move_line_reconcile_manual.field_account_move_line_reconcile_manual__writeoff_ref
+msgid "Reference"
+msgstr ""
+
+#. module: account_move_line_reconcile_manual
+#: model:ir.model.fields.selection,name:account_move_line_reconcile_manual.selection__account_move_line_reconcile_manual__state__start
+msgid "Start"
+msgstr ""
+
+#. module: account_move_line_reconcile_manual
+#: model:ir.model.fields,field_description:account_move_line_reconcile_manual.field_account_move_line_reconcile_manual__state
+msgid "State"
+msgstr ""
+
+#. module: account_move_line_reconcile_manual
+#. odoo-python
+#: code:addons/account_move_line_reconcile_manual/wizards/account_move_line_reconcile_manual.py:0
+#: code:addons/account_move_line_reconcile_manual/wizards/account_move_line_reconcile_manual.py:0
+#, python-format
+msgid "Successful reconciliation"
+msgstr ""
+
+#. module: account_move_line_reconcile_manual
+#. odoo-python
+#: code:addons/account_move_line_reconcile_manual/wizards/account_move_line_reconcile_manual.py:0
+#, python-format
+msgid ""
+"The Journal Items selected have different accounts: %(account1)s and "
+"%(account2)s."
+msgstr ""
+
+#. module: account_move_line_reconcile_manual
+#. odoo-python
+#: code:addons/account_move_line_reconcile_manual/wizards/account_move_line_reconcile_manual.py:0
+#, python-format
+msgid ""
+"This is a/an '%(writeoff_type)s' write-off, but you selected account "
+"%(account_code)s which is a/an '%(account_type)s' account."
+msgstr ""
+
+#. module: account_move_line_reconcile_manual
+#: model:ir.model.fields,field_description:account_move_line_reconcile_manual.field_account_move_line_reconcile_manual__total_credit
+msgid "Total Credit"
+msgstr ""
+
+#. module: account_move_line_reconcile_manual
+#: model:ir.model.fields,field_description:account_move_line_reconcile_manual.field_account_move_line_reconcile_manual__total_debit
+msgid "Total Debit"
+msgstr ""
+
+#. module: account_move_line_reconcile_manual
+#: model:ir.model.fields,field_description:account_move_line_reconcile_manual.field_account_move_line_reconcile_manual__writeoff_type
+msgid "Type"
+msgstr ""
+
+#. module: account_move_line_reconcile_manual
+#. odoo-python
+#: code:addons/account_move_line_reconcile_manual/wizards/account_move_line_reconcile_manual.py:0
+#: model:ir.model.fields.selection,name:account_move_line_reconcile_manual.selection__account_move_line_reconcile_manual__state__writeoff
+#: model_terms:ir.ui.view,arch_db:account_move_line_reconcile_manual.account_move_line_reconcile_manual_form
+#, python-format
+msgid "Write-off"
+msgstr ""
+
+#. module: account_move_line_reconcile_manual
+#: model:ir.model.fields,field_description:account_move_line_reconcile_manual.field_account_move_line_reconcile_manual__writeoff_account_id
+msgid "Write-off Account"
+msgstr ""
+
+#. module: account_move_line_reconcile_manual
+#. odoo-python
+#: code:addons/account_move_line_reconcile_manual/wizards/account_move_line_reconcile_manual.py:0
+#, python-format
+msgid ""
+"Write-off journal entry: %(writeoff_move)s\n"
+"Reconcile mark: %(full_rec)s"
+msgstr ""
+
+#. module: account_move_line_reconcile_manual
+#: model_terms:ir.ui.view,arch_db:account_move_line_reconcile_manual.account_move_line_reconcile_manual_form
+msgid "You are trying to reconcile journal items from"
+msgstr ""
+
+#. module: account_move_line_reconcile_manual
+#. odoo-python
+#: code:addons/account_move_line_reconcile_manual/wizards/account_move_line_reconcile_manual.py:0
+#, python-format
+msgid "You must select at least 2 journal items!"
+msgstr ""
+
+#. module: account_move_line_reconcile_manual
+#. odoo-python
+#: code:addons/account_move_line_reconcile_manual/wizards/account_move_line_reconcile_manual.py:0
+#, python-format
+msgid "You selected only credit journal items."
+msgstr ""
+
+#. module: account_move_line_reconcile_manual
+#. odoo-python
+#: code:addons/account_move_line_reconcile_manual/wizards/account_move_line_reconcile_manual.py:0
+#, python-format
+msgid "You selected only debit journal items."
+msgstr ""
+
+#. module: account_move_line_reconcile_manual
+#: model_terms:ir.ui.view,arch_db:account_move_line_reconcile_manual.account_move_line_reconcile_manual_form
+msgid "different partners: make sure it is intented."
+msgstr ""
