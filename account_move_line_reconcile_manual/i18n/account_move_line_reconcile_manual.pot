@@ -41,6 +41,11 @@ msgid "Analytic"
 msgstr ""
 
 #. module: account_move_line_reconcile_manual
+#: model:ir.model.fields,field_description:account_move_line_reconcile_manual.field_account_move_line_reconcile_manual__analytic_distribution_search
+msgid "Analytic Distribution Search"
+msgstr ""
+
+#. module: account_move_line_reconcile_manual
 #: model:ir.model.fields,field_description:account_move_line_reconcile_manual.field_account_move_line_reconcile_manual__analytic_precision
 msgid "Analytic Precision"
 msgstr ""
