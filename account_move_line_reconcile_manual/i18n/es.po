@@ -44,6 +44,11 @@ msgid "Analytic"
 msgstr "Analítica"
 
 #. module: account_move_line_reconcile_manual
+#: model:ir.model.fields,field_description:account_move_line_reconcile_manual.field_account_move_line_reconcile_manual__analytic_distribution_search
+msgid "Analytic Distribution Search"
+msgstr ""
+
+#. module: account_move_line_reconcile_manual
 #: model:ir.model.fields,field_description:account_move_line_reconcile_manual.field_account_move_line_reconcile_manual__analytic_precision
 msgid "Analytic Precision"
 msgstr "Precisión analítica"
@@ -102,7 +107,6 @@ msgstr "Reconciliación completa"
 
 #. module: account_move_line_reconcile_manual
 #. odoo-python
-#: code:addons/account_move_line_reconcile_manual/wizards/account_move_line_reconcile_manual.py:0
 #: code:addons/account_move_line_reconcile_manual/wizards/account_move_line_reconcile_manual.py:0
 #, python-format
 msgid "Full reconciliation failed. It should never happen!"
@@ -210,7 +214,6 @@ msgstr "Estado"
 
 #. module: account_move_line_reconcile_manual
 #. odoo-python
-#: code:addons/account_move_line_reconcile_manual/wizards/account_move_line_reconcile_manual.py:0
 #: code:addons/account_move_line_reconcile_manual/wizards/account_move_line_reconcile_manual.py:0
 #, python-format
 msgid "Successful reconciliation"
