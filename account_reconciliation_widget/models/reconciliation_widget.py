@@ -794,6 +794,8 @@ class AccountReconciliation(models.AbstractModel):
             "&",
             "&",
             "&",
+            "&",
+            ("id", "not in", st_line.move_id.line_ids.ids),
             ("reconciled", "=", False),
             ("account_id.reconcile", "=", True),
             ("balance", "!=", 0.0),
