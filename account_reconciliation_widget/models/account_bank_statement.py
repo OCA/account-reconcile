@@ -98,10 +98,6 @@ class AccountBankStatementLine(models.Model):
         new_aml_dicts = new_aml_dicts or []
 
         aml_obj = self.env["account.move.line"]
-
-        company_currency = self.journal_id.company_id.currency_id
-        statement_currency = self.journal_id.currency_id or company_currency
-
         counterpart_moves = self.env["account.move"]
 
         # Check and prepare received data
@@ -130,55 +126,22 @@ class AccountBankStatementLine(models.Model):
                 and user_type_id not in account_types
             ):
                 account_types |= user_type_id
-        # FIXME: review
-        # if suspense_moves_mode:
-        #     if any(not line.journal_entry_ids for line in self):
-        #         raise UserError(
-        #             _(
-        #                 "Some selected statement line were not already "
-        #                 "reconciled with an account move."
-        #             )
-        #         )
-        # else:
-        #     if any(line.journal_entry_ids for line in self):
-        #         raise UserError(
-        #             _(
-        #                 "A selected statement line was already reconciled with "
-        #                 "an account move."
-        #             )
-        #         )
-
-        # Fully reconciled moves are just linked to the bank statement
-        total = self.amount
-        currency = self.foreign_currency_id or statement_currency
+        # Fully reconciled moves are just linked to the bank statement (blue lines),
+        # but the generated move on statement post should be removed and link the
+        # payment one for not having double entry
+        # TODO: To mix already done payments with new ones. Not sure if possible.
+        old_move = self.move_id.with_context(force_delete=True)
         for aml_rec in payment_aml_rec:
-            balance = (
-                aml_rec.amount_currency if aml_rec.currency_id else aml_rec.balance
-            )
-            aml_currency = aml_rec.currency_id or aml_rec.company_currency_id
-            total -= aml_currency._convert(
-                balance, currency, aml_rec.company_id, aml_rec.date
-            )
             aml_rec.with_context(check_move_validity=False).write(
                 {"statement_line_id": self.id}
             )
-            counterpart_moves = counterpart_moves | aml_rec.move_id
-            if (
-                aml_rec.journal_id.post_at == "bank_rec"
-                and aml_rec.payment_id
-                and aml_rec.move_id.state == "draft"
-            ):
-                # In case the journal is set to only post payments when
-                # performing bank reconciliation, we modify its date and post
-                # it.
-                aml_rec.move_id.date = self.date
-                aml_rec.payment_id.payment_date = self.date
-                aml_rec.move_id.action_post()
-                # We check the paid status of the invoices reconciled with this
-                # payment
-                for invoice in aml_rec.payment_id.reconciled_invoice_ids:
-                    self._check_invoice_state(invoice)
-
+            # This overwrites the value on each loop, so only one will be linked, but
+            # there's no better solution in this case
+            self.move_id = aml_rec.move_id.id
+            counterpart_moves |= aml_rec.move_id
+        if payment_aml_rec:
+            old_move.button_draft()
+            old_move.unlink()
         # Create move line(s). Either matching an existing journal entry
         # (eg. invoice), in which case we reconcile the existing and the new
         # move lines together, or being a write-off.
@@ -343,3 +306,39 @@ class AccountBankStatementLine(models.Model):
     def _check_invoice_state(self, invoice):
         if invoice.is_invoice(include_receipts=True):
             invoice._compute_amount()
+
+    def button_undo_reconciliation(self):
+        """Handle the case when the reconciliation was done against a direct payment
+        with the bank account as counterpart. This may be the case for payments made
+        in previous versions of Odoo.
+        """
+        handled = self.env[self._name]
+        for record in self:
+            if record.move_id.payment_id:
+                # The reconciliation was done against a blue line (existing move)
+                # We remove the link on the current existing move, preserving it,
+                # and recreate a new move as if the statement line was new
+                record.move_id.line_ids.statement_line_id = False
+                statement = record.statement_id
+                journal = statement.journal_id
+                line_vals_list = record._prepare_move_line_default_vals()
+                new_move = self.env["account.move"].create(
+                    {
+                        "move_type": "entry",
+                        "statement_line_id": record.id,
+                        "ref": statement.name,
+                        "date": record.date,
+                        "journal_id": journal.id,
+                        "partner_id": record.partner_id.id,
+                        "currency_id": (
+                            journal.currency_id or journal.company_id.currency_id
+                        ).id,
+                        "line_ids": [(0, 0, line_vals) for line_vals in line_vals_list],
+                    }
+                )
+                new_move.action_post()
+                record.move_id = new_move.id
+                handled += record
+        return super(
+            AccountBankStatementLine, self - handled
+        ).button_undo_reconciliation()
