@@ -37,6 +37,32 @@ class TestScenarioReconcile(TestAccountReconciliationCommon):
             default_vals.update(values)
             acs_ids = cls.acs_model.create(default_vals)
 
+    def create_currency_rate(self, name, currency, company, rate):
+        currency_rate = (
+            self.env["res.currency.rate"]
+            .sudo()
+            .search(
+                [
+                    ("currency_id", "=", currency),
+                    ("company_id", "=", company),
+                ]
+            )
+            .filtered(lambda r: r.name == name)
+        )
+        if not currency_rate:
+            # create currency rate
+            self.env["res.currency.rate"].sudo().create(
+                {
+                    "name": name,
+                    "currency_id": currency,
+                    "rate": rate,
+                    "company_id": company,
+                }
+            )
+        else:
+            currency_rate = fields.first(currency_rate)
+            currency_rate.rate = rate
+
     def test_scenario_reconcile(self):
         invoice = self.create_invoice()
         self.assertEqual("posted", invoice.state)
@@ -68,29 +94,10 @@ class TestScenarioReconcile(TestAccountReconciliationCommon):
         self.assertEqual("paid", invoice.payment_state)
 
     def test_scenario_reconcile_currency(self):
-        currency_rate = (
-            self.env["res.currency.rate"]
-            .sudo()
-            .search(
-                [
-                    ("currency_id", "=", self.ref("base.USD")),
-                    ("company_id", "=", self.ref("base.main_company")),
-                ]
-            )
-            .filtered(lambda r: r.name == fields.Date.today())
+        rate_date = fields.Date.today()
+        self.create_currency_rate(
+            rate_date, self.ref("base.USD"), self.ref("base.main_company"), 1.5
         )
-        if not currency_rate:
-            # create currency rate
-            self.env["res.currency.rate"].create(
-                {
-                    "name": fields.Date.today(),
-                    "currency_id": self.ref("base.USD"),
-                    "rate": 1.5,
-                }
-            )
-        else:
-            currency_rate = fields.first(currency_rate)
-            currency_rate.rate = 1.5
         # create invoice
         invoice = self._create_invoice(
             currency_id=self.ref("base.USD"),
@@ -98,13 +105,9 @@ class TestScenarioReconcile(TestAccountReconciliationCommon):
             auto_validate=True,
         )
         self.assertEqual("posted", invoice.state)
-
-        self.env["res.currency.rate"].create(
-            {
-                "name": fields.Date.today() - timedelta(days=3),
-                "currency_id": self.ref("base.USD"),
-                "rate": 2,
-            }
+        rate_date = fields.Date.today() - timedelta(days=3)
+        self.create_currency_rate(
+            rate_date, self.ref("base.USD"), self.ref("base.main_company"), 2
         )
         receivable_account_id = invoice.partner_id.property_account_receivable_id.id
         # create payment
