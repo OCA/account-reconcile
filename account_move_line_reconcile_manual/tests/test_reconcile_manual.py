@@ -16,7 +16,12 @@ class TestReconcileManual(TransactionCase):
         cls.company = cls.env.ref("base.main_company")
         cls.ccur = cls.company.currency_id
         cls.rec_account = cls.env["account.account"].search(
-            [("company_id", "=", cls.company.id), ("reconcile", "=", True)], limit=1
+            [
+                ("company_id", "=", cls.company.id),
+                ("reconcile", "=", True),
+                ("account_type", "=", "asset_receivable"),
+            ],
+            limit=1,
         )
         cls.other_account = cls.env["account.account"].search(
             [("company_id", "=", cls.company.id), ("reconcile", "=", False)], limit=1
@@ -27,66 +32,6 @@ class TestReconcileManual(TransactionCase):
         cls.partner = cls.env["res.partner"].create(
             {"name": "Odoo Community Association", "company_id": cls.company.id}
         )
-        cls.move1 = cls.env["account.move"].create(
-            {
-                "journal_id": cls.journal.id,
-                "company_id": cls.company.id,
-                "line_ids": [
-                    (
-                        0,
-                        0,
-                        {
-                            "account_id": cls.rec_account.id,
-                            "partner_id": cls.partner.id,
-                            "debit": 100,
-                        },
-                    ),
-                    (
-                        0,
-                        0,
-                        {
-                            "account_id": cls.other_account.id,
-                            "partner_id": cls.partner.id,
-                            "credit": 100,
-                        },
-                    ),
-                ],
-            }
-        )
-        cls.move1._post(soft=False)
-        cls.line1 = cls.move1.line_ids.filtered(
-            lambda x: x.account_id == cls.rec_account
-        )
-        cls.move2 = cls.env["account.move"].create(
-            {
-                "journal_id": cls.journal.id,
-                "company_id": cls.company.id,
-                "line_ids": [
-                    (
-                        0,
-                        0,
-                        {
-                            "account_id": cls.rec_account.id,
-                            "partner_id": cls.partner.id,
-                            "credit": 95,
-                        },
-                    ),
-                    (
-                        0,
-                        0,
-                        {
-                            "account_id": cls.other_account.id,
-                            "partner_id": cls.partner.id,
-                            "debit": 95,
-                        },
-                    ),
-                ],
-            }
-        )
-        cls.move2._post(soft=False)
-        cls.line2 = cls.move2.line_ids.filtered(
-            lambda x: x.account_id == cls.rec_account
-        )
         cls.writeoff_account = cls.env["account.account"].search(
             [
                 ("company_id", "=", cls.company.id),
@@ -96,8 +41,120 @@ class TestReconcileManual(TransactionCase):
             limit=1,
         )
         cls.writeoff_ref = "OCApower"
+        cls.foreign_curr = (
+            cls.env["res.currency"]
+            .with_context(active_test=False)
+            .search([("id", "!=", cls.ccur.id)], limit=1)
+        )
+        cls.foreign_curr.write({"active": True})
+
+    def _generate_debit_reconcile_move(self, amount, currency_amount=0.0):
+        reconcile_line_vals = {
+            "account_id": self.rec_account.id,
+            "partner_id": self.partner.id,
+            "debit": amount,
+        }
+        other_line_vals = {
+            "account_id": self.other_account.id,
+            "partner_id": self.partner.id,
+            "credit": amount,
+        }
+        if currency_amount:
+            reconcile_line_vals.update(
+                {
+                    "amount_currency": currency_amount,
+                    "currency_id": self.foreign_curr.id,
+                }
+            )
+            other_line_vals.update(
+                {
+                    "amount_currency": -currency_amount,
+                    "currency_id": self.foreign_curr.id,
+                }
+            )
+
+        move = self.env["account.move"].create(
+            {
+                "journal_id": self.journal.id,
+                "company_id": self.company.id,
+                "currency_id": not currency_amount
+                and self.ccur.id
+                or self.foreign_curr.id,
+                "line_ids": [
+                    (
+                        0,
+                        0,
+                        reconcile_line_vals,
+                    ),
+                    (
+                        0,
+                        0,
+                        other_line_vals,
+                    ),
+                ],
+            }
+        )
+        move._post(soft=False)
+        return move
+
+    def _generate_credit_reconcile_move(self, amount, currency_amount=0.0):
+        reconcile_line_vals = {
+            "account_id": self.rec_account.id,
+            "partner_id": self.partner.id,
+            "credit": amount,
+        }
+        other_line_vals = {
+            "account_id": self.other_account.id,
+            "partner_id": self.partner.id,
+            "debit": amount,
+        }
+        if currency_amount:
+            reconcile_line_vals.update(
+                {
+                    "amount_currency": -currency_amount,
+                    "currency_id": self.foreign_curr.id,
+                }
+            )
+            other_line_vals.update(
+                {
+                    "amount_currency": currency_amount,
+                    "currency_id": self.foreign_curr.id,
+                }
+            )
+
+        move = self.env["account.move"].create(
+            {
+                "journal_id": self.journal.id,
+                "company_id": self.company.id,
+                "currency_id": not currency_amount
+                and self.ccur.id
+                or self.foreign_curr.id,
+                "line_ids": [
+                    (
+                        0,
+                        0,
+                        reconcile_line_vals,
+                    ),
+                    (
+                        0,
+                        0,
+                        other_line_vals,
+                    ),
+                ],
+            }
+        )
+        move._post(soft=False)
+        return move
 
     def test_reconcile_manual(self):
+        self.move1 = self._generate_debit_reconcile_move(100)
+        self.line1 = self.move1.line_ids.filtered(
+            lambda x: x.account_id == self.rec_account
+        )
+        self.move2 = self._generate_credit_reconcile_move(95)
+        self.line2 = self.move2.line_ids.filtered(
+            lambda x: x.account_id == self.rec_account
+        )
         # start with partial reconcile
         lines_to_rec = self.line1 + self.line2
         wiz1 = (
@@ -170,3 +227,63 @@ class TestReconcileManual(TransactionCase):
         self.assertTrue(full_rec4)
         self.assertEqual(self.line1.full_reconcile_id, full_rec4)
         self.assertEqual(self.line2.full_reconcile_id, full_rec4)
+
+    def test_foreign_currency_full_reconcile(self):
+        self.move1 = self._generate_debit_reconcile_move(100, currency_amount=95)
+        self.line1 = self.move1.line_ids.filtered(
+            lambda x: x.account_id == self.rec_account
+        )
+        self.move2 = self._generate_credit_reconcile_move(101, currency_amount=95)
+        self.line2 = self.move2.line_ids.filtered(
+            lambda x: x.account_id == self.rec_account
+        )
+        lines_to_rec = self.line1 + self.line2
+        wiz = (
+            self.env["account.move.line.reconcile.manual"]
+            .with_context(active_model="account.move.line", active_ids=lines_to_rec.ids)
+            .create({})
+        )
+        self.assertEqual(wiz.account_id, self.rec_account)
+        self.assertEqual(wiz.count, 2)
+        self.assertEqual(wiz.partner_count, 1)
+        self.assertFalse(self.foreign_curr.compare_amounts(wiz.total_debit, 95))
+        self.assertFalse(self.foreign_curr.compare_amounts(wiz.total_credit, 95))
+        self.assertEqual(wiz.writeoff_type, "none")
+        wiz.full_reconcile()
+
+        self.assertTrue(self.line1.full_reconcile_id)
+        self.assertEqual(self.line1.full_reconcile_id, self.line2.full_reconcile_id)
+        self.assertFalse(self.line1.amount_residual_currency)
+        self.assertFalse(self.line1.amount_residual)
+
+    def test_foreign_currency_reconcile_with_write_off(self):
+        self.move1 = self._generate_debit_reconcile_move(100, currency_amount=95)
+        self.line1 = self.move1.line_ids.filtered(
+            lambda x: x.account_id == self.rec_account
+        )
+        self.move2 = self._generate_credit_reconcile_move(98, currency_amount=94)
+        self.line2 = self.move2.line_ids.filtered(
+            lambda x: x.account_id == self.rec_account
+        )
+        lines_to_rec = self.line1 + self.line2
+        wiz = (
+            self.env["account.move.line.reconcile.manual"]
+            .with_context(active_model="account.move.line", active_ids=lines_to_rec.ids)
+            .create({})
+        )
+        self.assertEqual(wiz.account_id, self.rec_account)
+        self.assertEqual(wiz.count, 2)
+        self.assertEqual(wiz.writeoff_type, "expense")
+        self.assertEqual(wiz.writeoff_amount, 1)
+        wiz.go_to_writeoff()
+        wiz.write(
+            {
+                "writeoff_journal_id": self.journal.id,
+                "writeoff_ref": self.writeoff_ref,
+                "writeoff_account_id": self.writeoff_account.id,
+            }
+        )
+        wiz.reconcile_with_writeoff()
+
+        self.assertTrue(self.line1.full_reconcile_id)
+        self.assertEqual(self.line1.full_reconcile_id, self.line2.full_reconcile_id)

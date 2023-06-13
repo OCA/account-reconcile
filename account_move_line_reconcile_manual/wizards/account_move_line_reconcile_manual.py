@@ -19,10 +19,10 @@ class AccountMoveLineReconcileManual(models.TransientModel):
         "account.account", required=True, readonly=True, check_company=True
     )
     company_id = fields.Many2one("res.company", required=True, readonly=True)
-    company_currency_id = fields.Many2one(related="company_id.currency_id")
+    currency_id = fields.Many2one("res.currency")
     count = fields.Integer(string="# of Journal Items", readonly=True)
-    total_debit = fields.Monetary(currency_field="company_currency_id", readonly=True)
-    total_credit = fields.Monetary(currency_field="company_currency_id", readonly=True)
+    total_debit = fields.Monetary(currency_field="currency_id", readonly=True)
+    total_credit = fields.Monetary(currency_field="currency_id", readonly=True)
     move_line_ids = fields.Many2many(
         "account.move.line", readonly=True, check_company=True
     )
@@ -72,7 +72,7 @@ class AccountMoveLineReconcileManual(models.TransientModel):
         string="Type",
     )
     writeoff_amount = fields.Monetary(
-        currency_field="company_currency_id", readonly=True, string="Amount"
+        currency_field="currency_id", readonly=True, string="Amount"
     )
     writeoff_account_id = fields.Many2one(
         "account.account",
@@ -150,10 +150,19 @@ class AccountMoveLineReconcileManual(models.TransientModel):
         account = False
         total_debit = total_credit = 0.0
         partner_set = set()
+        currencies = move_lines.currency_id
+        currency = len(currencies) == 1 and currencies or ccur
+        is_foreign_currency = currency != ccur
         for line in move_lines:
             count += 1
-            total_debit += line.debit
-            total_credit += line.credit
+            if is_foreign_currency:
+                debit = line.amount_currency > 0.0 and line.amount_currency or 0.0
+                credit = line.amount_currency < 0.0 and abs(line.amount_currency) or 0.0
+            else:
+                debit = line.debit
+                credit = line.credit
+            total_debit += debit
+            total_credit += credit
             if line.full_reconcile_id:
                 raise UserError(
                     _("Line '%s' is already fully reconciled.") % line.display_name
@@ -179,14 +188,14 @@ class AccountMoveLineReconcileManual(models.TransientModel):
             )
         if count <= 1:
             raise UserError(_("You must select at least 2 journal items!"))
-        if ccur.is_zero(total_debit):
+        if currency.is_zero(total_debit):
             raise UserError(_("You selected only credit journal items."))
-        if ccur.is_zero(total_credit):
+        if currency.is_zero(total_credit):
             raise UserError(_("You selected only debit journal items."))
-        writeoff_amount = ccur.round(abs(total_debit - total_credit))
-        total_debit = ccur.round(total_debit)
-        total_credit = ccur.round(total_credit)
-        compare_res = ccur.compare_amounts(total_debit, total_credit)
+        writeoff_amount = currency.round(abs(total_debit - total_credit))
+        total_debit = currency.round(total_debit)
+        total_credit = currency.round(total_credit)
+        compare_res = currency.compare_amounts(total_debit, total_credit)
         if compare_res > 0:
             writeoff_type = "expense"
         elif compare_res < 0:
@@ -198,6 +207,7 @@ class AccountMoveLineReconcileManual(models.TransientModel):
                 "count": count,
                 "account_id": account.id,
                 "company_id": account.company_id.id,
+                "currency_id": currency.id,
                 "total_debit": total_debit,
                 "total_credit": total_credit,
                 "partner_count": len(partner_set),
@@ -242,9 +252,11 @@ class AccountMoveLineReconcileManual(models.TransientModel):
         return action
 
     def _prepare_writeoff_move(self):
-        ccur = self.company_currency_id
-        bal = ccur.round(self.total_debit - self.total_credit)
-        compare_res = ccur.compare_amounts(bal, 0)
+        cur = self.currency_id
+        is_foreign_currency = self.company_id.currency_id != self.currency_id
+
+        bal = cur.round(self.total_debit - self.total_credit)
+        compare_res = cur.compare_amounts(bal, 0)
         assert compare_res
         if compare_res > 0:
             credit = bal
@@ -252,6 +264,41 @@ class AccountMoveLineReconcileManual(models.TransientModel):
         else:
             debit = bal * -1
             credit = 0
+        payment_term_line_vals = {
+            "display_type": "payment_term",
+            "account_id": self.account_id.id,
+            "partner_id": self.partner_id and self.partner_id.id or False,
+        }
+
+        product_line_vals = {
+            "display_type": "product",
+            "account_id": self.writeoff_account_id.id,
+            "partner_id": self.partner_id and self.partner_id.id or False,
+            "analytic_distribution": self.writeoff_analytic_distribution,
+        }
+        if is_foreign_currency:
+            payment_term_line_vals.update(
+                {
+                    "currency_id": self.currency_id.id,
+                    "amount_currency": debit - credit,
+                }
+            )
+            product_line_vals.update(
+                {
+                    "currency_id": self.currency_id.id,
+                    "amount_currency": credit - debit,
+                }
+            )
+
+        else:
+            payment_term_line_vals.update({"debit": debit, "credit": credit})
+            product_line_vals.update(
+                {
+                    "debit": credit,
+                    "credit": debit,
+                }
+            )
+
         vals = {
             "company_id": self.company_id.id,
             "journal_id": self.writeoff_journal_id.id,
@@ -261,28 +308,17 @@ class AccountMoveLineReconcileManual(models.TransientModel):
                 (
                     0,
                     0,
-                    {
-                        "display_type": "payment_term",
-                        "account_id": self.account_id.id,
-                        "partner_id": self.partner_id and self.partner_id.id or False,
-                        "debit": debit,
-                        "credit": credit,
-                    },
+                    payment_term_line_vals,
                 ),
                 (
                     0,
                     0,
-                    {
-                        "display_type": "product",
-                        "account_id": self.writeoff_account_id.id,
-                        "partner_id": self.partner_id and self.partner_id.id or False,
-                        "debit": credit,
-                        "credit": debit,
-                        "analytic_distribution": self.writeoff_analytic_distribution,
-                    },
+                    product_line_vals,
                 ),
             ],
         }
+        if is_foreign_currency:
+            vals["currency_id"] = self.currency_id.id
         return vals
 
     def reconcile_with_writeoff(self):
