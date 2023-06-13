@@ -25,7 +25,7 @@
                     <field name="total_credit" />
                     <field name="state" invisible="1" />
                     <field name="company_id" invisible="1" />
-                    <field name="company_currency_id" invisible="1" />
+                    <field name="currency_id" invisible="1" />
                     <field name="partner_count" invisible="1" />
                     <field name="partner_id" invisible="1" />
                 </group>
@@ -36,9 +36,7 @@
                 >
                     <field name="writeoff_model_id" widget="selection" />
                     <field
-                        name="writeoff_journal_id"
-                        widget="selection"
-                        required="state == 'writeoff'"
+
                     />
                     <field
                         name="writeoff_date"
