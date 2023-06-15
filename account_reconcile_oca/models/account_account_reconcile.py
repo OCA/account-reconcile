@@ -34,10 +34,18 @@ class AccountAccountReconcile(models.Model):
         )
 
     def _select(self):
-        return """
+        account_account_name_field = self.env["ir.model.fields"].search(
+            [("model", "=", "account.account"), ("name", "=", "name")]
+        )
+        account_name = (
+            f"a.name ->> '{self.env.user.lang}'"
+            if account_account_name_field.translate
+            else "a.name"
+        )
+        return f"""
             SELECT
                 min(aml.id) as id,
-                MAX(a.name) as name,
+                MAX({account_name}) as name,
                 aml.partner_id,
                 a.id as account_id,
                 FALSE as is_reconciled,
