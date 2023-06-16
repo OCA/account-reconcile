@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: bank-statement-reconcile (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-08-12 00:48+0000\n"
-"PO-Revision-Date: 2023-05-31 15:08+0000\n"
+"PO-Revision-Date: 2023-06-16 13:09+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: Italian (http://www.transifex.com/oca/"
 "OCA-bank-statement-reconcile-8-0/language/it/)\n"
@@ -301,7 +301,7 @@ msgstr "ID"
 #. module: account_easy_reconcile
 #: help:account.easy.reconcile,message_unread:0
 msgid "If checked new messages require your attention."
-msgstr "If checked new messages require your attention."
+msgstr "Se selezionata, nuovi messaggi richiedono attenzione."
 
 #. module: account_easy_reconcile
 #: view:account.easy.reconcile:account_easy_reconcile.account_easy_reconcile_form
