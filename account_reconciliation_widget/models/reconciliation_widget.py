@@ -1152,10 +1152,11 @@ class AccountReconciliation(models.AbstractModel):
         """
         if len(move_line_ids) < 1 or len(move_line_ids) + len(new_mv_line_dicts) < 2:
             raise UserError(_("A reconciliation must involve at least 2 move lines."))
-
-        account_move_line = self.env["account.move.line"].browse(move_line_ids)
-        writeoff_lines = self.env["account.move.line"]
-
+        AccountMoveLine = self.env["account.move.line"].with_context(
+            skip_account_move_synchronization=True
+        )
+        account_move_line = AccountMoveLine.browse(move_line_ids)
+        writeoff_lines = AccountMoveLine
         # Create writeoff move lines
         if len(new_mv_line_dicts) > 0:
             company_currency = account_move_line[0].account_id.company_id.currency_id
