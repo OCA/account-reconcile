@@ -36,7 +36,7 @@ addon | version | maintainers | summary
 [account_reconcile_payment_order](account_reconcile_payment_order/) | 14.0.2.0.0 | [![pedrobaeza](https://github.com/pedrobaeza.png?size=30px)](https://github.com/pedrobaeza) | Automatically propose all lines generated from payment orders
 [account_reconcile_reconciliation_date](account_reconcile_reconciliation_date/) | 14.0.1.0.1 |  | Track Reconciliation Date of Payments and Invoices
 [account_reconcile_restrict_partner_mismatch](account_reconcile_restrict_partner_mismatch/) | 14.0.1.0.0 |  | Restrict reconciliation on receivable and payable accounts to the same partner
-[account_reconciliation_widget](account_reconciliation_widget/) | 14.0.2.0.4 |  | Account reconciliation widget
+[account_reconciliation_widget](account_reconciliation_widget/) | 14.0.2.0.5 |  | Account reconciliation widget
 
 [//]: # (end addons)
 
