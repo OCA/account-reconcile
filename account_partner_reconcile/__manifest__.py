@@ -8,7 +8,10 @@
     "author": "ForgeFlow, Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/account-reconcile",
     "license": "AGPL-3",
-    "depends": ["account"],
+    "depends": [
+        "account",
+        "account_reconciliation_widget",
+    ],
     "data": ["views/res_partner_view.xml"],
     "installable": True,
 }
