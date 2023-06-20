@@ -287,3 +287,29 @@ class TestReconcileManual(TransactionCase):
 
         self.assertTrue(self.line1.full_reconcile_id)
         self.assertEqual(self.line1.full_reconcile_id, self.line2.full_reconcile_id)
+
+    def test_multi_currency_full_reconcile(self):
+        self.move1 = self._generate_debit_reconcile_move(65.41, currency_amount=100)
+        self.line1 = self.move1.line_ids.filtered(
+            lambda x: x.account_id == self.rec_account
+        )
+        self.move2 = self._generate_credit_reconcile_move(30)
+        self.line2 = self.move2.line_ids.filtered(
+            lambda x: x.account_id == self.rec_account
+        )
+        lines_to_rec = self.line1 + self.line2
+        wiz = (
+            self.env["account.move.line.reconcile.manual"]
+            .with_context(active_model="account.move.line", active_ids=lines_to_rec.ids)
+            .create({})
+        )
+        self.assertEqual(wiz.writeoff_type, "expense")
+        wiz.go_to_writeoff()
+        wiz.write(
+            {
+                "writeoff_journal_id": self.journal.id,
+                "writeoff_ref": self.writeoff_ref,
+                "writeoff_account_id": self.writeoff_account.id,
+            }
+        )
+        wiz.reconcile_with_writeoff()
