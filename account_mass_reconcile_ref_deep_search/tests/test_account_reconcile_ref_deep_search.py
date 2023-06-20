@@ -1,9 +1,9 @@
 # Copyright 2019 Camptocamp SA
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
-from odoo.tests import SavepointCase
+from odoo.tests import TransactionCase
 
 
-class TestAccountReconcileRefDeepSearch(SavepointCase):
+class TestAccountReconcileRefDeepSearch(TransactionCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
@@ -12,9 +12,9 @@ class TestAccountReconcileRefDeepSearch(SavepointCase):
         cls.account_receivable = cls.env["account.account"].search(
             [
                 (
-                    "user_type_id",
+                    "account_type",
                     "=",
-                    cls.env.ref("account.data_account_type_receivable").id,
+                    "asset_receivable",
                 )
             ],
             limit=1,
@@ -23,9 +23,9 @@ class TestAccountReconcileRefDeepSearch(SavepointCase):
         account_revenue = cls.env["account.account"].search(
             [
                 (
-                    "user_type_id",
+                    "account_type",
                     "=",
-                    cls.env.ref("account.data_account_type_revenue").id,
+                    "income",
                 )
             ],
             limit=1,
@@ -40,7 +40,7 @@ class TestAccountReconcileRefDeepSearch(SavepointCase):
             .create(
                 {
                     "partner_id": cls.partner.id,
-                    "company_id": cls.env.ref("base.main_company"),
+                    "company_id": cls.env.ref("base.main_company").id,
                     "move_type": "out_invoice",
                     "journal_id": sales_journal.id,
                     "invoice_line_ids": [
@@ -55,6 +55,7 @@ class TestAccountReconcileRefDeepSearch(SavepointCase):
                                 "account_id": account_revenue.id,
                                 "price_unit": 1000.0,
                                 "quantity": 1.0,
+                                "tax_ids": [],
                             },
                         )
                     ],
@@ -108,6 +109,7 @@ class TestAccountReconcileRefDeepSearch(SavepointCase):
         )
         count = reconcile.unreconciled_count
         reconcile.run_reconcile()
-        self.cust_invoice.invalidate_cache()
+        self.cust_invoice._invalidate_cache()
+        reconcile._invalidate_cache()
         self.assertEqual(self.cust_invoice.payment_state, "paid")
         self.assertEqual(reconcile.unreconciled_count, count - 2)
