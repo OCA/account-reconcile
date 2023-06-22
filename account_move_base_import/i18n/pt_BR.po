@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-03-24 03:37+0000\n"
-"PO-Revision-Date: 2023-03-17 22:24+0000\n"
+"PO-Revision-Date: 2023-06-22 14:09+0000\n"
 "Last-Translator: Douglas Custódio <douglascstd@yahoo.com>\n"
 "Language-Team: Portuguese (Brazil) (https://www.transifex.com/oca/teams/"
 "23907/pt_BR/)\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 4.14.1\n"
+"X-Generator: Weblate 4.17\n"
 
 #. module: account_move_base_import
 #: code:addons/account_move_base_import/models/account_move.py:317
@@ -222,27 +222,27 @@ msgstr ""
 #. module: account_move_base_import
 #: selection:account.move.completion.rule,function_to_call:0
 msgid "From line name (based on partner field)"
-msgstr ""
+msgstr "Do nome da linha (baseado no campo do parceiro)"
 
 #. module: account_move_base_import
 #: selection:account.move.completion.rule,function_to_call:0
 msgid "From line name (based on partner name)"
-msgstr ""
+msgstr "Do nome da linha (baseado no nome do parceiro)"
 
 #. module: account_move_base_import
 #: selection:account.move.completion.rule,function_to_call:0
 msgid "From line name (based on supplier invoice number)"
-msgstr ""
+msgstr "Do nome da linha (baseado no número da fatura de fornecedor)"
 
 #. module: account_move_base_import
 #: selection:account.journal,import_type:0
 msgid "Generic .csv/.xls based on SO Name"
-msgstr ""
+msgstr "Genérico .csv/.xls baseado no Nome da SO"
 
 #. module: account_move_base_import
 #: selection:account.journal,import_type:0
 msgid "Generic .csv/.xls based on SO transaction ID"
-msgstr ""
+msgstr "Genérico .csv/.xls baseado no ID da transação da SO"
 
 #. module: account_move_base_import
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_move_completion_rule__id
@@ -295,14 +295,14 @@ msgstr "Importar informações relacionadas"
 #: code:addons/account_move_base_import/parser/file_parser.py:58
 #, python-format
 msgid "Invalid file type %s. Please use csv, xls or xlsx"
-msgstr ""
+msgstr "Tipo de arquivo inválido %s. Por favor use csv, xls ou xlsx"
 
 #. module: account_move_base_import
 #: code:addons/account_move_base_import/models/account_move.py:77
 #: code:addons/account_move_base_import/models/account_move.py:95
 #, python-format
 msgid "Invalid invoice type for completion: %s"
-msgstr ""
+msgstr "Tipo de fatura inválida para reconciliação: %s"
 
 #. module: account_move_base_import
 #: model:ir.model,name:account_move_base_import.model_account_journal
@@ -335,33 +335,32 @@ msgstr "Diário usado para importar"
 #. module: account_move_base_import
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_bank_statement_import_journal_creation__last_import_date
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_journal__last_import_date
-#, fuzzy
 msgid "Last Import Date"
-msgstr "Data da ultima importação"
+msgstr "Data da última importação"
 
 #. module: account_move_base_import
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_move_completion_rule____last_update
 #: model:ir.model.fields,field_description:account_move_base_import.field_credit_statement_import____last_update
 msgid "Last Modified on"
-msgstr "Modificada pela última vez"
+msgstr "Ultima Modificação em"
 
 #. module: account_move_base_import
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_move_completion_rule__write_uid
 #: model:ir.model.fields,field_description:account_move_base_import.field_credit_statement_import__write_uid
 msgid "Last Updated by"
-msgstr "Última atualização por"
+msgstr "Última Atualização por"
 
 #. module: account_move_base_import
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_move_completion_rule__write_date
 #: model:ir.model.fields,field_description:account_move_base_import.field_credit_statement_import__write_date
 msgid "Last Updated on"
-msgstr "Atualizado em"
+msgstr "Útima atualização em"
 
 #. module: account_move_base_import
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_bank_statement_import_journal_creation__launch_import_completion
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_journal__launch_import_completion
 msgid "Launch completion after import"
-msgstr ""
+msgstr "Lançar reconciliação após importar"
 
 #. module: account_move_base_import
 #: code:addons/account_move_base_import/models/account_move.py:86
