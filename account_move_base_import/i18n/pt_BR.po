@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-03-24 03:37+0000\n"
-"PO-Revision-Date: 2023-06-22 15:09+0000\n"
+"PO-Revision-Date: 2023-06-27 03:11+0000\n"
 "Last-Translator: Adriano Prado <adrianojprado@gmail.com>\n"
 "Language-Team: Portuguese (Brazil) (https://www.transifex.com/oca/teams/"
 "23907/pt_BR/)\n"
@@ -170,12 +170,12 @@ msgstr ""
 #. module: account_move_base_import
 #: model:ir.model,name:account_move_base_import.model_res_partner
 msgid "Contact"
-msgstr ""
+msgstr "Contato"
 
 #. module: account_move_base_import
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_journal__create_counterpart
 msgid "Create Counterpart"
-msgstr ""
+msgstr "Criar Contraparte"
 
 #. module: account_move_base_import
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_move_completion_rule__create_uid
@@ -241,33 +241,33 @@ msgstr "Mostrar  Nome"
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_journal__message_follower_ids
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_move__message_follower_ids
 msgid "Followers"
-msgstr ""
+msgstr "Seguidores"
 
 #. module: account_move_base_import
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_journal__message_partner_ids
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_move__message_partner_ids
 msgid "Followers (Partners)"
-msgstr ""
+msgstr "Seguidores (parceiros)"
 
 #. module: account_move_base_import
 #: model:ir.model.fields.selection,name:account_move_base_import.selection__account_move_completion_rule__function_to_call__get_from_name_and_invoice
 msgid "From line name (based on customer invoice number)"
-msgstr ""
+msgstr "Do nome da linha (com base no número da fatura do cliente)"
 
 #. module: account_move_base_import
 #: model:ir.model.fields.selection,name:account_move_base_import.selection__account_move_completion_rule__function_to_call__get_from_name_and_partner_field
 msgid "From line name (based on partner field)"
-msgstr ""
+msgstr "Do nome da linha (com base no campo do parceiro)"
 
 #. module: account_move_base_import
 #: model:ir.model.fields.selection,name:account_move_base_import.selection__account_move_completion_rule__function_to_call__get_from_name_and_partner_name
 msgid "From line name (based on partner name)"
-msgstr ""
+msgstr "Do nome da linha (com base no nome do parceiro)"
 
 #. module: account_move_base_import
 #: model:ir.model.fields.selection,name:account_move_base_import.selection__account_move_completion_rule__function_to_call__get_from_name_and_supplier_invoice
 msgid "From line name (based on supplier invoice number)"
-msgstr ""
+msgstr "Do nome da linha (com base no número da fatura do fornecedor)"
 
 #. module: account_move_base_import
 #: model:ir.model.fields.selection,name:account_move_base_import.selection__account_journal__import_type__generic_csvxls_so
@@ -324,7 +324,7 @@ msgstr "Importar arquivo em lote"
 #. module: account_move_base_import
 #: model:ir.model.fields,field_description:account_move_base_import.field_credit_statement_import__journal_id
 msgid "Import configuration parameter"
-msgstr ""
+msgstr "Parâmetro de configuração de importação"
 
 #. module: account_move_base_import
 #: model_terms:ir.ui.view,arch_db:account_move_base_import.move_importer_view
@@ -369,7 +369,7 @@ msgstr "Diário"
 #. module: account_move_base_import
 #: model:ir.model,name:account_move_base_import.model_account_move
 msgid "Journal Entry"
-msgstr ""
+msgstr "Entrada Diário"
 
 #. module: account_move_base_import
 #: model:ir.model,name:account_move_base_import.model_account_move_line
@@ -387,7 +387,7 @@ msgstr ""
 #. module: account_move_base_import
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_journal__used_for_import
 msgid "Journal used for import"
-msgstr ""
+msgstr "Diário usado para Importar"
 
 #. module: account_move_base_import
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_journal__last_import_date
