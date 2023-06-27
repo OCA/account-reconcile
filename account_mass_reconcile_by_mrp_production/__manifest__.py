@@ -4,7 +4,7 @@
 {
     "name": "Account Mass Reconcile by Manufacturing Order",
     "summary": "Allows to reconcile based on the MO line",
-    "version": "14.0.1.0.0",
+    "version": "16.0.1.0.0",
     "author": "ForgeFlow S.L., " "Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/account-reconcile",
     "category": "Finance",
