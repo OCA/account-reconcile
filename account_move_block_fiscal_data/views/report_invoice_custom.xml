@@ -1,0 +1,33 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <data>
+        <!-- Heredar la plantilla de informe original para la factura -->
+        <template id="report_invoice_custom" inherit_id="account.report_invoice_document">
+            <xpath expr="//t[@t-set='address']" position="replace">
+                <t t-if="o.fiscal_data_locked">
+                    <div class="text-left">
+                        <address t-field="o.partner_id" t-options="{&quot;widget&quot;: &quot;contact&quot;, &quot;fields&quot;: [&quot;address&quot;], &quot;no_marker&quot;: True}"/>
+                    </div>
+                    <div class="text-right">
+                        <address t-field="o.partner_fiscal_data" class="fiscal-data" />
+                    </div>
+                </t>
+                <t t-else="">
+                    <div class="text-left">
+                        <address t-field="o.partner_id" t-options="{&quot;widget&quot;: &quot;contact&quot;, &quot;fields&quot;: [&quot;address&quot;], &quot;no_marker&quot;: True}"/>
+                    </div>
+
+                    <div class="text-right">
+                        <address t-field="o.partner_id"
+                            t-options="{&quot;widget&quot;: &quot;contact&quot;, &quot;fields&quot;: [&quot;address&quot;, &quot;name&quot;], &quot;no_marker&quot;: True}" />
+                    </div>
+                    <div t-if="o.partner_id.vat" class="text-right mt-16">
+                        <t t-if="o.company_id.country_id.vat_label"
+                            t-esc="o.company_id.country_id.vat_label" id="inv_tax_id_label" />
+                        <t t-else="">Tax ID</t>: <span t-field="o.partner_id.vat" />
+                    </div>
+                </t>
+            </xpath>
+        </template>
+    </data>
+</odoo>
