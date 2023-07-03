@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="view_bank_statement_form" model="ir.ui.view">
+        <field name="name">account.bank.statement.form</field>
+        <field name="model">account.bank.statement</field>
+        <field name="inherit_id" ref="account.view_bank_statement_form" />
+        <field name="priority">1</field>
+        <field name="arch" type="xml">
+            <button name="button_undo_reconciliation" position="attributes">
+                <attribute
+                    name="attrs"
+                >{'invisible': [('is_reconciled', '=', False)]}</attribute>
+            </button>
+        </field>
+    </record>
+</odoo>
