@@ -21,6 +21,7 @@ Available addons
 ----------------
 addon | version | maintainers | summary
 --- | --- | --- | ---
+[account_bank_statement_reopen_skip_undo_reconciliation](account_bank_statement_reopen_skip_undo_reconciliation/) | 15.0.1.0.0 |  | When reopening a bank statement it will respect the reconciled entries.
 [account_mass_reconcile](account_mass_reconcile/) | 15.0.1.0.0 |  | Account Mass Reconcile
 [account_move_reconcile_forbid_cancel](account_move_reconcile_forbid_cancel/) | 15.0.1.0.0 |  | Account Move Reconcile Forbid Cancel
 [account_partner_reconcile](account_partner_reconcile/) | 15.0.1.0.0 |  | Account Partner Reconcile
