@@ -177,11 +177,10 @@ class TestAccountReconcileReconciliationDate(AccountTestInvoicingCommon):
         )
 
         ctx = {"active_model": "account.move", "active_ids": [inv_1.id, inv_2.id]}
-        register_payments = self.register_payments_model.with_context(ctx).create(
+        register_payments = self.register_payments_model.with_context(**ctx).create(
             {
                 "payment_date": time.strftime("%Y") + "-07-15",
                 "journal_id": self.bank_journal_euro.id,
-                "payment_method_id": self.payment_method_manual_in.id,
             }
         )
         register_payments.flush()

@@ -10,9 +10,7 @@ class AccountFullReconcile(models.Model):
     _inherit = "account.full.reconcile"
     _description = "Full Reconcile"
 
-    reconciliation_date = fields.Date(
-        string="Reconciliation Date", default=date.today()
-    )
+    reconciliation_date = fields.Date(default=date.today())
 
     @api.model
     def create(self, vals):
