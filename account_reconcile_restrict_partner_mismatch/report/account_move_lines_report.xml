@@ -4,12 +4,7 @@
         <field name="name">Reconciled items with partner mismatch</field>
         <field name="model">account.reconcile.partner.mismatch.report</field>
         <field name="arch" type="xml">
-            <tree
-                string="Reconciled items with partner mismatch"
-                create="false"
-                delete="false"
-                edit="false"
-            >
+            <tree create="false" delete="false" edit="false">
                 <!-- links are not clickable in tree view
                 only after open form view -->
                 <field name="partial_reconcile_id" />
