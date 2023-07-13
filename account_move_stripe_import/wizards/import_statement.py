@@ -14,13 +14,11 @@ class CreditStatementImport(models.TransientModel):
         string="Import From", related="journal_id.last_import_date"
     )
 
-    @api.multi
     @api.depends("journal_id")
     def _compute_need_file(self):
         for record in self:
             record.need_file = record.journal_id.import_type != "stripe"
 
-    @api.multi
     def _check_extension(self):
         if self.need_file:
             return super(CreditStatementImport, self)._check_extension()
