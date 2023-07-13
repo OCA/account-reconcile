@@ -2,16 +2,13 @@
 # @author Sébastien BEAU <sebastien.beau@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from odoo import api, fields, models
-from odoo.addons.account_move_base_import.parser.parser import (
-    AccountMoveImportParser,
-)
-from datetime import date
-from collections import defaultdict
-from datetime import datetime
-from datetime import timezone
-
 import logging
+from collections import defaultdict
+from datetime import date, datetime, timezone
+
+from odoo import api, fields, models
+
+from odoo.addons.account_move_base_import.parser.parser import AccountMoveImportParser
 
 _logger = logging.getLogger(__name__)
 
@@ -42,9 +39,7 @@ class StripeParser(AccountMoveImportParser):
         return parser_name == "stripe"
 
     def _get_account(self):
-        return self.env["payment.acquirer"].search(
-            [("provider", "=", "stripe")]
-        )
+        return self.env["payment.acquirer"].search([("provider", "=", "stripe")])
 
     def _skip(self, payout_id):
         return bool(self.env["account.move"].search([("ref", "=", payout_id)]))
@@ -114,7 +109,7 @@ class StripeParser(AccountMoveImportParser):
             vals.update(
                 {
                     "partner_id": self.journal.partner_id.id,
-                    "account_id": self.journal.default_debit_account_id.id,
+                    "account_id": self.journal.default_account_id.id,
                     "already_completed": True,
                 }
             )
