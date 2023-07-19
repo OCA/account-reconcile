@@ -17,7 +17,7 @@ class TestAccountMoveReconcileForbidCancel(TransactionCase):
             {
                 "name": "Receivable Account",
                 "code": "REC",
-                "user_type_id": cls.env.ref("account.data_account_type_receivable").id,
+                "account_type": "asset_receivable",
                 "reconcile": True,
             }
         )
@@ -25,7 +25,7 @@ class TestAccountMoveReconcileForbidCancel(TransactionCase):
             {
                 "name": "Payable Account",
                 "code": "PAY",
-                "user_type_id": cls.env.ref("account.data_account_type_payable").id,
+                "account_type": "liability_payable",
                 "reconcile": True,
             }
         )
@@ -33,9 +33,7 @@ class TestAccountMoveReconcileForbidCancel(TransactionCase):
             {
                 "name": "Income Account",
                 "code": "INC",
-                "user_type_id": cls.env.ref(
-                    "account.data_account_type_other_income"
-                ).id,
+                "account_type": "income",
                 "reconcile": False,
             }
         )
@@ -43,7 +41,7 @@ class TestAccountMoveReconcileForbidCancel(TransactionCase):
             {
                 "name": "Expense Account",
                 "code": "EXP",
-                "user_type_id": cls.env.ref("account.data_account_type_expenses").id,
+                "account_type": "expense",
                 "reconcile": False,
             }
         )
