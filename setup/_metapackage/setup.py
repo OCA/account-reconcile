@@ -10,6 +10,7 @@ setuptools.setup(
     install_requires=[
         'odoo-addon-account_bank_statement_reopen_skip_undo_reconciliation>=15.0dev,<15.1dev',
         'odoo-addon-account_mass_reconcile>=15.0dev,<15.1dev',
+        'odoo-addon-account_mass_reconcile_by_purchase_line>=15.0dev,<15.1dev',
         'odoo-addon-account_move_reconcile_forbid_cancel>=15.0dev,<15.1dev',
         'odoo-addon-account_partner_reconcile>=15.0dev,<15.1dev',
         'odoo-addon-account_reconcile_payment_order>=15.0dev,<15.1dev',
