@@ -29,7 +29,7 @@ class MassReconciledAdvancedRefDeepSearch(models.TransientModel):
 
     @staticmethod
     def _compare_matcher_values(key, values, opposite_values):
-        """Compare every values from a matcher vs an opposite matcher
+        """Compare every value from a matcher vs an opposite matcher
         and return True if it matches
         """
         for value, ovalue in product(values, opposite_values):
@@ -47,9 +47,9 @@ class MassReconciledAdvancedRefDeepSearch(models.TransientModel):
         mkey, mvalue = matcher
         omkey, omvalue = opposite_matcher
         assert mkey == omkey, _(
-            "A matcher %s is compared with a matcher %s, the _matchers and "
+            "A matcher %(mkey)s is compared with a matcher %(omkey)s, the _matchers and "
             "_opposite_matchers are probably wrong"
-        ) % (mkey, omkey)
+        ) % {"mkey": mkey, "omkey": omkey}
         if not isinstance(mvalue, (list, tuple)):
             mvalue = (mvalue,)
         if not isinstance(omvalue, (list, tuple)):
