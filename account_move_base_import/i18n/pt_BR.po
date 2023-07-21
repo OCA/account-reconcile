@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-03-24 03:37+0000\n"
-"PO-Revision-Date: 2023-06-27 03:11+0000\n"
+"PO-Revision-Date: 2023-07-21 12:10+0000\n"
 "Last-Translator: Adriano Prado <adrianojprado@gmail.com>\n"
 "Language-Team: Portuguese (Brazil) (https://www.transifex.com/oca/teams/"
 "23907/pt_BR/)\n"
@@ -33,7 +33,7 @@ msgstr ""
 "%(completion_date)s A movimentação da conta %(move_name)s tem %(num_imported)"
 "s/%(number_line)s linhas concluídas por %(user_name)s\n"
 "%(error_msg)s\n"
-"%(Histórico%(user_name)s\n"
+"%(log)s\n"
 
 #. module: account_move_base_import
 #: model:ir.model,name:account_move_base_import.model_account_move_completion_rule
@@ -219,7 +219,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_move_completion_rule__display_name
 #: model:ir.model.fields,field_description:account_move_base_import.field_credit_statement_import__display_name
 msgid "Display Name"
-msgstr "Mostrar  Nome"
+msgstr "Nome de Exibição"
 
 #. module: account_move_base_import
 #: model:ir.model.fields,help:account_move_base_import.field_res_partner__bank_statement_label
@@ -233,9 +233,8 @@ msgstr ""
 
 #. module: account_move_base_import
 #: model:ir.model.fields,field_description:account_move_base_import.field_credit_statement_import__file_name
-#, fuzzy
 msgid "File Name"
-msgstr "Mostrar  Nome"
+msgstr "Nome Arquivo"
 
 #. module: account_move_base_import
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_journal__message_follower_ids
