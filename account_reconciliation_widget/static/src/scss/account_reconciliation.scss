@@ -105,7 +105,7 @@
             cursor: pointer;
         }
         tr.already_reconciled {
-            color: $o-account-info-color;
+            color: #44c;
         }
         tr.invalid {
             text-decoration: line-through;
@@ -114,10 +114,10 @@
             padding: 1px 2px;
         }
         thead td {
-            border-top: $o-account-light-border;
+            border-top: 1px solid #bbb;
             padding-top: 4px;
             padding-bottom: 5px;
-            background-color: $o-account-initial-line-background;
+            background-color: #f0f0f0;
         }
         tfoot td {
             color: #bbb;
@@ -199,7 +199,7 @@
             td {
                 padding-top: 10px;
                 text-align: center;
-                color: $o-account-info-color;
+                color: #44c;
             }
         }
 
@@ -270,8 +270,7 @@
             content: "\f067";
         }
         .match_controls {
-            padding: 5px 0 5px
-                ($o-account-action-col-width + $o-account-main-table-borders-padding);
+            padding: 5px 0 5px (18px);
 
             .filter {
                 width: 240px;
@@ -296,9 +295,7 @@
         }
         .show_more {
             display: inline-block;
-            margin-left: (
-                $o-account-action-col-width + $o-account-main-table-borders-padding
-            );
+            margin-left: (18px);
             margin-top: 5px;
         }
     }

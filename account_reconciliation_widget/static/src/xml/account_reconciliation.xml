@@ -127,9 +127,9 @@
 <t t-name="reconciliation.line">
     <t t-set="state" t-value="widget._initialState" />
     <div class="o_reconciliation_line" t-att-data-mode="state.mode" tabindex="0">
-        <table class="accounting_view">
+        <table class="table accounting_view">
             <caption style="caption-side: top;">
-                <div class="float-right o_buttons">
+                <div class="float-end o_buttons">
                     <button
                             t-attf-class="o_no_valid btn btn-secondary #{state.balance.type &lt; 0 ? '' : 'd-none'}"
                             disabled="disabled"
@@ -181,9 +181,9 @@
                     <li
                             class="nav-item"
                             t-attf-title="{{'Match statement with existing lines on receivable/payable accounts&lt;br&gt;* Black line: existing journal entry that should be matched&lt;br&gt;* Blue lines: existing payment that should be matched'}}"
-                            data-toggle="tooltip"
+                            data-bs-toggle="tooltip"
                         ><a
-                                data-toggle="tab"
+                                data-bs-toggle="tab"
                                 disable_anchor="true"
                                 t-attf-href="#notebook_page_match_rp_#{state.st_line.id}"
                                 class="nav-link active nav-match_rp"
@@ -193,9 +193,9 @@
                     <li
                             class="nav-item"
                             title="Match with entries that are not from receivable/payable accounts"
-                            data-toggle="tooltip"
+                            data-bs-toggle="tooltip"
                         ><a
-                                data-toggle="tab"
+                                data-bs-toggle="tab"
                                 disable_anchor="true"
                                 t-attf-href="#notebook_page_match_other_#{state.st_line.id}"
                                 class="nav-link nav-match_other"
@@ -205,9 +205,9 @@
                     <li
                             class="nav-item"
                             title="Create a counterpart"
-                            data-toggle="tooltip"
+                            data-bs-toggle="tooltip"
                         ><a
-                                data-toggle="tab"
+                                data-bs-toggle="tab"
                                 disable_anchor="true"
                                 t-attf-href="#notebook_page_create_#{state.st_line.id}"
                                 class="nav-link nav-create"

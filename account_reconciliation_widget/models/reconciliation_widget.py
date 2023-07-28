@@ -49,6 +49,10 @@ class AccountReconciliation(models.AbstractModel):
                 st_line.write({"partner_id": datum["partner_id"]})
 
             ctx["default_to_check"] = datum.get("to_check")
+            # account_move_reversal = st_line.move_id._reverse_moves(
+            #     default_values_list=[{
+            #     'ref': _('Reversal of: %s', st_line.move_id.ref),
+            # }],cancel=True)
             moves = st_line.with_context(**ctx).process_reconciliation(
                 datum.get("counterpart_aml_dicts", []),
                 payment_aml_rec,
@@ -126,9 +130,9 @@ class AccountReconciliation(models.AbstractModel):
             )
         )
         params = where_clause_params + (limit and [limit] or [])
-        self.env["account.move"].flush()
-        self.env["account.move.line"].flush()
-        self.env["account.bank.statement"].flush()
+        self.env["account.move"].flush_model()
+        self.env["account.move.line"].flush_model()
+        self.env["account.bank.statement"].flush_model()
         self._cr.execute(query_str, params)
         res = self._cr.fetchall()
         try:
@@ -239,11 +243,18 @@ class AccountReconciliation(models.AbstractModel):
         )
 
         # Search for missing partners when opening the reconciliation widget.
+        matching_amls = {}
         if bank_statement_lines:
             partner_map = self._get_bank_statement_line_partners(bank_statement_lines)
-            matching_amls = reconcile_model._apply_rules(
-                bank_statement_lines, excluded_ids=excluded_ids, partner_map=partner_map
-            )
+            for bank_statement, partner_id in list(partner_map.items())[::-1]:
+                partner = self.env["res.partner"].browse(partner_id)
+                bank_statement_line = self.env["account.bank.statement.line"].browse(
+                    bank_statement
+                )
+                matching_aml = reconcile_model._apply_rules(
+                    bank_statement_line, partner=partner
+                )
+                matching_amls.update({bank_statement: matching_aml})
 
         # Iterate on st_lines to keep the same order in the results list.
         bank_statements_left = self.env["account.bank.statement"]
@@ -255,7 +266,7 @@ class AccountReconciliation(models.AbstractModel):
                     reconciled_move_lines and reconciled_move_lines.ids or []
                 )
             else:
-                aml_ids = matching_amls[line.id]["aml_ids"]
+                aml_ids = matching_amls[line.id].get("amls")
                 bank_statements_left += line.statement_id
                 target_currency = (
                     line.currency_id
@@ -268,7 +279,7 @@ class AccountReconciliation(models.AbstractModel):
                     "st_line": self._get_statement_line(line),
                     "reconciliation_proposition": aml_ids
                     and self._prepare_move_lines(
-                        amls, target_currency=target_currency, target_date=line.date
+                        amls.id, target_currency=target_currency, target_date=line.date
                     )
                     or [],
                     "model_id": matching_amls[line.id].get("model")
@@ -289,7 +300,6 @@ class AccountReconciliation(models.AbstractModel):
                             }
                         )
                 results["lines"].append(line_vals)
-
         return results
 
     @api.model
@@ -313,16 +323,16 @@ class AccountReconciliation(models.AbstractModel):
         query = """
              SELECT line.id
              FROM account_bank_statement_line line
-             LEFT JOIN res_partner p on p.id = line.partner_id
+             JOIN account_move st_line_move ON st_line_move.id = line.move_id
              INNER JOIN account_bank_statement st ON line.statement_id = st.id
-                AND st.state = 'posted'
              WHERE line.is_reconciled = FALSE
-             AND line.amount != 0.0
-             AND line.id IN %(ids)s
+               AND st_line_move.state = 'posted'
+               AND line.amount != 0.0
+               AND line.id IN %(ids)s
              GROUP BY line.id
         """
-        self.env.cr.execute(query, {"ids": tuple(bank_statement_line_ids)})
 
+        self.env.cr.execute(query, {"ids": tuple(bank_statement_line_ids)})
         domain = [["id", "in", [line.get("id") for line in self.env.cr.dictfetchall()]]]
         if srch_domain is not None:
             domain += srch_domain
@@ -363,7 +373,6 @@ class AccountReconciliation(models.AbstractModel):
                     },
                 }
             )
-
         return results
 
     @api.model
@@ -541,8 +550,6 @@ class AccountReconciliation(models.AbstractModel):
                     FROM
                         account_move_line l
                         RIGHT JOIN account_account a ON (a.id = l.account_id)
-                        RIGHT JOIN account_account_type at
-                            ON (at.id = a.user_type_id)
                         {inner_from}
                     WHERE
                         a.reconcile IS TRUE
@@ -571,9 +578,10 @@ class AccountReconciliation(models.AbstractModel):
                 or " ",
                 where1=is_partner
                 and " "
-                or "AND ((at.type <> 'payable' AND at.type <> 'receivable') "
+                or "AND ((a.account_type <> 'liability_payable'"
+                "AND a.account_type <> 'asset_receivable')"
                 "OR l.partner_id IS NULL)",
-                where2=account_type and "AND at.type = %(account_type)s" or "",
+                where2=account_type and "AND a.account_type = %(account_type)s" or "",
                 where3=res_ids and "AND " + res_alias + ".id in %(res_ids)s" or "",
                 company_id=self.env.company.id,
                 where4=aml_ids and "AND l.id IN %(aml_ids)s" or " ",
@@ -589,8 +597,8 @@ class AccountReconciliation(models.AbstractModel):
                 or " ",
             )
         )
-        self.env["account.move.line"].flush()
-        self.env["account.account"].flush()
+        self.env["account.move.line"].flush_model()
+        self.env["account.account"].flush_model()
         self.env.cr.execute(query, locals())
 
         # Apply ir_rules by filtering out
@@ -725,7 +733,7 @@ class AccountReconciliation(models.AbstractModel):
                     "|",
                     ("amount_residual_currency", "=", -amount),
                     "&",
-                    ("account_id.internal_type", "=", "liquidity"),
+                    ("account_id.account_type", "=", "asset_cash"),
                     "|",
                     "|",
                     "|",
@@ -763,7 +771,11 @@ class AccountReconciliation(models.AbstractModel):
         # Always exclude the journal items that have been marked as
         # 'to be checked' in a former bank statement reconciliation
         to_check_excluded = AccountMoveLine.search(
-            AccountMoveLine._get_suspense_moves_domain()
+            [
+                ("move_id.to_check", "=", True),
+                ("full_reconcile_id", "=", False),
+                ("statement_line_id", "!=", False),
+            ]
         ).ids
         if excluded_ids is None:
             excluded_ids = []
@@ -811,9 +823,9 @@ class AccountReconciliation(models.AbstractModel):
                     domain,
                     [
                         (
-                            "account_id.internal_type",
+                            "account_id.account_type",
                             "in",
-                            ["receivable", "payable", "liquidity"],
+                            ["receivable", "payable", "asset_cash"],
                         )
                     ],
                 ]
@@ -824,9 +836,9 @@ class AccountReconciliation(models.AbstractModel):
                     domain,
                     [
                         (
-                            "account_id.internal_type",
+                            "account_id.account_type",
                             "not in",
-                            ["receivable", "payable", "liquidity"],
+                            ["receivable", "payable", "asset_cash"],
                         )
                     ],
                 ]
@@ -906,10 +918,10 @@ class AccountReconciliation(models.AbstractModel):
                 # NB : we don't use the 'reconciled' field because the line
                 # we're selecting is not the one that gets reconciled
                 "account_id": [line.account_id.id, line.account_id.display_name],
-                "already_paid": line.account_id.internal_type == "liquidity",
+                "already_paid": line.account_id.account_type == "asset_cash",
                 "account_code": line.account_id.code,
                 "account_name": line.account_id.name,
-                "account_type": line.account_id.internal_type,
+                "account_type": line.account_id.account_type,
                 "date_maturity": format_date(self.env, line.date_maturity),
                 "date": format_date(self.env, line.date),
                 "journal_id": [line.journal_id.id, line.journal_id.display_name],
@@ -924,7 +936,7 @@ class AccountReconciliation(models.AbstractModel):
             amount_currency = line.amount_residual_currency
 
             # For already reconciled lines, don't use amount_residual(_currency)
-            if line.account_id.internal_type == "liquidity":
+            if line.account_id.account_type == "asset_cash":
                 amount = debit - credit
                 amount_currency = line.amount_currency
 

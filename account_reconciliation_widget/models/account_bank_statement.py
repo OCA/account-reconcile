@@ -89,8 +89,6 @@ class AccountBankStatementLine(models.Model):
             reconciliation, containing entries for the statement.line (1), the
             counterpart move lines (0..*) and the new move lines (0..*).
         """
-        payable_account_type = self.env.ref("account.data_account_type_payable")
-        receivable_account_type = self.env.ref("account.data_account_type_receivable")
         suspense_moves_mode = self._context.get("suspense_moves_mode")
         counterpart_aml_dicts = counterpart_aml_dicts or []
         payment_aml_rec = payment_aml_rec or self.env["account.move.line"]
@@ -108,23 +106,23 @@ class AccountBankStatementLine(models.Model):
             if isinstance(aml_dict["move_line"], int):
                 aml_dict["move_line"] = aml_obj.browse(aml_dict["move_line"])
 
-        account_types = self.env["account.account.type"]
+        account_types = []
         for aml_dict in counterpart_aml_dicts + new_aml_dicts:
             if aml_dict.get("tax_ids") and isinstance(aml_dict["tax_ids"][0], int):
                 # Transform the value in the format required for One2many and
                 # Many2many fields
                 aml_dict["tax_ids"] = [(4, id, None) for id in aml_dict["tax_ids"]]
 
-            user_type_id = (
+            account_type = (
                 self.env["account.account"]
                 .browse(aml_dict.get("account_id"))
-                .user_type_id
+                .account_type
             )
             if (
-                user_type_id in [payable_account_type, receivable_account_type]
-                and user_type_id not in account_types
+                account_type in ["liability_payable", "asset_receivable"]
+                and account_type not in account_types
             ):
-                account_types |= user_type_id
+                account_types.append(account_type)
         # Fully reconciled moves are just linked to the bank statement (blue lines),
         # but the generated move on statement post should be removed and link the
         # payment one for not having double entry
@@ -148,7 +146,6 @@ class AccountBankStatementLine(models.Model):
             counterpart_moves = self._create_counterpart_and_new_aml(
                 counterpart_moves, counterpart_aml_dicts, new_aml_dicts
             )
-
         elif self.move_name:
             raise UserError(
                 _(
@@ -173,16 +170,31 @@ class AccountBankStatementLine(models.Model):
     def _create_counterpart_and_new_aml(
         self, counterpart_moves, counterpart_aml_dicts, new_aml_dicts
     ):
-
         aml_obj = self.env["account.move.line"]
 
         # Delete previous move_lines
         self.move_id.line_ids.with_context(force_delete=True).unlink()
 
         # Create liquidity line
-        liquidity_aml_dict = self._prepare_liquidity_move_line_vals()
+        (
+            company_amount,
+            _company_currency,
+            journal_amount,
+            journal_currency,
+            transaction_amount,
+            foreign_currency,
+        ) = self._get_amounts_with_currencies()
+        liquidity_aml_dict = {
+            "name": self.payment_ref,
+            "move_id": self.move_id.id,
+            "partner_id": self.partner_id.id,
+            "account_id": self.journal_id.default_account_id.id,
+            "currency_id": journal_currency.id,
+            "amount_currency": journal_amount,
+            "debit": company_amount > 0 and company_amount or 0.0,
+            "credit": company_amount < 0 and -company_amount or 0.0,
+        }
         aml_obj.with_context(check_move_validity=False).create(liquidity_aml_dict)
-
         self.sequence = self.statement_id.line_ids.ids.index(self.id) + 1
         self.move_id.ref = self._get_move_ref(self.statement_id.name)
         counterpart_moves = counterpart_moves | self.move_id
@@ -195,18 +207,15 @@ class AccountBankStatementLine(models.Model):
             aml_dict["partner_id"] = self.partner_id.id
             aml_dict["statement_line_id"] = self.id
             self._prepare_move_line_for_currency(aml_dict, date)
-
         # Create write-offs
         wo_aml = self.env["account.move.line"]
         for aml_dict in new_aml_dicts:
             wo_aml |= aml_obj.with_context(check_move_validity=False).create(aml_dict)
-        analytic_wo_aml = wo_aml.filtered(
-            lambda l: l.analytic_account_id or l.analytic_tag_ids
-        )
-
+        analytic_wo_aml = wo_aml.filtered(lambda l: l.analytic_distribution)
         # Create counterpart move lines and reconcile them
         aml_to_reconcile = []
         for aml_dict in counterpart_aml_dicts:
+
             if not aml_dict["move_line"].statement_line_id:
                 aml_dict["move_line"].write({"statement_line_id": self.id})
             if aml_dict["move_line"].partner_id.id:
@@ -217,7 +226,6 @@ class AccountBankStatementLine(models.Model):
             new_aml = aml_obj.with_context(check_move_validity=False).create(aml_dict)
 
             aml_to_reconcile.append((new_aml, counterpart_move_line))
-
         # Post to allow reconcile
         if self.move_id.state == "draft":
             self.move_id.with_context(
@@ -225,7 +233,7 @@ class AccountBankStatementLine(models.Model):
             ).action_post()
         elif analytic_wo_aml:
             # if already posted the analytic entry has to be created
-            analytic_wo_aml.create_analytic_lines()
+            analytic_wo_aml._create_analytic_lines()
 
         # Reconcile new lines with counterpart
         for new_aml, counterpart_move_line in aml_to_reconcile:
@@ -241,7 +249,6 @@ class AccountBankStatementLine(models.Model):
         # record the move name on the statement line to be able to retrieve
         # it in case of unreconciliation
         self.write({"move_name": self.move_id.name})
-
         return counterpart_moves
 
     def _get_move_ref(self, move_ref):

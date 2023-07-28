@@ -3,7 +3,7 @@
 
 {
     "name": "account_reconciliation_widget",
-    "version": "15.0.1.2.9",
+    "version": "16.0.1.0.0",
     "category": "Accounting",
     "license": "AGPL-3",
     "summary": "Account reconciliation widget",
@@ -15,19 +15,16 @@
         "security/ir.model.access.csv",
         "wizards/res_config_settings_views.xml",
         "views/account_view.xml",
-        "views/account_bank_statement_view.xml",
         "views/account_journal_dashboard_view.xml",
     ],
     "assets": {
         "web.assets_backend": [
             "account_reconciliation_widget/static/src/scss/account_reconciliation.scss",
-            "account_reconciliation_widget/static/src/js/reconciliation/**/*",
+            "account_reconciliation_widget/static/src/xml/account_reconciliation.xml",
+            "account_reconciliation_widget/static/src/js/**/*",
         ],
         "web.qunit_suite_tests": [
             "account_reconciliation_widget/static/tests/**/*",
-        ],
-        "web.assets_qweb": [
-            "account_reconciliation_widget/static/src/xml/account_reconciliation.xml",
         ],
     },
     "installable": True,
