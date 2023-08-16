@@ -1,22 +1,20 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# * account_move_base_import
+# 	* account_move_base_import
 #
-# Translators:
-# Quentin THEURET <odoo@kerpeo.com>, 2018
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 10.0\n"
+"Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-03-20 20:58+0000\n"
-"PO-Revision-Date: 2018-03-20 20:58+0000\n"
-"Last-Translator: Quentin THEURET <odoo@kerpeo.com>, 2018\n"
-"Language-Team: French (https://www.transifex.com/oca/teams/23907/fr/)\n"
+"PO-Revision-Date: 2023-08-16 17:10+0000\n"
+"Last-Translator: Rémi <remi@le-filament.com>\n"
+"Language-Team: \n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: Weblate 4.17\n"
 
 #. module: account_move_base_import
 #. odoo-python
@@ -28,70 +26,74 @@ msgid ""
 "%(error_msg)s\n"
 "%(log)s\n"
 msgstr ""
+"%(completion_date)s La pièce comptable %(move_name)s a "
+"%(num_imported)s/%(number_line)s lignes complétées par %(user_name)s \n"
+"%(error_msg)s\n"
+"%(log)s\n"
 
 #. module: account_move_base_import
 #: model:ir.model,name:account_move_base_import.model_account_move_completion_rule
 msgid "Account move completion method"
-msgstr ""
+msgstr "Méthode de complétion de la pièce comptable"
 
 #. module: account_move_base_import
 #: model_terms:ir.ui.view,arch_db:account_move_base_import.view_account_move_filter
 msgid "Account move that should be completed manually"
-msgstr ""
+msgstr "Pièce comptable à compléter manuellement"
 
 #. module: account_move_base_import
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_journal__message_needaction
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_move__message_needaction
 msgid "Action Needed"
-msgstr ""
+msgstr "Nécessite une action"
 
 #. module: account_move_base_import
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_journal__message_attachment_count
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_move__message_attachment_count
 msgid "Attachment Count"
-msgstr ""
+msgstr "Nombre de pièces jointes"
 
 #. module: account_move_base_import
 #: model_terms:ir.ui.view,arch_db:account_move_base_import.view_move_importer_form
 msgid "Auto Completion"
-msgstr ""
+msgstr "Complétion automatique"
 
 #. module: account_move_base_import
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_move_line__already_completed
 msgid "Auto-Completed"
-msgstr ""
+msgstr "Complété automatiquement"
 
 #. module: account_move_base_import
 #: model_terms:ir.ui.view,arch_db:account_move_base_import.journal_importer_view_form
 msgid "Auto-Completion Rules"
-msgstr ""
+msgstr "Règles de complétion automatique"
 
 #. module: account_move_base_import
 #: model_terms:ir.ui.view,arch_db:account_move_base_import.journal_importer_view_form
 msgid "Auto-Completion related infos"
-msgstr ""
+msgstr "Informations relatives à l'autocomplétion"
 
 #. module: account_move_base_import
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_journal__rule_ids
 msgid "Auto-completion rules"
-msgstr ""
+msgstr "Règles d'autocomplétion"
 
 #. module: account_move_base_import
 #: model:ir.model.fields,field_description:account_move_base_import.field_res_partner__bank_statement_label
 #: model:ir.model.fields,field_description:account_move_base_import.field_res_users__bank_statement_label
 msgid "Bank Statement Label"
-msgstr ""
+msgstr "Libellé de relevé de compte"
 
 #. module: account_move_base_import
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_journal__partner_id
 #: model:ir.model.fields,field_description:account_move_base_import.field_credit_statement_import__partner_id
 msgid "Bank/Payment Office partner"
-msgstr ""
+msgstr "Partenaire de la banque/du bureau de paiement"
 
 #. module: account_move_base_import
 #: model_terms:ir.ui.view,arch_db:account_move_base_import.move_importer_view
 msgid "Cancel"
-msgstr ""
+msgstr "Annuler"
 
 #. module: account_move_base_import
 #: model:ir.model.fields,help:account_move_base_import.field_account_journal__receivable_account_id
@@ -100,11 +102,13 @@ msgid ""
 "Choose a receivable/payable account to use as the default debit/credit "
 "account."
 msgstr ""
+"Choisissez un compte créancier/débiteur à utiliser comme compte de débit/crédit "
+"par défaut."
 
 #. module: account_move_base_import
 #: model:ir.model.fields,help:account_move_base_import.field_account_journal__commission_analytic_account_id
 msgid "Choose an analytic account to be used on the commission line."
-msgstr ""
+msgstr "Choisissez un compte analytique à utiliser sur la ligne de commission."
 
 #. module: account_move_base_import
 #: model:ir.model.fields,help:account_move_base_import.field_account_journal__import_type
@@ -112,72 +116,74 @@ msgid ""
 "Choose here the method by which you want to import account moves for this "
 "journal."
 msgstr ""
+"Choisissez ici la méthode par laquelle vous souhaitez importer des pièces "
+"comptables pour ce journal."
 
 #. module: account_move_base_import
 #. odoo-python
 #: code:addons/account_move_base_import/parser/file_parser.py:0
 #, python-format
 msgid "Column %s not present in file"
-msgstr ""
+msgstr "La colonne %s n'est pas présente dans le fichier"
 
 #. module: account_move_base_import
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_journal__commission_analytic_account_id
 msgid "Commission Analytic Account"
-msgstr ""
+msgstr "Compte analytique de la Commission"
 
 #. module: account_move_base_import
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_journal__commission_account_id
 #: model:ir.model.fields,field_description:account_move_base_import.field_credit_statement_import__commission_account_id
 msgid "Commission account"
-msgstr ""
+msgstr "Compte de la Commission"
 
 #. module: account_move_base_import
 #. odoo-python
 #: code:addons/account_move_base_import/models/account_journal.py:0
 #, python-format
 msgid "Commission amount should not be positive."
-msgstr ""
+msgstr "Le montant de la commission ne doit pas être positif."
 
 #. module: account_move_base_import
 #. odoo-python
 #: code:addons/account_move_base_import/models/account_journal.py:0
 #, python-format
 msgid "Commission line"
-msgstr ""
+msgstr "Ligne de la Commission"
 
 #. module: account_move_base_import
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_bank_statement_line__completion_logs
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_move__completion_logs
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_payment__completion_logs
 msgid "Completion Log"
-msgstr ""
+msgstr "Journal de complétion"
 
 #. module: account_move_base_import
 #: model_terms:ir.ui.view,arch_db:account_move_base_import.view_move_importer_form
 msgid "Completion Logs"
-msgstr ""
+msgstr "Journaux de complétion"
 
 #. module: account_move_base_import
 #: model:ir.model,name:account_move_base_import.model_res_partner
 msgid "Contact"
-msgstr ""
+msgstr "Contact"
 
 #. module: account_move_base_import
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_journal__create_counterpart
 msgid "Create Counterpart"
-msgstr ""
+msgstr "Créer un homologue"
 
 #. module: account_move_base_import
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_move_completion_rule__create_uid
 #: model:ir.model.fields,field_description:account_move_base_import.field_credit_statement_import__create_uid
 msgid "Created by"
-msgstr ""
+msgstr "Créé par"
 
 #. module: account_move_base_import
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_move_completion_rule__create_date
 #: model:ir.model.fields,field_description:account_move_base_import.field_credit_statement_import__create_date
 msgid "Created on"
-msgstr ""
+msgstr "Créé le"
 
 #. module: account_move_base_import
 #. odoo-python
@@ -192,6 +198,13 @@ msgid ""
 " \n"
 " Detail: %(error)s"
 msgstr ""
+"Le format de la date n'est pas valide. Il doit être AAAA-MM-JJ pour la "
+"colonne : %(rule)s, valeur : %(line_value)s \n"
+" \n"
+" \n"
+" Veuillez vérifier la ligne avec la référence : %(ref_value)s \n"
+" \n"
+" Détail : %(error)s"
 
 #. module: account_move_base_import
 #. odoo-python
@@ -204,12 +217,17 @@ msgid ""
 " \n"
 " Detail: %(error)s"
 msgstr ""
+"Le format de la date n'est pas valide. Veuillez modifier le format de la "
+"cellule en format date pour la colonne : %(rule)s, valeur : %(line_value)s\n"
+" Veuillez vérifier la ligne avec la référence : %(value_ref)s\n"
+" \n"
+" Détail : %(error)s"
 
 #. module: account_move_base_import
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_move_completion_rule__display_name
 #: model:ir.model.fields,field_description:account_move_base_import.field_credit_statement_import__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Nom affiché"
 
 #. module: account_move_base_import
 #: model:ir.model.fields,help:account_move_base_import.field_res_partner__bank_statement_label
@@ -220,66 +238,70 @@ msgid ""
 "automatically filled (as long as you use this method/rules in your statement "
 "profile)."
 msgstr ""
+"Saisissez les différents libellés figurant sur votre relevé compte séparés "
+"par un ; Si l'un de ces libellés figure sur la ligne du relevé compte, le "
+"partenaire sera automatiquement renseigné (pour autant que vous utilisiez "
+"cette méthode / ces règles dans le profil de votre relevé)."
 
 #. module: account_move_base_import
 #: model:ir.model.fields,field_description:account_move_base_import.field_credit_statement_import__file_name
 msgid "File Name"
-msgstr ""
+msgstr "Nom de fichier"
 
 #. module: account_move_base_import
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_journal__message_follower_ids
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_move__message_follower_ids
 msgid "Followers"
-msgstr ""
+msgstr "Abonnés"
 
 #. module: account_move_base_import
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_journal__message_partner_ids
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_move__message_partner_ids
 msgid "Followers (Partners)"
-msgstr ""
+msgstr "Abonnés (Partenaires)"
 
 #. module: account_move_base_import
 #: model:ir.model.fields.selection,name:account_move_base_import.selection__account_move_completion_rule__function_to_call__get_from_name_and_invoice
 msgid "From line name (based on customer invoice number)"
-msgstr ""
+msgstr "À partir du nom de la ligne (basé sur le numéro de facture du client)"
 
 #. module: account_move_base_import
 #: model:ir.model.fields.selection,name:account_move_base_import.selection__account_move_completion_rule__function_to_call__get_from_name_and_partner_field
 msgid "From line name (based on partner field)"
-msgstr ""
+msgstr "À partir du nom de la ligne (basé sur le champ partenaire)"
 
 #. module: account_move_base_import
 #: model:ir.model.fields.selection,name:account_move_base_import.selection__account_move_completion_rule__function_to_call__get_from_name_and_partner_name
 msgid "From line name (based on partner name)"
-msgstr ""
+msgstr "À partir du nom de la ligne (basé sur le nom du partenaire)"
 
 #. module: account_move_base_import
 #: model:ir.model.fields.selection,name:account_move_base_import.selection__account_move_completion_rule__function_to_call__get_from_name_and_supplier_invoice
 msgid "From line name (based on supplier invoice number)"
-msgstr ""
+msgstr "À partir du nom de la ligne (basé sur le numéro de la facture fournisseur)"
 
 #. module: account_move_base_import
 #: model:ir.model.fields.selection,name:account_move_base_import.selection__account_journal__import_type__generic_csvxls_so
 msgid "Generic .csv/.xls based on SO Name"
-msgstr ""
+msgstr "Générique .csv/.xls basé sur le nom de la Commande"
 
 #. module: account_move_base_import
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_journal__has_message
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_move__has_message
 msgid "Has Message"
-msgstr ""
+msgstr "A un message"
 
 #. module: account_move_base_import
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_move_completion_rule__id
 #: model:ir.model.fields,field_description:account_move_base_import.field_credit_statement_import__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: account_move_base_import
 #: model:ir.model.fields,help:account_move_base_import.field_account_journal__message_needaction
 #: model:ir.model.fields,help:account_move_base_import.field_account_move__message_needaction
 msgid "If checked, new messages require your attention."
-msgstr ""
+msgstr "Si coché, de nouveaux messages demandent votre attention."
 
 #. module: account_move_base_import
 #: model:ir.model.fields,help:account_move_base_import.field_account_journal__message_has_error
@@ -287,78 +309,78 @@ msgstr ""
 #: model:ir.model.fields,help:account_move_base_import.field_account_move__message_has_error
 #: model:ir.model.fields,help:account_move_base_import.field_account_move__message_has_sms_error
 msgid "If checked, some messages have a delivery error."
-msgstr ""
+msgstr "Si coché, certains messages ont une erreur de livraison."
 
 #. module: account_move_base_import
 #: model:ir.actions.act_window,name:account_move_base_import.move_importer_action
 #: model:ir.ui.menu,name:account_move_base_import.move_importer_menu
 msgid "Import Batch File"
-msgstr ""
+msgstr "Importation d'un fichier de lot"
 
 #. module: account_move_base_import
 #: model:ir.model,name:account_move_base_import.model_credit_statement_import
 msgid "Import Batch File wizard"
-msgstr ""
+msgstr "Assistant d'importation de fichiers par lots"
 
 #. module: account_move_base_import
 #: model_terms:ir.ui.view,arch_db:account_move_base_import.move_importer_view
 msgid "Import Parameters Summary"
-msgstr ""
+msgstr "Résumé des paramètres d'importation"
 
 #. module: account_move_base_import
 #: model_terms:ir.ui.view,arch_db:account_move_base_import.journal_importer_view_form
 msgid "Import batch file"
-msgstr ""
+msgstr "Importer un fichier de lot"
 
 #. module: account_move_base_import
 #: model:ir.model.fields,field_description:account_move_base_import.field_credit_statement_import__journal_id
 msgid "Import configuration parameter"
-msgstr ""
+msgstr "Importer un paramètre de configuration"
 
 #. module: account_move_base_import
 #: model_terms:ir.ui.view,arch_db:account_move_base_import.move_importer_view
 msgid "Import file"
-msgstr ""
+msgstr "Fichier d'importation"
 
 #. module: account_move_base_import
 #: model_terms:ir.ui.view,arch_db:account_move_base_import.move_importer_view
 msgid "Import move"
-msgstr ""
+msgstr "Importer les pièces"
 
 #. module: account_move_base_import
 #: model_terms:ir.ui.view,arch_db:account_move_base_import.journal_importer_view_form
 msgid "Import related infos"
-msgstr ""
+msgstr "Importer les informations liées"
 
 #. module: account_move_base_import
 #. odoo-python
 #: code:addons/account_move_base_import/parser/file_parser.py:0
 #, python-format
 msgid "Invalid file type %s. Please use csv, xls or xlsx"
-msgstr ""
+msgstr "Type de fichier non valide %s. Veuillez utiliser csv, xls ou xlsx"
 
 #. module: account_move_base_import
 #. odoo-python
 #: code:addons/account_move_base_import/models/account_move.py:0
 #, python-format
 msgid "Invalid invoice type for completion: %s"
-msgstr ""
+msgstr "Type de facture non valide pour la complétion : %s"
 
 #. module: account_move_base_import
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_journal__message_is_follower
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_move__message_is_follower
 msgid "Is Follower"
-msgstr ""
+msgstr "Est un abonné"
 
 #. module: account_move_base_import
 #: model:ir.model,name:account_move_base_import.model_account_journal
 msgid "Journal"
-msgstr ""
+msgstr "Journal"
 
 #. module: account_move_base_import
 #: model:ir.model,name:account_move_base_import.model_account_move
 msgid "Journal Entry"
-msgstr ""
+msgstr "Pièce comptable"
 
 #. module: account_move_base_import
 #: model:ir.model,name:account_move_base_import.model_account_move_line
@@ -371,40 +393,40 @@ msgstr "Écriture comptable"
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_move__used_for_completion
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_payment__used_for_completion
 msgid "Journal used for completion"
-msgstr ""
+msgstr "Journal utilisé pour la complétion"
 
 #. module: account_move_base_import
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_journal__used_for_import
 msgid "Journal used for import"
-msgstr ""
+msgstr "Journal utilisé pour l'import"
 
 #. module: account_move_base_import
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_journal__last_import_date
 msgid "Last Import Date"
-msgstr ""
+msgstr "Date de la dernière importation"
 
 #. module: account_move_base_import
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_move_completion_rule____last_update
 #: model:ir.model.fields,field_description:account_move_base_import.field_credit_statement_import____last_update
 msgid "Last Modified on"
-msgstr ""
+msgstr "Dernière modification le"
 
 #. module: account_move_base_import
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_move_completion_rule__write_uid
 #: model:ir.model.fields,field_description:account_move_base_import.field_credit_statement_import__write_uid
 msgid "Last Updated by"
-msgstr ""
+msgstr "Mis à jour par"
 
 #. module: account_move_base_import
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_move_completion_rule__write_date
 #: model:ir.model.fields,field_description:account_move_base_import.field_credit_statement_import__write_date
 msgid "Last Updated on"
-msgstr ""
+msgstr "Mis à jour le"
 
 #. module: account_move_base_import
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_journal__launch_import_completion
 msgid "Launch completion after import"
-msgstr ""
+msgstr "Lancement de la complétion après l'import"
 
 #. module: account_move_base_import
 #. odoo-python
@@ -414,6 +436,8 @@ msgid ""
 "Line named \"%(line_name)s\" was matched by more than one partner while "
 "looking on %(inv_type)s invoices"
 msgstr ""
+"La ligne \"%(line_name)s\" a été associée à plus d'un partenaire lors de la "
+"recherche sur les factures %(inv_type)s"
 
 #. module: account_move_base_import
 #. odoo-python
@@ -423,6 +447,8 @@ msgid ""
 "Line named \"%(line_name)s\" was matched by more than one partner while "
 "looking on partner label: %(partner_labels)s"
 msgstr ""
+"La ligne \"%(line_name)s\" a été associée à plus d'un partenaire lors "
+"de la recherche sur le libellé du partenaire : %(partner_labels)s"
 
 #. module: account_move_base_import
 #. odoo-python
@@ -432,41 +458,43 @@ msgid ""
 "Line named \"%s\" was matched by more than one partner while looking on "
 "partner by name"
 msgstr ""
+"La ligne \"%s\" a été associée à plus d'un partenaire lors de la "
+"recherche d'un partenaire par son nom"
 
 #. module: account_move_base_import
 #: model:ir.model.fields,help:account_move_base_import.field_account_move_completion_rule__sequence
 msgid "Lower means parsed first."
-msgstr ""
+msgstr "Plus bas signifie analysé en premier."
 
 #. module: account_move_base_import
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_journal__message_main_attachment_id
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_move__message_main_attachment_id
 msgid "Main Attachment"
-msgstr ""
+msgstr "Pièce jointe principale"
 
 #. module: account_move_base_import
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_journal__message_has_error
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_move__message_has_error
 msgid "Message Delivery error"
-msgstr ""
+msgstr "Erreur d'envoi du message"
 
 #. module: account_move_base_import
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_journal__message_ids
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_move__message_ids
 msgid "Messages"
-msgstr ""
+msgstr "Messages"
 
 #. module: account_move_base_import
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_move_completion_rule__function_to_call
 msgid "Method"
-msgstr ""
+msgstr "Mode"
 
 #. module: account_move_base_import
 #. odoo-python
 #: code:addons/account_move_base_import/parser/file_parser.py:0
 #, python-format
 msgid "Missing"
-msgstr ""
+msgstr "Disparu"
 
 #. module: account_move_base_import
 #. odoo-python
@@ -475,6 +503,8 @@ msgstr ""
 msgid ""
 "Missing column! Column %s you try to import is not present in the move line!"
 msgstr ""
+"Colonne manquante ! La colonne %s que vous essayez d'importer n'est pas "
+"présente dans l'écriture comptable !"
 
 #. module: account_move_base_import
 #. odoo-python
@@ -482,81 +512,82 @@ msgstr ""
 #, python-format
 msgid "Move %(move_name)s have been imported with %(num_lines)s lines."
 msgstr ""
+"Les pièces %(move_name)s ont été importées avec %(num_lines)s lignes."
 
 #. module: account_move_base_import
 #: model:ir.ui.menu,name:account_move_base_import.menu_action_move_completion_rule_tree_menu
 #: model_terms:ir.ui.view,arch_db:account_move_base_import.move_completion_rule_view_form
 msgid "Move Completion Rule"
-msgstr ""
+msgstr "Règle de complétion des pièces"
 
 #. module: account_move_base_import
 #: model:ir.actions.act_window,name:account_move_base_import.action_move_completion_rule_tree
 msgid "Move Completion Rules"
-msgstr ""
+msgstr "Règles de complétion des pièces"
 
 #. module: account_move_base_import
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_move_completion_rule__name
 msgid "Name"
-msgstr ""
+msgstr "Nom"
 
 #. module: account_move_base_import
 #. odoo-python
 #: code:addons/account_move_base_import/parser/parser.py:0
 #, python-format
 msgid "No buffer file given."
-msgstr ""
+msgstr "Aucun fichier tampon n'a été fourni."
 
 #. module: account_move_base_import
 #. odoo-python
 #: code:addons/account_move_base_import/models/account_journal.py:0
 #, python-format
 msgid "No commission account is set on the journal."
-msgstr ""
+msgstr "Aucun compte de commission n'est défini dans le journal."
 
 #. module: account_move_base_import
 #. odoo-python
 #: code:addons/account_move_base_import/models/account_journal.py:0
 #, python-format
 msgid "Nothing to import: The file is empty"
-msgstr ""
+msgstr "Rien à importer : Le fichier est vide"
 
 #. module: account_move_base_import
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_journal__message_needaction_counter
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_move__message_needaction_counter
 msgid "Number of Actions"
-msgstr ""
+msgstr "Nombre d'actions"
 
 #. module: account_move_base_import
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_journal__message_has_error_counter
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_move__message_has_error_counter
 msgid "Number of errors"
-msgstr ""
+msgstr "Nombre d'erreurs"
 
 #. module: account_move_base_import
 #: model:ir.model.fields,help:account_move_base_import.field_account_journal__message_needaction_counter
 #: model:ir.model.fields,help:account_move_base_import.field_account_move__message_needaction_counter
 msgid "Number of messages which requires an action"
-msgstr ""
+msgstr "Nombre de messages nécessitant une action"
 
 #. module: account_move_base_import
 #: model:ir.model.fields,help:account_move_base_import.field_account_journal__message_has_error_counter
 #: model:ir.model.fields,help:account_move_base_import.field_account_move__message_has_error_counter
 msgid "Number of messages with delivery error"
-msgstr ""
+msgstr "Nombre de messages avec des erreurs d'envoi"
 
 #. module: account_move_base_import
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_bank_statement_line__import_partner_id
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_move__import_partner_id
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_payment__import_partner_id
 msgid "Partner from import"
-msgstr ""
+msgstr "Partenaire de l'import"
 
 #. module: account_move_base_import
 #. odoo-python
 #: code:addons/account_move_base_import/wizard/import_statement.py:0
 #, python-format
 msgid "Please use a file with an extension"
-msgstr ""
+msgstr "Veuillez utiliser un fichier avec une extension"
 
 #. module: account_move_base_import
 #: model:ir.model.fields,help:account_move_base_import.field_account_journal__partner_id
@@ -566,38 +597,41 @@ msgid ""
 "on the counterpart of the intermediate/banking move if you tick the "
 "corresponding checkbox)."
 msgstr ""
+"Mettez un partenaire si vous voulez l'avoir sur le mouvement de commission "
+"(et optionnellement sur la contrepartie du mouvement intermédiaire/bancaire "
+"si vous cochez la case correspondante)."
 
 #. module: account_move_base_import
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_journal__receivable_account_id
 #: model:ir.model.fields,field_description:account_move_base_import.field_credit_statement_import__receivable_account_id
 msgid "Receivable/Payable Account"
-msgstr ""
+msgstr "Compte créancier/débiteur"
 
 #. module: account_move_base_import
 #: model_terms:ir.ui.view,arch_db:account_move_base_import.move_completion_rule_view_form
 msgid "Related Profiles"
-msgstr ""
+msgstr "Profils apparentés"
 
 #. module: account_move_base_import
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_move_completion_rule__journal_ids
 msgid "Related journals"
-msgstr ""
+msgstr "Journaux apparentés"
 
 #. module: account_move_base_import
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_journal__message_has_sms_error
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_move__message_has_sms_error
 msgid "SMS Delivery error"
-msgstr ""
+msgstr "Erreur d'envoi SMS"
 
 #. module: account_move_base_import
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_move_completion_rule__sequence
 msgid "Sequence"
-msgstr ""
+msgstr "Séquence"
 
 #. module: account_move_base_import
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_journal__split_counterpart
 msgid "Split Counterpart"
-msgstr ""
+msgstr "Décomposer la contrepartie"
 
 #. module: account_move_base_import
 #. odoo-python
@@ -607,23 +641,26 @@ msgid ""
 "Statement ID %(move_name)s auto-completed for %(num_imported)s/"
 "%(number_line)s lines completed"
 msgstr ""
+"ID du relevé %(move_name)s complété automatiquement pour %(num_imported)s/"
+"%(number_line)s lignes complétées"
 
 #. module: account_move_base_import
 #: model:ir.model.fields,field_description:account_move_base_import.field_credit_statement_import__input_statement
 msgid "Statement file"
-msgstr ""
+msgstr "Fichier de relevé"
 
 #. module: account_move_base_import
 #. odoo-python
 #: code:addons/account_move_base_import/models/account_journal.py:0
 #, python-format
 msgid "Statement import error The statement cannot be created: %s"
-msgstr ""
+msgstr "Erreur d'importation de relevé. Le relevé ne peut pas être créé : %s"
 
 #. module: account_move_base_import
 #: model:ir.model.fields,help:account_move_base_import.field_account_journal__create_counterpart
 msgid "Tick that box to automatically create the move counterpart"
 msgstr ""
+"Cochez cette case pour créer automatiquement la contrepartie de la pièce"
 
 #. module: account_move_base_import
 #: model:ir.model.fields,help:account_move_base_import.field_account_journal__launch_import_completion
@@ -631,6 +668,8 @@ msgid ""
 "Tick that box to automatically launch the completion on each imported file "
 "using this journal."
 msgstr ""
+"Cochez cette case pour lancer automatiquement la complétion sur chaque "
+"fichier importé à l'aide de ce journal."
 
 #. module: account_move_base_import
 #: model:ir.model.fields,help:account_move_base_import.field_account_journal__autovalidate_completed_move
@@ -638,11 +677,13 @@ msgid ""
 "Tick that box to automatically validate the journal entries after the "
 "completion"
 msgstr ""
+"Cochez cette case pour valider automatiquement les pièces comptables après "
+"leur complétion"
 
 #. module: account_move_base_import
 #: model_terms:ir.ui.view,arch_db:account_move_base_import.view_account_move_filter
 msgid "To Complete"
-msgstr ""
+msgstr "À compléter"
 
 #. module: account_move_base_import
 #: model:ir.model.fields,help:account_move_base_import.field_account_journal__split_counterpart
@@ -650,16 +691,18 @@ msgid ""
 "Two counterparts will be automatically created : one for the refunds and one "
 "for the payments"
 msgstr ""
+"Deux contreparties seront automatiquement créées : une pour les "
+"remboursements et une pour les paiements"
 
 #. module: account_move_base_import
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_journal__import_type
 msgid "Type of import"
-msgstr ""
+msgstr "Type d'importation"
 
 #. module: account_move_base_import
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_journal__autovalidate_completed_move
 msgid "Validate fully completed moves"
-msgstr ""
+msgstr "Valider les pièces complétées"
 
 #. module: account_move_base_import
 #. odoo-python
@@ -671,18 +714,22 @@ msgid ""
 " \n"
 " Detail: %(error)s"
 msgstr ""
+"La valeur %(line_value)s de la colonne %(rule)s n'est pas valide.\n"
+" Veuillez vérifier la ligne avec la référence %(value_ref)s :\n"
+" \n"
+" Détail : %(error)s"
 
 #. module: account_move_base_import
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_journal__website_message_ids
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_move__website_message_ids
 msgid "Website Messages"
-msgstr ""
+msgstr "Messages du site web"
 
 #. module: account_move_base_import
 #: model:ir.model.fields,help:account_move_base_import.field_account_journal__website_message_ids
 #: model:ir.model.fields,help:account_move_base_import.field_account_move__website_message_ids
 msgid "Website communication history"
-msgstr ""
+msgstr "Historique des échanges sur le site Web"
 
 #. module: account_move_base_import
 #: model:ir.model.fields,help:account_move_base_import.field_account_move_line__already_completed
@@ -690,8 +737,5 @@ msgid ""
 "When this checkbox is ticked, the auto-completion process/button will ignore "
 "this line."
 msgstr ""
-
-#, fuzzy
-#~| msgid "Journal Item"
-#~ msgid "Journal Entries"
-#~ msgstr "Écriture comptable"
+"Lorsque cette case est cochée, le processus/bouton d'autocomplétion ignore "
+"cette ligne."
