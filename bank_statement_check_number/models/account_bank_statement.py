@@ -8,7 +8,6 @@ class AccountBankStatementLine(models.Model):
     _inherit = "account.bank.statement.line"
 
     check_number = fields.Char(
-        string="Check Number",
         copy=False,
         index=True,
     )
