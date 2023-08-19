@@ -62,6 +62,9 @@
                 <th>Partner</th>
                 <th>Date</th>
                 <th>Label</th>
+                <th class="text-end" t-if="foreignCurrency">
+                    Amount in currency
+                </th>
                 <th class="text-end">Debit</th>
                 <th class="text-end">Credit</th>
                 <th />
@@ -89,6 +92,12 @@
                                 t-esc="reconcile_line.name"
                                 t-if="reconcile_line.name"
                             />
+                        </td>
+                        <td
+                            class="text-end o_field_account_reconcile_oca_balance_float"
+                            t-if="foreignCurrency"
+                        >
+                            <span t-esc="reconcile_line.amount_currency_format" />
                         </td>
                         <td
                             class="text-end o_field_account_reconcile_oca_balance_float"

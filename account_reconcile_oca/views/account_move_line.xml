@@ -12,7 +12,10 @@
                 <field name="date" />
                 <field name="move_id" />
                 <field name="partner_id" />
+                <field name="company_currency_id" invisible="1" />
+                <field name="currency_id" invisible="1" />
                 <field name="name" />
+                <field name="amount_residual_currency" optional="hide" />
                 <field name="amount_residual" />
                 <button
                     type="object"
