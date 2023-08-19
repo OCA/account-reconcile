@@ -21,7 +21,6 @@ class AccountAccountReconcile(models.Model):
     account_id = fields.Many2one("account.account", readonly=True)
     name = fields.Char(readonly=True)
     is_reconciled = fields.Boolean(readonly=True)
-    currency_id = fields.Many2one("res.currency", readonly=True)
 
     @property
     def _table_query(self):
@@ -50,7 +49,8 @@ class AccountAccountReconcile(models.Model):
                 a.id as account_id,
                 FALSE as is_reconciled,
                 aml.currency_id as currency_id,
-                a.company_id
+                a.company_id,
+                false as foreign_currency_id
         """
 
     def _from(self):

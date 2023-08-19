@@ -144,6 +144,9 @@ class AccountBankStatementLine(models.Model):
             self.add_account_move_line_id = False
 
     def _recompute_suspense_line(self, data, reconcile_auxiliary_id, manual_reference):
+        reconcile_auxiliary_id = self._compute_exchange_rate(
+            data, reconcile_auxiliary_id
+        )
         can_reconcile = True
         total_amount = 0
         new_data = []
@@ -188,7 +191,9 @@ class AccountBankStatementLine(models.Model):
                     "credit": total_amount if total_amount > 0 else 0.0,
                     "debit": -total_amount if total_amount < 0 else 0.0,
                     "kind": "suspense",
-                    "currency_id": self.currency_id.id,
+                    "currency_id": self.company_id.currency_id.id,
+                    "line_currency_id": self.company_id.currency_id.id,
+                    "currency_amount": -total_amount,
                 }
                 reconcile_auxiliary_id += 1
             new_data.append(suspense_line)
@@ -204,7 +209,7 @@ class AccountBankStatementLine(models.Model):
         return (
             not float_is_zero(
                 self.manual_amount - line["amount"],
-                precision_digits=self.currency_id.decimal_places,
+                precision_digits=self.company_id.currency_id.decimal_places,
             )
             or self.manual_account_id.id != line["account_id"][0]
             or self.manual_name != line["name"]
@@ -366,6 +371,9 @@ class AccountBankStatementLine(models.Model):
                     .browse(line["account_id"])
                     .name_get()[0],
                     "date": fields.Date.to_string(self.date),
+                    "line_currency_id": self.company_id.currency_id.id,
+                    "currency_id": self.company_id.currency_id.id,
+                    "currency_amount": amount,
                 }
             )
             reconcile_auxiliary_id += 1
@@ -376,15 +384,16 @@ class AccountBankStatementLine(models.Model):
             new_data.append(new_line)
         return new_data, reconcile_auxiliary_id
 
-    def _compute_exchange_rate(self, data):
-        reconcile_auxiliary_id = 1
-        if not self.foreign_currency_id or self.is_reconciled:
+    def _compute_exchange_rate(self, data, reconcile_auxiliary_id):
+        foreign_currency = (
+            self.currency_id != self.company_id.currency_id
+            or self.foreign_currency_id
+            or any(line["currency_id"] != line["line_currency_id"] for line in data)
+        )
+        if not foreign_currency or self.is_reconciled:
             return reconcile_auxiliary_id
         currency = self.journal_id.currency_id or self.company_id.currency_id
-        currency_amount = self.foreign_currency_id._convert(
-            self.amount_currency, currency, self.company_id, self.date
-        )
-        amount = sum(d["amount"] for d in data) - currency_amount
+        amount = sum(d.get("net_amount", 0) for d in data)
         if not currency.is_zero(amount):
             account = self.company_id.expense_currency_exchange_account_id
             if amount > 0:
@@ -402,6 +411,8 @@ class AccountBankStatementLine(models.Model):
                     "debit": -amount if amount < 0 else 0.0,
                     "kind": "other",
                     "currency_id": self.currency_id.id,
+                    "line_currency_id": self.currency_id.id,
+                    "currency_amount": -amount,
                 }
             )
             reconcile_auxiliary_id += 1
@@ -410,7 +421,7 @@ class AccountBankStatementLine(models.Model):
     def _default_reconcile_data(self):
         liquidity_lines, suspense_lines, other_lines = self._seek_for_lines()
         data = [self._get_reconcile_line(line, "liquidity") for line in liquidity_lines]
-        reconcile_auxiliary_id = self._compute_exchange_rate(data)
+        reconcile_auxiliary_id = 1
         res = (
             self.env["account.reconcile.model"]
             .search([("rule_type", "in", ["invoice_matching", "writeoff_suggestion"])])
@@ -605,7 +616,7 @@ class AccountBankStatementLine(models.Model):
                 record._get_reconcile_line(line, "liquidity")
                 for line in liquidity_lines
             ]
-            reconcile_auxiliary_id = record._compute_exchange_rate(data)
+            reconcile_auxiliary_id = 1
             if res.get("status", "") == "write_off":
                 data = record._recompute_suspense_line(
                     *record._reconcile_data_by_model(
@@ -664,6 +675,8 @@ class AccountBankStatementLine(models.Model):
                         "debit": -total_amount if total_amount < 0 else 0.0,
                         "kind": "other",
                         "currency_id": line["currency_id"],
+                        "line_currency_id": line["currency_id"],
+                        "currency_amount": -total_amount,
                     }
                 )
                 reconcile_auxiliary_id += 1
