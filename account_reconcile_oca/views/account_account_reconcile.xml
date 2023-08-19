@@ -12,6 +12,9 @@
             <form js_class="reconcile_manual" create="0">
                 <field name="manual_delete" invisible="1" />
                 <field name="manual_reference" invisible="1" />
+                <field name="company_currency_id" invisible="1" />
+                <field name="foreign_currency_id" invisible="1" />
+                <field name="currency_id" invisible="1" />
                 <div class="o_form_statusbar o_account_reconcile_oca_statusbar">
                     <div class="o_statusbar_buttons">
                         <button
