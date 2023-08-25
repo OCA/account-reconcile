@@ -37,6 +37,7 @@ addon | version | maintainers | summary
 [account_reconcile_reconciliation_date](account_reconcile_reconciliation_date/) | 14.0.1.0.1 |  | Track Reconciliation Date of Payments and Invoices
 [account_reconcile_restrict_partner_mismatch](account_reconcile_restrict_partner_mismatch/) | 14.0.1.0.0 |  | Restrict reconciliation on receivable and payable accounts to the same partner
 [account_reconciliation_widget](account_reconciliation_widget/) | 14.0.2.0.5 |  | Account reconciliation widget
+[bank_statement_check_number](bank_statement_check_number/) | 14.0.1.0.0 | [![ps-tubtim](https://github.com/ps-tubtim.png?size=30px)](https://github.com/ps-tubtim) | Add the check number in the bank statements
 
 [//]: # (end addons)
 
