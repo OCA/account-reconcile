@@ -345,11 +345,11 @@ class AccountBankStatementLine(models.Model):
                 continue
             new_data.append(line_data)
             liquidity_amount += line_data["amount"]
-        for line in reconcile_model._apply_lines_for_bank_widget(
-            -liquidity_amount, self._retrieve_partner(), self
+        for line in reconcile_model._get_write_off_move_lines_dict(
+            -liquidity_amount, self._retrieve_partner()
         ):
             new_line = line.copy()
-            amount = line.get("amount_currency")
+            amount = line.get("balance")
             if self.foreign_currency_id:
                 amount = self.foreign_currency_id.compute(
                     amount, self.journal_id.currency_id or self.company_currency_id
