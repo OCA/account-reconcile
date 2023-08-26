@@ -561,9 +561,9 @@ class AccountBankStatementLine(models.Model):
 
     def unreconcile_bank_line(self):
         self.ensure_one()
-        return getattr(self, "_unreconcile_bank_line_%s" % self.reconcile_mode)(
-            self.reconcile_data_info["data"]
-        )
+        return getattr(
+            self, "_unreconcile_bank_line_%s" % (self.reconcile_mode or "edit")
+        )(self.reconcile_data_info["data"])
 
     def _unreconcile_bank_line_edit(self, data):
         self.action_undo_reconciliation()
