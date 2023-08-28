@@ -435,7 +435,7 @@ class AccountBankStatementLine(models.Model):
                 self.manual_reference
             )
         elif res and res.get("amls"):
-            amount = self.amount
+            amount = self.amount_total_signed
             for line in res.get("amls", []):
                 line_data = self._get_reconcile_line(
                     line, "other", is_counterpart=True, max_amount=amount
