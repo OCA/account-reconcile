@@ -1,9 +1,10 @@
 # Copyright 2019 Camptocamp SA
 # Copyright 2022 Simone Rubino - Agile Business Group
+# Copyright 2023 Alejandro Ji Cheung - FactorLibre
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl)
 {
     "name": "Base transaction ID for financial institutes",
-    "version": "16.0.1.0.0",
+    "version": "16.0.1.1.0",
     "author": "Camptocamp, Odoo Community Association (OCA)",
     "maintainer": "Camptocamp",
     "category": "Hidden/Dependency",

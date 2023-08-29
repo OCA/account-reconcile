@@ -1,4 +1,5 @@
 # Copyright 2022 Simone Rubino - Agile Business Group
+# Copyright 2023 Alejandro Ji Cheung - FactorLibre
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
 from odoo.fields import first
@@ -50,5 +51,25 @@ class TestTransactionID(TestSaleCommon):
         # post-condition: there is an invoice
         # and has the same transaction of the sale order
         invoice = first(self.sale_order.invoice_ids)
+        invoice.action_post()
         self.assertTrue(invoice)
         self.assertEqual(invoice.transaction_id, transaction_id)
+
+        # create reversal invoice
+        account_move_reversal = (
+            self.env["account.move.reversal"]
+            .with_context(active_model="account.move", active_ids=invoice.ids)
+            .create(
+                {
+                    "journal_id": invoice.journal_id.id,
+                    "reason": "no reason",
+                    "refund_method": "refund",
+                }
+            )
+        )
+        account_move_reversal.reverse_moves()
+        self.assertEqual(1, len(invoice.reversal_move_id))
+        refund = invoice.reversal_move_id
+
+        # check if the reversal move has the same transaction as the invoice
+        self.assertEqual(invoice.transaction_id, refund.transaction_id)
