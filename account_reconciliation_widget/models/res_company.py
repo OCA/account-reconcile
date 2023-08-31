@@ -12,3 +12,6 @@ class ResCompany(models.Model):
         "for some time and don't want to reconcile all the past payments with "
         "bank statements.",
     )
+    account_bank_reconciliation_start_all_aml = fields.Boolean(
+        string="Filter all account move lines"
+    )

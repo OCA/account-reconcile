@@ -11,3 +11,6 @@ class ResConfigSettings(models.TransientModel):
     account_bank_reconciliation_start = fields.Date(
         related="company_id.account_bank_reconciliation_start", readonly=False
     )
+    account_bank_reconciliation_start_all_aml = fields.Boolean(
+        related="company_id.account_bank_reconciliation_start_all_aml", readonly=False
+    )

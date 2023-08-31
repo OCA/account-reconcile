@@ -805,6 +805,22 @@ class AccountReconciliation(models.AbstractModel):
             ("balance", "!=", 0.0),
             ("parent_state", "=", "posted"),
         ]
+        if (
+            st_line.company_id.account_bank_reconciliation_start_all_aml
+            and st_line.company_id.account_bank_reconciliation_start
+        ):
+            domain_matching = expression.AND(
+                [
+                    domain_matching,
+                    [
+                        (
+                            "date",
+                            ">=",
+                            st_line.company_id.account_bank_reconciliation_start,
+                        )
+                    ],
+                ]
+            )
 
         domain = expression.OR([domain_reconciliation, domain_matching])
         if partner_id:
