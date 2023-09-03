@@ -22,12 +22,14 @@ msgid "Journal Entry"
 msgstr "Lançamento de Diário"
 
 #. module: account_move_reconcile_forbid_cancel
+#. odoo-python
 #: code:addons/account_move_reconcile_forbid_cancel/models/account_move.py:0
 #, python-format
 msgid "You cannot cancel reconciled entries."
 msgstr "Você não pode cancelar lançamentos reconciliados."
 
 #. module: account_move_reconcile_forbid_cancel
+#. odoo-python
 #: code:addons/account_move_reconcile_forbid_cancel/models/account_move.py:0
 #, python-format
 msgid "You cannot reset to draft reconciled entries."
