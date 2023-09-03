@@ -16,8 +16,8 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
-"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
 "X-Generator: Weblate 4.17\n"
 
 #. module: account_mass_reconcile
@@ -513,8 +513,8 @@ msgstr "Broj grešaka"
 
 #. module: account_mass_reconcile
 #: model:ir.model.fields,help:account_mass_reconcile.field_account_mass_reconcile__message_needaction_counter
-msgid "Number of messages which requires an action"
-msgstr "Broj poruka koje zahtijevaju dodatnu radnju"
+msgid "Number of messages requiring action"
+msgstr ""
 
 #. module: account_mass_reconcile
 #: model:ir.model.fields,help:account_mass_reconcile.field_account_mass_reconcile__message_has_error_counter
@@ -690,6 +690,9 @@ msgstr ""
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_reference__write_off
 msgid "Write off allowed"
 msgstr "Otpis dozvoljen"
+
+#~ msgid "Number of messages which requires an action"
+#~ msgstr "Broj poruka koje zahtijevaju dodatnu radnju"
 
 #~ msgid "Options"
 #~ msgstr "Opcije"
