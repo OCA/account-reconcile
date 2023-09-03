@@ -26,8 +26,8 @@ msgid ""
 "%(error_msg)s\n"
 "%(log)s\n"
 msgstr ""
-"%(completion_date)s La pièce comptable %(move_name)s a "
-"%(num_imported)s/%(number_line)s lignes complétées par %(user_name)s \n"
+"%(completion_date)s La pièce comptable %(move_name)s a %(num_imported)s/"
+"%(number_line)s lignes complétées par %(user_name)s \n"
 "%(error_msg)s\n"
 "%(log)s\n"
 
@@ -102,8 +102,8 @@ msgid ""
 "Choose a receivable/payable account to use as the default debit/credit "
 "account."
 msgstr ""
-"Choisissez un compte créancier/débiteur à utiliser comme compte de débit/crédit "
-"par défaut."
+"Choisissez un compte créancier/débiteur à utiliser comme compte de débit/"
+"crédit par défaut."
 
 #. module: account_move_base_import
 #: model:ir.model.fields,help:account_move_base_import.field_account_journal__commission_analytic_account_id
@@ -278,7 +278,8 @@ msgstr "À partir du nom de la ligne (basé sur le nom du partenaire)"
 #. module: account_move_base_import
 #: model:ir.model.fields.selection,name:account_move_base_import.selection__account_move_completion_rule__function_to_call__get_from_name_and_supplier_invoice
 msgid "From line name (based on supplier invoice number)"
-msgstr "À partir du nom de la ligne (basé sur le numéro de la facture fournisseur)"
+msgstr ""
+"À partir du nom de la ligne (basé sur le numéro de la facture fournisseur)"
 
 #. module: account_move_base_import
 #: model:ir.model.fields.selection,name:account_move_base_import.selection__account_journal__import_type__generic_csvxls_so
@@ -447,8 +448,8 @@ msgid ""
 "Line named \"%(line_name)s\" was matched by more than one partner while "
 "looking on partner label: %(partner_labels)s"
 msgstr ""
-"La ligne \"%(line_name)s\" a été associée à plus d'un partenaire lors "
-"de la recherche sur le libellé du partenaire : %(partner_labels)s"
+"La ligne \"%(line_name)s\" a été associée à plus d'un partenaire lors de la "
+"recherche sur le libellé du partenaire : %(partner_labels)s"
 
 #. module: account_move_base_import
 #. odoo-python
@@ -458,8 +459,8 @@ msgid ""
 "Line named \"%s\" was matched by more than one partner while looking on "
 "partner by name"
 msgstr ""
-"La ligne \"%s\" a été associée à plus d'un partenaire lors de la "
-"recherche d'un partenaire par son nom"
+"La ligne \"%s\" a été associée à plus d'un partenaire lors de la recherche "
+"d'un partenaire par son nom"
 
 #. module: account_move_base_import
 #: model:ir.model.fields,help:account_move_base_import.field_account_move_completion_rule__sequence
@@ -511,8 +512,7 @@ msgstr ""
 #: code:addons/account_move_base_import/models/account_journal.py:0
 #, python-format
 msgid "Move %(move_name)s have been imported with %(num_lines)s lines."
-msgstr ""
-"Les pièces %(move_name)s ont été importées avec %(num_lines)s lignes."
+msgstr "Les pièces %(move_name)s ont été importées avec %(num_lines)s lignes."
 
 #. module: account_move_base_import
 #: model:ir.ui.menu,name:account_move_base_import.menu_action_move_completion_rule_tree_menu
@@ -566,8 +566,8 @@ msgstr "Nombre d'erreurs"
 #. module: account_move_base_import
 #: model:ir.model.fields,help:account_move_base_import.field_account_journal__message_needaction_counter
 #: model:ir.model.fields,help:account_move_base_import.field_account_move__message_needaction_counter
-msgid "Number of messages which requires an action"
-msgstr "Nombre de messages nécessitant une action"
+msgid "Number of messages requiring action"
+msgstr ""
 
 #. module: account_move_base_import
 #: model:ir.model.fields,help:account_move_base_import.field_account_journal__message_has_error_counter
@@ -739,3 +739,6 @@ msgid ""
 msgstr ""
 "Lorsque cette case est cochée, le processus/bouton d'autocomplétion ignore "
 "cette ligne."
+
+#~ msgid "Number of messages which requires an action"
+#~ msgstr "Nombre de messages nécessitant une action"
