@@ -388,7 +388,11 @@ class AccountBankStatementLine(models.Model):
         foreign_currency = (
             self.currency_id != self.company_id.currency_id
             or self.foreign_currency_id
-            or any(line["currency_id"] != line["line_currency_id"] for line in data)
+            or any(
+                line.get("line_currency_id")
+                and line["currency_id"] != line["line_currency_id"]
+                for line in data
+            )
         )
         if not foreign_currency or self.is_reconciled:
             return reconcile_auxiliary_id

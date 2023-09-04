@@ -16,7 +16,9 @@ export class AccountReconcileDataWidget extends Component {
                 this.props.record.data.currency_id[0] !==
                     this.props.record.data.company_currency_id[0] ||
                 this.props.record.data[this.props.name].data.some(
-                    (item) => item.line_currency_id !== item.currency_id
+                    (item) =>
+                        item.line_currency_id &&
+                        item.line_currency_id !== item.currency_id
                 ));
     }
     getReconcileLines() {
