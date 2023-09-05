@@ -33,7 +33,9 @@ class AccountReconcileAbstract(models.AbstractModel):
         "res.currency", related="company_id.currency_id"
     )
 
-    def _get_reconcile_line(self, line, kind, is_counterpart=False, max_amount=False):
+    def _get_reconcile_line(
+        self, line, kind, is_counterpart=False, max_amount=False, from_unreconcile=False
+    ):
         date = self.date if "date" in self._fields else line.date
         original_amount = amount = net_amount = line.debit - line.credit
         amount_currency = self.company_id.currency_id
@@ -80,6 +82,16 @@ class AccountReconcileAbstract(models.AbstractModel):
             "analytic_distribution": line.analytic_distribution,
             "kind": kind,
         }
+        if from_unreconcile:
+            vals.update(
+                {
+                    "id": False,
+                    "counterpart_line_id": (
+                        line.matched_debit_ids.mapped("debit_move_id")
+                        | line.matched_credit_ids.mapped("credit_move_id")
+                    ).id,
+                }
+            )
         if not float_is_zero(
             amount - original_amount, precision_digits=line.currency_id.decimal_places
         ):
