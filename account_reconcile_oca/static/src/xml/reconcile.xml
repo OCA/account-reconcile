@@ -67,7 +67,7 @@
                 </th>
                 <th class="text-end">Debit</th>
                 <th class="text-end">Credit</th>
-                <th />
+                <th t-if="! props.record.data.is_reconciled" />
             </thead>
             <tbody>
                 <t
@@ -130,7 +130,7 @@
                                 class="btn fa fa-trash-o"
                                 role="button"
                                 t-on-click="(ev) => this.onTrashLine(ev, reconcile_line)"
-                                t-if="reconcile_line.kind == 'other'"
+                                t-if="reconcile_line.kind == 'other' &amp;&amp; ! props.record.data.is_reconciled"
                             />
                         </td>
                     </tr>
