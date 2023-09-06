@@ -66,7 +66,12 @@ class AccountBankStatementLine(models.Model):
         domain=[("rule_type", "=", "writeoff_button")],
     )
     manual_name = fields.Char(store=False, default=False, prefetch=False)
-    manual_amount = fields.Monetary(store=False, default=False, prefetch=False)
+    manual_amount = fields.Monetary(
+        store=False, default=False, prefetch=False, currency_field="manual_currency_id"
+    )
+    manual_currency_id = fields.Many2one(
+        "res.currency", readonly=True, store=False, prefetch=False
+    )
     manual_original_amount = fields.Monetary(
         default=False, store=False, prefetch=False, readonly=True
     )
@@ -240,6 +245,7 @@ class AccountBankStatementLine(models.Model):
                             "manual_move_type": False,
                             "manual_kind": False,
                             "manual_original_amount": False,
+                            "manual_currency_id": False,
                             "analytic_distribution": False,
                         }
                     )
@@ -247,6 +253,7 @@ class AccountBankStatementLine(models.Model):
                 else:
                     self.manual_account_id = line["account_id"][0]
                     self.manual_amount = line["amount"]
+                    self.manual_currency_id = line["currency_id"]
                     self.manual_name = line["name"]
                     self.manual_partner_id = (
                         line.get("partner_id") and line["partner_id"][0]
