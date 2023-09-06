@@ -255,6 +255,7 @@
                                     string="Amount"
                                     attrs="{'readonly': ['|', ('manual_reference', '=', False), ('is_reconciled', '=', True)]}"
                                 />
+                                <field name="manual_currency_id" invisible="1" />
                                 <field name="manual_original_amount" invisible="1" />
                                 <field name="manual_move_type" invisible="1" />
                                 <label
