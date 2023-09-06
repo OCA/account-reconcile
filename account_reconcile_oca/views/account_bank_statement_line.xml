@@ -288,6 +288,10 @@
                             </group>
                         </group>
                     </page>
+                    <page name="narration" string="Narration">
+                        <field name="payment_ref" />
+                        <field name="narration" />
+                    </page>
                     <page name="chatter" string="Chatter">
                         <field name="move_id" widget="account_reconcile_oca_chatter" />
                     </page>
