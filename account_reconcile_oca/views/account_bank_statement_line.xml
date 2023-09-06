@@ -143,7 +143,7 @@
                         <button
                             name="unreconcile_bank_line"
                             type="object"
-                            string="Reset"
+                            string="Unreconcile"
                             accesskey="r"
                             class="btn btn-warning"
                             attrs="{'invisible': [('is_reconciled', '=', False)]}"
@@ -152,7 +152,7 @@
                         <button
                             name="clean_reconcile"
                             type="object"
-                            string="Clean"
+                            string="Reset reconciliation"
                             class="btn btn-secondary"
                             attrs="{'invisible': [('is_reconciled', '=', True)]}"
                         />
