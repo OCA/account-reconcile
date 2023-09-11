@@ -143,7 +143,7 @@
                         <button
                             name="unreconcile_bank_line"
                             type="object"
-                            string="Reset"
+                            string="Unreconcile"
                             accesskey="r"
                             class="btn btn-warning"
                             attrs="{'invisible': [('is_reconciled', '=', False)]}"
@@ -152,7 +152,7 @@
                         <button
                             name="clean_reconcile"
                             type="object"
-                            string="Clean"
+                            string="Reset reconciliation"
                             class="btn btn-secondary"
                             attrs="{'invisible': [('is_reconciled', '=', True)]}"
                         />
@@ -255,6 +255,7 @@
                                     string="Amount"
                                     attrs="{'readonly': ['|', ('manual_reference', '=', False), ('is_reconciled', '=', True)]}"
                                 />
+                                <field name="manual_currency_id" invisible="1" />
                                 <field name="manual_original_amount" invisible="1" />
                                 <field name="manual_move_type" invisible="1" />
                                 <label
@@ -286,6 +287,10 @@
                                 </div>
                             </group>
                         </group>
+                    </page>
+                    <page name="narration" string="Narration">
+                        <field name="payment_ref" />
+                        <field name="narration" />
                     </page>
                     <page name="chatter" string="Chatter">
                         <field name="move_id" widget="account_reconcile_oca_chatter" />
