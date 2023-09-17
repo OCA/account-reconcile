@@ -38,6 +38,13 @@ class TestReconciliationWidget(TestAccountReconciliationCommon):
                 "line_ids": [(0, 0, {"account_id": cls.current_assets_account.id})],
             }
         )
+        cls.tax_10 = cls.env["account.tax"].create(
+            {
+                "name": "tax_10",
+                "amount_type": "percent",
+                "amount": 10.0,
+            }
+        )
         # We need to make some fields visible in order to make the tests work
         cls.env["ir.ui.view"].create(
             {
@@ -348,9 +355,56 @@ class TestReconciliationWidget(TestAccountReconciliationCommon):
             f.manual_model_id = self.rule
             self.assertTrue(f.can_reconcile)
         bank_stmt_line.reconcile_bank_line()
+        self.assertEqual(2, len(bank_stmt_line.move_id.line_ids))
         self.assertTrue(
             bank_stmt_line.move_id.line_ids.filtered(
                 lambda r: r.account_id == self.current_assets_account
+            )
+        )
+
+    def test_reconcile_model_tax_included(self):
+        """
+        We want to test what happens when we select an reconcile model to fill a
+        bank statement.
+        """
+        self.rule.line_ids.write(
+            {"tax_ids": [(4, self.tax_10.id)], "force_tax_included": True}
+        )
+        bank_stmt = self.acc_bank_stmt_model.create(
+            {
+                "company_id": self.env.ref("base.main_company").id,
+                "journal_id": self.bank_journal_euro.id,
+                "date": time.strftime("%Y-07-15"),
+                "name": "test",
+            }
+        )
+        bank_stmt_line = self.acc_bank_stmt_line_model.create(
+            {
+                "name": "testLine",
+                "journal_id": self.bank_journal_euro.id,
+                "statement_id": bank_stmt.id,
+                "amount": 100,
+                "date": time.strftime("%Y-07-15"),
+            }
+        )
+        with Form(
+            bank_stmt_line,
+            view="account_reconcile_oca.bank_statement_line_form_reconcile_view",
+        ) as f:
+            self.assertFalse(f.can_reconcile)
+            f.manual_model_id = self.rule
+            self.assertTrue(f.can_reconcile)
+        bank_stmt_line.reconcile_bank_line()
+        self.assertEqual(3, len(bank_stmt_line.move_id.line_ids))
+        self.assertTrue(
+            bank_stmt_line.move_id.line_ids.filtered(
+                lambda r: r.account_id == self.current_assets_account
+                and r.tax_ids == self.tax_10
+            )
+        )
+        self.assertTrue(
+            bank_stmt_line.move_id.line_ids.filtered(
+                lambda r: r.tax_line_id == self.tax_10
             )
         )
 
