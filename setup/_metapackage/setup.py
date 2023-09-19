@@ -24,6 +24,7 @@ setuptools.setup(
         'odoo14-addon-account_reconcile_reconciliation_date',
         'odoo14-addon-account_reconcile_restrict_partner_mismatch',
         'odoo14-addon-account_reconciliation_widget',
+        'odoo14-addon-account_reconciliation_widget_limit_aml',
         'odoo14-addon-bank_statement_check_number',
     ],
     classifiers=[
