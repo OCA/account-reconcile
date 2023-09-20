@@ -119,7 +119,6 @@ msgstr ""
 
 #. module: account_reconcile_oca
 #: model_terms:ir.ui.view,arch_db:account_reconcile_oca.account_account_reconcile_form_view
-#: model_terms:ir.ui.view,arch_db:account_reconcile_oca.bank_statement_line_form_reconcile_view
 msgid "Clean"
 msgstr ""
 
@@ -302,6 +301,11 @@ msgid "Manual Amount"
 msgstr "Manuel Tutar"
 
 #. module: account_reconcile_oca
+#: model:ir.model.fields,field_description:account_reconcile_oca.field_account_bank_statement_line__manual_currency_id
+msgid "Manual Currency"
+msgstr ""
+
+#. module: account_reconcile_oca
 #: model:ir.model.fields,field_description:account_reconcile_oca.field_account_account_reconcile__manual_delete
 #: model:ir.model.fields,field_description:account_reconcile_oca.field_account_bank_statement_line__manual_delete
 #: model:ir.model.fields,field_description:account_reconcile_oca.field_account_reconcile_abstract__manual_delete
@@ -370,6 +374,11 @@ msgstr "Çeşitli"
 #: model_terms:ir.ui.view,arch_db:account_reconcile_oca.bank_statement_line_form_reconcile_view
 msgid "Name"
 msgstr "Adı"
+
+#. module: account_reconcile_oca
+#: model_terms:ir.ui.view,arch_db:account_reconcile_oca.bank_statement_line_form_reconcile_view
+msgid "Narration"
+msgstr ""
 
 #. module: account_reconcile_oca
 #. odoo-python
@@ -465,8 +474,8 @@ msgstr "Uzlaştırılan"
 
 #. module: account_reconcile_oca
 #: model_terms:ir.ui.view,arch_db:account_reconcile_oca.bank_statement_line_form_reconcile_view
-msgid "Reset"
-msgstr "Sıfırla"
+msgid "Reset reconciliation"
+msgstr ""
 
 #. module: account_reconcile_oca
 #: model_terms:ir.ui.view,arch_db:account_reconcile_oca.account_move_line_search_reconcile_view
@@ -516,6 +525,11 @@ msgid "Undefined"
 msgstr "Tanımsız"
 
 #. module: account_reconcile_oca
+#: model_terms:ir.ui.view,arch_db:account_reconcile_oca.bank_statement_line_form_reconcile_view
+msgid "Unreconcile"
+msgstr ""
+
+#. module: account_reconcile_oca
 #: model:ir.model.fields,field_description:account_reconcile_oca.field_account_account_reconcile_data__user_id
 msgid "User"
 msgstr "Kullanıcı"
@@ -561,3 +575,6 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:account_reconcile_oca.bank_statement_line_form_reconcile_view
 msgid "with an open amount"
 msgstr ""
+
+#~ msgid "Reset"
+#~ msgstr "Sıfırla"
