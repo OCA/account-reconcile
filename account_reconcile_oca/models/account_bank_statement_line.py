@@ -189,7 +189,7 @@ class AccountBankStatementLine(models.Model):
                     "account_id": self.journal_id.suspense_account_id.name_get()[0],
                     "partner_id": self.partner_id
                     and self.partner_id.name_get()[0]
-                    or False,
+                    or (False, self.partner_name),
                     "date": fields.Date.to_string(self.date),
                     "name": self.payment_ref or self.name,
                     "amount": -total_amount,
@@ -292,7 +292,7 @@ class AccountBankStatementLine(models.Model):
                             "name": self.manual_name,
                             "partner_id": self.manual_partner_id
                             and self.manual_partner_id.name_get()[0]
-                            or False,
+                            or (False, self.partner_name),
                             "account_id": self.manual_account_id.name_get()[0]
                             if self.manual_account_id
                             else [False, _("Undefined")],
@@ -717,3 +717,17 @@ class AccountBankStatementLine(models.Model):
     def action_checked(self):
         self.ensure_one()
         self.move_id.to_check = False
+
+    def _get_reconcile_line(
+        self, line, kind, is_counterpart=False, max_amount=False, from_unreconcile=False
+    ):
+        vals = super()._get_reconcile_line(
+            line,
+            kind,
+            is_counterpart=is_counterpart,
+            max_amount=max_amount,
+            from_unreconcile=from_unreconcile,
+        )
+        if vals["partner_id"] is False:
+            vals["partner_id"] = (False, self.partner_name)
+        return vals
