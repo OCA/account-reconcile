@@ -359,7 +359,7 @@ class AccountBankStatementLine(models.Model):
                 continue
             new_data.append(line_data)
             liquidity_amount += line_data["amount"]
-        for line in reconcile_model._get_write_off_move_lines_dict(
+        for line in reconcile_model._get_write_off_move_lines_dict_oca(
             -liquidity_amount, self._retrieve_partner()
         ):
             new_line = line.copy()

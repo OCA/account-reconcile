@@ -302,3 +302,12 @@ class TestReconciliationWidget(TestAccountReconciliationCommon):
         )
         self.assertTrue(reconcile_account)
         self.assertEqual(reconcile_account.partner_id, self.env.user.partner_id)
+
+    def test_compute_reconcile_data_info(self):
+        """Attempt to trigger error:
+            'UnboundLocalError: local variable 'balance' referenced before assignment'
+        See https://github.com/OCA/account-reconcile/issues/592
+        """
+        self.env["account.bank.statement.line"].sudo().search(
+            []
+        )._compute_reconcile_data_info()
