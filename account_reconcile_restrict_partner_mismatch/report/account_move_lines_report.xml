@@ -15,7 +15,7 @@
                 <field name="credit_move_id" />
                 <field name="credit_amount" />
                 <field name="credit_partner_id" />
-                <field name="account_type_id" />
+                <field name="account_type" />
                 <field name="account_id" />
             </tree>
         </field>
@@ -42,7 +42,7 @@
                         </group>
                         <group>
                             <field name="account_id" />
-                            <field name="account_type_id" />
+                            <field name="account_type" />
                             <field name="debit_move_id" />
                             <field name="credit_move_id" />
                         </group>

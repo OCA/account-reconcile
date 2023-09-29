@@ -15,7 +15,9 @@ class AccountReconcilePartnerMismatchReport(models.Model):
     )
     full_reconcile_id = fields.Many2one("account.full.reconcile")
     account_id = fields.Many2one("account.account", string="Account")
-    account_type_id = fields.Many2one("account.account.type", string="Account type")
+    account_type = fields.Selection(
+        selection=[("asset_receivable", "Receivable"), ("liability_payable", "Payable")]
+    )
     debit_move_id = fields.Many2one("account.move.line", string="Debit move")
     debit_amount = fields.Float("Debit amount")
     debit_partner_id = fields.Many2one("res.partner", string="Debit partner")
@@ -33,7 +35,7 @@ class AccountReconcilePartnerMismatchReport(models.Model):
                     , pr.full_reconcile_id
                     , pr.debit_move_id
                     , daml.debit debit_amount
-                    , aat.id account_type_id
+                    , aa.account_type
                     , daml.partner_id debit_partner_id
                     , daml.account_id account_id
                     , pr.credit_move_id
@@ -46,9 +48,7 @@ class AccountReconcilePartnerMismatchReport(models.Model):
                         ON caml.id = pr.credit_move_id
                     LEFT JOIN account_account aa
                         ON daml.account_id = aa.id
-                    LEFT JOIN account_account_type aat
-                        ON aa.user_type_id = aat.id
-                    WHERE aat.type in ('receivable', 'payable')
+                    WHERE aa.account_type IN ('asset_receivable', 'liability_payable')
                     AND (daml.partner_id <> caml.partner_id
                     OR (daml.partner_id IS NULL
                         AND caml.partner_id IS NOT NULL)

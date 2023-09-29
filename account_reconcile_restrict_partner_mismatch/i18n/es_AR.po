@@ -27,7 +27,7 @@ msgid "Account Reconcile Partner Mismatch Report"
 msgstr "Informe de Discrepancias de Contactos en la Conciliación de Cuentas"
 
 #. module: account_reconcile_restrict_partner_mismatch
-#: model:ir.model.fields,field_description:account_reconcile_restrict_partner_mismatch.field_account_reconcile_partner_mismatch_report__account_type_id
+#: model:ir.model.fields,field_description:account_reconcile_restrict_partner_mismatch.field_account_reconcile_partner_mismatch_report__account_type
 msgid "Account type"
 msgstr "Tipo de Cuenta"
 

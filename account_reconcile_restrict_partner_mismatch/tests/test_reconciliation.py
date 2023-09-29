@@ -20,7 +20,7 @@ class TestReconciliation(TransactionCase):
             {
                 "code": "RA1000",
                 "name": "Test Receivable Account",
-                "user_type_id": cls.env.ref("account.data_account_type_receivable").id,
+                "account_type": "asset_receivable",
                 "reconcile": True,
             }
         )
@@ -28,7 +28,7 @@ class TestReconciliation(TransactionCase):
             {
                 "code": "PA1000",
                 "name": "Test Payable Account",
-                "user_type_id": cls.env.ref("account.data_account_type_payable").id,
+                "account_type": "liability_payable",
                 "reconcile": True,
             }
         )
@@ -102,9 +102,7 @@ class TestReconciliation(TransactionCase):
             {
                 "code": "CAA1000",
                 "name": "Test Current Assets Account",
-                "user_type_id": self.env.ref(
-                    "account.data_account_type_current_assets"
-                ).id,
+                "account_type": "asset_current",
                 "reconcile": True,
             }
         )

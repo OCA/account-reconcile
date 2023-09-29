@@ -28,7 +28,7 @@ msgstr ""
 "Informe sobre la falta de coincidencia de cuentas conciliadas de los socios"
 
 #. module: account_reconcile_restrict_partner_mismatch
-#: model:ir.model.fields,field_description:account_reconcile_restrict_partner_mismatch.field_account_reconcile_partner_mismatch_report__account_type_id
+#: model:ir.model.fields,field_description:account_reconcile_restrict_partner_mismatch.field_account_reconcile_partner_mismatch_report__account_type
 msgid "Account type"
 msgstr "Tipo de cuenta"
 

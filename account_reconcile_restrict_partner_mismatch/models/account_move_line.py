@@ -18,7 +18,10 @@ class AccountMoveLine(models.Model):
             return True
         partners = set()
         for line in self:
-            if line.account_id.internal_type in ("receivable", "payable"):
+            if line.account_id.account_type in (
+                "asset_receivable",
+                "liability_payable",
+            ):
                 partners.add(line.partner_id.id)
         if len(partners) > 1:
             raise UserError(
