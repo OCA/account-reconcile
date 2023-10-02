@@ -31,6 +31,7 @@
                             <field name="partner_id" invisible="1" />
                     </group>
                     <group name="writeoff" string="Write-off" states="writeoff">
+                            <field name="writeoff_model_id" widget="selection" />
                             <field
                         name="writeoff_journal_id"
                         widget="selection"
@@ -49,9 +50,10 @@
                         attrs="{'required': [('state', '=', 'writeoff')]}"
                     />
                             <field
-                        name="analytic_distribution"
+                        name="writeoff_analytic_distribution"
                         widget="analytic_distribution"
                         groups="analytic.group_analytic_accounting"
+                        options="{'account_field': 'writeoff_account_id', 'business_domain': 'general'}"
                     />
                     </group>
                     <footer>

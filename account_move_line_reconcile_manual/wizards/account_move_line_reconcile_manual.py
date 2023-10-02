@@ -14,7 +14,6 @@ class AccountMoveLineReconcileManual(models.TransientModel):
     _name = "account.move.line.reconcile.manual"
     _description = "Manual Reconciliation Wizard"
     _check_company_auto = True
-    _inherit = "analytic.mixin"
 
     account_id = fields.Many2one(
         "account.account", required=True, readonly=True, check_company=True
@@ -38,14 +37,31 @@ class AccountMoveLineReconcileManual(models.TransientModel):
         default="start",
     )
     # START WRITE-OFF FIELDS
+    writeoff_model_id = fields.Many2one(
+        "account.reconcile.manual.model",
+        string="Model",
+        domain="[('company_id', '=', company_id)]",
+        check_company=True,
+    )
     writeoff_journal_id = fields.Many2one(
         "account.journal",
+        compute="_compute_writeoff",
+        readonly=False,
+        store=True,
+        precompute=True,
         string="Journal",
         domain="[('type', '=', 'general'), ('company_id', '=', company_id)]",
         check_company=True,
     )
     writeoff_date = fields.Date(string="Date", default=fields.Date.context_today)
-    writeoff_ref = fields.Char(string="Reference", default=lambda self: _("Write-off"))
+    writeoff_ref = fields.Char(
+        compute="_compute_writeoff",
+        readonly=False,
+        store=True,
+        precompute=True,
+        string="Reference",
+        default=lambda self: _("Write-off"),
+    )
     writeoff_type = fields.Selection(
         [
             ("income", "Income"),
@@ -60,28 +76,64 @@ class AccountMoveLineReconcileManual(models.TransientModel):
     )
     writeoff_account_id = fields.Many2one(
         "account.account",
+        compute="_compute_writeoff",
+        readonly=False,
+        store=True,
+        precompute=True,
         string="Write-off Account",
         domain="[('company_id', '=', company_id), ('deprecated', '=', False)]",
         check_company=True,
     )
+    writeoff_analytic_distribution = fields.Json(
+        string="Analytic",
+        compute="_compute_writeoff_analytic_distribution",
+        readonly=False,
+        store=True,
+        precompute=True,
+    )
+    analytic_precision = fields.Integer(
+        default=lambda self: self.env["decimal.precision"].precision_get(
+            "Percentage Analytic"
+        ),
+    )
 
-    @api.depends("writeoff_account_id", "partner_id")
-    def _compute_analytic_distribution(self):
+    @api.depends("writeoff_model_id")
+    def _compute_writeoff(self):
+        for wiz in self:
+            if wiz.writeoff_model_id:
+                model = wiz.writeoff_model_id
+                wiz.writeoff_journal_id = model.journal_id
+                wiz.writeoff_ref = model.ref
+                if wiz.writeoff_type == "expense":
+                    wiz.writeoff_account_id = model.expense_account_id.id
+                    if model.expense_analytic_distribution:
+                        wiz.writeoff_analytic_distribution = (
+                            model.expense_analytic_distribution
+                        )
+                elif wiz.writeoff_type == "income":
+                    wiz.writeoff_account_id = model.income_account_id.id
+                    if model.income_analytic_distribution:
+                        wiz.writeoff_analytic_distribution = (
+                            model.income_analytic_distribution
+                        )
+            else:
+                journals = self.env["account.journal"].search(
+                    [("type", "=", "general"), ("company_id", "=", wiz.company_id.id)]
+                )
+                if len(journals) == 1:
+                    wiz.writeoff_journal_id = journals.id
+
+    @api.depends("writeoff_account_id")
+    def _compute_writeoff_analytic_distribution(self):
         aadmo = self.env["account.analytic.distribution.model"]
         for wiz in self:
-            if wiz.writeoff_account_id:
-                partner = wiz.partner_id
-                distribution = aadmo._get_distribution(
+            if wiz.writeoff_account_id and not wiz.writeoff_analytic_distribution:
+                wiz.writeoff_analytic_distribution = aadmo._get_distribution(
                     {
-                        "partner_id": partner and partner.id or False,
-                        "partner_category_id": partner
-                        and partner.category_id.ids
-                        or False,
                         "account_prefix": wiz.writeoff_account_id.code,
                         "company_id": wiz.company_id.id,
                     }
                 )
-                wiz.analytic_distribution = distribution or wiz.analytic_distribution
 
     @api.model
     def default_get(self, fields_list):
@@ -141,12 +193,6 @@ class AccountMoveLineReconcileManual(models.TransientModel):
             writeoff_type = "income"
         else:
             writeoff_type = "none"
-        general_journals = self.env["account.journal"].search(
-            [("type", "=", "general"), ("company_id", "=", company.id)]
-        )
-        writeoff_journal_id = False
-        if len(general_journals) == 1:
-            writeoff_journal_id = general_journals.id
         res.update(
             {
                 "count": count,
@@ -159,7 +205,6 @@ class AccountMoveLineReconcileManual(models.TransientModel):
                 "move_line_ids": move_lines.ids,
                 "writeoff_type": writeoff_type,
                 "writeoff_amount": writeoff_amount,
-                "writeoff_journal_id": writeoff_journal_id,
             }
         )
         return res
@@ -233,7 +278,7 @@ class AccountMoveLineReconcileManual(models.TransientModel):
                         "partner_id": self.partner_id and self.partner_id.id or False,
                         "debit": credit,
                         "credit": debit,
-                        "analytic_distribution": self.analytic_distribution,
+                        "analytic_distribution": self.writeoff_analytic_distribution,
                     },
                 ),
             ],
