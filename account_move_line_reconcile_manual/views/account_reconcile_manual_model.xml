@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+  Copyright 2023 Akretion France (http://www.akretion.com/)
+  @author: Alexis de Lattre <alexis.delattre@akretion.com>
+  License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
+-->
+<odoo>
+
+<record id="account_reconcile_manual_model_form" model="ir.ui.view">
+    <field name="model">account.reconcile.manual.model</field>
+    <field name="arch" type="xml">
+        <form>
+            <group name="main">
+                <field name="company_id" invisible="1" />
+                <field name="ref" />
+                <field name="expense_account_id" />
+                <field
+                        name="expense_analytic_distribution"
+                        widget="analytic_distribution"
+                        groups="analytic.group_analytic_accounting"
+                        options="{'account_field': 'expense_account_id', 'business_domain': 'general'}"
+                    />
+                <field name="income_account_id" />
+                <field
+                        name="income_analytic_distribution"
+                        widget="analytic_distribution"
+                        groups="analytic.group_analytic_accounting"
+                        options="{'account_field': 'expense_account_id', 'business_domain': 'general'}"
+                    />
+                <field name="journal_id" />
+                <field name="company_id" groups="base.group_multi_company" />
+            </group>
+        </form>
+    </field>
+</record>
+
+<record id="account_reconcile_manual_model_tree" model="ir.ui.view">
+    <field name="model">account.reconcile.manual.model</field>
+    <field name="arch" type="xml">
+        <tree>
+            <field name="sequence" widget="handle" />
+            <field name="ref" decoration-bf="1" />
+            <field name="expense_account_id" />
+            <field
+                    name="expense_analytic_distribution"
+                    widget="analytic_distribution"
+                    optional="show"
+                    groups="analytic.group_analytic_accounting"
+                />
+            <field name="income_account_id" />
+            <field
+                    name="income_analytic_distribution"
+                    widget="analytic_distribution"
+                    optional="show"
+                    groups="analytic.group_analytic_accounting"
+                />
+            <field name="journal_id" optional="show" />
+            <field
+                    name="company_id"
+                    groups="base.group_multi_company"
+                    optional="hide"
+                />
+        </tree>
+    </field>
+</record>
+
+<record id="account_reconcile_manual_model_search" model="ir.ui.view">
+    <field name="model">account.reconcile.manual.model</field>
+    <field name="arch" type="xml">
+        <search>
+            <field name="ref" />
+            <field name="expense_account_id" />
+            <field name="income_account_id" />
+            <group name="groupby">
+                <filter
+                        name="journal_groupby"
+                        string="Journal"
+                        context="{'group_by': 'journal_id'}"
+                    />
+            </group>
+        </search>
+    </field>
+</record>
+
+<record id="account_reconcile_manual_model_action" model="ir.actions.act_window">
+    <field name="name">Write-off Models</field>
+    <field name="res_model">account.reconcile.manual.model</field>
+    <field name="view_mode">tree,form</field>
+</record>
+
+<menuitem
+        id="account_reconcile_manual_model_menu"
+        action="account_reconcile_manual_model_action"
+        parent="account.account_account_menu"
+        sequence="500"
+    />
+
+</odoo>
