@@ -15,6 +15,7 @@
     "data": [
         "security/ir.model.access.csv",
         "wizards/account_move_line_reconcile_manual_view.xml",
+        "views/account_reconcile_manual_model.xml",
         "views/account_move_line.xml",
     ],
     "installable": True,
