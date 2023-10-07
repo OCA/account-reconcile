@@ -36,18 +36,24 @@ msgid "Amount"
 msgstr ""
 
 #. module: account_move_line_reconcile_manual
-#: model:ir.model.fields,field_description:account_move_line_reconcile_manual.field_account_move_line_reconcile_manual__analytic_distribution
+#: model:ir.model.fields,field_description:account_move_line_reconcile_manual.field_account_move_line_reconcile_manual__writeoff_analytic_distribution
 msgid "Analytic"
 msgstr ""
 
 #. module: account_move_line_reconcile_manual
-#: model:ir.model.fields,field_description:account_move_line_reconcile_manual.field_account_move_line_reconcile_manual__analytic_distribution_search
-msgid "Analytic Distribution Search"
+#: model:ir.model.fields,field_description:account_move_line_reconcile_manual.field_account_move_line_reconcile_manual__analytic_precision
+#: model:ir.model.fields,field_description:account_move_line_reconcile_manual.field_account_reconcile_manual_model__analytic_precision
+msgid "Analytic Precision"
 msgstr ""
 
 #. module: account_move_line_reconcile_manual
-#: model:ir.model.fields,field_description:account_move_line_reconcile_manual.field_account_move_line_reconcile_manual__analytic_precision
-msgid "Analytic Precision"
+#: model:ir.model.fields,field_description:account_move_line_reconcile_manual.field_account_reconcile_manual_model__expense_analytic_distribution
+msgid "Analytic for Expense"
+msgstr ""
+
+#. module: account_move_line_reconcile_manual
+#: model:ir.model.fields,field_description:account_move_line_reconcile_manual.field_account_reconcile_manual_model__income_analytic_distribution
+msgid "Analytic for Income"
 msgstr ""
 
 #. module: account_move_line_reconcile_manual
@@ -64,16 +70,19 @@ msgstr ""
 
 #. module: account_move_line_reconcile_manual
 #: model:ir.model.fields,field_description:account_move_line_reconcile_manual.field_account_move_line_reconcile_manual__company_id
+#: model:ir.model.fields,field_description:account_move_line_reconcile_manual.field_account_reconcile_manual_model__company_id
 msgid "Company"
 msgstr ""
 
 #. module: account_move_line_reconcile_manual
 #: model:ir.model.fields,field_description:account_move_line_reconcile_manual.field_account_move_line_reconcile_manual__create_uid
+#: model:ir.model.fields,field_description:account_move_line_reconcile_manual.field_account_reconcile_manual_model__create_uid
 msgid "Created by"
 msgstr ""
 
 #. module: account_move_line_reconcile_manual
 #: model:ir.model.fields,field_description:account_move_line_reconcile_manual.field_account_move_line_reconcile_manual__create_date
+#: model:ir.model.fields,field_description:account_move_line_reconcile_manual.field_account_reconcile_manual_model__create_date
 msgid "Created on"
 msgstr ""
 
@@ -89,12 +98,18 @@ msgstr ""
 
 #. module: account_move_line_reconcile_manual
 #: model:ir.model.fields,field_description:account_move_line_reconcile_manual.field_account_move_line_reconcile_manual__display_name
+#: model:ir.model.fields,field_description:account_move_line_reconcile_manual.field_account_reconcile_manual_model__display_name
 msgid "Display Name"
 msgstr ""
 
 #. module: account_move_line_reconcile_manual
 #: model:ir.model.fields.selection,name:account_move_line_reconcile_manual.selection__account_move_line_reconcile_manual__writeoff_type__expense
 msgid "Expense"
+msgstr ""
+
+#. module: account_move_line_reconcile_manual
+#: model:ir.model.fields,field_description:account_move_line_reconcile_manual.field_account_reconcile_manual_model__expense_account_id
+msgid "Expense Write-off Account"
 msgstr ""
 
 #. module: account_move_line_reconcile_manual
@@ -112,6 +127,7 @@ msgstr ""
 
 #. module: account_move_line_reconcile_manual
 #: model:ir.model.fields,field_description:account_move_line_reconcile_manual.field_account_move_line_reconcile_manual__id
+#: model:ir.model.fields,field_description:account_move_line_reconcile_manual.field_account_reconcile_manual_model__id
 msgid "ID"
 msgstr ""
 
@@ -121,22 +137,31 @@ msgid "Income"
 msgstr ""
 
 #. module: account_move_line_reconcile_manual
+#: model:ir.model.fields,field_description:account_move_line_reconcile_manual.field_account_reconcile_manual_model__income_account_id
+msgid "Income Write-off Account"
+msgstr ""
+
+#. module: account_move_line_reconcile_manual
 #: model:ir.model.fields,field_description:account_move_line_reconcile_manual.field_account_move_line_reconcile_manual__writeoff_journal_id
+#: model_terms:ir.ui.view,arch_db:account_move_line_reconcile_manual.account_reconcile_manual_model_search
 msgid "Journal"
 msgstr ""
 
 #. module: account_move_line_reconcile_manual
 #: model:ir.model.fields,field_description:account_move_line_reconcile_manual.field_account_move_line_reconcile_manual____last_update
+#: model:ir.model.fields,field_description:account_move_line_reconcile_manual.field_account_reconcile_manual_model____last_update
 msgid "Last Modified on"
 msgstr ""
 
 #. module: account_move_line_reconcile_manual
 #: model:ir.model.fields,field_description:account_move_line_reconcile_manual.field_account_move_line_reconcile_manual__write_uid
+#: model:ir.model.fields,field_description:account_move_line_reconcile_manual.field_account_reconcile_manual_model__write_uid
 msgid "Last Updated by"
 msgstr ""
 
 #. module: account_move_line_reconcile_manual
 #: model:ir.model.fields,field_description:account_move_line_reconcile_manual.field_account_move_line_reconcile_manual__write_date
+#: model:ir.model.fields,field_description:account_move_line_reconcile_manual.field_account_reconcile_manual_model__write_date
 msgid "Last Updated on"
 msgstr ""
 
@@ -150,6 +175,16 @@ msgstr ""
 #. module: account_move_line_reconcile_manual
 #: model:ir.model,name:account_move_line_reconcile_manual.model_account_move_line_reconcile_manual
 msgid "Manual Reconciliation Wizard"
+msgstr ""
+
+#. module: account_move_line_reconcile_manual
+#: model:ir.model.fields,field_description:account_move_line_reconcile_manual.field_account_move_line_reconcile_manual__writeoff_model_id
+msgid "Model"
+msgstr ""
+
+#. module: account_move_line_reconcile_manual
+#: model:ir.model,name:account_move_line_reconcile_manual.model_account_reconcile_manual_model
+msgid "Models for Manual Reconcile Write-off"
 msgstr ""
 
 #. module: account_move_line_reconcile_manual
@@ -201,6 +236,11 @@ msgid "Reference"
 msgstr ""
 
 #. module: account_move_line_reconcile_manual
+#: model:ir.model.fields,field_description:account_move_line_reconcile_manual.field_account_reconcile_manual_model__sequence
+msgid "Sequence"
+msgstr ""
+
+#. module: account_move_line_reconcile_manual
 #: model:ir.model.fields.selection,name:account_move_line_reconcile_manual.selection__account_move_line_reconcile_manual__state__start
 msgid "Start"
 msgstr ""
@@ -237,6 +277,11 @@ msgid ""
 msgstr ""
 
 #. module: account_move_line_reconcile_manual
+#: model:ir.model.constraint,message:account_move_line_reconcile_manual.constraint_account_reconcile_manual_model_ref_company_uniq
+msgid "This write-off model already exists in this company!"
+msgstr ""
+
+#. module: account_move_line_reconcile_manual
 #: model:ir.model.fields,field_description:account_move_line_reconcile_manual.field_account_move_line_reconcile_manual__total_credit
 msgid "Total Credit"
 msgstr ""
@@ -263,6 +308,22 @@ msgstr ""
 #. module: account_move_line_reconcile_manual
 #: model:ir.model.fields,field_description:account_move_line_reconcile_manual.field_account_move_line_reconcile_manual__writeoff_account_id
 msgid "Write-off Account"
+msgstr ""
+
+#. module: account_move_line_reconcile_manual
+#: model:ir.model.fields,field_description:account_move_line_reconcile_manual.field_account_reconcile_manual_model__journal_id
+msgid "Write-off Journal"
+msgstr ""
+
+#. module: account_move_line_reconcile_manual
+#: model:ir.actions.act_window,name:account_move_line_reconcile_manual.account_reconcile_manual_model_action
+#: model:ir.ui.menu,name:account_move_line_reconcile_manual.account_reconcile_manual_model_menu
+msgid "Write-off Models"
+msgstr ""
+
+#. module: account_move_line_reconcile_manual
+#: model:ir.model.fields,field_description:account_move_line_reconcile_manual.field_account_reconcile_manual_model__ref
+msgid "Write-off Reference"
 msgstr ""
 
 #. module: account_move_line_reconcile_manual
