@@ -34,14 +34,11 @@ msgstr "Fecha vencimiento"
 
 #. module: account_reconciliation_widget_due_date
 #. openerp-web
-#: code:addons/account_reconciliation_widget_due_date/static/src/js/reconciliation_model.js:0
-#, python-format
-msgid "Open balance"
-msgstr "Saldo pendiente"
-
-#. module: account_reconciliation_widget_due_date
-#. openerp-web
 #: code:addons/account_reconciliation_widget_due_date/static/src/js/reconciliation_renderer.js:0
 #, python-format
 msgid "Select Due date"
 msgstr "Seleccionar fecha vencimiento"
+
+#, python-format
+#~ msgid "Open balance"
+#~ msgstr "Saldo pendiente"
