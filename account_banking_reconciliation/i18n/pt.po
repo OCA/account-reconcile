@@ -1,6 +1,6 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-#	* account_banking_reconciliation
+# 	* account_banking_reconciliation
 #
 msgid ""
 msgstr ""
@@ -30,7 +30,8 @@ msgstr "(Saldo Final - Saldo Inicial) - Saldo Apurado."
 
 #. module: account_banking_reconciliation
 #: model_terms:ir.ui.view,arch_db:account_banking_reconciliation.report_bank_statement_detail_doc
-msgid "<b>\n"
+msgid ""
+"<b>\n"
 "                                            <span>Cleared Balance</span>\n"
 "                                        </b>"
 msgstr ""
@@ -40,7 +41,8 @@ msgstr ""
 
 #. module: account_banking_reconciliation
 #: model_terms:ir.ui.view,arch_db:account_banking_reconciliation.report_bank_statement_detail_doc
-msgid "<b>\n"
+msgid ""
+"<b>\n"
 "                                            <span>Ending Balance</span>\n"
 "                                        </b>"
 msgstr ""
@@ -50,8 +52,10 @@ msgstr ""
 
 #. module: account_banking_reconciliation
 #: model_terms:ir.ui.view,arch_db:account_banking_reconciliation.report_bank_statement_detail_doc
-msgid "<b>\n"
-"                                            <span>Total Checks &amp; Payments\n"
+msgid ""
+"<b>\n"
+"                                            <span>Total Checks &amp; "
+"Payments\n"
 "                                            </span>\n"
 "                                        </b>"
 msgstr ""
@@ -63,8 +67,10 @@ msgstr ""
 
 #. module: account_banking_reconciliation
 #: model_terms:ir.ui.view,arch_db:account_banking_reconciliation.report_bank_statement_detail_doc
-msgid "<b>\n"
-"                                            <span>Total Cleared Transactions\n"
+msgid ""
+"<b>\n"
+"                                            <span>Total Cleared "
+"Transactions\n"
 "                                            </span>\n"
 "                                        </b>"
 msgstr ""
@@ -76,7 +82,8 @@ msgstr ""
 
 #. module: account_banking_reconciliation
 #: model_terms:ir.ui.view,arch_db:account_banking_reconciliation.report_bank_statement_detail_doc
-msgid "<b>\n"
+msgid ""
+"<b>\n"
 "                                            <span>Total Deposits &amp;\n"
 "                                                Credits\n"
 "                                            </span>\n"
@@ -90,7 +97,8 @@ msgstr ""
 
 #. module: account_banking_reconciliation
 #: model_terms:ir.ui.view,arch_db:account_banking_reconciliation.report_bank_statement_summary_doc
-msgid "<b>\n"
+msgid ""
+"<b>\n"
 "                                        <span>Cleared Balance</span>\n"
 "                                    </b>"
 msgstr ""
@@ -101,7 +109,8 @@ msgstr ""
 #. module: account_banking_reconciliation
 #: model_terms:ir.ui.view,arch_db:account_banking_reconciliation.report_bank_statement_detail_doc
 #: model_terms:ir.ui.view,arch_db:account_banking_reconciliation.report_bank_statement_summary_doc
-msgid "<b>\n"
+msgid ""
+"<b>\n"
 "                                        <span>Cleared Transactions</span>\n"
 "                                    </b>"
 msgstr ""
@@ -111,7 +120,8 @@ msgstr ""
 
 #. module: account_banking_reconciliation
 #: model_terms:ir.ui.view,arch_db:account_banking_reconciliation.report_bank_statement_summary_doc
-msgid "<b>\n"
+msgid ""
+"<b>\n"
 "                                        <span>Ending Balance:</span>\n"
 "                                    </b>"
 msgstr ""
@@ -122,7 +132,8 @@ msgstr ""
 #. module: account_banking_reconciliation
 #: model_terms:ir.ui.view,arch_db:account_banking_reconciliation.report_bank_statement_detail_doc
 #: model_terms:ir.ui.view,arch_db:account_banking_reconciliation.report_bank_statement_summary_doc
-msgid "<b>\n"
+msgid ""
+"<b>\n"
 "                                        <span>Initial Balance:</span>\n"
 "                                    </b>"
 msgstr ""
@@ -132,13 +143,15 @@ msgstr ""
 
 #. module: account_banking_reconciliation
 #: model_terms:ir.ui.view,arch_db:account_banking_reconciliation.report_bank_statement_summary_doc
-msgid "<b>\n"
-"                                        <span>Total Cleared Transactions</span>\n"
+msgid ""
+"<b>\n"
+"                                        <span>Total Cleared Transactions</"
+"span>\n"
 "                                    </b>"
 msgstr ""
 "<b>\n"
-"                                        <span>Total Transações "
-"Apuradas</span>\n"
+"                                        <span>Total Transações Apuradas</"
+"span>\n"
 "                                    </b>"
 
 #. module: account_banking_reconciliation
@@ -255,7 +268,8 @@ msgstr ""
 
 #. module: account_banking_reconciliation
 #: model:ir.model.fields,field_description:account_banking_reconciliation.field_bank_acc_rec_statement__sum_of_credits_lines
-msgid "Checks, Withdrawals,\n"
+msgid ""
+"Checks, Withdrawals,\n"
 "                                          Debits, and Service Charges # of\n"
 "                                          Items"
 msgstr ""
@@ -387,7 +401,8 @@ msgstr ""
 
 #. module: account_banking_reconciliation
 #: model:ir.model.fields,field_description:account_banking_reconciliation.field_bank_acc_rec_statement__sum_of_debits_lines
-msgid "Deposits, Credits, and\n"
+msgid ""
+"Deposits, Credits, and\n"
 "                                         Interest # of Items"
 msgstr ""
 
@@ -504,7 +519,8 @@ msgstr ""
 
 #. module: account_banking_reconciliation
 #: model:ir.model.fields,help:account_banking_reconciliation.field_bank_acc_rec_statement__verified_by_user_id
-msgid "Entered automatically by the “last user” who saved it. System generated."
+msgid ""
+"Entered automatically by the “last user” who saved it. System generated."
 msgstr ""
 
 #. module: account_banking_reconciliation
@@ -520,7 +536,9 @@ msgstr ""
 
 #. module: account_banking_reconciliation
 #: model:ir.model.fields,help:account_banking_reconciliation.field_bank_acc_rec_statement__suppress_ending_date_filter
-msgid "If this is checked then the Statement End Date filter on the transactions below will not occur. All transactions would come over."
+msgid ""
+"If this is checked then the Statement End Date filter on the transactions "
+"below will not occur. All transactions would come over."
 msgstr ""
 
 #. module: account_banking_reconciliation
@@ -578,7 +596,9 @@ msgstr ""
 #. module: account_banking_reconciliation
 #: code:addons/account_banking_reconciliation/models/account_banking_reconciliation.py:46
 #, python-format
-msgid "Only a member of '%s' group may delete/edit bank statements when not in draft state!"
+msgid ""
+"Only a member of '%s' group may delete/edit bank statements when not in "
+"draft state!"
 msgstr ""
 
 #. module: account_banking_reconciliation
@@ -596,7 +616,10 @@ msgstr ""
 #: code:addons/account_banking_reconciliation/models/account_banking_reconciliation.py:68
 #: code:addons/account_banking_reconciliation/models/account_banking_reconciliation.py:75
 #, python-format
-msgid "Prior to reconciling a statement, all differences must be accounted for and the Difference balance must be zero. Please review and make necessary changes."
+msgid ""
+"Prior to reconciling a statement, all differences must be accounted for and "
+"the Difference balance must be zero. Please review and make necessary "
+"changes."
 msgstr ""
 
 #. module: account_banking_reconciliation
@@ -763,7 +786,8 @@ msgstr ""
 
 #. module: account_banking_reconciliation
 #: model:ir.model.fields,help:account_banking_reconciliation.field_bank_acc_rec_statement__name
-msgid "This is a unique name identifying the statement (e.g. Bank X January 2012)."
+msgid ""
+"This is a unique name identifying the statement (e.g. Bank X January 2012)."
 msgstr ""
 
 #. module: account_banking_reconciliation
@@ -790,13 +814,17 @@ msgstr ""
 #. module: account_banking_reconciliation
 #: model:ir.model.fields,help:account_banking_reconciliation.field_bank_acc_rec_statement__cleared_balance
 #: model:ir.model.fields,help:account_banking_reconciliation.field_bank_acc_rec_statement__cleared_balance_cur
-msgid "Total Sum of the Deposit Amount Cleared – Total Sum of Checks, Withdrawals, Debits, and Service Charges Amount Cleared"
+msgid ""
+"Total Sum of the Deposit Amount Cleared – Total Sum of Checks, Withdrawals, "
+"Debits, and Service Charges Amount Cleared"
 msgstr ""
 
 #. module: account_banking_reconciliation
 #: model:ir.model.fields,help:account_banking_reconciliation.field_bank_acc_rec_statement__uncleared_balance
 #: model:ir.model.fields,help:account_banking_reconciliation.field_bank_acc_rec_statement__uncleared_balance_cur
-msgid "Total Sum of the Deposit Amount Uncleared – Total Sum of Checks, Withdrawals, Debits, and Service Charges Amount Uncleared"
+msgid ""
+"Total Sum of the Deposit Amount Uncleared – Total Sum of Checks, "
+"Withdrawals, Debits, and Service Charges Amount Uncleared"
 msgstr ""
 
 #. module: account_banking_reconciliation
@@ -838,12 +866,14 @@ msgstr ""
 
 #. module: account_banking_reconciliation
 #: model:ir.model.fields,field_description:account_banking_reconciliation.field_bank_acc_rec_statement__sum_of_ucredits_cur
-msgid "Uncleared - Checks, Withdrawals, Debits, and Service Charges Amount (Cur)"
+msgid ""
+"Uncleared - Checks, Withdrawals, Debits, and Service Charges Amount (Cur)"
 msgstr ""
 
 #. module: account_banking_reconciliation
 #: model:ir.model.fields,field_description:account_banking_reconciliation.field_bank_acc_rec_statement__sum_of_udebits_lines
-msgid "Uncleared - Deposits,\n"
+msgid ""
+"Uncleared - Deposits,\n"
 "                                          Credits, and Interest # of Items"
 msgstr ""
 
@@ -895,7 +925,8 @@ msgstr ""
 #. module: account_banking_reconciliation
 #: code:addons/account_banking_reconciliation/models/account_banking_reconciliation.py:595
 #, python-format
-msgid "You cannot add any new bank statement line manually as of this revision!"
+msgid ""
+"You cannot add any new bank statement line manually as of this revision!"
 msgstr ""
 
 #. module: account_banking_reconciliation
