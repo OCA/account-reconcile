@@ -1,6 +1,6 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-#	* account_reconcile_reconciliation_date
+# 	* account_reconcile_reconciliation_date
 #
 msgid ""
 msgstr ""
