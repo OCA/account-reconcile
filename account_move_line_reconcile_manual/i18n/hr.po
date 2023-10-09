@@ -13,8 +13,8 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
-"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
 "X-Generator: Weblate 4.17\n"
 
 #. module: account_move_line_reconcile_manual
@@ -40,19 +40,25 @@ msgid "Amount"
 msgstr "Iznos"
 
 #. module: account_move_line_reconcile_manual
-#: model:ir.model.fields,field_description:account_move_line_reconcile_manual.field_account_move_line_reconcile_manual__analytic_distribution
+#: model:ir.model.fields,field_description:account_move_line_reconcile_manual.field_account_move_line_reconcile_manual__writeoff_analytic_distribution
 msgid "Analytic"
 msgstr "Analitika"
 
 #. module: account_move_line_reconcile_manual
-#: model:ir.model.fields,field_description:account_move_line_reconcile_manual.field_account_move_line_reconcile_manual__analytic_distribution_search
-msgid "Analytic Distribution Search"
-msgstr "Pretraga analitičkih distribucija"
-
-#. module: account_move_line_reconcile_manual
 #: model:ir.model.fields,field_description:account_move_line_reconcile_manual.field_account_move_line_reconcile_manual__analytic_precision
+#: model:ir.model.fields,field_description:account_move_line_reconcile_manual.field_account_reconcile_manual_model__analytic_precision
 msgid "Analytic Precision"
 msgstr "Preciznost analitike"
+
+#. module: account_move_line_reconcile_manual
+#: model:ir.model.fields,field_description:account_move_line_reconcile_manual.field_account_reconcile_manual_model__expense_analytic_distribution
+msgid "Analytic for Expense"
+msgstr ""
+
+#. module: account_move_line_reconcile_manual
+#: model:ir.model.fields,field_description:account_move_line_reconcile_manual.field_account_reconcile_manual_model__income_analytic_distribution
+msgid "Analytic for Income"
+msgstr ""
 
 #. module: account_move_line_reconcile_manual
 #. odoo-python
@@ -68,16 +74,19 @@ msgstr "Otkaži"
 
 #. module: account_move_line_reconcile_manual
 #: model:ir.model.fields,field_description:account_move_line_reconcile_manual.field_account_move_line_reconcile_manual__company_id
+#: model:ir.model.fields,field_description:account_move_line_reconcile_manual.field_account_reconcile_manual_model__company_id
 msgid "Company"
 msgstr "Tvrtka"
 
 #. module: account_move_line_reconcile_manual
 #: model:ir.model.fields,field_description:account_move_line_reconcile_manual.field_account_move_line_reconcile_manual__create_uid
+#: model:ir.model.fields,field_description:account_move_line_reconcile_manual.field_account_reconcile_manual_model__create_uid
 msgid "Created by"
 msgstr "Kreirao"
 
 #. module: account_move_line_reconcile_manual
 #: model:ir.model.fields,field_description:account_move_line_reconcile_manual.field_account_move_line_reconcile_manual__create_date
+#: model:ir.model.fields,field_description:account_move_line_reconcile_manual.field_account_reconcile_manual_model__create_date
 msgid "Created on"
 msgstr "Kreirano"
 
@@ -93,6 +102,7 @@ msgstr "Datum"
 
 #. module: account_move_line_reconcile_manual
 #: model:ir.model.fields,field_description:account_move_line_reconcile_manual.field_account_move_line_reconcile_manual__display_name
+#: model:ir.model.fields,field_description:account_move_line_reconcile_manual.field_account_reconcile_manual_model__display_name
 msgid "Display Name"
 msgstr "Prikazani naziv"
 
@@ -102,6 +112,11 @@ msgid "Expense"
 msgstr "Trošak"
 
 #. module: account_move_line_reconcile_manual
+#: model:ir.model.fields,field_description:account_move_line_reconcile_manual.field_account_reconcile_manual_model__expense_account_id
+msgid "Expense Write-off Account"
+msgstr ""
+
+#. module: account_move_line_reconcile_manual
 #: model_terms:ir.ui.view,arch_db:account_move_line_reconcile_manual.account_move_line_reconcile_manual_form
 msgid "Full Reconcile"
 msgstr "Potpuno zatvori"
@@ -109,13 +124,13 @@ msgstr "Potpuno zatvori"
 #. module: account_move_line_reconcile_manual
 #. odoo-python
 #: code:addons/account_move_line_reconcile_manual/wizards/account_move_line_reconcile_manual.py:0
-#: code:addons/account_move_line_reconcile_manual/wizards/account_move_line_reconcile_manual.py:0
 #, python-format
 msgid "Full reconciliation failed. It should never happen!"
 msgstr "Potpuno zatvaranje nije uspjelo. Ovo se ne bi smjelo dogoditi!"
 
 #. module: account_move_line_reconcile_manual
 #: model:ir.model.fields,field_description:account_move_line_reconcile_manual.field_account_move_line_reconcile_manual__id
+#: model:ir.model.fields,field_description:account_move_line_reconcile_manual.field_account_reconcile_manual_model__id
 msgid "ID"
 msgstr "ID"
 
@@ -125,22 +140,31 @@ msgid "Income"
 msgstr "Prihod"
 
 #. module: account_move_line_reconcile_manual
+#: model:ir.model.fields,field_description:account_move_line_reconcile_manual.field_account_reconcile_manual_model__income_account_id
+msgid "Income Write-off Account"
+msgstr ""
+
+#. module: account_move_line_reconcile_manual
 #: model:ir.model.fields,field_description:account_move_line_reconcile_manual.field_account_move_line_reconcile_manual__writeoff_journal_id
+#: model_terms:ir.ui.view,arch_db:account_move_line_reconcile_manual.account_reconcile_manual_model_search
 msgid "Journal"
 msgstr "Dnevnik"
 
 #. module: account_move_line_reconcile_manual
 #: model:ir.model.fields,field_description:account_move_line_reconcile_manual.field_account_move_line_reconcile_manual____last_update
+#: model:ir.model.fields,field_description:account_move_line_reconcile_manual.field_account_reconcile_manual_model____last_update
 msgid "Last Modified on"
 msgstr "Zadnje modificirano"
 
 #. module: account_move_line_reconcile_manual
 #: model:ir.model.fields,field_description:account_move_line_reconcile_manual.field_account_move_line_reconcile_manual__write_uid
+#: model:ir.model.fields,field_description:account_move_line_reconcile_manual.field_account_reconcile_manual_model__write_uid
 msgid "Last Updated by"
 msgstr "Zadnje ažurirano"
 
 #. module: account_move_line_reconcile_manual
 #: model:ir.model.fields,field_description:account_move_line_reconcile_manual.field_account_move_line_reconcile_manual__write_date
+#: model:ir.model.fields,field_description:account_move_line_reconcile_manual.field_account_reconcile_manual_model__write_date
 msgid "Last Updated on"
 msgstr "Zadnje ažirirano"
 
@@ -155,6 +179,16 @@ msgstr "Stavka '%s' je već potpuno zatvorena."
 #: model:ir.model,name:account_move_line_reconcile_manual.model_account_move_line_reconcile_manual
 msgid "Manual Reconciliation Wizard"
 msgstr "Čarobnjak za ručno zatvaranje"
+
+#. module: account_move_line_reconcile_manual
+#: model:ir.model.fields,field_description:account_move_line_reconcile_manual.field_account_move_line_reconcile_manual__writeoff_model_id
+msgid "Model"
+msgstr ""
+
+#. module: account_move_line_reconcile_manual
+#: model:ir.model,name:account_move_line_reconcile_manual.model_account_reconcile_manual_model
+msgid "Models for Manual Reconcile Write-off"
+msgstr ""
 
 #. module: account_move_line_reconcile_manual
 #: model:ir.model.fields,field_description:account_move_line_reconcile_manual.field_account_move_line_reconcile_manual__move_line_ids
@@ -205,6 +239,11 @@ msgid "Reference"
 msgstr "Referenca"
 
 #. module: account_move_line_reconcile_manual
+#: model:ir.model.fields,field_description:account_move_line_reconcile_manual.field_account_reconcile_manual_model__sequence
+msgid "Sequence"
+msgstr ""
+
+#. module: account_move_line_reconcile_manual
 #: model:ir.model.fields.selection,name:account_move_line_reconcile_manual.selection__account_move_line_reconcile_manual__state__start
 msgid "Start"
 msgstr "Start"
@@ -216,7 +255,6 @@ msgstr "Stanje"
 
 #. module: account_move_line_reconcile_manual
 #. odoo-python
-#: code:addons/account_move_line_reconcile_manual/wizards/account_move_line_reconcile_manual.py:0
 #: code:addons/account_move_line_reconcile_manual/wizards/account_move_line_reconcile_manual.py:0
 #, python-format
 msgid "Successful reconciliation"
@@ -239,6 +277,11 @@ msgstr ""
 msgid ""
 "This is a/an '%(writeoff_type)s' write-off, but you selected account "
 "%(account_code)s which is a/an '%(account_type)s' account."
+msgstr ""
+
+#. module: account_move_line_reconcile_manual
+#: model:ir.model.constraint,message:account_move_line_reconcile_manual.constraint_account_reconcile_manual_model_ref_company_uniq
+msgid "This write-off model already exists in this company!"
 msgstr ""
 
 #. module: account_move_line_reconcile_manual
@@ -269,6 +312,22 @@ msgstr "Otpis"
 #: model:ir.model.fields,field_description:account_move_line_reconcile_manual.field_account_move_line_reconcile_manual__writeoff_account_id
 msgid "Write-off Account"
 msgstr "Konto otpisa"
+
+#. module: account_move_line_reconcile_manual
+#: model:ir.model.fields,field_description:account_move_line_reconcile_manual.field_account_reconcile_manual_model__journal_id
+msgid "Write-off Journal"
+msgstr ""
+
+#. module: account_move_line_reconcile_manual
+#: model:ir.actions.act_window,name:account_move_line_reconcile_manual.account_reconcile_manual_model_action
+#: model:ir.ui.menu,name:account_move_line_reconcile_manual.account_reconcile_manual_model_menu
+msgid "Write-off Models"
+msgstr ""
+
+#. module: account_move_line_reconcile_manual
+#: model:ir.model.fields,field_description:account_move_line_reconcile_manual.field_account_reconcile_manual_model__ref
+msgid "Write-off Reference"
+msgstr ""
 
 #. module: account_move_line_reconcile_manual
 #. odoo-python
@@ -311,3 +370,6 @@ msgstr "Odabrali ste samo dugovne stavke dnevnika."
 #: model_terms:ir.ui.view,arch_db:account_move_line_reconcile_manual.account_move_line_reconcile_manual_form
 msgid "different partners: make sure it is intented."
 msgstr "različiti partneri: pobrinite se da nije greška."
+
+#~ msgid "Analytic Distribution Search"
+#~ msgstr "Pretraga analitičkih distribucija"
