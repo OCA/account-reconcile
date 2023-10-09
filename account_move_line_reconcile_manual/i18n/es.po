@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2023-07-29 12:10+0000\n"
+"PO-Revision-Date: 2023-10-09 12:38+0000\n"
 "Last-Translator: Ivorra78 <informatica@totmaterial.es>\n"
 "Language-Team: none\n"
 "Language: es\n"
@@ -52,12 +52,12 @@ msgstr "Precisión analítica"
 #. module: account_move_line_reconcile_manual
 #: model:ir.model.fields,field_description:account_move_line_reconcile_manual.field_account_reconcile_manual_model__expense_analytic_distribution
 msgid "Analytic for Expense"
-msgstr ""
+msgstr "Analítica de gastos"
 
 #. module: account_move_line_reconcile_manual
 #: model:ir.model.fields,field_description:account_move_line_reconcile_manual.field_account_reconcile_manual_model__income_analytic_distribution
 msgid "Analytic for Income"
-msgstr ""
+msgstr "Analítica de ingresos"
 
 #. module: account_move_line_reconcile_manual
 #. odoo-python
@@ -113,7 +113,7 @@ msgstr "Gasto"
 #. module: account_move_line_reconcile_manual
 #: model:ir.model.fields,field_description:account_move_line_reconcile_manual.field_account_reconcile_manual_model__expense_account_id
 msgid "Expense Write-off Account"
-msgstr ""
+msgstr "Cuenta de amortización de gastos"
 
 #. module: account_move_line_reconcile_manual
 #: model_terms:ir.ui.view,arch_db:account_move_line_reconcile_manual.account_move_line_reconcile_manual_form
@@ -141,7 +141,7 @@ msgstr "Ingreso"
 #. module: account_move_line_reconcile_manual
 #: model:ir.model.fields,field_description:account_move_line_reconcile_manual.field_account_reconcile_manual_model__income_account_id
 msgid "Income Write-off Account"
-msgstr ""
+msgstr "Cuenta de cancelación de ingresos"
 
 #. module: account_move_line_reconcile_manual
 #: model:ir.model.fields,field_description:account_move_line_reconcile_manual.field_account_move_line_reconcile_manual__writeoff_journal_id
@@ -182,12 +182,12 @@ msgstr "Wizard para conciliación manual"
 #. module: account_move_line_reconcile_manual
 #: model:ir.model.fields,field_description:account_move_line_reconcile_manual.field_account_move_line_reconcile_manual__writeoff_model_id
 msgid "Model"
-msgstr ""
+msgstr "Modelo"
 
 #. module: account_move_line_reconcile_manual
 #: model:ir.model,name:account_move_line_reconcile_manual.model_account_reconcile_manual_model
 msgid "Models for Manual Reconcile Write-off"
-msgstr ""
+msgstr "Modelos de cancelación de conciliación manual"
 
 #. module: account_move_line_reconcile_manual
 #: model:ir.model.fields,field_description:account_move_line_reconcile_manual.field_account_move_line_reconcile_manual__move_line_ids
@@ -240,7 +240,7 @@ msgstr "Referencia"
 #. module: account_move_line_reconcile_manual
 #: model:ir.model.fields,field_description:account_move_line_reconcile_manual.field_account_reconcile_manual_model__sequence
 msgid "Sequence"
-msgstr ""
+msgstr "Secuencia"
 
 #. module: account_move_line_reconcile_manual
 #: model:ir.model.fields.selection,name:account_move_line_reconcile_manual.selection__account_move_line_reconcile_manual__state__start
@@ -284,7 +284,7 @@ msgstr ""
 #. module: account_move_line_reconcile_manual
 #: model:ir.model.constraint,message:account_move_line_reconcile_manual.constraint_account_reconcile_manual_model_ref_company_uniq
 msgid "This write-off model already exists in this company!"
-msgstr ""
+msgstr "¡Este modelo de amortización ya existe en esta compañía!"
 
 #. module: account_move_line_reconcile_manual
 #: model:ir.model.fields,field_description:account_move_line_reconcile_manual.field_account_move_line_reconcile_manual__total_credit
@@ -318,18 +318,18 @@ msgstr "Cuenta de descuadre"
 #. module: account_move_line_reconcile_manual
 #: model:ir.model.fields,field_description:account_move_line_reconcile_manual.field_account_reconcile_manual_model__journal_id
 msgid "Write-off Journal"
-msgstr ""
+msgstr "Diario de amortizaciones"
 
 #. module: account_move_line_reconcile_manual
 #: model:ir.actions.act_window,name:account_move_line_reconcile_manual.account_reconcile_manual_model_action
 #: model:ir.ui.menu,name:account_move_line_reconcile_manual.account_reconcile_manual_model_menu
 msgid "Write-off Models"
-msgstr ""
+msgstr "Modelos de amortización"
 
 #. module: account_move_line_reconcile_manual
 #: model:ir.model.fields,field_description:account_move_line_reconcile_manual.field_account_reconcile_manual_model__ref
 msgid "Write-off Reference"
-msgstr ""
+msgstr "Referencia de cancelación"
 
 #. module: account_move_line_reconcile_manual
 #. odoo-python
