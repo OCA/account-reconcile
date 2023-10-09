@@ -22,21 +22,6 @@ msgid "Contact"
 msgstr "Contacto"
 
 #. module: account_partner_reconcile
-#: model:ir.model.fields,field_description:account_partner_reconcile.field_res_partner__display_name
-msgid "Display Name"
-msgstr "Nome a Exibir"
-
-#. module: account_partner_reconcile
-#: model:ir.model.fields,field_description:account_partner_reconcile.field_res_partner__id
-msgid "ID"
-msgstr "ID"
-
-#. module: account_partner_reconcile
-#: model:ir.model.fields,field_description:account_partner_reconcile.field_res_partner____last_update
-msgid "Last Modified on"
-msgstr "Última Modific. em"
-
-#. module: account_partner_reconcile
 #: model_terms:ir.ui.view,arch_db:account_partner_reconcile.res_partner_view_buttons
 msgid "Match Payables"
 msgstr "Reconc. Pagam."
@@ -45,3 +30,12 @@ msgstr "Reconc. Pagam."
 #: model_terms:ir.ui.view,arch_db:account_partner_reconcile.res_partner_view_buttons
 msgid "Match Receivables"
 msgstr "Reconc. Recebim."
+
+#~ msgid "Display Name"
+#~ msgstr "Nome a Exibir"
+
+#~ msgid "ID"
+#~ msgstr "ID"
+
+#~ msgid "Last Modified on"
+#~ msgstr "Última Modific. em"
