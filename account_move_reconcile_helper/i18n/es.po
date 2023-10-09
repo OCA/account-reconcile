@@ -20,17 +20,30 @@ msgstr ""
 "X-Generator: Weblate 4.3.2\n"
 
 #. module: account_move_reconcile_helper
+#: model:ir.model.fields,field_description:account_move_reconcile_helper.field_account_move_line__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: account_move_reconcile_helper
+#: model:ir.model.fields,field_description:account_move_reconcile_helper.field_account_move_line__id
+msgid "ID"
+msgstr ""
+
+#. module: account_move_reconcile_helper
 #: model:ir.model,name:account_move_reconcile_helper.model_account_move_line
 msgid "Journal Item"
 msgstr "Apunte contable"
 
 #. module: account_move_reconcile_helper
-#: model:ir.model.fields,field_description:account_move_reconcile_helper.field_account_move_line__partial_reconciliation_in_progress
-msgid "Partial Reconciliation In Progress"
-msgstr "Reconciliación parcial en progreso"
+#: model:ir.model.fields,field_description:account_move_reconcile_helper.field_account_move_line____last_update
+msgid "Last Modified on"
+msgstr ""
 
 #. module: account_move_reconcile_helper
 #: model:ir.model.fields,field_description:account_move_reconcile_helper.field_account_move_line__reconcile_line_ids
 #: model_terms:ir.ui.view,arch_db:account_move_reconcile_helper.account_move_line_tree_view
 msgid "Reconciled lines"
 msgstr "Líneas reconciliadas"
+
+#~ msgid "Partial Reconciliation In Progress"
+#~ msgstr "Reconciliación parcial en progreso"
