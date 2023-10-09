@@ -24,3 +24,18 @@ msgstr ""
 #: model:ir.model,name:account_reconcile_payment_order.model_account_reconciliation_widget
 msgid "Account Reconciliation widget"
 msgstr ""
+
+#. module: account_reconcile_payment_order
+#: model:ir.model.fields,field_description:account_reconcile_payment_order.field_account_reconciliation_widget__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: account_reconcile_payment_order
+#: model:ir.model.fields,field_description:account_reconcile_payment_order.field_account_reconciliation_widget__id
+msgid "ID"
+msgstr ""
+
+#. module: account_reconcile_payment_order
+#: model:ir.model.fields,field_description:account_reconcile_payment_order.field_account_reconciliation_widget____last_update
+msgid "Last Modified on"
+msgstr ""
