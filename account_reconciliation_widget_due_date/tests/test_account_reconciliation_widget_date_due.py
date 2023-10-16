@@ -7,50 +7,62 @@ from odoo.tests.common import Form, TransactionCase
 
 
 class TestAccountReconciliationWidgetDueDate(TransactionCase):
-    def setUp(self):
-        super().setUp()
-        self.company = self.env.ref("base.main_company")
-        self.journal = self.env["account.journal"].create(
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        cls.env = cls.env(
+            context=dict(
+                cls.env.context,
+                mail_create_nolog=True,
+                mail_create_nosubscribe=True,
+                mail_notrack=True,
+                no_reset_password=True,
+                tracking_disable=True,
+            )
+        )
+        cls.company = cls.env.ref("base.main_company")
+        cls.journal = cls.env["account.journal"].create(
             {"name": "Test journal bank", "type": "bank", "code": "BANK-TEST"}
         )
-        self.account = self.env["account.account"].create(
+        cls.account = cls.env["account.account"].create(
             {
                 "name": "Account Receivable",
                 "code": "AR",
-                "user_type_id": self.env.ref("account.data_account_type_receivable").id,
+                "user_type_id": cls.env.ref("account.data_account_type_receivable").id,
                 "reconcile": True,
             }
         )
-        self.partner_a = self.env["res.partner"].create(
+        cls.partner_a = cls.env["res.partner"].create(
             {
                 "name": "Partner Test A",
-                "property_account_receivable_id": self.account.id,
+                "property_account_receivable_id": cls.account.id,
             }
         )
-        self.partner_b = self.partner_a.copy({"name": "Partner Test B"})
-        self.partner_c = self.partner_a.copy({"name": "Partner Test C"})
-        self.statement = self._create_account_bank_statement()
+        cls.partner_b = cls.partner_a.copy({"name": "Partner Test B"})
+        cls.partner_c = cls.partner_a.copy({"name": "Partner Test C"})
+        cls.statement = cls._create_account_bank_statement()
 
-    def _create_account_bank_statement(self):
-        statement_form = Form(self.env["account.bank.statement"])
-        statement_form.journal_id = self.journal
+    @classmethod
+    def _create_account_bank_statement(cls):
+        statement_form = Form(cls.env["account.bank.statement"])
+        statement_form.journal_id = cls.journal
         statement_form.date = date(2021, 3, 1)
         statement_form.balance_end_real = 600.00
         with statement_form.line_ids.new() as line_form:
             line_form.date = "2021-01-01"
             line_form.payment_ref = "LINE_A"
-            line_form.partner_id = self.partner_a
+            line_form.partner_id = cls.partner_a
             line_form.amount = 100.00
         with statement_form.line_ids.new() as line_form:
             line_form.date = "2021-02-01"
             line_form.date_due = "2021-02-05"
             line_form.payment_ref = "LINE_B"
-            line_form.partner_id = self.partner_b
+            line_form.partner_id = cls.partner_b
             line_form.amount = 200.00
         with statement_form.line_ids.new() as line_form:
             line_form.date = "2021-03-01"
             line_form.payment_ref = "LINE_C"
-            line_form.partner_id = self.partner_c
+            line_form.partner_id = cls.partner_c
             line_form.amount = 300.00
         return statement_form.save()
 
