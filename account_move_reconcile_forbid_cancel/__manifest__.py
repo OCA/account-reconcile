@@ -3,7 +3,7 @@
 
 {
     "name": "Account Move Reconcile Forbid Cancel",
-    "version": "16.0.1.0.0",
+    "version": "16.0.1.0.1",
     "category": "Finance",
     "website": "https://github.com/OCA/account-reconcile",
     "author": "Tecnativa, Odoo Community Association (OCA)",
