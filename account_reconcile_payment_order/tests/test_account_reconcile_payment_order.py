@@ -14,6 +14,16 @@ class TestAccountReconcilePaymentOrder(TestPaymentOrderInboundBase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
+        cls.env = cls.env(
+            context=dict(
+                cls.env.context,
+                mail_create_nolog=True,
+                mail_create_nosubscribe=True,
+                mail_notrack=True,
+                no_reset_password=True,
+                tracking_disable=True,
+            )
+        )
         cls.widget_obj = cls.env["account.reconciliation.widget"]
         cls.bank_journal = cls.env["account.journal"].create(
             {"name": "Test bank journal", "type": "bank"}
