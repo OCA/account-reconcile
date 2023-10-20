@@ -11,6 +11,20 @@ from odoo.addons.account.tests.test_account_bank_statement import (
 
 @tagged("post_install", "-at_install")
 class TestAccountBankStatementLine(TestAccountBankStatementCommon):
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        cls.env = cls.env(
+            context=dict(
+                cls.env.context,
+                mail_create_nolog=True,
+                mail_create_nosubscribe=True,
+                mail_notrack=True,
+                no_reset_password=True,
+                tracking_disable=True,
+            )
+        )
+
     def test_button_undo_reconciliation(self):
         statement = self.env["account.bank.statement"].create(
             {
