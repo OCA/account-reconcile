@@ -4,7 +4,7 @@
 
 {
     "name": "Reconcile payment orders",
-    "version": "15.0.1.0.0",
+    "version": "15.0.1.0.1",
     "author": "Therp BV, Tecnativa, Odoo Community Association (OCA)",
     "license": "AGPL-3",
     "website": "https://github.com/OCA/account-reconcile",

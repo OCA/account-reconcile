@@ -21,14 +21,14 @@ Available addons
 ----------------
 addon | version | maintainers | summary
 --- | --- | --- | ---
-[account_bank_statement_reopen_skip_undo_reconciliation](account_bank_statement_reopen_skip_undo_reconciliation/) | 15.0.1.0.0 |  | When reopening a bank statement it will respect the reconciled entries.
+[account_bank_statement_reopen_skip_undo_reconciliation](account_bank_statement_reopen_skip_undo_reconciliation/) | 15.0.1.0.1 |  | When reopening a bank statement it will respect the reconciled entries.
 [account_mass_reconcile](account_mass_reconcile/) | 15.0.1.0.0 |  | Account Mass Reconcile
 [account_mass_reconcile_by_purchase_line](account_mass_reconcile_by_purchase_line/) | 15.0.1.0.0 |  | Allows to reconcile based on the PO line
-[account_move_reconcile_forbid_cancel](account_move_reconcile_forbid_cancel/) | 15.0.1.0.0 |  | Account Move Reconcile Forbid Cancel
+[account_move_reconcile_forbid_cancel](account_move_reconcile_forbid_cancel/) | 15.0.1.0.1 |  | Account Move Reconcile Forbid Cancel
 [account_partner_reconcile](account_partner_reconcile/) | 15.0.1.0.0 |  | Account Partner Reconcile
-[account_reconcile_payment_order](account_reconcile_payment_order/) | 15.0.1.0.0 | [![pedrobaeza](https://github.com/pedrobaeza.png?size=30px)](https://github.com/pedrobaeza) | Automatically propose all lines generated from payment orders
-[account_reconciliation_widget](account_reconciliation_widget/) | 15.0.1.2.10 |  | Account reconciliation widget
-[account_reconciliation_widget_due_date](account_reconciliation_widget_due_date/) | 15.0.1.0.0 | [![victoralmau](https://github.com/victoralmau.png?size=30px)](https://github.com/victoralmau) | Account Reconciliation Widget Due Date
+[account_reconcile_payment_order](account_reconcile_payment_order/) | 15.0.1.0.1 | [![pedrobaeza](https://github.com/pedrobaeza.png?size=30px)](https://github.com/pedrobaeza) | Automatically propose all lines generated from payment orders
+[account_reconciliation_widget](account_reconciliation_widget/) | 15.0.1.2.11 |  | Account reconciliation widget
+[account_reconciliation_widget_due_date](account_reconciliation_widget_due_date/) | 15.0.1.0.1 | [![victoralmau](https://github.com/victoralmau.png?size=30px)](https://github.com/victoralmau) | Account Reconciliation Widget Due Date
 [account_reconciliation_widget_limit_aml](account_reconciliation_widget_limit_aml/) | 15.0.1.0.0 |  | Filter all account move lines in reconciliation view
 
 [//]: # (end addons)

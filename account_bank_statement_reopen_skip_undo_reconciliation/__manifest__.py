@@ -8,7 +8,7 @@
     "name": "Account Bank Statement Reopen Skip Undo Reconciliation",
     "summary": "When reopening a bank statement it will respect the "
     "reconciled entries.",
-    "version": "15.0.1.0.0",
+    "version": "15.0.1.0.1",
     "author": "ForgeFlow, Akretion, Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/account-reconcile",
     "category": "Finance",
