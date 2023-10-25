@@ -177,7 +177,7 @@ class MassReconcileBase(models.AbstractModel):
 
         move = self.env["account.move"].create(
             {
-                "date": lines.env.context.get("date_p"),
+                "date": lines.env.context.get("date_p") or fields.Date.today(),
                 "journal_id": journal.id,
                 "currency_id": currency.id,
                 "line_ids": [(0, 0, write_off_vals), (0, 0, counter_part)],
