@@ -28,7 +28,11 @@ class MassReconcileOptions(models.AbstractModel):
 
     @api.model
     def _get_rec_base_date(self):
-        return [("newest", "Most recent move line"), ("actual", "Today")]
+        return [
+            ("newest", "Most recent move line"),
+            ("actual", "Today"),
+            ("oldest", "Oldest move line"),
+        ]
 
     write_off = fields.Float("Write off allowed", default=0.0)
     account_lost_id = fields.Many2one("account.account", string="Account Lost")
