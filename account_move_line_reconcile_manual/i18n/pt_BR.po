@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2023-06-27 03:11+0000\n"
+"PO-Revision-Date: 2023-10-28 13:19+0000\n"
 "Last-Translator: Adriano Prado <adrianojprado@gmail.com>\n"
 "Language-Team: none\n"
 "Language: pt_BR\n"
@@ -52,19 +52,19 @@ msgstr "Precisão Analítica"
 #. module: account_move_line_reconcile_manual
 #: model:ir.model.fields,field_description:account_move_line_reconcile_manual.field_account_reconcile_manual_model__expense_analytic_distribution
 msgid "Analytic for Expense"
-msgstr ""
+msgstr "Analítico para Despesa"
 
 #. module: account_move_line_reconcile_manual
 #: model:ir.model.fields,field_description:account_move_line_reconcile_manual.field_account_reconcile_manual_model__income_analytic_distribution
 msgid "Analytic for Income"
-msgstr ""
+msgstr "Analítica para Receita"
 
 #. module: account_move_line_reconcile_manual
 #. odoo-python
 #: code:addons/account_move_line_reconcile_manual/wizards/account_move_line_reconcile_manual.py:0
 #, python-format
 msgid "Bad write-off account type"
-msgstr "Tipo incorreto de conta write-off"
+msgstr "Tipo incorreto de conta de baixa"
 
 #. module: account_move_line_reconcile_manual
 #: model_terms:ir.ui.view,arch_db:account_move_line_reconcile_manual.account_move_line_reconcile_manual_form
@@ -113,12 +113,12 @@ msgstr "Despesa"
 #. module: account_move_line_reconcile_manual
 #: model:ir.model.fields,field_description:account_move_line_reconcile_manual.field_account_reconcile_manual_model__expense_account_id
 msgid "Expense Write-off Account"
-msgstr ""
+msgstr "Conta de Baixa (Write-off) de Despesas"
 
 #. module: account_move_line_reconcile_manual
 #: model_terms:ir.ui.view,arch_db:account_move_line_reconcile_manual.account_move_line_reconcile_manual_form
 msgid "Full Reconcile"
-msgstr "Reconciliação total"
+msgstr "Reconciliação Total"
 
 #. module: account_move_line_reconcile_manual
 #. odoo-python
@@ -136,12 +136,12 @@ msgstr "ID"
 #. module: account_move_line_reconcile_manual
 #: model:ir.model.fields.selection,name:account_move_line_reconcile_manual.selection__account_move_line_reconcile_manual__writeoff_type__income
 msgid "Income"
-msgstr "Entrada"
+msgstr "Receita"
 
 #. module: account_move_line_reconcile_manual
 #: model:ir.model.fields,field_description:account_move_line_reconcile_manual.field_account_reconcile_manual_model__income_account_id
 msgid "Income Write-off Account"
-msgstr ""
+msgstr "Conta de Baixa (Write-off) de Receita"
 
 #. module: account_move_line_reconcile_manual
 #: model:ir.model.fields,field_description:account_move_line_reconcile_manual.field_account_move_line_reconcile_manual__writeoff_journal_id
@@ -182,12 +182,12 @@ msgstr "Assistente de Reconciliação Manual"
 #. module: account_move_line_reconcile_manual
 #: model:ir.model.fields,field_description:account_move_line_reconcile_manual.field_account_move_line_reconcile_manual__writeoff_model_id
 msgid "Model"
-msgstr ""
+msgstr "Modelo"
 
 #. module: account_move_line_reconcile_manual
 #: model:ir.model,name:account_move_line_reconcile_manual.model_account_reconcile_manual_model
 msgid "Models for Manual Reconcile Write-off"
-msgstr ""
+msgstr "Modelos para Baixa (Write-off) de Reconciliação Manual"
 
 #. module: account_move_line_reconcile_manual
 #: model:ir.model.fields,field_description:account_move_line_reconcile_manual.field_account_move_line_reconcile_manual__move_line_ids
@@ -230,7 +230,7 @@ msgstr "Marca de reconciliação: %s"
 #. module: account_move_line_reconcile_manual
 #: model_terms:ir.ui.view,arch_db:account_move_line_reconcile_manual.account_move_line_reconcile_manual_form
 msgid "Reconcile with Write-off"
-msgstr "Reconciliar com Write-off"
+msgstr "Reconciliar com Baixa"
 
 #. module: account_move_line_reconcile_manual
 #: model:ir.model.fields,field_description:account_move_line_reconcile_manual.field_account_move_line_reconcile_manual__writeoff_ref
@@ -240,7 +240,7 @@ msgstr "Referencia"
 #. module: account_move_line_reconcile_manual
 #: model:ir.model.fields,field_description:account_move_line_reconcile_manual.field_account_reconcile_manual_model__sequence
 msgid "Sequence"
-msgstr ""
+msgstr "Sequência"
 
 #. module: account_move_line_reconcile_manual
 #: model:ir.model.fields.selection,name:account_move_line_reconcile_manual.selection__account_move_line_reconcile_manual__state__start
@@ -278,13 +278,13 @@ msgid ""
 "This is a/an '%(writeoff_type)s' write-off, but you selected account "
 "%(account_code)s which is a/an '%(account_type)s' account."
 msgstr ""
-"Esta é um write-off de '%(writeoff_type)s', mas você selecionou a conta "
-"%(account_code)s que é uma/uma conta '%(account_type)s'."
+"Esta é uma baixa de '%(writeoff_type)s', mas você selecionou a conta "
+"%(account_code)s que é uma conta '%(account_type)s'."
 
 #. module: account_move_line_reconcile_manual
 #: model:ir.model.constraint,message:account_move_line_reconcile_manual.constraint_account_reconcile_manual_model_ref_company_uniq
 msgid "This write-off model already exists in this company!"
-msgstr ""
+msgstr "Esse modelo de baixa já existe nesta empresa!"
 
 #. module: account_move_line_reconcile_manual
 #: model:ir.model.fields,field_description:account_move_line_reconcile_manual.field_account_move_line_reconcile_manual__total_credit
@@ -308,28 +308,28 @@ msgstr "Tipo"
 #: model_terms:ir.ui.view,arch_db:account_move_line_reconcile_manual.account_move_line_reconcile_manual_form
 #, python-format
 msgid "Write-off"
-msgstr "Write-off"
+msgstr "Baixa (write-off)"
 
 #. module: account_move_line_reconcile_manual
 #: model:ir.model.fields,field_description:account_move_line_reconcile_manual.field_account_move_line_reconcile_manual__writeoff_account_id
 msgid "Write-off Account"
-msgstr "Conta Write-off"
+msgstr "Conta de Baixa"
 
 #. module: account_move_line_reconcile_manual
 #: model:ir.model.fields,field_description:account_move_line_reconcile_manual.field_account_reconcile_manual_model__journal_id
 msgid "Write-off Journal"
-msgstr ""
+msgstr "Diário de Baixa"
 
 #. module: account_move_line_reconcile_manual
 #: model:ir.actions.act_window,name:account_move_line_reconcile_manual.account_reconcile_manual_model_action
 #: model:ir.ui.menu,name:account_move_line_reconcile_manual.account_reconcile_manual_model_menu
 msgid "Write-off Models"
-msgstr ""
+msgstr "Modelos de Baixa"
 
 #. module: account_move_line_reconcile_manual
 #: model:ir.model.fields,field_description:account_move_line_reconcile_manual.field_account_reconcile_manual_model__ref
 msgid "Write-off Reference"
-msgstr ""
+msgstr "Referência da Baixa"
 
 #. module: account_move_line_reconcile_manual
 #. odoo-python
@@ -339,7 +339,7 @@ msgid ""
 "Write-off journal entry: %(writeoff_move)s\n"
 "Reconcile mark: %(full_rec)s"
 msgstr ""
-"Lançamento do diário Write-off: %(writeoff_move)s\n"
+"Lançamento do diário de Baixa: %(writeoff_move)s\n"
 "Marca de reconciliação: %(full_rec)s"
 
 #. module: account_move_line_reconcile_manual
