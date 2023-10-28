@@ -11,8 +11,8 @@ msgstr ""
 "POT-Creation-Date: 2017-03-24 03:37+0000\n"
 "PO-Revision-Date: 2023-10-28 13:19+0000\n"
 "Last-Translator: Adriano Prado <adrianojprado@gmail.com>\n"
-"Language-Team: Portuguese (Brazil) (https://www.transifex.com/oca/teams/"
-"23907/pt_BR/)\n"
+"Language-Team: Portuguese (Brazil) (https://www.transifex.com/oca/"
+"teams/23907/pt_BR/)\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -309,9 +309,7 @@ msgstr "Se marcada, novas mensagens requerem sua atenção."
 
 #. module: account_move_base_import
 #: model:ir.model.fields,help:account_move_base_import.field_account_journal__message_has_error
-#: model:ir.model.fields,help:account_move_base_import.field_account_journal__message_has_sms_error
 #: model:ir.model.fields,help:account_move_base_import.field_account_move__message_has_error
-#: model:ir.model.fields,help:account_move_base_import.field_account_move__message_has_sms_error
 msgid "If checked, some messages have a delivery error."
 msgstr "Se marcada, algumas mensagens apresentam erro de entrega."
 
@@ -621,12 +619,6 @@ msgid "Related journals"
 msgstr "Diários relacionados"
 
 #. module: account_move_base_import
-#: model:ir.model.fields,field_description:account_move_base_import.field_account_journal__message_has_sms_error
-#: model:ir.model.fields,field_description:account_move_base_import.field_account_move__message_has_sms_error
-msgid "SMS Delivery error"
-msgstr "Erro de Entrega de SMS"
-
-#. module: account_move_base_import
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_move_completion_rule__sequence
 msgid "Sequence"
 msgstr "Seqüência"
@@ -662,7 +654,8 @@ msgstr "Erro de importação do Extrato O extrato não pode ser criado: %s"
 #. module: account_move_base_import
 #: model:ir.model.fields,help:account_move_base_import.field_account_journal__create_counterpart
 msgid "Tick that box to automatically create the move counterpart"
-msgstr "Marque essa caixa para criar automaticamente a contraparte do movimento"
+msgstr ""
+"Marque essa caixa para criar automaticamente a contraparte do movimento"
 
 #. module: account_move_base_import
 #: model:ir.model.fields,help:account_move_base_import.field_account_journal__launch_import_completion
@@ -741,6 +734,9 @@ msgid ""
 msgstr ""
 "Quando esta caixa de seleção estiver marcada, o processo/botão de "
 "preenchimento automático irá ignorar esta linha."
+
+#~ msgid "SMS Delivery error"
+#~ msgstr "Erro de Entrega de SMS"
 
 #, python-format
 #~ msgid ""
