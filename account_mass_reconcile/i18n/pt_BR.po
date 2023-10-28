@@ -11,8 +11,8 @@ msgstr ""
 "POT-Creation-Date: 2016-12-24 00:38+0000\n"
 "PO-Revision-Date: 2023-10-28 13:19+0000\n"
 "Last-Translator: Adriano Prado <adrianojprado@gmail.com>\n"
-"Language-Team: Portuguese (Brazil) (http://www.transifex.com/oca/"
-"OCA-bank-statement-reconcile-9-0/language/pt_BR/)\n"
+"Language-Team: Portuguese (Brazil) (http://www.transifex.com/oca/OCA-bank-"
+"statement-reconcile-9-0/language/pt_BR/)\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -327,7 +327,6 @@ msgstr "Se marcada, novas mensagens requerem sua atenção."
 
 #. module: account_mass_reconcile
 #: model:ir.model.fields,help:account_mass_reconcile.field_account_mass_reconcile__message_has_error
-#: model:ir.model.fields,help:account_mass_reconcile.field_account_mass_reconcile__message_has_sms_error
 msgid "If checked, some messages have a delivery error."
 msgstr "Se marcada, algumas mensagens apresentam erro de entrega."
 
@@ -603,11 +602,6 @@ msgid "Run date"
 msgstr "Data Execução"
 
 #. module: account_mass_reconcile
-#: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile__message_has_sms_error
-msgid "SMS Delivery error"
-msgstr "Erro entrega SMS"
-
-#. module: account_mass_reconcile
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile_method__sequence
 msgid "Sequence"
 msgstr "Seqüência"
@@ -711,6 +705,9 @@ msgstr "Histórico de comunicação do site"
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_reference__write_off
 msgid "Write off allowed"
 msgstr "Baixa permitida"
+
+#~ msgid "SMS Delivery error"
+#~ msgstr "Erro entrega SMS"
 
 #, python-format
 #~ msgid ""
