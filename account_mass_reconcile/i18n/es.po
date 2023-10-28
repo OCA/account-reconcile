@@ -328,7 +328,6 @@ msgstr "Si se comprueba, nuevos mensajes requieren su atención."
 
 #. module: account_mass_reconcile
 #: model:ir.model.fields,help:account_mass_reconcile.field_account_mass_reconcile__message_has_error
-#: model:ir.model.fields,help:account_mass_reconcile.field_account_mass_reconcile__message_has_sms_error
 msgid "If checked, some messages have a delivery error."
 msgstr "Si se comprueba, algunos mensajes tienen un error de entrega."
 
@@ -605,11 +604,6 @@ msgid "Run date"
 msgstr "Fecha ejecucción"
 
 #. module: account_mass_reconcile
-#: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile__message_has_sms_error
-msgid "SMS Delivery error"
-msgstr "SMS error de entrada"
-
-#. module: account_mass_reconcile
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile_method__sequence
 msgid "Sequence"
 msgstr "Secuencia"
@@ -713,6 +707,9 @@ msgstr "Historia de la comunicación del sitio web"
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_reference__write_off
 msgid "Write off allowed"
 msgstr "Desajuste permitido"
+
+#~ msgid "SMS Delivery error"
+#~ msgstr "SMS error de entrada"
 
 #~ msgid "Number of messages which requires an action"
 #~ msgstr "Número de mensajes que requieren una acción"

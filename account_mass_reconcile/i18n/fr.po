@@ -323,7 +323,6 @@ msgstr "Si coché, de nouveaux messages demandent votre attention."
 
 #. module: account_mass_reconcile
 #: model:ir.model.fields,help:account_mass_reconcile.field_account_mass_reconcile__message_has_error
-#: model:ir.model.fields,help:account_mass_reconcile.field_account_mass_reconcile__message_has_sms_error
 msgid "If checked, some messages have a delivery error."
 msgstr "Si coché, certains messages ont une erreur d'envoi."
 
@@ -598,11 +597,6 @@ msgid "Run date"
 msgstr "Date de lancement"
 
 #. module: account_mass_reconcile
-#: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile__message_has_sms_error
-msgid "SMS Delivery error"
-msgstr "Erreur d'envoi SMS"
-
-#. module: account_mass_reconcile
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile_method__sequence
 msgid "Sequence"
 msgstr "Séquence"
@@ -706,6 +700,9 @@ msgstr ""
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_reference__write_off
 msgid "Write off allowed"
 msgstr "Écart autorisé"
+
+#~ msgid "SMS Delivery error"
+#~ msgstr "Erreur d'envoi SMS"
 
 #~ msgid "Number of messages which requires an action"
 #~ msgstr "Nombre de messages qui demandent une action"
