@@ -11,8 +11,8 @@ msgstr ""
 "POT-Creation-Date: 2017-03-24 03:37+0000\n"
 "PO-Revision-Date: 2023-10-29 08:14+0000\n"
 "Last-Translator: Ignacio Buioli <ibuioli@gmail.com>\n"
-"Language-Team: Spanish (Argentina) (https://www.transifex.com/oca/teams/"
-"23907/es_AR/)\n"
+"Language-Team: Spanish (Argentina) (https://www.transifex.com/oca/"
+"teams/23907/es_AR/)\n"
 "Language: es_AR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -310,9 +310,7 @@ msgstr "Si está marcado, los nuevos mensajes requieren su atención."
 
 #. module: account_move_base_import
 #: model:ir.model.fields,help:account_move_base_import.field_account_journal__message_has_error
-#: model:ir.model.fields,help:account_move_base_import.field_account_journal__message_has_sms_error
 #: model:ir.model.fields,help:account_move_base_import.field_account_move__message_has_error
-#: model:ir.model.fields,help:account_move_base_import.field_account_move__message_has_sms_error
 msgid "If checked, some messages have a delivery error."
 msgstr "Si está marcado, algunos mensajes tienen error de entrega."
 
@@ -517,7 +515,6 @@ msgstr "El Movimiento %s ha sido importado con %s líneas."
 #. module: account_move_base_import
 #: model:ir.ui.menu,name:account_move_base_import.menu_action_move_completion_rule_tree_menu
 #: model_terms:ir.ui.view,arch_db:account_move_base_import.move_completion_rule_view_form
-#: model_terms:ir.ui.view,arch_db:account_move_base_import.move_completion_rule_view_tree
 msgid "Move Completion Rule"
 msgstr "Regla de Finalización de Movimiento"
 
@@ -619,12 +616,6 @@ msgstr "Perfiles Relacionados"
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_move_completion_rule__journal_ids
 msgid "Related journals"
 msgstr "Diarios relacionados"
-
-#. module: account_move_base_import
-#: model:ir.model.fields,field_description:account_move_base_import.field_account_journal__message_has_sms_error
-#: model:ir.model.fields,field_description:account_move_base_import.field_account_move__message_has_sms_error
-msgid "SMS Delivery error"
-msgstr "Error de entrega de SMS"
 
 #. module: account_move_base_import
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_move_completion_rule__sequence
@@ -748,6 +739,9 @@ msgid ""
 msgstr ""
 "Cuando esta casilla de verificación está marcada, el proceso / botón de "
 "autocompletar ignorará esta línea."
+
+#~ msgid "SMS Delivery error"
+#~ msgstr "Error de entrega de SMS"
 
 #~ msgid "From line name (based on SO number)"
 #~ msgstr "Desde el nombre de la línea (basado en el número de SO)"
