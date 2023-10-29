@@ -99,7 +99,6 @@ msgstr "Conciliación parcial"
 #: model:ir.actions.act_window,name:account_reconcile_restrict_partner_mismatch.action_account_reconcile_partner_mismatch_report
 #: model:ir.ui.menu,name:account_reconcile_restrict_partner_mismatch.menu_account_reconcile_partner_mismatch_report
 #: model_terms:ir.ui.view,arch_db:account_reconcile_restrict_partner_mismatch.account_reconcile_partner_mismatch_report_view_form
-#: model_terms:ir.ui.view,arch_db:account_reconcile_restrict_partner_mismatch.view_account_move_reconciled_report_tree
 msgid "Reconciled items with partner mismatch"
 msgstr "Artículos conciliados sin coincidencia de socio"
 
