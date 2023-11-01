@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2023-08-16 17:10+0000\n"
-"Last-Translator: Rémi <remi@le-filament.com>\n"
+"PO-Revision-Date: 2023-11-01 18:37+0000\n"
+"Last-Translator: Alexis de Lattre <alexis@via.ecp.fr>\n"
 "Language-Team: none\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
@@ -44,7 +44,7 @@ msgstr "Lettrage"
 #. module: account_reconcile_oca
 #: model:ir.model,name:account_reconcile_oca.model_account_reconcile_abstract
 msgid "Account Reconcile Abstract"
-msgstr "Modèle Abstrait de Lettrage"
+msgstr "Modèle Abstrait de lettrage"
 
 #. module: account_reconcile_oca
 #: model:ir.model.fields,field_description:account_reconcile_oca.field_account_account_reconcile__add_account_move_line_id
@@ -68,12 +68,12 @@ msgstr "Montant"
 #: code:addons/account_reconcile_oca/static/src/xml/reconcile.xml:0
 #, python-format
 msgid "Amount in currency"
-msgstr ""
+msgstr "Montant en devise"
 
 #. module: account_reconcile_oca
 #: model:ir.model.fields,field_description:account_reconcile_oca.field_account_bank_statement_line__analytic_distribution
 msgid "Analytic Distribution"
-msgstr "Distribution Analytique"
+msgstr "Distribution analytique"
 
 #. module: account_reconcile_oca
 #: model:ir.model.fields,field_description:account_reconcile_oca.field_account_bank_statement_line__analytic_precision
@@ -83,7 +83,7 @@ msgstr "Précision analytique"
 #. module: account_reconcile_oca
 #: model_terms:ir.ui.view,arch_db:account_reconcile_oca.bank_statement_line_form_reconcile_view
 msgid "Are you sure that the move should be unreconciled?"
-msgstr "Êtes-vous sûr que la pièce doit être délettrée ?"
+msgstr "Êtes-vous sûr que la ligne doit être délettrée ?"
 
 #. module: account_reconcile_oca
 #: model_terms:ir.ui.view,arch_db:account_reconcile_oca.account_move_line_search_reconcile_view
@@ -205,17 +205,17 @@ msgstr "Modifier la pièce"
 #: model:ir.model.fields,field_description:account_reconcile_oca.field_account_bank_statement_line__foreign_currency_id
 #: model:ir.model.fields,field_description:account_reconcile_oca.field_account_reconcile_abstract__foreign_currency_id
 msgid "Foreign Currency"
-msgstr ""
+msgstr "Devise étrangère"
 
 #. module: account_reconcile_oca
 #: model_terms:ir.ui.view,arch_db:account_reconcile_oca.account_move_line_search_reconcile_view
 msgid "From Trade Payable accounts"
-msgstr "Depuis comptes des dettes"
+msgstr "Depuis comptes fournisseur"
 
 #. module: account_reconcile_oca
 #: model_terms:ir.ui.view,arch_db:account_reconcile_oca.account_move_line_search_reconcile_view
 msgid "From Trade Receivable accounts"
-msgstr "Depuis comptes des créances"
+msgstr "Depuis comptes client"
 
 #. module: account_reconcile_oca
 #: model:ir.model.fields,field_description:account_reconcile_oca.field_account_account_reconcile__id
@@ -246,7 +246,7 @@ msgstr "Journal"
 #. module: account_reconcile_oca
 #: model:ir.model.fields,field_description:account_reconcile_oca.field_account_bank_statement_line__currency_id
 msgid "Journal Currency"
-msgstr ""
+msgstr "Devise du journal"
 
 #. module: account_reconcile_oca
 #: model_terms:ir.ui.view,arch_db:account_reconcile_oca.account_move_line_search_reconcile_view
@@ -288,12 +288,12 @@ msgstr "Dernière modification le"
 #. module: account_reconcile_oca
 #: model:ir.model.fields,field_description:account_reconcile_oca.field_account_account_reconcile_data__write_uid
 msgid "Last Updated by"
-msgstr "Mis à jour par"
+msgstr "Dernière mise à jour par"
 
 #. module: account_reconcile_oca
 #: model:ir.model.fields,field_description:account_reconcile_oca.field_account_account_reconcile_data__write_date
 msgid "Last Updated on"
-msgstr "Mis à jour le"
+msgstr "Dernière mise à jour le"
 
 #. module: account_reconcile_oca
 #: model:ir.model.fields,field_description:account_reconcile_oca.field_account_bank_statement_line__manual_account_id
@@ -308,7 +308,7 @@ msgstr "Montant manuel"
 #. module: account_reconcile_oca
 #: model:ir.model.fields,field_description:account_reconcile_oca.field_account_bank_statement_line__manual_currency_id
 msgid "Manual Currency"
-msgstr ""
+msgstr "Devise manuelle"
 
 #. module: account_reconcile_oca
 #: model:ir.model.fields,field_description:account_reconcile_oca.field_account_account_reconcile__manual_delete
@@ -325,7 +325,7 @@ msgstr "Type manuel"
 #. module: account_reconcile_oca
 #: model:ir.model.fields,field_description:account_reconcile_oca.field_account_bank_statement_line__manual_line_id
 msgid "Manual Line"
-msgstr "Ligne manuelle"
+msgstr "Écriture manuelle"
 
 #. module: account_reconcile_oca
 #: model:ir.model.fields,field_description:account_reconcile_oca.field_account_bank_statement_line__manual_model_id
@@ -345,7 +345,7 @@ msgstr "Type de pièce manuelle"
 #. module: account_reconcile_oca
 #: model:ir.model.fields,field_description:account_reconcile_oca.field_account_bank_statement_line__manual_name
 msgid "Manual Name"
-msgstr "Nom manuel"
+msgstr "Libellé manuel"
 
 #. module: account_reconcile_oca
 #: model:ir.model.fields,field_description:account_reconcile_oca.field_account_bank_statement_line__manual_original_amount
@@ -383,7 +383,7 @@ msgstr "Nom"
 #. module: account_reconcile_oca
 #: model_terms:ir.ui.view,arch_db:account_reconcile_oca.bank_statement_line_form_reconcile_view
 msgid "Narration"
-msgstr ""
+msgstr "Commentaire"
 
 #. module: account_reconcile_oca
 #. odoo-python
@@ -416,7 +416,7 @@ msgstr "Partenaire"
 #. module: account_reconcile_oca
 #: model_terms:ir.ui.view,arch_db:account_reconcile_oca.account_move_line_search_reconcile_view
 msgid "Payable"
-msgstr "Dette fournisseur"
+msgstr "Compte fournisseur"
 
 #. module: account_reconcile_oca
 #: model_terms:ir.ui.view,arch_db:account_reconcile_oca.account_move_line_search_reconcile_view
@@ -426,7 +426,7 @@ msgstr "Achats"
 #. module: account_reconcile_oca
 #: model_terms:ir.ui.view,arch_db:account_reconcile_oca.account_move_line_search_reconcile_view
 msgid "Receivable"
-msgstr "Créance"
+msgstr "Compte client"
 
 #. module: account_reconcile_oca
 #: model:ir.actions.act_window,name:account_reconcile_oca.account_account_account_account_reconcile_act_window
@@ -457,7 +457,7 @@ msgstr "Informations de données de lettrage"
 #: model:ir.model.fields,field_description:account_reconcile_oca.field_account_bank_statement_line__reconcile_mode
 #: model:ir.model.fields,field_description:account_reconcile_oca.field_account_journal__reconcile_mode
 msgid "Reconcile Mode"
-msgstr "Mode lettrage"
+msgstr "Mode de lettrage"
 
 #. module: account_reconcile_oca
 #: model:ir.actions.act_window,name:account_reconcile_oca.action_bank_statement_line_move_view_reconcile
@@ -482,7 +482,7 @@ msgstr "Lettré"
 #. module: account_reconcile_oca
 #: model_terms:ir.ui.view,arch_db:account_reconcile_oca.bank_statement_line_form_reconcile_view
 msgid "Reset reconciliation"
-msgstr ""
+msgstr "Réinitialiser le rapprochement"
 
 #. module: account_reconcile_oca
 #: model_terms:ir.ui.view,arch_db:account_reconcile_oca.account_move_line_search_reconcile_view
@@ -507,7 +507,7 @@ msgstr "Marquer comme vérifié"
 #. module: account_reconcile_oca
 #: model:ir.model.fields,help:account_reconcile_oca.field_account_bank_statement_line__foreign_currency_id
 msgid "The optional other currency if it is a multi-currency entry."
-msgstr ""
+msgstr "L'autre devise facultative s'il s'agit d'une entrée multidevise."
 
 #. module: account_reconcile_oca
 #: model_terms:ir.ui.view,arch_db:account_reconcile_oca.bank_statement_line_form_reconcile_view
@@ -534,7 +534,7 @@ msgstr "Non défini"
 #. module: account_reconcile_oca
 #: model_terms:ir.ui.view,arch_db:account_reconcile_oca.bank_statement_line_form_reconcile_view
 msgid "Unreconcile"
-msgstr ""
+msgstr "Délettrer"
 
 #. module: account_reconcile_oca
 #: model:ir.model.fields,field_description:account_reconcile_oca.field_account_account_reconcile_data__user_id
@@ -554,7 +554,7 @@ msgstr "Vue"
 #. module: account_reconcile_oca
 #: model_terms:ir.ui.view,arch_db:account_reconcile_oca.bank_statement_line_form_reconcile_view
 msgid "View move"
-msgstr "Voir la vue"
+msgstr "Voir la pièce"
 
 #. module: account_reconcile_oca
 #. odoo-python
