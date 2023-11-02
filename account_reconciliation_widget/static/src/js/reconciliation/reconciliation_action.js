@@ -53,7 +53,11 @@ odoo.define("account.ReconciliationClientAction", function (require) {
             const $input = ev.target.$input;
             // When we're on a relational field, we want to navigate inside the record
             // selector, otherwise we'll be catching a wrong navigation event
-            if ($input && $input.hasClass("ui-autocomplete-input")) {
+            if (
+                ["up", "down"].includes(ev.data.direction) &&
+                $input &&
+                $input.hasClass("ui-autocomplete-input")
+            ) {
                 ev.stopPropagation();
                 return;
             }
