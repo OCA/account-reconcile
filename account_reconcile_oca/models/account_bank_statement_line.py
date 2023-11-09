@@ -351,6 +351,53 @@ class AccountBankStatementLine(models.Model):
         for record in self:
             record.reconcile_data = record.reconcile_data_info
 
+    def _apply_lines_for_bank_widget(self, residual_amount_currency, partner, model):
+        """
+        This function is quite similar to the one from account.reconcile.model but adding
+        some functionalities for taxes
+        """
+        self.ensure_one()
+        currency = (
+            self.foreign_currency_id
+            or self.journal_id.currency_id
+            or self.company_currency_id
+        )
+        if currency.is_zero(residual_amount_currency):
+            return []
+
+        vals_list = []
+        for line in model.line_ids:
+            vals = line._apply_in_bank_widget(residual_amount_currency, partner, self)
+            amount_currency = vals["amount_currency"]
+            vals.update(
+                {
+                    "balance": vals["amount_currency"],
+                }
+            )
+            if currency.is_zero(amount_currency):
+                continue
+
+            vals_list.append(vals)
+            residual_amount_currency -= amount_currency
+            if line.tax_ids:
+                taxes = line.tax_ids
+                detected_fiscal_position = self.env[
+                    "account.fiscal.position"
+                ]._get_fiscal_position(partner)
+                if detected_fiscal_position:
+                    taxes = detected_fiscal_position.map_tax(taxes)
+                vals["tax_ids"] += [Command.set(taxes.ids)]
+                # Multiple taxes with force_tax_included results in wrong computation, so we
+                # only allow to set the force_tax_included field if we have one tax selected
+                if line.force_tax_included:
+                    taxes = taxes[0].with_context(force_price_include=True)
+                tax_vals_list = model._get_taxes_move_lines_dict(taxes, vals)
+                vals_list += tax_vals_list
+                if not line.force_tax_included:
+                    for tax_line in tax_vals_list:
+                        residual_amount_currency -= tax_line["balance"]
+        return vals_list
+
     def _reconcile_data_by_model(self, data, reconcile_model, reconcile_auxiliary_id):
         new_data = []
         liquidity_amount = 0.0
@@ -359,8 +406,8 @@ class AccountBankStatementLine(models.Model):
                 continue
             new_data.append(line_data)
             liquidity_amount += line_data["amount"]
-        for line in reconcile_model._get_write_off_move_lines_dict(
-            -liquidity_amount, self._retrieve_partner()
+        for line in self._apply_lines_for_bank_widget(
+            -liquidity_amount, self._retrieve_partner(), reconcile_model
         ):
             new_line = line.copy()
             amount = line.get("balance")
