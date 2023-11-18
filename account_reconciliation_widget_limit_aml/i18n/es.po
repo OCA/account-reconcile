@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 14.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2023-09-21 17:37+0000\n"
-"Last-Translator: Harald Panten <harald.panten@sygel.es>\n"
+"PO-Revision-Date: 2023-11-18 17:34+0000\n"
+"Last-Translator: Ivorra78 <informatica@totmaterial.es>\n"
 "Language-Team: none\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
@@ -19,24 +19,24 @@ msgstr ""
 #. module: account_reconciliation_widget_limit_aml
 #: model:ir.model,name:account_reconciliation_widget_limit_aml.model_account_reconciliation_widget
 msgid "Account Reconciliation widget"
-msgstr ""
+msgstr "Pantalla de Conciliación contable"
 
 #. module: account_reconciliation_widget_limit_aml
 #: model:ir.model,name:account_reconciliation_widget_limit_aml.model_res_company
 msgid "Companies"
-msgstr ""
+msgstr "Compañías"
 
 #. module: account_reconciliation_widget_limit_aml
 #: model:ir.model,name:account_reconciliation_widget_limit_aml.model_res_config_settings
 msgid "Config Settings"
-msgstr ""
+msgstr "Ajustes de Configuración"
 
 #. module: account_reconciliation_widget_limit_aml
 #: model:ir.model.fields,field_description:account_reconciliation_widget_limit_aml.field_account_reconciliation_widget__display_name
 #: model:ir.model.fields,field_description:account_reconciliation_widget_limit_aml.field_res_company__display_name
 #: model:ir.model.fields,field_description:account_reconciliation_widget_limit_aml.field_res_config_settings__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Mostrar Nombre"
 
 #. module: account_reconciliation_widget_limit_aml
 #: model:ir.model.fields,field_description:account_reconciliation_widget_limit_aml.field_res_company__account_bank_reconciliation_start_all_aml
@@ -49,11 +49,11 @@ msgstr "Filtrar todos los apuntes contables"
 #: model:ir.model.fields,field_description:account_reconciliation_widget_limit_aml.field_res_company__id
 #: model:ir.model.fields,field_description:account_reconciliation_widget_limit_aml.field_res_config_settings__id
 msgid "ID"
-msgstr ""
+msgstr "ID (identificación)"
 
 #. module: account_reconciliation_widget_limit_aml
 #: model:ir.model.fields,field_description:account_reconciliation_widget_limit_aml.field_account_reconciliation_widget____last_update
 #: model:ir.model.fields,field_description:account_reconciliation_widget_limit_aml.field_res_company____last_update
 #: model:ir.model.fields,field_description:account_reconciliation_widget_limit_aml.field_res_config_settings____last_update
 msgid "Last Modified on"
-msgstr ""
+msgstr "Última Modificación el"
