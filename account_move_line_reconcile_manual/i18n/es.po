@@ -6,197 +6,199 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 14.0\n"
 "Report-Msgid-Bugs-To: \n"
-"Last-Translator: Automatically generated\n"
+"PO-Revision-Date: 2023-11-18 14:33+0000\n"
+"Last-Translator: Ivorra78 <informatica@totmaterial.es>\n"
 "Language-Team: none\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.17\n"
 
 #. module: account_move_line_reconcile_manual
 #: model:ir.model.fields,field_description:account_move_line_reconcile_manual.field_account_move_line_reconcile_manual__count
 msgid "# of Journal Items"
-msgstr ""
+msgstr "# de Artículos del Diario"
 
 #. module: account_move_line_reconcile_manual
 #: model:ir.model.fields,field_description:account_move_line_reconcile_manual.field_account_move_line_reconcile_manual__account_id
 msgid "Account"
-msgstr ""
+msgstr "Cuenta"
 
 #. module: account_move_line_reconcile_manual
 #: code:addons/account_move_line_reconcile_manual/wizards/account_move_line_reconcile_manual.py:0
 #, python-format
 msgid "Account '%s' is not reconciliable."
-msgstr ""
+msgstr "La cuenta %s no es conciliable."
 
 #. module: account_move_line_reconcile_manual
 #: model:ir.model.fields,field_description:account_move_line_reconcile_manual.field_account_move_line_reconcile_manual__writeoff_amount
 msgid "Amount"
-msgstr ""
+msgstr "importe"
 
 #. module: account_move_line_reconcile_manual
 #: code:addons/account_move_line_reconcile_manual/wizards/account_move_line_reconcile_manual.py:0
 #, python-format
 msgid "Bad write-off account type"
-msgstr ""
+msgstr "Tipo de cuenta contable incobrable"
 
 #. module: account_move_line_reconcile_manual
 #: model_terms:ir.ui.view,arch_db:account_move_line_reconcile_manual.account_move_line_reconcile_manual_form
 msgid "Cancel"
-msgstr ""
+msgstr "Cancelar"
 
 #. module: account_move_line_reconcile_manual
 #: model:ir.model.fields,field_description:account_move_line_reconcile_manual.field_account_move_line_reconcile_manual__company_id
 msgid "Company"
-msgstr ""
+msgstr "Companía"
 
 #. module: account_move_line_reconcile_manual
 #: model:ir.model.fields,field_description:account_move_line_reconcile_manual.field_account_move_line_reconcile_manual__create_uid
 msgid "Created by"
-msgstr ""
+msgstr "Creado por"
 
 #. module: account_move_line_reconcile_manual
 #: model:ir.model.fields,field_description:account_move_line_reconcile_manual.field_account_move_line_reconcile_manual__create_date
 msgid "Created on"
-msgstr ""
+msgstr "Creado el"
 
 #. module: account_move_line_reconcile_manual
 #: model:ir.model.fields,field_description:account_move_line_reconcile_manual.field_account_move_line_reconcile_manual__company_currency_id
 msgid "Currency"
-msgstr ""
+msgstr "Divisa"
 
 #. module: account_move_line_reconcile_manual
 #: model:ir.model.fields,field_description:account_move_line_reconcile_manual.field_account_move_line_reconcile_manual__writeoff_date
 msgid "Date"
-msgstr ""
+msgstr "Fecha"
 
 #. module: account_move_line_reconcile_manual
 #: model:ir.model.fields,field_description:account_move_line_reconcile_manual.field_account_move_line_reconcile_manual__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Mostrar Nombre"
 
 #. module: account_move_line_reconcile_manual
 #: model:ir.model.fields.selection,name:account_move_line_reconcile_manual.selection__account_move_line_reconcile_manual__writeoff_type__expense
 msgid "Expense"
-msgstr ""
+msgstr "Gasto"
 
 #. module: account_move_line_reconcile_manual
 #: model_terms:ir.ui.view,arch_db:account_move_line_reconcile_manual.account_move_line_reconcile_manual_form
 msgid "Full Reconcile"
-msgstr ""
+msgstr "Conciliación completa"
 
 #. module: account_move_line_reconcile_manual
 #: code:addons/account_move_line_reconcile_manual/wizards/account_move_line_reconcile_manual.py:0
 #: code:addons/account_move_line_reconcile_manual/wizards/account_move_line_reconcile_manual.py:0
 #, python-format
 msgid "Full reconciliation failed. It should never happen!"
-msgstr ""
+msgstr "La reconciliación completa ha fallado. ¡Nunca debería suceder!"
 
 #. module: account_move_line_reconcile_manual
 #: model:ir.model.fields,field_description:account_move_line_reconcile_manual.field_account_move_line_reconcile_manual__id
 msgid "ID"
-msgstr ""
+msgstr "ID (identificación)"
 
 #. module: account_move_line_reconcile_manual
 #: model:ir.model.fields.selection,name:account_move_line_reconcile_manual.selection__account_move_line_reconcile_manual__writeoff_type__income
 msgid "Income"
-msgstr ""
+msgstr "Ingreso"
 
 #. module: account_move_line_reconcile_manual
 #: model:ir.model.fields,field_description:account_move_line_reconcile_manual.field_account_move_line_reconcile_manual__writeoff_journal_id
 msgid "Journal"
-msgstr ""
+msgstr "Dario"
 
 #. module: account_move_line_reconcile_manual
 #: model:ir.model.fields,field_description:account_move_line_reconcile_manual.field_account_move_line_reconcile_manual____last_update
 msgid "Last Modified on"
-msgstr ""
+msgstr "Última Modificación el"
 
 #. module: account_move_line_reconcile_manual
 #: model:ir.model.fields,field_description:account_move_line_reconcile_manual.field_account_move_line_reconcile_manual__write_uid
 msgid "Last Updated by"
-msgstr ""
+msgstr "Actualizado por última vez por"
 
 #. module: account_move_line_reconcile_manual
 #: model:ir.model.fields,field_description:account_move_line_reconcile_manual.field_account_move_line_reconcile_manual__write_date
 msgid "Last Updated on"
-msgstr ""
+msgstr "Última Actualización el"
 
 #. module: account_move_line_reconcile_manual
 #: code:addons/account_move_line_reconcile_manual/wizards/account_move_line_reconcile_manual.py:0
 #, python-format
 msgid "Line '%s' is already fully reconciled."
-msgstr ""
+msgstr "Línea %s está totalmente conciliada."
 
 #. module: account_move_line_reconcile_manual
 #: model:ir.model,name:account_move_line_reconcile_manual.model_account_move_line_reconcile_manual
 msgid "Manual Reconciliation Wizard"
-msgstr ""
+msgstr "Wizard para Conciliación Manual"
 
 #. module: account_move_line_reconcile_manual
 #: model:ir.model.fields,field_description:account_move_line_reconcile_manual.field_account_move_line_reconcile_manual__move_line_ids
 msgid "Move Line"
-msgstr ""
+msgstr "Línea de Movimiento"
 
 #. module: account_move_line_reconcile_manual
 #: model:ir.model.fields.selection,name:account_move_line_reconcile_manual.selection__account_move_line_reconcile_manual__writeoff_type__none
 msgid "None"
-msgstr ""
+msgstr "Ninguno/a"
 
 #. module: account_move_line_reconcile_manual
 #: model_terms:ir.ui.view,arch_db:account_move_line_reconcile_manual.account_move_line_reconcile_manual_form
 msgid "Partial Reconcile"
-msgstr ""
+msgstr "Reconciliación parcial"
 
 #. module: account_move_line_reconcile_manual
 #: model:ir.model.fields,field_description:account_move_line_reconcile_manual.field_account_move_line_reconcile_manual__partner_id
 msgid "Partner"
-msgstr ""
+msgstr "Socio"
 
 #. module: account_move_line_reconcile_manual
 #: model:ir.model.fields,field_description:account_move_line_reconcile_manual.field_account_move_line_reconcile_manual__partner_count
 msgid "Partner Count"
-msgstr ""
+msgstr "Conteo de Socios"
 
 #. module: account_move_line_reconcile_manual
 #: model:ir.actions.act_window,name:account_move_line_reconcile_manual.account_move_line_reconcile_manual_action
 #: model_terms:ir.ui.view,arch_db:account_move_line_reconcile_manual.view_move_line_tree
 msgid "Reconcile"
-msgstr ""
+msgstr "Conciliación"
 
 #. module: account_move_line_reconcile_manual
 #: code:addons/account_move_line_reconcile_manual/wizards/account_move_line_reconcile_manual.py:0
 #, python-format
 msgid "Reconcile mark: %s"
-msgstr ""
+msgstr "Marca de conciliación: %s"
 
 #. module: account_move_line_reconcile_manual
 #: model_terms:ir.ui.view,arch_db:account_move_line_reconcile_manual.account_move_line_reconcile_manual_form
 msgid "Reconcile with Write-off"
-msgstr ""
+msgstr "Conciliar con Cancelación"
 
 #. module: account_move_line_reconcile_manual
 #: model:ir.model.fields,field_description:account_move_line_reconcile_manual.field_account_move_line_reconcile_manual__writeoff_ref
 msgid "Reference"
-msgstr ""
+msgstr "Referencia"
 
 #. module: account_move_line_reconcile_manual
 #: model:ir.model.fields.selection,name:account_move_line_reconcile_manual.selection__account_move_line_reconcile_manual__state__start
 msgid "Start"
-msgstr ""
+msgstr "Inicio"
 
 #. module: account_move_line_reconcile_manual
 #: model:ir.model.fields,field_description:account_move_line_reconcile_manual.field_account_move_line_reconcile_manual__state
 msgid "State"
-msgstr ""
+msgstr "Estado"
 
 #. module: account_move_line_reconcile_manual
 #: code:addons/account_move_line_reconcile_manual/wizards/account_move_line_reconcile_manual.py:0
 #: code:addons/account_move_line_reconcile_manual/wizards/account_move_line_reconcile_manual.py:0
 #, python-format
 msgid "Successful reconciliation"
-msgstr ""
+msgstr "Conciliación completada"
 
 #. module: account_move_line_reconcile_manual
 #: code:addons/account_move_line_reconcile_manual/wizards/account_move_line_reconcile_manual.py:0
@@ -205,6 +207,8 @@ msgid ""
 "The Journal Items selected have different accounts: %(account1)s and "
 "%(account2)s."
 msgstr ""
+"Los apuntes contables seleccionados tienen cuentas diferentes: %(account1)s "
+"y %(account2)s."
 
 #. module: account_move_line_reconcile_manual
 #: code:addons/account_move_line_reconcile_manual/wizards/account_move_line_reconcile_manual.py:0
@@ -213,21 +217,23 @@ msgid ""
 "This is a/an '%(writeoff_type)s' write-off, but you selected account "
 "%(account_code)s which is a/an '%(account_type)s' account."
 msgstr ""
+"Hay un %(writeoff_type)s descuadre, pero seleccionaste la cuenta "
+"%(account_code)s que es una cuenta %(account_type)s."
 
 #. module: account_move_line_reconcile_manual
 #: model:ir.model.fields,field_description:account_move_line_reconcile_manual.field_account_move_line_reconcile_manual__total_credit
 msgid "Total Credit"
-msgstr ""
+msgstr "Crédito Total"
 
 #. module: account_move_line_reconcile_manual
 #: model:ir.model.fields,field_description:account_move_line_reconcile_manual.field_account_move_line_reconcile_manual__total_debit
 msgid "Total Debit"
-msgstr ""
+msgstr "Débito Total"
 
 #. module: account_move_line_reconcile_manual
 #: model:ir.model.fields,field_description:account_move_line_reconcile_manual.field_account_move_line_reconcile_manual__writeoff_type
 msgid "Type"
-msgstr ""
+msgstr "Tipo"
 
 #. module: account_move_line_reconcile_manual
 #: code:addons/account_move_line_reconcile_manual/wizards/account_move_line_reconcile_manual.py:0
@@ -235,17 +241,17 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:account_move_line_reconcile_manual.account_move_line_reconcile_manual_form
 #, python-format
 msgid "Write-off"
-msgstr ""
+msgstr "Cancelación"
 
 #. module: account_move_line_reconcile_manual
 #: model:ir.model.fields,field_description:account_move_line_reconcile_manual.field_account_move_line_reconcile_manual__writeoff_account_id
 msgid "Write-off Account"
-msgstr ""
+msgstr "Cuenta de Cancelación"
 
 #. module: account_move_line_reconcile_manual
 #: model:ir.model.fields,field_description:account_move_line_reconcile_manual.field_account_move_line_reconcile_manual__writeoff_analytic_account_id
 msgid "Write-off Analytic Account"
-msgstr ""
+msgstr "Cancelación de la Cuenta Analítica"
 
 #. module: account_move_line_reconcile_manual
 #: code:addons/account_move_line_reconcile_manual/wizards/account_move_line_reconcile_manual.py:0
@@ -254,31 +260,33 @@ msgid ""
 "Write-off journal entry: %(writeoff_move)s\n"
 "Reconcile mark: %(full_rec)s"
 msgstr ""
+"Asiento descuadrado: %(writeoff_move)s\n"
+"Marca de conciliación: %(full_rec)s"
 
 #. module: account_move_line_reconcile_manual
 #: model_terms:ir.ui.view,arch_db:account_move_line_reconcile_manual.account_move_line_reconcile_manual_form
 msgid "You are trying to reconcile journal items from"
-msgstr ""
+msgstr "Estás intentando conciliar los elementos de un diario de cuentas de"
 
 #. module: account_move_line_reconcile_manual
 #: code:addons/account_move_line_reconcile_manual/wizards/account_move_line_reconcile_manual.py:0
 #, python-format
 msgid "You must select at least 2 journal items!"
-msgstr ""
+msgstr "¡Debe seleccionar al menos 2 artículos del diario!"
 
 #. module: account_move_line_reconcile_manual
 #: code:addons/account_move_line_reconcile_manual/wizards/account_move_line_reconcile_manual.py:0
 #, python-format
 msgid "You selected only credit journal items."
-msgstr ""
+msgstr "Sólo seleccionó elementos del diario de crédito."
 
 #. module: account_move_line_reconcile_manual
 #: code:addons/account_move_line_reconcile_manual/wizards/account_move_line_reconcile_manual.py:0
 #, python-format
 msgid "You selected only debit journal items."
-msgstr ""
+msgstr "Sólo seleccionó partidas del diario de débito."
 
 #. module: account_move_line_reconcile_manual
 #: model_terms:ir.ui.view,arch_db:account_move_line_reconcile_manual.account_move_line_reconcile_manual_form
 msgid "different partners: make sure it is intented."
-msgstr ""
+msgstr "diferentes socios: asegúrese de que sea intencionado."
