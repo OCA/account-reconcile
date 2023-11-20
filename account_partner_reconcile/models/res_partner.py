@@ -13,7 +13,6 @@ class ResPartner(models.Model):
         accounts = self.property_account_payable_id
         if reconcile_mode == "customers":
             accounts = self.property_account_receivable_id
-
         action_context = {
             "show_mode_selector": True,
             "partner_ids": [self.id],
