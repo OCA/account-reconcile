@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2023-11-14 17:37+0000\n"
+"PO-Revision-Date: 2023-11-28 17:34+0000\n"
 "Last-Translator: Yung-Wa <yw.ng@onestein.nl>\n"
 "Language-Team: none\n"
 "Language: nl\n"
@@ -367,7 +367,7 @@ msgstr "Handmatige Referentie"
 #. module: account_reconcile_oca
 #: model_terms:ir.ui.view,arch_db:account_reconcile_oca.bank_statement_line_form_reconcile_view
 msgid "Manual operation"
-msgstr "Handmatige Werking"
+msgstr "Handmatige Verwerking"
 
 #. module: account_reconcile_oca
 #: model_terms:ir.ui.view,arch_db:account_reconcile_oca.account_move_line_search_reconcile_view
@@ -383,7 +383,7 @@ msgstr "Naam"
 #. module: account_reconcile_oca
 #: model_terms:ir.ui.view,arch_db:account_reconcile_oca.bank_statement_line_form_reconcile_view
 msgid "Narration"
-msgstr "Vertelling"
+msgstr "Notitie"
 
 #. module: account_reconcile_oca
 #. odoo-python
