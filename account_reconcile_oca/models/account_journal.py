@@ -1,4 +1,4 @@
-# Copyright 2022 CreuBlanca
+# Copyright 2023 Dixmit
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
 from odoo import _, fields, models
