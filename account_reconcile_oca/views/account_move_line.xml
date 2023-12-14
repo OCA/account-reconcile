@@ -101,4 +101,13 @@
                 </search>
         </field>
     </record>
+
+    <record id="action_reconcile" model="ir.actions.server">
+        <field name="name">Reconcile</field>
+        <field name="model_id" ref="account.model_account_move_line" />
+        <field name="binding_model_id" ref="account.model_account_move_line" />
+        <field name="binding_view_types">list</field>
+        <field name="state">code</field>
+        <field name="code">action = records.action_reconcile_manually()</field>
+    </record>
 </odoo>
