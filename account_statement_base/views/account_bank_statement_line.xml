@@ -80,14 +80,14 @@
                     type="object"
                     string="Revert reconciliation"
                     icon="fa-undo"
-                    attrs="{'invisible': [('is_reconciled', '=', False)]}"
+                    invisible="not is_reconciled"
                 />
-            <field name="company_id" invisible="1" />
-            <field name="is_reconciled" invisible="1" />
-            <field name="currency_id" invisible="1" />
-            <field name="foreign_currency_id" invisible="1" />
-            <field name="country_code" invisible="1" />
-            <field name="state" invisible="1" />
+            <field name="company_id" column_invisible="True" />
+            <field name="is_reconciled" column_invisible="True" />
+            <field name="currency_id" column_invisible="True" />
+            <field name="foreign_currency_id" column_invisible="True" />
+            <field name="country_code" column_invisible="True" />
+            <field name="state" column_invisible="True" />
         </tree>
     </field>
 </record>
