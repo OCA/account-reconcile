@@ -25,6 +25,7 @@ addon | version | maintainers | summary
 [account_mass_reconcile](account_mass_reconcile/) | 15.0.1.0.0 |  | Account Mass Reconcile
 [account_mass_reconcile_by_purchase_line](account_mass_reconcile_by_purchase_line/) | 15.0.1.0.0 |  | Allows to reconcile based on the PO line
 [account_move_reconcile_forbid_cancel](account_move_reconcile_forbid_cancel/) | 15.0.1.0.1 |  | Account Move Reconcile Forbid Cancel
+[account_move_reconcile_helper](account_move_reconcile_helper/) | 15.0.1.0.0 |  | Provides tools to facilitate reconciliation
 [account_partner_reconcile](account_partner_reconcile/) | 15.0.1.0.0 |  | Account Partner Reconcile
 [account_reconcile_payment_order](account_reconcile_payment_order/) | 15.0.1.0.1 | [![pedrobaeza](https://github.com/pedrobaeza.png?size=30px)](https://github.com/pedrobaeza) | Automatically propose all lines generated from payment orders
 [account_reconciliation_widget](account_reconciliation_widget/) | 15.0.1.2.12 |  | Account reconciliation widget
