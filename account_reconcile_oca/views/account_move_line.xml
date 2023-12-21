@@ -10,13 +10,16 @@
         <field name="arch" type="xml">
             <tree js_class="reconcile_move_line">
                 <field name="date" />
-                <field name="move_id" />
+                <field name="move_id" optional="show" />
+                <field name="account_id" optional="show" />
                 <field name="partner_id" />
                 <field name="company_currency_id" invisible="1" />
                 <field name="currency_id" invisible="1" />
-                <field name="name" />
+                <field name="name" optional="show" />
                 <field name="amount_residual_currency" optional="hide" />
-                <field name="amount_residual" />
+                <field name="amount_residual" optional="show" />
+                <field name="debit" optional="hide" />
+                <field name="credit" optional="hide" />
                 <button
                     type="object"
                     name="action_open_business_doc"
