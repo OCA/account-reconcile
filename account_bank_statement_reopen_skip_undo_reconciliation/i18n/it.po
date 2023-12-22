@@ -6,23 +6,25 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 14.0\n"
 "Report-Msgid-Bugs-To: \n"
-"Last-Translator: Automatically generated\n"
+"PO-Revision-Date: 2023-12-22 14:36+0000\n"
+"Last-Translator: Francesco Foresti <francesco.foresti@ooops404.com>\n"
 "Language-Team: none\n"
 "Language: it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.17\n"
 
 #. module: account_bank_statement_reopen_skip_undo_reconciliation
 #: model:ir.model,name:account_bank_statement_reopen_skip_undo_reconciliation.model_account_bank_statement
 msgid "Bank Statement"
-msgstr ""
+msgstr "Estratto conto bancario"
 
 #. module: account_bank_statement_reopen_skip_undo_reconciliation
 #: model:ir.model,name:account_bank_statement_reopen_skip_undo_reconciliation.model_account_bank_statement_line
 msgid "Bank Statement Line"
-msgstr ""
+msgstr "Riga estratto conto bancario"
 
 #. module: account_bank_statement_reopen_skip_undo_reconciliation
 #: model:ir.model.fields,field_description:account_bank_statement_reopen_skip_undo_reconciliation.field_account_bank_statement__display_name
@@ -30,7 +32,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:account_bank_statement_reopen_skip_undo_reconciliation.field_account_move__display_name
 #: model:ir.model.fields,field_description:account_bank_statement_reopen_skip_undo_reconciliation.field_account_move_line__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Nome visualizzato"
 
 #. module: account_bank_statement_reopen_skip_undo_reconciliation
 #: model:ir.model.fields,field_description:account_bank_statement_reopen_skip_undo_reconciliation.field_account_bank_statement__id
@@ -38,17 +40,17 @@ msgstr ""
 #: model:ir.model.fields,field_description:account_bank_statement_reopen_skip_undo_reconciliation.field_account_move__id
 #: model:ir.model.fields,field_description:account_bank_statement_reopen_skip_undo_reconciliation.field_account_move_line__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: account_bank_statement_reopen_skip_undo_reconciliation
 #: model:ir.model,name:account_bank_statement_reopen_skip_undo_reconciliation.model_account_move
 msgid "Journal Entry"
-msgstr ""
+msgstr "Registrazione contabile"
 
 #. module: account_bank_statement_reopen_skip_undo_reconciliation
 #: model:ir.model,name:account_bank_statement_reopen_skip_undo_reconciliation.model_account_move_line
 msgid "Journal Item"
-msgstr ""
+msgstr "Movimento contabile"
 
 #. module: account_bank_statement_reopen_skip_undo_reconciliation
 #: model:ir.model.fields,field_description:account_bank_statement_reopen_skip_undo_reconciliation.field_account_bank_statement____last_update
@@ -56,4 +58,4 @@ msgstr ""
 #: model:ir.model.fields,field_description:account_bank_statement_reopen_skip_undo_reconciliation.field_account_move____last_update
 #: model:ir.model.fields,field_description:account_bank_statement_reopen_skip_undo_reconciliation.field_account_move_line____last_update
 msgid "Last Modified on"
-msgstr ""
+msgstr "Ultima modifica il"
