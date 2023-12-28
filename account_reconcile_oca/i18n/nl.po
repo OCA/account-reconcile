@@ -254,6 +254,7 @@ msgid "Journal Entry"
 msgstr "Boeking"
 
 #. module: account_reconcile_oca
+#: model:ir.model,name:account_reconcile_oca.model_account_move_line
 #: model_terms:ir.ui.view,arch_db:account_reconcile_oca.account_move_line_search_reconcile_view
 msgid "Journal Item"
 msgstr "Boekingsregel"
@@ -432,6 +433,7 @@ msgstr "Debiteuren"
 #: model:ir.actions.act_window,name:account_reconcile_oca.account_account_account_account_reconcile_act_window
 #: model:ir.actions.act_window,name:account_reconcile_oca.account_account_reconcile_act_window
 #: model:ir.actions.act_window,name:account_reconcile_oca.res_partner_account_account_reconcile_act_window
+#: model:ir.actions.server,name:account_reconcile_oca.action_reconcile
 #: model:ir.model.fields,field_description:account_reconcile_oca.field_account_account_reconcile_data__reconcile_id
 #: model:ir.ui.menu,name:account_reconcile_oca.account_account_reconcile_menu
 #: model_terms:ir.ui.view,arch_db:account_reconcile_oca.account_account_reconcile_form_view
@@ -560,6 +562,13 @@ msgstr "Boeking weergeven"
 #, python-format
 msgid "Well done! Everything has been reconciled"
 msgstr "Goed gedaan! Alles is afgeletterd"
+
+#. module: account_reconcile_oca
+#. odoo-python
+#: code:addons/account_reconcile_oca/models/account_move_line.py:0
+#, python-format
+msgid "You must reconcile information on the same partner"
+msgstr ""
 
 #. module: account_reconcile_oca
 #: model_terms:ir.ui.view,arch_db:account_reconcile_oca.bank_statement_line_form_reconcile_view
