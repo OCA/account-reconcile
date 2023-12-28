@@ -1,4 +1,4 @@
-# Copyright 2022 CreuBlanca
+# Copyright 2023 Dixmit
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
 from odoo import api, fields, models
@@ -84,6 +84,13 @@ class AccountAccountReconcile(models.Model):
     def _compute_reconcile_data_info(self):
         data_obj = self.env["account.account.reconcile.data"]
         for record in self:
+            if self.env.context.get("default_account_move_lines"):
+                data = {
+                    "data": [],
+                    "counterparts": self.env.context.get("default_account_move_lines"),
+                }
+                record.reconcile_data_info = self._recompute_data(data)
+                continue
             data_record = data_obj.search(
                 [("user_id", "=", self.env.user.id), ("reconcile_id", "=", record.id)]
             )
