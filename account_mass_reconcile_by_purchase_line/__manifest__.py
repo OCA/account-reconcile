@@ -4,7 +4,7 @@
 {
     "name": "Account Mass Reconcile by Purchase Line",
     "summary": "Allows to reconcile based on the PO line",
-    "version": "15.0.1.0.0",
+    "version": "16.0.1.0.0",
     "author": "ForgeFlow, " "Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/account-reconcile",
     "category": "Finance",
