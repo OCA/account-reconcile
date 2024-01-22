@@ -1,10 +1,10 @@
 # Copyright 2011-2019 Camptocamp SA
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html)
 
-from odoo.tests.common import SavepointCase
+from odoo.tests.common import TransactionCase
 
 
-class TestCompliteSO(SavepointCase):
+class TestCompliteSO(TransactionCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
@@ -66,24 +66,10 @@ class TestCompliteSO(SavepointCase):
             {"name": "Test move", "journal_id": cls.journal.id}
         )
         cls.account_payable = cls.env["account.account"].search(
-            [
-                (
-                    "user_type_id",
-                    "=",
-                    cls.env.ref("account.data_account_type_payable").id,
-                ),
-            ],
-            limit=1,
+            [("account_type", "=", "liability_payable")], limit=1
         )
         cls.account_bank = cls.env["account.account"].search(
-            [
-                (
-                    "user_type_id",
-                    "=",
-                    cls.env.ref("account.data_account_type_liquidity").id,
-                ),
-            ],
-            limit=1,
+            [("account_type", "=", "asset_cash")], limit=1
         )
         cls.order.action_confirm()
 

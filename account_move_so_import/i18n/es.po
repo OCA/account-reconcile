@@ -25,48 +25,22 @@ msgid "Account move completion method"
 msgstr "account.statement.completion.rule"
 
 #. module: account_move_so_import
-#: selection:account.move.completion.rule,function_to_call:0
+#: model:ir.model.fields.selection,name:account_move_so_import.selection__account_move_completion_rule__function_to_call__get_from_name_and_so
 msgid "From line name (based on SO number)"
 msgstr ""
 
 #. module: account_move_so_import
-#: selection:account.move.completion.rule,function_to_call:0
-msgid "From line name (based on customer invoice number)"
+#: model:ir.model.fields.selection,name:account_move_so_import.selection__account_move_completion_rule__function_to_call__get_from_name_and_so_payment_ref
+msgid "From line name (based on SO payment ref)"
 msgstr ""
 
 #. module: account_move_so_import
-#: selection:account.move.completion.rule,function_to_call:0
-msgid "From line name (based on partner field)"
-msgstr ""
-
-#. module: account_move_so_import
-#: selection:account.move.completion.rule,function_to_call:0
-msgid "From line name (based on partner name)"
-msgstr ""
-
-#. module: account_move_so_import
-#: selection:account.move.completion.rule,function_to_call:0
-msgid "From line name (based on supplier invoice number)"
-msgstr ""
-
-#. module: account_move_so_import
-#: code:addons/account_move_so_import/models/account_move.py:42
-#, fuzzy, python-format
+#. odoo-python
+#: code:addons/account_move_so_import/models/account_move.py:0
+#, python-format
 msgid ""
-"Line named \"%s\"  was matched by more than one partner while looking on SO "
+"Line named \"%s\" was matched by more than one partner while looking on SO "
 "by ref."
-msgstr ""
-"La línea llamada \"%s\" (Ref: %s) se casó con más de una empresa al buscar "
-"por referencia de pedido."
-
-#. module: account_move_so_import
-#: selection:account.move.completion.rule,function_to_call:0
-msgid "Match Invoice using transaction ID"
-msgstr ""
-
-#. module: account_move_so_import
-#: selection:account.move.completion.rule,function_to_call:0
-msgid "Match Sales Order using transaction ID"
 msgstr ""
 
 #. module: account_move_so_import
