@@ -62,7 +62,6 @@ msgid "Debit partner"
 msgstr "Débito del contacto"
 
 #. module: account_reconcile_restrict_partner_mismatch
-#: model:ir.model.fields,field_description:account_reconcile_restrict_partner_mismatch.field_account_move_line__display_name
 #: model:ir.model.fields,field_description:account_reconcile_restrict_partner_mismatch.field_account_reconcile_partner_mismatch_report__display_name
 msgid "Display Name"
 msgstr "Mostrar Nombre"
@@ -73,7 +72,6 @@ msgid "Full Reconcile"
 msgstr "Conciliación Total"
 
 #. module: account_reconcile_restrict_partner_mismatch
-#: model:ir.model.fields,field_description:account_reconcile_restrict_partner_mismatch.field_account_move_line__id
 #: model:ir.model.fields,field_description:account_reconcile_restrict_partner_mismatch.field_account_reconcile_partner_mismatch_report__id
 msgid "ID"
 msgstr "ID"
@@ -84,7 +82,6 @@ msgid "Journal Item"
 msgstr "Apunte Contable"
 
 #. module: account_reconcile_restrict_partner_mismatch
-#: model:ir.model.fields,field_description:account_reconcile_restrict_partner_mismatch.field_account_move_line____last_update
 #: model:ir.model.fields,field_description:account_reconcile_restrict_partner_mismatch.field_account_reconcile_partner_mismatch_report____last_update
 msgid "Last Modified on"
 msgstr "Última modificación en"
@@ -98,7 +95,6 @@ msgstr "Conciliación Parcial"
 #: model:ir.actions.act_window,name:account_reconcile_restrict_partner_mismatch.action_account_reconcile_partner_mismatch_report
 #: model:ir.ui.menu,name:account_reconcile_restrict_partner_mismatch.menu_account_reconcile_partner_mismatch_report
 #: model_terms:ir.ui.view,arch_db:account_reconcile_restrict_partner_mismatch.account_reconcile_partner_mismatch_report_view_form
-#: model_terms:ir.ui.view,arch_db:account_reconcile_restrict_partner_mismatch.view_account_move_reconciled_report_tree
 msgid "Reconciled items with partner mismatch"
 msgstr "Elementos conciliados con discrepancia del contacto"
 
