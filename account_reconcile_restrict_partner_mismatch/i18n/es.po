@@ -1,0 +1,114 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* account_reconcile_restrict_partner_mismatch
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 14.0\n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: 2022-08-04 18:06+0000\n"
+"Last-Translator: Luis D. Lafaurie <luislafaurie@hotmail.com>\n"
+"Language-Team: none\n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.3.2\n"
+
+#. module: account_reconcile_restrict_partner_mismatch
+#: model:ir.model.fields,field_description:account_reconcile_restrict_partner_mismatch.field_account_reconcile_partner_mismatch_report__account_id
+msgid "Account"
+msgstr "Cuenta"
+
+#. module: account_reconcile_restrict_partner_mismatch
+#: model:ir.model,name:account_reconcile_restrict_partner_mismatch.model_account_reconcile_partner_mismatch_report
+msgid "Account Reconcile Partner Mismatch Report"
+msgstr ""
+"Informe sobre la falta de coincidencia de cuentas conciliadas de los socios"
+
+#. module: account_reconcile_restrict_partner_mismatch
+#: model:ir.model.fields,field_description:account_reconcile_restrict_partner_mismatch.field_account_reconcile_partner_mismatch_report__account_type_id
+msgid "Account type"
+msgstr "Tipo de cuenta"
+
+#. module: account_reconcile_restrict_partner_mismatch
+#: model:ir.model.fields,field_description:account_reconcile_restrict_partner_mismatch.field_account_reconcile_partner_mismatch_report__credit_amount
+msgid "Credit amount"
+msgstr "Importe del crédito"
+
+#. module: account_reconcile_restrict_partner_mismatch
+#: model:ir.model.fields,field_description:account_reconcile_restrict_partner_mismatch.field_account_reconcile_partner_mismatch_report__credit_move_id
+msgid "Credit move"
+msgstr "Movimiento del crédito"
+
+#. module: account_reconcile_restrict_partner_mismatch
+#: model:ir.model.fields,field_description:account_reconcile_restrict_partner_mismatch.field_account_reconcile_partner_mismatch_report__credit_partner_id
+msgid "Credit partner"
+msgstr "Socio del crédito"
+
+#. module: account_reconcile_restrict_partner_mismatch
+#: model:ir.model.fields,field_description:account_reconcile_restrict_partner_mismatch.field_account_reconcile_partner_mismatch_report__debit_amount
+msgid "Debit amount"
+msgstr "Importe de débito"
+
+#. module: account_reconcile_restrict_partner_mismatch
+#: model:ir.model.fields,field_description:account_reconcile_restrict_partner_mismatch.field_account_reconcile_partner_mismatch_report__debit_move_id
+msgid "Debit move"
+msgstr "Movimiento de débito"
+
+#. module: account_reconcile_restrict_partner_mismatch
+#: model:ir.model.fields,field_description:account_reconcile_restrict_partner_mismatch.field_account_reconcile_partner_mismatch_report__debit_partner_id
+msgid "Debit partner"
+msgstr "Socio de débito"
+
+#. module: account_reconcile_restrict_partner_mismatch
+#: model:ir.model.fields,field_description:account_reconcile_restrict_partner_mismatch.field_account_move_line__display_name
+#: model:ir.model.fields,field_description:account_reconcile_restrict_partner_mismatch.field_account_reconcile_partner_mismatch_report__display_name
+msgid "Display Name"
+msgstr "Nombre de la pantalla"
+
+#. module: account_reconcile_restrict_partner_mismatch
+#: model:ir.model.fields,field_description:account_reconcile_restrict_partner_mismatch.field_account_reconcile_partner_mismatch_report__full_reconcile_id
+msgid "Full Reconcile"
+msgstr "Conciliación completa"
+
+#. module: account_reconcile_restrict_partner_mismatch
+#: model:ir.model.fields,field_description:account_reconcile_restrict_partner_mismatch.field_account_move_line__id
+#: model:ir.model.fields,field_description:account_reconcile_restrict_partner_mismatch.field_account_reconcile_partner_mismatch_report__id
+msgid "ID"
+msgstr "Identificación"
+
+#. module: account_reconcile_restrict_partner_mismatch
+#: model:ir.model,name:account_reconcile_restrict_partner_mismatch.model_account_move_line
+msgid "Journal Item"
+msgstr "Artículo del diario"
+
+#. module: account_reconcile_restrict_partner_mismatch
+#: model:ir.model.fields,field_description:account_reconcile_restrict_partner_mismatch.field_account_move_line____last_update
+#: model:ir.model.fields,field_description:account_reconcile_restrict_partner_mismatch.field_account_reconcile_partner_mismatch_report____last_update
+msgid "Last Modified on"
+msgstr "Ultima modificación en"
+
+#. module: account_reconcile_restrict_partner_mismatch
+#: model:ir.model.fields,field_description:account_reconcile_restrict_partner_mismatch.field_account_reconcile_partner_mismatch_report__partial_reconcile_id
+msgid "Partial Reconcile"
+msgstr "Conciliación parcial"
+
+#. module: account_reconcile_restrict_partner_mismatch
+#: model:ir.actions.act_window,name:account_reconcile_restrict_partner_mismatch.action_account_reconcile_partner_mismatch_report
+#: model:ir.ui.menu,name:account_reconcile_restrict_partner_mismatch.menu_account_reconcile_partner_mismatch_report
+#: model_terms:ir.ui.view,arch_db:account_reconcile_restrict_partner_mismatch.account_reconcile_partner_mismatch_report_view_form
+#: model_terms:ir.ui.view,arch_db:account_reconcile_restrict_partner_mismatch.view_account_move_reconciled_report_tree
+msgid "Reconciled items with partner mismatch"
+msgstr "Artículos conciliados sin coincidencia de socio"
+
+#. module: account_reconcile_restrict_partner_mismatch
+#: code:addons/account_reconcile_restrict_partner_mismatch/models/account_move_line.py:0
+#, python-format
+msgid ""
+"The partner has to be the same on all lines for receivable and payable "
+"accounts!"
+msgstr ""
+"¡El socio tiene que ser el mismo en todas las líneas de cuentas por cobrar y "
+"por pagar!"

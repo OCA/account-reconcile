@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="view_account_move_reconciled_report_tree" model="ir.ui.view">
+        <field name="name">Reconciled items with partner mismatch</field>
+        <field name="model">account.reconcile.partner.mismatch.report</field>
+        <field name="arch" type="xml">
+            <tree create="false" delete="false" edit="false">
+                <!-- links are not clickable in tree view
+                only after open form view -->
+                <field name="partial_reconcile_id" />
+                <field name="full_reconcile_id" />
+                <field name="debit_move_id" />
+                <field name="debit_amount" />
+                <field name="debit_partner_id" />
+                <field name="credit_move_id" />
+                <field name="credit_amount" />
+                <field name="credit_partner_id" />
+                <field name="account_type_id" />
+                <field name="account_id" />
+            </tree>
+        </field>
+    </record>
+    <record id="account_reconcile_partner_mismatch_report_view_form" model="ir.ui.view">
+        <field name="name">account.reconcile.partner.mismatch.report.form</field>
+        <field name="model">account.reconcile.partner.mismatch.report</field>
+        <field name="arch" type="xml">
+            <form
+                string="Reconciled items with partner mismatch"
+                create="false"
+                delete="false"
+                edit="false"
+            >
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="partial_reconcile_id" />
+                            <field name="full_reconcile_id" />
+                            <field name="debit_amount" />
+                            <field name="credit_amount" />
+                            <field name="debit_partner_id" />
+                            <field name="credit_partner_id" />
+                        </group>
+                        <group>
+                            <field name="account_id" />
+                            <field name="account_type_id" />
+                            <field name="debit_move_id" />
+                            <field name="credit_move_id" />
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record
+        id="action_account_reconcile_partner_mismatch_report"
+        model="ir.actions.act_window"
+    >
+        <field name="name">Reconciled items with partner mismatch</field>
+        <field name="res_model">account.reconcile.partner.mismatch.report</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <menuitem
+        id="menu_account_reconcile_partner_mismatch_report"
+        parent="account.menu_finance_entries"
+        sequence="80"
+        action="action_account_reconcile_partner_mismatch_report"
+        name="Reconciled items with partner mismatch"
+    />
+</odoo>
