@@ -33,8 +33,10 @@ class AccountAccountReconcile(models.Model):
         )
 
     def _select(self):
-        account_account_name_field = self.env["ir.model.fields"].search(
-            [("model", "=", "account.account"), ("name", "=", "name")]
+        account_account_name_field = (
+            self.env["ir.model.fields"]
+            .sudo()
+            .search([("model", "=", "account.account"), ("name", "=", "name")])
         )
         account_name = (
             f"a.name ->> '{self.env.user.lang}'"

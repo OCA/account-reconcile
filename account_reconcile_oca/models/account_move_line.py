@@ -12,21 +12,18 @@ class AccountMoveLine(models.Model):
     def action_reconcile_manually(self):
         if not self:
             return {}
-        self.mapped("account_id").ensure_one()
-        partner = self.mapped("partner_id")
-        if partner:
-            partner.ensure_one()
-        if self.filtered(lambda r: r.partner_id != partner):
+        accounts = self.mapped("account_id")
+        if len(accounts) > 1:
             raise ValidationError(
-                _("You must reconcile information on the same partner")
+                _("You can only reconcile journal items belonging to the same account.")
             )
+        partner = self.mapped("partner_id")
         action = self.env["ir.actions.act_window"]._for_xml_id(
             "account_reconcile_oca.account_account_reconcile_act_window"
         )
-        action["domain"] = [
-            ("account_id", "=", self.mapped("account_id").id),
-            ("partner_id", "=", partner.id),
-        ]
+        action["domain"] = [("account_id", "=", self.mapped("account_id").id)]
+        if len(partner) == 1:
+            action["domain"] += [("partner_id", "=", partner.id)]
         action["context"] = self.env.context.copy()
         action["context"]["default_account_move_lines"] = self.filtered(
             lambda r: not r.reconciled
