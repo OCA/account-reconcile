@@ -1,7 +1,8 @@
 # Copyright 2023 Dixmit
+# Copyright 2024 FactorLibre - Aritz Olea
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
-from odoo import _, fields, models
+from odoo import _, api, fields, models
 from odoo.exceptions import ValidationError
 
 
@@ -34,3 +35,9 @@ class AccountMoveLine(models.Model):
             lambda r: not r.reconciled
         ).ids
         return action
+
+    @api.model
+    def _create_exchange_difference_move(self, exchange_diff_vals):
+        return super(
+            AccountMoveLine, self.with_context(no_foreign_currency=False)
+        )._create_exchange_difference_move(exchange_diff_vals)

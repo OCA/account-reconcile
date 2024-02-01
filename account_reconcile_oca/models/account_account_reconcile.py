@@ -1,4 +1,5 @@
 # Copyright 2023 Dixmit
+# Copyright 2024 FactorLibre - Aritz Olea
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
 from odoo import api, fields, models
@@ -166,7 +167,11 @@ class AccountAccountReconcile(models.Model):
         lines = self.env["account.move.line"].browse(
             self.reconcile_data_info["counterparts"]
         )
-        lines.reconcile()
+        ctx = self.env.context.copy()
+        if len(lines.currency_id) > 1:
+            ctx["no_foreign_currency"] = True
+        lines.with_context(**ctx).reconcile()
+
         data_record = self.env["account.account.reconcile.data"].search(
             [("user_id", "=", self.env.user.id), ("reconcile_id", "=", self.id)]
         )

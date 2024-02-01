@@ -139,6 +139,62 @@ class TestReconciliationWidget(TestAccountReconciliationCommon):
             }
         )
         cls.move_3.action_post()
+        cls.move_4 = cls.env["account.move"].create(
+            {
+                "line_ids": [
+                    (
+                        0,
+                        0,
+                        {
+                            "account_id": cls.non_current_assets_account.id,
+                            "name": "DEMO",
+                            "credit": 100,
+                        },
+                    ),
+                    (
+                        0,
+                        0,
+                        {
+                            "account_id": cls.equity_account.id,
+                            "name": "DEMO",
+                            "debit": 100,
+                        },
+                    ),
+                ]
+            }
+        )
+        cls.move_4.action_post()
+        cls.move_1_foreign = cls.env["account.move"].create(
+            {
+                "line_ids": [
+                    (
+                        0,
+                        0,
+                        {
+                            "account_id": cls.current_assets_account.id,
+                            "name": "DEMO",
+                            "credit": 100,
+                            "currency_id": cls.currency_usd_id,
+                        },
+                    ),
+                    (
+                        0,
+                        0,
+                        {
+                            "account_id": cls.non_current_assets_account.id,
+                            "name": "DEMO",
+                            "debit": 100,
+                            "currency_id": cls.currency_usd_id,
+                        },
+                    ),
+                ]
+            }
+        )
+        for line in cls.move_1_foreign.line_ids:
+            line.amount_currency = line.currency_id.round(
+                line.balance * line.currency_rate
+            )
+        cls.move_1_foreign.action_post()
 
     def test_reconcile(self):
         account = self.non_current_assets_account
@@ -170,6 +226,36 @@ class TestReconciliationWidget(TestAccountReconciliationCommon):
             [("account_id", "=", account.id)]
         )
         self.assertFalse(reconcile_account)
+
+    def test_reconcile_exchange_currency(self):
+        account = self.non_current_assets_account
+        reconcile_account = self.env["account.account.reconcile"].search(
+            [("account_id", "=", account.id)]
+        )
+        self.assertTrue(reconcile_account)
+        move_4_reconcile_line = self.move_4.line_ids.filtered(
+            lambda r: r.account_id == account
+        )
+        move_1_foreign_reconcile_line = self.move_1_foreign.line_ids.filtered(
+            lambda r: r.account_id == account
+        )
+        with Form(reconcile_account) as f:
+            f.add_account_move_line_id = move_4_reconcile_line
+            f.add_account_move_line_id = move_1_foreign_reconcile_line
+        reconcile_account.reconcile()
+        self.assertTrue(move_4_reconcile_line.reconciled)
+        self.assertTrue(move_1_foreign_reconcile_line.reconciled)
+        self.assertEqual(
+            move_4_reconcile_line.full_reconcile_id,
+            move_1_foreign_reconcile_line.full_reconcile_id,
+        )
+        full_reconcile_id = move_4_reconcile_line.full_reconcile_id
+        exchange_move = full_reconcile_id.exchange_move_id
+        self.assertTrue(exchange_move)
+        exchange_move_reconcile_line = exchange_move.line_ids.filtered(
+            lambda r: r.account_id == account
+        )
+        self.assertTrue(exchange_move_reconcile_line.reconciled)
 
     def test_clean_reconcile(self):
         account = self.non_current_assets_account
