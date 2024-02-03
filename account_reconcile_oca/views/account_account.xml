@@ -8,15 +8,15 @@
         <field name="model">account.account</field>
         <field name="inherit_id" ref="account.view_account_list" />
         <field name="arch" type="xml">
-            <button name="action_read_account" position="after">
+            <tree position="inside">
                 <button
                     type="action"
                     name="%(account_reconcile_oca.account_account_account_account_reconcile_act_window)s"
                     string="Reconcile"
                     class="float-end btn-secondary"
-                    attrs="{'invisible': [('reconcile', '=', False)]}"
+                    invisible="reconcile == False"
                 />
-            </button>
+            </tree>
         </field>
     </record>
 
