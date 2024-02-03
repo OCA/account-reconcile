@@ -111,7 +111,7 @@ class AccountBankStatementLine(models.Model):
                     self.manual_model_id,
                     self.reconcile_data_info["reconcile_auxiliary_id"],
                 ),
-                self.manual_reference
+                self.manual_reference,
             )
         else:
             # Refreshing data
@@ -444,7 +444,7 @@ class AccountBankStatementLine(models.Model):
                     *self._reconcile_data_by_model(
                         data, res["model"], reconcile_auxiliary_id
                     ),
-                    self.manual_reference
+                    self.manual_reference,
                 )
             elif res and res.get("amls"):
                 amount = self.amount_total_signed
@@ -643,7 +643,7 @@ class AccountBankStatementLine(models.Model):
                     *record._reconcile_data_by_model(
                         data, res["model"], reconcile_auxiliary_id
                     ),
-                    self.manual_reference
+                    self.manual_reference,
                 )
             elif res.get("amls"):
                 amount = self.amount
