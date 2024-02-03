@@ -6,7 +6,6 @@ from odoo.exceptions import ValidationError
 
 
 class AccountMoveLine(models.Model):
-
     _inherit = "account.move.line"
 
     def action_reconcile_manually(self):
