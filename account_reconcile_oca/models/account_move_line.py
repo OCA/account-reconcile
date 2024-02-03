@@ -6,7 +6,6 @@ from odoo.exceptions import ValidationError
 
 
 class AccountMoveLine(models.Model):
-
     _inherit = "account.move.line"
 
     invoice_due_date = fields.Date(
