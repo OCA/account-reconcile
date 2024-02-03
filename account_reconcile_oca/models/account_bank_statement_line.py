@@ -186,9 +186,9 @@ class AccountBankStatementLine(models.Model):
                 suspense_line = {
                     "reference": "reconcile_auxiliary;%s" % reconcile_auxiliary_id,
                     "id": False,
-                    "account_id": self.journal_id.suspense_account_id.name_get()[0],
+                    "account_id": self.journal_id.suspense_account_id.display_name,
                     "partner_id": self.partner_id
-                    and self.partner_id.name_get()[0]
+                    and self.partner_id.display_name
                     or (False, self.partner_name),
                     "date": fields.Date.to_string(self.date),
                     "name": self.payment_ref or self.name,
@@ -218,9 +218,7 @@ class AccountBankStatementLine(models.Model):
             )
             or self.manual_account_id.id != line["account_id"][0]
             or self.manual_name != line["name"]
-            or (
-                self.manual_partner_id and self.manual_partner_id.name_get()[0] or False
-            )
+            or (self.manual_partner_id and self.manual_partner_id.display_name or False)
             != line.get("partner_id")
         )
 
@@ -291,9 +289,9 @@ class AccountBankStatementLine(models.Model):
                         {
                             "name": self.manual_name,
                             "partner_id": self.manual_partner_id
-                            and self.manual_partner_id.name_get()[0]
+                            and self.manual_partner_id.display_name
                             or (False, self.partner_name),
-                            "account_id": self.manual_account_id.name_get()[0]
+                            "account_id": self.manual_account_id.display_name
                             if self.manual_account_id
                             else [False, _("Undefined")],
                             "amount": self.manual_amount,
@@ -378,7 +376,7 @@ class AccountBankStatementLine(models.Model):
                     "kind": "other",
                     "account_id": self.env["account.account"]
                     .browse(line["account_id"])
-                    .name_get()[0],
+                    .display_name,
                     "date": fields.Date.to_string(self.date),
                     "line_currency_id": self.company_id.currency_id.id,
                     "currency_id": self.company_id.currency_id.id,
@@ -388,7 +386,7 @@ class AccountBankStatementLine(models.Model):
             reconcile_auxiliary_id += 1
             if line.get("partner_id"):
                 new_line["partner_id"] = (
-                    self.env["res.partner"].browse(line["partner_id"]).name_get()[0]
+                    self.env["res.partner"].browse(line["partner_id"]).display_name
                 )
             new_data.append(new_line)
         return new_data, reconcile_auxiliary_id
@@ -411,7 +409,7 @@ class AccountBankStatementLine(models.Model):
                 {
                     "reference": "reconcile_auxiliary;%s" % reconcile_auxiliary_id,
                     "id": False,
-                    "account_id": account.name_get()[0],
+                    "account_id": account.display_name,
                     "partner_id": False,
                     "date": fields.Date.to_string(self.date),
                     "name": self.payment_ref or self.name,

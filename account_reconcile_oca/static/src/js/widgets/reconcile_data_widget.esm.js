@@ -1,8 +1,9 @@
 /** @odoo-module **/
 
-import fieldUtils from "web.field_utils";
+import {formatDate, formatMonetary} from "@web/views/fields/formatters";
+import {parseDate} from "@web/core/l10n/dates";
 import {registry} from "@web/core/registry";
-import session from "web.session";
+import {session} from "@web/session";
 
 const {Component} = owl;
 
@@ -22,28 +23,16 @@ export class AccountReconcileDataWidget extends Component {
     getReconcileLines() {
         var data = this.props.record.data[this.props.name].data;
         for (var line in data) {
-            data[line].amount_format = fieldUtils.format.monetary(
-                data[line].amount,
-                undefined,
-                {
-                    currency: session.get_currency(data[line].currency_id),
-                }
-            );
-            data[line].debit_format = fieldUtils.format.monetary(
-                data[line].debit,
-                undefined,
-                {
-                    currency: session.get_currency(data[line].currency_id),
-                }
-            );
-            data[line].credit_format = fieldUtils.format.monetary(
-                data[line].credit,
-                undefined,
-                {
-                    currency: session.get_currency(data[line].currency_id),
-                }
-            );
-            data[line].amount_currency_format = fieldUtils.format.monetary(
+            data[line].amount_format = formatMonetary(data[line].amount, undefined, {
+                currency: session.get_currency(data[line].currency_id),
+            });
+            data[line].debit_format = formatMonetary(data[line].debit, undefined, {
+                currency: session.get_currency(data[line].currency_id),
+            });
+            data[line].credit_format = formatMonetary(data[line].credit, undefined, {
+                currency: session.get_currency(data[line].currency_id),
+            });
+            data[line].amount_currency_format = formatMonetary(
                 data[line].currency_amount,
                 undefined,
                 {
@@ -51,7 +40,7 @@ export class AccountReconcileDataWidget extends Component {
                 }
             );
             if (data[line].original_amount) {
-                data[line].original_amount_format = fieldUtils.format.monetary(
+                data[line].original_amount_format = formatMonetary(
                     data[line].original_amount,
                     undefined,
                     {
@@ -59,8 +48,8 @@ export class AccountReconcileDataWidget extends Component {
                     }
                 );
             }
-            data[line].date_format = fieldUtils.format.date(
-                fieldUtils.parse.date(data[line].date, undefined, {isUTC: true})
+            data[line].date_format = formatDate(
+                parseDate(data[line].date, undefined, {isUTC: true})
             );
         }
         return data;

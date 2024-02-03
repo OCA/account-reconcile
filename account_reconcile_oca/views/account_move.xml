@@ -15,7 +15,7 @@
                     string="Bank reconcile"
                     class="btn btn-primary"
                     icon="fa-list"
-                    attrs="{'invisible': [('statement_line_id', '=', False)]}"
+                    invisible="statement_line_id == False"
                 />
             </div>
         </field>

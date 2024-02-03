@@ -4,7 +4,6 @@
         t-name="account_reconcile_oca.ReconcileRenderer"
         t-inherit="web.KanbanRenderer"
         t-inherit-mode="primary"
-        owl="1"
     >
         <xpath expr="div[hasclass('o_kanban_renderer')]" position="attributes">
             <attribute
@@ -23,7 +22,6 @@
         t-name="account_reconcile_oca.ReconcileController"
         t-inherit="web.KanbanView"
         t-inherit-mode="primary"
-        owl="1"
     >
         <!-- we pass to the component the selected record -->
         <xpath expr="//Layout/t[2]" position="attributes">
@@ -42,17 +40,17 @@
             </div>
         </xpath>
     </t>
-    <t t-name="account_reconcile.ReconcileView.Buttons" owl="1">
+    <t t-name="account_reconcile.ReconcileView.Buttons">
         <button
             t-on-click="onClickNewButton"
             class="btn btn-primary"
             t-if="activeActions.create"
         >Create</button>
     </t>
-    <t t-name="account_reconcile_oca.ReconcileMatchWidget" owl="1">
+    <t t-name="account_reconcile_oca.ReconcileMatchWidget">
         <View t-props="listViewProperties" />
     </t>
-    <t t-name="account_reconcile_oca.ReconcileDataWidget" owl="1">
+    <t t-name="account_reconcile_oca.ReconcileDataWidget">
         <table
             class="table table-sm position-relative mb-0 table-striped o_reconcile_widget_table"
             style="table-layout: auto"
@@ -138,7 +136,7 @@
             </tbody>
         </table>
     </t>
-    <t t-name="account_reconcile_oca.AccountReconcileChatterWidget" owl="1">
+    <t t-name="account_reconcile_oca.AccountReconcileChatterWidget">
         <ChatterContainer
             threadModel="this.props.record.fields[this.props.name].relation"
             threadId="this.props.value[0]"
@@ -148,7 +146,6 @@
         t-name="account_reconcile_oca.ReconcileMoveLineController"
         t-inherit="web.ListView"
         t-inherit-mode="primary"
-        owl="1"
     >
         <xpath expr="//t[@list='model.root']" position="attributes">
             <attribute name="parentRecord">props.parentRecord</attribute>
