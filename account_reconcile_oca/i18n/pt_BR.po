@@ -565,8 +565,8 @@ msgstr "Bom trabalho! Tudo foi reconciliado"
 #. odoo-python
 #: code:addons/account_reconcile_oca/models/account_move_line.py:0
 #, python-format
-msgid "You must reconcile information on the same partner"
-msgstr "Você deve reconciliar informações sobre o mesmo parceiro"
+msgid "You can only reconcile journal items belonging to the same account."
+msgstr ""
 
 #. module: account_reconcile_oca
 #: model_terms:ir.ui.view,arch_db:account_reconcile_oca.bank_statement_line_form_reconcile_view
@@ -587,6 +587,10 @@ msgstr "será reduzido em"
 #: model_terms:ir.ui.view,arch_db:account_reconcile_oca.bank_statement_line_form_reconcile_view
 msgid "with an open amount"
 msgstr "com um valor em aberto"
+
+#, python-format
+#~ msgid "You must reconcile information on the same partner"
+#~ msgstr "Você deve reconciliar informações sobre o mesmo parceiro"
 
 #~ msgid "Reset"
 #~ msgstr "Reiniciar"

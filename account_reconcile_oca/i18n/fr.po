@@ -569,7 +569,7 @@ msgstr "Bravo ! Tout a été lettré"
 #. odoo-python
 #: code:addons/account_reconcile_oca/models/account_move_line.py:0
 #, python-format
-msgid "You must reconcile information on the same partner"
+msgid "You can only reconcile journal items belonging to the same account."
 msgstr ""
 
 #. module: account_reconcile_oca
