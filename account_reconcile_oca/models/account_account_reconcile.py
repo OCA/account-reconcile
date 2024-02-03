@@ -24,7 +24,7 @@ class AccountAccountReconcile(models.Model):
 
     @property
     def _table_query(self):
-        return "%s %s %s %s %s" % (
+        return "{} {} {} {} {}".format(
             self._select(),
             self._from(),
             self._where(),
