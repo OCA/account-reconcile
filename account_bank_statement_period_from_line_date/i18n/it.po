@@ -9,8 +9,8 @@ msgstr ""
 "Project-Id-Version: bank-statement-reconcile (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2015-10-14 09:25+0000\n"
-"PO-Revision-Date: 2023-12-22 14:35+0000\n"
-"Last-Translator: Francesco Foresti <francesco.foresti@ooops404.com>\n"
+"PO-Revision-Date: 2024-02-07 10:35+0000\n"
+"Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: Italian (http://www.transifex.com/oca/"
 "OCA-bank-statement-reconcile-8-0/language/it/)\n"
 "Language: it\n"
@@ -28,7 +28,7 @@ msgstr "Estratto conto bancario"
 #. module: account_bank_statement_period_from_line_date
 #: model:ir.model,name:account_bank_statement_period_from_line_date.model_account_bank_statement_line
 msgid "Bank Statement Line"
-msgstr "Linea estratto conto"
+msgstr "Riga estratto conto"
 
 #. module: account_bank_statement_period_from_line_date
 #: model:ir.model,name:account_bank_statement_period_from_line_date.model_account_move_line
