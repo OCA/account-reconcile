@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: bank-statement-reconcile (9.0)\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-09-28 11:33+0000\n"
-"PO-Revision-Date: 2023-01-18 11:53+0000\n"
-"Last-Translator: Francesco Foresti <francesco.foresti@ooops404.com>\n"
+"PO-Revision-Date: 2024-02-07 10:37+0000\n"
+"Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: Italian (http://www.transifex.com/oca/"
 "OCA-bank-statement-reconcile-9-0/language/it/)\n"
 "Language: it\n"
@@ -17,12 +17,12 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.14.1\n"
+"X-Generator: Weblate 4.17\n"
 
 #. module: base_transaction_id
 #: model:ir.model,name:base_transaction_id.model_account_bank_statement_line
 msgid "Bank Statement Line"
-msgstr "Linea estratto conto"
+msgstr "Riga estratto conto"
 
 #. module: base_transaction_id
 #: model:ir.model,name:base_transaction_id.model_account_invoice
