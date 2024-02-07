@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: bank-statement-reconcile (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-12-10 01:06+0000\n"
-"PO-Revision-Date: 2023-05-31 15:08+0000\n"
+"PO-Revision-Date: 2024-02-07 10:35+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: Italian (http://www.transifex.com/oca/"
 "OCA-bank-statement-reconcile-8-0/language/it/)\n"
@@ -45,7 +45,7 @@ msgstr ""
 #. module: account_statement_operation_rule
 #: model:ir.model,name:account_statement_operation_rule.model_account_bank_statement_line
 msgid "Bank Statement Line"
-msgstr "Linea estratto conto"
+msgstr "Riga estratto conto"
 
 #. module: account_statement_operation_rule
 #: field:account.statement.operation.rule,create_uid:0
