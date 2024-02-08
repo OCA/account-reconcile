@@ -1,9 +1,7 @@
 /** @odoo-module **/
-
-import {formatDate, formatMonetary} from "@web/views/fields/formatters";
-import {parseDate} from "@web/core/l10n/dates";
+import {formatDate, parseDate} from "@web/core/l10n/dates";
+import {formatMonetary} from "@web/views/fields/formatters";
 import {registry} from "@web/core/registry";
-import {session} from "@web/session";
 
 const {Component} = owl;
 
@@ -24,19 +22,19 @@ export class AccountReconcileDataWidget extends Component {
         var data = this.props.record.data[this.props.name].data;
         for (var line in data) {
             data[line].amount_format = formatMonetary(data[line].amount, undefined, {
-                currency: session.get_currency(data[line].currency_id),
+                currency: data[line].currency_id,
             });
             data[line].debit_format = formatMonetary(data[line].debit, undefined, {
-                currency: session.get_currency(data[line].currency_id),
+                currency: data[line].currency_id,
             });
             data[line].credit_format = formatMonetary(data[line].credit, undefined, {
-                currency: session.get_currency(data[line].currency_id),
+                currency: data[line].currency_id,
             });
             data[line].amount_currency_format = formatMonetary(
                 data[line].currency_amount,
                 undefined,
                 {
-                    currency: session.get_currency(data[line].line_currency_id),
+                    currency: data[line].line_currency_id,
                 }
             );
             if (data[line].original_amount) {
@@ -44,7 +42,7 @@ export class AccountReconcileDataWidget extends Component {
                     data[line].original_amount,
                     undefined,
                     {
-                        currency: session.get_currency(data[line].currency_id),
+                        currency: data[line].currency_id,
                     }
                 );
             }
@@ -75,6 +73,10 @@ export class AccountReconcileDataWidget extends Component {
 }
 AccountReconcileDataWidget.template = "account_reconcile_oca.ReconcileDataWidget";
 
+export const AccountReconcileDataWidgetField = {
+    component: AccountReconcileDataWidget,
+    supportedTypes: [],
+};
 registry
     .category("fields")
-    .add("account_reconcile_oca_data", AccountReconcileDataWidget);
+    .add("account_reconcile_oca_data", AccountReconcileDataWidgetField);
