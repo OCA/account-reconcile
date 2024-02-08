@@ -8,7 +8,12 @@
         <field name="model">account.move.line</field>
         <field name="priority">99</field>
         <field name="arch" type="xml">
-            <tree js_class="reconcile_move_line">
+            <tree
+                js_class="reconcile_move_line"
+                create="0"
+                edit="0"
+                export_xlsx="false"
+            >
                 <field name="date" />
                 <field name="move_id" optional="show" />
                 <field name="invoice_due_date" optional="show" />

@@ -3,7 +3,7 @@
 
 from collections import defaultdict
 
-from odoo import Command, _, api, fields, models
+from odoo import Command, _, api, fields, models, tools
 from odoo.exceptions import UserError
 from odoo.tools import float_is_zero
 
@@ -186,10 +186,14 @@ class AccountBankStatementLine(models.Model):
                 suspense_line = {
                     "reference": "reconcile_auxiliary;%s" % reconcile_auxiliary_id,
                     "id": False,
-                    "account_id": self.journal_id.suspense_account_id.display_name,
+                    "account_id": [
+                        self.journal_id.suspense_account_id.id,
+                        self.journal_id.suspense_account_id.display_name,
+                    ],
                     "partner_id": self.partner_id
-                    and self.partner_id.display_name
-                    or (False, self.partner_name),
+                    and [self.partner_id.id, self.partner_id.display_name]
+                    or (self.partner_name and (False, self.partner_name))
+                    or False,
                     "date": fields.Date.to_string(self.date),
                     "name": self.payment_ref or self.name,
                     "amount": -total_amount,
@@ -289,9 +293,16 @@ class AccountBankStatementLine(models.Model):
                         {
                             "name": self.manual_name,
                             "partner_id": self.manual_partner_id
-                            and self.manual_partner_id.display_name
-                            or (False, self.partner_name),
-                            "account_id": self.manual_account_id.display_name
+                            and [
+                                self.manual_partner_id.id,
+                                self.manual_partner_id.display_name,
+                            ]
+                            or (self.partner_name and (False, self.partner_name))
+                            or False,
+                            "account_id": [
+                                self.manual_account_id.id,
+                                self.manual_account_id.display_name,
+                            ]
                             if self.manual_account_id
                             else [False, _("Undefined")],
                             "amount": self.manual_amount,
@@ -374,9 +385,12 @@ class AccountBankStatementLine(models.Model):
                     "debit": amount if amount > 0 else 0,
                     "credit": -amount if amount < 0 else 0,
                     "kind": "other",
-                    "account_id": self.env["account.account"]
-                    .browse(line["account_id"])
-                    .display_name,
+                    "account_id": [
+                        line["account_id"],
+                        self.env["account.account"]
+                        .browse(line["account_id"])
+                        .display_name,
+                    ],
                     "date": fields.Date.to_string(self.date),
                     "line_currency_id": self.company_id.currency_id.id,
                     "currency_id": self.company_id.currency_id.id,
@@ -386,7 +400,8 @@ class AccountBankStatementLine(models.Model):
             reconcile_auxiliary_id += 1
             if line.get("partner_id"):
                 new_line["partner_id"] = (
-                    self.env["res.partner"].browse(line["partner_id"]).display_name
+                    line["partner_id"],
+                    self.env["res.partner"].browse(line["partner_id"]).display_name,
                 )
             new_data.append(new_line)
         return new_data, reconcile_auxiliary_id
@@ -409,7 +424,7 @@ class AccountBankStatementLine(models.Model):
                 {
                     "reference": "reconcile_auxiliary;%s" % reconcile_auxiliary_id,
                     "id": False,
-                    "account_id": account.display_name,
+                    "account_id": [account.id, account.display_name],
                     "partner_id": False,
                     "date": fields.Date.to_string(self.date),
                     "name": self.payment_ref or self.name,
@@ -620,6 +635,10 @@ class AccountBankStatementLine(models.Model):
     @api.model_create_multi
     def create(self, mvals):
         result = super().create(mvals)
+        if tools.config["test_enable"] and not self.env.context.get(
+            "_test_account_reconcile_oca"
+        ):
+            return result
         models = self.env["account.reconcile.model"].search(
             [
                 ("rule_type", "in", ["invoice_matching", "writeoff_suggestion"]),
@@ -726,6 +745,6 @@ class AccountBankStatementLine(models.Model):
             max_amount=max_amount,
             from_unreconcile=from_unreconcile,
         )
-        if vals["partner_id"] is False:
+        if vals["partner_id"] is False and self.partner_name:
             vals["partner_id"] = (False, self.partner_name)
         return vals

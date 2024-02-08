@@ -48,7 +48,7 @@
         >Create</button>
     </t>
     <t t-name="account_reconcile_oca.ReconcileMatchWidget">
-        <View t-props="listViewProperties" />
+        <View t-props="this.listViewProperties" />
     </t>
     <t t-name="account_reconcile_oca.ReconcileDataWidget">
         <table
@@ -137,9 +137,9 @@
         </table>
     </t>
     <t t-name="account_reconcile_oca.AccountReconcileChatterWidget">
-        <ChatterContainer
+        <Chatter
             threadModel="this.props.record.fields[this.props.name].relation"
-            threadId="this.props.value[0]"
+            threadId="this.props.record.data[this.props.name][0]"
         />
     </t>
     <t
