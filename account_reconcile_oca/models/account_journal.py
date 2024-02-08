@@ -15,6 +15,9 @@ class AccountJournal(models.Model):
 
     def get_rainbowman_message(self):
         self.ensure_one()
-        if self.get_journal_dashboard_datas()["number_to_reconcile"] > 0:
+        if (
+            self._get_journal_dashboard_data_batched()[self.id]["number_to_reconcile"]
+            > 0
+        ):
             return False
         return _("Well done! Everything has been reconciled")

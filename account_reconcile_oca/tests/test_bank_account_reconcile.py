@@ -3,27 +3,34 @@ import time
 from odoo.exceptions import UserError
 from odoo.tests import Form, tagged
 
-from odoo.addons.account.tests.common import TestAccountReconciliationCommon
+from odoo.addons.account_reconcile_model_oca.tests.common import (
+    TestAccountReconciliationCommon,
+)
 
 
 @tagged("post_install", "-at_install")
 class TestReconciliationWidget(TestAccountReconciliationCommon):
     @classmethod
+    def _setup_context(cls):
+        return {**cls.env.context, "_test_account_reconcile_oca": True}
+
+    @classmethod
     def setUpClass(cls, chart_template_ref=None):
         super().setUpClass(chart_template_ref=chart_template_ref)
+        cls.env = cls.env(context=cls._setup_context())
 
         cls.acc_bank_stmt_model = cls.env["account.bank.statement"]
         cls.acc_bank_stmt_line_model = cls.env["account.bank.statement.line"]
         cls.bank_journal_usd.suspense_account_id = (
-            cls.company.account_journal_suspense_account_id
+            cls.env.company.account_journal_suspense_account_id
         )
         cls.bank_journal_euro.suspense_account_id = (
-            cls.company.account_journal_suspense_account_id
+            cls.env.company.account_journal_suspense_account_id
         )
         cls.current_assets_account = cls.env["account.account"].search(
             [
                 ("account_type", "=", "asset_current"),
-                ("company_id", "=", cls.company.id),
+                ("company_id", "=", cls.env.company.id),
             ],
             limit=1,
         )
