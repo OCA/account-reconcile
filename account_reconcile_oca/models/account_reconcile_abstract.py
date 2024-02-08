@@ -68,8 +68,10 @@ class AccountReconcileAbstract(models.AbstractModel):
         vals = {
             "reference": "account.move.line;%s" % line.id,
             "id": line.id,
-            "account_id": line.account_id.display_name,
-            "partner_id": line.partner_id and line.partner_id.display_name or False,
+            "account_id": [line.account_id.id, line.account_id.display_name],
+            "partner_id": [line.partner_id.id, line.partner_id.display_name]
+            if line.partner_id
+            else False,
             "date": fields.Date.to_string(line.date),
             "name": line.name,
             "debit": amount if amount > 0 else 0.0,
