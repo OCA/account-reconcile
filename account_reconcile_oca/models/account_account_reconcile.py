@@ -52,7 +52,7 @@ class AccountAccountReconcile(models.Model):
                 FALSE as is_reconciled,
                 aml.currency_id as currency_id,
                 a.company_id,
-                false as foreign_currency_id
+                null as foreign_currency_id
         """
 
     def _from(self):
