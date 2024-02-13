@@ -167,9 +167,13 @@ class AccountAccountReconcile(models.Model):
         lines = self.env["account.move.line"].browse(
             self.reconcile_data_info["counterparts"]
         )
+        account = lines.mapped("account_id")[0]
         ctx = self.env.context.copy()
         if len(lines.currency_id) > 1:
-            ctx["no_foreign_currency"] = True
+            if account.account_type == "liability_payable":
+                ctx["no_credit_currency"] = True
+            elif account.account_type == "asset_receivable":
+                ctx["no_debit_currency"] = True
         lines.with_context(**ctx).reconcile()
 
         data_record = self.env["account.account.reconcile.data"].search(

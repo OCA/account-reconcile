@@ -39,5 +39,6 @@ class AccountMoveLine(models.Model):
     @api.model
     def _create_exchange_difference_move(self, exchange_diff_vals):
         return super(
-            AccountMoveLine, self.with_context(no_foreign_currency=False)
+            AccountMoveLine,
+            self.with_context(no_credit_currency=False, no_debit_currency=False),
         )._create_exchange_difference_move(exchange_diff_vals)
