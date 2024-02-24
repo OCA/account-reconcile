@@ -1,5 +1,6 @@
 from odoo import _, fields, models
 from odoo.exceptions import UserError
+from odoo.tools import float_is_zero
 
 
 class AccountBankStatement(models.Model):
@@ -195,7 +196,26 @@ class AccountBankStatementLine(models.Model):
             aml_dict["partner_id"] = self.partner_id.id
             aml_dict["statement_line_id"] = self.id
             self._prepare_move_line_for_currency(aml_dict, date)
-
+        # Adjust latest counterpart move debit/credit if currency amount is balanced
+        # but company amount is not
+        if self.currency_id != self.company_currency_id:
+            all_amls = to_create + [liquidity_aml_dict]
+            balance_currency = sum(x["amount_currency"] for x in all_amls)
+            balance = sum(x["debit"] - x["credit"] for x in all_amls)
+            if float_is_zero(
+                balance_currency, precision_rounding=self.currency_id.rounding
+            ) and not float_is_zero(
+                balance, precision_rounding=self.company_currency_id.rounding
+            ):
+                aml_dict = to_create[-1]
+                if aml_dict["debit"]:
+                    aml_dict["debit"] = self.company_currency_id.round(
+                        aml_dict["debit"] - balance
+                    )
+                else:
+                    aml_dict["credit"] = self.company_currency_id.round(
+                        aml_dict["credit"] + balance
+                    )
         # Create write-offs
         wo_aml = self.env["account.move.line"]
         for aml_dict in new_aml_dicts:

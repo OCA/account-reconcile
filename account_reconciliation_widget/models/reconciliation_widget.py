@@ -328,7 +328,10 @@ class AccountReconciliation(models.AbstractModel):
             domain += srch_domain
         bank_statement_lines = self.env["account.bank.statement.line"].search(domain)
 
-        results = self.get_bank_statement_line_data(bank_statement_lines.ids)
+        results = self.get_bank_statement_line_data(
+            bank_statement_lines.ids,
+            excluded_ids=bank_statement_lines.move_id.line_ids.ids,
+        )
         bank_statement_lines_left = self.env["account.bank.statement.line"].browse(
             [line["st_line"]["id"] for line in results["lines"]]
         )
