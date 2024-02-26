@@ -117,6 +117,19 @@
         </field>
     </record>
 
+    <record id="account_bank_statement_line_search" model="ir.ui.view">
+        <field name="name">account.bank.statement.line.search</field>
+        <field name="model">account.bank.statement.line</field>
+        <field
+            name="inherit_id"
+            ref="account_statement_base.account_bank_statement_line_search"
+        />
+        <field name="arch" type="xml">
+            <field name="journal_id" position="after">
+                <field name="move_id" />
+            </field>
+        </field>
+    </record>
     <record id="bank_statement_line_form_reconcile_view" model="ir.ui.view">
         <field name="name">account.bank.statement.line.reconcile</field>
         <field name="model">account.bank.statement.line</field>
@@ -130,14 +143,14 @@
                             type="object"
                             string="Validate"
                             accesskey="v"
-                            class="btn btn-primary"
+                            class="btn btn-primary mx-1"
                             invisible="is_reconciled == True or can_reconcile == False"
                         />
                         <button
                             name="reconcile_bank_line"
                             type="object"
                             string="Reconcile"
-                            class="btn btn-primary disabled"
+                            class="btn btn-primary disabled mx-1"
                             invisible="is_reconciled == True or can_reconcile == True"
                         />
                         <button
@@ -145,7 +158,7 @@
                             type="object"
                             string="Unreconcile"
                             accesskey="r"
-                            class="btn btn-warning"
+                            class="btn btn-warning mx-1"
                             invisible="is_reconciled == False"
                             confirm="Are you sure that the move should be unreconciled?"
                         />
@@ -153,20 +166,21 @@
                             name="clean_reconcile"
                             type="object"
                             string="Reset reconciliation"
-                            class="btn btn-secondary"
+                            class="btn btn-secondary mx-1"
                             invisible="is_reconciled == True"
                         />
                         <button
                             name="action_to_check"
                             string="To Check"
-                            class="btn btn-secondary"
+                            class="btn btn-secondary mx-1"
                             accesskey="c"
                             type="object"
                             invisible="to_check == True"
                         />
-                            <button
+                        <button
                             name="action_checked"
                             string="Set as Checked"
+                            class="btn btn-secondary mx-1"
                             accesskey="c"
                             type="object"
                             invisible="to_check == False"
@@ -176,7 +190,7 @@
                             type="object"
                             accesskey="m"
                             string="View move"
-                            class="btn btn-info"
+                            class="btn btn-info mx-1"
                         />
                     </div>
                 </div>
@@ -367,7 +381,7 @@
     >
         <field name="name">Reconcile bank statement lines</field>
         <field name="res_model">account.bank.statement.line</field>
-        <field name="context">{'search_default_move_id': id}</field>
+        <field name="context">{'search_default_move_id': active_id}</field>
         <field name="view_mode">kanban</field>
         <field
             name="view_ids"
