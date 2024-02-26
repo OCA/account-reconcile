@@ -21,14 +21,14 @@
                             name="reconcile"
                             type="object"
                             string="Reconcile"
-                            class="btn btn-primary"
+                            class="btn btn-primary mx-1"
                             invisible="is_reconciled == True"
                         />
                         <button
                             name="clean_reconcile"
                             type="object"
                             string="Clean"
-                            class="btn btn-secondary"
+                            class="btn btn-secondary mx-1"
                             invisible="is_reconciled == True"
                         />
                     </div>
