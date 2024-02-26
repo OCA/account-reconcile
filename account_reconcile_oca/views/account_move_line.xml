@@ -19,8 +19,8 @@
                 <field name="invoice_due_date" optional="show" />
                 <field name="account_id" optional="show" />
                 <field name="partner_id" />
-                <field name="company_currency_id" invisible="1" />
-                <field name="currency_id" invisible="1" />
+                <field name="company_currency_id" column_invisible="1" />
+                <field name="currency_id" column_invisible="1" />
                 <field name="name" optional="show" />
                 <field name="amount_residual_currency" optional="hide" />
                 <field name="amount_residual" optional="show" />
