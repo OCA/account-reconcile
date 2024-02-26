@@ -117,6 +117,19 @@
         </field>
     </record>
 
+    <record id="account_bank_statement_line_search" model="ir.ui.view">
+        <field name="name">account.bank.statement.line.search</field>
+        <field name="model">account.bank.statement.line</field>
+        <field
+            name="inherit_id"
+            ref="account_statement_base.account_bank_statement_line_search"
+        />
+        <field name="arch" type="xml">
+            <field name="journal_id" position="after">
+                <field name="move_id" />
+            </field>
+        </field>
+    </record>
     <record id="bank_statement_line_form_reconcile_view" model="ir.ui.view">
         <field name="name">account.bank.statement.line.reconcile</field>
         <field name="model">account.bank.statement.line</field>
@@ -367,7 +380,7 @@
     >
         <field name="name">Reconcile bank statement lines</field>
         <field name="res_model">account.bank.statement.line</field>
-        <field name="context">{'search_default_move_id': id}</field>
+        <field name="context">{'search_default_move_id': active_id}</field>
         <field name="view_mode">kanban</field>
         <field
             name="view_ids"
