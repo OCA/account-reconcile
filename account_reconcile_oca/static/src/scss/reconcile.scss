@@ -26,23 +26,8 @@
         height: 100%;
     }
     .o_form_view {
-        .btn-info:not(.dropdown-toggle):not(.dropdown-item) {
-            text-transform: uppercase;
-        }
         .o_form_statusbar.o_account_reconcile_oca_statusbar {
-            .btn:not(.dropdown-toggle):not(.dropdown-item) {
-                text-transform: uppercase;
-            }
             height: 40px;
-            > .o_statusbar_buttons {
-                height: 100%;
-                > .btn {
-                    margin: 0;
-                    height: 100%;
-                    padding: 10px;
-                    border-radius: 0;
-                }
-            }
         }
         .o_field_account_reconcile_oca_data {
             .o_field_account_reconcile_oca_balance_float {

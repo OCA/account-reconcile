@@ -1,5 +1,5 @@
 /** @odoo-module */
-const {useState, useSubEnv} = owl;
+const {useState, useSubEnv, onMounted} = owl;
 import {useBus, useService} from "@web/core/utils/hooks";
 import {KanbanController} from "@web/views/kanban/kanban_controller";
 import {View} from "@web/views/view";
@@ -22,6 +22,7 @@ export class ReconcileController extends KanbanController {
         useBus(this.model.bus, "update", () => {
             this.selectRecord();
         });
+        onMounted(() => this.selectRecord());
     }
     exposeController(controller) {
         this.form_controller = controller;
