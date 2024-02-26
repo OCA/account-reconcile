@@ -8,12 +8,7 @@ import {Chatter} from "@mail/core/web/chatter";
 
 const {Component} = owl;
 
-export class AccountReconcileChatterWidget extends Component {
-    setup() {
-        super.setup();
-        console.log(this);
-    }
-}
+export class AccountReconcileChatterWidget extends Component {}
 AccountReconcileChatterWidget.props = {...standardFieldProps};
 AccountReconcileChatterWidget.template =
     "account_reconcile_oca.AccountReconcileChatterWidget";
