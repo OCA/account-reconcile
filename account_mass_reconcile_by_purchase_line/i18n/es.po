@@ -1,0 +1,123 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* account_mass_reconcile_by_purchase_line
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 14.0\n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: 2022-08-04 18:06+0000\n"
+"Last-Translator: Luis D. Lafaurie <luislafaurie@hotmail.com>\n"
+"Language-Team: none\n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.3.2\n"
+
+#. module: account_mass_reconcile_by_purchase_line
+#: model:ir.model.fields,field_description:account_mass_reconcile_by_purchase_line.field_mass_reconcile_advanced_by_purchase_line__account_id
+msgid "Account"
+msgstr "Cuenta"
+
+#. module: account_mass_reconcile_by_purchase_line
+#: model:ir.model.fields,field_description:account_mass_reconcile_by_purchase_line.field_mass_reconcile_advanced_by_purchase_line__account_lost_id
+msgid "Account Lost"
+msgstr "Cuenta perdida"
+
+#. module: account_mass_reconcile_by_purchase_line
+#: model:ir.model.fields,field_description:account_mass_reconcile_by_purchase_line.field_mass_reconcile_advanced_by_purchase_line__account_profit_id
+msgid "Account Profit"
+msgstr "Cuenta de ganancias"
+
+#. module: account_mass_reconcile_by_purchase_line
+#: model_terms:ir.ui.view,arch_db:account_mass_reconcile_by_purchase_line.account_mass_reconcile_form
+msgid "Advanced. Purchase Order Line"
+msgstr "Avanzado. Línea de pedido"
+
+#. module: account_mass_reconcile_by_purchase_line
+#: model:ir.model.fields,field_description:account_mass_reconcile_by_purchase_line.field_mass_reconcile_advanced_by_purchase_line__create_uid
+msgid "Created by"
+msgstr "Creado por"
+
+#. module: account_mass_reconcile_by_purchase_line
+#: model:ir.model.fields,field_description:account_mass_reconcile_by_purchase_line.field_mass_reconcile_advanced_by_purchase_line__create_date
+msgid "Created on"
+msgstr "Creado en"
+
+#. module: account_mass_reconcile_by_purchase_line
+#: model:ir.model.fields,field_description:account_mass_reconcile_by_purchase_line.field_mass_reconcile_advanced_by_purchase_line__date_base_on
+msgid "Date of reconciliation"
+msgstr "Fecha de reconciliación"
+
+#. module: account_mass_reconcile_by_purchase_line
+#: model:ir.model.fields,field_description:account_mass_reconcile_by_purchase_line.field_mass_reconcile_advanced_by_purchase_line__display_name
+msgid "Display Name"
+msgstr "Mostrar nombre"
+
+#. module: account_mass_reconcile_by_purchase_line
+#: model:ir.model.fields,field_description:account_mass_reconcile_by_purchase_line.field_mass_reconcile_advanced_by_purchase_line___filter
+msgid "Filter"
+msgstr "Filtrar"
+
+#. module: account_mass_reconcile_by_purchase_line
+#: model:ir.model.fields,field_description:account_mass_reconcile_by_purchase_line.field_mass_reconcile_advanced_by_purchase_line__id
+msgid "ID"
+msgstr "Identificación"
+
+#. module: account_mass_reconcile_by_purchase_line
+#: model:ir.model.fields,field_description:account_mass_reconcile_by_purchase_line.field_mass_reconcile_advanced_by_purchase_line__journal_id
+msgid "Journal"
+msgstr "Revista"
+
+#. module: account_mass_reconcile_by_purchase_line
+#: model:ir.model.fields,field_description:account_mass_reconcile_by_purchase_line.field_mass_reconcile_advanced_by_purchase_line____last_update
+msgid "Last Modified on"
+msgstr "Última modificación en"
+
+#. module: account_mass_reconcile_by_purchase_line
+#: model:ir.model.fields,field_description:account_mass_reconcile_by_purchase_line.field_mass_reconcile_advanced_by_purchase_line__write_uid
+msgid "Last Updated by"
+msgstr "Última actualización por"
+
+#. module: account_mass_reconcile_by_purchase_line
+#: model:ir.model.fields,field_description:account_mass_reconcile_by_purchase_line.field_mass_reconcile_advanced_by_purchase_line__write_date
+msgid "Last Updated on"
+msgstr "Última actualización en"
+
+#. module: account_mass_reconcile_by_purchase_line
+#: model:ir.model,name:account_mass_reconcile_by_purchase_line.model_mass_reconcile_advanced
+msgid "Mass Reconcile Advanced"
+msgstr "Conciliación masiva avanzada"
+
+#. module: account_mass_reconcile_by_purchase_line
+#: model:ir.model,name:account_mass_reconcile_by_purchase_line.model_mass_reconcile_advanced_by_purchase_line
+msgid "Mass Reconcile By Purchase Line"
+msgstr "Conciliación masiva por línea de compra"
+
+#. module: account_mass_reconcile_by_purchase_line
+#: model_terms:ir.ui.view,arch_db:account_mass_reconcile_by_purchase_line.account_mass_reconcile_form
+msgid ""
+"Match multiple debit vs multiple credit entries. Allow partial "
+"reconciliation. The lines should have the same partner, product and PO lines "
+"to be reconciled."
+msgstr ""
+"Casar múltiples entradas de débito con múltiples entradas de crédito. "
+"Permitir la conciliación parcial. Las líneas deben tener el mismo socio, "
+"producto y líneas de PO para ser conciliadas."
+
+#. module: account_mass_reconcile_by_purchase_line
+#: model:ir.model,name:account_mass_reconcile_by_purchase_line.model_account_mass_reconcile_method
+msgid "Reconcile Method for account_mass_reconcile"
+msgstr "Método para conciliar account_mass_reconcile"
+
+#. module: account_mass_reconcile_by_purchase_line
+#: model:ir.model.fields,field_description:account_mass_reconcile_by_purchase_line.field_mass_reconcile_advanced_by_purchase_line__partner_ids
+msgid "Restrict on partners"
+msgstr "Restricción de socios"
+
+#. module: account_mass_reconcile_by_purchase_line
+#: model:ir.model.fields,field_description:account_mass_reconcile_by_purchase_line.field_mass_reconcile_advanced_by_purchase_line__write_off
+msgid "Write off allowed"
+msgstr "Cancelación permitida"
