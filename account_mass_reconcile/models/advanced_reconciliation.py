@@ -112,7 +112,6 @@ class MassReconcileAdvancedRef(models.TransientModel):
 
 
 class MassReconcileAdvancedName(models.TransientModel):
-
     _name = "mass.reconcile.advanced.name"
     _inherit = "mass.reconcile.advanced"
     _description = "Mass Reconcile Advanced Name"
