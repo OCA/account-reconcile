@@ -222,7 +222,6 @@ class MassReconcileAdvanced(models.AbstractModel):
     def _rec_group(self, reconcile_groups, lines_by_id):
         reconciled_ids = []
         for group_count, reconcile_group_ids in enumerate(reconcile_groups, start=1):
-
             _logger.debug(
                 "Reconciling group %d/%d with ids %s",
                 group_count,

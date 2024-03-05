@@ -56,7 +56,7 @@ class MassReconcileBase(models.AbstractModel):
             "reconciled",
             "move_id",
         )
-        return ["account_move_line.{}".format(col) for col in aml_cols]
+        return [f"account_move_line.{col}" for col in aml_cols]
 
     def _selection_columns(self):
         return self._base_columns()
