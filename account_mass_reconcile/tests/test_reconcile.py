@@ -4,14 +4,14 @@
 import odoo.tests
 from odoo import exceptions, fields
 
-from odoo.addons.account.tests.common import TestAccountReconciliationCommon
+from odoo.addons.account.tests.common import AccountTestInvoicingCommon
 
 
 @odoo.tests.tagged("post_install", "-at_install")
-class TestReconcile(TestAccountReconciliationCommon):
+class TestReconcile(AccountTestInvoicingCommon):
     @classmethod
     def setUpClass(cls):
-        super(TestReconcile, cls).setUpClass()
+        super().setUpClass()
         cls.rec_history_obj = cls.env["mass.reconcile.history"]
         cls.mass_rec_obj = cls.env["account.mass.reconcile"]
         cls.mass_rec_method_obj = cls.env["account.mass.reconcile.method"]

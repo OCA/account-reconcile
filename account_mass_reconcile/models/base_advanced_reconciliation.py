@@ -158,9 +158,9 @@ class MassReconcileAdvanced(models.AbstractModel):
             "A matcher %(mkey)s is compared with a matcher %(omkey)s, the _matchers and "
             "_opposite_matchers are probably wrong"
         ) % {"mkey": mkey, "omkey": omkey}
-        if not isinstance(mvalue, (list, tuple)):
+        if not isinstance(mvalue, list | tuple):
             mvalue = (mvalue,)
-        if not isinstance(omvalue, (list, tuple)):
+        if not isinstance(omvalue, list | tuple):
             omvalue = (omvalue,)
         return MassReconcileAdvanced._compare_matcher_values(mkey, mvalue, omvalue)
 

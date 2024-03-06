@@ -7,7 +7,7 @@ from odoo.tests import common
 class TestOnChange(common.TransactionCase):
     @classmethod
     def setUpClass(cls):
-        super(TestOnChange, cls).setUpClass()
+        super().setUpClass()
         acc_setting = cls.env["res.config.settings"]
         cls.acc_setting_obj = acc_setting.create({})
         cls.company_obj = cls.env["res.company"]
