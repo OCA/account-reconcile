@@ -6,99 +6,101 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 14.0\n"
 "Report-Msgid-Bugs-To: \n"
-"Last-Translator: Automatically generated\n"
+"PO-Revision-Date: 2024-03-06 16:34+0000\n"
+"Last-Translator: jakobkrabbe <jakob@syscare.se>\n"
 "Language-Team: none\n"
 "Language: sv\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.17\n"
 
 #. module: account_mass_reconcile_by_sale_line
 #: model:ir.model.fields,field_description:account_mass_reconcile_by_sale_line.field_mass_reconcile_advanced_by_sale_line__account_id
 msgid "Account"
-msgstr ""
+msgstr "Konto"
 
 #. module: account_mass_reconcile_by_sale_line
 #: model:ir.model.fields,field_description:account_mass_reconcile_by_sale_line.field_mass_reconcile_advanced_by_sale_line__account_lost_id
 msgid "Account Lost"
-msgstr ""
+msgstr "Kontoförlust"
 
 #. module: account_mass_reconcile_by_sale_line
 #: model:ir.model.fields,field_description:account_mass_reconcile_by_sale_line.field_mass_reconcile_advanced_by_sale_line__account_profit_id
 msgid "Account Profit"
-msgstr ""
+msgstr "Kontovinst"
 
 #. module: account_mass_reconcile_by_sale_line
 #: model_terms:ir.ui.view,arch_db:account_mass_reconcile_by_sale_line.account_mass_reconcile_form
 msgid "Advanced. Sale Order Line"
-msgstr ""
+msgstr "Avancerade säljrader"
 
 #. module: account_mass_reconcile_by_sale_line
 #: model:ir.model.fields,field_description:account_mass_reconcile_by_sale_line.field_mass_reconcile_advanced_by_sale_line__create_uid
 msgid "Created by"
-msgstr ""
+msgstr "Skapad av"
 
 #. module: account_mass_reconcile_by_sale_line
 #: model:ir.model.fields,field_description:account_mass_reconcile_by_sale_line.field_mass_reconcile_advanced_by_sale_line__create_date
 msgid "Created on"
-msgstr ""
+msgstr "Skapad den"
 
 #. module: account_mass_reconcile_by_sale_line
 #: model:ir.model.fields,field_description:account_mass_reconcile_by_sale_line.field_mass_reconcile_advanced_by_sale_line__date_base_on
 msgid "Date of reconciliation"
-msgstr ""
+msgstr "Datum för avstämning"
 
 #. module: account_mass_reconcile_by_sale_line
 #: model:ir.model.fields,field_description:account_mass_reconcile_by_sale_line.field_account_mass_reconcile_method__display_name
 #: model:ir.model.fields,field_description:account_mass_reconcile_by_sale_line.field_mass_reconcile_advanced__display_name
 #: model:ir.model.fields,field_description:account_mass_reconcile_by_sale_line.field_mass_reconcile_advanced_by_sale_line__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Visningsnamn"
 
 #. module: account_mass_reconcile_by_sale_line
 #: model:ir.model.fields,field_description:account_mass_reconcile_by_sale_line.field_mass_reconcile_advanced_by_sale_line___filter
 msgid "Filter"
-msgstr ""
+msgstr "Filter"
 
 #. module: account_mass_reconcile_by_sale_line
 #: model:ir.model.fields,field_description:account_mass_reconcile_by_sale_line.field_account_mass_reconcile_method__id
 #: model:ir.model.fields,field_description:account_mass_reconcile_by_sale_line.field_mass_reconcile_advanced__id
 #: model:ir.model.fields,field_description:account_mass_reconcile_by_sale_line.field_mass_reconcile_advanced_by_sale_line__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: account_mass_reconcile_by_sale_line
 #: model:ir.model.fields,field_description:account_mass_reconcile_by_sale_line.field_mass_reconcile_advanced_by_sale_line__journal_id
 msgid "Journal"
-msgstr ""
+msgstr "Journal"
 
 #. module: account_mass_reconcile_by_sale_line
 #: model:ir.model.fields,field_description:account_mass_reconcile_by_sale_line.field_account_mass_reconcile_method____last_update
 #: model:ir.model.fields,field_description:account_mass_reconcile_by_sale_line.field_mass_reconcile_advanced____last_update
 #: model:ir.model.fields,field_description:account_mass_reconcile_by_sale_line.field_mass_reconcile_advanced_by_sale_line____last_update
 msgid "Last Modified on"
-msgstr ""
+msgstr "Senast ändrad den"
 
 #. module: account_mass_reconcile_by_sale_line
 #: model:ir.model.fields,field_description:account_mass_reconcile_by_sale_line.field_mass_reconcile_advanced_by_sale_line__write_uid
 msgid "Last Updated by"
-msgstr ""
+msgstr "Senast uppdaterad av"
 
 #. module: account_mass_reconcile_by_sale_line
 #: model:ir.model.fields,field_description:account_mass_reconcile_by_sale_line.field_mass_reconcile_advanced_by_sale_line__write_date
 msgid "Last Updated on"
-msgstr ""
+msgstr "Senast uppdaterad den"
 
 #. module: account_mass_reconcile_by_sale_line
 #: model:ir.model,name:account_mass_reconcile_by_sale_line.model_mass_reconcile_advanced
 msgid "Mass Reconcile Advanced"
-msgstr ""
+msgstr "Avancerad massavstämning"
 
 #. module: account_mass_reconcile_by_sale_line
 #: model:ir.model,name:account_mass_reconcile_by_sale_line.model_mass_reconcile_advanced_by_sale_line
 msgid "Mass Reconcile By Sale Line"
-msgstr ""
+msgstr "Massavstämning av säljrader"
 
 #. module: account_mass_reconcile_by_sale_line
 #: model_terms:ir.ui.view,arch_db:account_mass_reconcile_by_sale_line.account_mass_reconcile_form
@@ -107,18 +109,20 @@ msgid ""
 "reconciliation. The lines should have the same partner, product and SO lines"
 " to be reconciled."
 msgstr ""
+"Matcha flera debit- mot flera kreditposter. Tillåt partiell avstämning. "
+"Raderna bör ha samma kontakt-, produkt- och SO-linjer för att stämmas av."
 
 #. module: account_mass_reconcile_by_sale_line
 #: model:ir.model,name:account_mass_reconcile_by_sale_line.model_account_mass_reconcile_method
 msgid "Reconcile Method for account_mass_reconcile"
-msgstr ""
+msgstr "Avstämningsmetod för account_mass_reconcile"
 
 #. module: account_mass_reconcile_by_sale_line
 #: model:ir.model.fields,field_description:account_mass_reconcile_by_sale_line.field_mass_reconcile_advanced_by_sale_line__partner_ids
 msgid "Restrict on partners"
-msgstr ""
+msgstr "Begränsning av kontakt"
 
 #. module: account_mass_reconcile_by_sale_line
 #: model:ir.model.fields,field_description:account_mass_reconcile_by_sale_line.field_mass_reconcile_advanced_by_sale_line__write_off
 msgid "Write off allowed"
-msgstr ""
+msgstr "Avskrivning tillåten"
