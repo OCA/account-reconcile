@@ -6,52 +6,54 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 14.0\n"
 "Report-Msgid-Bugs-To: \n"
-"Last-Translator: Automatically generated\n"
+"PO-Revision-Date: 2024-03-06 16:34+0000\n"
+"Last-Translator: jakobkrabbe <jakob@syscare.se>\n"
 "Language-Team: none\n"
 "Language: sv\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.17\n"
 
 #. module: account_reconciliation_widget_limit_aml
 #: model:ir.model,name:account_reconciliation_widget_limit_aml.model_account_reconciliation_widget
 msgid "Account Reconciliation widget"
-msgstr ""
+msgstr "Kontoavstämnings-widget"
 
 #. module: account_reconciliation_widget_limit_aml
 #: model:ir.model,name:account_reconciliation_widget_limit_aml.model_res_company
 msgid "Companies"
-msgstr ""
+msgstr "Företag"
 
 #. module: account_reconciliation_widget_limit_aml
 #: model:ir.model,name:account_reconciliation_widget_limit_aml.model_res_config_settings
 msgid "Config Settings"
-msgstr ""
+msgstr "Konfig. inställningar"
 
 #. module: account_reconciliation_widget_limit_aml
 #: model:ir.model.fields,field_description:account_reconciliation_widget_limit_aml.field_account_reconciliation_widget__display_name
 #: model:ir.model.fields,field_description:account_reconciliation_widget_limit_aml.field_res_company__display_name
 #: model:ir.model.fields,field_description:account_reconciliation_widget_limit_aml.field_res_config_settings__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Visningsnamn"
 
 #. module: account_reconciliation_widget_limit_aml
 #: model:ir.model.fields,field_description:account_reconciliation_widget_limit_aml.field_res_company__account_bank_reconciliation_start_all_aml
 #: model:ir.model.fields,field_description:account_reconciliation_widget_limit_aml.field_res_config_settings__account_bank_reconciliation_start_all_aml
 msgid "Filter all account move lines"
-msgstr ""
+msgstr "Filtrera alla kontotransaktioner"
 
 #. module: account_reconciliation_widget_limit_aml
 #: model:ir.model.fields,field_description:account_reconciliation_widget_limit_aml.field_account_reconciliation_widget__id
 #: model:ir.model.fields,field_description:account_reconciliation_widget_limit_aml.field_res_company__id
 #: model:ir.model.fields,field_description:account_reconciliation_widget_limit_aml.field_res_config_settings__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: account_reconciliation_widget_limit_aml
 #: model:ir.model.fields,field_description:account_reconciliation_widget_limit_aml.field_account_reconciliation_widget____last_update
 #: model:ir.model.fields,field_description:account_reconciliation_widget_limit_aml.field_res_company____last_update
 #: model:ir.model.fields,field_description:account_reconciliation_widget_limit_aml.field_res_config_settings____last_update
 msgid "Last Modified on"
-msgstr ""
+msgstr "Senast ändrad den"
