@@ -60,21 +60,51 @@
 <record id="account_bank_statement_line_tree" model="ir.ui.view">
     <field name="model">account.bank.statement.line</field>
     <field name="arch" type="xml">
-        <tree decoration-muted="is_reconciled">
+        <tree editable="top" multi_edit="1" decoration-muted="is_reconciled">
             <field name="sequence" widget="handle" />
-            <field name="date" />
-            <field name="payment_ref" />
-            <field name="ref" optional="hide" />
-            <field name="partner_id" />
-            <field name="amount" />
+            <field name="date" attrs="{'readonly': [('is_reconciled', '=', True)]}" />
+            <field
+                    name="payment_ref"
+                    attrs="{'readonly': [('is_reconciled', '=', True)]}"
+                />
+            <field
+                    name="ref"
+                    optional="hide"
+                    attrs="{'readonly': [('is_reconciled', '=', True)]}"
+                />
+            <field
+                    name="partner_id"
+                    attrs="{'readonly': [('is_reconciled', '=', True)]}"
+                />
+            <field name="amount" attrs="{'readonly': [('is_reconciled', '=', True)]}" />
+            <field
+                    name="foreign_currency_id"
+                    optional="hidden"
+                    groups="base.group_multi_currency"
+                    attrs="{'readonly': [('is_reconciled', '=', True)]}"
+                />
             <field
                     name="amount_currency"
                     optional="hide"
                     groups="base.group_multi_currency"
+                    attrs="{'readonly': [('is_reconciled', '=', True)]}"
                 />
-            <field name="narration" optional="hide" string="Notes" />
-            <field name="journal_id" optional="hide" />
-            <field name="partner_bank_id" optional="hide" />
+            <field
+                    name="narration"
+                    optional="hide"
+                    string="Notes"
+                    attrs="{'readonly': [('is_reconciled', '=', True)]}"
+                />
+            <field
+                    name="journal_id"
+                    optional="hide"
+                    attrs="{'readonly': [('is_reconciled', '=', True)]}"
+                />
+            <field
+                    name="partner_bank_id"
+                    optional="hide"
+                    attrs="{'readonly': [('is_reconciled', '=', True)]}"
+                />
             <button
                     name="action_undo_reconciliation"
                     type="object"
@@ -85,9 +115,9 @@
             <field name="company_id" invisible="1" />
             <field name="is_reconciled" invisible="1" />
             <field name="currency_id" invisible="1" />
-            <field name="foreign_currency_id" invisible="1" />
             <field name="country_code" invisible="1" />
             <field name="state" invisible="1" />
+            <field name="suitable_journal_ids" invisible="1" />
         </tree>
     </field>
 </record>
