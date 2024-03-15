@@ -15,7 +15,7 @@
                 <field name="company_id" invisible="1" />
                 <field name="currency_id" invisible="1" />
                 <field name="country_code" invisible="1" />
-                <field name="state" invisible="1" />
+                <field5c1485a3 name="state" invisible="1" />
                 <field name="suitable_journal_ids" invisible="1" />
                 <field name="date" />
                 <field name="payment_ref" required="1" />
@@ -60,21 +60,35 @@
 <record id="account_bank_statement_line_tree" model="ir.ui.view">
     <field name="model">account.bank.statement.line</field>
     <field name="arch" type="xml">
-        <tree decoration-muted="is_reconciled">
-            <field name="sequence" widget="handle" />
-            <field name="date" />
-            <field name="payment_ref" />
-            <field name="ref" optional="hide" />
-            <field name="partner_id" />
-            <field name="amount" />
+        <tree editable="top" multi_edit="1" decoration-muted="is_reconciled">
+            <field name="sequence" />
+            <field name="date" readonly="is_reconciled" />
+            <field name="payment_ref" readonly="is_reconciled" />
+            <field name="ref" optional="hide" readonly="is_reconciled" />
+            <field name="transaction_type" optional="hide" />
+            <field name="account_number" optional="hide" />
+            <field name="partner_id" readonly="is_reconciled" />
+            <field name="amount" readonly="is_reconciled" />
+            <field
+                    name="foreign_currency_id"
+                    optional="hidden"
+                    groups="base.group_multi_currency"
+                    readonly="is_reconciled"
+                />
             <field
                     name="amount_currency"
                     optional="hide"
                     groups="base.group_multi_currency"
+                    readonly="is_reconciled"
                 />
-            <field name="narration" optional="hide" string="Notes" />
-            <field name="journal_id" optional="hide" />
-            <field name="partner_bank_id" optional="hide" />
+            <field
+                    name="narration"
+                    optional="hide"
+                    string="Notes"
+                    readonly="is_reconciled"
+                />
+            <field name="journal_id" optional="hide" readonly="is_reconciled" />
+            <field name="partner_bank_id" optional="hide" readonly="is_reconciled" />
             <button
                     name="action_undo_reconciliation"
                     type="object"
@@ -88,6 +102,8 @@
             <field name="foreign_currency_id" column_invisible="True" />
             <field name="country_code" column_invisible="True" />
             <field name="state" column_invisible="True" />
+            <field name="suitable_journal_ids" column_invisible="True" />
+
         </tree>
     </field>
 </record>
