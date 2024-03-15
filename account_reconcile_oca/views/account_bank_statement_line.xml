@@ -306,11 +306,12 @@
         <field
             name="context"
         >{'default_journal_id': active_id, 'search_default_not_reconciled': True, 'view_ref': 'account_reconcile_oca.bank_statement_line_form_reconcile_view'}</field>
-        <field name="view_mode">tree</field>
+        <field name="view_mode">kanban,tree</field>
         <field
             name="view_ids"
             eval="[(5, 0, 0),
-            (0, 0, {'view_mode': 'tree', 'view_id': ref('bank_statement_line_reconcile_view')})]"
+            (0, 0, {'view_mode': 'kanban', 'view_id': ref('bank_statement_line_reconcile_view')}),
+            (0, 0, {'view_mode': 'tree', 'view_id': ref('account_statement_base.account_bank_statement_line_tree')})]"
         />
         <field name="help" type="html">
             <p class="o_view_nocontent_smiling_face">
@@ -325,11 +326,12 @@
         <field
             name="context"
         >{'default_journal_id': active_id, 'view_ref': 'account_reconcile_oca.bank_statement_line_form_reconcile_view'}</field>
-        <field name="view_mode">tree</field>
+        <field name="view_mode">tree,kanban</field>
         <field
             name="view_ids"
             eval="[(5, 0, 0),
-            (0, 0, {'view_mode': 'tree', 'view_id': ref('bank_statement_line_reconcile_view')})]"
+            (0, 0, {'view_mode': 'tree', 'view_id': ref('account_statement_base.account_bank_statement_line_tree')}),
+            (0, 0, {'view_mode': 'kanban', 'view_id': ref('bank_statement_line_reconcile_view')})]"
         />
         <field name="help" type="html">
             <p class="o_view_nocontent_smiling_face">
