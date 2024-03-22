@@ -130,7 +130,9 @@ class AccountBankStatementLine(models.Model):
             for line in data:
                 if line["kind"] != "suspense":
                     pending_amount += line["amount"]
-                if line.get("counterpart_line_id") == self.add_account_move_line_id.id:
+                if self.add_account_move_line_id.id in line.get(
+                    "counterpart_line_ids", []
+                ):
                     is_new_line = False
                 else:
                     new_data.append(line)
@@ -161,8 +163,8 @@ class AccountBankStatementLine(models.Model):
         suspense_line = False
         counterparts = []
         for line in data:
-            if line.get("counterpart_line_id"):
-                counterparts.append(line["counterpart_line_id"])
+            if line.get("counterpart_line_ids"):
+                counterparts += line["counterpart_line_ids"]
             if (
                 line["account_id"][0] == self.journal_id.suspense_account_id.id
                 or not line["account_id"][0]
@@ -524,10 +526,10 @@ class AccountBankStatementLine(models.Model):
                     )
                     .create(self._reconcile_move_line_vals(line_vals))
                 )
-                if line_vals.get("counterpart_line_id"):
+                if line_vals.get("counterpart_line_ids"):
                     to_reconcile.append(
                         self.env["account.move.line"].browse(
-                            line_vals.get("counterpart_line_id")
+                            line_vals.get("counterpart_line_ids")
                         )
                         + line
                     )
@@ -590,10 +592,10 @@ class AccountBankStatementLine(models.Model):
                     .with_context(check_move_validity=False, skip_invoice_sync=True)
                     .create(self._reconcile_move_line_vals(line_vals, move.id))
                 )
-                if line_vals.get("counterpart_line_id") and line.account_id.reconcile:
+                if line_vals.get("counterpart_line_ids") and line.account_id.reconcile:
                     to_reconcile[line.account_id.id] |= (
                         self.env["account.move.line"].browse(
-                            line_vals.get("counterpart_line_id")
+                            line_vals.get("counterpart_line_ids")
                         )
                         | line
                     )
