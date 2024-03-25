@@ -36,7 +36,19 @@
                             t-esc="dashboard.number_to_reconcile"
                         /> Items</button>
                 </t>
+                <t t-if="dashboard.number_to_reconcile == 0">
+                    <button
+                        type="action"
+                        name="%(account_reconcile_oca.action_bank_statement_line_reconcile)s"
+                        class="btn btn-primary"
+                    > New Transaction   </button>
+                </t>
             </xpath>
+            <xpath
+                expr="//button[@name='create_cash_statement']/.."
+                position="attributes"
+            >
+            <attribute name="t-if">0</attribute></xpath>
             <xpath
                 expr="//kanban/templates//div[@id='dashboard_bank_cash_right']"
                 position="inside"
