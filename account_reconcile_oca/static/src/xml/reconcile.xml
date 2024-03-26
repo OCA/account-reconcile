@@ -83,7 +83,7 @@
                         <td>
                             <span
                                 t-esc="reconcile_line.partner_id[1]"
-                                t-if="reconcile_line.partner_id"
+                                t-if="reconcile_line.partner_id and reconcile_line.partner_id[1]"
                             />
                         </td>
                         <td t-esc="reconcile_line.date_format" />
