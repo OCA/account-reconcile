@@ -1,0 +1,23 @@
+# Copyright 2023 Dixmit
+# License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
+
+from odoo import _, fields, models
+
+
+class AccountJournal(models.Model):
+    _inherit = "account.journal"
+
+    reconcile_mode = fields.Selection(
+        [("edit", "Edit Move"), ("keep", "Keep Suspense Accounts")],
+        default="edit",
+        required=True,
+    )
+
+    def get_rainbowman_message(self):
+        self.ensure_one()
+        if (
+            self._get_journal_dashboard_data_batched()[self.id]["number_to_reconcile"]
+            > 0
+        ):
+            return False
+        return _("Well done! Everything has been reconciled")

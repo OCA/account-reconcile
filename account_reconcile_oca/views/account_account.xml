@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2023 Dixmit
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
+<odoo>
+
+    <record model="ir.ui.view" id="view_account_list">
+        <field name="name">account.account.tree (in account_reconcile_oca)</field>
+        <field name="model">account.account</field>
+        <field name="inherit_id" ref="account.view_account_list" />
+        <field name="arch" type="xml">
+            <tree position="inside">
+                <button
+                    type="action"
+                    name="%(account_reconcile_oca.account_account_account_account_reconcile_act_window)s"
+                    string="Reconcile"
+                    class="float-end btn-secondary"
+                    invisible="reconcile == False"
+                />
+            </tree>
+        </field>
+    </record>
+
+</odoo>
