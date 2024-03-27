@@ -223,7 +223,6 @@ msgstr "Prikaži stavke zatvorene u zadnjem krugu"
 
 #. module: account_mass_reconcile
 #: model:ir.actions.server,name:account_mass_reconcile.ir_cron_run_reconciliations_ir_actions_server
-#: model:ir.cron,cron_name:account_mass_reconcile.ir_cron_run_reconciliations
 msgid "Do Automatic Reconciliations"
 msgstr "Radi automatska zatvaranja"
 
@@ -318,6 +317,7 @@ msgstr "Ako je označeno, nove poruke traže vašu pozornost."
 
 #. module: account_mass_reconcile
 #: model:ir.model.fields,help:account_mass_reconcile.field_account_mass_reconcile__message_has_error
+#: model:ir.model.fields,help:account_mass_reconcile.field_account_mass_reconcile__message_has_sms_error
 msgid "If checked, some messages have a delivery error."
 msgstr "Ako je označeno, neke poruke imaju greške pri isporuci."
 
@@ -344,18 +344,6 @@ msgstr "Je pratitelj"
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_reference__journal_id
 msgid "Journal"
 msgstr "Dnevnik"
-
-#. module: account_mass_reconcile
-#: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile____last_update
-#: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile_method____last_update
-#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_advanced_name____last_update
-#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_advanced_ref____last_update
-#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_history____last_update
-#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_name____last_update
-#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_partner____last_update
-#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_reference____last_update
-msgid "Last Modified on"
-msgstr "Zadnje modificirano"
 
 #. module: account_mass_reconcile
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile__write_uid
@@ -391,11 +379,6 @@ msgstr "Zadnja povijest"
 #: model:ir.model.fields,help:account_mass_reconcile.field_res_config_settings__reconciliation_commit_every
 msgid "Leave zero to commit only at the end of the process."
 msgstr "Ostavite nulu za spremanje tek na kraju procesa."
-
-#. module: account_mass_reconcile
-#: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile__message_main_attachment_id
-msgid "Main Attachment"
-msgstr "Glavni prilog"
 
 #. module: account_mass_reconcile
 #: model:ir.actions.act_window,name:account_mass_reconcile.action_account_mass_reconcile
@@ -581,6 +564,11 @@ msgid "Run date"
 msgstr "Datum pokretanja"
 
 #. module: account_mass_reconcile
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile__message_has_sms_error
+msgid "SMS Delivery error"
+msgstr "Greška pri isporuci SMSa"
+
+#. module: account_mass_reconcile
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile_method__sequence
 msgid "Sequence"
 msgstr "Sekvenca"
@@ -685,8 +673,11 @@ msgstr ""
 msgid "Write off allowed"
 msgstr "Otpis dozvoljen"
 
-#~ msgid "SMS Delivery error"
-#~ msgstr "Greška pri isporuci SMSa"
+#~ msgid "Last Modified on"
+#~ msgstr "Zadnje modificirano"
+
+#~ msgid "Main Attachment"
+#~ msgstr "Glavni prilog"
 
 #~ msgid "Number of messages which requires an action"
 #~ msgstr "Broj poruka koje zahtijevaju dodatnu radnju"
