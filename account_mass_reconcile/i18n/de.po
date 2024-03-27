@@ -1,0 +1,772 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# * account_mass_reconcile
+#
+# Translators:
+# OCA Transbot <transbot@odoo-community.org>, 2017
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 10.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-03-24 03:37+0000\n"
+"PO-Revision-Date: 2017-03-24 03:37+0000\n"
+"Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2017\n"
+"Language-Team: German (https://www.transifex.com/oca/teams/23907/de/)\n"
+"Language: de\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. module: account_mass_reconcile
+#. odoo-python
+#: code:addons/account_mass_reconcile/models/mass_reconcile.py:0
+#, python-format
+msgid ""
+"A mass reconcile is already ongoing for this account, please try again later."
+msgstr ""
+
+#. module: account_mass_reconcile
+#. odoo-python
+#: code:addons/account_mass_reconcile/models/base_advanced_reconciliation.py:0
+#, python-format
+msgid ""
+"A matcher %(mkey)s is compared with a matcher %(omkey)s, the _matchers and "
+"_opposite_matchers are probably wrong"
+msgstr ""
+
+#. module: account_mass_reconcile
+#: model_terms:ir.actions.act_window,help:account_mass_reconcile.action_account_mass_reconcile
+msgid ""
+"A reconciliation profile specifies, for one account, how\n"
+"            the entries should be reconciled.\n"
+"            You can select one or many reconciliation methods which will\n"
+"            be run sequentially to match the entries between them."
+msgstr ""
+"Ein Ausgleichsprofil gibt für ein Konto an, wie\n"
+"die Einträge ausgeglichen werden sollen.\n"
+"Sie können eine oder mehrere Ausgleichsmethoden\n"
+"auswählen, die nacheinander durchlaufen werden, \n"
+"um Übereinstimmungen der Einträge zu finden."
+
+#. module: account_mass_reconcile
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile__account
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_advanced__account_id
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_advanced_name__account_id
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_advanced_ref__account_id
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_base__account_id
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple__account_id
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_name__account_id
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_partner__account_id
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_reference__account_id
+msgid "Account"
+msgstr "Konto"
+
+#. module: account_mass_reconcile
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile_method__account_lost_id
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_advanced__account_lost_id
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_advanced_name__account_lost_id
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_advanced_ref__account_lost_id
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_base__account_lost_id
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_options__account_lost_id
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple__account_lost_id
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_name__account_lost_id
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_partner__account_lost_id
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_reference__account_lost_id
+msgid "Account Lost"
+msgstr "Konto für Verluste"
+
+#. module: account_mass_reconcile
+#: model:ir.model,name:account_mass_reconcile.model_account_mass_reconcile
+msgid "Account Mass Reconcile"
+msgstr ""
+
+#. module: account_mass_reconcile
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile_method__account_profit_id
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_advanced__account_profit_id
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_advanced_name__account_profit_id
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_advanced_ref__account_profit_id
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_base__account_profit_id
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_options__account_profit_id
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple__account_profit_id
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_name__account_profit_id
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_partner__account_profit_id
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_reference__account_profit_id
+msgid "Account Profit"
+msgstr "Konto für Umsätze"
+
+#. module: account_mass_reconcile
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile__message_needaction
+msgid "Action Needed"
+msgstr ""
+
+#. module: account_mass_reconcile
+#: model_terms:ir.ui.view,arch_db:account_mass_reconcile.account_mass_reconcile_form
+msgid "Advanced. Partner and Ref"
+msgstr "Weitergehend. Partner und Ref"
+
+#. module: account_mass_reconcile
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile__message_attachment_count
+msgid "Attachment Count"
+msgstr ""
+
+#. module: account_mass_reconcile
+#: model_terms:ir.ui.view,arch_db:account_mass_reconcile.account_mass_reconcile_form
+msgid "Automatic Mass Reconcile"
+msgstr "Automatischer Massenausgleich"
+
+#. module: account_mass_reconcile
+#: model_terms:ir.ui.view,arch_db:account_mass_reconcile.mass_reconcile_history_form
+#: model_terms:ir.ui.view,arch_db:account_mass_reconcile.view_mass_reconcile_history_search
+msgid "Automatic Mass Reconcile History"
+msgstr "Verlauf des automatischen Massenausgleichs"
+
+#. module: account_mass_reconcile
+#. odoo-python
+#: code:addons/account_mass_reconcile/models/base_reconciliation.py:0
+#, python-format
+msgid "Automatic Write Off"
+msgstr ""
+
+#. module: account_mass_reconcile
+#. odoo-python
+#: code:addons/account_mass_reconcile/models/base_reconciliation.py:0
+#, python-format
+msgid "Automatic writeoff"
+msgstr ""
+
+#. module: account_mass_reconcile
+#: model_terms:ir.actions.act_window,help:account_mass_reconcile.action_account_mass_reconcile
+msgid "Click to add a reconciliation profile."
+msgstr "Klicken Sie, um ein Ausgleichsprofil hinzuzufügen."
+
+#. module: account_mass_reconcile
+#: model_terms:ir.ui.view,arch_db:account_mass_reconcile.view_account_config
+msgid "Commit frequency"
+msgstr ""
+
+#. module: account_mass_reconcile
+#: model:ir.model,name:account_mass_reconcile.model_res_company
+msgid "Companies"
+msgstr "Unternehmen"
+
+#. module: account_mass_reconcile
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile__company_id
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile_method__company_id
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_history__company_id
+msgid "Company"
+msgstr "Unternehmen"
+
+#. module: account_mass_reconcile
+#: model:ir.model,name:account_mass_reconcile.model_res_config_settings
+#, fuzzy
+msgid "Config Settings"
+msgstr "account.config.settings"
+
+#. module: account_mass_reconcile
+#: model_terms:ir.ui.view,arch_db:account_mass_reconcile.account_mass_reconcile_form
+msgid "Configuration"
+msgstr "Einstellungen"
+
+#. module: account_mass_reconcile
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile__create_uid
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile_method__create_uid
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_advanced_name__create_uid
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_advanced_ref__create_uid
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_history__create_uid
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_name__create_uid
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_partner__create_uid
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_reference__create_uid
+msgid "Created by"
+msgstr "Angelegt durch"
+
+#. module: account_mass_reconcile
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile__create_date
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile_method__create_date
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_advanced_name__create_date
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_advanced_ref__create_date
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_history__create_date
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_name__create_date
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_partner__create_date
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_reference__create_date
+msgid "Created on"
+msgstr "Angelegt am"
+
+#. module: account_mass_reconcile
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile_method__date_base_on
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_advanced__date_base_on
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_advanced_name__date_base_on
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_advanced_ref__date_base_on
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_base__date_base_on
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_options__date_base_on
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple__date_base_on
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_name__date_base_on
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_partner__date_base_on
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_reference__date_base_on
+msgid "Date of reconciliation"
+msgstr "Ausgleichsdatum"
+
+#. module: account_mass_reconcile
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile__display_name
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile_method__display_name
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_advanced_name__display_name
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_advanced_ref__display_name
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_history__display_name
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_name__display_name
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_partner__display_name
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_reference__display_name
+msgid "Display Name"
+msgstr "Anzeigename"
+
+#. module: account_mass_reconcile
+#: model_terms:ir.ui.view,arch_db:account_mass_reconcile.account_mass_reconcile_form
+#: model_terms:ir.ui.view,arch_db:account_mass_reconcile.account_mass_reconcile_tree
+msgid "Display items reconciled on the last run"
+msgstr "Zeige Posten mit Ausgleich im letzten Lauf"
+
+#. module: account_mass_reconcile
+#: model:ir.actions.server,name:account_mass_reconcile.ir_cron_run_reconciliations_ir_actions_server
+#: model:ir.cron,cron_name:account_mass_reconcile.ir_cron_run_reconciliations
+#, fuzzy
+msgid "Do Automatic Reconciliations"
+msgstr "Beginne Auto-Ausgleichen"
+
+#. module: account_mass_reconcile
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile_method___filter
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_advanced___filter
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_advanced_name___filter
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_advanced_ref___filter
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_base___filter
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_options___filter
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple___filter
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_name___filter
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_partner___filter
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_reference___filter
+msgid "Filter"
+msgstr "Filter"
+
+#. module: account_mass_reconcile
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile__message_follower_ids
+msgid "Followers"
+msgstr ""
+
+#. module: account_mass_reconcile
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile__message_partner_ids
+msgid "Followers (Partners)"
+msgstr ""
+
+#. module: account_mass_reconcile
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_history__reconcile_ids
+msgid "Full Reconciliations"
+msgstr "Vollausgleiche"
+
+#. module: account_mass_reconcile
+#: model_terms:ir.ui.view,arch_db:account_mass_reconcile.account_mass_reconcile_form
+#: model_terms:ir.ui.view,arch_db:account_mass_reconcile.mass_reconcile_history_form
+#: model_terms:ir.ui.view,arch_db:account_mass_reconcile.mass_reconcile_history_tree
+msgid "Go to reconciled items"
+msgstr "Gehe zu ausgeglichenen Posten"
+
+#. module: account_mass_reconcile
+#: model_terms:ir.ui.view,arch_db:account_mass_reconcile.account_mass_reconcile_form
+msgid "Go to unreconciled items"
+msgstr "Gehe zu offenen Posten"
+
+#. module: account_mass_reconcile
+#: model_terms:ir.ui.view,arch_db:account_mass_reconcile.view_mass_reconcile_history_search
+msgid "Group By..."
+msgstr "Gruppiere..."
+
+#. module: account_mass_reconcile
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile__has_message
+msgid "Has Message"
+msgstr ""
+
+#. module: account_mass_reconcile
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile__history_ids
+#: model_terms:ir.ui.view,arch_db:account_mass_reconcile.account_mass_reconcile_form
+msgid "History"
+msgstr "Verlauf"
+
+#. module: account_mass_reconcile
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_res_company__reconciliation_commit_every
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_res_config_settings__reconciliation_commit_every
+msgid "How often to commit when performing automatic reconciliation."
+msgstr "Wie oft beim automatischen Ausgleich verbucht werden soll."
+
+#. module: account_mass_reconcile
+#: model_terms:ir.ui.view,arch_db:account_mass_reconcile.view_account_config
+#, fuzzy
+msgid ""
+"How often to commit when performing automatic reconciliation.\n"
+"                  Leave zero to commit only at the end of the process."
+msgstr "Wie oft beim automatischen Ausgleich verbucht werden soll."
+
+#. module: account_mass_reconcile
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile__id
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile_method__id
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_advanced_name__id
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_advanced_ref__id
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_history__id
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_name__id
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_partner__id
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_reference__id
+msgid "ID"
+msgstr "ID"
+
+#. module: account_mass_reconcile
+#: model:ir.model.fields,help:account_mass_reconcile.field_account_mass_reconcile__message_needaction
+msgid "If checked, new messages require your attention."
+msgstr ""
+
+#. module: account_mass_reconcile
+#: model:ir.model.fields,help:account_mass_reconcile.field_account_mass_reconcile__message_has_error
+msgid "If checked, some messages have a delivery error."
+msgstr ""
+
+#. module: account_mass_reconcile
+#: model_terms:ir.ui.view,arch_db:account_mass_reconcile.account_mass_reconcile_form
+msgid "Information"
+msgstr "Information"
+
+#. module: account_mass_reconcile
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile__message_is_follower
+msgid "Is Follower"
+msgstr ""
+
+#. module: account_mass_reconcile
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile_method__journal_id
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_advanced__journal_id
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_advanced_name__journal_id
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_advanced_ref__journal_id
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_base__journal_id
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_options__journal_id
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple__journal_id
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_name__journal_id
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_partner__journal_id
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_reference__journal_id
+msgid "Journal"
+msgstr "Journal"
+
+#. module: account_mass_reconcile
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile____last_update
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile_method____last_update
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_advanced_name____last_update
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_advanced_ref____last_update
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_history____last_update
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_name____last_update
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_partner____last_update
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_reference____last_update
+msgid "Last Modified on"
+msgstr "Letztes Änderungsdatum"
+
+#. module: account_mass_reconcile
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile__write_uid
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile_method__write_uid
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_advanced_name__write_uid
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_advanced_ref__write_uid
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_history__write_uid
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_name__write_uid
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_partner__write_uid
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_reference__write_uid
+msgid "Last Updated by"
+msgstr "Letzte Aktualisierung durch"
+
+#. module: account_mass_reconcile
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile__write_date
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile_method__write_date
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_advanced_name__write_date
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_advanced_ref__write_date
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_history__write_date
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_name__write_date
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_partner__write_date
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_reference__write_date
+msgid "Last Updated on"
+msgstr "Letzte Aktualisierung am"
+
+#. module: account_mass_reconcile
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile__last_history
+msgid "Last history"
+msgstr "Neuester Verlauf"
+
+#. module: account_mass_reconcile
+#: model:ir.model.fields,help:account_mass_reconcile.field_res_company__reconciliation_commit_every
+#: model:ir.model.fields,help:account_mass_reconcile.field_res_config_settings__reconciliation_commit_every
+msgid "Leave zero to commit only at the end of the process."
+msgstr "Leer lassen, um nur zum Abschluss der Vorgangs zu verbuchen."
+
+#. module: account_mass_reconcile
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile__message_main_attachment_id
+msgid "Main Attachment"
+msgstr ""
+
+#. module: account_mass_reconcile
+#: model:ir.actions.act_window,name:account_mass_reconcile.action_account_mass_reconcile
+#: model:ir.ui.menu,name:account_mass_reconcile.menu_mass_reconcile
+msgid "Mass Automatic Reconcile"
+msgstr "Massenhafter automatischer Ausgleich"
+
+#. module: account_mass_reconcile
+#: model:ir.actions.act_window,name:account_mass_reconcile.action_mass_reconcile_history
+msgid "Mass Automatic Reconcile History"
+msgstr "Verlauf zum massenhaften automatischen Ausgleich"
+
+#. module: account_mass_reconcile
+#: model:ir.model,name:account_mass_reconcile.model_mass_reconcile_advanced
+msgid "Mass Reconcile Advanced"
+msgstr ""
+
+#. module: account_mass_reconcile
+#: model:ir.model,name:account_mass_reconcile.model_mass_reconcile_advanced_name
+msgid "Mass Reconcile Advanced Name"
+msgstr ""
+
+#. module: account_mass_reconcile
+#: model:ir.model,name:account_mass_reconcile.model_mass_reconcile_advanced_ref
+msgid "Mass Reconcile Advanced Ref"
+msgstr ""
+
+#. module: account_mass_reconcile
+#: model:ir.model,name:account_mass_reconcile.model_mass_reconcile_base
+msgid "Mass Reconcile Base"
+msgstr ""
+
+#. module: account_mass_reconcile
+#: model:ir.model,name:account_mass_reconcile.model_mass_reconcile_simple
+msgid "Mass Reconcile Simple"
+msgstr ""
+
+#. module: account_mass_reconcile
+#: model:ir.model,name:account_mass_reconcile.model_mass_reconcile_simple_name
+msgid "Mass Reconcile Simple Name"
+msgstr ""
+
+#. module: account_mass_reconcile
+#: model:ir.model,name:account_mass_reconcile.model_mass_reconcile_simple_partner
+msgid "Mass Reconcile Simple Partner"
+msgstr ""
+
+#. module: account_mass_reconcile
+#: model:ir.model,name:account_mass_reconcile.model_mass_reconcile_simple_reference
+msgid "Mass Reconcile Simple Reference"
+msgstr ""
+
+#. module: account_mass_reconcile
+#: model_terms:ir.ui.view,arch_db:account_mass_reconcile.account_mass_reconcile_form
+#, fuzzy
+msgid ""
+"Match multiple debit vs multiple credit entries. Allow partial "
+"reconciliation. The lines should have the same partner, and the credit entry "
+"ref. is matched with the debit entry ref. or name."
+msgstr ""
+"Stimme mehrere Soll- mit mehreren Habenposten ab. Erlaube Teilausgleich. Die "
+"Positionen müssen den Partner enthalten, Die Ref. der Habenbuchung wird mit "
+"der Ref. oder dem Namen der Sollbuchungabgestimmt."
+
+#. module: account_mass_reconcile
+#: model_terms:ir.ui.view,arch_db:account_mass_reconcile.account_mass_reconcile_form
+msgid ""
+"Match one debit line vs one credit line. Do not allow partial "
+"reconciliation. The lines should have the same amount (with the write-off) "
+"and the same name to be reconciled."
+msgstr ""
+"Stimme eine Soll- mit einer Habenposition ab. Erlaube keinen Teilausgleich. "
+"Die Positionen müssen den gleichen Betrag (mit Abschreibung) und die gleiche "
+"Bezeichnung haben."
+
+#. module: account_mass_reconcile
+#: model_terms:ir.ui.view,arch_db:account_mass_reconcile.account_mass_reconcile_form
+msgid ""
+"Match one debit line vs one credit line. Do not allow partial "
+"reconciliation. The lines should have the same amount (with the write-off) "
+"and the same partner to be reconciled."
+msgstr ""
+"Stimme eine Soll- mit einer Habenposition ab. Erlaube keinen Teilausgleich. "
+"Die Positionen müssen den gleichen Betrag (mit Abschreibung) und den "
+"gleichen Partner ausweisen."
+
+#. module: account_mass_reconcile
+#: model_terms:ir.ui.view,arch_db:account_mass_reconcile.account_mass_reconcile_form
+msgid ""
+"Match one debit line vs one credit line. Do not allow partial "
+"reconciliation. The lines should have the same amount (with the write-off) "
+"and the same reference to be reconciled."
+msgstr ""
+"Stimme eine Soll- mit einer Habenposition ab. Erlaube keinen Teilausgleich. "
+"Die Positionen müssen den gleichen Betrag (mit Abschreibung) und die gleiche "
+"Referenz (Zweck) ausweisen."
+
+#. module: account_mass_reconcile
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile__message_has_error
+msgid "Message Delivery error"
+msgstr ""
+
+#. module: account_mass_reconcile
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile__message_ids
+msgid "Messages"
+msgstr ""
+
+#. module: account_mass_reconcile
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile__reconcile_method
+msgid "Method"
+msgstr "Verfahren"
+
+#. module: account_mass_reconcile
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile__name
+msgid "Name"
+msgstr "Bezeichnung"
+
+#. module: account_mass_reconcile
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile__message_needaction_counter
+msgid "Number of Actions"
+msgstr ""
+
+#. module: account_mass_reconcile
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile__message_has_error_counter
+msgid "Number of errors"
+msgstr ""
+
+#. module: account_mass_reconcile
+#: model:ir.model.fields,help:account_mass_reconcile.field_account_mass_reconcile__message_needaction_counter
+msgid "Number of messages requiring action"
+msgstr ""
+
+#. module: account_mass_reconcile
+#: model:ir.model.fields,help:account_mass_reconcile.field_account_mass_reconcile__message_has_error_counter
+msgid "Number of messages with delivery error"
+msgstr ""
+
+#. module: account_mass_reconcile
+#: model:ir.model,name:account_mass_reconcile.model_mass_reconcile_options
+#, fuzzy
+msgid "Options of a reconciliation profile"
+msgstr "Klicken Sie, um ein Ausgleichsprofil hinzuzufügen."
+
+#. module: account_mass_reconcile
+#: model_terms:ir.ui.view,arch_db:account_mass_reconcile.account_mass_reconcile_form
+msgid "Profile Information"
+msgstr "Profilinformation"
+
+#. module: account_mass_reconcile
+#: model:ir.model,name:account_mass_reconcile.model_account_mass_reconcile_method
+msgid "Reconcile Method for account_mass_reconcile"
+msgstr ""
+
+#. module: account_mass_reconcile
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_history__mass_reconcile_id
+msgid "Reconcile Profile"
+msgstr "Ausgleichsprofil"
+
+#. module: account_mass_reconcile
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_history__reconcile_line_ids
+msgid "Reconciled Items"
+msgstr "Ausgeglichene Posten"
+
+#. module: account_mass_reconcile
+#: model_terms:ir.ui.view,arch_db:account_mass_reconcile.view_account_config
+msgid "Reconciliation"
+msgstr "Ausgleich"
+
+#. module: account_mass_reconcile
+#. odoo-python
+#: code:addons/account_mass_reconcile/models/mass_reconcile_history.py:0
+#: model_terms:ir.ui.view,arch_db:account_mass_reconcile.mass_reconcile_history_form
+#, python-format
+msgid "Reconciliations"
+msgstr "Ausgleiche"
+
+#. module: account_mass_reconcile
+#: model_terms:ir.ui.view,arch_db:account_mass_reconcile.view_mass_reconcile_history_search
+msgid "Reconciliations of last 7 days"
+msgstr "Ausgleiche der letzten 7 Tage"
+
+#. module: account_mass_reconcile
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_advanced__partner_ids
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_advanced_name__partner_ids
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_advanced_ref__partner_ids
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_base__partner_ids
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple__partner_ids
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_name__partner_ids
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_partner__partner_ids
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_reference__partner_ids
+msgid "Restrict on partners"
+msgstr "Schränke auf Partner ein"
+
+#. module: account_mass_reconcile
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_history__date
+msgid "Run date"
+msgstr "Laufdatum"
+
+#. module: account_mass_reconcile
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile_method__sequence
+msgid "Sequence"
+msgstr "Reihenfolge"
+
+#. module: account_mass_reconcile
+#: model_terms:ir.ui.view,arch_db:account_mass_reconcile.account_mass_reconcile_form
+msgid "Simple. Amount and Name"
+msgstr "Einfach. Betrag und Bezeichnung"
+
+#. module: account_mass_reconcile
+#: model_terms:ir.ui.view,arch_db:account_mass_reconcile.account_mass_reconcile_form
+msgid "Simple. Amount and Partner"
+msgstr "Einfach. Betrag und Partner"
+
+#. module: account_mass_reconcile
+#: model_terms:ir.ui.view,arch_db:account_mass_reconcile.account_mass_reconcile_form
+msgid "Simple. Amount and Reference"
+msgstr "Einfach. Betrag und Referenz"
+
+#. module: account_mass_reconcile
+#: model_terms:ir.ui.view,arch_db:account_mass_reconcile.account_mass_reconcile_tree
+msgid "Start Auto Reconcilation"
+msgstr "Beginne Auto-Ausgleichen"
+
+#. module: account_mass_reconcile
+#: model_terms:ir.ui.view,arch_db:account_mass_reconcile.account_mass_reconcile_form
+msgid "Start Auto Reconciliation"
+msgstr "Beginne Auto-Ausgleichen"
+
+#. module: account_mass_reconcile
+#: model:ir.model,name:account_mass_reconcile.model_mass_reconcile_history
+msgid "Store an history of the runs per profile"
+msgstr ""
+
+#. module: account_mass_reconcile
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile_method__task_id
+msgid "Task"
+msgstr "Aufgabe"
+
+#. module: account_mass_reconcile
+#: model:ir.model.fields,help:account_mass_reconcile.field_account_mass_reconcile_method__sequence
+msgid "The sequence field is used to order the reconcile method"
+msgstr ""
+"Das Reihenfolgefeld wird verwendet, um die Ausgleichsverfahren zu sortieren"
+
+#. module: account_mass_reconcile
+#. odoo-python
+#: code:addons/account_mass_reconcile/models/mass_reconcile.py:0
+#, python-format
+msgid "There is no history of reconciled items on the task: %s."
+msgstr "Es gibt keinen Verlauf zu Ausgleichsposten bei Aufgabe %s."
+
+#. module: account_mass_reconcile
+#. odoo-python
+#: code:addons/account_mass_reconcile/models/mass_reconcile.py:0
+#, python-format
+msgid "There was an error during reconciliation : %s"
+msgstr "Beim Ausgleichen ist ein Fehler aufgetreten: %s"
+
+#. module: account_mass_reconcile
+#: model_terms:ir.ui.view,arch_db:account_mass_reconcile.view_mass_reconcile_history_search
+msgid "Todays' Reconcilations"
+msgstr "Heutige Ausgleiche"
+
+#. module: account_mass_reconcile
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile_method__name
+msgid "Type"
+msgstr "Art"
+
+#. module: account_mass_reconcile
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile__unreconciled_count
+msgid "Unreconciled Items"
+msgstr "Unausgeglichene Posten"
+
+#. module: account_mass_reconcile
+#. odoo-python
+#: code:addons/account_mass_reconcile/models/mass_reconcile.py:0
+#, python-format
+msgid "Unreconciled items"
+msgstr "Unausgeglichene Posten"
+
+#. module: account_mass_reconcile
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile__website_message_ids
+msgid "Website Messages"
+msgstr ""
+
+#. module: account_mass_reconcile
+#: model:ir.model.fields,help:account_mass_reconcile.field_account_mass_reconcile__website_message_ids
+msgid "Website communication history"
+msgstr ""
+
+#. module: account_mass_reconcile
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile_method__write_off
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_advanced__write_off
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_advanced_name__write_off
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_advanced_ref__write_off
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_base__write_off
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_options__write_off
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple__write_off
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_name__write_off
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_partner__write_off
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_reference__write_off
+msgid "Write off allowed"
+msgstr "Abschreibung erlaubt"
+
+#, python-format
+#~ msgid ""
+#~ "A matcher %s is compared with a matcher %s, the _matchers and "
+#~ "_opposite_matchers are probably wrong"
+#~ msgstr ""
+#~ "Der Abstimmer %s wird mit dem Abstimmer %s verglichen, der Abstimmer und "
+#~ "das Gegenstück sind wahrscheinlich falsch"
+
+#~ msgid "Automatic Mass Reconcile Method"
+#~ msgstr "Verfahren des automatischen Massenausgleichs"
+
+#~ msgid "Gain Exchange Rate Account"
+#~ msgstr "Konto für Wechselkursgewinne"
+
+#~ msgid "History Details"
+#~ msgstr "Verlaufsdetails"
+
+#~ msgid "Loss Exchange Rate Account"
+#~ msgstr "Konto für Wechselkursverluste "
+
+#~ msgid "account mass reconcile"
+#~ msgstr "Konten-Massenausgleich"
+
+#~ msgid "mass.reconcile.advanced"
+#~ msgstr "mass.reconcile.advanced"
+
+#~ msgid "mass.reconcile.advanced.ref"
+#~ msgstr "mass.reconcile.advanced.ref"
+
+#~ msgid "mass.reconcile.base"
+#~ msgstr "mass.reconcile.base"
+
+#~ msgid "mass.reconcile.simple"
+#~ msgstr "mass.reconcile.simple"
+
+#~ msgid "mass.reconcile.simple.name"
+#~ msgstr "mass.reconcile.simple.name"
+
+#~ msgid "mass.reconcile.simple.partner"
+#~ msgstr "mass.reconcile.simple.partner"
+
+#~ msgid "mass.reconcile.simple.reference"
+#~ msgstr "mass.reconcile.simple.reference"
+
+#~ msgid "reconcile method for account_mass_reconcile"
+#~ msgstr "Ausgleichsverfahren für account_mass_reconcile"
+
+#~ msgid "7 Days"
+#~ msgstr "7 Tage"
+
+#~ msgid "Date"
+#~ msgstr "Datum"
+
+#~ msgid "Reconciliation Profile"
+#~ msgstr "Ausgleichsprofil"
+
+#~ msgid "Today"
+#~ msgstr "Heute"
+
+#~ msgid "mass.reconcile.history"
+#~ msgstr "mass.reconcile.history"
+
+#~ msgid "mass.reconcile.options"
+#~ msgstr "mass.reconcile.options"
+
+#~ msgid "Options"
+#~ msgstr "Optionen"
