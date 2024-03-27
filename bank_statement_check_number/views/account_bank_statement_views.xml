@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+     <record id="view_bank_statement_tree" model="ir.ui.view">
+        <field name="name">account.bank.statement.form</field>
+        <field name="model">account.bank.statement.line</field>
+        <field
+            name="inherit_id"
+            ref="account_statement_base.account_bank_statement_line_tree"
+        />
+        <field name="arch" type="xml">
+            <field name="date" position="after">
+                <field name="check_number" optional="show" />
+            </field>
+        </field>
+    </record>
+    <record id="account_bank_statement_line_form" model="ir.ui.view">
+        <field name="name">account.bank.statement.form</field>
+        <field name="model">account.bank.statement.line</field>
+        <field
+            name="inherit_id"
+            ref="account_statement_base.account_bank_statement_line_form"
+        />
+        <field name="arch" type="xml">
+            <field name="date" position="after">
+                <field name="check_number" optional="show" />
+            </field>
+        </field>
+    </record>
+
+</odoo>
