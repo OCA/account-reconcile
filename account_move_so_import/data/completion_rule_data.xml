@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo noupdate="1">
+
+    <record id="bank_statement_completion_rule_1" model="account.move.completion.rule">
+        <field name="name">Match from line name (based on SO number)</field>
+        <field name="sequence">50</field>
+        <field name="function_to_call">get_from_name_and_so</field>
+    </record>
+
+    <record id="bank_statement_completion_rule_2" model="account.move.completion.rule">
+        <field name="name">Match from line name (based on SO payment reference)</field>
+        <field name="sequence">55</field>
+        <field name="function_to_call">get_from_name_and_so_payment_ref</field>
+    </record>
+
+</odoo>
