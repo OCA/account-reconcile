@@ -1,0 +1,31 @@
+# Copyright 2020 Ozono Multimedia - Iván Antón
+# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
+
+{
+    "name": "account_reconciliation_widget",
+    "version": "16.0.1.0.0",
+    "category": "Accounting",
+    "license": "AGPL-3",
+    "summary": "Account reconciliation widget",
+    "author": "Odoo, Ozono Multimedia, Odoo Community Association (OCA)",
+    "website": "https://github.com/OCA/account-reconcile",
+    "depends": ["account"],
+    "development_status": "Production/Stable",
+    "data": [
+        "security/ir.model.access.csv",
+        "wizards/res_config_settings_views.xml",
+        "views/account_view.xml",
+        "views/account_journal_dashboard_view.xml",
+    ],
+    "assets": {
+        "web.assets_backend": [
+            "account_reconciliation_widget/static/src/scss/account_reconciliation.scss",
+            "account_reconciliation_widget/static/src/xml/account_reconciliation.xml",
+            "account_reconciliation_widget/static/src/js/**/*",
+        ],
+        "web.qunit_suite_tests": [
+            "account_reconciliation_widget/static/tests/**/*",
+        ],
+    },
+    "installable": True,
+}
