@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: bank-statement-reconcile (9.0)\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-12-24 00:38+0000\n"
-"PO-Revision-Date: 2024-04-02 14:36+0000\n"
+"PO-Revision-Date: 2024-04-02 15:06+0000\n"
 "Last-Translator: Thijs van Oers <thijsvanoers@yahoo.com>\n"
 "Language-Team: Dutch (http://www.transifex.com/oca/"
 "OCA-bank-statement-reconcile-9-0/language/nl/)\n"
@@ -135,7 +135,7 @@ msgstr "Automatisch afschrijven"
 #: code:addons/account_mass_reconcile/models/base_reconciliation.py:0
 #, python-format
 msgid "Automatic writeoff"
-msgstr ""
+msgstr "Automatische afschrijving"
 
 #. module: account_mass_reconcile
 #: model_terms:ir.actions.act_window,help:account_mass_reconcile.action_account_mass_reconcile
@@ -145,7 +145,7 @@ msgstr "Klik om een afletteringsprofiel toe te voegen."
 #. module: account_mass_reconcile
 #: model_terms:ir.ui.view,arch_db:account_mass_reconcile.view_account_config
 msgid "Commit frequency"
-msgstr ""
+msgstr "Frequentie vastleggen"
 
 #. module: account_mass_reconcile
 #: model:ir.model,name:account_mass_reconcile.model_res_company
@@ -162,7 +162,7 @@ msgstr "Bedrijf"
 #. module: account_mass_reconcile
 #: model:ir.model,name:account_mass_reconcile.model_res_config_settings
 msgid "Config Settings"
-msgstr ""
+msgstr "Configuratie instellingen"
 
 #. module: account_mass_reconcile
 #: model_terms:ir.ui.view,arch_db:account_mass_reconcile.account_mass_reconcile_form
@@ -270,7 +270,7 @@ msgstr "Ga naar afgeletterde items"
 #. module: account_mass_reconcile
 #: model_terms:ir.ui.view,arch_db:account_mass_reconcile.account_mass_reconcile_form
 msgid "Go to unreconciled items"
-msgstr ""
+msgstr "Ga naar niet afgeletterde regels"
 
 #. module: account_mass_reconcile
 #: model_terms:ir.ui.view,arch_db:account_mass_reconcile.view_mass_reconcile_history_search
@@ -280,7 +280,7 @@ msgstr "Groeperen op..."
 #. module: account_mass_reconcile
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile__has_message
 msgid "Has Message"
-msgstr ""
+msgstr "Heeft een bericht"
 
 #. module: account_mass_reconcile
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile__history_ids
@@ -292,7 +292,7 @@ msgstr "Historie"
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_res_company__reconciliation_commit_every
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_res_config_settings__reconciliation_commit_every
 msgid "How often to commit when performing automatic reconciliation."
-msgstr ""
+msgstr "Hoe vaak vastleggen bij automatische aflettering."
 
 #. module: account_mass_reconcile
 #: model_terms:ir.ui.view,arch_db:account_mass_reconcile.view_account_config
