@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-03-24 03:37+0000\n"
-"PO-Revision-Date: 2024-03-29 00:44+0000\n"
+"PO-Revision-Date: 2024-04-02 10:36+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: Italian (https://www.transifex.com/oca/teams/23907/it/)\n"
 "Language: it\n"
@@ -148,7 +148,7 @@ msgstr "Fare clic per aggiungere un profilo riconciliazione."
 #. module: account_mass_reconcile
 #: model_terms:ir.ui.view,arch_db:account_mass_reconcile.view_account_config
 msgid "Commit frequency"
-msgstr ""
+msgstr "Frequenza di esecuzione"
 
 #. module: account_mass_reconcile
 #: model:ir.model,name:account_mass_reconcile.model_res_company
@@ -633,6 +633,7 @@ msgstr "Lavoro"
 #: model:ir.model.fields,help:account_mass_reconcile.field_account_mass_reconcile_method__sequence
 msgid "The sequence field is used to order the reconcile method"
 msgstr ""
+"Il campo sequenza è utilizzato per ordinare il metodo di riconciliazione"
 
 #. module: account_mass_reconcile
 #. odoo-python
@@ -640,18 +641,19 @@ msgstr ""
 #, python-format
 msgid "There is no history of reconciled items on the task: %s."
 msgstr ""
+"Non esiste lo storico delle registrazioni di riconciliazione nel lavoro: %s."
 
 #. module: account_mass_reconcile
 #. odoo-python
 #: code:addons/account_mass_reconcile/models/mass_reconcile.py:0
 #, python-format
 msgid "There was an error during reconciliation : %s"
-msgstr ""
+msgstr "Si è verificato un errore durante la riconciliazione: %s"
 
 #. module: account_mass_reconcile
 #: model_terms:ir.ui.view,arch_db:account_mass_reconcile.view_mass_reconcile_history_search
 msgid "Todays' Reconcilations"
-msgstr ""
+msgstr "Riconciliazioni odierne"
 
 #. module: account_mass_reconcile
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile_method__name
@@ -661,24 +663,24 @@ msgstr "Tipo"
 #. module: account_mass_reconcile
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile__unreconciled_count
 msgid "Unreconciled Items"
-msgstr ""
+msgstr "Registrazioni non riconciliate"
 
 #. module: account_mass_reconcile
 #. odoo-python
 #: code:addons/account_mass_reconcile/models/mass_reconcile.py:0
 #, python-format
 msgid "Unreconciled items"
-msgstr ""
+msgstr "Registrazioni non riconciliate"
 
 #. module: account_mass_reconcile
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile__website_message_ids
 msgid "Website Messages"
-msgstr ""
+msgstr "Messaggi sito web"
 
 #. module: account_mass_reconcile
 #: model:ir.model.fields,help:account_mass_reconcile.field_account_mass_reconcile__website_message_ids
 msgid "Website communication history"
-msgstr ""
+msgstr "Cronologia comunicazioni sito web"
 
 #. module: account_mass_reconcile
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile_method__write_off
@@ -692,7 +694,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_partner__write_off
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_reference__write_off
 msgid "Write off allowed"
-msgstr ""
+msgstr "Write-off consentito"
 
 #~ msgid "Last Modified on"
 #~ msgstr "Ultima modifica il"
