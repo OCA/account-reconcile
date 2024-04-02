@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: bank-statement-reconcile (9.0)\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-12-24 00:38+0000\n"
-"PO-Revision-Date: 2020-12-14 00:28+0000\n"
-"Last-Translator: Bosd <c5e2fd43-d292-4c90-9d1f-74ff3436329a@anonaddy.me>\n"
-"Language-Team: Dutch (http://www.transifex.com/oca/OCA-bank-statement-"
-"reconcile-9-0/language/nl/)\n"
+"PO-Revision-Date: 2024-04-02 14:36+0000\n"
+"Last-Translator: Thijs van Oers <thijsvanoers@yahoo.com>\n"
+"Language-Team: Dutch (http://www.transifex.com/oca/"
+"OCA-bank-statement-reconcile-9-0/language/nl/)\n"
 "Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.3.2\n"
+"X-Generator: Weblate 4.17\n"
 
 #. module: account_mass_reconcile
 #. odoo-python
@@ -26,6 +26,8 @@ msgstr ""
 msgid ""
 "A mass reconcile is already ongoing for this account, please try again later."
 msgstr ""
+"Er is al een massa aflettering gaande voor deze grootboekrekening. Probeer "
+"het later nog eens."
 
 #. module: account_mass_reconcile
 #. odoo-python
@@ -113,13 +115,13 @@ msgstr "Aantal bijlagen"
 #. module: account_mass_reconcile
 #: model_terms:ir.ui.view,arch_db:account_mass_reconcile.account_mass_reconcile_form
 msgid "Automatic Mass Reconcile"
-msgstr ""
+msgstr "Automatische bulk aflettering"
 
 #. module: account_mass_reconcile
 #: model_terms:ir.ui.view,arch_db:account_mass_reconcile.mass_reconcile_history_form
 #: model_terms:ir.ui.view,arch_db:account_mass_reconcile.view_mass_reconcile_history_search
 msgid "Automatic Mass Reconcile History"
-msgstr ""
+msgstr "Automatische bulk aflettering geschiedenis"
 
 #. module: account_mass_reconcile
 #. odoo-python
