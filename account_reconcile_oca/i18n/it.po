@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-03-30 12:37+0000\n"
-"Last-Translator: Alessandro Fiorino <alessandro.fiorino@digitaldomus.it>\n"
+"PO-Revision-Date: 2024-04-04 11:34+0000\n"
+"Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
 "MIME-Version: 1.0\n"
@@ -38,15 +38,13 @@ msgstr "Conto"
 
 #. module: account_reconcile_oca
 #: model:ir.model,name:account_reconcile_oca.model_account_account_reconcile
-#, fuzzy
 msgid "Account Account Reconcile"
-msgstr "Riconciliazione Conto"
+msgstr "Conto riconciliazione contabile"
 
 #. module: account_reconcile_oca
 #: model:ir.model,name:account_reconcile_oca.model_account_reconcile_abstract
-#, fuzzy
 msgid "Account Reconcile Abstract"
-msgstr "Riconciliazione Conto Astratto"
+msgstr "Sintesi riconciliazione contabile"
 
 #. module: account_reconcile_oca
 #: model:ir.model.fields,field_description:account_reconcile_oca.field_account_account_reconcile__add_account_move_line_id
@@ -80,7 +78,7 @@ msgstr "Distribuzione Analitica"
 #. module: account_reconcile_oca
 #: model:ir.model.fields,field_description:account_reconcile_oca.field_account_bank_statement_line__analytic_precision
 msgid "Analytic Precision"
-msgstr "Precisione Analitica"
+msgstr "Precisione analitica"
 
 #. module: account_reconcile_oca
 #: model_terms:ir.ui.view,arch_db:account_reconcile_oca.bank_statement_line_form_reconcile_view
@@ -119,9 +117,8 @@ msgstr "Contante"
 
 #. module: account_reconcile_oca
 #: model_terms:ir.ui.view,arch_db:account_reconcile_oca.bank_statement_line_form_reconcile_view
-#, fuzzy
 msgid "Chatter"
-msgstr "Chatter"
+msgstr "Elenco messaggi"
 
 #. module: account_reconcile_oca
 #: model_terms:ir.ui.view,arch_db:account_reconcile_oca.account_account_reconcile_form_view
@@ -175,7 +172,6 @@ msgstr "Valuta"
 
 #. module: account_reconcile_oca
 #: model:ir.model.fields,field_description:account_reconcile_oca.field_account_account_reconcile_data__data
-#, fuzzy
 msgid "Data"
 msgstr "Dati"
 
@@ -197,7 +193,7 @@ msgstr "Dare"
 #: model:ir.model.fields,field_description:account_reconcile_oca.field_account_account_reconcile__display_name
 #: model:ir.model.fields,field_description:account_reconcile_oca.field_account_account_reconcile_data__display_name
 msgid "Display Name"
-msgstr "Nome Visualizzato"
+msgstr "Nome visualizzato"
 
 #. module: account_reconcile_oca
 #: model:ir.model.fields,field_description:account_reconcile_oca.field_account_move_line__invoice_due_date
@@ -219,12 +215,12 @@ msgstr "Valuta Estera"
 #. module: account_reconcile_oca
 #: model_terms:ir.ui.view,arch_db:account_reconcile_oca.account_move_line_search_reconcile_view
 msgid "From Trade Payable accounts"
-msgstr ""
+msgstr "Da conti debiti commerciali"
 
 #. module: account_reconcile_oca
 #: model_terms:ir.ui.view,arch_db:account_reconcile_oca.account_move_line_search_reconcile_view
 msgid "From Trade Receivable accounts"
-msgstr ""
+msgstr "Da conti crediti commerciali"
 
 #. module: account_reconcile_oca
 #: model:ir.model.fields,field_description:account_reconcile_oca.field_account_account_reconcile__id
@@ -239,9 +235,8 @@ msgstr "Fattura"
 
 #. module: account_reconcile_oca
 #: model:ir.model.fields,field_description:account_reconcile_oca.field_account_account_reconcile__is_reconciled
-#, fuzzy
 msgid "Is Reconciled"
-msgstr "E' riconciliato"
+msgstr "È riconciliato"
 
 #. module: account_reconcile_oca
 #: model_terms:ir.ui.view,arch_db:account_reconcile_oca.account_journal_dashboard_kanban_view
@@ -261,18 +256,18 @@ msgstr "Valuta Registro"
 #. module: account_reconcile_oca
 #: model_terms:ir.ui.view,arch_db:account_reconcile_oca.account_move_line_search_reconcile_view
 msgid "Journal Entry"
-msgstr "Annotazione Registro"
+msgstr "Registrazione contabile"
 
 #. module: account_reconcile_oca
 #: model:ir.model,name:account_reconcile_oca.model_account_move_line
 #: model_terms:ir.ui.view,arch_db:account_reconcile_oca.account_move_line_search_reconcile_view
 msgid "Journal Item"
-msgstr "Elemento Registro"
+msgstr "Movimento contabile"
 
 #. module: account_reconcile_oca
 #: model:ir.model.fields.selection,name:account_reconcile_oca.selection__account_journal__reconcile_mode__keep
 msgid "Keep Suspense Accounts"
-msgstr "Mantiene Conti Sospesi"
+msgstr "Mantiene conti sospesi"
 
 #. module: account_reconcile_oca
 #. odoo-python
@@ -294,17 +289,17 @@ msgstr "Etichetta"
 #: model:ir.model.fields,field_description:account_reconcile_oca.field_account_account_reconcile____last_update
 #: model:ir.model.fields,field_description:account_reconcile_oca.field_account_account_reconcile_data____last_update
 msgid "Last Modified on"
-msgstr "Ultima Modifica il"
+msgstr "Ultima modifica il"
 
 #. module: account_reconcile_oca
 #: model:ir.model.fields,field_description:account_reconcile_oca.field_account_account_reconcile_data__write_uid
 msgid "Last Updated by"
-msgstr "Ultima Modifica di"
+msgstr "Ultimo aggiornamento di"
 
 #. module: account_reconcile_oca
 #: model:ir.model.fields,field_description:account_reconcile_oca.field_account_account_reconcile_data__write_date
 msgid "Last Updated on"
-msgstr "Ultima Modifica il"
+msgstr "Ultimo aggiornamento il"
 
 #. module: account_reconcile_oca
 #: model:ir.model.fields,field_description:account_reconcile_oca.field_account_bank_statement_line__manual_account_id
@@ -436,9 +431,8 @@ msgstr "Acquisti"
 
 #. module: account_reconcile_oca
 #: model_terms:ir.ui.view,arch_db:account_reconcile_oca.account_move_line_search_reconcile_view
-#, fuzzy
 msgid "Receivable"
-msgstr "Creditibile"
+msgstr "Credito"
 
 #. module: account_reconcile_oca
 #: model:ir.actions.act_window,name:account_reconcile_oca.account_account_account_account_reconcile_act_window
@@ -559,7 +553,6 @@ msgstr "Valida"
 
 #. module: account_reconcile_oca
 #: model_terms:ir.ui.view,arch_db:account_reconcile_oca.account_move_line_tree_reconcile_view
-#, fuzzy
 msgid "View"
 msgstr "Vista"
 
