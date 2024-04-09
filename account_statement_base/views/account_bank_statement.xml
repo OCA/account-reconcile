@@ -1,6 +1,7 @@
 <?xml version="1.0" ?>
 <!--
   Copyright 2023 Therp BV
+  Copyright 2024 Onestein
   Licence LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl-3.0).
 -->
 <odoo>
@@ -9,6 +10,102 @@
     <record id="account.action_bank_statement_tree" model="ir.actions.act_window">
          <field name="res_model">account.bank.statement</field>
          <field name="view_mode">tree,form,pivot,graph</field>
+    </record>
+
+    <record id="account_bank_statement_form" model="ir.ui.view">
+        <field name="name">account.bank.statement</field>
+        <field name="model">account.bank.statement</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet string="Bank Statement">
+                    <group>
+                        <group>
+                            <field name="name" />
+                            <field name="date" />
+                            <field name="balance_start" />
+                            <field name="balance_end_real" />
+                            <field name="currency_id" />
+                        </group>
+                        <group>
+                            <field name="reference" />
+                            <field name="balance_end" />
+                            <field name="company_id" />
+                            <field name="journal_id" />
+                        </group>
+                    </group>
+                    <notebook>
+                      <page string="Statements">
+                        <field
+                                name="line_ids"
+                                context="{'default_journal_id':journal_id}"
+                                nolabel="1"
+                            >
+                            <tree
+                                    decoration-muted="is_reconciled"
+                                    editable="top"
+                                    multi_edit="1"
+                                >
+                                <field name="sequence" widget="handle" />
+                                <field
+                                        name="date"
+                                        attrs="{'readonly': [['is_reconciled', '=', True], ['amount', '!=', 0]], 'required': True}"
+                                    />
+                                <field
+                                        name="payment_ref"
+                                        attrs="{'readonly': [['is_reconciled', '=', True], ['amount', '!=', 0]]}"
+                                    />
+                                <field
+                                        name="ref"
+                                        optional="hide"
+                                        attrs="{'readonly': [['is_reconciled', '=', True], ['amount', '!=', 0]]}"
+                                    />
+                                <field
+                                        name="partner_id"
+                                        attrs="{'readonly': [['is_reconciled', '=', True], ['amount', '!=', 0]]}"
+                                    />
+                                <field
+                                        name="amount"
+                                        attrs="{'readonly': [['is_reconciled', '=', True], ['amount', '!=', 0]]}"
+                                    />
+                                <field
+                                        name="narration"
+                                        optional="hide"
+                                        string="Notes"
+                                        attrs="{'readonly': [['is_reconciled', '=', True], ['amount', '!=', 0]]}"
+                                    />
+                                <field name="suitable_journal_ids" invisible="1" />
+                                <field name="is_reconciled" invisible="1" />
+                                <field name="statement_id" invisible="1" />
+                                <field name="state" invisible="1" />
+                                <field
+                                        name="journal_id"
+                                        optional="hide"
+                                        attrs="{'readonly': ['|', ['statement_id', '!=', False], ['is_reconciled', '=', True], ['amount', '!=', 0]], 'required': True}"
+                                    />
+                                <field
+                                        name="partner_bank_id"
+                                        optional="hide"
+                                        attrs="{'readonly': [['is_reconciled', '=', True], ['amount', '!=', 0]]}"
+                                    />
+                                <button
+                                        name="action_undo_reconciliation"
+                                        type="object"
+                                        string="Revert reconciliation"
+                                        icon="fa-undo"
+                                        attrs="{'invisible': [('is_reconciled', '=', False)]}"
+                                    />
+                                <field name="company_id" invisible="1" />
+                                <field name="is_reconciled" invisible="1" />
+                                <field name="currency_id" invisible="1" />
+                                <field name="country_code" invisible="1" />
+                                <field name="state" invisible="1" />
+                            </tree>
+                        </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
     </record>
 
 </odoo>
