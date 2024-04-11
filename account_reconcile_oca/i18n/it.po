@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-04-04 11:34+0000\n"
+"PO-Revision-Date: 2024-04-11 11:37+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
@@ -73,7 +73,7 @@ msgstr "Importo in valuta"
 #. module: account_reconcile_oca
 #: model:ir.model.fields,field_description:account_reconcile_oca.field_account_bank_statement_line__analytic_distribution
 msgid "Analytic Distribution"
-msgstr "Distribuzione Analitica"
+msgstr "Distribuzione analitica"
 
 #. module: account_reconcile_oca
 #: model:ir.model.fields,field_description:account_reconcile_oca.field_account_bank_statement_line__analytic_precision
@@ -314,7 +314,7 @@ msgstr "Importo Manuale"
 #. module: account_reconcile_oca
 #: model:ir.model.fields,field_description:account_reconcile_oca.field_account_bank_statement_line__manual_currency_id
 msgid "Manual Currency"
-msgstr "Valuta Manuale"
+msgstr "Valuta manuale"
 
 #. module: account_reconcile_oca
 #: model:ir.model.fields,field_description:account_reconcile_oca.field_account_account_reconcile__manual_delete
