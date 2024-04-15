@@ -143,6 +143,17 @@ class AccountJournal(models.Model):
             )
         return vals_list
 
+    def _get_global_commission_amount(self, parser):
+        global_commission_amount = 0.0
+        commmission_field = parser.commission_field
+        if commmission_field:
+            for row in parser.result_row_list:
+                global_commission_amount += float(row.get(commmission_field, "0.0"))
+            # If commission amount is positive in field, inverse the sign
+            if parser.commission_sign == "+":
+                global_commission_amount = -global_commission_amount
+        return global_commission_amount
+
     def _get_extra_move_line_vals_list(self, parser, move):
         """Insert extra lines after the main statement lines.
 
@@ -156,15 +167,8 @@ class AccountJournal(models.Model):
               statement ID
             :param:    context: global context
         """
-        global_commission_amount = 0
-        commmission_field = parser.commission_field
         vals_list = []
-        if commmission_field:
-            for row in parser.result_row_list:
-                global_commission_amount += float(row.get(commmission_field, "0.0"))
-            # If commission amount is positive in field, inverse the sign
-            if parser.commission_sign == "+":
-                global_commission_amount = -global_commission_amount
+        global_commission_amount = self._get_global_commission_amount(parser)
         partner_id = self.partner_id.id
         # Commission line
         if global_commission_amount > 0.0:
