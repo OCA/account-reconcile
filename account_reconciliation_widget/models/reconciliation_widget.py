@@ -308,12 +308,6 @@ class AccountReconciliation(models.AbstractModel):
         """
         if not bank_statement_line_ids:
             return {}
-        bank_statements = (
-            self.env["account.bank.statement.line"]
-            .browse(bank_statement_line_ids)
-            .mapped("statement_id")
-        )
-
         query = """
              SELECT line.id
              FROM account_bank_statement_line line
@@ -340,18 +334,17 @@ class AccountReconciliation(models.AbstractModel):
             [line["st_line"]["id"] for line in results["lines"]]
         )
         bank_statements_left = bank_statement_lines_left.mapped("statement_id")
-
+        data = bank_statements_left.read(["name", "journal_id"])
+        data = data and data[0] or {}
         results.update(
             {
                 "statement_id": len(bank_statements_left) == 1
-                and bank_statements_left.id
+                and bank_statements_left[0].id
                 or False,
                 "statement_name": len(bank_statements_left) == 1
-                and bank_statements_left.name
+                and data.get("name")
                 or False,
-                "journal_id": bank_statements
-                and bank_statements[0].journal_id.id
-                or False,
+                "journal_id": data and data.get("journal_id", [False])[0] or False,
                 "notifications": [],
             }
         )
