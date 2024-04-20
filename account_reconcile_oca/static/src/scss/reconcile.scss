@@ -7,6 +7,8 @@
     height: 100%;
     .o_kanban_renderer.o_kanban_ungrouped .o_kanban_record {
         margin: 0 0 0;
+        min-width: fit-content;
+        width: 100%;
         > div {
             border-right: thick solid rgba(0, 0, 0, 0);
         }
