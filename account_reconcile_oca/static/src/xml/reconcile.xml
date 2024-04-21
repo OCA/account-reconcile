@@ -29,7 +29,8 @@
                         t-esc="statement.name"
                     />
                     <span
-                        class="pe-0 fw-bold fs-4 align-self-center"
+                        t-on-click="() => this.onClickStatement(statement.id)"
+                        class="pe-0 fw-bold fs-4 align-self-center btn btn-link"
                         t-esc="statement.balanceStr"
                     />
                 </div>
