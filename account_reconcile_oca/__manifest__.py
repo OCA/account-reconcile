@@ -23,6 +23,7 @@
         "views/account_journal.xml",
         "views/account_move.xml",
         "views/account_account.xml",
+        "views/account_bank_statement.xml",
     ],
     "demo": ["demo/demo.xml"],
     "post_init_hook": "post_init_hook",
