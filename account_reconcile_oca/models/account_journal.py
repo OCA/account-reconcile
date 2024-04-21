@@ -12,6 +12,7 @@ class AccountJournal(models.Model):
         default="edit",
         required=True,
     )
+    company_currency_id = fields.Many2one(related="company_id.currency_id")
 
     def get_rainbowman_message(self):
         self.ensure_one()
