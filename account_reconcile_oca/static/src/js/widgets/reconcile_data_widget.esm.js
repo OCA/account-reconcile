@@ -22,25 +22,25 @@ export class AccountReconcileDataWidget extends Component {
         var data = this.props.record.data[this.props.name].data;
         for (var line in data) {
             data[line].amount_format = formatMonetary(data[line].amount, {
-                currency: data[line].currency_id,
+                currencyId: data[line].currency_id,
             });
             data[line].debit_format = formatMonetary(data[line].debit, {
-                currency: data[line].currency_id,
+                currencyId: data[line].currency_id,
             });
             data[line].credit_format = formatMonetary(data[line].credit, {
-                currency: data[line].currency_id,
+                currencyId: data[line].currency_id,
             });
             data[line].amount_currency_format = formatMonetary(
                 data[line].currency_amount,
                 {
-                    currency: data[line].line_currency_id,
+                    currencyId: data[line].line_currency_id,
                 }
             );
             if (data[line].original_amount) {
                 data[line].original_amount_format = formatMonetary(
                     data[line].original_amount,
                     {
-                        currency: data[line].currency_id,
+                        currencyId: data[line].currency_id,
                     }
                 );
             }
