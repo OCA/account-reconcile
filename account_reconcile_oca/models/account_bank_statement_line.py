@@ -765,3 +765,25 @@ class AccountBankStatementLine(models.Model):
         if vals["partner_id"] is False:
             vals["partner_id"] = (False, self.partner_name)
         return vals
+
+    def add_statement(self):
+        self.ensure_one()
+        action = self.env["ir.actions.act_window"]._for_xml_id(
+            "account_reconcile_oca.account_bank_statement_action_edit"
+        )
+        previous_line_with_statement = self.env["account.bank.statement.line"].search(
+            [
+                ("internal_index", "<", self.internal_index),
+                ("journal_id", "=", self.journal_id.id),
+                ("state", "=", "posted"),
+                ("statement_id", "!=", self.statement_id.id),
+                ("statement_id", "!=", False),
+            ],
+            limit=1,
+        )
+        action["context"] = {
+            "default_journal_id": self.journal_id.id,
+            "default_balance_start": previous_line_with_statement.statement_id.balance_end_real,
+            "split_line_id": self.id,
+        }
+        return action
