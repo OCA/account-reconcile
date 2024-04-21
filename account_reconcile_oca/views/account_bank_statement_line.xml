@@ -18,6 +18,20 @@
                 <templates>
                     <t t-name="kanban-box">
                         <div
+                            t-if="!record.statement_id.raw_value"
+                            class="o_reconcile_create_statement text-center"
+                        >
+                            <a
+                                role="button"
+                                class="btn btn-secondary btn-sm"
+                                tabindex="-1"
+                                type="object"
+                                name="add_statement"
+                            >
+                                Statement
+                            </a>
+                        </div>
+                        <div
                             t-attf-class="oe_kanban_card oe_kanban_global_click"
                             style="width:100%"
                         >
