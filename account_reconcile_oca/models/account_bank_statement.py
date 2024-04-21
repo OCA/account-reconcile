@@ -11,6 +11,5 @@ class AccountBankStatement(models.Model):
         action = self.env["ir.actions.act_window"]._for_xml_id(
             "account_reconcile_oca.account_bank_statement_action_edit"
         )
-        print(action)
         action["res_id"] = self.id
         return action
