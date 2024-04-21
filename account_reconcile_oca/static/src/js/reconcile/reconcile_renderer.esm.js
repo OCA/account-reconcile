@@ -2,7 +2,11 @@
 
 import {KanbanRenderer} from "@web/views/kanban/kanban_renderer";
 import {ReconcileKanbanRecord} from "./reconcile_kanban_record.esm.js";
-export class ReconcileRenderer extends KanbanRenderer {}
+export class ReconcileRenderer extends KanbanRenderer {
+    get journalBalanceStr() {
+        console.log(this);
+    }
+}
 
 ReconcileRenderer.components = {
     ...KanbanRenderer.components,
