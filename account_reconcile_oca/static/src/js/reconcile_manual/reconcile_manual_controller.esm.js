@@ -15,6 +15,9 @@ export class ReconcileManualController extends FormController {
             afterExecuteAction: this.afterExecuteActionButton.bind(this),
         });
     }
+    displayName() {
+        return this.env.config.getDisplayName();
+    }
     async reloadFormController() {
         try {
             await this.model.root.load();
