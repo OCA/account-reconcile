@@ -21,18 +21,17 @@ export class AccountReconcileDataWidget extends Component {
     getReconcileLines() {
         var data = this.props.record.data[this.props.name].data;
         for (var line in data) {
-            data[line].amount_format = formatMonetary(data[line].amount, undefined, {
+            data[line].amount_format = formatMonetary(data[line].amount, {
                 currency: data[line].currency_id,
             });
-            data[line].debit_format = formatMonetary(data[line].debit, undefined, {
+            data[line].debit_format = formatMonetary(data[line].debit, {
                 currency: data[line].currency_id,
             });
-            data[line].credit_format = formatMonetary(data[line].credit, undefined, {
+            data[line].credit_format = formatMonetary(data[line].credit, {
                 currency: data[line].currency_id,
             });
             data[line].amount_currency_format = formatMonetary(
                 data[line].currency_amount,
-                undefined,
                 {
                     currency: data[line].line_currency_id,
                 }
@@ -40,7 +39,6 @@ export class AccountReconcileDataWidget extends Component {
             if (data[line].original_amount) {
                 data[line].original_amount_format = formatMonetary(
                     data[line].original_amount,
-                    undefined,
                     {
                         currency: data[line].currency_id,
                     }

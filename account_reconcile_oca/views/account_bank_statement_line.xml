@@ -315,7 +315,7 @@
         </field>
     </record>
     <record id="action_bank_statement_line_reconcile" model="ir.actions.act_window">
-        <field name="name">Reconcile bank statement lines</field>
+        <field name="name">Statement lines</field>
         <field name="res_model">account.bank.statement.line</field>
         <field name="domain">[('journal_id', '=', active_id)]</field>
         <field name="context">
