@@ -24,6 +24,7 @@
                         <field name="balance_start" />
                         <field name="balance_end_real" />
                         <field name="attachment_ids" widget="many2many_binary" />
+                        <field name="line_ids" invisible="1" />
                     </group>
                 </sheet>
 
