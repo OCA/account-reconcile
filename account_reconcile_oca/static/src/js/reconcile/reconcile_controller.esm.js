@@ -1,14 +1,17 @@
 /** @odoo-module */
-const {useState, useSubEnv, onMounted} = owl;
+const {onMounted, onWillStart, useState, useSubEnv} = owl;
 import {useBus, useService} from "@web/core/utils/hooks";
 import {KanbanController} from "@web/views/kanban/kanban_controller";
 import {View} from "@web/views/view";
+import {formatMonetary} from "@web/views/fields/formatters";
 
 export class ReconcileController extends KanbanController {
     async setup() {
         super.setup();
         this.state = useState({
             selectedRecordId: null,
+            journalBalance: 0,
+            currency: false,
         });
         useSubEnv({
             parentController: this,
@@ -22,7 +25,43 @@ export class ReconcileController extends KanbanController {
         useBus(this.model.bus, "update", () => {
             this.selectRecord();
         });
-        onMounted(() => this.selectRecord());
+        onWillStart(() => {
+            this.updateJournalInfo();
+        });
+        onMounted(() => {
+            this.selectRecord();
+        });
+    }
+    get journalId() {
+        if (this.props.resModel === "account.bank.statement.line") {
+            return this.props.context.active_id;
+        }
+        return false;
+    }
+    async updateJournalInfo() {
+        var journalId = this.journalId;
+        if (!journalId) {
+            return;
+        }
+        var result = await this.orm.call("account.journal", "read", [
+            [journalId],
+            ["current_statement_balance", "currency_id", "company_currency_id"],
+        ]);
+        this.state.journalBalance = result[0].current_statement_balance;
+        this.state.currency = (result[0].currency_id ||
+            result[0].company_currency_id)[0];
+    }
+    get journalBalanceStr() {
+        if (!this.state.journalBalance) {
+            return "";
+        }
+        console.log(this.state, {
+            currencyId: this.state.currency,
+            humanReadable: true,
+        });
+        return formatMonetary(this.state.journalBalance, {
+            currencyId: this.state.currency,
+        });
     }
     exposeController(controller) {
         this.form_controller = controller;
@@ -48,6 +87,7 @@ export class ReconcileController extends KanbanController {
         return {
             resId: this.state.selectedRecordId,
             type: "form",
+            noBreadcrumbs: true,
             context: {
                 ...(this.props.context || {}),
                 form_view_ref: this.props.context.view_ref,

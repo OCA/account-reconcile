@@ -5,6 +5,17 @@
         t-inherit="web.KanbanRenderer"
         t-inherit-mode="primary"
     >
+        <xpath expr="//t[@t-as='groupOrRecord']" position="before">
+            <div class="m-2 d-flex w-100" t-if="env.parentController.journalId">
+                <span
+                    class="flex-fill text-900 text-start ps-0 fw-bold fs-4 align-self-center"
+                >Balance</span>
+                <span
+                    class="pe-0 fw-bold fs-4 align-self-center"
+                    t-esc="env.parentController.journalBalanceStr"
+                />
+            </div>
+        </xpath>
         <xpath expr="div[hasclass('o_kanban_renderer')]" position="attributes">
             <attribute
                 name="class"
