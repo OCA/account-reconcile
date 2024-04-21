@@ -3,10 +3,15 @@
 import {KanbanRenderer} from "@web/views/kanban/kanban_renderer";
 import {ReconcileKanbanRecord} from "./reconcile_kanban_record.esm.js";
 import {formatMonetary} from "@web/views/fields/formatters";
+import {useService} from "@web/core/utils/hooks";
 
 export class ReconcileRenderer extends KanbanRenderer {
+    setup() {
+        super.setup();
+        this.action = useService("action");
+        this.orm = useService("orm");
+    }
     getStatements() {
-        console.log(this.props);
         if (
             this.env.parentController.props.resModel !== "account.bank.statement.line"
         ) {
@@ -30,8 +35,23 @@ export class ReconcileRenderer extends KanbanRenderer {
                 });
             }
         }
-        console.log(statements);
         return statements;
+    }
+    async onClickStatement(statementId) {
+        const action = await this.orm.call(
+            "account.bank.statement",
+            "action_open_statement",
+            [[statementId]],
+            {
+                context: this.props.context,
+            }
+        );
+        const model = this.props.list.model;
+        this.action.doAction(action, {
+            async onClose() {
+                model.root.load();
+            },
+        });
     }
 }
 
