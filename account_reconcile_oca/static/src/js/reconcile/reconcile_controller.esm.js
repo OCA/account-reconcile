@@ -55,10 +55,6 @@ export class ReconcileController extends KanbanController {
         if (!this.state.journalBalance) {
             return "";
         }
-        console.log(this.state, {
-            currencyId: this.state.currency,
-            humanReadable: true,
-        });
         return formatMonetary(this.state.journalBalance, {
             currencyId: this.state.currency,
         });

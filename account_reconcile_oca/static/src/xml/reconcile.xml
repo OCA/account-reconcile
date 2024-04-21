@@ -15,6 +15,24 @@
                     t-esc="env.parentController.journalBalanceStr"
                 />
             </div>
+            <t t-set="statements" t-value="getStatements()" />
+        </xpath>
+        <xpath expr="//t[@t-else='']/KanbanRecord" position="before">
+            <t
+                t-if="statements.length and groupOrRecord.record.data.statement_id and statements[0].id == groupOrRecord.record.data.statement_id[0]"
+            >
+                <t t-set="statement" t-value="statements.shift()" />
+                <div class="m-2 d-flex w-100" t-if="env.parentController.journalId">
+                    <span
+                        class="flex-fill text-900 text-start ps-0 fw-bold fs-4 align-self-center"
+                        t-esc="statement.name"
+                    />
+                    <span
+                        class="pe-0 fw-bold fs-4 align-self-center"
+                        t-esc="statement.balanceStr"
+                    />
+                </div>
+            </t>
         </xpath>
         <xpath expr="div[hasclass('o_kanban_renderer')]" position="attributes">
             <attribute
