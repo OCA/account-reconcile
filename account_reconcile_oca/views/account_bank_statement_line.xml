@@ -13,12 +13,14 @@
                 <field name="foreign_currency_id" />
                 <field name="statement_id" />
                 <field name="statement_balance_end_real" />
-                <field name="statement_name" />
                 <field name="to_check" />
+                <field name="reconcile_aggregate" />
+                <field name="aggregate_id" />
+                <field name="aggregate_name" />
                 <templates>
                     <t t-name="kanban-box">
                         <div
-                            t-if="!record.statement_id.raw_value"
+                            t-if="record.reconcile_aggregate.raw_value == 'statement' and !record.statement_id.raw_value"
                             class="o_reconcile_create_statement text-center"
                         >
                             <a
