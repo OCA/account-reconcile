@@ -15,6 +15,7 @@
         "base_sparse_field",
     ],
     "data": [
+        "views/res_config_settings.xml",
         "security/ir.model.access.csv",
         "views/account_account_reconcile.xml",
         "views/account_bank_statement_line.xml",

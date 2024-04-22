@@ -3,6 +3,9 @@
 
 from collections import defaultdict
 
+from dateutil import rrule
+from dateutil.relativedelta import relativedelta
+
 from odoo import Command, _, api, fields, models
 from odoo.exceptions import UserError
 from odoo.tools import float_is_zero
@@ -99,6 +102,42 @@ class AccountBankStatementLine(models.Model):
         string="Statement Name",
         related="statement_id.name",
     )
+    reconcile_aggregate = fields.Char(compute="_compute_reconcile_aggregate")
+    aggregate_id = fields.Integer(compute="_compute_reconcile_aggregate")
+    aggregate_name = fields.Char(compute="_compute_reconcile_aggregate")
+
+    @api.model
+    def _reconcile_aggregate_map(self):
+        lang = self.env["res.lang"]._lang_get(self.env.user.lang)
+        week_start = rrule.weekday(int(lang.week_start) - 1)
+        return {
+            False: lambda s: (False, False),
+            "statement": lambda s: (s.statement_id.id, s.statement_id.name),
+            "day": lambda s: (s.date.toordinal(), s.date.strftime(lang.date_format)),
+            "week": lambda s: (
+                (s.date + relativedelta(weekday=week_start(-1))).toordinal(),
+                (s.date + relativedelta(weekday=week_start(-1))).strftime(
+                    lang.date_format
+                ),
+            ),
+            "month": lambda s: (
+                s.date.replace(day=1).toordinal(),
+                s.date.replace(day=1).strftime(lang.date_format),
+            ),
+        }
+
+    @api.depends("company_id", "journal_id")
+    def _compute_reconcile_aggregate(self):
+        reconcile_aggregate_map = self._reconcile_aggregate_map()
+        for record in self:
+            reconcile_aggregate = (
+                record.journal_id.reconcile_aggregate
+                or record.company_id.reconcile_aggregate
+            )
+            record.reconcile_aggregate = reconcile_aggregate
+            record.aggregate_id, record.aggregate_name = reconcile_aggregate_map[
+                reconcile_aggregate
+            ](record)
 
     def save(self):
         return {"type": "ir.actions.act_window_close"}
