@@ -11,4 +11,49 @@
          <field name="view_mode">tree,form,pivot,graph</field>
     </record>
 
+    <!-- Add form view to account.bank.statement model -->
+    <record id="view_bank_statement_form" model="ir.ui.view">
+        <field name="name">account.bank.statement.form</field>
+        <field name="model">account.bank.statement</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet string="Bank Statement">
+                    <group>
+                        <group>
+                            <field name="name" />
+                            <field name="date" readonly="1" />
+                            <field name="balance_start" on_change="1" />
+                            <field name="balance_end_real" on_change="1" />
+                            <field name="currency_id" readonly="1" />
+                        </group>
+                        <group>
+                            <field name="reference" />
+                            <field name="first_line_index" readonly="1" />
+                            <field name="balance_end" on_change="1" readonly="1" />
+                            <field name="company_id" readonly="1" />
+                            <field name="journal_id" on_change="1" readonly="1" />
+                        </group>
+                    </group>
+                    <group>
+                        <field name="line_ids" on_change="1" required="1" />
+                    </group>
+                    <group>
+                        <group>
+                            <field name="is_complete" on_change="1" readonly="1" />
+                        </group>
+                        <group>
+                            <field name="is_valid" on_change="1" readonly="1" />
+                        </group>
+                    </group>
+                    <group>
+                        <field name="problem_description" readonly="1" />
+                    </group>
+                    <group>
+                        <field name="attachment_ids" />
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
 </odoo>
