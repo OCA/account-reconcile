@@ -11,23 +11,23 @@ export class ReconcileRenderer extends KanbanRenderer {
         this.action = useService("action");
         this.orm = useService("orm");
     }
-    getStatements() {
+    getAggregates() {
         if (
             this.env.parentController.props.resModel !== "account.bank.statement.line"
         ) {
             return [];
         }
         const {list} = this.props;
-        const statements = [];
+        const aggregates = [];
         for (const record of list.records) {
-            const statementId = record.data.statement_id && record.data.statement_id[0];
+            const aggregateId = record.data.aggregate_id && record.data.aggregate_id;
             if (
-                statementId &&
-                (!statements.length || statements[0].id !== statementId)
+                aggregateId &&
+                (!aggregates.length || aggregates[0].id !== aggregateId)
             ) {
-                statements.push({
-                    id: statementId,
-                    name: record.data.statement_name,
+                aggregates.push({
+                    id: aggregateId,
+                    name: record.data.aggregate_name,
                     balance: record.data.statement_balance_end_real,
                     balanceStr: formatMonetary(record.data.statement_balance_end_real, {
                         currencyId: record.data.currency_id[0],
@@ -35,7 +35,7 @@ export class ReconcileRenderer extends KanbanRenderer {
                 });
             }
         }
-        return statements;
+        return aggregates;
     }
     async onClickStatement(statementId) {
         const action = await this.orm.call(
