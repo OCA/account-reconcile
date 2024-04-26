@@ -1,0 +1,429 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2023 Dixmit
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
+<odoo>
+
+    <record id="bank_statement_line_reconcile_view" model="ir.ui.view">
+        <field name="name">account.bank.statement.line.reconcile</field>
+        <field name="model">account.bank.statement.line</field>
+        <field name="arch" type="xml">
+            <kanban js_class="reconcile">
+                <field name="is_reconciled" />
+                <field name="currency_id" />
+                <field name="foreign_currency_id" />
+                <field name="statement_id" />
+                <field name="statement_balance_end_real" />
+                <field name="to_check" />
+                <field name="reconcile_aggregate" />
+                <field name="aggregate_id" />
+                <field name="aggregate_name" />
+                <templates>
+                    <t t-name="kanban-box">
+                        <div
+                            t-if="record.reconcile_aggregate.raw_value == 'statement' and !record.statement_id.raw_value"
+                            class="o_reconcile_create_statement text-center"
+                        >
+                            <a
+                                role="button"
+                                class="btn btn-secondary btn-sm"
+                                tabindex="-1"
+                                type="object"
+                                name="add_statement"
+                            >
+                                Statement
+                            </a>
+                        </div>
+                        <div
+                            t-attf-class="oe_kanban_card oe_kanban_global_click"
+                            style="width:100%"
+                        >
+                            <div class="row">
+                                <div class="col-8">
+                                    <field name="date" />
+                                </div>
+                                <div class="col-4" style="text-align:right">
+                                    <field
+                                        name="amount"
+                                        t-if="! record.foreign_currency_id.raw_value"
+                                    />
+                                    <field
+                                        name="amount_currency"
+                                        t-if="record.foreign_currency_id.raw_value"
+                                        widget="monetary"
+                                        options="{'currency_field': 'foreign_currency_id'}"
+                                    />
+                                </div>
+
+                            </div>
+                            <div>
+                                <field name="partner_id" />
+                            </div>
+                            <div class="row">
+                                <div class="col-8">
+                                    <field name="payment_ref" />
+                                </div>
+                                <div class="col-4" style="text-align:right">
+                                    <div
+                                        t-if="record.to_check.raw_value"
+                                        class="badge text-bg-warning"
+                                    >
+                                        To check
+                                    </div>
+                                    <div
+                                        t-if="record.is_reconciled.raw_value"
+                                        class="badge text-bg-success"
+                                    >
+                                        Reconciled
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record id="bank_statement_line_form_add_view" model="ir.ui.view">
+        <field
+            name="name"
+        >Simple form view to manually create an account.bank.statement.line</field>
+        <field name="model">account.bank.statement.line</field>
+        <field name="priority">99</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <group>
+                        <field name="suitable_journal_ids" invisible="1" />
+                        <field name="state" invisible="1" />
+                        <field name="currency_id" invisible="0" />
+                        <field name="company_id" invisible="0" />
+                        <field name="date" />
+                        <field name="payment_ref" required="1" />
+                        <field name="partner_id" />
+                        <field
+                            name="statement_id"
+                            domain="[('journal_id', '=', journal_id)]"
+                        />
+                        <field
+                            name="journal_id"
+                            invisible="context.get('default_journal_id')"
+                        />
+                    </group>
+                    <group>
+                        <field name="amount" />
+                        <field
+                            name="foreign_currency_id"
+                            domain="[('id', '!=', currency_id)]"
+                            groups="base.group_multi_currency"
+                        />
+                        <field
+                            name="amount_currency"
+                            groups="base.group_multi_currency"
+                        />
+                    </group>
+                </group>
+                <footer>
+                    <button
+                        string="Save"
+                        type="object"
+                        name="save"
+                        class="btn btn-primary"
+                    />
+                    <button string="Cancel" class="btn-secondary" special="cancel" />
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="account_bank_statement_line_search" model="ir.ui.view">
+        <field name="name">account.bank.statement.line.search</field>
+        <field name="model">account.bank.statement.line</field>
+        <field
+            name="inherit_id"
+            ref="account_statement_base.account_bank_statement_line_search"
+        />
+        <field name="arch" type="xml">
+            <field name="journal_id" position="after">
+                <field name="move_id" />
+            </field>
+        </field>
+    </record>
+    <record id="bank_statement_line_form_reconcile_view" model="ir.ui.view">
+        <field name="name">account.bank.statement.line.reconcile</field>
+        <field name="model">account.bank.statement.line</field>
+        <field name="priority">99</field>
+        <field name="arch" type="xml">
+            <form js_class="reconcile_form">
+                <div class="o_form_statusbar o_account_reconcile_oca_statusbar">
+                    <div class="o_statusbar_buttons">
+                    <button
+                            name="reconcile_bank_line"
+                            type="object"
+                            string="Validate"
+                            accesskey="v"
+                            class="btn btn-primary mx-1"
+                            invisible="is_reconciled == True or can_reconcile == False"
+                        />
+                        <button
+                            name="reconcile_bank_line"
+                            type="object"
+                            string="Reconcile"
+                            class="btn btn-primary disabled mx-1"
+                            invisible="is_reconciled == True or can_reconcile == True"
+                        />
+                        <button
+                            name="unreconcile_bank_line"
+                            type="object"
+                            string="Unreconcile"
+                            accesskey="r"
+                            class="btn btn-warning mx-1"
+                            invisible="is_reconciled == False"
+                            confirm="Are you sure that the move should be unreconciled?"
+                        />
+                        <button
+                            name="clean_reconcile"
+                            type="object"
+                            string="Reset reconciliation"
+                            class="btn btn-secondary mx-1"
+                            invisible="is_reconciled == True"
+                        />
+                        <button
+                            name="action_to_check"
+                            string="To Check"
+                            class="btn btn-secondary mx-1"
+                            accesskey="c"
+                            type="object"
+                            invisible="to_check == True"
+                        />
+                        <button
+                            name="action_checked"
+                            string="Set as Checked"
+                            class="btn btn-secondary mx-1"
+                            accesskey="c"
+                            type="object"
+                            invisible="to_check == False"
+                        />
+                        <button
+                            name="action_show_move"
+                            type="object"
+                            accesskey="m"
+                            string="View move"
+                            class="btn btn-info mx-1"
+                        />
+                    </div>
+                </div>
+                <field name="id" invisible="1" />
+                <field name="name" invisible="1" />
+                <field name="can_reconcile" invisible="1" />
+                <field name="to_check" invisible="1" />
+                <field name="partner_id" invisible="1" />
+                <field name="company_id" invisible="1" />
+                <field name="journal_id" invisible="1" />
+                <field name="suitable_journal_ids" invisible="1" />
+                <field name="manual_reference" invisible="1" />
+                <field name="manual_delete" invisible="1" />
+                <field name="is_reconciled" invisible="1" />
+                <field name="foreign_currency_id" invisible="1" />
+                <field name="company_currency_id" invisible="1" />
+                <field name="currency_id" invisible="1" />
+                <field
+                    name="reconcile_data_info"
+                    nolabel="1"
+                    widget="account_reconcile_oca_data"
+                    class="w-100"
+                />
+                <div>
+                    <field
+                        name="manual_model_id"
+                        widget="selection_badge_uncheck"
+                        nolabel="1"
+                        invisible="is_reconciled == True"
+                    />
+                </div>
+                <notebook>
+                    <page
+                        name="reconcile_line"
+                        string="Reconcile"
+                        invisible="is_reconciled == True"
+                    >
+                        <field
+                            name="add_account_move_line_id"
+                            widget="account_reconcile_oca_match"
+                            domain="[('parent_state', '=', 'posted'),('amount_residual', '!=', 0),('account_id.reconcile', '=', True), ('company_id', '=', company_id), ('statement_line_id', '!=', id)]"
+                            context="{'search_default_partner_id': partner_id, 'tree_view_ref': 'account_reconcile_oca.account_move_line_tree_reconcile_view', 'search_view_ref': 'account_reconcile_oca.account_move_line_search_reconcile_view'}"
+                        />
+                    </page>
+                    <page name="manual" string="Manual operation">
+                        <group>
+                            <group>
+                                <field name="manual_line_id" invisible="1" />
+                                <field name="manual_kind" invisible="1" />
+                                <field
+                                    name="manual_account_id"
+                                    string="Account"
+                                    readonly="manual_reference == False or is_reconciled == True or manual_line_id != False"
+                                />
+                                <field
+                                    name="manual_partner_id"
+                                    string="Partner"
+                                    readonly="manual_reference == False or is_reconciled == True or (manual_line_id != False and manual_kind != 'liquidity')"
+                                />
+                                <field
+                                    name="analytic_distribution"
+                                    widget="analytic_distribution"
+                                    groups="analytic.group_analytic_accounting"
+                                    options="{'account_field': 'manual_account_id', 'business_domain': 'general'}"
+                                    invisible="manual_kind == 'liquidity' or manual_reference == False"
+                                    readonly="is_reconciled == True"
+                                />
+                            </group>
+                            <group>
+                                <field
+                                    name="manual_name"
+                                    string="Name"
+                                    readonly="manual_reference == False or is_reconciled == True or (manual_line_id != False and manual_kind != 'liquidity')"
+                                />
+                                <field
+                                    name="manual_amount"
+                                    string="Amount"
+                                    readonly="manual_reference == False or is_reconciled == True"
+                                />
+                                <field name="manual_currency_id" invisible="1" />
+                                <field name="manual_original_amount" invisible="1" />
+                                <field name="manual_move_type" invisible="1" />
+                                <label
+                                    for="manual_move_id"
+                                    string=""
+                                    insible="manual_move_type not in ['in_invoice', 'in_refund', 'out_invoice', 'out_refund'] or manual_original_amount == 0"
+                                />
+                                <div
+                                    insible="manual_move_type not in ['in_invoice', 'in_refund', 'out_invoice', 'out_refund'] or manual_original_amount == 0"
+                                >
+                                    Invoice <field
+                                        class="oe_inline"
+                                        name="manual_move_id"
+                                    />
+                                    with an open amount <field
+                                        class="oe_inline"
+                                        name="manual_original_amount"
+                                    /> will be reduced by <field
+                                        class="oe_inline"
+                                        name="manual_amount"
+                                        readonly="1"
+                                    />.
+                                    <br />
+                                You might want to set the invoice as <button
+                                        name="button_manual_reference_full_paid"
+                                        type="object"
+                                        method_args="[1]"
+                                    >fully paid</button>.
+                                </div>
+                            </group>
+                        </group>
+                    </page>
+                    <page name="narration" string="Narration">
+                        <field name="payment_ref" />
+                        <field name="narration" />
+                    </page>
+                    <page name="chatter" string="Chatter">
+                         <field name="move_id" widget="account_reconcile_oca_chatter" />
+                    </page>
+                </notebook>
+            </form>
+        </field>
+    </record>
+    <record id="action_bank_statement_line_reconcile" model="ir.actions.act_window">
+        <field name="name">Statement lines</field>
+        <field name="res_model">account.bank.statement.line</field>
+        <field name="domain">[('journal_id', '=', active_id)]</field>
+        <field name="context">
+            {'default_journal_id': active_id, 'search_default_not_reconciled': True, 'view_ref': 'account_reconcile_oca.bank_statement_line_form_reconcile_view'}
+        </field>
+        <field name="view_mode">kanban,tree</field>
+        <field
+            name="view_ids"
+            eval="[(5, 0, 0),
+            (0, 0, {'view_mode': 'kanban', 'view_id': ref('bank_statement_line_reconcile_view')}),
+            (0, 0, {'view_mode': 'tree', 'view_id': ref('account_statement_base.account_bank_statement_line_tree')})]"
+        />
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+            Nothing to reconcile
+            </p>
+        </field>
+    </record>
+    <record id="action_bank_statement_line_reconcile_all" model="ir.actions.act_window">
+        <field name="name">Reconcile bank statement lines</field>
+        <field name="res_model">account.bank.statement.line</field>
+        <field name="domain">[('journal_id', '=', active_id)]</field>
+        <field
+            name="context"
+        >{'default_journal_id': active_id, 'view_ref': 'account_reconcile_oca.bank_statement_line_form_reconcile_view'}</field>
+        <field name="view_mode">kanban,tree</field>
+        <field
+            name="view_ids"
+            eval="[(5, 0, 0),
+            (0, 0, {'view_mode': 'kanban', 'view_id': ref('bank_statement_line_reconcile_view')}),
+            (0, 0, {'view_mode': 'tree', 'view_id': ref('account_statement_base.account_bank_statement_line_tree')})]"
+        />
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+            Nothing to reconcile
+            </p>
+        </field>
+    </record>
+    <record
+        id="action_bank_statement_line_reconcile_to_check"
+        model="ir.actions.act_window"
+    >
+        <field name="name">Reconcile bank statement lines</field>
+        <field name="res_model">account.bank.statement.line</field>
+        <field name="domain">[('journal_id', '=', active_id)]</field>
+        <field name="context">
+            {'default_journal_id': active_id, 'search_default_to_check': True, 'view_ref': 'account_reconcile_oca.bank_statement_line_form_reconcile_view'}
+        </field>
+        <field name="view_mode">kanban</field>
+        <field
+            name="view_ids"
+            eval="[(5, 0, 0),
+            (0, 0, {'view_mode': 'kanban', 'view_id': ref('bank_statement_line_reconcile_view')})]"
+        />
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+            Nothing to check
+            </p>
+        </field>
+    </record>
+
+    <record
+        id="action_bank_statement_line_move_view_reconcile"
+        model="ir.actions.act_window"
+    >
+        <field name="name">Reconcile bank statement lines</field>
+        <field name="res_model">account.bank.statement.line</field>
+        <field name="context">{'search_default_move_id': active_id}</field>
+        <field name="view_mode">kanban</field>
+        <field
+            name="view_ids"
+            eval="[(5, 0, 0),
+            (0, 0, {'view_mode': 'kanban', 'view_id': ref('bank_statement_line_reconcile_view')})]"
+        />
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+            Nothing to reconcile
+            </p>
+        </field>
+    </record>
+    <record id="action_bank_statement_line_create" model="ir.actions.act_window">
+        <field name="name">Add Bank Statement Line</field>
+        <field name="res_model">account.bank.statement.line</field>
+        <field name="view_mode">form</field>
+        <field
+            name="view_ids"
+            eval="[(5, 0, 0),
+            (0, 0, {'view_mode': 'form', 'view_id': ref('bank_statement_line_form_add_view')})]"
+        />
+        <field name="target">new</field>
+    </record>
+</odoo>

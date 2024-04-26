@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates>
+    <t
+        t-name="account_reconcile_oca.ReconcileRenderer"
+        t-inherit="web.KanbanRenderer"
+        t-inherit-mode="primary"
+    >
+        <xpath expr="//t[@t-as='groupOrRecord']" position="before">
+            <div class="m-2 d-flex w-100" t-if="env.parentController.journalId">
+                <span
+                    class="flex-fill text-900 text-start ps-0 fw-bold fs-4 align-self-center"
+                >Global Balance</span>
+                <span
+                    class="pe-0 fw-bold fs-4 align-self-center"
+                    t-esc="env.parentController.journalBalanceStr"
+                />
+            </div>
+            <t t-set="aggregates" t-value="getAggregates()" />
+        </xpath>
+        <xpath expr="//t[@t-else='']/KanbanRecord" position="before">
+            <t
+                t-if="aggregates.length and groupOrRecord.record.data.aggregate_id and aggregates[0].id == groupOrRecord.record.data.aggregate_id"
+            >
+                <t t-set="aggregate" t-value="aggregates.shift()" />
+                <div class="m-2 d-flex w-100">
+                    <span
+                        class="flex-fill text-900 text-start ps-0 fw-bold fs-4 align-self-center"
+                        t-esc="aggregate.name"
+                    />
+                    <span
+                        t-if="groupOrRecord.record.data.reconcile_aggregate == 'statement'"
+                        t-on-click="() => this.onClickStatement(aggregate.id)"
+                        class="pe-0 fw-bold fs-4 align-self-center btn btn-link"
+                        t-esc="aggregate.balanceStr"
+                    />
+                    <!--
+                    <span
+                        t-if="groupOrRecord.record.data.reconcile_aggregate != 'statement'"
+                        class="pe-0 fw-bold fs-4 align-self-center text-link"
+                        t-esc="aggregate.balanceStr"
+                    />-->
+                </div>
+            </t>
+        </xpath>
+        <xpath expr="div[hasclass('o_kanban_renderer')]" position="attributes">
+            <attribute
+                name="class"
+                add="o_account_reconcile_oca_selector"
+                separator=" "
+            />
+        </xpath>
+        <!-- Group by selector disabled on the view, so we need to find the one without group,
+        then we pass to the component the selected record -->
+        <xpath expr="//KanbanRecord[not(@group)]" position="attributes">
+            <attribute name="selectedRecordId">props.selectedRecordId</attribute>
+        </xpath>
+    </t>
+    <t
+        t-name="account_reconcile_oca.ReconcileController"
+        t-inherit="web.KanbanView"
+        t-inherit-mode="primary"
+    >
+        <!-- we pass to the component the selected record -->
+        <xpath expr="//Layout/t[2]" position="attributes">
+            <attribute name="selectedRecordId">state.selectedRecordId</attribute>
+        </xpath>
+        <xpath expr="//Layout" position="attributes">
+            <attribute
+                name="className"
+            >model.useSampleModel ? 'o_view_sample_data o_account_reconcile_oca' : 'o_account_reconcile_oca'</attribute>
+        </xpath>
+        <xpath expr="//Layout" position="inside">
+            <div class="o_account_reconcile_oca_info">
+            <t t-if="state.selectedRecordId">
+                <View t-props="viewReconcileInfo" t-key="state.selectedRecordId" />
+                </t>
+            </div>
+        </xpath>
+    </t>
+    <t t-name="account_reconcile.ReconcileView.Buttons">
+        <button
+            t-on-click="onClickNewButton"
+            class="btn btn-primary"
+            t-if="activeActions.create"
+        >Create</button>
+    </t>
+    <t t-name="account_reconcile_oca.ReconcileMatchWidget">
+        <View t-props="this.listViewProperties" />
+    </t>
+    <t t-name="account_reconcile_oca.ReconcileDataWidget">
+        <table
+            class="table table-sm position-relative mb-0 table-striped o_reconcile_widget_table"
+            style="table-layout: auto"
+        >
+            <thead>
+                <th>Account</th>
+                <th>Partner</th>
+                <th>Date</th>
+                <th>Label</th>
+                <th class="text-end" t-if="foreignCurrency">
+                    Amount in currency
+                </th>
+                <th class="text-end">Debit</th>
+                <th class="text-end">Credit</th>
+                <th t-if="! props.record.data.is_reconciled" />
+            </thead>
+            <tbody>
+                <t
+                    t-foreach="getReconcileLines()"
+                    t-as="reconcile_line"
+                    t-key="reconcile_line_index"
+                >
+                    <tr
+                        t-on-click="(ev) => this.selectReconcileLine(ev, reconcile_line)"
+                        t-att-class="'o_reconcile_widget_line ' + reconcile_line.kind + (props.record.data.manual_reference == reconcile_line.reference ? ' selected ' :  ' ')"
+                    >
+                        <td t-esc="reconcile_line.account_id[1]" />
+                        <td>
+                            <span
+                                t-esc="reconcile_line.partner_id[1]"
+                                t-if="reconcile_line.partner_id and reconcile_line.partner_id[1]"
+                            />
+                        </td>
+                        <td t-esc="reconcile_line.date_format" />
+                        <td>
+                            <span
+                                t-esc="reconcile_line.name"
+                                t-if="reconcile_line.name"
+                            />
+                        </td>
+                        <td
+                            class="text-end o_field_account_reconcile_oca_balance_float"
+                            t-if="foreignCurrency"
+                        >
+                            <span t-esc="reconcile_line.amount_currency_format" />
+                        </td>
+                        <td
+                            class="text-end o_field_account_reconcile_oca_balance_float"
+                        >
+                            <div
+                                t-esc="reconcile_line.debit_format"
+                                t-if="reconcile_line.amount &gt; 0"
+                            />
+                            <div
+                                class="o_field_account_reconcile_oca_balance_original_float"
+                                t-esc="reconcile_line.original_amount_format"
+                                t-if="reconcile_line.amount &gt; 0 and reconcile_line.original_amount"
+                            />
+                        </td>
+                        <td
+                            class="text-end o_field_account_reconcile_oca_balance_float"
+                        >
+                            <div
+                                t-esc="reconcile_line.credit_format"
+                                t-if="reconcile_line.amount &lt; 0"
+                            />
+                            <div
+                                class="o_field_account_reconcile_oca_balance_original_float"
+                                t-esc="reconcile_line.original_amount_format"
+                                t-if="reconcile_line.amount &lt; 0  and reconcile_line.original_amount"
+                            />
+                        </td>
+                        <td>
+                            <button
+                                class="btn fa fa-trash-o"
+                                role="button"
+                                t-on-click="(ev) => this.onTrashLine(ev, reconcile_line)"
+                                t-if="reconcile_line.kind == 'other' &amp;&amp; ! props.record.data.is_reconciled"
+                            />
+                        </td>
+                    </tr>
+                </t>
+            </tbody>
+        </table>
+    </t>
+    <t t-name="account_reconcile_oca.AccountReconcileChatterWidget">
+        <Chatter
+            threadModel="this.props.record.fields[this.props.name].relation"
+            threadId="this.props.record.data[this.props.name][0]"
+        />
+    </t>
+    <t
+        t-name="account_reconcile_oca.ReconcileMoveLineController"
+        t-inherit="web.ListView"
+        t-inherit-mode="primary"
+    >
+        <xpath expr="//t[@list='model.root']" position="attributes">
+            <attribute name="parentRecord">props.parentRecord</attribute>
+            <attribute name="parentField">props.parentField</attribute>
+        </xpath>
+    </t>
+</templates>
