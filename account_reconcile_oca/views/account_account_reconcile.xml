@@ -135,7 +135,7 @@
         <field name="name">Reconcile</field>
         <field name="res_model">account.account.reconcile</field>
         <field name="view_mode">kanban</field>
-        <field name="domain">[("partner_id", "=", id)]</field>
+        <field name="domain">[("partner_id", "=", active_id)]</field>
         <field
             name="context"
         >{'view_ref': 'account_reconcile_oca.account_account_reconcile_form_view'}</field>
@@ -150,7 +150,7 @@
         <field name="name">Reconcile</field>
         <field name="res_model">account.account.reconcile</field>
         <field name="view_mode">kanban</field>
-        <field name="domain">[("account_id", "=", id)]</field>
+        <field name="domain">[("account_id", "=", active_id)]</field>
         <field
             name="context"
         >{'view_ref': 'account_reconcile_oca.account_account_reconcile_form_view'}</field>
