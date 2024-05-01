@@ -402,7 +402,7 @@ class TestReconciliationMatchingRules(AccountTestInvoicingCommon):
                 },
             )
 
-            # Test matching with the partner name (reinitializing the statement line first)
+            # Test matching with the partner name (resetting the statement line first)
             self.bank_line_1.write(
                 {**st_line_initial_vals, st_line_field: self.partner_1.name}
             )
@@ -920,7 +920,7 @@ class TestReconciliationMatchingRules(AccountTestInvoicingCommon):
         )
 
     def test_auto_reconcile_with_tax(self):
-        """Test auto reconciliation with a tax amount included in the bank statement line"""
+        """Test auto reconciliation with a tax amount included in the bank stat. line"""
         self.rule_1.write(
             {
                 "auto_reconcile": True,
@@ -968,7 +968,7 @@ class TestReconciliationMatchingRules(AccountTestInvoicingCommon):
         )
 
     def test_auto_reconcile_with_tax_fpos(self):
-        """Test the fiscal positions are applied by reconcile models when using taxes."""
+        """Test the fiscal positions are applied by reconcile models when using taxes"""
         self.rule_1.write(
             {
                 "auto_reconcile": True,
@@ -1031,6 +1031,7 @@ class TestReconciliationMatchingRules(AccountTestInvoicingCommon):
     def test_reverted_move_matching(self):
         partner = self.partner_1
         AccountMove = self.env["account.move"]
+        account = self.bank_journal.company_id.account_journal_payment_credit_account_id
         move = AccountMove.create(
             {
                 "journal_id": self.bank_journal.id,
@@ -1049,7 +1050,7 @@ class TestReconciliationMatchingRules(AccountTestInvoicingCommon):
                         0,
                         0,
                         {
-                            "account_id": self.bank_journal.company_id.account_journal_payment_credit_account_id.id,
+                            "account_id": account.id,
                             "partner_id": partner.id,
                             "name": "I'm gonna cut you into little pieces",
                             "credit": 10,
@@ -1140,7 +1141,7 @@ class TestReconciliationMatchingRules(AccountTestInvoicingCommon):
                 "line_ids": [(5, 0, 0)],
                 "match_partner": False,
                 "match_label": "contains",
-                "match_label_param": "Tournicoti",  # So that we only match what we want to test
+                "match_label_param": "Tournicoti",  # match what we want to test
             }
         )
 
@@ -1165,7 +1166,7 @@ class TestReconciliationMatchingRules(AccountTestInvoicingCommon):
             {
                 "match_partner": False,
                 "match_label": "contains",
-                "match_label_param": "doudlidou",  # So that we only match what we want to test
+                "match_label_param": "doudlidou",  # match what we want to test
                 "payment_tolerance_param": 10.0,
                 "auto_reconcile": True,
             }
@@ -1219,7 +1220,7 @@ class TestReconciliationMatchingRules(AccountTestInvoicingCommon):
         self.bank_line_2.write({"partner_id": None})
         self.rule_1.write({"match_partner": False})
 
-        # bank_line_1 should match, as its communication contains the invoice's partner name
+        # bank_line_1 should match, as its communic. contains the invoice's partner name
         self._check_statement_matching(
             self.rule_1,
             {
@@ -1246,13 +1247,13 @@ class TestReconciliationMatchingRules(AccountTestInvoicingCommon):
         )
 
     def test_match_multi_currencies(self):
-        """Ensure the matching of candidates is made using the right statement line currency.
-        In this test, the value of the statement line is 100 USD = 300 GOL = 900 DAR and we want to match two journal
-        items of:
+        """Ensure the matching of candidates is made using the right statement line
+        currency. In this test, the value of the statement line is 100 USD = 300
+        GOL = 900 DAR and we want to match two journal items of:
         - 100 USD = 200 GOL (= 600 DAR from the statement line point of view)
         - 14 USD = 280 DAR
-        Both journal items should be suggested to the user because they represents 98% of the statement line amount
-        (DAR).
+        Both journal items should be suggested to the user because they represents 98%
+        of the statement line amount (DAR).
         """
         partner = self.env["res.partner"].create({"name": "Bernard Perdant"})
 
@@ -1280,9 +1281,7 @@ class TestReconciliationMatchingRules(AccountTestInvoicingCommon):
             }
         )
 
-        statement_line = self.env[
-            "account.bank.statement.line"
-        ].create(
+        statement_line = self.env["account.bank.statement.line"].create(
             {
                 "journal_id": journal.id,
                 "date": "2016-01-01",
@@ -1290,7 +1289,8 @@ class TestReconciliationMatchingRules(AccountTestInvoicingCommon):
                 "partner_id": partner.id,
                 "foreign_currency_id": self.currency_data_2["currency"].id,
                 "amount": 300.0,  # Rate is 3 GOL = 1 USD in 2016.
-                "amount_currency": 900.0,  # Rate is 10 DAR = 1 USD in 2016 but the rate used by the bank is 9:1.
+                # Rate is 10 DAR = 1 USD in 2016 but the rate used by the bank is 9:1.
+                "amount_currency": 900.0,
             }
         )
 
@@ -1447,10 +1447,11 @@ class TestReconciliationMatchingRules(AccountTestInvoicingCommon):
         )
 
     def test_no_amount_check_keep_first(self):
-        """In case the reconciliation model doesn't check the total amount of the candidates,
-        we still don't want to suggest more than are necessary to match the statement.
-        For example, if a statement line amounts to 250 and is to be matched with three invoices
-        of 100, 200 and 300 (retrieved in this order), only 100 and 200 should be proposed.
+        """In case the reconciliation model doesn't check the total amount of the
+        candidates, we still don't want to suggest more than are necessary to match the
+        statement. For example, if a statement line amounts to 250 and is to be matched
+        with three invoices of 100, 200 and 300 (retrieved in this order), only 100 and
+        200 should be proposed.
         """
         self.rule_1.allow_payment_tolerance = False
         self.bank_line_2.amount = 250

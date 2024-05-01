@@ -63,12 +63,14 @@ class AccountBankStatementLine(models.Model):
                 continue
 
             # Find a partner having a name contained inside the statement line values.
-            # Take care a partner could contain some special characters in its name that needs to be escaped.
+            # Take care a partner could contain some special characters in its name that
+            # needs to be escaped.
             sub_queries.append(
                 rf"""
                 {unaccent("%s")} ~* ('^' || (
                    SELECT STRING_AGG(CONCAT('(?=.*\m', chunk[1], '\M)'), '')
-                   FROM regexp_matches({unaccent('partner.name')}, '\w{{3,}}', 'g') AS chunk
+                   FROM regexp_matches({unaccent('partner.name')}, '\w{{3,}}', 'g')
+                   AS chunk
                 ))
             """
             )
@@ -100,7 +102,8 @@ class AccountBankStatementLine(models.Model):
         return self.env["res.partner"]
 
     def _get_st_line_strings_for_matching(self, allowed_fields=None):
-        """Collect the strings that could be used on the statement line to perform some matching.
+        """Collect the strings that could be used on the statement line to perform some
+        matching.
         :param allowed_fields: A explicit list of fields to consider.
         :return: A list of strings.
         """

@@ -9,8 +9,8 @@ class TestAccountReconciliationCommon(AccountTestInvoicingCommon):
 
     """Tests for reconciliation (account.tax)
 
-    Test used to check that when doing a sale or purchase invoice in a different currency,
-    the result will be balanced.
+    Test used to check that when doing a sale or purchase invoice in a different
+    currency, the result will be balanced.
     """
 
     @classmethod

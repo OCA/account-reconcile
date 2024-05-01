@@ -14,13 +14,14 @@ class AccountReconcileModel(models.Model):
     ####################################################
 
     def _apply_lines_for_bank_widget(self, residual_amount_currency, partner, st_line):
-        """Apply the reconciliation model lines to the statement line passed as parameter.
-        :param residual_amount_currency:    The open balance of the statement line in the bank reconciliation widget
-                                            expressed in the statement line currency.
-        :param partner:                     The partner set on the wizard.
-        :param st_line:                     The statement line processed by the bank reconciliation widget.
-        :return:                            A list of python dictionaries (one per reconcile model line) representing
-                                            the journal items to be created by the current reconcile model.
+        """Apply the reconciliation model lines to the statement line passed as
+        parameter.
+        :param residual_amount_currency: The open balance of the statement line in the
+          bank reconciliation widget expressed in the statement line currency.
+        :param partner: The partner set on the wizard.
+        :param st_line: The statement line processed by the bank reconciliation widget.
+        :return: A list of python dictionaries (one per reconcile model line)
+          representing the journal items to be created by the current reconcile model.
         """
         self.ensure_one()
         currency = (
@@ -48,9 +49,11 @@ class AccountReconcileModel(models.Model):
 
     def _get_taxes_move_lines_dict(self, tax, base_line_dict):
         """Get move.lines dict (to be passed to the create()) corresponding to a tax.
-        :param tax:             An account.tax record.
-        :param base_line_dict:  A dict representing the move.line containing the base amount.
-        :return: A list of dict representing move.lines to be created corresponding to the tax.
+        :param tax: An account.tax record.
+        :param base_line_dict: A dict representing the move.line containing the base
+          amount.
+        :return: A list of dict representing move.lines to be created corresponding to
+          the tax.
         """
         self.ensure_one()
         balance = base_line_dict["balance"]
@@ -103,9 +106,12 @@ class AccountReconcileModel(models.Model):
         return new_aml_dicts
 
     def _get_write_off_move_lines_dict(self, residual_balance, partner_id):
-        """Get move.lines dict corresponding to the reconciliation model's write-off lines.
-        :param residual_balance:    The residual balance of the account on the manual reconciliation widget.
-        :return: A list of dict representing move.lines to be created corresponding to the write-off lines.
+        """Get move.lines dict corresponding to the reconciliation model's write-off
+        lines.
+        :param residual_balance: The residual balance of the account on the manual
+          reconciliation widget.
+        :return: A list of dict representing move.lines to be created corresponding to
+          the write-off lines.
         """
         self.ensure_one()
 
@@ -153,8 +159,9 @@ class AccountReconcileModel(models.Model):
                 if detected_fiscal_position:
                     taxes = detected_fiscal_position.map_tax(taxes)
                 writeoff_line["tax_ids"] += [Command.set(taxes.ids)]
-                # Multiple taxes with force_tax_included results in wrong computation, so we
-                # only allow to set the force_tax_included field if we have one tax selected
+                # Multiple taxes with force_tax_included results in wrong computation,
+                # so we only allow to set the force_tax_included field if we have one
+                # tax selected
                 if line.force_tax_included:
                     taxes = taxes[0].with_context(force_price_include=True)
                 tax_vals_list = self._get_taxes_move_lines_dict(taxes, writeoff_line)
@@ -172,15 +179,17 @@ class AccountReconcileModel(models.Model):
     def _apply_rules(self, st_line, partner):
         """Apply criteria to get candidates for all reconciliation models.
         This function is called in enterprise by the reconciliation widget to match
-        the statement line with the available candidates (using the reconciliation models).
+        the statement line with the available candidates (using the reconciliation
+        models).
         :param st_line: The statement line to match.
         :param partner: The partner to consider.
-        :return:        A dict mapping each statement line id with:
-            * aml_ids:          A list of account.move.line ids.
-            * model:            An account.reconcile.model record (optional).
-            * status:           'reconciled' if the lines has been already reconciled, 'write_off' if the write-off
-                                must be applied on the statement line.
-            * auto_reconcile:   A flag indicating if the match is enough significant to auto reconcile the candidates.
+        :return: A dict mapping each statement line id with:
+            * aml_ids: A list of account.move.line ids.
+            * model: An account.reconcile.model record (optional).
+            * status: 'reconciled' if the lines has been already reconciled, 'write_off'
+              if the write-off must be applied on the statement line.
+            * auto_reconcile: A flag indicating if the match is enough significant to
+              auto reconcile the candidates.
         """
         available_models = self.filtered(
             lambda m: m.rule_type != "writeoff_button"
@@ -318,7 +327,8 @@ class AccountReconcileModel(models.Model):
 
     def _get_invoice_matching_st_line_tokens(self, st_line):
         """Parse the textual information from the statement line passed as parameter
-        in order to extract from it the meaningful information in order to perform the matching.
+        in order to extract from it the meaningful information in order to perform the
+        matching.
         :param st_line: A statement line.
         :return: A list of tokens, each one being a string.
         """
@@ -347,7 +357,8 @@ class AccountReconcileModel(models.Model):
         return tokens
 
     def _get_invoice_matching_amls_candidates(self, st_line, partner):
-        """Returns the match candidates for the 'invoice_matching' rule, with respect to the provided parameters.
+        """Returns the match candidates for the 'invoice_matching' rule, with respect to
+        the provided parameters.
         :param st_line: A statement line.
         :param partner: The partner associated to the statement line.
         """
@@ -381,14 +392,17 @@ class AccountReconcileModel(models.Model):
                         UNNEST(
                             REGEXP_SPLIT_TO_ARRAY(
                                 SUBSTRING(
-                                    REGEXP_REPLACE({table_alias}.{field}, '[^0-9\s]', '', 'g'),
+                                    REGEXP_REPLACE(
+                                        {table_alias}.{field}, '[^0-9\s]', '', 'g'
+                                    ),
                                     '\S(?:.*\S)*'
                                 ),
                                 '\s+'
                             )
                         ) AS token
                     FROM {tables}
-                    JOIN account_move account_move_line__move_id ON account_move_line__move_id.id = account_move_line.move_id
+                    JOIN account_move account_move_line__move_id
+                        ON account_move_line__move_id.id = account_move_line.move_id
                     WHERE {where_clause} AND {table_alias}.{field} IS NOT NULL
                 """
                 )
@@ -432,11 +446,14 @@ class AccountReconcileModel(models.Model):
                 }
 
     def _get_invoice_matching_rules_map(self):
-        """Get a mapping <priority_order, rule> that could be overridden in others modules.
+        """Get a mapping <priority_order, rule> that could be overridden in others
+        modules.
         :return: a mapping <priority_order, rule> where:
-            * priority_order:   Defines in which order the rules will be evaluated, the lowest comes first.
-                                This is extremely important since the algorithm stops when a rule returns some candidates.
-            * rule:             Method taking <st_line, partner> as parameters and returning the candidates journal items found.
+            * priority_order: Defines in which order the rules will be evaluated, the
+              lowest comes first. This is extremely important since the algorithm stops
+              when a rule returns some candidates.
+            * rule: Method taking <st_line, partner> as parameters and returning the
+              candidates journal items found.
         """
         rules_map = defaultdict(list)
         rules_map[10].append(self._get_invoice_matching_amls_candidates)
@@ -563,9 +580,11 @@ class AccountReconcileModel(models.Model):
                     )
                     > 0
                 ):
-                    # Here, we still have room for other candidates ; so we add the current one to the list we keep.
-                    # Then, we continue iterating, even if there is no room anymore, just in case one of the following candidates
-                    # is an exact match, which would then be preferred on the current candidates.
+                    # Here, we still have room for other candidates ; so we add the
+                    # current one to the list we keep. Then, we continue iterating, even
+                    # if there is no room anymore, just in case one of the following
+                    # candidates is an exact match, which would then be preferred on the
+                    # current candidates.
                     kepts_amls_values_list.append(aml_values)
                     sum_amount_residual_currency += aml_values[
                         "amount_residual_currency"
@@ -580,7 +599,8 @@ class AccountReconcileModel(models.Model):
             else:
                 return None, []
 
-        # Try to match a batch with the early payment feature. Only a perfect match is allowed.
+        # Try to match a batch with the early payment feature. Only a perfect match is
+        # allowed.
         match_type, kepts_amls_values_list = match_batch_amls(amls_with_epd_values_list)
         if match_type != "perfect":
             kepts_amls_values_list = []
@@ -603,15 +623,18 @@ class AccountReconcileModel(models.Model):
     def _check_rule_propositions(self, st_line, amls_values_list):
         """Check restrictions that can't be handled for each move.line separately.
         Note: Only used by models having a type equals to 'invoice_matching'.
-        :param st_line:             The statement line.
-        :param amls_values_list:    The candidates account.move.line as a list of dict:
-            * aml:                          The record.
-            * amount_residual:              The amount residual to consider.
-            * amount_residual_currency:     The amount residual in foreign currency to consider.
+        :param st_line: The statement line.
+        :param amls_values_list: The candidates account.move.line as a list of dict:
+            * aml: The record.
+            * amount_residual: The amount residual to consider.
+            * amount_residual_currency: The amount residual in foreign currency to
+              consider.
         :return: A string representing what to do with the candidates:
-            * rejected:             Reject candidates.
-            * allow_write_off:      Allow to generate the write-off from the reconcile model lines if specified.
-            * allow_auto_reconcile: Allow to automatically reconcile entries if 'auto_validate' is enabled.
+            * rejected: Reject candidates.
+            * allow_write_off: Allow to generate the write-off from the reconcile model
+              lines if specified.
+            * allow_auto_reconcile: Allow to automatically reconcile entries if
+              'auto_validate' is enabled.
         """
         self.ensure_one()
 
@@ -637,8 +660,8 @@ class AccountReconcileModel(models.Model):
         if st_line_currency.is_zero(amount_curr_after_rec):
             return {"allow_auto_reconcile"}
 
-        # The payment amount is higher than the sum of invoices.
-        # In that case, don't check the tolerance and don't try to generate any write-off.
+        # The payment amount is higher than the sum of invoices. In that case, don't
+        # check the tolerance and don't try to generate any write-off.
         if amount_curr_after_rec > 0.0:
             return {"allow_auto_reconcile"}
 
@@ -646,8 +669,8 @@ class AccountReconcileModel(models.Model):
         if self.payment_tolerance_param == 0:
             return {"rejected"}
 
-        # If the tolerance is expressed as a fixed amount, check the residual payment amount doesn't exceed the
-        # tolerance.
+        # If the tolerance is expressed as a fixed amount, check the residual payment
+        # amount doesn't exceed the tolerance.
         if (
             self.payment_tolerance_type == "fixed_amount"
             and -amount_curr_after_rec <= self.payment_tolerance_param
