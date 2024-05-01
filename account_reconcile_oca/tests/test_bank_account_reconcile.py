@@ -711,8 +711,8 @@ class TestReconciliationWidget(TestAccountReconciliationCommon):
 
     def test_widget_invoice_unselect(self):
         """
-        We want to test how selection and unselection of an account move lines is managed
-        by the system.
+        We want to test how selection and unselection of an account move lines is
+        managed by the system.
         """
         inv1 = self.create_invoice(
             currency_id=self.currency_euro_id, invoice_amount=100
@@ -786,7 +786,7 @@ class TestReconciliationWidget(TestAccountReconciliationCommon):
             f.manual_partner_id = inv1.partner_id
             self.assertEqual(f.partner_id, inv1.partner_id)
         bank_stmt_line.clean_reconcile()
-        # As we have a set a partner, the cleaning should assign the invoice automatically
+        # As we have set a partner, the cleaning should assign the invoice automatically
         self.assertTrue(bank_stmt_line.can_reconcile)
 
     def test_widget_model_clean(self):
