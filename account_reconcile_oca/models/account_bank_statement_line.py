@@ -122,7 +122,6 @@ class AccountBankStatementLine(models.Model):
                 or record.company_id.reconcile_aggregate
             )
             record.reconcile_aggregate = reconcile_aggregate
-            print(record.date, reconcile_aggregate_map[reconcile_aggregate](record))
             record.aggregate_id, record.aggregate_name = reconcile_aggregate_map[
                 reconcile_aggregate
             ](record)
@@ -825,9 +824,10 @@ class AccountBankStatementLine(models.Model):
             ],
             limit=1,
         )
+        balance = previous_line_with_statement.statement_id.balance_end_real
         action["context"] = {
             "default_journal_id": self.journal_id.id,
-            "default_balance_start": previous_line_with_statement.statement_id.balance_end_real,
+            "default_balance_start": balance,
             "split_line_id": self.id,
         }
         return action
