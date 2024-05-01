@@ -656,6 +656,13 @@ msgstr "foi reconciliado automaticamente."
 #. openerp-web
 #: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
 #, python-format
+msgid "o_manual_statement"
+msgstr ""
+
+#. module: account_reconciliation_widget
+#. openerp-web
+#: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
+#, python-format
 msgid "reconcile"
 msgstr "reconciliar"
 
@@ -719,6 +726,16 @@ msgstr "Movimentos desconciliados"
 #, python-format
 msgid "vendor bills"
 msgstr "faturas de fornecedores"
+
+#. module: account_reconciliation_widget
+#. openerp-web
+#: code:addons/account_reconciliation_widget/static/src/xml/account_reconciliation.xml:0
+#, python-format
+msgid ""
+"{{'Match statement with existing lines on receivable/payable accounts<br>* "
+"Black line: existing journal entry that should be matched<br>* Blue lines: "
+"existing payment that should be matched'}}"
+msgstr ""
 
 #~ msgid "Accounting Date"
 #~ msgstr "Data Contabilística"
