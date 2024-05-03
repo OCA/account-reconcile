@@ -116,9 +116,9 @@ class AccountReconciliation(models.AbstractModel):
             SELECT "account_move_line".id, COUNT(*) OVER() FROM {from_clause}
             {where_str}
             ORDER BY ("account_move_line".debit -
-                      "account_move_line".credit) = {amount} DESC,
-                "account_move_line".date_maturity ASC,
-                "account_move_line".id ASC
+                    "account_move_line".credit) = {amount} DESC,
+                    "account_move_line".date_maturity DESC,
+                    "account_move_line".id DESC
             {limit_str}
         """.format(
                 from_clause=from_clause,
