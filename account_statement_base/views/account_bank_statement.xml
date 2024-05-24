@@ -28,6 +28,16 @@
                             context="{'search_default_statement_id': id}"
                             string="Transactions"
                         />
+                        <button
+                            name="open_entries"
+                            type="object"
+                            class="oe_stat_button"
+                            icon="fa-bars"
+                        >
+                            <div class="o_stat_info">
+                                <span class="o_stat_text">Journal Items</span>
+                            </div>
+                        </button>
                         </div>
                         <div class="oe_title oe_inline">
                             <label for="name" />
