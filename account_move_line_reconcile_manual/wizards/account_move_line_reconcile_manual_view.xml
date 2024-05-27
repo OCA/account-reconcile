@@ -36,7 +36,9 @@
                 >
                     <field name="writeoff_model_id" widget="selection" />
                     <field
-
+                        name="writeoff_journal_id"
+                        widget="selection"
+                        required="state == 'writeoff'"
                     />
                     <field
                         name="writeoff_date"
