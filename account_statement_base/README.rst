@@ -58,7 +58,14 @@ Authors
 Contributors
 ------------
 
--  Alexis de Lattre <alexis.delattre@akretion.com>
+-  `Akretion <https://www.akretion.com>`__:
+
+   -  Alexis de Lattre <alexis.delattre@akretion.com>
+
+-  `Tecnativa <https://www.tecnativa.com>`__:
+
+   -  Carlos Dauden
+   -  Sergio Teruel
 
 Maintainers
 -----------
