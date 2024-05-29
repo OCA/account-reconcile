@@ -14,8 +14,8 @@
     "website": "https://github.com/OCA/account-reconcile",
     "depends": ["account"],
     "data": [
-        "views/account_bank_statement.xml",
         "views/account_bank_statement_line.xml",
+        "views/account_bank_statement.xml",  # Keep order
     ],
     "installable": True,
 }
