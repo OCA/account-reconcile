@@ -1,18 +1,13 @@
 # Copyright 2023 Dixmit
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
-from odoo import _, fields, models
+from odoo import _, models
 from odoo.exceptions import ValidationError
 
 
 class AccountMoveLine(models.Model):
 
     _inherit = "account.move.line"
-
-    invoice_due_date = fields.Date(
-        related="move_id.invoice_date_due",
-        readonly=True,
-    )
 
     def action_reconcile_manually(self):
         if not self:

@@ -11,7 +11,7 @@
             <tree js_class="reconcile_move_line">
                 <field name="date" />
                 <field name="move_id" optional="show" />
-                <field name="invoice_due_date" optional="show" />
+                <field name="date_maturity" optional="show" />
                 <field name="account_id" optional="show" />
                 <field name="partner_id" />
                 <field name="company_currency_id" invisible="1" />
