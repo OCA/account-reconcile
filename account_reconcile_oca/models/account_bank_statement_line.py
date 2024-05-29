@@ -86,6 +86,19 @@ class AccountBankStatementLine(models.Model):
         "account.move", default=False, store=False, prefetch=False, readonly=True
     )
     can_reconcile = fields.Boolean(sparse="reconcile_data_info")
+    statement_complete = fields.Boolean(
+        related="statement_id.is_complete",
+    )
+    statement_valid = fields.Boolean(
+        related="statement_id.is_valid",
+    )
+    statement_balance_end_real = fields.Monetary(
+        related="statement_id.balance_end_real",
+    )
+    statement_name = fields.Char(
+        string="Statement Name",
+        related="statement_id.name",
+    )
 
     def save(self):
         return {"type": "ir.actions.act_window_close"}
