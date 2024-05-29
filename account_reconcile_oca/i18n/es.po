@@ -196,11 +196,6 @@ msgid "Display Name"
 msgstr "Nombre Mostrado"
 
 #. module: account_reconcile_oca
-#: model:ir.model.fields,field_description:account_reconcile_oca.field_account_move_line__invoice_due_date
-msgid "Due Date"
-msgstr "Fecha de Vencimiento"
-
-#. module: account_reconcile_oca
 #: model:ir.model.fields.selection,name:account_reconcile_oca.selection__account_journal__reconcile_mode__edit
 msgid "Edit Move"
 msgstr "Editar movimiento"
@@ -592,6 +587,9 @@ msgstr "será disminuido por"
 #: model_terms:ir.ui.view,arch_db:account_reconcile_oca.bank_statement_line_form_reconcile_view
 msgid "with an open amount"
 msgstr "con un importe pendiente"
+
+#~ msgid "Due Date"
+#~ msgstr "Fecha de Vencimiento"
 
 #, python-format
 #~ msgid "You must reconcile information on the same partner"
