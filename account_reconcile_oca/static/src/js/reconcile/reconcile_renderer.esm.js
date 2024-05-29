@@ -20,10 +20,11 @@ export class ReconcileRenderer extends KanbanRenderer {
         const {list} = this.props;
         const statements = [];
         for (const record of list.records) {
-            const statementId = record.data.statement_id && record.data.statement_id[0];
+            var statementId = record.data.statement_id && record.data.statement_id[0];
             if (
                 statementId &&
-                (!statements.length || statements[0].id !== statementId)
+                (!statements.length ||
+                    statements[statements.length - 1].id !== statementId)
             ) {
                 statements.push({
                     id: statementId,
@@ -35,6 +36,7 @@ export class ReconcileRenderer extends KanbanRenderer {
                 });
             }
         }
+        console.log(statements);
         return statements;
     }
     async onClickStatement(statementId) {

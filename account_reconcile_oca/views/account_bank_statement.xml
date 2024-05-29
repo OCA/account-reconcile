@@ -12,7 +12,7 @@
                 <div
                     class="alert alert-warning text-center"
                     role="alert"
-                    invisible="is_valid and is_complete"
+                    attrs="{'invisible': [('is_valid', '=',True), ('is_complete','=',True)]}"
                 >
                     <field name="problem_description" />
                     <field name="is_valid" invisible="1" />
