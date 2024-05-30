@@ -667,7 +667,25 @@ class AccountBankStatementLine(models.Model):
         self.action_undo_reconciliation()
 
     def _unreconcile_bank_line_keep(self):
-        raise UserError(_("Keep suspense move lines mode cannot be unreconciled"))
+        self.reconcile_data_info = self._default_reconcile_data(from_unreconcile=True)
+        # Reverse reconciled journal entry
+        to_reverse = (
+            self.line_ids._all_reconciled_lines()
+            .filtered(
+                lambda line: line.move_id != self.move_id
+                and (line.matched_debit_ids or line.matched_credit_ids)
+            )
+            .mapped("move_id")
+        )
+        if to_reverse:
+            default_values_list = [
+                {
+                    "date": move.date,
+                    "ref": _("Reversal of: %s", move.name),
+                }
+                for move in to_reverse
+            ]
+            to_reverse._reverse_moves(default_values_list, cancel=True)
 
     def _reconcile_move_line_vals(self, line, move_id=False):
         return {
