@@ -1,0 +1,25 @@
+<odoo>
+    <record id="view_account_reconcile_model_form" model="ir.ui.view">
+        <field name="model">account.reconcile.model</field>
+        <field name="inherit_id" ref="account.view_account_reconcile_model_form" />
+        <field name="arch" type="xml">
+            <group id="conditions_tab_group" position="attributes">
+                <attribute
+                    name="attrs"
+                >{'invisible': [('rule_type', '=', 'sale_order_matching')]}</attribute>
+            </group>
+            <group id="conditions_tab_group" position="after">
+                <group
+                    name="account_reconcile_sale_order"
+                    attrs="{'invisible': [('rule_type', '!=', 'sale_order_matching')]}"
+                >
+                        <field name="sale_order_matching_token_match" />
+                        <field
+                        name="sale_order_matching_token_length"
+                        attrs="{'invisible': [('sale_order_matching_token_match', '=', False)]}"
+                    />
+                    </group>
+                    </group>
+        </field>
+    </record>
+</odoo>
