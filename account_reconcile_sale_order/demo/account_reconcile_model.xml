@@ -1,0 +1,6 @@
+<odoo>
+    <record id="reconcile_model_sale_order" model="account.reconcile.model">
+        <field name="name">Match sale orders</field>
+        <field name="rule_type">sale_order_matching</field>
+    </record>
+</odoo>
