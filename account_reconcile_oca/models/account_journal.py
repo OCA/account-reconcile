@@ -12,6 +12,17 @@ class AccountJournal(models.Model):
         default="edit",
         required=True,
     )
+    company_currency_id = fields.Many2one(related="company_id.currency_id")
+    reconcile_aggregate = fields.Selection(
+        [
+            ("statement", "Statement"),
+            ("day", "Day"),
+            ("week", "Week"),
+            ("month", "Month"),
+        ],
+        string="Reconcile aggregation",
+        help="Aggregation to use on reconcile view",
+    )
 
     def get_rainbowman_message(self):
         self.ensure_one()

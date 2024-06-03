@@ -17,6 +17,9 @@ export class ReconcileFormController extends FormController {
             afterExecuteAction: this.afterExecuteActionButton.bind(this),
         });
     }
+    displayName() {
+        return this.env.config.getDisplayName();
+    }
     async reloadFormController() {
         var is_reconciled = this.model.root.data.is_reconciled;
         await this.model.root.load();

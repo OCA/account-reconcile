@@ -15,6 +15,11 @@
                     options="{'no_quick_create': True}"
                     groups="account.group_account_readonly"
                 />
+                <field
+                    name="reconcile_aggregate"
+                    attrs="{'invisible': [('type','not in', ['bank', 'cash'])]}"
+                    groups="account.group_account_readonly"
+                />
             </field>
         </field>
     </record>

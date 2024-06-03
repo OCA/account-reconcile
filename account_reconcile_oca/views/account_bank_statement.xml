@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2023 Dixmit
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
+<odoo>
+
+    <record id="account_bank_statement_form_edit" model="ir.ui.view">
+        <field name="name">Edit Bank statement</field>
+        <field name="model">account.bank.statement</field>
+        <field name="priority">99</field>
+        <field name="arch" type="xml">
+            <form string="Bank Statement">
+                <div
+                    class="alert alert-warning text-center"
+                    role="alert"
+                    attrs="{'invisible': [('is_valid', '=',True), ('is_complete','=',True)]}"
+                >
+                    <field name="problem_description" />
+                    <field name="is_valid" invisible="1" />
+                    <field name="is_complete" invisible="1" />
+                </div>
+                <sheet>
+                    <group>
+                        <field name="name" required="1" />
+                        <field name="balance_start" />
+                        <field name="balance_end_real" />
+                        <field name="attachment_ids" widget="many2many_binary" />
+                        <field name="line_ids" invisible="1" />
+                    </group>
+                </sheet>
+
+            </form>
+        </field>
+    </record>
+
+    <record id="account_bank_statement_action_edit" model="ir.actions.act_window">
+        <field name="name">Edit Bank Statement</field>
+        <field name="res_model">account.bank.statement</field>
+        <field name="view_mode">form</field>
+        <field
+            name="view_ids"
+            eval="[(5, 0, 0),
+            (0, 0, {'view_mode': 'form', 'view_id': ref('account_bank_statement_form_edit')})]"
+        />
+        <field name="target">new</field>
+    </record>
+</odoo>

@@ -6,6 +6,43 @@
         t-inherit-mode="primary"
         owl="1"
     >
+        <xpath expr="//t[@t-as='groupOrRecord']" position="before">
+            <div class="m-2 d-flex w-100" t-if="env.parentController.journalId">
+                <span
+                    class="flex-fill text-900 text-start ps-0 fw-bold fs-4 align-self-center"
+                >Global Balance</span>
+                <span
+                    class="pe-0 fw-bold fs-4 align-self-center"
+                    t-esc="env.parentController.journalBalanceStr"
+                />
+            </div>
+            <t t-set="aggregates" t-value="getAggregates()" />
+        </xpath>
+        <xpath expr="//t[@t-else='']/KanbanRecord" position="before">
+            <t
+                t-if="aggregates.length and groupOrRecord.record.data.aggregate_id and aggregates[0].id == groupOrRecord.record.data.aggregate_id"
+            >
+                <t t-set="aggregate" t-value="aggregates.shift()" />
+                <div class="m-2 d-flex w-100">
+                    <span
+                        class="flex-fill text-900 text-start ps-0 fw-bold fs-4 align-self-center"
+                        t-esc="aggregate.name"
+                    />
+                    <span
+                        t-if="groupOrRecord.record.data.reconcile_aggregate == 'statement'"
+                        t-on-click="() => this.onClickStatement(aggregate.id)"
+                        class="pe-0 fw-bold fs-4 align-self-center btn btn-link"
+                        t-esc="aggregate.balanceStr"
+                    />
+                    <!--
+                    <span
+                        t-if="groupOrRecord.record.data.reconcile_aggregate != 'statement'"
+                        class="pe-0 fw-bold fs-4 align-self-center text-link"
+                        t-esc="aggregate.balanceStr"
+                    />-->
+                </div>
+            </t>
+        </xpath>
         <xpath expr="div[hasclass('o_kanban_renderer')]" position="attributes">
             <attribute
                 name="class"

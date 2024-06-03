@@ -6,7 +6,23 @@
     flex-flow: row wrap;
     height: 100%;
     .o_kanban_renderer.o_kanban_ungrouped .o_kanban_record {
+        &:hover {
+            .o_reconcile_create_statement {
+                opacity: 100;
+            }
+        }
         margin: 0 0 0;
+        min-width: fit-content;
+        width: 100%;
+        .o_reconcile_create_statement {
+            position: absolute;
+            height: 4px;
+            margin: 0;
+            padding: 2px 0 0 0;
+            border: 0;
+            top: -14px;
+            opacity: 0;
+        }
         > div {
             border-right: thick solid rgba(0, 0, 0, 0);
         }
