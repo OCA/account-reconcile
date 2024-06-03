@@ -314,15 +314,6 @@ msgid "Keep Suspense Accounts"
 msgstr "Mantiene conti sospesi"
 
 #. module: account_reconcile_oca
-#. odoo-python
-#: code:addons/account_reconcile_oca/models/account_bank_statement_line.py:0
-#, python-format
-msgid "Keep suspense move lines mode cannot be unreconciled"
-msgstr ""
-"Con la modalità mantieni le righe sospese non si può annullare la "
-"riconciliazione"
-
-#. module: account_reconcile_oca
 #. odoo-javascript
 #: code:addons/account_reconcile_oca/static/src/xml/reconcile.xml:0
 #, python-format
@@ -545,6 +536,13 @@ msgid "Reset reconciliation"
 msgstr "Annulla riconciliazione"
 
 #. module: account_reconcile_oca
+#. odoo-python
+#: code:addons/account_reconcile_oca/models/account_bank_statement_line.py:0
+#, python-format
+msgid "Reversal of: %s"
+msgstr ""
+
+#. module: account_reconcile_oca
 #: model_terms:ir.ui.view,arch_db:account_reconcile_oca.account_move_line_search_reconcile_view
 msgid "Sales"
 msgstr "Vendite"
@@ -672,6 +670,12 @@ msgstr "sarà ridotto di"
 #: model_terms:ir.ui.view,arch_db:account_reconcile_oca.bank_statement_line_form_reconcile_view
 msgid "with an open amount"
 msgstr "con un importo aperto"
+
+#, python-format
+#~ msgid "Keep suspense move lines mode cannot be unreconciled"
+#~ msgstr ""
+#~ "Con la modalità mantieni le righe sospese non si può annullare la "
+#~ "riconciliazione"
 
 #~ msgid "Due Date"
 #~ msgstr "Scadenza"
