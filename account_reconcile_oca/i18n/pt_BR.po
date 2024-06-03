@@ -314,13 +314,6 @@ msgid "Keep Suspense Accounts"
 msgstr "Manter contas suspensas"
 
 #. module: account_reconcile_oca
-#. odoo-python
-#: code:addons/account_reconcile_oca/models/account_bank_statement_line.py:0
-#, python-format
-msgid "Keep suspense move lines mode cannot be unreconciled"
-msgstr "O modo Manter suspenso linhas de movimento não pode ser irreconciliado"
-
-#. module: account_reconcile_oca
 #. odoo-javascript
 #: code:addons/account_reconcile_oca/static/src/xml/reconcile.xml:0
 #, python-format
@@ -543,6 +536,13 @@ msgid "Reset reconciliation"
 msgstr "Redefinir Reconciliação"
 
 #. module: account_reconcile_oca
+#. odoo-python
+#: code:addons/account_reconcile_oca/models/account_bank_statement_line.py:0
+#, python-format
+msgid "Reversal of: %s"
+msgstr ""
+
+#. module: account_reconcile_oca
 #: model_terms:ir.ui.view,arch_db:account_reconcile_oca.account_move_line_search_reconcile_view
 msgid "Sales"
 msgstr "Vendas"
@@ -668,6 +668,11 @@ msgstr "será reduzido em"
 #: model_terms:ir.ui.view,arch_db:account_reconcile_oca.bank_statement_line_form_reconcile_view
 msgid "with an open amount"
 msgstr "com um valor em aberto"
+
+#, python-format
+#~ msgid "Keep suspense move lines mode cannot be unreconciled"
+#~ msgstr ""
+#~ "O modo Manter suspenso linhas de movimento não pode ser irreconciliado"
 
 #~ msgid "Last Modified on"
 #~ msgstr "Última modificação em"
