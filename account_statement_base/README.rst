@@ -28,7 +28,11 @@ Bank Statement Base
 
 |badge1| |badge2| |badge3| |badge4| |badge5|
 
-This is a technical module that adds the views of the **Bank Statement Lines** (since Odoo 16.0, these views are not part of the *account* module any more).
+This is a technical module that adds the next views (since Odoo 16.0, these views are not part of the *account* module any more):
+  - **Bank Statement**
+  - **Bank Statement Lines**
+
+
 
 **Table of contents**
 
@@ -56,7 +60,14 @@ Authors
 Contributors
 ~~~~~~~~~~~~
 
-* Alexis de Lattre <alexis.delattre@akretion.com>
+* `Akretion <https://www.akretion.com>`_:
+
+  * Alexis de Lattre <alexis.delattre@akretion.com>
+
+* `Tecnativa <https://www.tecnativa.com>`_:
+
+  * Carlos Dauden
+  * Sergio Teruel
 
 Maintainers
 ~~~~~~~~~~~
