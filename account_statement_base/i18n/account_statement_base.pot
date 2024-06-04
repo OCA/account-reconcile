@@ -14,6 +14,11 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: account_statement_base
+#: model_terms:ir.ui.view,arch_db:account_statement_base.view_bank_statement_form
+msgid "Bank Statement"
+msgstr ""
+
+#. module: account_statement_base
 #: model:ir.actions.act_window,name:account_statement_base.account_bank_statement_line_action
 msgid "Bank Statement Lines"
 msgstr ""
@@ -72,4 +77,14 @@ msgstr ""
 #. module: account_statement_base
 #: model_terms:ir.ui.view,arch_db:account_statement_base.account_bank_statement_line_search
 msgid "Transaction Type"
+msgstr ""
+
+#. module: account_statement_base
+#: model_terms:ir.ui.view,arch_db:account_statement_base.view_bank_statement_form
+msgid "Transactions"
+msgstr ""
+
+#. module: account_statement_base
+#: model_terms:ir.ui.view,arch_db:account_statement_base.view_bank_statement_form
+msgid "e.g. BNK/2021/0001"
 msgstr ""
