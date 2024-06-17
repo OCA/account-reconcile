@@ -53,18 +53,15 @@ class AccountReconcileAbstract(models.AbstractModel):
                 if amount < currency_max_amount < 0:
                     amount = currency_max_amount
                     net_amount = max_amount
-            amount = -amount
+            currency_amount = -amount
             original_amount = -original_amount
             net_amount = -net_amount
+            amount = amount_currency._convert(
+                currency_amount, self.company_id.currency_id, self.company_id, date
+            )
         else:
             amount_currency = line.currency_id
-            amount = self.company_id.currency_id._convert(
-                amount, amount_currency, self.company_id, date
-            )
-        currency_amount = amount
-        amount = amount_currency._convert(
-            amount, self.company_id.currency_id, self.company_id, date
-        )
+            currency_amount = line.amount_currency
         vals = {
             "reference": "account.move.line;%s" % line.id,
             "id": line.id,
