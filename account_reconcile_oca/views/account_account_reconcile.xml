@@ -73,7 +73,8 @@
         <field name="model">account.account.reconcile</field>
         <field name="arch" type="xml">
             <search>
-                <!-- TODO -->
+                <field name="account_id" />
+                <field name="partner_id" />
             </search>
         </field>
     </record>
