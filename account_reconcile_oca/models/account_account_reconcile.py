@@ -162,12 +162,11 @@ class AccountAccountReconcile(models.Model):
         counterparts = data["counterparts"]
         amount = 0.0
         for line_id in counterparts:
-            max_amount = amount if line_id == counterparts[-1] else 0
-            line = self._get_reconcile_line(
-                self.env["account.move.line"].browse(line_id), "other", True, max_amount
+            lines = self._get_reconcile_line(
+                self.env["account.move.line"].browse(line_id), "other", True, amount
             )
-            new_data["data"].append(line)
-            amount += line["amount"]
+            new_data["data"] += lines
+            amount += sum(line["amount"] for line in lines)
         return new_data
 
     def clean_reconcile(self):
