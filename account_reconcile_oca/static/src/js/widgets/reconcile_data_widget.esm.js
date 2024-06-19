@@ -45,6 +45,7 @@ export class AccountReconcileDataWidget extends Component {
             );
             data[line].amount_currency_format = fieldUtils.format.monetary(
                 data[line].currency_amount,
+                undefined,
                 {
                     currency: session.get_currency(data[line].line_currency_id),
                 }
