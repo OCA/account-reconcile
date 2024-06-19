@@ -1058,3 +1058,57 @@ class TestReconciliationWidget(TestAccountReconciliationCommon):
                 line["currency_amount"],
                 100,
             )
+
+    def test_invoice_foreign_currency_change(self):
+        self.env["res.currency.rate"].create(
+            {
+                "currency_id": self.env.ref("base.EUR").id,
+                "name": time.strftime("%Y-07-14"),
+                "rate": 1.15,
+            }
+        )
+        self.env["res.currency.rate"].create(
+            {
+                "currency_id": self.env.ref("base.EUR").id,
+                "name": time.strftime("%Y-07-15"),
+                "rate": 1.2,
+            }
+        )
+        inv1 = self._create_invoice(
+            currency_id=self.currency_usd_id,
+            invoice_amount=100,
+            date_invoice="2021-07-14",
+            auto_validate=True,
+        )
+        bank_stmt = self.acc_bank_stmt_model.create(
+            {
+                "company_id": self.env.ref("base.main_company").id,
+                "journal_id": self.bank_journal_usd.id,
+                "date": time.strftime("%Y-07-15"),
+                "name": "test",
+            }
+        )
+        bank_stmt_line = self.acc_bank_stmt_line_model.create(
+            {
+                "name": "testLine",
+                "journal_id": self.bank_journal_usd.id,
+                "statement_id": bank_stmt.id,
+                "amount": 100,
+                "date": time.strftime("%Y-07-15"),
+            }
+        )
+        with Form(
+            bank_stmt_line,
+            view="account_reconcile_oca.bank_statement_line_form_reconcile_view",
+        ) as f:
+            line = f.reconcile_data_info["data"][0]
+            self.assertEqual(
+                line["currency_amount"],
+                100,
+            )
+            f.add_account_move_line_id = inv1.line_ids.filtered(
+                lambda l: l.account_id.account_type == "asset_receivable"
+            )
+            self.assertFalse(f.add_account_move_line_id)
+            self.assertTrue(f.can_reconcile)
+            self.assertEqual(3, len(f.reconcile_data_info["data"]))
