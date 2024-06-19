@@ -416,8 +416,9 @@ class AccountBankStatementLine(models.Model):
                 continue
             new_data.append(line_data)
             liquidity_amount += line_data["amount"]
+
         for line in reconcile_model._get_write_off_move_lines_dict(
-            -liquidity_amount, self._retrieve_partner()
+            -liquidity_amount, self._retrieve_partner().id
         ):
             new_line = line.copy()
             amount = line.get("balance")
