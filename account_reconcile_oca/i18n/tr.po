@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-06-07 11:48+0000\n"
+"PO-Revision-Date: 2024-06-28 09:48+0000\n"
 "Last-Translator: Metin GÜLSOY <metin.gulsoy@kitayazilim.com>\n"
 "Language-Team: none\n"
 "Language: tr\n"
@@ -140,7 +140,7 @@ msgstr "Nakit"
 #. module: account_reconcile_oca
 #: model_terms:ir.ui.view,arch_db:account_reconcile_oca.bank_statement_line_form_reconcile_view
 msgid "Chatter"
-msgstr "Log ve Notlar"
+msgstr "Mesajlaşma"
 
 #. module: account_reconcile_oca
 #: model_terms:ir.ui.view,arch_db:account_reconcile_oca.account_account_reconcile_form_view
@@ -667,7 +667,7 @@ msgstr "Hafta"
 #: code:addons/account_reconcile_oca/models/account_journal.py:0
 #, python-format
 msgid "Well done! Everything has been reconciled"
-msgstr "Tebrikler! Her şey uzlaştırldı"
+msgstr "Tebrikler! Her şey uzlaştırıldı"
 
 #. module: account_reconcile_oca
 #. odoo-python
