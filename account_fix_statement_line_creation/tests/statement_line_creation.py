@@ -38,4 +38,5 @@ class TestAccountBankStatementLineCreation(AccountTestInvoicingCommon):
         Check that we can create a new statement.
         """
         self.statement.line_ids.new()
+        self.statement._compute_date_index()
         self.assertEqual(len(self.statement.line_ids), 2)
