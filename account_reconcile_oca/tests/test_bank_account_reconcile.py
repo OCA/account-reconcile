@@ -1020,6 +1020,11 @@ class TestReconciliationWidget(TestAccountReconciliationCommon):
         self.assertTrue(bank_stmt_line.can_reconcile)
         bank_stmt_line.reconcile_bank_line()
         self.assertEqual(0, inv1.amount_residual)
+        self.assertTrue(
+            inv1.line_ids.filtered(
+                lambda line: line.account_id.account_type == "asset_receivable"
+            ).full_reconcile_id
+        )
 
     def test_journal_foreign_currency_change(self):
         self.env["res.currency.rate"].create(

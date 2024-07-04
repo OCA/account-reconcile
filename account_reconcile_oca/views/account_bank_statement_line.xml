@@ -258,16 +258,22 @@
                         <group>
                             <group>
                                 <field name="manual_line_id" invisible="1" />
+                                <field
+                                    name="manual_exchange_counterpart"
+                                    invisible="1"
+                                />
+                                <field name="manual_in_currency_id" invisible="1" />
+                                <field name="manual_in_currency" invisible="1" />
                                 <field name="manual_kind" invisible="1" />
                                 <field
                                     name="manual_account_id"
                                     string="Account"
-                                    readonly="manual_reference == False or is_reconciled == True or manual_line_id != False"
+                                    modifiers="{'readonly': ['|', '|', '|', ('manual_exchange_counterpart', '=', True),('manual_reference', '=', False), ('is_reconciled', '=', True), ('manual_line_id', '!=', False)]}"
                                 />
                                 <field
                                     name="manual_partner_id"
                                     string="Partner"
-                                    readonly="manual_reference == False or is_reconciled == True or (manual_line_id != False and manual_kind != 'liquidity')"
+                                    modifiers="{'readonly': ['|', '|', '|', ('manual_exchange_counterpart', '=', True),('manual_reference', '=', False), ('is_reconciled', '=', True), '&amp;', ('manual_line_id', '!=', False), ('manual_kind', '!=', 'liquidity')]}"
                                 />
                                 <field
                                     name="analytic_distribution"
@@ -282,12 +288,17 @@
                                 <field
                                     name="manual_name"
                                     string="Name"
-                                    readonly="manual_reference == False or is_reconciled == True or (manual_line_id != False and manual_kind != 'liquidity')"
+                                    modifiers="{'readonly': ['|', '|', '|', ('manual_exchange_counterpart', '=', True), ('manual_reference', '=', False), ('is_reconciled', '=', True), '&amp;', ('manual_line_id', '!=', False), ('manual_kind', '!=', 'liquidity')]}"
+                                />
+                                <field
+                                    name="manual_amount_in_currency"
+                                    string="Amount in Currency"
+                                    modifiers="{'invisible': [('manual_in_currency', '=', False)], 'readonly': ['|', '|', ('manual_exchange_counterpart', '=', True), ('manual_reference', '=', False), ('is_reconciled', '=', True)]}"
                                 />
                                 <field
                                     name="manual_amount"
                                     string="Amount"
-                                    readonly="manual_reference == False or is_reconciled == True"
+                                    modifiers="{'readonly': ['|', '|', ('manual_exchange_counterpart', '=', True), ('manual_reference', '=', False), ('is_reconciled', '=', True)]}"
                                 />
                                 <field name="manual_currency_id" invisible="1" />
                                 <field name="manual_original_amount" invisible="1" />
