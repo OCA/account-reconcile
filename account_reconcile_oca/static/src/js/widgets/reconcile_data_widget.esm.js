@@ -52,6 +52,7 @@ export class AccountReconcileDataWidget extends Component {
         return data;
     }
     onTrashLine(ev, line) {
+        ev.stopPropagation();
         this.props.record.update({
             manual_reference: line.reference,
             manual_delete: true,
