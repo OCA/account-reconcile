@@ -326,7 +326,6 @@ msgstr "Se marcada, novas mensagens requerem sua atenção."
 
 #. module: account_mass_reconcile
 #: model:ir.model.fields,help:account_mass_reconcile.field_account_mass_reconcile__message_has_error
-#: model:ir.model.fields,help:account_mass_reconcile.field_account_mass_reconcile__message_has_sms_error
 msgid "If checked, some messages have a delivery error."
 msgstr "Se marcada, algumas mensagens apresentam erro de entrega."
 
@@ -585,11 +584,6 @@ msgid "Run date"
 msgstr "Data Execução"
 
 #. module: account_mass_reconcile
-#: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile__message_has_sms_error
-msgid "SMS Delivery error"
-msgstr "Erro entrega SMS"
-
-#. module: account_mass_reconcile
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile_method__sequence
 msgid "Sequence"
 msgstr "Seqüência"
@@ -693,6 +687,9 @@ msgstr "Histórico de comunicação do site"
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_reference__write_off
 msgid "Write off allowed"
 msgstr "Baixa permitida"
+
+#~ msgid "SMS Delivery error"
+#~ msgstr "Erro entrega SMS"
 
 #~ msgid "Last Modified on"
 #~ msgstr "Modificada pela última vez"

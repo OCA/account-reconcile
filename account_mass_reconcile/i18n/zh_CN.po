@@ -35,7 +35,8 @@ msgstr "此科目正在进行批量对账，请稍后再试。"
 msgid ""
 "A matcher %(mkey)s is compared with a matcher %(omkey)s, the _matchers and "
 "_opposite_matchers are probably wrong"
-msgstr "匹配器 %(mkey)s 与匹配器 %(omkey)s 进行比较，_matchers 和 _opposite_matchers "
+msgstr ""
+"匹配器 %(mkey)s 与匹配器 %(omkey)s 进行比较，_matchers 和 _opposite_matchers "
 "可能是错误的"
 
 #. module: account_mass_reconcile
@@ -319,7 +320,6 @@ msgstr "如果勾选，新的消息需要您关注。"
 
 #. module: account_mass_reconcile
 #: model:ir.model.fields,help:account_mass_reconcile.field_account_mass_reconcile__message_has_error
-#: model:ir.model.fields,help:account_mass_reconcile.field_account_mass_reconcile__message_has_sms_error
 msgid "If checked, some messages have a delivery error."
 msgstr "如果勾选，一些消息有发送错误。"
 
@@ -439,7 +439,8 @@ msgid ""
 "Match multiple debit vs multiple credit entries. Allow partial "
 "reconciliation. The lines should have the same partner, and the credit entry "
 "ref. is matched with the debit entry ref. or name."
-msgstr "匹配多个借方与多个贷方分录。允许部分对账。分录应具有相同的合作伙伴，并且贷方"
+msgstr ""
+"匹配多个借方与多个贷方分录。允许部分对账。分录应具有相同的合作伙伴，并且贷方"
 "分录的参考号应与借方分录的参考号或名称一致。"
 
 #. module: account_mass_reconcile
@@ -448,7 +449,8 @@ msgid ""
 "Match one debit line vs one credit line. Do not allow partial "
 "reconciliation. The lines should have the same amount (with the write-off) "
 "and the same name to be reconciled."
-msgstr "匹配一个借方分录和一个贷方分录。不允许部分对账。要对账分录的金额（包括销账金"
+msgstr ""
+"匹配一个借方分录和一个贷方分录。不允许部分对账。要对账分录的金额（包括销账金"
 "额）和名称必须一致。"
 
 #. module: account_mass_reconcile
@@ -457,7 +459,8 @@ msgid ""
 "Match one debit line vs one credit line. Do not allow partial "
 "reconciliation. The lines should have the same amount (with the write-off) "
 "and the same partner to be reconciled."
-msgstr "匹配一个借方分录与一个贷方分录。不允许部分对账。要对账的分录的金额（包括销账"
+msgstr ""
+"匹配一个借方分录与一个贷方分录。不允许部分对账。要对账的分录的金额（包括销账"
 "金额）和合作伙伴必须一致。"
 
 #. module: account_mass_reconcile
@@ -466,7 +469,8 @@ msgid ""
 "Match one debit line vs one credit line. Do not allow partial "
 "reconciliation. The lines should have the same amount (with the write-off) "
 "and the same reference to be reconciled."
-msgstr "匹配一个借方分录与一个贷方分录。不允许部分对账。要对账的分录应的金额（包括销"
+msgstr ""
+"匹配一个借方分录与一个贷方分录。不允许部分对账。要对账的分录应的金额（包括销"
 "账金额）和参考号必须一致。"
 
 #. module: account_mass_reconcile
@@ -568,11 +572,6 @@ msgstr "限制合作伙伴"
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_history__date
 msgid "Run date"
 msgstr "执行日期"
-
-#. module: account_mass_reconcile
-#: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile__message_has_sms_error
-msgid "SMS Delivery error"
-msgstr "短信发送错误"
 
 #. module: account_mass_reconcile
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile_method__sequence
@@ -678,6 +677,9 @@ msgstr "网站沟通记录"
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_reference__write_off
 msgid "Write off allowed"
 msgstr "允许销账"
+
+#~ msgid "SMS Delivery error"
+#~ msgstr "短信发送错误"
 
 #~ msgid "Last Modified on"
 #~ msgstr "最后修改时间"
