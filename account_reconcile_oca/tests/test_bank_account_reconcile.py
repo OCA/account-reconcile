@@ -1,6 +1,5 @@
 import time
 
-from odoo.exceptions import UserError
 from odoo.tests import Form, tagged
 
 from odoo.addons.account.tests.common import TestAccountReconciliationCommon
@@ -500,7 +499,7 @@ class TestReconciliationWidget(TestAccountReconciliationCommon):
     def test_reconcile_invoice_keep(self):
         """
         We want to test how the keep mode works, keeping the original move lines.
-        However, the unreconcile will not work properly
+        When unreconciling, the entry created for the reconciliation is reversed.
         """
         self.bank_journal_euro.reconcile_mode = "keep"
         self.bank_journal_euro.suspense_account_id.reconcile = True
@@ -540,8 +539,15 @@ class TestReconciliationWidget(TestAccountReconciliationCommon):
             self.bank_journal_euro.suspense_account_id,
             bank_stmt_line.mapped("move_id.line_ids.account_id"),
         )
-        with self.assertRaises(UserError):
-            bank_stmt_line.unreconcile_bank_line()
+        # Reset reconciliation
+        reconcile_move = (
+            bank_stmt_line.line_ids._all_reconciled_lines()
+            .filtered(lambda line: line.move_id != bank_stmt_line.move_id)
+            .move_id
+        )
+        bank_stmt_line.unreconcile_bank_line()
+        self.assertTrue(reconcile_move.reversal_move_id)
+        self.assertFalse(bank_stmt_line.is_reconciled)
 
     # Testing to check functionality
 
