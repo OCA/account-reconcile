@@ -330,13 +330,6 @@ msgid "Keep Suspense Accounts"
 msgstr "Behåll observationskonto"
 
 #. module: account_reconcile_oca
-#. odoo-python
-#: code:addons/account_reconcile_oca/models/account_bank_statement_line.py:0
-#, python-format
-msgid "Keep suspense move lines mode cannot be unreconciled"
-msgstr "Behåll observationstransaktioner, läge kan inte vara oavstämd"
-
-#. module: account_reconcile_oca
 #. odoo-javascript
 #: code:addons/account_reconcile_oca/static/src/xml/reconcile.xml:0
 #, python-format
@@ -565,6 +558,13 @@ msgid "Reset reconciliation"
 msgstr "Återställ avstämning"
 
 #. module: account_reconcile_oca
+#. odoo-python
+#: code:addons/account_reconcile_oca/models/account_bank_statement_line.py:0
+#, python-format
+msgid "Reversal of: %s"
+msgstr ""
+
+#. module: account_reconcile_oca
 #: model_terms:ir.ui.view,arch_db:account_reconcile_oca.account_move_line_search_reconcile_view
 msgid "Sales"
 msgstr "Försäljning"
@@ -695,6 +695,10 @@ msgstr "kommer att reduceras med"
 #: model_terms:ir.ui.view,arch_db:account_reconcile_oca.bank_statement_line_form_reconcile_view
 msgid "with an open amount"
 msgstr "med ett valfritt belopp"
+
+#, python-format
+#~ msgid "Keep suspense move lines mode cannot be unreconciled"
+#~ msgstr "Behåll observationstransaktioner, läge kan inte vara oavstämd"
 
 #~ msgid "Due Date"
 #~ msgstr "Förfallodatum"
