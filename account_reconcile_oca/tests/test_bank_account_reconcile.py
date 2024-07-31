@@ -1162,3 +1162,51 @@ class TestReconciliationWidget(TestAccountReconciliationCommon):
             self.assertFalse(f.add_account_move_line_id)
             self.assertTrue(f.can_reconcile)
             self.assertEqual(3, len(f.reconcile_data_info["data"]))
+
+    def test_receivable_line(self):
+        bank_stmt_line = self.acc_bank_stmt_line_model.create(
+            {
+                "name": "testLine",
+                "journal_id": self.bank_journal_euro.id,
+                "partner_id": self.partner_agrolait_id,
+                "amount": 100,
+                "date": time.strftime("%Y-07-15"),
+            }
+        )
+        self.assertTrue(bank_stmt_line.can_reconcile)
+        suspense_line = False
+        for line in bank_stmt_line.reconcile_data_info["data"]:
+            if line["kind"] == "suspense":
+                suspense_line = line
+                break
+        self.assertTrue(suspense_line)
+        self.assertEqual(
+            self.env["account.account"]
+            .browse(suspense_line["account_id"][0])
+            .account_type,
+            "asset_receivable",
+        )
+
+    def test_payable_line(self):
+        bank_stmt_line = self.acc_bank_stmt_line_model.create(
+            {
+                "name": "testLine",
+                "journal_id": self.bank_journal_euro.id,
+                "partner_id": self.partner_agrolait_id,
+                "amount": -100,
+                "date": time.strftime("%Y-07-15"),
+            }
+        )
+        self.assertTrue(bank_stmt_line.can_reconcile)
+        suspense_line = False
+        for line in bank_stmt_line.reconcile_data_info["data"]:
+            if line["kind"] == "suspense":
+                suspense_line = line
+                break
+        self.assertTrue(suspense_line)
+        self.assertEqual(
+            self.env["account.account"]
+            .browse(suspense_line["account_id"][0])
+            .account_type,
+            "liability_payable",
+        )
