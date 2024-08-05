@@ -63,6 +63,7 @@
         <tree editable="top" multi_edit="1" decoration-muted="is_reconciled">
             <field name="sequence" />
             <field name="date" attrs="{'readonly': [('is_reconciled', '=', True)]}" />
+            <field name="move_id" optional="hide" />
             <field
                     name="payment_ref"
                     attrs="{'readonly': [('is_reconciled', '=', True)]}"
@@ -111,6 +112,12 @@
                     string="Revert reconciliation"
                     icon="fa-undo"
                     attrs="{'invisible': [('is_reconciled', '=', False)]}"
+                />
+            <button
+                    name="action_open_journal_entry"
+                    type="object"
+                    title="Open Journal Entry"
+                    icon="fa-folder-open-o"
                 />
             <field name="company_id" invisible="1" />
             <field name="is_reconciled" invisible="1" />

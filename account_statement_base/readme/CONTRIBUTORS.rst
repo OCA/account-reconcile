@@ -6,3 +6,7 @@
 
   * Carlos Dauden
   * Sergio Teruel
+
+* `ForgeFlow <https://www.forgeflow.com>`_:
+
+  * Jordi Ballester
