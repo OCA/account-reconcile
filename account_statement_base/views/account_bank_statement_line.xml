@@ -63,6 +63,7 @@
         <tree editable="top" multi_edit="1" decoration-muted="is_reconciled">
             <field name="sequence" />
             <field name="date" readonly="is_reconciled" />
+            <field name="move_id" optional="hide" />
             <field name="payment_ref" readonly="is_reconciled" />
             <field name="ref" optional="hide" readonly="is_reconciled" />
             <field name="transaction_type" optional="hide" />
@@ -96,6 +97,12 @@
                     string="Revert reconciliation"
                     icon="fa-undo"
                     invisible="not is_reconciled"
+                />
+            <button
+                    name="action_open_journal_entry"
+                    type="object"
+                    title="Open Journal Entry"
+                    icon="fa-folder-open-o"
                 />
             <field name="company_id" column_invisible="True" />
             <field name="is_reconciled" column_invisible="True" />

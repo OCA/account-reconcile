@@ -67,6 +67,10 @@ Contributors
    -  Carlos Dauden
    -  Sergio Teruel
 
+-  `ForgeFlow <https://www.forgeflow.com>`__:
+
+   -  Jordi Ballester
+
 Maintainers
 -----------
 
