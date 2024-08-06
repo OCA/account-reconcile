@@ -41,6 +41,13 @@ export class ReconcileController extends KanbanController {
         if (!journalId) {
             return;
         }
+       if (this.props.context.active_model == "account.move") {
+          var move_id =  await this.orm.call("account.move", "read", [
+            [journalId],
+            ["journal_id"]
+            ]);
+        journalId = move_id[0].journal_id[0] ;
+         }
         var result = await this.orm.call("account.journal", "read", [
             [journalId],
             ["current_statement_balance", "currency_id", "company_currency_id"],
