@@ -175,6 +175,7 @@ The lines should have the same partner, and the credit entry ref. is matched wit
                 />
                 <field name="journal_id" attrs="{'required':[('write_off','>',0)]}" />
                 <field name="date_base_on" />
+                <field name="_filter" optional="hide" />
             </tree>
         </field>
     </record>
