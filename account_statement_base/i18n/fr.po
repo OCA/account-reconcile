@@ -32,6 +32,7 @@ msgid "Date"
 msgstr "Date"
 
 #. module: account_statement_base
+#: model:ir.model,name:account_statement_base.model_account_journal
 #: model_terms:ir.ui.view,arch_db:account_statement_base.account_bank_statement_line_search
 msgid "Journal"
 msgstr "Journal"
