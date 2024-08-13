@@ -33,7 +33,7 @@ export class ReconcileController extends KanbanController {
         });
     }
     get journalId() {
-        if (this.props.resModel === "account.bank.statement.line") {
+        if (this.props.context.active_model === "account.journal") {
             return this.props.context.active_id;
         }
         return false;
