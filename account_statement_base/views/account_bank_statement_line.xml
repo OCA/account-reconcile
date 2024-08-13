@@ -71,7 +71,7 @@
             <field name="amount" readonly="is_reconciled" />
             <field
                     name="foreign_currency_id"
-                    optional="hidden"
+                    optional="hide"
                     groups="base.group_multi_currency"
                     readonly="is_reconciled"
                 />
@@ -81,6 +81,7 @@
                     groups="base.group_multi_currency"
                     readonly="is_reconciled"
                 />
+            <field name="running_balance" />
             <field
                     name="narration"
                     optional="hide"
