@@ -40,7 +40,7 @@
                     <field
                     name="name"
                     string="Journal Item"
-                    filter_domain="[                         '|', '|', '|',                         ('name', 'ilike', self), ('ref', 'ilike', self), ('account_id', 'ilike', self), ('partner_id', 'ilike', self)]"
+                    filter_domain="['|','|','|','|','|',('name', 'ilike', self), ('ref', 'ilike', self), ('account_id', 'ilike', self), ('partner_id', 'ilike', self),('amount_residual', 'ilike', self),('amount_residual_currency', 'ilike', self)]"
                 />
                     <field name="name" />
                     <field name="ref" />
