@@ -67,6 +67,7 @@ export class ReconcileController extends KanbanController {
         this.action.doAction(action, {
             onClose: async () => {
                 await this.model.root.load();
+                await this.updateJournalInfo();
                 this.render(true);
             },
         });
