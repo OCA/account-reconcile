@@ -23,10 +23,12 @@ export class ReconcileFormController extends FormController {
     async reloadFormController() {
         var is_reconciled = this.model.root.data.is_reconciled;
         await this.model.root.load();
-        if (!is_reconciled && this.model.root.data.is_reconciled) {
-            // This only happens when we press the reconcile button
-            if (this.env.parentController) {
-                // Showing rainbow man
+        if (this.env.parentController) {
+            // We will update the parent controller every time we reload the form.
+            await this.env.parentController.model.root.load();
+            await this.env.parentController.render(true);
+            if (!is_reconciled && this.model.root.data.is_reconciled) {
+                // This only happens when we press the reconcile button for showing rainbow man
                 const message = await this.orm.call(
                     "account.journal",
                     "get_rainbowman_message",
@@ -36,8 +38,6 @@ export class ReconcileFormController extends FormController {
                     this.env.parentController.setRainbowMan(message);
                 }
                 // Refreshing
-                await this.env.parentController.model.root.load();
-                await this.env.parentController.render(true);
                 this.env.parentController.selectRecord();
             }
         }
