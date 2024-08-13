@@ -72,6 +72,8 @@
                     optional="hide"
                     attrs="{'readonly': [('is_reconciled', '=', True)]}"
                 />
+            <field name="transaction_type" optional="hide" />
+            <field name="account_number" optional="hide" />
             <field
                     name="partner_id"
                     attrs="{'readonly': [('is_reconciled', '=', True)]}"
@@ -79,7 +81,7 @@
             <field name="amount" attrs="{'readonly': [('is_reconciled', '=', True)]}" />
             <field
                     name="foreign_currency_id"
-                    optional="hidden"
+                    optional="hide"
                     groups="base.group_multi_currency"
                     attrs="{'readonly': [('is_reconciled', '=', True)]}"
                 />
@@ -89,6 +91,7 @@
                     groups="base.group_multi_currency"
                     attrs="{'readonly': [('is_reconciled', '=', True)]}"
                 />
+            <field name="running_balance" />
             <field
                     name="narration"
                     optional="hide"
