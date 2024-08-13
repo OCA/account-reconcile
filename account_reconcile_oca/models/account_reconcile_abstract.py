@@ -66,7 +66,7 @@ class AccountReconcileAbstract(models.AbstractModel):
             amount, self.company_id.currency_id, self.company_id, date
         )
         vals = {
-            "reference": "abs.account.move.line;%s" % line.id,
+            "reference": "account.move.line;%s" % line.id,
             "id": line.id,
             "account_id": line.account_id.name_get()[0],
             "partner_id": line.partner_id and line.partner_id.name_get()[0] or False,

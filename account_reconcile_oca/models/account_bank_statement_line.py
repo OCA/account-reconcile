@@ -241,7 +241,7 @@ class AccountBankStatementLine(models.Model):
                 )
             else:
                 suspense_line = {
-                    "reference": "3.reconcile_auxiliary;%s" % reconcile_auxiliary_id,
+                    "reference": "reconcile_auxiliary;%s" % reconcile_auxiliary_id,
                     "id": False,
                     "account_id": self.journal_id.suspense_account_id.name_get()[0],
                     "partner_id": self.partner_id
@@ -427,7 +427,7 @@ class AccountBankStatementLine(models.Model):
                 )
             new_line.update(
                 {
-                    "reference": "1.reconcile_auxiliary;%s" % reconcile_auxiliary_id,
+                    "reference": "reconcile_auxiliary;%s" % reconcile_auxiliary_id,
                     "id": False,
                     "amount": amount,
                     "debit": amount if amount > 0 else 0,
@@ -470,7 +470,7 @@ class AccountBankStatementLine(models.Model):
                 account = self.company_id.income_currency_exchange_account_id
             data.append(
                 {
-                    "reference": "2.reconcile_auxiliary;%s" % reconcile_auxiliary_id,
+                    "reference": "reconcile_auxiliary;%s" % reconcile_auxiliary_id,
                     "id": False,
                     "account_id": account.name_get()[0],
                     "partner_id": False,
@@ -755,7 +755,7 @@ class AccountBankStatementLine(models.Model):
                 )
                 new_data.append(
                     {
-                        "reference": "4.reconcile_auxiliary;%s" % reconcile_auxiliary_id,
+                        "reference": "reconcile_auxiliary;%s" % reconcile_auxiliary_id,
                         "id": False,
                         "account_id": line["account_id"],
                         "partner_id": line.get("partner_id"),
