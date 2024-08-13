@@ -245,6 +245,7 @@
                             <group>
                                 <field name="manual_line_id" invisible="1" />
                                 <field name="manual_kind" invisible="1" />
+                                 <field name="manual_reference" invisible="0" />
                                 <field
                                     name="manual_account_id"
                                     string="Account"

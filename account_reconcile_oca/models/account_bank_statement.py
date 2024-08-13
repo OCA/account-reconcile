@@ -13,3 +13,9 @@ class AccountBankStatement(models.Model):
         )
         action["res_id"] = self.id
         return action
+
+    def unlink(self):
+        for statement in self:
+            statement.line_ids.unlink()
+        return super(AccountBankStatement, self).unlink()
+
