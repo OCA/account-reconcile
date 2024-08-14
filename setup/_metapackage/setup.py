@@ -8,6 +8,7 @@ setuptools.setup(
     description="Meta package for oca-account-reconcile Odoo addons",
     version=version,
     install_requires=[
+        'odoo-addon-account_in_payment>=16.0dev,<16.1dev',
         'odoo-addon-account_mass_reconcile>=16.0dev,<16.1dev',
         'odoo-addon-account_move_base_import>=16.0dev,<16.1dev',
         'odoo-addon-account_move_line_reconcile_manual>=16.0dev,<16.1dev',
