@@ -31,7 +31,7 @@ export class ReconcileController extends KanbanController {
         });
     }
     get journalId() {
-        if (this.props.resModel === "account.bank.statement.line") {
+        if (this.props.context.active_model === "account.journal") {
             return this.props.context.active_id;
         }
         return false;
@@ -67,6 +67,7 @@ export class ReconcileController extends KanbanController {
         this.action.doAction(action, {
             onClose: async () => {
                 await this.model.root.load();
+                await this.updateJournalInfo();
                 this.render(true);
             },
         });

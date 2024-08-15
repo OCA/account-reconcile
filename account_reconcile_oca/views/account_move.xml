@@ -13,6 +13,7 @@
                     type="action"
                     name="%(account_reconcile_oca.action_bank_statement_line_move_view_reconcile)s"
                     string="Bank reconcile"
+                    context="{'search_default_move_id': id}"
                     class="btn btn-primary"
                     icon="fa-list"
                     attrs="{'invisible': [('statement_line_id', '=', False)]}"
