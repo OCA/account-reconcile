@@ -2,7 +2,7 @@
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html)
 {
     "name": "Account Mass Reconcile as Jobs",
-    "version": "14.0.1.1.1",
+    "version": "14.0.1.1.2",
     "category": "Accounting",
     "depends": [
         "queue_job",
