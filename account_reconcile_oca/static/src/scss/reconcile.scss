@@ -11,6 +11,10 @@
                 opacity: 100;
             }
         }
+        .row {
+            // We need to add this in order to make remove horizontal scroll
+            margin: 0;
+        }
         margin: 0 0 0;
         min-width: fit-content;
         width: 100%;
@@ -36,10 +40,12 @@
         padding: 0;
         position: relative;
         border-right: 1px solid $o-gray-300;
+        overflow: auto;
     }
     .o_account_reconcile_oca_info {
         width: 70%;
         height: 100%;
+        overflow: auto;
     }
     .o_form_view {
         .o_form_statusbar.o_account_reconcile_oca_statusbar {
