@@ -6,87 +6,89 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"Last-Translator: Automatically generated\n"
+"PO-Revision-Date: 2024-08-21 22:23+0000\n"
+"Last-Translator: Peter Romão <peterromao@yahoo.co.uk>\n"
 "Language-Team: none\n"
 "Language: pt\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: Weblate 5.6.2\n"
 
 #. module: account_statement_base
 #: model_terms:ir.ui.view,arch_db:account_statement_base.view_bank_statement_form
 msgid "Bank Statement"
-msgstr ""
+msgstr "Extrato Bancário"
 
 #. module: account_statement_base
 #: model:ir.actions.act_window,name:account_statement_base.account_bank_statement_line_action
 msgid "Bank Statement Lines"
-msgstr ""
+msgstr "Linhas de Eextrato Bancário"
 
 #. module: account_statement_base
 #: model_terms:ir.ui.view,arch_db:account_statement_base.account_bank_statement_line_search
 msgid "Date"
-msgstr ""
+msgstr "Data"
 
 #. module: account_statement_base
 #: model:ir.model,name:account_statement_base.model_account_journal
 #: model_terms:ir.ui.view,arch_db:account_statement_base.account_bank_statement_line_search
 msgid "Journal"
-msgstr ""
+msgstr "Diário"
 
 #. module: account_statement_base
 #: model_terms:ir.ui.view,arch_db:account_statement_base.account_bank_statement_line_search
 msgid "Label, Ref or Notes"
-msgstr ""
+msgstr "Rótulo, Ref ou Notas"
 
 #. module: account_statement_base
 #: model_terms:ir.ui.view,arch_db:account_statement_base.account_bank_statement_line_search
 msgid "Not Reconciled"
-msgstr ""
+msgstr "Não Reconciliado"
 
 #. module: account_statement_base
 #: model_terms:ir.ui.view,arch_db:account_statement_base.account_bank_statement_line_form
 #: model_terms:ir.ui.view,arch_db:account_statement_base.account_bank_statement_line_tree
 msgid "Notes"
-msgstr ""
+msgstr "Notas"
 
 #. module: account_statement_base
 #: model_terms:ir.ui.view,arch_db:account_statement_base.account_bank_statement_line_search
 msgid "Partner"
-msgstr ""
+msgstr "Parceiro"
 
 #. module: account_statement_base
 #: model_terms:ir.ui.view,arch_db:account_statement_base.account_bank_statement_line_search
 msgid "Reconciled"
-msgstr ""
+msgstr "Reconciliado"
 
 #. module: account_statement_base
 #: model_terms:ir.ui.view,arch_db:account_statement_base.account_bank_statement_line_tree
 msgid "Revert reconciliation"
-msgstr ""
+msgstr "Reverter reconciliação"
 
 #. module: account_statement_base
 #: model_terms:ir.ui.view,arch_db:account_statement_base.account_bank_statement_line_form
 msgid "Technical Information"
-msgstr ""
+msgstr "Informação Técnica"
 
 #. module: account_statement_base
 #: model_terms:ir.ui.view,arch_db:account_statement_base.account_bank_statement_line_search
 msgid "To check"
-msgstr ""
+msgstr "Para verificar"
 
 #. module: account_statement_base
 #: model_terms:ir.ui.view,arch_db:account_statement_base.account_bank_statement_line_search
 msgid "Transaction Type"
-msgstr ""
+msgstr "Tipo de Transação"
 
 #. module: account_statement_base
 #: model_terms:ir.ui.view,arch_db:account_statement_base.view_bank_statement_form
 msgid "Transactions"
-msgstr ""
+msgstr "Transações"
 
 #. module: account_statement_base
 #: model_terms:ir.ui.view,arch_db:account_statement_base.view_bank_statement_form
 msgid "e.g. BNK/2021/0001"
-msgstr ""
+msgstr "ex. BNK/2021/0001"
