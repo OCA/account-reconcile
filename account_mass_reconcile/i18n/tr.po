@@ -37,7 +37,7 @@ msgid ""
 "A matcher %(mkey)s is compared with a matcher %(omkey)s, the _matchers and "
 "_opposite_matchers are probably wrong"
 msgstr ""
-"Bir dahası %s bir %s ile karşılaştırıldığında, _matchers ve \n"
+"Bir dahası %(mkey)s bir %(omkey)s ile karşılaştırıldığında, _matchers ve \n"
 "_opposite_matchers muhtemelen yanlış"
 
 #. module: account_mass_reconcile
