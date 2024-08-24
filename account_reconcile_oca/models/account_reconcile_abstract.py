@@ -30,7 +30,7 @@ class AccountReconcileAbstract(models.AbstractModel):
     currency_id = fields.Many2one("res.currency", readonly=True)
     foreign_currency_id = fields.Many2one("res.currency")
     company_currency_id = fields.Many2one(
-        "res.currency", related="company_id.currency_id"
+        related="company_id.currency_id", string="Company Currency"
     )
 
     def _get_reconcile_line(
