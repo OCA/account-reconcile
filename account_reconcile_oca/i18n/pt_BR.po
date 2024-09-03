@@ -6,8 +6,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-09-02 22:06+0000\n"
-"Last-Translator: Antônio Neto <netosjb@yahoo.com.br>\n"
+"PO-Revision-Date: 2024-09-03 15:06+0000\n"
+"Last-Translator: Rodrigo Sottomaior Macedo "
+"<sottomaiormacedotec@sottomaiormacedo.tech>\n"
 "Language-Team: none\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
@@ -164,7 +165,7 @@ msgstr "Empresa"
 #: model:ir.model.fields,field_description:account_reconcile_oca.field_account_journal__company_currency_id
 #: model:ir.model.fields,field_description:account_reconcile_oca.field_account_reconcile_abstract__company_currency_id
 msgid "Company Currency"
-msgstr ""
+msgstr "Moeda da empresa"
 
 #. module: account_reconcile_oca
 #: model:ir.model.fields,help:account_reconcile_oca.field_account_bank_statement_line__company_id
