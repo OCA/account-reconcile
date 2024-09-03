@@ -701,3 +701,47 @@ msgstr "avec un montant ouvert"
 
 #~ msgid "Reset"
 #~ msgstr "Réinitialiser"
+
+#. module: account_reconcile_oca
+#: model:ir.model.fields.selection,name:account_reconcile_oca.selection__account_bank_statement__state__open
+msgid "Open"
+msgstr "Ouvert"
+
+
+#. module: account_reconcile_oca
+#: model:ir.model.fields.selection,name:account_reconcile_oca.selection__account_bank_statement__state__confirmed
+msgid "Confirmed"
+msgstr "Confirmé"
+
+#. module: account_reconcile_oca
+#. odoo-python
+#: code:addons/account_reconcile_oca/models/account_bank_statement.py:0
+#, python-format
+msgid ""
+"Starting balance must match the ending balance of the previous statement."
+msgstr "Le solde de départ doit correspondre au solde de clôture du relevé précédent."
+
+#. module: account_reconcile_oca
+#. odoo-python
+#: code:addons/account_reconcile_oca/models/account_bank_statement.py:0
+#, python-format
+msgid "All statement lines must be reconciled."
+msgstr "Toutes les lignes de relevé doivent être rapprochées"
+
+#. module: account_reconcile_oca
+#. odoo-python
+#: code:addons/account_reconcile_oca/models/account_bank_statement.py:0
+#, python-format
+msgid ""
+"Sum of statement lines must equal to the difference between start and end "
+"balance"
+msgstr "La somme des lignes de relevé doit être égale à la différence entre le solde "
+"de départ et le solde de clôture."
+
+#. module: account_reconcile_oca
+#: model:ir.model.fields,help:account_reconcile_oca.field_account_bank_statement__state
+msgid ""
+"The status is set to Open, when a statement is created."
+"When the statement is approved , the status is set Confirmed."
+msgstr "Le statut est défini sur Ouvert lorsqu'un relevé est créé."
+"Lorsque le relevé est approuvé, le statut est défini sur Confirmé."
