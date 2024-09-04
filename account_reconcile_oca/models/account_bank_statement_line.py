@@ -60,6 +60,19 @@ class AccountBankStatementLine(models.Model):
             "Percentage Analytic"
         ),
     )
+    manual_in_currency = fields.Boolean(readonly=True, store=False, prefetch=False)
+    manual_in_currency_id = fields.Many2one(
+        "res.currency", readonly=True, store=False, prefetch=False
+    )
+    manual_amount_in_currency = fields.Monetary(
+        store=False,
+        default=False,
+        prefetch=False,
+        currency_field="manual_in_currency_id",
+    )
+    manual_exchange_counterpart = fields.Boolean(
+        store=False,
+    )
     manual_model_id = fields.Many2one(
         "account.reconcile.model",
         check_company=True,
@@ -163,7 +176,7 @@ class AccountBankStatementLine(models.Model):
                     self.manual_model_id,
                     self.reconcile_data_info["reconcile_auxiliary_id"],
                 ),
-                self.manual_reference
+                self.manual_reference,
             )
         else:
             # Refreshing data
@@ -189,26 +202,19 @@ class AccountBankStatementLine(models.Model):
                 else:
                     new_data.append(line)
             if is_new_line:
-                new_data.append(
-                    self._get_reconcile_line(
-                        self.add_account_move_line_id, "other", True, pending_amount
-                    )
+                reconcile_auxiliary_id, lines = self._get_reconcile_line(
+                    self.add_account_move_line_id, "other", True, pending_amount
                 )
+                new_data += lines
             self.reconcile_data_info = self._recompute_suspense_line(
                 new_data,
                 self.reconcile_data_info["reconcile_auxiliary_id"],
                 self.manual_reference,
-                exchange_recompute=True,
             )
             self.can_reconcile = self.reconcile_data_info.get("can_reconcile", False)
             self.add_account_move_line_id = False
 
-    def _recompute_suspense_line(
-        self, data, reconcile_auxiliary_id, manual_reference, exchange_recompute=False
-    ):
-        reconcile_auxiliary_id = self._compute_exchange_rate(
-            data, reconcile_auxiliary_id, exchange_recompute=exchange_recompute
-        )
+    def _recompute_suspense_line(self, data, reconcile_auxiliary_id, manual_reference):
         can_reconcile = True
         total_amount = 0
         new_data = []
@@ -286,15 +292,29 @@ class AccountBankStatementLine(models.Model):
         self.ensure_one()
         data = self.reconcile_data_info.get("data", [])
         new_data = []
+        related_move_line_id = False
         for line in data:
+            if line.get("reference") == self.manual_reference:
+                related_move_line_id = line.get("id")
+                break
+        for line in data:
+            if (
+                self.manual_delete
+                and related_move_line_id
+                and line.get("original_exchange_line_id") == related_move_line_id
+            ):
+                # We should remove the related exchange rate line
+                continue
             if line["reference"] == self.manual_reference:
                 if self.manual_delete:
                     self.update(
                         {
-                            "manual_delete": False,
                             "manual_reference": False,
                             "manual_account_id": False,
                             "manual_amount": False,
+                            "manual_exchange_counterpart": False,
+                            "manual_in_currency_id": False,
+                            "manual_in_currency": False,
                             "manual_name": False,
                             "manual_partner_id": False,
                             "manual_line_id": False,
@@ -304,6 +324,7 @@ class AccountBankStatementLine(models.Model):
                             "manual_original_amount": False,
                             "manual_currency_id": False,
                             "analytic_distribution": False,
+                            "manual_amount_in_currency": False,
                         }
                     )
                     continue
@@ -311,11 +332,22 @@ class AccountBankStatementLine(models.Model):
                     self.manual_account_id = line["account_id"][0]
                     self.manual_amount = line["amount"]
                     self.manual_currency_id = line["currency_id"]
+                    self.manual_in_currency_id = line.get("line_currency_id")
+                    self.manual_in_currency = line.get("line_currency_id") and line[
+                        "currency_id"
+                    ] != line.get("line_currency_id")
+                    self.manual_amount_in_currency = line.get("currency_amount")
                     self.manual_name = line["name"]
+                    self.manual_exchange_counterpart = line.get(
+                        "is_exchange_counterpart", False
+                    )
                     self.manual_partner_id = (
                         line.get("partner_id") and line["partner_id"][0]
                     )
-                    self.manual_line_id = line["id"]
+                    manual_line = (
+                        self.env["account.move.line"].browse(line["id"]).exists()
+                    )
+                    self.manual_line_id = manual_line
                     self.analytic_distribution = line.get("analytic_distribution", {})
                     if self.manual_line_id:
                         self.manual_move_id = self.manual_line_id.move_id
@@ -323,12 +355,24 @@ class AccountBankStatementLine(models.Model):
                     self.manual_kind = line["kind"]
                     self.manual_original_amount = line.get("original_amount", 0.0)
             new_data.append(line)
+        self.update({"manual_delete": False})
         self.reconcile_data_info = self._recompute_suspense_line(
             new_data,
             self.reconcile_data_info["reconcile_auxiliary_id"],
             self.manual_reference,
         )
         self.can_reconcile = self.reconcile_data_info.get("can_reconcile", False)
+
+    @api.onchange("manual_amount_in_currency")
+    def _onchange_manual_amount_in_currency(self):
+        if self.manual_line_id.exists() and self.manual_line_id:
+            self.manual_amount = self.manual_in_currency_id._convert(
+                self.manual_amount_in_currency,
+                self.company_id.currency_id,
+                self.company_id,
+                self.manual_line_id.date,
+            )
+        self._onchange_manual_reconcile_vals()
 
     @api.onchange(
         "manual_account_id",
@@ -368,6 +412,23 @@ class AccountBankStatementLine(models.Model):
                     )
                     if line["kind"] == "liquidity":
                         self._update_move_partner()
+            if self.manual_line_id and self.manual_line_id.id == line.get(
+                "original_exchange_line_id"
+            ):
+                # Now, we should edit the amount of the exchange rate
+                amount = self._get_exchange_rate_amount(
+                    self.manual_amount,
+                    self.manual_amount_in_currency,
+                    self.manual_line_id.currency_id,
+                    self.manual_line_id,
+                )
+                line.update(
+                    {
+                        "amount": amount,
+                        "credit": -amount if amount < 0 else 0.0,
+                        "debit": amount if amount > 0 else 0.0,
+                    }
+                )
             new_data.append(line)
         self.reconcile_data_info = self._recompute_suspense_line(
             new_data,
@@ -451,49 +512,15 @@ class AccountBankStatementLine(models.Model):
             new_data.append(new_line)
         return new_data, reconcile_auxiliary_id
 
-    def _compute_exchange_rate(
-        self, data, reconcile_auxiliary_id, exchange_recompute=False
-    ):
-        if not exchange_recompute:
-            return reconcile_auxiliary_id
-        foreign_currency = (
-            self.currency_id != self.company_id.currency_id
-            or self.foreign_currency_id
-            or any(line["currency_id"] != line["line_currency_id"] for line in data)
-        )
-        if not foreign_currency or self.is_reconciled:
-            return reconcile_auxiliary_id
-        currency = self.journal_id.currency_id or self.company_id.currency_id
-        amount = sum(d.get("net_amount", 0) for d in data)
-        if not currency.is_zero(amount):
-            account = self.company_id.expense_currency_exchange_account_id
-            if amount > 0:
-                account = self.company_id.income_currency_exchange_account_id
-            data.append(
-                {
-                    "reference": "reconcile_auxiliary;%s" % reconcile_auxiliary_id,
-                    "id": False,
-                    "account_id": account.name_get()[0],
-                    "partner_id": False,
-                    "date": fields.Date.to_string(self.date),
-                    "name": self.payment_ref or self.name,
-                    "amount": -amount,
-                    "net_amount": -amount,
-                    "credit": amount if amount > 0 else 0.0,
-                    "debit": -amount if amount < 0 else 0.0,
-                    "kind": "other",
-                    "currency_id": self.currency_id.id,
-                    "line_currency_id": self.currency_id.id,
-                    "currency_amount": -amount,
-                }
-            )
-            reconcile_auxiliary_id += 1
-        return reconcile_auxiliary_id
-
     def _default_reconcile_data(self, from_unreconcile=False):
         liquidity_lines, suspense_lines, other_lines = self._seek_for_lines()
-        data = [self._get_reconcile_line(line, "liquidity") for line in liquidity_lines]
+        data = []
         reconcile_auxiliary_id = 1
+        for line in liquidity_lines:
+            reconcile_auxiliary_id, lines = self._get_reconcile_line(
+                line, "liquidity", reconcile_auxiliary_id=reconcile_auxiliary_id
+            )
+            data += lines
         if not from_unreconcile:
             res = (
                 self.env["account.reconcile.model"]
@@ -508,30 +535,36 @@ class AccountBankStatementLine(models.Model):
                         data, res["model"], reconcile_auxiliary_id
                     ),
                     self.manual_reference,
-                    exchange_recompute=True
                 )
             elif res and res.get("amls"):
                 amount = self.amount_total_signed
                 for line in res.get("amls", []):
-                    line_data = self._get_reconcile_line(
-                        line, "other", is_counterpart=True, max_amount=amount
+                    reconcile_auxiliary_id, line_data = self._get_reconcile_line(
+                        line,
+                        "other",
+                        is_counterpart=True,
+                        max_amount=amount,
+                        reconcile_auxiliary_id=reconcile_auxiliary_id,
                     )
-                    amount -= line_data.get("amount")
-                    data.append(line_data)
+                    amount -= sum(line.get("amount") for line in line_data)
+                    data += line_data
                 return self._recompute_suspense_line(
                     data,
                     reconcile_auxiliary_id,
                     self.manual_reference,
-                    exchange_recompute=True,
                 )
+        else:
+            other_lines = (
+                other_lines.matched_credit_ids.credit_move_id
+                | other_lines.matched_debit_ids.debit_move_id
+            )
+        for line in other_lines:
+            reconcile_auxiliary_id, lines = self._get_reconcile_line(
+                line, "other", from_unreconcile=from_unreconcile
+            )
+            data += lines
         return self._recompute_suspense_line(
-            data
-            + [
-                self._get_reconcile_line(
-                    line, "other", from_unreconcile=from_unreconcile
-                )
-                for line in other_lines
-            ],
+            data,
             reconcile_auxiliary_id,
             self.manual_reference,
         )
@@ -544,7 +577,7 @@ class AccountBankStatementLine(models.Model):
         self.ensure_one()
         self.reconcile_mode = self.journal_id.reconcile_mode
         result = getattr(self, "_reconcile_bank_line_%s" % self.reconcile_mode)(
-            self.reconcile_data_info["data"]
+            self._prepare_reconcile_line_data(self.reconcile_data_info["data"])
         )
         self.reconcile_data_info = False
         return result
@@ -718,10 +751,12 @@ class AccountBankStatementLine(models.Model):
             if not res:
                 continue
             liquidity_lines, suspense_lines, other_lines = record._seek_for_lines()
-            data = [
-                record._get_reconcile_line(line, "liquidity")
-                for line in liquidity_lines
-            ]
+            data = []
+            for line in liquidity_lines:
+                reconcile_auxiliary_id, lines = record._get_reconcile_line(
+                    line, "liquidity"
+                )
+                data += lines
             reconcile_auxiliary_id = 1
             if res.get("status", "") == "write_off":
                 data = record._recompute_suspense_line(
@@ -729,28 +764,54 @@ class AccountBankStatementLine(models.Model):
                         data, res["model"], reconcile_auxiliary_id
                     ),
                     self.manual_reference,
-                    exchange_recompute=True
                 )
             elif res.get("amls"):
                 amount = self.amount
                 for line in res.get("amls", []):
-                    line_data = record._get_reconcile_line(
+                    reconcile_auxiliary_id, line_datas = record._get_reconcile_line(
                         line, "other", is_counterpart=True, max_amount=amount
                     )
-                    amount -= line_data.get("amount")
-                    data.append(line_data)
+                    amount -= sum(line_data.get("amount") for line_data in line_datas)
+                    data += line_datas
                 data = record._recompute_suspense_line(
                     data,
                     reconcile_auxiliary_id,
                     self.manual_reference,
-                    exchange_recompute=True,
                 )
             if not data.get("can_reconcile"):
                 continue
             getattr(
                 record, "_reconcile_bank_line_%s" % record.journal_id.reconcile_mode
-            )(data["data"])
+            )(self._prepare_reconcile_line_data(data["data"]))
         return result
+
+    def _prepare_reconcile_line_data(self, lines):
+        new_lines = []
+        reverse_lines = {}
+        for line in lines:
+            if not line.get("id") and not line.get("original_exchange_line_id"):
+                new_lines.append(line)
+            elif not line.get("original_exchange_line_id"):
+                reverse_lines[line["id"]] = line
+        for line in lines:
+            if line.get("original_exchange_line_id"):
+                reverse_lines[line["original_exchange_line_id"]].update(
+                    {
+                        "amount": reverse_lines[line["original_exchange_line_id"]][
+                            "amount"
+                        ]
+                        + line["amount"],
+                        "credit": reverse_lines[line["original_exchange_line_id"]][
+                            "credit"
+                        ]
+                        + line["credit"],
+                        "debit": reverse_lines[line["original_exchange_line_id"]][
+                            "debit"
+                        ]
+                        + line["debit"],
+                    }
+                )
+        return new_lines + list(reverse_lines.values())
 
     def button_manual_reference_full_paid(self):
         self.ensure_one()
@@ -764,14 +825,14 @@ class AccountBankStatementLine(models.Model):
             if line["reference"] == manual_reference and line.get("id"):
                 total_amount = -line["amount"] + line["original_amount_unsigned"]
                 original_amount = line["original_amount_unsigned"]
-                new_data.append(
-                    self._get_reconcile_line(
-                        self.env["account.move.line"].browse(line["id"]),
-                        "other",
-                        is_counterpart=True,
-                        max_amount=original_amount,
-                    )
+                reconcile_auxiliary_id, lines = self._get_reconcile_line(
+                    self.env["account.move.line"].browse(line["id"]),
+                    "other",
+                    is_counterpart=True,
+                    reconcile_auxiliary_id=reconcile_auxiliary_id,
+                    max_amount=original_amount,
                 )
+                new_data += lines
                 new_data.append(
                     {
                         "reference": "reconcile_auxiliary;%s" % reconcile_auxiliary_id,
@@ -796,7 +857,6 @@ class AccountBankStatementLine(models.Model):
             new_data,
             reconcile_auxiliary_id,
             self.manual_reference,
-            exchange_recompute=True,
         )
         self.can_reconcile = self.reconcile_data_info.get("can_reconcile", False)
 
@@ -811,18 +871,86 @@ class AccountBankStatementLine(models.Model):
         self.move_id.to_check = False
 
     def _get_reconcile_line(
-        self, line, kind, is_counterpart=False, max_amount=False, from_unreconcile=False
+        self,
+        line,
+        kind,
+        is_counterpart=False,
+        max_amount=False,
+        from_unreconcile=False,
+        reconcile_auxiliary_id=False,
     ):
-        vals = super()._get_reconcile_line(
+        new_vals = super()._get_reconcile_line(
             line,
             kind,
             is_counterpart=is_counterpart,
             max_amount=max_amount,
             from_unreconcile=from_unreconcile,
         )
-        if vals["partner_id"] is False:
-            vals["partner_id"] = (False, self.partner_name)
-        return vals
+        rates = []
+        for vals in new_vals:
+            if vals["partner_id"] is False:
+                vals["partner_id"] = (False, self.partner_name)
+            reconcile_auxiliary_id, rate = self._compute_exchange_rate(
+                vals, line, reconcile_auxiliary_id
+            )
+            if rate:
+                rates.append(rate)
+        new_vals += rates
+        return reconcile_auxiliary_id, new_vals
+
+    def _get_exchange_rate_amount(self, amount, currency_amount, currency, line):
+        return (
+            currency._convert(
+                currency_amount,
+                self.company_id.currency_id,
+                self.company_id,
+                self.date,
+            )
+            - amount
+        )
+
+    def _compute_exchange_rate(
+        self,
+        vals,
+        line,
+        reconcile_auxiliary_id,
+    ):
+        foreign_currency = (
+            self.currency_id != self.company_id.currency_id
+            or self.foreign_currency_id
+            or vals["currency_id"] != vals["line_currency_id"]
+        )
+        if not foreign_currency or self.is_reconciled:
+            return reconcile_auxiliary_id, False
+        currency = self.env["res.currency"].browse(vals["line_currency_id"])
+        amount = self._get_exchange_rate_amount(
+            vals.get("amount", 0), vals.get("currency_amount", 0), currency, line
+        )
+        if currency.is_zero(amount):
+            return reconcile_auxiliary_id, False
+        account = self.company_id.expense_currency_exchange_account_id
+        if amount < 0:
+            account = self.company_id.income_currency_exchange_account_id
+        data = {
+            "is_exchange_counterpart": True,
+            "original_exchange_line_id": line.id,
+            "reference": "reconcile_auxiliary;%s" % reconcile_auxiliary_id,
+            "id": False,
+            "account_id": account.name_get()[0],
+            "partner_id": False,
+            "date": fields.Date.to_string(self.date),
+            "name": self.payment_ref or self.name,
+            "amount": amount,
+            "net_amount": amount,
+            "credit": -amount if amount < 0 else 0.0,
+            "debit": amount if amount > 0 else 0.0,
+            "kind": "other",
+            "currency_id": self.company_id.currency_id.id,
+            "line_currency_id": self.company_id.currency_id.id,
+            "currency_amount": amount,
+        }
+        reconcile_auxiliary_id += 1
+        return reconcile_auxiliary_id, data
 
     def add_statement(self):
         self.ensure_one()

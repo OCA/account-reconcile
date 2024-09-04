@@ -45,6 +45,7 @@ export class AccountReconcileDataWidget extends Component {
             );
             data[line].amount_currency_format = fieldUtils.format.monetary(
                 data[line].currency_amount,
+                undefined,
                 {
                     currency: session.get_currency(data[line].line_currency_id),
                 }
@@ -64,6 +65,7 @@ export class AccountReconcileDataWidget extends Component {
         return data;
     }
     onTrashLine(ev, line) {
+        ev.stopPropagation();
         this.props.record.update({
             manual_reference: line.reference,
             manual_delete: true,
