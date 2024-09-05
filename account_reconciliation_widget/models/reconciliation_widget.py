@@ -674,6 +674,8 @@ class AccountReconciliation(models.AbstractModel):
             ("move_id.ref", "ilike", search_str),
             "|",
             ("date_maturity", "like", parse_date(self.env, search_str)),
+            "|",
+            ("statement_id.name", "like", search_str),
             "&",
             ("name", "!=", "/"),
             ("name", "ilike", search_str),
