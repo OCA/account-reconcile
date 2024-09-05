@@ -12,7 +12,7 @@ class AccountMassReconcileMethod(models.Model):
         methods += [
             (
                 "mass.reconcile.advanced.by.purchase.line",
-                "Advanced. Product, purchase order line.",
+                "Advanced. Purchase order line.",
             ),
         ]
         return methods
