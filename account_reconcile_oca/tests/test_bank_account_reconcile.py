@@ -193,7 +193,11 @@ class TestReconciliationWidget(TestAccountReconciliationCommon):
                 lambda r: r.account_id == self.bank_journal_euro.suspense_account_id
             )
         )
+        number_of_lines = len(bank_stmt_line.reconcile_data_info["data"])
         bank_stmt_line.reconcile_bank_line()
+        self.assertEqual(
+            number_of_lines, len(bank_stmt_line.reconcile_data_info["data"])
+        )
         self.assertTrue(bank_stmt_line.is_reconciled)
         self.assertFalse(
             bank_stmt_line.move_id.line_ids.filtered(
@@ -260,7 +264,11 @@ class TestReconciliationWidget(TestAccountReconciliationCommon):
             self.assertTrue(f.can_reconcile)
         self.assertEqual(inv1.amount_residual_signed, 100)
         self.assertEqual(inv2.amount_residual_signed, 100)
+        number_of_lines = len(bank_stmt_line.reconcile_data_info["data"])
         bank_stmt_line.reconcile_bank_line()
+        self.assertEqual(
+            number_of_lines, len(bank_stmt_line.reconcile_data_info["data"])
+        )
         self.assertEqual(inv1.amount_residual_signed, 30)
         self.assertEqual(inv2.amount_residual_signed, 70)
 
@@ -320,7 +328,11 @@ class TestReconciliationWidget(TestAccountReconciliationCommon):
             self.assertTrue(f.can_reconcile)
         self.assertEqual(inv1.amount_residual_signed, -100)
         self.assertEqual(inv2.amount_residual_signed, -100)
+        number_of_lines = len(bank_stmt_line.reconcile_data_info["data"])
         bank_stmt_line.reconcile_bank_line()
+        self.assertEqual(
+            number_of_lines, len(bank_stmt_line.reconcile_data_info["data"])
+        )
         self.assertEqual(inv1.amount_residual_signed, -30)
         self.assertEqual(inv2.amount_residual_signed, -70)
 
@@ -353,7 +365,11 @@ class TestReconciliationWidget(TestAccountReconciliationCommon):
             self.assertFalse(f.can_reconcile)
             f.manual_model_id = self.rule
             self.assertTrue(f.can_reconcile)
+        number_of_lines = len(bank_stmt_line.reconcile_data_info["data"])
         bank_stmt_line.reconcile_bank_line()
+        self.assertEqual(
+            number_of_lines, len(bank_stmt_line.reconcile_data_info["data"])
+        )
         self.assertEqual(2, len(bank_stmt_line.move_id.line_ids))
         self.assertTrue(
             bank_stmt_line.move_id.line_ids.filtered(
@@ -393,7 +409,11 @@ class TestReconciliationWidget(TestAccountReconciliationCommon):
             self.assertFalse(f.can_reconcile)
             f.manual_model_id = self.rule
             self.assertTrue(f.can_reconcile)
+        number_of_lines = len(bank_stmt_line.reconcile_data_info["data"])
         bank_stmt_line.reconcile_bank_line()
+        self.assertEqual(
+            number_of_lines, len(bank_stmt_line.reconcile_data_info["data"])
+        )
         self.assertEqual(3, len(bank_stmt_line.move_id.line_ids))
         self.assertTrue(
             bank_stmt_line.move_id.line_ids.filtered(
@@ -446,7 +466,11 @@ class TestReconciliationWidget(TestAccountReconciliationCommon):
             self.assertFalse(f.can_reconcile)
             f.manual_model_id = self.rule
             self.assertTrue(f.can_reconcile)
+        number_of_lines = len(bank_stmt_line.reconcile_data_info["data"])
         bank_stmt_line.reconcile_bank_line()
+        self.assertEqual(
+            number_of_lines, len(bank_stmt_line.reconcile_data_info["data"])
+        )
         self.assertNotEqual(self.current_assets_account, receivable1.account_id)
         self.assertTrue(
             bank_stmt_line.move_id.line_ids.filtered(
@@ -534,7 +558,11 @@ class TestReconciliationWidget(TestAccountReconciliationCommon):
             f.add_account_move_line_id = receivable1
             self.assertFalse(f.add_account_move_line_id)
         self.assertTrue(bank_stmt_line.can_reconcile)
+        number_of_lines = len(bank_stmt_line.reconcile_data_info["data"])
         bank_stmt_line.reconcile_bank_line()
+        self.assertEqual(
+            number_of_lines, len(bank_stmt_line.reconcile_data_info["data"])
+        )
         self.assertIn(
             self.bank_journal_euro.suspense_account_id,
             bank_stmt_line.mapped("move_id.line_ids.account_id"),
@@ -1011,7 +1039,11 @@ class TestReconciliationWidget(TestAccountReconciliationCommon):
             self.assertFalse(f.add_account_move_line_id)
             self.assertTrue(f.can_reconcile)
         self.assertTrue(bank_stmt_line.can_reconcile)
+        number_of_lines = len(bank_stmt_line.reconcile_data_info["data"])
         bank_stmt_line.reconcile_bank_line()
+        self.assertEqual(
+            number_of_lines, len(bank_stmt_line.reconcile_data_info["data"])
+        )
         self.assertEqual(0, inv1.amount_residual)
         self.assertTrue(
             inv1.line_ids.filtered(
