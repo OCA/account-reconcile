@@ -438,7 +438,7 @@ class AccountBankStatementLine(models.Model):
             return
         self.partner_id = self.manual_partner_id
 
-    @api.depends("reconcile_data")
+    @api.depends("reconcile_data", "is_reconciled")
     def _compute_reconcile_data_info(self):
         for record in self:
             if record.reconcile_data:
@@ -553,11 +553,6 @@ class AccountBankStatementLine(models.Model):
                     reconcile_auxiliary_id,
                     self.manual_reference,
                 )
-        else:
-            other_lines = (
-                other_lines.matched_credit_ids.credit_move_id
-                | other_lines.matched_debit_ids.debit_move_id
-            )
         for line in other_lines:
             reconcile_auxiliary_id, lines = self._get_reconcile_line(
                 line, "other", from_unreconcile=from_unreconcile
@@ -579,7 +574,7 @@ class AccountBankStatementLine(models.Model):
         result = getattr(self, "_reconcile_bank_line_%s" % self.reconcile_mode)(
             self._prepare_reconcile_line_data(self.reconcile_data_info["data"])
         )
-        self.reconcile_data_info = False
+        self.reconcile_data = False
         return result
 
     def _reconcile_bank_line_edit(self, data):
