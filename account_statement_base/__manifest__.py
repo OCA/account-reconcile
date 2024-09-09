@@ -4,7 +4,7 @@
 
 {
     "name": "Bank Statement Base",
-    "version": "17.0.1.0.0",
+    "version": "17.0.1.0.1",
     "category": "Accounting",
     "license": "LGPL-3",
     "summary": "Base module for Bank Statements",
@@ -14,8 +14,8 @@
     "website": "https://github.com/OCA/account-reconcile",
     "depends": ["account"],
     "data": [
-        "views/account_bank_statement.xml",
         "views/account_bank_statement_line.xml",
+        "views/account_bank_statement.xml",  # Keep order
     ],
     "installable": True,
 }
