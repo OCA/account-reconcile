@@ -9,16 +9,17 @@ msgstr ""
 "Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-03-24 03:37+0000\n"
-"PO-Revision-Date: 2023-10-28 13:19+0000\n"
-"Last-Translator: Adriano Prado <adrianojprado@gmail.com>\n"
-"Language-Team: Portuguese (Brazil) (https://www.transifex.com/oca/"
-"teams/23907/pt_BR/)\n"
+"PO-Revision-Date: 2024-09-11 03:06+0000\n"
+"Last-Translator: Rodrigo Sottomaior Macedo "
+"<sottomaiormacedotec@sottomaiormacedo.tech>\n"
+"Language-Team: Portuguese (Brazil) (https://www.transifex.com/oca/teams/"
+"23907/pt_BR/)\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 4.17\n"
+"X-Generator: Weblate 5.6.2\n"
 
 #. module: account_move_base_import
 #. odoo-python
@@ -231,7 +232,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_move_completion_rule__display_name
 #: model:ir.model.fields,field_description:account_move_base_import.field_credit_statement_import__display_name
 msgid "Display Name"
-msgstr "Nome de Exibição"
+msgstr "Exibir Nome"
 
 #. module: account_move_base_import
 #: model:ir.model.fields,help:account_move_base_import.field_res_partner__bank_statement_label
