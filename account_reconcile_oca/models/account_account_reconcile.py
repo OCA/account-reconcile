@@ -164,7 +164,11 @@ class AccountAccountReconcile(models.Model):
         for line_id in counterparts:
             max_amount = amount if line_id == counterparts[-1] else 0
             lines = self._get_reconcile_line(
-                self.env["account.move.line"].browse(line_id), "other", True, max_amount
+                self.env["account.move.line"].browse(line_id),
+                "other",
+                True,
+                max_amount,
+                move=True,
             )
             new_data["data"] += lines
             amount += sum(line["amount"] for line in lines)
