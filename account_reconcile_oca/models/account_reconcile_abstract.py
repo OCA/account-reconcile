@@ -47,18 +47,25 @@ class AccountReconcileAbstract(models.AbstractModel):
     ):
         date = self.date if "date" in self._fields else line.date
         original_amount = amount = net_amount = line.debit - line.credit
+        line_currency = line.currency_id
         if is_counterpart:
             currency_amount = -line.amount_residual_currency or line.amount_residual
             amount = -line.amount_residual
             currency = line.currency_id or line.company_id.currency_id
             original_amount = net_amount = -line.amount_residual
             if max_amount:
-                real_currency_amount = currency._convert(
-                    currency_amount,
-                    self._get_reconcile_currency(),
-                    self.company_id,
-                    date,
-                )
+                dest_currency = self._get_reconcile_currency()
+                if currency == dest_currency:
+                    real_currency_amount = currency_amount
+                elif self.company_id.currency_id == dest_currency:
+                    real_currency_amount = amount
+                else:
+                    real_currency_amount = self.company_id.currency_id._convert(
+                        amount,
+                        dest_currency,
+                        self.company_id,
+                        date,
+                    )
                 if (
                     -real_currency_amount > max_amount > 0
                     or -real_currency_amount < max_amount < 0
@@ -76,7 +83,8 @@ class AccountReconcileAbstract(models.AbstractModel):
                         date,
                     )
         else:
-            currency_amount = line.amount_currency
+            currency_amount = self.amount_currency or self.amount
+            line_currency = self._get_reconcile_currency()
         vals = {
             "move_id": move and line.move_id.id,
             "move": move and line.move_id.name,
@@ -93,7 +101,7 @@ class AccountReconcileAbstract(models.AbstractModel):
             "amount": amount,
             "net_amount": amount - net_amount,
             "currency_id": self.company_id.currency_id.id,
-            "line_currency_id": line.currency_id.id,
+            "line_currency_id": line_currency.id,
             "currency_amount": currency_amount,
             "analytic_distribution": line.analytic_distribution,
             "kind": kind,
