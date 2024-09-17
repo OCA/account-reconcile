@@ -178,6 +178,18 @@ class AccountBankStatementLine(models.Model):
             )._default_reconcile_data()
         self.can_reconcile = self.reconcile_data_info.get("can_reconcile", False)
 
+    def _get_amount_currency(self, line, dest_curr):
+        if line["line_currency_id"] == dest_curr.id:
+            amount = line["currency_amount"]
+        else:
+            amount = self.company_id.currency_id._convert(
+                line["amount"],
+                dest_curr,
+                self.company_id,
+                self.date,
+            )
+        return amount
+
     @api.onchange("add_account_move_line_id")
     def _onchange_add_account_move_line_id(self):
         if self.add_account_move_line_id:
@@ -185,16 +197,10 @@ class AccountBankStatementLine(models.Model):
             new_data = []
             is_new_line = True
             pending_amount = 0.0
-            currency = self._get_reconcile_currency()
             for line in data:
                 if line["kind"] != "suspense":
-                    pending_amount += currency._convert(
-                        line["currency_amount"],
-                        self.env["res.currency"].browse(
-                            line.get("line_currency_id", currency.id)
-                        ),
-                        self.company_id,
-                        self.date,
+                    pending_amount += self._get_amount_currency(
+                        line, self._get_reconcile_currency()
                     )
                 if self.add_account_move_line_id.id in line.get(
                     "counterpart_line_ids", []
@@ -226,6 +232,7 @@ class AccountBankStatementLine(models.Model):
         new_data = []
         suspense_line = False
         counterparts = []
+        suspense_currency = self.foreign_currency_id or self.currency_id
         for line in data:
             if line.get("counterpart_line_ids"):
                 counterparts += line["counterpart_line_ids"]
@@ -237,24 +244,25 @@ class AccountBankStatementLine(models.Model):
             if line["kind"] != "suspense":
                 new_data.append(line)
                 total_amount += line["amount"]
-                if line.get("currency_amount"):
-                    currency_amount += (
-                        self.env["res.currency"]
-                        .browse(line["line_currency_id"])
-                        ._convert(
-                            line["currency_amount"],
-                            self._get_reconcile_currency(),
+                if not line.get("is_exchange_counterpart"):
+                    # case of statement line with foreign_currency
+                    if (
+                        line["kind"] == "liquidity"
+                        and line["line_currency_id"] != suspense_currency.id
+                    ):
+                        currency_amount += self.amount_currency
+                    elif (
+                        line.get("currency_amount")
+                        and line.get("line_currency_id") == suspense_currency.id
+                    ):
+                        currency_amount += line.get("currency_amount")
+                    else:
+                        currency_amount += self.company_id.currency_id._convert(
+                            line["amount"],
+                            suspense_currency,
                             self.company_id,
                             self.date,
                         )
-                    )
-                else:
-                    currency_amount += self.company_id.currency_id._convert(
-                        line["amount"],
-                        self._get_reconcile_currency(),
-                        self.company_id,
-                        self.date,
-                    )
             else:
                 suspense_line = line
         if not float_is_zero(
@@ -267,6 +275,7 @@ class AccountBankStatementLine(models.Model):
                         "amount": -total_amount,
                         "credit": total_amount if total_amount > 0 else 0.0,
                         "debit": -total_amount if total_amount < 0 else 0.0,
+                        "currency_amount": -currency_amount,
                     }
                 )
             else:
@@ -292,7 +301,7 @@ class AccountBankStatementLine(models.Model):
                     "debit": -total_amount if total_amount < 0 else 0.0,
                     "kind": "suspense",
                     "currency_id": self.company_id.currency_id.id,
-                    "line_currency_id": self.currency_id.id,
+                    "line_currency_id": suspense_currency.id,
                     "currency_amount": -currency_amount,
                 }
                 reconcile_auxiliary_id += 1
@@ -396,7 +405,7 @@ class AccountBankStatementLine(models.Model):
         if self.manual_line_id.exists() and self.manual_line_id:
             self.manual_amount = self.manual_in_currency_id._convert(
                 self.manual_amount_in_currency,
-                self._get_reconcile_currency(),
+                self.company_id.currency_id,
                 self.company_id,
                 self.manual_line_id.date,
             )
@@ -585,6 +594,7 @@ class AccountBankStatementLine(models.Model):
                     self.manual_reference,
                 )
             elif res and res.get("amls"):
+                # TODO should be signed in currency get_reconcile_currency
                 amount = self.amount_total_signed
                 for line in res.get("amls", []):
                     reconcile_auxiliary_id, line_data = self._get_reconcile_line(
@@ -898,7 +908,7 @@ class AccountBankStatementLine(models.Model):
                     self.manual_reference,
                 )
             elif res.get("amls"):
-                amount = self.amount
+                amount = self.amount_currency or self.amount
                 for line in res.get("amls", []):
                     reconcile_auxiliary_id, line_datas = record._get_reconcile_line(
                         line, "other", is_counterpart=True, max_amount=amount, move=True
@@ -1023,26 +1033,38 @@ class AccountBankStatementLine(models.Model):
         )
         rates = []
         for vals in new_vals:
+            rate = False
             if vals["partner_id"] is False:
                 vals["partner_id"] = (False, self.partner_name)
-            reconcile_auxiliary_id, rate = self._compute_exchange_rate(
-                vals, line, reconcile_auxiliary_id
-            )
+            if vals.get("kind") not in ("suspense", "liquidity"):
+                reconcile_auxiliary_id, rate = self._compute_exchange_rate(
+                    vals, line, reconcile_auxiliary_id
+                )
             if rate:
                 rates.append(rate)
         new_vals += rates
         return reconcile_auxiliary_id, new_vals
 
     def _get_exchange_rate_amount(self, amount, currency_amount, currency, line):
-        return (
-            currency._convert(
+        if self.foreign_currency_id:
+            # take real rate of statement line to compute the exchange rate gain/loss
+            real_rate = self.amount / self.amount_currency
+            to_amount_journal_currency = currency_amount * real_rate
+            to_amount_company_currency = self.currency_id._convert(
+                to_amount_journal_currency,
+                self.company_id.currency_id,
+                self.company_id,
+                self.date,
+            )
+            to_amount = self.company_id.currency_id.round(to_amount_company_currency)
+        else:
+            to_amount = currency._convert(
                 currency_amount,
                 self.company_id.currency_id,
                 self.company_id,
                 self.date,
             )
-            - amount
-        )
+        return self.company_id.currency_id.round(to_amount - amount)
 
     def _compute_exchange_rate(
         self,
@@ -1112,7 +1134,7 @@ class AccountBankStatementLine(models.Model):
 
     def _get_reconcile_currency(self):
         return (
-            self.currency_id
+            self.foreign_currency_id
             or self.journal_id.currency_id
-            or self.company_id._currency_id
+            or self.company_id.currency_id
         )
