@@ -47,7 +47,11 @@ class AccountAccountReconcile(models.Model):
             SELECT
                 min(aml.id) as id,
                 MAX({account_name}) as name,
-                aml.partner_id,
+                CASE
+                    WHEN a.account_type in ('asset_receivable', 'liability_payable')
+                        THEN aml.partner_id
+                    ELSE NULL
+                    END as partner_id,
                 a.id as account_id,
                 FALSE as is_reconciled,
                 aml.currency_id as currency_id,
@@ -73,7 +77,14 @@ class AccountAccountReconcile(models.Model):
     def _groupby(self):
         return """
             GROUP BY
-                a.id, aml.partner_id, aml.currency_id, a.company_id
+                a.id,
+                CASE
+                    WHEN a.account_type in ('asset_receivable', 'liability_payable')
+                        THEN aml.partner_id
+                    ELSE NULL
+                END,
+                aml.currency_id,
+                a.company_id
         """
 
     def _having(self):
