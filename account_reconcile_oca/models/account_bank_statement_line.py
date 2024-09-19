@@ -60,9 +60,18 @@ class AccountBankStatementLine(models.Model):
             "Percentage Analytic"
         ),
     )
-    manual_in_currency = fields.Boolean(readonly=True, store=False, prefetch=False)
+    manual_in_currency = fields.Boolean(
+        string="Is Manual in Currency?",
+        readonly=True,
+        store=False,
+        prefetch=False,
+    )
     manual_in_currency_id = fields.Many2one(
-        "res.currency", readonly=True, store=False, prefetch=False
+        comodel_name="res.currency",
+        string="Manual In Currency",
+        readonly=True,
+        store=False,
+        prefetch=False,
     )
     manual_amount_in_currency = fields.Monetary(
         store=False,
