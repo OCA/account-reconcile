@@ -17,6 +17,7 @@ msgstr ""
 "X-Generator: Weblate 5.6.2\n"
 
 #. module: account_statement_base
+#: model:ir.model,name:account_statement_base.model_account_bank_statement
 #: model_terms:ir.ui.view,arch_db:account_statement_base.view_bank_statement_form
 msgid "Bank Statement"
 msgstr "Extrato Bancário"
@@ -61,6 +62,11 @@ msgstr "Notas"
 #. module: account_statement_base
 #: model_terms:ir.ui.view,arch_db:account_statement_base.account_bank_statement_line_tree
 msgid "Open Journal Entry"
+msgstr ""
+
+#. module: account_statement_base
+#: model_terms:ir.ui.view,arch_db:account_statement_base.view_bank_statement_tree
+msgid "Open Statement Lines"
 msgstr ""
 
 #. module: account_statement_base
