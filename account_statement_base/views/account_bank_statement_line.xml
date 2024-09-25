@@ -63,7 +63,7 @@
         <tree editable="top" multi_edit="1" decoration-muted="is_reconciled">
             <field name="sequence" />
             <field name="date" readonly="is_reconciled" />
-            <field name="move_id" optional="hide" />
+            <field name="move_id" optional="hide" required="0" />
             <field name="payment_ref" readonly="is_reconciled" />
             <field name="ref" optional="hide" readonly="is_reconciled" />
             <field name="transaction_type" optional="hide" />
