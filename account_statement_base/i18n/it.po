@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-06-05 12:39+0000\n"
+"PO-Revision-Date: 2024-09-26 09:06+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
@@ -14,7 +14,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.17\n"
+"X-Generator: Weblate 5.6.2\n"
 
 #. module: account_statement_base
 #: model:ir.model,name:account_statement_base.model_account_bank_statement
@@ -25,7 +25,7 @@ msgstr "Estratto conto bancario"
 #. module: account_statement_base
 #: model:ir.model,name:account_statement_base.model_account_bank_statement_line
 msgid "Bank Statement Line"
-msgstr ""
+msgstr "Riga estratto conto"
 
 #. module: account_statement_base
 #: model:ir.actions.act_window,name:account_statement_base.account_bank_statement_line_action
@@ -62,12 +62,12 @@ msgstr "Note"
 #. module: account_statement_base
 #: model_terms:ir.ui.view,arch_db:account_statement_base.account_bank_statement_line_tree
 msgid "Open Journal Entry"
-msgstr ""
+msgstr "Apri registrazione contabile"
 
 #. module: account_statement_base
 #: model_terms:ir.ui.view,arch_db:account_statement_base.view_bank_statement_tree
 msgid "Open Statement Lines"
-msgstr ""
+msgstr "Apri righe estratto conto"
 
 #. module: account_statement_base
 #: model_terms:ir.ui.view,arch_db:account_statement_base.account_bank_statement_line_search
