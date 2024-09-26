@@ -20,6 +20,11 @@ msgid "Bank Statement"
 msgstr ""
 
 #. module: account_statement_base
+#: model:ir.model,name:account_statement_base.model_account_bank_statement_line
+msgid "Bank Statement Line"
+msgstr ""
+
+#. module: account_statement_base
 #: model:ir.actions.act_window,name:account_statement_base.account_bank_statement_line_action
 msgid "Bank Statement Lines"
 msgstr ""
@@ -49,6 +54,11 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:account_statement_base.account_bank_statement_line_form
 #: model_terms:ir.ui.view,arch_db:account_statement_base.account_bank_statement_line_tree
 msgid "Notes"
+msgstr ""
+
+#. module: account_statement_base
+#: model_terms:ir.ui.view,arch_db:account_statement_base.account_bank_statement_line_tree
+msgid "Open Journal Entry"
 msgstr ""
 
 #. module: account_statement_base
