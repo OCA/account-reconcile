@@ -22,6 +22,11 @@ msgid "Bank Statement"
 msgstr ""
 
 #. module: account_statement_base
+#: model:ir.model,name:account_statement_base.model_account_bank_statement_line
+msgid "Bank Statement Line"
+msgstr ""
+
+#. module: account_statement_base
 #: model:ir.actions.act_window,name:account_statement_base.account_bank_statement_line_action
 msgid "Bank Statement Lines"
 msgstr "银行对账单明细"
@@ -52,6 +57,11 @@ msgstr "未对账"
 #: model_terms:ir.ui.view,arch_db:account_statement_base.account_bank_statement_line_tree
 msgid "Notes"
 msgstr "备注"
+
+#. module: account_statement_base
+#: model_terms:ir.ui.view,arch_db:account_statement_base.account_bank_statement_line_tree
+msgid "Open Journal Entry"
+msgstr ""
 
 #. module: account_statement_base
 #: model_terms:ir.ui.view,arch_db:account_statement_base.account_bank_statement_line_search
