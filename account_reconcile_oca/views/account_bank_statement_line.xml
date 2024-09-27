@@ -240,6 +240,16 @@
                             context="{'search_default_partner_id': partner_id, 'tree_view_ref': 'account_reconcile_oca.account_move_line_tree_reconcile_view', 'search_view_ref': 'account_reconcile_oca.account_move_line_search_reconcile_view'}"
                         />
                     </page>
+                    <page
+                        name="reconciled_line"
+                        string="Reconciled"
+                        attrs="{'invisible': [('is_reconciled', '=', False)]}"
+                    >
+                        <field
+                            name="reconciled_move_line_ids"
+                            context="{'bank_statement_line_id':id,'search_default_partner_id': partner_id, 'search_default_trade_payable': 1, 'search_default_trade_receivable': 1, 'tree_view_ref': 'account_reconcile_oca.account_move_line_tree_reconcile_view', 'search_view_ref': 'account_reconcile_oca.account_move_line_search_reconcile_view'}"
+                        />
+                    </page>
                     <page name="manual" string="Manual operation">
                         <group>
                             <group>

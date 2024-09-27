@@ -16,6 +16,9 @@ class AccountBankStatementLine(models.Model):
     _inherit = ["account.bank.statement.line", "account.reconcile.abstract"]
 
     reconcile_data_info = fields.Serialized(inverse="_inverse_reconcile_data_info")
+    reconciled_move_line_ids = fields.Many2many(
+        "account.move.line", compute="_compute_reconciled_move_line_ids"
+    )
     reconcile_mode = fields.Selection(
         selection=lambda self: self.env["account.journal"]
         ._fields["reconcile_mode"]
@@ -127,6 +130,13 @@ class AccountBankStatementLine(models.Model):
     reconcile_aggregate = fields.Char(compute="_compute_reconcile_aggregate")
     aggregate_id = fields.Integer(compute="_compute_reconcile_aggregate")
     aggregate_name = fields.Char(compute="_compute_reconcile_aggregate")
+
+    @api.depends("reconcile_data_info")
+    def _compute_reconciled_move_line_ids(self):
+        for rec in self:
+            rec.reconciled_move_line_ids = rec.reconcile_data_info.get(
+                "counterparts", []
+            )
 
     @api.model
     def _reconcile_aggregate_map(self):
