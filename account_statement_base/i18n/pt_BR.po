@@ -18,6 +18,12 @@ msgstr ""
 
 #. module: account_statement_base
 #: model_terms:ir.ui.view,arch_db:account_statement_base.view_bank_statement_form
+msgid "<span class=\"o_stat_text\">Journal Items</span>"
+msgstr ""
+
+#. module: account_statement_base
+#: model:ir.model,name:account_statement_base.model_account_bank_statement
+#: model_terms:ir.ui.view,arch_db:account_statement_base.view_bank_statement_form
 msgid "Bank Statement"
 msgstr ""
 
@@ -41,6 +47,13 @@ msgstr "Data"
 #: model_terms:ir.ui.view,arch_db:account_statement_base.account_bank_statement_line_search
 msgid "Journal"
 msgstr "Diário"
+
+#. module: account_statement_base
+#. odoo-python
+#: code:addons/account_statement_base/models/account_bank_statement.py:0
+#, python-format
+msgid "Journal Items"
+msgstr ""
 
 #. module: account_statement_base
 #: model_terms:ir.ui.view,arch_db:account_statement_base.account_bank_statement_line_search
