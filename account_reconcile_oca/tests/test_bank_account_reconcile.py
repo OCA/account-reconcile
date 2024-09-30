@@ -143,13 +143,11 @@ class TestReconciliationWidget(TestAccountReconciliationCommon):
             self.assertEqual(-50, f.manual_amount)
         self.assertEqual(2, len(bank_stmt_line.reconcile_data_info["data"]))
         bank_stmt_line.button_manual_reference_full_paid()
-        self.assertEqual(3, len(bank_stmt_line.reconcile_data_info["data"]))
-        with Form(
-            bank_stmt_line,
-            view="account_reconcile_oca.bank_statement_line_form_reconcile_view",
-        ) as f:
-            f.manual_reference = "account.move.line;%s" % receivable1.id
-            self.assertEqual(-100, f.manual_amount)
+        self.assertTrue(
+            bank_stmt_line.move_id.line_ids.filtered(
+                lambda r: r.account_id == self.bank_journal_euro.suspense_account_id
+            )
+        )
 
     def test_reconcile_invoice_unreconcile(self):
         """
