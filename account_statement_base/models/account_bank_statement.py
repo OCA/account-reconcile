@@ -11,7 +11,18 @@ class AccountBankStatement(models.Model):
         action = self.env["ir.actions.act_window"]._for_xml_id(
             "account_statement_base.account_bank_statement_line_action"
         )
-        action.update({"domain": [("statement_id", "=", self.id)]})
+        action.update(
+            {
+                "domain": [("statement_id", "=", self.id)],
+                "context": {
+                    "default_journal_id": self._context.get("active_id")
+                    if self._context.get("active_model") == "account.journal"
+                    else None,
+                    "account_bank_statement_line_main_view": True,
+                },
+            }
+        )
+
         return action
 
     def open_entries(self):
