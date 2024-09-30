@@ -1155,3 +1155,42 @@ class TestReconciliationWidget(TestAccountReconciliationCommon):
             self.assertFalse(f.add_account_move_line_id)
             self.assertTrue(f.can_reconcile)
             self.assertEqual(3, len(f.reconcile_data_info["data"]))
+
+    def test_reconcile_manual_tax(self):
+        bank_stmt = self.acc_bank_stmt_model.create(
+            {
+                "company_id": self.env.ref("base.main_company").id,
+                "journal_id": self.bank_journal_euro.id,
+                "date": time.strftime("%Y-07-15"),
+                "name": "test",
+            }
+        )
+        bank_stmt_line = self.acc_bank_stmt_line_model.create(
+            {
+                "name": "Demo tax",
+                "journal_id": self.bank_journal_euro.id,
+                "statement_id": bank_stmt.id,
+                "amount": 100,
+                "date": time.strftime("%Y-07-15"),
+            }
+        )
+        with Form(
+            bank_stmt_line,
+            view="account_reconcile_oca.bank_statement_line_form_reconcile_view",
+        ) as f:
+            f.manual_reference = "reconcile_auxiliary;1"
+            f.manual_account_id = self.company.account_journal_payment_debit_account_id
+            f.manual_tax_ids.add(self.tax_10)
+        bank_stmt_line.reconcile_bank_line()
+        self.assertTrue(
+            bank_stmt_line.move_id.line_ids.filtered(
+                lambda r: r.account_id
+                == self.company.account_journal_payment_debit_account_id
+                and r.tax_ids == self.tax_10
+            )
+        )
+        self.assertTrue(
+            bank_stmt_line.move_id.line_ids.filtered(
+                lambda r: r.tax_line_id == self.tax_10
+            )
+        )

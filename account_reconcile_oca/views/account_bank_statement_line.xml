@@ -257,9 +257,15 @@
                                     attrs="{'readonly': ['|', '|', '|', ('manual_exchange_counterpart', '=', True),('manual_reference', '=', False), ('is_reconciled', '=', True), ('manual_line_id', '!=', False)]}"
                                 />
                                 <field
+                                    name="manual_tax_ids"
+                                    string="Taxes"
+                                    attrs="{'readonly': ['|','|',('manual_reference', '=', False), ('is_reconciled', '=', True),('manual_kind', '=', 'liquidity')],'invisible':['|',('manual_kind', '=', 'tax'), ('manual_line_id', '!=', False)]}"
+                                    widget="many2many_tags"
+                                />
+                                <field
                                     name="manual_partner_id"
                                     string="Partner"
-                                    attrs="{'readonly': ['|', '|', '|', ('manual_exchange_counterpart', '=', True),('manual_reference', '=', False), ('is_reconciled', '=', True), '&amp;', ('manual_line_id', '!=', False), ('manual_kind', '!=', 'liquidity')]}"
+                                    attrs="{'readonly': ['|', '|', '|', ('manual_exchange_counterpart', '=', True),('manual_reference', '=', False), ('is_reconciled', '=', True), '&amp;', ('manual_line_id', '!=', False), ('manual_kind', 'not in', ('liquidity','other'))]}"
                                 />
                                 <field
                                     name="analytic_distribution"
