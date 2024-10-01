@@ -47,6 +47,7 @@ export class AccountReconcileMatchWidget extends Component {
             searchViewId: false,
             parentRecord: this.props.record,
             parentField: this.props.name,
+            counterpartField: this.props.counterpartField,
             showButtons: false,
         };
     }
@@ -75,6 +76,9 @@ AccountReconcileMatchWidget.components = {
     ...AccountReconcileMatchWidget.components,
     View,
 };
+AccountReconcileMatchWidget.extractProps = ({attrs}) => ({
+    counterpartField: attrs.options.counterpart_field || "counterparts",
+});
 
 export const AccountReconcileMatchWidgetField = {
     component: AccountReconcileMatchWidget,
