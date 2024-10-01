@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2024 Dixmit
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
+<odoo>
+
+    <record model="ir.ui.view" id="account_payment_order_maturity_form_view">
+        <field name="model">account.payment.order.maturity</field>
+        <field name="arch" type="xml">
+            <form>
+                <header />
+                <sheet>
+                    <group>
+                        <field name="payment_order_id" />
+                        <field name="amount_residual" />
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="account_payment_order_maturity_search_view">
+        <field name="model">account.payment.order.maturity</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="payment_order_id" />
+                <field name="date" />
+                <separator />
+                <filter
+                    name="filter_inbound"
+                    string="Inbound"
+                    domain="[('payment_type', '=', 'inbound')]"
+                />
+                <filter
+                    name="filter_outbound"
+                    string="Outbound"
+                    domain="[('payment_type', '=', 'outbound')]"
+                />
+            </search>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="account_payment_order_maturity_tree_view">
+        <field name="model">account.payment.order.maturity</field>
+        <field name="arch" type="xml">
+            <tree js_class="reconcile_move_line">
+                <field name="payment_order_id" />
+                <field name="date" />
+                <field name="amount_residual" />
+                <field name="currency_id" invisible="1" />
+                <button
+                    name="action_view_order"
+                    string="View Order"
+                    type="object"
+                    class="btn btn-secondary"
+                />
+            </tree>
+        </field>
+    </record>
+
+</odoo>

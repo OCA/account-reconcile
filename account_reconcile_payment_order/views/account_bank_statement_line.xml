@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2024 Dixmit
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
+<odoo>
+
+    <record model="ir.ui.view" id="bank_statement_line_form_reconcile_view">
+        <field name="model">account.bank.statement.line</field>
+        <field
+            name="inherit_id"
+            ref="account_reconcile_oca.bank_statement_line_form_reconcile_view"
+        />
+        <field name="arch" type="xml">
+            <page name="manual" position="before">
+                <page
+                    name="order"
+                    string="Payment Orders"
+                    attrs="{'invisible': [('is_reconciled', '=', True)]}"
+                >
+                    <field name="payment_type_filter" />
+                    <field
+                        name="add_payment_order_id"
+                        widget="account_reconcile_oca_match"
+                        domain="[('company_id', '=', company_id), ('is_matched', '=', False)]"
+                        options="{'counterpart_field': 'order_counterparts'}"
+                        context="{'search_default_filter_inbound': payment_type_filter == 'inbound','search_default_filter_outbound': payment_type_filter == 'outbound', 'tree_view_ref': 'account_reconcile_payment_order.account_payment_order_maturity_tree_view', 'search_view_ref': 'account_reconcile_payment_order.account_payment_order_maturity_search_view'}"
+                    />
+                </page>
+            </page>
+        </field>
+    </record>
+
+
+
+</odoo>
