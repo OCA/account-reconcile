@@ -57,8 +57,8 @@ msgstr ""
 
 #. module: account_statement_base
 #: model_terms:ir.ui.view,arch_db:account_statement_base.account_bank_statement_line_search
-msgid "Label, Ref or Notes"
-msgstr "Etichetta, riferimento o note"
+msgid "Label, Ref, Notes or Amount"
+msgstr "Etichetta, riferimento, note o importo"
 
 #. module: account_statement_base
 #: model_terms:ir.ui.view,arch_db:account_statement_base.account_bank_statement_line_search
