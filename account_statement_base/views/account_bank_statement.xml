@@ -102,7 +102,7 @@
         <field name="inherit_id" ref="account.view_bank_statement_tree" />
         <field name="arch" type="xml">
             <tree position="attributes">
-                <attribute name="editable">bottom</attribute>
+                <attribute name="create">true</attribute>
             </tree>
             <field name="balance_end_real" position="after">
                 <button
