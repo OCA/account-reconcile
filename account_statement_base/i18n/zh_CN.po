@@ -77,6 +77,11 @@ msgid "Open Journal Entry"
 msgstr ""
 
 #. module: account_statement_base
+#: model_terms:ir.ui.view,arch_db:account_statement_base.view_bank_statement_tree
+msgid "Open Statement Lines"
+msgstr ""
+
+#. module: account_statement_base
 #: model_terms:ir.ui.view,arch_db:account_statement_base.account_bank_statement_line_search
 msgid "Partner"
 msgstr "业务伙伴"
