@@ -32,6 +32,7 @@ export class AccountReconcileDataWidget extends Component {
             });
             data[line].amount_currency_format = formatMonetary(
                 data[line].currency_amount,
+                undefined,
                 {
                     currencyId: data[line].line_currency_id,
                 }
@@ -51,6 +52,7 @@ export class AccountReconcileDataWidget extends Component {
         return data;
     }
     onTrashLine(ev, line) {
+        ev.stopPropagation();
         this.props.record.update({
             manual_reference: line.reference,
             manual_delete: true,
