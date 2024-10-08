@@ -29,6 +29,26 @@
                         </div>
                     </div>
                 </div>
+                <div
+                    class="col-12 col-lg-6 o_setting_box"
+                    id="show_reconcile_button"
+                    title="Show Reconcile Button Even If There Are No Entries to reconcile"
+                >
+                  <div class="o_setting_left_pane">
+                      <field
+                            name="show_reconcile_button_with_no_entries_to_reconcile"
+                        />
+                  </div>
+                  <div class="o_setting_right_pane">
+                        <label
+                            for="show_reconcile_button_with_no_entries_to_reconcile"
+                            string="Show Reconcile Button"
+                        />
+                        <div class="text-muted">
+                            Show Reconcile Button Even If There Are No Entries to reconcile
+                        </div>
+                    </div>
+                  </div>
             </xpath>
         </field>
     </record>

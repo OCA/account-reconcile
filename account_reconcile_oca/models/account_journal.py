@@ -31,3 +31,21 @@ class AccountJournal(models.Model):
         if self.get_journal_dashboard_datas()["number_to_reconcile"] > 0:
             return False
         return _("Well done! Everything has been reconciled")
+
+    def _fill_bank_cash_dashboard_data(self, dashboard_data):
+        """Populate all bank and cash journal's data dict with
+        relevant information for the kanban card."""
+        super()._fill_bank_cash_dashboard_data(dashboard_data)
+        bank_cash_journals = self.filtered(
+            lambda journal: journal.type in ("bank", "cash")
+        )
+        if not bank_cash_journals:
+            return
+        for journal in bank_cash_journals:
+            dashboard_data[journal.id].update(
+                {
+                    "show_reconcile_button_with_no_entries_to_reconcile": (
+                        journal.company_id.show_reconcile_button_with_no_entries_to_reconcile
+                    )
+                }
+            )

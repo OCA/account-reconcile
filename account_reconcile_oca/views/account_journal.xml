@@ -32,7 +32,9 @@
                 expr="//kanban/templates//div[@id='dashboard_bank_cash_left']/t[1]"
                 position="before"
             >
-                <t t-if="dashboard.number_to_reconcile > 0">
+                <t
+                    t-if="dashboard.number_to_reconcile > 0 or dashboard.show_reconcile_button_with_no_entries_to_reconcile"
+                >
                     <button
                         type="action"
                         name="%(account_reconcile_oca.action_bank_statement_line_reconcile)s"

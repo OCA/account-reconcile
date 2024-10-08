@@ -12,3 +12,7 @@ class ResCompany(models.Model):
         ._fields["reconcile_aggregate"]
         .selection
     )
+    show_reconcile_button_with_no_entries_to_reconcile = fields.Boolean(
+        string="Show Reconcile Button Even If There Are No Entries to reconcile",
+        default=False,
+    )
