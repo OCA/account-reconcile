@@ -8,6 +8,7 @@ from dateutil.relativedelta import relativedelta
 
 from odoo import Command, _, api, fields, models, tools
 from odoo.exceptions import UserError
+from odoo.fields import first
 from odoo.tools import float_is_zero
 
 
@@ -402,7 +403,11 @@ class AccountBankStatementLine(models.Model):
 
     @api.onchange("manual_amount_in_currency")
     def _onchange_manual_amount_in_currency(self):
-        if self.manual_line_id.exists() and self.manual_line_id:
+        if (
+            self.manual_line_id.exists()
+            and self.manual_line_id
+            and self.manual_kind != "liquidity"
+        ):
             self.manual_amount = self.manual_in_currency_id._convert(
                 self.manual_amount_in_currency,
                 self.company_id.currency_id,
@@ -1046,7 +1051,7 @@ class AccountBankStatementLine(models.Model):
         return reconcile_auxiliary_id, new_vals
 
     def _get_exchange_rate_amount(self, amount, currency_amount, currency, line):
-        if self.foreign_currency_id:
+        if self.foreign_currency_id == currency:
             # take real rate of statement line to compute the exchange rate gain/loss
             real_rate = self.amount / self.amount_currency
             to_amount_journal_currency = currency_amount * real_rate
@@ -1057,6 +1062,12 @@ class AccountBankStatementLine(models.Model):
                 self.date,
             )
             to_amount = self.company_id.currency_id.round(to_amount_company_currency)
+        elif self.currency_id == currency and not self.foreign_currency_id:
+            liquidity_lines, _suspense_lines, _other_lines = self._seek_for_lines()
+            real_rate = (
+                first(liquidity_lines).balance / first(liquidity_lines).amount_currency
+            )
+            to_amount = self.company_id.currency_id.round(currency_amount * real_rate)
         else:
             to_amount = currency._convert(
                 currency_amount,

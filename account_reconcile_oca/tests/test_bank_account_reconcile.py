@@ -1250,3 +1250,75 @@ class TestReconciliationWidget(TestAccountReconciliationCommon):
             .account_type,
             "liability_payable",
         )
+
+    def test_invoice_foreign_currency_late_change_of_rate(self):
+        # Test we can reconcile lines in foreign currency even if the rate was updated
+        # late in odoo, meaning the statement line was created and the rate was updated
+        # in odoo after that.
+        self.env["res.currency.rate"].create(
+            {
+                "currency_id": self.env.ref("base.USD").id,
+                "name": time.strftime("%Y-07-14"),
+                "rate": 1.15,
+            }
+        )
+        self.env["res.currency.rate"].create(
+            {
+                "currency_id": self.env.ref("base.USD").id,
+                "name": time.strftime("%Y-07-15"),
+                "rate": 1.2,
+            }
+        )
+        inv1 = self._create_invoice(
+            currency_id=self.currency_usd_id,
+            invoice_amount=100,
+            date_invoice=time.strftime("%Y-07-14"),
+            auto_validate=True,
+        )
+        bank_stmt = self.acc_bank_stmt_model.create(
+            {
+                "journal_id": self.bank_journal_usd.id,
+                "date": time.strftime("%Y-07-15"),
+                "name": "test",
+            }
+        )
+        bank_stmt_line = self.acc_bank_stmt_line_model.create(
+            {
+                "name": "testLine",
+                "journal_id": self.bank_journal_usd.id,
+                "statement_id": bank_stmt.id,
+                "amount": 100,
+                "date": time.strftime("%Y-07-16"),
+            }
+        )
+        # rate of 07-16 is create after the statement line, meaning the rate of the
+        # statement line is the one of the 07-15
+        self.env["res.currency.rate"].create(
+            {
+                "currency_id": self.env.ref("base.USD").id,
+                "name": time.strftime("%Y-07-16"),
+                "rate": 1.25,
+            }
+        )
+        with Form(
+            bank_stmt_line,
+            view="account_reconcile_oca.bank_statement_line_form_reconcile_view",
+        ) as f:
+            line = f.reconcile_data_info["data"][0]
+            self.assertEqual(
+                line["currency_amount"],
+                100,
+            )
+            self.assertEqual(
+                line["amount"],
+                83.33,
+            )
+            f.manual_reference = "account.move.line;%s" % line["id"]
+            # simulate click on statement line, check amount does not recompute
+            self.assertEqual(f.manual_amount, 83.33)
+            f.add_account_move_line_id = inv1.line_ids.filtered(
+                lambda l: l.account_id.account_type == "asset_receivable"
+            )
+            self.assertEqual(3, len(f.reconcile_data_info["data"]))
+            self.assertTrue(f.can_reconcile)
+            self.assertEqual(f.reconcile_data_info["data"][-1]["amount"], 3.63)
