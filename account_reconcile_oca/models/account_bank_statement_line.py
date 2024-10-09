@@ -60,9 +60,15 @@ class AccountBankStatementLine(models.Model):
             "Percentage Analytic"
         ),
     )
-    manual_in_currency = fields.Boolean(readonly=True, store=False, prefetch=False)
+    manual_in_currency = fields.Boolean(
+        readonly=True, store=False, prefetch=False, string="Manual In Currency?"
+    )
     manual_in_currency_id = fields.Many2one(
-        "res.currency", readonly=True, store=False, prefetch=False
+        "res.currency",
+        readonly=True,
+        store=False,
+        prefetch=False,
+        string="Manual In Currency",
     )
     manual_amount_in_currency = fields.Monetary(
         store=False,
@@ -935,7 +941,7 @@ class AccountBankStatementLine(models.Model):
             "original_exchange_line_id": line.id,
             "reference": "reconcile_auxiliary;%s" % reconcile_auxiliary_id,
             "id": False,
-            "account_id": account.name_get()[0],
+            "account_id": (account.id, account.display_name),
             "partner_id": False,
             "date": fields.Date.to_string(self.date),
             "name": self.payment_ref or self.name,
