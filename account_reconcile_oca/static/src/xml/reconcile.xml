@@ -190,6 +190,7 @@
         <xpath expr="//t[@list='model.root']" position="attributes">
             <attribute name="parentRecord">props.parentRecord</attribute>
             <attribute name="parentField">props.parentField</attribute>
+            <attribute name="counterpartField">props.counterpartField</attribute>
         </xpath>
     </t>
 </templates>

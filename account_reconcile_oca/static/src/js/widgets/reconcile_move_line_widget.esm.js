@@ -36,6 +36,7 @@ export class AccountReconcileMatchWidget extends Component {
             searchViewId: false,
             parentRecord: this.props.record,
             parentField: this.props.name,
+            counterpartField: this.props.counterpartField,
         };
     }
 }
@@ -45,6 +46,9 @@ AccountReconcileMatchWidget.components = {
     ...AccountReconcileMatchWidget.components,
     View,
 };
+AccountReconcileMatchWidget.extractProps = ({attrs}) => ({
+    counterpartField: attrs.options.counterpart_field || "counterparts",
+});
 
 registry
     .category("fields")

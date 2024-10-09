@@ -15,4 +15,5 @@ ReconcileMoveLineController.props = {
     ...ListController.props,
     parentRecord: {type: Object, optional: true},
     parentField: {type: String, optional: true},
+    counterpartField: {type: String, optional: true},
 };
