@@ -935,7 +935,7 @@ class AccountBankStatementLine(models.Model):
             "original_exchange_line_id": line.id,
             "reference": "reconcile_auxiliary;%s" % reconcile_auxiliary_id,
             "id": False,
-            "account_id": account.name_get()[0],
+            "account_id": (account.id, account.display_name),
             "partner_id": False,
             "date": fields.Date.to_string(self.date),
             "name": self.payment_ref or self.name,
