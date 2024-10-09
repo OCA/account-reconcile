@@ -150,17 +150,17 @@ class AccountMassReconcile(models.Model):
         return auto_rec_id.automatic_reconcile()
 
     def run_reconcile(self):
-        def find_reconcile_ids(fieldname, move_line_ids):
+        def find_reconcile_ids(fieldname, move_line_ids, new_env):
             if not move_line_ids:
                 return []
-            self.env.flush_all()
+            new_env.flush_all()
             sql = """
                 SELECT DISTINCT %s FROM account_move_line
                 WHERE %s IS NOT NULL AND id in %s
             """
             params = [AsIs(fieldname), AsIs(fieldname), tuple(move_line_ids)]
-            self.env.cr.execute(sql, params)
-            res = self.env.cr.fetchall()
+            new_env.cr.execute(sql, params)
+            res = new_env.cr.fetchall()
             return [row[0] for row in res]
 
         # we use a new cursor to be able to commit the reconciliation
@@ -169,10 +169,18 @@ class AccountMassReconcile(models.Model):
         # does not.
 
         for rec in self:
+            ctx = self.env.context.copy()
+            ctx["commit_every"] = rec.account.company_id.reconciliation_commit_every
+            if ctx["commit_every"]:
+                new_cr = sql_db.db_connect(self.env.cr.dbname).cursor()
+                new_env = api.Environment(new_cr, self.env.uid, ctx)
+            else:
+                new_cr = self.env.cr
+                new_env = self.env
             # SELECT FOR UPDATE the mass reconcile row ; this is done in order
             # to avoid 2 processes on the same mass reconcile method.
             try:
-                self.env.cr.execute(
+                new_env.cr.execute(
                     "SELECT id FROM account_mass_reconcile"
                     " WHERE id = %s"
                     " FOR UPDATE NOWAIT",
@@ -185,14 +193,6 @@ class AccountMassReconcile(models.Model):
                         "please try again later."
                     )
                 ) from e
-            ctx = self.env.context.copy()
-            ctx["commit_every"] = rec.account.company_id.reconciliation_commit_every
-            if ctx["commit_every"]:
-                new_cr = sql_db.db_connect(self.env.cr.dbname).cursor()
-                new_env = api.Environment(new_cr, self.env.uid, ctx)
-            else:
-                new_cr = self.env.cr
-                new_env = self.env
 
             try:
                 all_ml_rec_ids = []
@@ -202,8 +202,10 @@ class AccountMassReconcile(models.Model):
 
                     all_ml_rec_ids += ml_rec_ids
 
-                reconcile_ids = find_reconcile_ids("full_reconcile_id", all_ml_rec_ids)
-                self.env["mass.reconcile.history"].create(
+                reconcile_ids = find_reconcile_ids(
+                    "full_reconcile_id", all_ml_rec_ids, new_env
+                )
+                new_env["mass.reconcile.history"].create(
                     {
                         "mass_reconcile_id": rec.id,
                         "date": fields.Datetime.now(),
