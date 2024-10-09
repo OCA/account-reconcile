@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-08-27 22:11+0000\n"
-"Last-Translator: Julie LeBrun <julie.lebrun@numigi.com>\n"
+"PO-Revision-Date: 2024-10-09 11:06+0000\n"
+"Last-Translator: Guillaume Masson <guillaume.masson@meta-it.fr>\n"
 "Language-Team: none\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
@@ -39,12 +39,12 @@ msgstr "Compte"
 #. module: account_reconcile_oca
 #: model:ir.model,name:account_reconcile_oca.model_account_account_reconcile
 msgid "Account Account Reconcile"
-msgstr "Réconciliation des comptes"
+msgstr "Lettrage"
 
 #. module: account_reconcile_oca
 #: model:ir.model,name:account_reconcile_oca.model_account_reconcile_abstract
 msgid "Account Reconcile Abstract"
-msgstr "Résumé de réconciliation des comptes"
+msgstr "Résumé de lettrage des comptes"
 
 #. module: account_reconcile_oca
 #: model:ir.model.fields,field_description:account_reconcile_oca.field_account_account_reconcile__add_account_move_line_id
