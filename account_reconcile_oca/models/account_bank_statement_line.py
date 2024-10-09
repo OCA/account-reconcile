@@ -60,9 +60,15 @@ class AccountBankStatementLine(models.Model):
             "Percentage Analytic"
         ),
     )
-    manual_in_currency = fields.Boolean(readonly=True, store=False, prefetch=False)
+    manual_in_currency = fields.Boolean(
+        readonly=True, store=False, prefetch=False, string="Manual In Currency?"
+    )
     manual_in_currency_id = fields.Many2one(
-        "res.currency", readonly=True, store=False, prefetch=False
+        "res.currency",
+        readonly=True,
+        store=False,
+        prefetch=False,
+        string="Manual In Currency",
     )
     manual_amount_in_currency = fields.Monetary(
         store=False,
