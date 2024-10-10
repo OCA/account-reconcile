@@ -116,7 +116,18 @@
                         t-on-click="(ev) => this.selectReconcileLine(ev, reconcile_line)"
                         t-att-class="'o_reconcile_widget_line ' + reconcile_line.kind + (props.record.data.manual_reference == reconcile_line.reference ? ' selected ' :  ' ')"
                     >
-                        <td t-esc="reconcile_line.account_id[1]" />
+                        <td>
+                            <div t-esc="reconcile_line.account_id[1]" />
+                            <div t-if="reconcile_line.move_id">
+                                <a
+                                    t-att-href="'/web#id=' + reconcile_line.move_id + '&amp;view_type=form&amp;model=account.move'"
+                                    class="o_form_uri"
+                                    t-on-click="(ev) => this.openMove(ev, reconcile_line.move_id)"
+                                >
+                                    <small t-esc="reconcile_line.move" />
+                                </a>
+                            </div>
+                        </td>
                         <td>
                             <span
                                 t-esc="reconcile_line.partner_id[1]"
