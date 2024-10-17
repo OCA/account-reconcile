@@ -827,34 +827,13 @@ class AccountBankStatementLine(models.Model):
         reconcile_auxiliary_id = self.reconcile_data_info["reconcile_auxiliary_id"]
         for line in data:
             if line["reference"] == manual_reference and line.get("id"):
-                total_amount = -line["amount"] + line["original_amount_unsigned"]
-                original_amount = line["original_amount_unsigned"]
                 reconcile_auxiliary_id, lines = self._get_reconcile_line(
                     self.env["account.move.line"].browse(line["id"]),
                     "other",
                     is_counterpart=True,
                     reconcile_auxiliary_id=reconcile_auxiliary_id,
-                    max_amount=original_amount,
+                    max_amount=line["original_amount_unsigned"],
                 )
-                new_data += lines
-                new_data.append(
-                    {
-                        "reference": "reconcile_auxiliary;%s" % reconcile_auxiliary_id,
-                        "id": False,
-                        "account_id": line["account_id"],
-                        "partner_id": line.get("partner_id"),
-                        "date": line["date"],
-                        "name": line["name"],
-                        "amount": -total_amount,
-                        "credit": total_amount if total_amount > 0 else 0.0,
-                        "debit": -total_amount if total_amount < 0 else 0.0,
-                        "kind": "other",
-                        "currency_id": line["currency_id"],
-                        "line_currency_id": line["currency_id"],
-                        "currency_amount": -total_amount,
-                    }
-                )
-                reconcile_auxiliary_id += 1
             else:
                 new_data.append(line)
         self.reconcile_data_info = self._recompute_suspense_line(
