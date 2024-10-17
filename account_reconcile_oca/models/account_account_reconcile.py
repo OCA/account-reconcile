@@ -91,7 +91,7 @@ class AccountAccountReconcile(models.Model):
         return """
             HAVING
                 SUM(aml.debit) > 0
-                AND SUM(aml.credit) > 0
+                OR SUM(aml.credit) > 0
         """
 
     def _compute_reconcile_data_info(self):
