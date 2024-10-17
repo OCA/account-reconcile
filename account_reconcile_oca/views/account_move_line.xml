@@ -19,6 +19,7 @@
                 <field name="name" optional="show" />
                 <field name="amount_residual_currency" optional="hide" />
                 <field name="amount_residual" optional="show" />
+                <field name="paid_amount" />
                 <field name="debit" optional="hide" />
                 <field name="credit" optional="hide" />
                 <button
