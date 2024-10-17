@@ -1155,3 +1155,60 @@ class TestReconciliationWidget(TestAccountReconciliationCommon):
             self.assertFalse(f.add_account_move_line_id)
             self.assertTrue(f.can_reconcile)
             self.assertEqual(3, len(f.reconcile_data_info["data"]))
+
+    def test_reconcile_model_payment_tolerance(self):
+        """
+        We want to test what happens when we have a reconcile model with
+         payment tolerance enabled.
+        """
+        inv_1 = self._create_invoice(
+            currency_id=self.currency_euro_id,
+            invoice_amount=100,
+            date_invoice=time.strftime("%Y-07-15"),
+            auto_validate=True,
+        )
+        self.env["account.reconcile.model"].create(
+            {
+                "name": "payment_tolerance_allowed_reconcile_model",
+                "rule_type": "invoice_matching",
+                "allow_payment_tolerance": True,
+                "auto_reconcile": True,
+                "payment_tolerance_type": "percentage",
+                "payment_tolerance_param": 2.0,
+                "line_ids": [
+                    (
+                        0,
+                        0,
+                        {
+                            "account_id": (
+                                self.company.default_cash_difference_expense_account_id.id
+                            )
+                        },
+                    )
+                ],
+            }
+        )
+        bank_stmt = self.acc_bank_stmt_model.create(
+            {
+                "company_id": self.env.ref("base.main_company").id,
+                "journal_id": self.bank_journal_euro.id,
+                "date": time.strftime("%Y-07-15"),
+                "name": "test",
+            }
+        )
+        bank_stmt_line = self.acc_bank_stmt_line_model.create(
+            {
+                "name": "Demo payment tolerance",
+                "journal_id": self.bank_journal_euro.id,
+                "statement_id": bank_stmt.id,
+                "amount": 98,
+                "date": time.strftime("%Y-07-15"),
+                "partner_id": inv_1.partner_id.id,
+            }
+        )
+        self.assertIn(
+            self.company.default_cash_difference_expense_account_id,
+            bank_stmt_line.mapped("move_id.line_ids.account_id"),
+        )
+        bank_stmt_line.clean_reconcile()
+        self.assertEqual(3, len(bank_stmt_line.reconcile_data_info["data"]))

@@ -1,6 +1,5 @@
 # Copyright 2023 Dixmit
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
-
 from collections import defaultdict
 
 from dateutil import rrule
@@ -539,10 +538,30 @@ class AccountBankStatementLine(models.Model):
                 ._apply_rules(self, self._retrieve_partner())
             )
             if res and res.get("status", "") == "write_off":
+                model = res["model"]
+                amount = self.amount_total_signed
+                if (
+                    model
+                    and model.rule_type == "invoice_matching"
+                    and model.allow_payment_tolerance
+                    and not model.payment_tolerance_param == 0
+                ):
+                    for line in res.get("amls", []):
+                        reconcile_auxiliary_id, line_data = self._get_reconcile_line(
+                            line,
+                            "other",
+                            is_counterpart=True,
+                        )
+                        data += line_data
+                else:
+                    for line in res.get("amls", []):
+                        reconcile_auxiliary_id, line_data = self._get_reconcile_line(
+                            line, "other", is_counterpart=True, max_amount=amount
+                        )
+                        amount -= line_data.get("amount")
+                        data += line_data
                 return self._recompute_suspense_line(
-                    *self._reconcile_data_by_model(
-                        data, res["model"], reconcile_auxiliary_id
-                    ),
+                    *self._reconcile_data_by_model(data, model, reconcile_auxiliary_id),
                     self.manual_reference,
                 )
             elif res and res.get("amls"):
@@ -763,9 +782,31 @@ class AccountBankStatementLine(models.Model):
                 data += lines
             reconcile_auxiliary_id = 1
             if res.get("status", "") == "write_off":
+                model = res["model"]
+                amount = self.amount
+                if (
+                    model
+                    and model.rule_type == "invoice_matching"
+                    and model.allow_payment_tolerance
+                    and not model.payment_tolerance_param == 0
+                ):
+                    for line in res.get("amls", []):
+                        reconcile_auxiliary_id, line_data = record._get_reconcile_line(
+                            line,
+                            "other",
+                            is_counterpart=True,
+                        )
+                        data += line_data
+                else:
+                    for line in res.get("amls", []):
+                        reconcile_auxiliary_id, line_data = record._get_reconcile_line(
+                            line, "other", is_counterpart=True, max_amount=amount
+                        )
+                        amount -= line_data.get("amount")
+                        data += line_data
                 data = record._recompute_suspense_line(
                     *record._reconcile_data_by_model(
-                        data, res["model"], reconcile_auxiliary_id
+                        data, model, reconcile_auxiliary_id
                     ),
                     self.manual_reference,
                 )
