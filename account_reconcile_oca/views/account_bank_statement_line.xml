@@ -319,8 +319,11 @@
                         </group>
                     </page>
                     <page name="narration" string="Narration">
-                        <field name="payment_ref" />
-                        <field name="narration" />
+                        <group>
+                            <field name="ref" />
+                            <field name="payment_ref" />
+                            <field name="narration" />
+                        </group>
                     </page>
                     <page name="chatter" string="Chatter">
                         <field name="move_id" widget="account_reconcile_oca_chatter" />
