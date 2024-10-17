@@ -31,3 +31,11 @@ class AccountJournal(models.Model):
         if self.get_journal_dashboard_datas()["number_to_reconcile"] > 0:
             return False
         return _("Well done! Everything has been reconciled")
+
+    def open_action(self):
+        self.ensure_one()
+        if self.type not in ["bank", "cash"]:
+            return super().open_action()
+        return self.env["ir.actions.actions"]._for_xml_id(
+            "account_reconcile_oca.action_bank_statement_line_open"
+        )
