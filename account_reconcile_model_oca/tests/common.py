@@ -6,7 +6,6 @@ from odoo.addons.account.tests.common import AccountTestInvoicingCommon
 
 
 class TestAccountReconciliationCommon(AccountTestInvoicingCommon):
-
     """Tests for reconciliation (account.tax)
 
     Test used to check that when doing a sale or purchase invoice in a different
