@@ -2,14 +2,13 @@
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
 from odoo import models
-from odoo.osv.expression import get_unaccent_wrapper
-from odoo.tools import html2plaintext
+from odoo.tools import SQL, html2plaintext
 
 from odoo.addons.base.models.res_bank import sanitize_account_number
 
 
 class AccountBankStatementLine(models.Model):
-    _inherit = ("account.bank.statement.line",)
+    _inherit = "account.bank.statement.line"
 
     def _retrieve_partner(self):
         self.ensure_one()
@@ -55,7 +54,7 @@ class AccountBankStatementLine(models.Model):
 
         # Retrieve the partner from statement line text values.
         st_line_text_values = self._get_st_line_strings_for_matching()
-        unaccent = get_unaccent_wrapper(self._cr)
+        unaccent = self.env.registry.unaccent
         sub_queries = []
         params = []
         for text_value in st_line_text_values:
@@ -66,35 +65,45 @@ class AccountBankStatementLine(models.Model):
             # Take care a partner could contain some special characters in its name that
             # needs to be escaped.
             sub_queries.append(
-                rf"""
-                {unaccent("%s")} ~* ('^' || (
-                   SELECT STRING_AGG(CONCAT('(?=.*\m', chunk[1], '\M)'), '')
-                   FROM regexp_matches({unaccent('partner.name')}, '\w{{3,}}', 'g')
-                   AS chunk
-                ))
-            """
+                SQL(
+                    rf"""
+                    {unaccent("%s")} ~* ('^' || (
+                        SELECT STRING_AGG(CONCAT('(?=.*\m', chunk[1], '\M)'), '')
+                        FROM regexp_matches({unaccent('partner.name')}, '\w{{3,}}', 'g')
+                        AS chunk
+                    ))
+                    """,
+                    text_value,
+                )
             )
             params.append(text_value)
 
         if sub_queries:
             self.env["res.partner"].flush_model(["company_id", "name"])
             self.env["account.move.line"].flush_model(["partner_id", "company_id"])
-            self._cr.execute(
+            query = SQL("""
+                SELECT aml.partner_id
+                FROM account_move_line aml
+                JOIN res_partner partner ON
+                    aml.partner_id = partner.id
+                    AND partner.name IS NOT NULL
+                    AND partner.active
+                    AND (
+            """)
+            query_parts = SQL(") OR (").join(sub_queries)
+            final_query = SQL(
                 """
-                    SELECT aml.partner_id
-                    FROM account_move_line aml
-                    JOIN res_partner partner ON
-                        aml.partner_id = partner.id
-                        AND partner.name IS NOT NULL
-                        AND partner.active
-                        AND (("""
-                + ") OR (".join(sub_queries)
-                + """))
-                    WHERE aml.company_id = %s
-                    LIMIT 1
-                """,
-                params + [self.company_id.id],
+                %s
+                    %s
+                )
+                WHERE aml.company_id = %s
+                LIMIT 1
+            """,
+                query,
+                query_parts,
+                self.company_id.id,
             )
+            self._cr.execute(final_query)
             row = self._cr.fetchone()
             if row:
                 return self.env["res.partner"].browse(row[0])

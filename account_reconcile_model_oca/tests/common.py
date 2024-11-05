@@ -13,8 +13,8 @@ class TestAccountReconciliationCommon(AccountTestInvoicingCommon):
     """
 
     @classmethod
-    def setUpClass(cls, chart_template_ref=None):
-        super().setUpClass(chart_template_ref=chart_template_ref)
+    def setUpClass(cls):
+        super().setUpClass()
 
         cls.company = cls.company_data["company"]
         cls.company.currency_id = cls.env.ref("base.EUR")
@@ -69,7 +69,7 @@ class TestAccountReconciliationCommon(AccountTestInvoicingCommon):
                 "code": "TWAIT",
                 "account_type": "liability_current",
                 "reconcile": True,
-                "company_id": cls.company.id,
+                "company_ids": cls.company.ids,
             }
         )
         # cash basis final account
@@ -78,7 +78,7 @@ class TestAccountReconciliationCommon(AccountTestInvoicingCommon):
                 "name": "TAX_TO_DEDUCT",
                 "code": "TDEDUCT",
                 "account_type": "asset_current",
-                "company_id": cls.company.id,
+                "company_ids": cls.company.ids,
             }
         )
         cls.tax_base_amount_account = cls.env["account.account"].create(
@@ -86,7 +86,7 @@ class TestAccountReconciliationCommon(AccountTestInvoicingCommon):
                 "name": "TAX_BASE",
                 "code": "TBASE",
                 "account_type": "asset_current",
-                "company_id": cls.company.id,
+                "company_ids": cls.company.ids,
             }
         )
         cls.company.account_cash_basis_base_account_id = cls.tax_base_amount_account.id
@@ -190,7 +190,7 @@ class TestAccountReconciliationCommon(AccountTestInvoicingCommon):
                     0,
                     0,
                     {
-                        "name": "product that cost %s" % invoice_amount,
+                        "name": f"product that cost {invoice_amount}",
                         "quantity": 1,
                         "price_unit": invoice_amount,
                         "tax_ids": [Command.set([])],

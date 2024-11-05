@@ -362,16 +362,21 @@ class AccountReconcileModel(models.Model):
 
         aml_domain = self._get_invoice_matching_amls_domain(st_line, partner)
         query = self.env["account.move.line"]._where_calc(aml_domain)
-        tables, where_clause, where_params = query.get_sql()
+        from_string, from_params = query.from_clause
+        where_string, where_params = query.where_clause
+        from_clause = from_string
+        where_clause = where_string
+        query_params = from_params + where_params
 
         tokens = self._get_invoice_matching_st_line_tokens(st_line)
         if tokens:
-            sub_queries = []
-            for table_alias, field in (
+            search_fields = [
                 ("account_move_line", "name"),
                 ("account_move_line__move_id", "name"),
                 ("account_move_line__move_id", "ref"),
-            ):
+            ]
+            sub_queries = []
+            for table_alias, field in search_fields:
                 sub_queries.append(
                     rf"""
                     SELECT
@@ -389,7 +394,7 @@ class AccountReconcileModel(models.Model):
                                 '\s+'
                             )
                         ) AS token
-                    FROM {tables}
+                    FROM {from_clause}
                     JOIN account_move account_move_line__move_id
                         ON account_move_line__move_id.id = account_move_line.move_id
                     WHERE {where_clause} AND {table_alias}.{field} IS NOT NULL
@@ -411,7 +416,7 @@ class AccountReconcileModel(models.Model):
                 + order_by
                 + """
                 """,
-                (where_params * 3) + [tuple(tokens)],
+                (query_params * 3) + [tuple(tokens)],
             )
             candidate_ids = [r[0] for r in self._cr.fetchall()]
             if candidate_ids:
