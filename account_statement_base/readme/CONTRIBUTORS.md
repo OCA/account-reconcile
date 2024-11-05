@@ -5,4 +5,5 @@
       - Sergio Teruel
   - [ForgeFlow](https://www.forgeflow.com):
       - Jordi Ballester
-
+  - [Trobz](https://www.trobz.com):
+      - Do Anh Duy \<<duyda@trobz.com>\>

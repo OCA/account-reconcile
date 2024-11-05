@@ -1,4 +1,4 @@
-from odoo import _, models
+from odoo import models
 
 
 class AccountBankStatement(models.Model):
@@ -48,8 +48,8 @@ class AccountBankStatement(models.Model):
     def open_entries(self):
         self.ensure_one()
         return {
-            "name": _("Journal Items"),
-            "view_mode": "tree,form",
+            "name": self.env._("Journal Items"),
+            "view_mode": "list,form",
             "res_model": "account.move.line",
             "view_id": False,
             "type": "ir.actions.act_window",

@@ -90,20 +90,20 @@
     <!-- Add form to view mode. -->
     <record id="account.action_bank_statement_tree" model="ir.actions.act_window">
         <field name="res_model">account.bank.statement</field>
-        <field name="view_mode">tree,form,pivot,graph</field>
+        <field name="view_mode">list,form,pivot,graph</field>
     </record>
     <record id="account.action_view_bank_statement_tree" model="ir.actions.act_window">
-        <field name="view_mode">tree,form,pivot,graph</field>
+        <field name="view_mode">list,form,pivot,graph</field>
     </record>
 
     <record id="view_bank_statement_tree" model="ir.ui.view">
-        <field name="name">account.bank.statement.tree</field>
+        <field name="name">account.bank.statement.list</field>
         <field name="model">account.bank.statement</field>
         <field name="inherit_id" ref="account.view_bank_statement_tree" />
         <field name="arch" type="xml">
-            <tree position="attributes">
+            <list position="attributes">
                 <attribute name="create">true</attribute>
-            </tree>
+            </list>
             <field name="balance_end_real" position="after">
                 <button
                     name="action_open_statement_lines"
