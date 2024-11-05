@@ -1113,8 +1113,8 @@ class AccountBankStatementLine(models.Model):
             "debit": amount if amount > 0 else 0.0,
             "kind": "other",
             "currency_id": self.company_id.currency_id.id,
-            "line_currency_id": self.company_id.currency_id.id,
-            "currency_amount": amount,
+            "line_currency_id": currency.id,
+            "currency_amount": 0,
         }
         reconcile_auxiliary_id += 1
         return reconcile_auxiliary_id, data
