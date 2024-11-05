@@ -198,11 +198,10 @@ class AccountBankStatementLine(models.Model):
             new_data = []
             is_new_line = True
             pending_amount = 0.0
+            currency = self._get_reconcile_currency()
             for line in data:
                 if line["kind"] != "suspense":
-                    pending_amount += self._get_amount_currency(
-                        line, self._get_reconcile_currency()
-                    )
+                    pending_amount += self._get_amount_currency(line, currency)
                 if self.add_account_move_line_id.id in line.get(
                     "counterpart_line_ids", []
                 ):
@@ -214,7 +213,7 @@ class AccountBankStatementLine(models.Model):
                     self.add_account_move_line_id,
                     "other",
                     True,
-                    max_amount=pending_amount,
+                    max_amount=currency.round(pending_amount),
                     move=True,
                 )
                 new_data += lines
