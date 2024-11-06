@@ -2,18 +2,14 @@
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 
 from odoo.exceptions import UserError
-from odoo.tests.common import TransactionCase
+
+from odoo.addons.base.tests.common import BaseCommon
 
 
-class TestReconciliation(TransactionCase):
+class TestReconciliation(BaseCommon):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        cls.env = cls.env(
-            context=dict(
-                cls.env.context, tracking_disable=True, test_partner_mismatch=True
-            )
-        )
         cls.partner = cls.env.ref("base.res_partner_2")
         cls.partner_id = cls.partner.id
         cls.account_rcv = cls.env["account.account"].create(
@@ -84,19 +80,44 @@ class TestReconciliation(TransactionCase):
         self.assertTrue(all(self.aml.mapped("reconciled")))
 
     def test_reconcile_partner_mismatch(self):
+        self.aml.move_id.company_id.restrict_partner_mismatch_on_reconcile = True
         self.aml[0].partner_id = self.partner.id
-        with self.assertRaises(UserError):
+        self.aml.move_id.action_post()
+        with self.assertRaises(UserError) as exc:
             self.aml.reconcile()
+        self.assertIn(
+            "The partner has to be the same on all lines for receivable and payable accounts!",
+            exc.exception.args[0],
+        )
         # all lines with same partner allowed
         self.aml.write({"partner_id": self.partner.id})
-        self.aml.move_id.action_post()
+        # self.aml.move_id.action_post()
         self.aml.reconcile()
         self.assertTrue(all(self.aml.mapped("reconciled")))
 
-    def test_reconcile_accounts_excluded(self):
+    def test_reconcile_partner_mismatch_deactivated(self):
+        # Check reconciliation is allowed if restriction is deactivated
         self.aml[0].partner_id = self.partner.id
-        with self.assertRaises(UserError):
+        self.aml.move_id.action_post()
+        self.aml.reconcile()
+
+    def test_reconcile_partner_mismatch_deactivated_on_journal(self):
+        # Check reconciliation is allowed if restriction is deactivated on journal level
+        self.aml.move_id.company_id.restrict_partner_mismatch_on_reconcile = True
+        self.aml.move_id.journal_id.no_restrict_partner_mismatch_on_reconcile = True
+        self.aml[0].partner_id = self.partner.id
+        self.aml.move_id.action_post()
+        self.aml.reconcile()
+
+    def test_reconcile_accounts_excluded(self):
+        self.aml.move_id.company_id.restrict_partner_mismatch_on_reconcile = True
+        self.aml[0].partner_id = self.partner.id
+        with self.assertRaises(UserError) as exc:
             self.aml.reconcile()
+        self.assertIn(
+            "The partner has to be the same on all lines for receivable and payable accounts!",
+            exc.exception.args[0],
+        )
         # reconciliation forbiden only for certain types of accounts
         account = self.env["account.account"].create(
             {
@@ -106,9 +127,6 @@ class TestReconciliation(TransactionCase):
                 "reconcile": True,
             }
         )
-        self.aml[0].account_id = account.id
-        with self.assertRaises(UserError):
-            self.aml.reconcile()
         # reconciliation for different partners allowed
         # for not forbidden types
         self.aml.write({"account_id": account.id})
