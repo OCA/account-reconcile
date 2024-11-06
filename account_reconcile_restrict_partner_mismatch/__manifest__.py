@@ -11,6 +11,11 @@
     "website": "https://github.com/OCA/account-reconcile",
     "category": "Finance",
     "license": "AGPL-3",
-    "data": ["report/account_move_lines_report.xml", "security/ir.model.access.csv"],
+    "data": [
+        "security/ir.model.access.csv",
+        "report/account_move_lines_report.xml",
+        "views/account_journal.xml",
+        "views/res_config_settings.xml",
+    ],
     "installable": True,
 }

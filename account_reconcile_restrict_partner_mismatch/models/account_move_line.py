@@ -3,25 +3,31 @@
 
 from odoo import _, models
 from odoo.exceptions import UserError
-from odoo.tools import config
 
 
 class AccountMoveLine(models.Model):
     _inherit = "account.move.line"
 
-    def reconcile(self):
-        if config["test_enable"] and not self.env.context.get("test_partner_mismatch"):
-            return super().reconcile()
+    @property
+    def _check_partner_mismatch_on_reconcile(self):
+        """
+        Returns True if the partner mismatch check on reconcile should be done
+        """
+        self.ensure_one()
+        return bool(
+            self.company_id.restrict_partner_mismatch_on_reconcile
+            and not self.journal_id.no_restrict_partner_mismatch_on_reconcile
+            and self.account_id.account_type
+            in ("asset_receivable", "liability_payable")
+        )
 
+    def reconcile(self):
         # to be consistent with parent method
         if not self:
             return True
         partners = set()
         for line in self:
-            if line.account_id.account_type in (
-                "asset_receivable",
-                "liability_payable",
-            ):
+            if line._check_partner_mismatch_on_reconcile:
                 partners.add(line.partner_id.id)
         if len(partners) > 1:
             raise UserError(

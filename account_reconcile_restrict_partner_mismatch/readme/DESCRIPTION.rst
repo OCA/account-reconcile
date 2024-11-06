@@ -8,3 +8,5 @@ This rule applies only for journal items using receivable and payable account ty
 As at the moment of installation some journal items could have been reconciled
 using different partners, you can detect them in menu Accounting > Adviser >
 Reconciled items with partner mismatch.
+
+This restriction can be enabled per company but can also be deactivated per journal.
