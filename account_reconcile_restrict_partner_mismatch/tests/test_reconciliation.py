@@ -100,6 +100,12 @@ class TestReconciliation(BaseCommon):
         self.aml[0].partner_id = self.partner.id
         self.aml.move_id.action_post()
         self.aml.reconcile()
+        self.aml.flush_recordset()
+
+        self.env["account.reconcile.partner.mismatch.report"].init()
+        report = self.env["account.reconcile.partner.mismatch.report"].search([])
+        self.assertTrue(report)
+        self.assertEqual(self.aml[0], report.credit_move_id)
 
     def test_reconcile_partner_mismatch_deactivated_on_journal(self):
         # Check reconciliation is allowed if restriction is deactivated on journal level
