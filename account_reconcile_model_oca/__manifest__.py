@@ -10,6 +10,7 @@
     "author": "Dixmit,Odoo,Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/account-reconcile",
     "depends": ["account"],
+    "excludes": ["account_accountant"],
     "data": [],
     "demo": [],
 }
