@@ -507,6 +507,7 @@ class AccountBankStatementLine(models.Model):
                     "line_currency_id": self.company_id.currency_id.id,
                     "currency_id": self.company_id.currency_id.id,
                     "currency_amount": amount,
+                    "name": line.get("name") or self.payment_ref,
                 }
             )
             reconcile_auxiliary_id += 1
