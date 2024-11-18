@@ -95,6 +95,9 @@
          <field name="res_model">account.bank.statement</field>
          <field name="view_mode">tree,form,pivot,graph</field>
     </record>
+    <record id="account.action_view_bank_statement_tree" model="ir.actions.act_window">
+        <field name="view_mode">tree,form,pivot,graph</field>
+    </record>
 
     <record id="view_bank_statement_tree" model="ir.ui.view">
         <field name="name">account.bank.statement.tree</field>
