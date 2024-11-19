@@ -34,6 +34,7 @@ class AccountBankStatement(models.Model):
             {
                 "domain": [("statement_id", "=", self.id)],
                 "context": {
+                    "default_statement_id": self.id,
                     "default_journal_id": self._context.get("active_id")
                     if self._context.get("active_model") == "account.journal"
                     else None,
