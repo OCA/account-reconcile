@@ -51,7 +51,6 @@ msgstr "日记账"
 #. module: account_statement_base
 #. odoo-python
 #: code:addons/account_statement_base/models/account_bank_statement.py:0
-#, python-format
 msgid "Journal Items"
 msgstr ""
 
