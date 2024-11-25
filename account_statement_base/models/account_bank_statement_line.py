@@ -7,13 +7,6 @@ from odoo import models
 class AccountBankStatementLine(models.Model):
     _inherit = "account.bank.statement.line"
 
-    # TODO: Delete if merged https://github.com/odoo/odoo/pull/182497
-    def _compute_running_balance(self):
-        # We need to set value to all records because super() does not do it using sql.
-        for item in self:
-            item.running_balance = item.running_balance
-        return super()._compute_running_balance()
-
     def action_open_journal_entry(self):
         self.ensure_one()
         if not self:
