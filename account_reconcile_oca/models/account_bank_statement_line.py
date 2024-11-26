@@ -282,6 +282,46 @@ class AccountBankStatementLine(models.Model):
             != line.get("partner_id")
         )
 
+    def _get_manual_delete_vals(self):
+        return {
+            "manual_reference": False,
+            "manual_account_id": False,
+            "manual_amount": False,
+            "manual_exchange_counterpart": False,
+            "manual_in_currency_id": False,
+            "manual_in_currency": False,
+            "manual_name": False,
+            "manual_partner_id": False,
+            "manual_line_id": False,
+            "manual_move_id": False,
+            "manual_move_type": False,
+            "manual_kind": False,
+            "manual_original_amount": False,
+            "manual_currency_id": False,
+            "analytic_distribution": False,
+        }
+
+    def _process_manual_reconcile_from_line(self, line):
+        self.manual_account_id = line["account_id"][0]
+        self.manual_amount = line["amount"]
+        self.manual_currency_id = line["currency_id"]
+        self.manual_in_currency_id = line.get("line_currency_id")
+        self.manual_in_currency = line.get("line_currency_id") and line[
+            "currency_id"
+        ] != line.get("line_currency_id")
+        self.manual_amount_in_currency = line.get("currency_amount")
+        self.manual_name = line["name"]
+        self.manual_exchange_counterpart = line.get("is_exchange_counterpart", False)
+        self.manual_partner_id = line.get("partner_id") and line["partner_id"][0]
+        manual_line = self.env["account.move.line"].browse(line["id"]).exists()
+        self.manual_line_id = manual_line
+        self.analytic_distribution = line.get("analytic_distribution", {})
+        if self.manual_line_id:
+            self.manual_move_id = self.manual_line_id.move_id
+            self.manual_move_type = self.manual_line_id.move_id.move_type
+        self.manual_kind = line["kind"]
+        self.manual_original_amount = line.get("original_amount", 0.0)
+
     @api.onchange("manual_reference", "manual_delete")
     def _onchange_manual_reconcile_reference(self):
         self.ensure_one()
@@ -302,53 +342,10 @@ class AccountBankStatementLine(models.Model):
                 continue
             if line["reference"] == self.manual_reference:
                 if self.manual_delete:
-                    self.update(
-                        {
-                            "manual_reference": False,
-                            "manual_account_id": False,
-                            "manual_amount": False,
-                            "manual_exchange_counterpart": False,
-                            "manual_in_currency_id": False,
-                            "manual_in_currency": False,
-                            "manual_name": False,
-                            "manual_partner_id": False,
-                            "manual_line_id": False,
-                            "manual_move_id": False,
-                            "manual_move_type": False,
-                            "manual_kind": False,
-                            "manual_original_amount": False,
-                            "manual_currency_id": False,
-                            "analytic_distribution": False,
-                            "manual_amount_in_currency": False,
-                        }
-                    )
+                    self.update(self._get_manual_delete_vals())
                     continue
                 else:
-                    self.manual_account_id = line["account_id"][0]
-                    self.manual_amount = line["amount"]
-                    self.manual_currency_id = line["currency_id"]
-                    self.manual_in_currency_id = line.get("line_currency_id")
-                    self.manual_in_currency = line.get("line_currency_id") and line[
-                        "currency_id"
-                    ] != line.get("line_currency_id")
-                    self.manual_amount_in_currency = line.get("currency_amount")
-                    self.manual_name = line["name"]
-                    self.manual_exchange_counterpart = line.get(
-                        "is_exchange_counterpart", False
-                    )
-                    self.manual_partner_id = (
-                        line.get("partner_id") and line["partner_id"][0]
-                    )
-                    manual_line = (
-                        self.env["account.move.line"].browse(line["id"]).exists()
-                    )
-                    self.manual_line_id = manual_line
-                    self.analytic_distribution = line.get("analytic_distribution", {})
-                    if self.manual_line_id:
-                        self.manual_move_id = self.manual_line_id.move_id
-                        self.manual_move_type = self.manual_line_id.move_id.move_type
-                    self.manual_kind = line["kind"]
-                    self.manual_original_amount = line.get("original_amount", 0.0)
+                    self._process_manual_reconcile_from_line(line)
             new_data.append(line)
         self.update({"manual_delete": False})
         self.reconcile_data_info = self._recompute_suspense_line(
@@ -369,6 +366,26 @@ class AccountBankStatementLine(models.Model):
             )
         self._onchange_manual_reconcile_vals()
 
+    def _get_manual_reconcile_vals(self):
+        return {
+            "name": self.manual_name,
+            "partner_id": (
+                self.manual_partner_id
+                and [self.manual_partner_id.id, self.manual_partner_id.display_name]
+                or (self.partner_name and (False, self.partner_name))
+                or False
+            ),
+            "account_id": (
+                [self.manual_account_id.id, self.manual_account_id.display_name]
+                if self.manual_account_id
+                else [False, _("Undefined")]
+            ),
+            "amount": self.manual_amount,
+            "credit": -self.manual_amount if self.manual_amount < 0 else 0.0,
+            "debit": self.manual_amount if self.manual_amount > 0 else 0.0,
+            "analytic_distribution": self.analytic_distribution,
+        }
+
     @api.onchange(
         "manual_account_id",
         "manual_partner_id",
@@ -383,35 +400,11 @@ class AccountBankStatementLine(models.Model):
         for line in data:
             if line["reference"] == self.manual_reference:
                 if self._check_line_changed(line):
-                    line.update(
-                        {
-                            "name": self.manual_name,
-                            "partner_id": self.manual_partner_id
-                            and [
-                                self.manual_partner_id.id,
-                                self.manual_partner_id.display_name,
-                            ]
-                            or (self.partner_name and (False, self.partner_name))
-                            or False,
-                            "account_id": [
-                                self.manual_account_id.id,
-                                self.manual_account_id.display_name,
-                            ]
-                            if self.manual_account_id
-                            else [False, _("Undefined")],
-                            "amount": self.manual_amount,
-                            "credit": -self.manual_amount
-                            if self.manual_amount < 0
-                            else 0.0,
-                            "debit": self.manual_amount
-                            if self.manual_amount > 0
-                            else 0.0,
-                            "analytic_distribution": self.analytic_distribution,
-                            "kind": line["kind"]
-                            if line["kind"] != "suspense"
-                            else "other",
-                        }
+                    line_vals = self._get_manual_reconcile_vals()
+                    line_vals["kind"] = (
+                        line["kind"] if line["kind"] != "suspense" else "other"
                     )
+                    line.update(line_vals)
                     if line["kind"] == "liquidity":
                         self._update_move_partner()
             if self.manual_line_id and self.manual_line_id.id == line.get(
