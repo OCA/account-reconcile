@@ -17,6 +17,7 @@
                     groups="account_analytic_tag.group_analytic_tags"
                     widget="many2many_tags"
                     attrs="{'invisible': ['|', ('manual_kind', '=', 'liquidity'), ('manual_reference', '=', False)], 'readonly': [('is_reconciled', '=', True)]}"
+                    options="{'color_field': 'color'}"
                 />
             </xpath>
         </field>
