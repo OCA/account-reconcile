@@ -17,6 +17,16 @@ class TestReconciliationWidget(TestAccountReconciliationCommon):
     def setUpClass(cls, chart_template_ref=None):
         super().setUpClass(chart_template_ref=chart_template_ref)
         cls.env = cls.env(context=cls._setup_context())
+        # Auto-disable reconciliation model created automatically with
+        # generate_account_reconcile_model() to avoid side effects in tests
+        cls.invoice_matching_models = cls.env["account.reconcile.model"].search(
+            [
+                ("rule_type", "=", "invoice_matching"),
+                ("auto_reconcile", "=", True),
+                ("company_id", "=", cls.company.id),
+            ]
+        )
+        cls.invoice_matching_models.active = False
 
         cls.acc_bank_stmt_model = cls.env["account.bank.statement"]
         cls.acc_bank_stmt_line_model = cls.env["account.bank.statement.line"]
@@ -995,6 +1005,8 @@ class TestReconciliationWidget(TestAccountReconciliationCommon):
             }
         )
 
+        self.invoice_matching_models.active = True
+        self.invoice_matching_models.match_text_location_label = False
         bank_stmt_line = self.acc_bank_stmt_line_model.create(
             {
                 "name": "testLine",
