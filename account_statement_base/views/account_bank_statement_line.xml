@@ -167,6 +167,11 @@
                         string="Transaction Type"
                         context="{'group_by': 'transaction_type'}"
                     />
+                    <filter
+                        name="date_groupby"
+                        string="Date"
+                        context="{'group_by': 'date'}"
+                    />
                 </group>
             </search>
         </field>
