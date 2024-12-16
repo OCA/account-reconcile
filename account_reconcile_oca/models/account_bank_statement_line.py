@@ -610,6 +610,7 @@ class AccountBankStatementLine(models.Model):
                         check_move_validity=False,
                         skip_sync_invoice=True,
                         skip_invoice_sync=True,
+                        validate_analytic=True,
                     )
                     .create(self._reconcile_move_line_vals(line_vals))
                 )
