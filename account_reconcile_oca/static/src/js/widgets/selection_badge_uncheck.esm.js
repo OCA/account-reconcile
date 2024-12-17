@@ -1,10 +1,9 @@
 /** @odoo-module **/
 import {
     BadgeSelectionField,
-    preloadSelection,
+    badgeSelectionField,
 } from "@web/views/fields/badge_selection/badge_selection_field";
 import {registry} from "@web/core/registry";
-import {standardFieldProps} from "@web/views/fields/standard_field_props";
 
 export class FieldSelectionBadgeUncheck extends BadgeSelectionField {
     async onChange(value) {
@@ -20,19 +19,11 @@ export class FieldSelectionBadgeUncheck extends BadgeSelectionField {
     }
 }
 
-FieldSelectionBadgeUncheck.props = {...standardFieldProps};
-FieldSelectionBadgeUncheck.supportedTypes = ["many2one", "selection"];
-FieldSelectionBadgeUncheck.additionalClasses = ["o_field_selection_badge"];
-
 export const FieldSelectionBadgeUncheckField = {
+    ...badgeSelectionField,
     component: FieldSelectionBadgeUncheck,
     supportedTypes: ["many2one"],
 };
 registry
     .category("fields")
     .add("selection_badge_uncheck", FieldSelectionBadgeUncheckField);
-
-registry.category("preloadedData").add("selection_badge_uncheck", {
-    loadOnTypes: ["many2one"],
-    preload: preloadSelection,
-});
