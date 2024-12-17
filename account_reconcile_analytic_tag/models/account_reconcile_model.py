@@ -14,7 +14,8 @@ class AccountReconcileModel(models.Model):
         if len(res) == 0:
             return res
         currency = self.company_id.currency_id
-        for index, line in enumerate(self.line_ids):
+        index = 0
+        for line in self.line_ids:
             if line.amount_type == "percentage":
                 balance = currency.round(residual_balance * (line.amount / 100.0))
             elif line.amount_type == "fixed":
@@ -28,6 +29,7 @@ class AccountReconcileModel(models.Model):
                 continue
 
             res[index]["manual_analytic_tag_ids"] = [(6, 0, line.analytic_tag_ids.ids)]
+            index += 1
         return res
 
 
