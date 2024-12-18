@@ -5,39 +5,37 @@ from odoo.tests.common import TransactionCase
 
 
 class TestAccountMoveReconcileHelper(TransactionCase):
-    def setUp(self):
-        super(TestAccountMoveReconcileHelper, self).setUp()
-        self.AccountObj = self.env["account.account"]
-        self.AccountJournalObj = self.env["account.journal"]
-        self.AccountMoveObj = self.env["account.move"]
-        self.AccountMoveLineObj = self.env["account.move.line"]
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        cls.AccountObj = cls.env["account.account"]
+        cls.AccountJournalObj = cls.env["account.journal"]
+        cls.AccountMoveObj = cls.env["account.move"]
+        cls.AccountMoveLineObj = cls.env["account.move.line"]
 
-        self.account_type_recv = self.env.ref("account.data_account_type_receivable")
-        self.account_type_rev = self.env.ref("account.data_account_type_revenue")
-
-        self.account_recv = self.AccountObj.create(
+        cls.account_recv = cls.AccountObj.create(
             {
-                "code": "MRH-RECVT",
+                "code": "MRH.RECVT",
                 "name": "Receivable (test)",
                 "reconcile": True,
-                "user_type_id": self.account_type_recv.id,
+                "account_type": "asset_receivable",
             }
         )
-        self.account_sale = self.AccountObj.create(
+        cls.account_sale = cls.AccountObj.create(
             {
-                "code": "MRH-SALET",
+                "code": "MRH.SALET",
                 "name": "Receivable (sale)",
                 "reconcile": True,
-                "user_type_id": self.account_type_rev.id,
+                "account_type": "income",
             }
         )
 
-        self.sales_journal = self.AccountJournalObj.create(
+        cls.sales_journal = cls.AccountJournalObj.create(
             {
                 "name": "Sales journal",
                 "code": "MRH-SAJT",
                 "type": "sale",
-                "default_account_id": self.account_sale.id,
+                "default_account_id": cls.account_sale.id,
             }
         )
 
