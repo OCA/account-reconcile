@@ -6,15 +6,7 @@ from odoo import models
 class AccountReconcileAbstract(models.AbstractModel):
     _inherit = "account.reconcile.abstract"
 
-    def _get_reconcile_line(
-        self, line, kind, is_counterpart=False, max_amount=False, from_unreconcile=False
-    ):
-        vals = super()._get_reconcile_line(
-            line=line,
-            kind=kind,
-            is_counterpart=is_counterpart,
-            max_amount=max_amount,
-            from_unreconcile=from_unreconcile,
-        )
+    def _get_reconcile_line(self, line, kind, **kwargs):
+        vals = super()._get_reconcile_line(line, kind, **kwargs)
         vals[0]["manual_analytic_tag_ids"] = [(6, 0, line.analytic_tag_ids.ids)]
         return vals
