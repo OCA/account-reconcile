@@ -4,7 +4,7 @@
     "name": "Analytic tags in account reconciliation",
     "author": "Tecnativa, Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/account-reconcile",
-    "version": "16.0.1.2.0",
+    "version": "16.0.1.2.1",
     "depends": ["account_reconcile_oca", "account_analytic_tag"],
     "license": "AGPL-3",
     "category": "Accounting",
