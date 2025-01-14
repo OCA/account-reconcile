@@ -562,7 +562,7 @@ class AccountBankStatementLine(models.Model):
                     )
                     amount -= sum(line.get("amount") for line in line_data)
                     data += line_data
-                if res.get("auto_reconcile"):
+                if res.get("auto_reconcile") and self.reconcile_data_info:
                     self.reconcile_bank_line()
                 return self._recompute_suspense_line(
                     data,
