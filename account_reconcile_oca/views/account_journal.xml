@@ -2,7 +2,6 @@
 <!-- Copyright 2023 Dixmit
      License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
 <odoo>
-
     <record id="view_account_journal_form" model="ir.ui.view">
         <field name="name">account.journal.form.inherit</field>
         <field name="model">account.journal</field>
@@ -39,8 +38,8 @@
                         name="%(account_reconcile_oca.action_bank_statement_line_reconcile)s"
                         class="btn btn-primary"
                     > Reconcile <t
-                            t-esc="dashboard.number_to_reconcile"
-                        /> Items</button>
+                        t-esc="dashboard.number_to_reconcile"
+                    /> Items</button>
                 </t>
             </xpath>
             <xpath

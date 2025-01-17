@@ -24,13 +24,7 @@ class AccountAccountReconcile(models.Model):
 
     @property
     def _table_query(self):
-        return "{} {} {} {} {}".format(
-            self._select(),
-            self._from(),
-            self._where(),
-            self._groupby(),
-            self._having(),
-        )
+        return f"{self._select()} {self._from()} {self._where()} {self._groupby()} {self._having()}"
 
     def _select(self):
         account_account_name_field = (
