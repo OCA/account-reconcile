@@ -899,6 +899,7 @@ class TestReconciliationWidget(TestAccountReconciliationCommon):
             self.assertFalse(f.partner_id)
             f.manual_reference = "account.move.line;%s" % liquidity_lines.id
             f.manual_partner_id = inv1.partner_id
+            f.save()
             self.assertEqual(f.partner_id, inv1.partner_id)
         bank_stmt_line.clean_reconcile()
         # As we have set a partner, the cleaning should assign the invoice automatically
