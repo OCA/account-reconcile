@@ -1,7 +1,3 @@
-.. image:: https://odoo-community.org/readme-banner-image
-   :target: https://odoo-community.org/get-involved?utm_source=readme
-   :alt: Odoo Community Association
-
 =====================
 Account Reconcile Oca
 =====================
@@ -17,7 +13,7 @@ Account Reconcile Oca
 .. |badge1| image:: https://img.shields.io/badge/maturity-Beta-yellow.png
     :target: https://odoo-community.org/page/development-status
     :alt: Beta
-.. |badge2| image:: https://img.shields.io/badge/license-AGPL--3-blue.png
+.. |badge2| image:: https://img.shields.io/badge/licence-AGPL--3-blue.png
     :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
     :alt: License: AGPL-3
 .. |badge3| image:: https://img.shields.io/badge/github-OCA%2Faccount--reconcile-lightgray.png?logo=github
@@ -56,12 +52,20 @@ Access Invoicing / Accounting / Actions / Reconcile All the possible
 reconcile options will show and you will be able to reconcile properly.
 You can access the same widget from accounts and Partners.
 
+Applying a reconcilation model to multiple lines
+------------------------------------------------
+
+1. Select multiple transactions (account.bank.statement.line)
+2. Actions -> Reconcile with model
+3. In the wizard, select the model
+4. Run
+
 Known issues / Roadmap
 ======================
 
 The following bugs are already detected:
 
-- Creation of activities on the chatter do show automatically
+-  Creation of activities on the chatter do show automatically
 
 Bug Tracker
 ===========
@@ -85,7 +89,8 @@ Authors
 Contributors
 ------------
 
-- Enric Tobella
+-  Enric Tobella
+-  Simone Rubino
 
 Other credits
 -------------

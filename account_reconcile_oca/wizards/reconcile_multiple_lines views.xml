@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+ ~ Copyright 2025 Simone Rubino
+ ~ License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
+-->
+<odoo>
+
+    <record id="reconcile_multiple_lines_view_form" model="ir.ui.view">
+        <field
+            name="name"
+        >Form view to reconcile multiple lines with a reconciliation model</field>
+        <field name="model">account_reconcile_oca.reconcile_multiple_lines</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="manual_model_id" />
+                    </group>
+                </sheet>
+                <footer>
+                    <button string="Run" class="btn-primary" type="object" name="run" />
+                    <button string="Cancel" special="cancel" />
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="reconcile_multiple_lines_action" model="ir.actions.act_window">
+        <field name="name">Reconcile with model</field>
+        <field name="res_model">account_reconcile_oca.reconcile_multiple_lines</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <field
+            name="binding_model_id"
+            ref="account.model_account_bank_statement_line"
+        />
+    </record>
+</odoo>
