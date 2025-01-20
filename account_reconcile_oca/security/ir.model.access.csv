@@ -1,3 +1,4 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 access_account_account_reconcile,account.account.reconcile,model_account_account_reconcile,account.group_account_user,1,1,0,0
 access_account_account_reconcile_data,account.account.reconcile,model_account_account_reconcile_data,account.group_account_user,1,1,1,1
+account_reconcile_oca.access_account_reconcile_oca_reconcile_multiple_lines,Allow account user to reconcile multiple lines with a reconciliation model,account_reconcile_oca.model_account_reconcile_oca_reconcile_multiple_lines,account.group_account_user,1,1,1,1
