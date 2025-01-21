@@ -984,20 +984,38 @@ class AccountBankStatementLine(models.Model):
         if self._context.get("skip_account_move_synchronization"):
             return
 
-        if not any(f_name in changed_fields for f_name in ("manual_partner_id",)):
+        # we actually check reconcile_data to find the partner of the liquidity lines
+        # because the written manual_partner_id is not always related to the liquidity
+        # line...
+        if not any(f_name in changed_fields for f_name in ("reconcile_data",)):
             return
 
         for st_line in self.with_context(skip_account_move_synchronization=True):
-            liquidity_lines, suspense_lines, _other_lines = st_line._seek_for_lines()
-            line_vals = {"partner_id": st_line.manual_partner_id.id}
-            line_ids_commands = [(1, liquidity_lines.id, line_vals)]
-            if suspense_lines:
-                line_ids_commands.append((1, suspense_lines.id, line_vals))
-            st_line_vals = {"line_ids": line_ids_commands}
-            if st_line.move_id.partner_id != st_line.manual_partner_id:
-                st_line_vals["partner_id"] = st_line.manual_partner_id.id
-            st_line.move_id.write(st_line_vals)
-            st_line.write({"partner_id": st_line.manual_partner_id.id})
+            data = st_line.reconcile_data_info.get("data", [])
+            partner_id = False
+            for line_data in data:
+                if line_data["kind"] == "liquidity":
+                    partner_id = (
+                        line_data.get("partner_id")
+                        and line_data.get("partner_id")[0]
+                        or False
+                    )
+                    break
+            if st_line.partner_id.id != partner_id:
+                (
+                    liquidity_lines,
+                    suspense_lines,
+                    _other_lines,
+                ) = st_line._seek_for_lines()
+                line_vals = {"partner_id": partner_id}
+                line_ids_commands = [(1, liquidity_lines.id, line_vals)]
+                if suspense_lines:
+                    line_ids_commands.append((1, suspense_lines.id, line_vals))
+                st_line_vals = {"line_ids": line_ids_commands}
+                if st_line.move_id.partner_id.id != partner_id:
+                    st_line_vals["partner_id"] = partner_id
+                st_line.move_id.write(st_line_vals)
+                st_line.write({"partner_id": partner_id})
 
     def _synchronize_to_moves(self, changed_fields):
         """We take advantage of this method to call the custom method that does
