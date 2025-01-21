@@ -88,7 +88,7 @@ class AccountReconcileAbstract(models.AbstractModel):
         vals = {
             "move_id": move and line.move_id.id,
             "move": move and line.move_id.name,
-            "reference": "account.move.line;%s" % line.id,
+            "reference": f"account.move.line;{line.id}",
             "id": line.id,
             "account_id": [line.account_id.id, line.account_id.display_name],
             "partner_id": [line.partner_id.id, line.partner_id.display_name]

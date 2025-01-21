@@ -1,5 +1,3 @@
-/** @odoo-module */
-
 import {FormController} from "@web/views/form/form_controller";
 import {useService} from "@web/core/utils/hooks";
 import {useViewButtons} from "@web/views/view_button/view_button_hook";
@@ -11,7 +9,7 @@ export class ReconcileFormController extends FormController {
         this.env.exposeController(this);
         this.orm = useService("orm");
         const rootRef = useRef("root");
-        useViewButtons(this.model, rootRef, {
+        useViewButtons(rootRef, {
             reload: this.reloadFormController.bind(this),
             beforeExecuteAction: this.beforeExecuteActionButton.bind(this),
             afterExecuteAction: this.afterExecuteActionButton.bind(this),

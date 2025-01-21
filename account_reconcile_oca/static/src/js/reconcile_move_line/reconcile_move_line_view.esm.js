@@ -1,5 +1,3 @@
-/** @odoo-module */
-
 import {ReconcileMoveLineController} from "./reconcile_move_line_controller.esm.js";
 import {ReconcileMoveLineRenderer} from "./reconcile_move_line_renderer.esm.js";
 

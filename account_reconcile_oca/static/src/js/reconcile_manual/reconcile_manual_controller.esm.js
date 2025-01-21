@@ -1,5 +1,3 @@
-/** @odoo-module */
-
 import {FormController} from "@web/views/form/form_controller";
 import {useViewButtons} from "@web/views/view_button/view_button_hook";
 const {useRef} = owl;

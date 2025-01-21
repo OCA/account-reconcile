@@ -1,5 +1,3 @@
-/** @odoo-module */
-
 import {ReconcileController} from "./reconcile_controller.esm.js";
 import {ReconcileRenderer} from "./reconcile_renderer.esm.js";
 import {kanbanView} from "@web/views/kanban/kanban_view";

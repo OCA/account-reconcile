@@ -1,5 +1,3 @@
-/** @odoo-module */
-
 import {KanbanRenderer} from "@web/views/kanban/kanban_renderer";
 import {ReconcileKanbanRecord} from "./reconcile_kanban_record.esm.js";
 import {formatMonetary} from "@web/views/fields/formatters";

@@ -1,9 +1,9 @@
-/** @odoo-module */
 const {onMounted, onWillStart, useState, useSubEnv} = owl;
 import {useBus, useService} from "@web/core/utils/hooks";
 import {KanbanController} from "@web/views/kanban/kanban_controller";
 import {View} from "@web/views/view";
 import {formatMonetary} from "@web/views/fields/formatters";
+import {router} from "@web/core/browser/router";
 
 export class ReconcileController extends KanbanController {
     async setup() {
@@ -20,7 +20,6 @@ export class ReconcileController extends KanbanController {
         this.effect = useService("effect");
         this.orm = useService("orm");
         this.action = useService("action");
-        this.router = useService("router");
         this.activeActions = this.props.archInfo.activeActions;
         useBus(this.model.bus, "update", () => {
             this.selectRecord();
@@ -134,7 +133,7 @@ export class ReconcileController extends KanbanController {
         this.selectRecord(record);
     }
     updateURL(resId) {
-        this.router.pushState({id: resId});
+        router.pushState({id: resId});
     }
 }
 
