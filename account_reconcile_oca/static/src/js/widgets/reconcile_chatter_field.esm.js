@@ -1,8 +1,6 @@
-/** @odoo-module **/
-
-// import {ChatterContainer} from "@mail/components/chatter_container/chatter_container";
+// Import {ChatterContainer} from "@mail/components/chatter_container/chatter_container";
 // import {Chatter} from "@mail/core/web/chatter";
-import {Chatter} from "@mail/core/web/chatter";
+import {Chatter} from "@mail/chatter/web_portal/chatter";
 
 import {registry} from "@web/core/registry";
 import {standardFieldProps} from "@web/views/fields/standard_field_props";

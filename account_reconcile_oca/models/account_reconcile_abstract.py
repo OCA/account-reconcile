@@ -63,7 +63,7 @@ class AccountReconcileAbstract(models.AbstractModel):
         else:
             currency_amount = line.amount_currency
         vals = {
-            "reference": "account.move.line;%s" % line.id,
+            "reference": f"account.move.line;{line.id}",
             "id": line.id,
             "account_id": [line.account_id.id, line.account_id.display_name],
             "partner_id": [line.partner_id.id, line.partner_id.display_name]
