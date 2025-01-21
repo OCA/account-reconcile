@@ -81,7 +81,7 @@
         <button
             t-on-click="onClickNewButton"
             class="btn btn-primary"
-            t-if="activeActions.create"
+            t-if="props.archInfo.activeActions.create"
         >Create</button>
     </t>
     <t t-name="account_reconcile_oca.ReconcileMatchWidget">

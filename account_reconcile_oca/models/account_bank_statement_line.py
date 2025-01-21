@@ -22,7 +22,6 @@ class AccountBankStatementLine(models.Model):
         ._fields["reconcile_mode"]
         .selection
     )
-    company_id = fields.Many2one(related="journal_id.company_id")
     reconcile_data = fields.Serialized()
     manual_line_id = fields.Many2one(
         "account.move.line",
@@ -290,7 +289,7 @@ class AccountBankStatementLine(models.Model):
                     can_reconcile = True
                     account = self.partner_id.property_account_payable_id
                 suspense_line = {
-                    "reference": "reconcile_auxiliary;%s" % reconcile_auxiliary_id,
+                    "reference": f"reconcile_auxiliary;{reconcile_auxiliary_id}",
                     "id": False,
                     "account_id": [account.id, account.display_name],
                     "partner_id": self.partner_id
@@ -587,7 +586,7 @@ class AccountBankStatementLine(models.Model):
                 )
             new_line.update(
                 {
-                    "reference": "reconcile_auxiliary;%s" % reconcile_auxiliary_id,
+                    "reference": f"reconcile_auxiliary;{reconcile_auxiliary_id}",
                     "id": False,
                     "amount": amount,
                     "debit": amount if amount > 0 else 0,
@@ -765,7 +764,7 @@ class AccountBankStatementLine(models.Model):
     def reconcile_bank_line(self):
         self.ensure_one()
         self.reconcile_mode = self.journal_id.reconcile_mode
-        result = getattr(self, "_reconcile_bank_line_%s" % self.reconcile_mode)(
+        result = getattr(self, f"_reconcile_bank_line_{self.reconcile_mode}")(
             self._prepare_reconcile_line_data(self.reconcile_data_info["data"])
         )
         self.reconcile_data = False
@@ -773,7 +772,9 @@ class AccountBankStatementLine(models.Model):
 
     def _reconcile_bank_line_edit(self, data):
         _liquidity_lines, suspense_lines, other_lines = self._seek_for_lines()
-        lines_to_remove = [(2, line.id) for line in suspense_lines + other_lines]
+        lines_to_remove = [
+            Command.delete(line.id) for line in suspense_lines + other_lines
+        ]
 
         # Cleanup previous lines.
         move = self.move_id
@@ -784,6 +785,7 @@ class AccountBankStatementLine(models.Model):
                 skip_account_move_synchronization=True,
                 force_delete=True,
                 skip_invoice_sync=True,
+                skip_readonly_check=True,
             ).write(
                 {
                     "line_ids": lines_to_remove,
@@ -983,9 +985,9 @@ class AccountBankStatementLine(models.Model):
                 )
             if not data.get("can_reconcile"):
                 continue
-            getattr(
-                record, "_reconcile_bank_line_%s" % record.journal_id.reconcile_mode
-            )(self._prepare_reconcile_line_data(data["data"]))
+            getattr(record, f"_reconcile_bank_line_{record.journal_id.reconcile_mode}")(
+                self._prepare_reconcile_line_data(data["data"])
+            )
         return result
 
     def _synchronize_to_moves(self, changed_fields):
@@ -1100,7 +1102,7 @@ class AccountBankStatementLine(models.Model):
                 new_data += lines
                 new_data.append(
                     {
-                        "reference": "reconcile_auxiliary;%s" % reconcile_auxiliary_id,
+                        "reference": f"reconcile_auxiliary;{reconcile_auxiliary_id}",
                         "id": False,
                         "account_id": line["account_id"],
                         "partner_id": line.get("partner_id"),
@@ -1127,13 +1129,13 @@ class AccountBankStatementLine(models.Model):
 
     def action_to_check(self):
         self.ensure_one()
-        self.move_id.to_check = True
+        self.move_id.write({"checked": False})
         if self.can_reconcile and self.journal_id.reconcile_mode == "edit":
             self.reconcile_bank_line()
 
     def action_checked(self):
         self.ensure_one()
-        self.move_id.to_check = False
+        self.move_id.write({"checked": True})
 
     def _get_reconcile_line(
         self,
@@ -1219,7 +1221,7 @@ class AccountBankStatementLine(models.Model):
         data = {
             "is_exchange_counterpart": True,
             "original_exchange_line_id": line.id,
-            "reference": "reconcile_auxiliary;%s" % reconcile_auxiliary_id,
+            "reference": f"reconcile_auxiliary;{reconcile_auxiliary_id}",
             "id": False,
             "account_id": (account.id, account.display_name),
             "partner_id": False,

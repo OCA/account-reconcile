@@ -1,4 +1,3 @@
-/** @odoo-module **/
 import {formatDate, parseDate} from "@web/core/l10n/dates";
 import {formatMonetary} from "@web/views/fields/formatters";
 import {registry} from "@web/core/registry";

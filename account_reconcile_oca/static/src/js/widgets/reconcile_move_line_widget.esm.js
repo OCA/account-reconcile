@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 import {View} from "@web/views/view";
 import {evaluateBooleanExpr} from "@web/core/py_js/py";
 import {getFieldContext} from "@web/model/relational_model/utils";

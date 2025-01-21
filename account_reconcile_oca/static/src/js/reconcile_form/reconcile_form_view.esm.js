@@ -1,5 +1,3 @@
-/** @odoo-module */
-
 import {ReconcileFormController} from "./reconcile_form_controller.esm.js";
 import {ReconcileFormRenderer} from "./reconcile_form_renderer.esm.js";
 import {formView} from "@web/views/form/form_view";

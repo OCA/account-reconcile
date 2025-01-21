@@ -1,4 +1,3 @@
-/** @odoo-module */
 import {Notebook} from "@web/core/notebook/notebook";
 import {onWillDestroy} from "@odoo/owl";
 

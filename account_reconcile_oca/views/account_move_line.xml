@@ -4,11 +4,11 @@
 <odoo>
 
     <record id="account_move_line_tree_reconcile_view" model="ir.ui.view">
-        <field name="name">account.move.line.tree.reconcile</field>
+        <field name="name">account.move.line.list.reconcile</field>
         <field name="model">account.move.line</field>
         <field name="priority">99</field>
         <field name="arch" type="xml">
-            <tree
+            <list
                 js_class="reconcile_move_line"
                 create="0"
                 edit="0"
@@ -32,7 +32,7 @@
                     string="View"
                     class="btn btn-secondary"
                 />
-            </tree>
+            </list>
         </field>
     </record>
 
