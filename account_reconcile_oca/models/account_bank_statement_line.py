@@ -322,7 +322,11 @@ class AccountBankStatementLine(models.Model):
             )
             or self.manual_account_id.id != line["account_id"][0]
             or self.manual_name != line["name"]
-            or (self.manual_partner_id and self.manual_partner_id.display_name or False)
+            or (
+                self.manual_partner_id
+                and [self.manual_partner_id.id, self.manual_partner_id.display_name]
+                or [False, False]
+            )
             != line.get("partner_id")
             or self.analytic_distribution != line.get("analytic_distribution", False)
         )
