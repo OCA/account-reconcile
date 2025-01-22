@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2025 Hunki Enterprises BV
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0) -->
+<data>
+    <record id="view_account_reconcile_model_form" model="ir.ui.view">
+        <field name="model">account.reconcile.model</field>
+        <field name="inherit_id" ref="account.view_account_reconcile_model_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//page[@id='conditions_tab']//group[@id='left_column']">
+                <field name="include_reconcile_model_ids" widget="many2many_tags" />
+                <field name="exclude_reconcile_model_ids" widget="many2many_tags" />
+            </xpath>
+        </field>
+    </record>
+</data>

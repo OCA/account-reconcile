@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2025 Hunki Enterprises BV
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0) -->
+<data>
+    <record id="model_rule_two_blocks" model="account.reconcile.model">
+        <field name="name">Two blocks</field>
+        <field name="rule_type">writeoff_suggestion</field>
+        <field name="match_label">match_regex</field>
+        <field name="match_label_param">.*\bXX\s+\d{2}\s+\d{2}\b.*</field>
+    </record>
+    <record id="model_rule_three_blocks" model="account.reconcile.model">
+        <field name="name">Three blocks</field>
+        <field name="rule_type">writeoff_suggestion</field>
+        <field name="match_label">match_regex</field>
+        <field name="match_label_param">.*\bXY\s+\d{2}\s+\d{2}\s+\d{2}\b.*</field>
+    </record>
+    <record id="model_rule_three_blocks_xx" model="account.reconcile.model">
+        <field name="name">Three blocks (includes two blocks)</field>
+        <field name="rule_type">writeoff_suggestion</field>
+        <field name="match_label">match_regex</field>
+        <field name="match_label_param">.*\bXX\s+\d{2}\s+\d{2}\s+\d{2}\b.*</field>
+    </record>
+    <record id="model_rule_both" model="account.reconcile.model">
+        <field name="name">Both blocks</field>
+        <field name="rule_type">writeoff_suggestion</field>
+        <field
+            name="include_reconcile_model_ids"
+            eval="[Command.set([ref('model_rule_two_blocks'), ref('model_rule_three_blocks')])]"
+        />
+    </record>
+    <record id="model_rule_both_xx" model="account.reconcile.model">
+        <field name="name">Both XX blocks</field>
+        <field name="rule_type">writeoff_suggestion</field>
+        <field
+            name="include_reconcile_model_ids"
+            eval="[Command.set([ref('model_rule_two_blocks'), ref('model_rule_three_blocks_xx')])]"
+        />
+    </record>
+    <record id="model_rule_two_blocks" model="account.reconcile.model">
+        <field
+            name="exclude_reconcile_model_ids"
+            eval="[Command.set([ref('model_rule_both'), ref('model_rule_both_xx')])]"
+        />
+    </record>
+    <record id="model_rule_three_blocks" model="account.reconcile.model">
+        <field
+            name="exclude_reconcile_model_ids"
+            eval="[Command.set([ref('model_rule_both')])]"
+        />
+    </record>
+</data>
