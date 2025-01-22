@@ -438,10 +438,11 @@ class AccountBankStatementLine(models.Model):
             "debit": self.manual_amount if self.manual_amount > 0 else 0.0,
             "analytic_distribution": self.analytic_distribution,
         }
-        if self.manual_line_id:
+        liquidity_lines, _suspense_lines, _other_lines = self._seek_for_lines()
+        if self.manual_line_id and self.manual_line_id.id not in liquidity_lines.ids:
             vals.update(
                 {
-                    "currency_amount": self.manual_line_id.currency_id._convert(
+                    "currency_amount": self.manual_currency_id._convert(
                         self.manual_amount,
                         self.manual_in_currency_id,
                         self.company_id,
