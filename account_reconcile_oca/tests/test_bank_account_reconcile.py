@@ -1141,7 +1141,7 @@ class TestReconciliationWidget(TestAccountReconciliationCommon):
                 259200,
             )
             f.add_account_move_line_id = inv1.line_ids.filtered(
-                lambda l: l.account_id.account_type == "asset_receivable"
+                lambda line: line.account_id.account_type == "asset_receivable"
             )
             self.assertTrue(f.can_reconcile)
         self.assertEqual(len(bank_stmt_line.reconcile_data_info["data"]), 3)
@@ -1317,7 +1317,7 @@ class TestReconciliationWidget(TestAccountReconciliationCommon):
             # simulate click on statement line, check amount does not recompute
             self.assertEqual(f.manual_amount, 83.33)
             f.add_account_move_line_id = inv1.line_ids.filtered(
-                lambda l: l.account_id.account_type == "asset_receivable"
+                lambda line: line.account_id.account_type == "asset_receivable"
             )
             self.assertEqual(3, len(f.reconcile_data_info["data"]))
             self.assertTrue(f.can_reconcile)
