@@ -1315,7 +1315,10 @@ class TestReconciliationWidget(TestAccountReconciliationCommon):
             )
             f.manual_reference = "account.move.line;%s" % line["id"]
             # simulate click on statement line, check amount does not recompute
+            f.manual_partner_id = inv1.partner_id
             self.assertEqual(f.manual_amount, 83.33)
+            # check currency amount is still fine
+            self.assertEqual(f.reconcile_data_info["data"][0]["currency_amount"], 100)
             f.add_account_move_line_id = inv1.line_ids.filtered(
                 lambda line: line.account_id.account_type == "asset_receivable"
             )
