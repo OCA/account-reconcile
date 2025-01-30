@@ -7,7 +7,6 @@
         <field name="model">res.partner</field>
         <field name="inherit_id" ref="base.view_partner_form" />
         <field name="priority" eval="20" />
-        <field name="groups_id" eval="[(4, ref('account.group_account_invoice'))]" />
         <field name="arch" type="xml">
             <div name="button_box" position="inside">
                 <button
@@ -16,6 +15,7 @@
                     name="action_open_reconcile"
                     context="{'reconcile_mode': 'customers'}"
                     icon="fa-usd"
+                    groups="account.group_account_invoice"
                     string="Match Receivables"
                 >
                 </button>
@@ -24,6 +24,7 @@
                     type="object"
                     name="action_open_reconcile"
                     context="{'reconcile_mode': 'suppliers'}"
+                    groups="account.group_account_invoice"
                     icon="fa-usd"
                     string="Match Payables"
                 >

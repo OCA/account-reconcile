@@ -8,26 +8,46 @@ class TestAccountPartnerReconcile(TransactionCase):
     """Tests for Account Partner Reconcile."""
 
     def setUp(self):
-        super(TestAccountPartnerReconcile, self).setUp()
+        super().setUp()
 
         self.partner1 = self.env.ref("base.res_partner_1")
 
     def test_account_partner_reconcile(self):
-        res = self.partner1.action_open_reconcile()
+        receivable_account = self.partner1.property_account_receivable_id
+        payable_account = self.partner1.property_account_payable_id
 
-        # assertDictContainsSubset is deprecated in Python <3.2
-        expect = {"type": "ir.actions.client", "tag": "manual_reconciliation_view"}
+        # reconcile_mode="customers" (Match Receivables)
+        res = self.partner1.with_context(
+            reconcile_mode="customers"
+        ).action_open_reconcile()
+        expect = {
+            "type": "ir.actions.act_window",
+            "xml_id": "account_reconcile_oca.account_account_reconcile_act_window",
+            "domain": [
+                ("account_id", "=", receivable_account.id),
+                ("partner_id", "=", self.partner1.id),
+            ],
+        }
         self.assertDictEqual(
             expect,
             {k: v for k, v in res.items() if k in expect},
-            "There was an error and the manual_reconciliation_view "
-            "couldn't be opened.",
+            "There was an error and the Reconcile action couldn't be opened.",
         )
 
-        expect = {"partner_ids": self.partner1.ids, "show_mode_selector": True}
+        # reconcile_mode="suppliers" (Match Payables)
+        res = self.partner1.with_context(
+            reconcile_mode="suppliers"
+        ).action_open_reconcile()
+        expect = {
+            "type": "ir.actions.act_window",
+            "xml_id": "account_reconcile_oca.account_account_reconcile_act_window",
+            "domain": [
+                ("account_id", "=", payable_account.id),
+                ("partner_id", "=", self.partner1.id),
+            ],
+        }
         self.assertDictEqual(
             expect,
-            {k: v for k, v in res["context"].items() if k in expect},
-            "There was an error and the manual_reconciliation_view "
-            "couldn't be opened.",
+            {k: v for k, v in res.items() if k in expect},
+            "There was an error and the Reconcile action couldn't be opened.",
         )

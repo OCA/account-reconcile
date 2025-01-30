@@ -3,12 +3,12 @@
 
 {
     "name": "Account Partner Reconcile",
-    "version": "15.0.1.0.0",
+    "version": "16.0.1.0.0",
     "category": "Accounting",
     "author": "ForgeFlow, Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/account-reconcile",
     "license": "AGPL-3",
-    "depends": ["account"],
+    "depends": ["account_reconcile_oca"],
     "data": ["views/res_partner_view.xml"],
     "installable": True,
 }

@@ -9,19 +9,20 @@ class ResPartner(models.Model):
 
     def action_open_reconcile(self):
         # Open reconciliation view for customers and suppliers
-        reconcile_mode = self.env.context.get("reconcile_mode", False)
-        accounts = self.property_account_payable_id
-        if reconcile_mode == "customers":
-            accounts = self.property_account_receivable_id
+        self.ensure_one()
 
-        action_context = {
-            "show_mode_selector": True,
-            "partner_ids": [self.id],
-            "mode": reconcile_mode,
-            "account_ids": accounts.ids,
-        }
-        return {
-            "type": "ir.actions.client",
-            "tag": "manual_reconciliation_view",
-            "context": action_context,
-        }
+        reconcile_mode = self.env.context.get("reconcile_mode", False)
+        account = self.property_account_payable_id
+        if reconcile_mode == "customers":
+            account = self.property_account_receivable_id
+
+        action = self.env["ir.actions.act_window"]._for_xml_id(
+            "account_reconcile_oca.account_account_reconcile_act_window"
+        )
+
+        action["domain"] = [
+            ("account_id", "=", account.id),
+            ("partner_id", "=", self.id),
+        ]
+
+        return action
