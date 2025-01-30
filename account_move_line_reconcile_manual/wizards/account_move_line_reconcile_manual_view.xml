@@ -5,97 +5,98 @@
   License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 -->
 <odoo>
-
-<record id="account_move_line_reconcile_manual_form" model="ir.ui.view">
-    <field name="model">account.move.line.reconcile.manual</field>
-    <field name="arch" type="xml">
+    <record id="account_move_line_reconcile_manual_form" model="ir.ui.view">
+        <field name="model">account.move.line.reconcile.manual</field>
+        <field name="arch" type="xml">
             <form>
-                    <div
+                <div
                     class="alert alert-warning"
                     role="alert"
                     attrs="{'invisible': [('partner_count', '&lt;', 2)]}"
                 >
                             You are trying to reconcile journal items from <field
-                        name="partner_count"
-                    /> different partners: make sure it is intented.
+                    name="partner_count"
+                /> different partners: make sure it is intented.
             </div>
-                    <group name="main">
-                            <field name="account_id" />
-                            <field name="count" />
-                            <field name="total_debit" />
-                            <field name="total_credit" />
-                            <field name="state" invisible="1" />
-                            <field name="company_id" invisible="1" />
-                            <field name="company_currency_id" invisible="1" />
-                            <field name="partner_count" invisible="1" />
-                            <field name="partner_id" invisible="1" />
-                    </group>
-                    <group name="writeoff" string="Write-off" states="writeoff">
-                            <field name="writeoff_model_id" widget="selection" />
-                            <field
+                <group name="main">
+                    <field name="account_id" />
+                    <field name="count" />
+                    <field name="total_debit" />
+                    <field name="total_credit" />
+                    <field name="state" invisible="1" />
+                    <field name="company_id" invisible="1" />
+                    <field name="company_currency_id" invisible="1" />
+                    <field name="partner_count" invisible="1" />
+                    <field name="partner_id" invisible="1" />
+                </group>
+                <group name="writeoff" string="Write-off" states="writeoff">
+                    <field name="writeoff_model_id" widget="selection" />
+                    <field
                         name="writeoff_journal_id"
                         widget="selection"
                         attrs="{'required': [('state', '=', 'writeoff')]}"
                     />
-                            <field
+                    <field
                         name="writeoff_date"
                         attrs="{'required': [('state', '=', 'writeoff')]}"
                         options="{'datepicker': {'warn_future': true}}"
                     />
-                            <field name="writeoff_ref" />
-                            <field name="writeoff_amount" />
-                            <field name="writeoff_type" />
-                            <field
+                    <field name="writeoff_ref" />
+                    <field name="writeoff_amount" />
+                    <field name="writeoff_type" />
+                    <field
                         name="writeoff_account_id"
                         attrs="{'required': [('state', '=', 'writeoff')]}"
                     />
-                            <field
+                    <field
                         name="writeoff_analytic_distribution"
                         widget="analytic_distribution"
                         groups="analytic.group_analytic_accounting"
                         options="{'account_field': 'writeoff_account_id', 'business_domain': 'general'}"
                     />
-                    </group>
-                    <footer>
-                            <button
+                </group>
+                <footer>
+                    <button
                         name="full_reconcile"
                         type="object"
                         attrs="{'invisible': ['|', ('state', '!=', 'start'), ('writeoff_type', '!=', 'none')]}"
                         class="btn-primary"
                         string="Full Reconcile"
                     />
-                            <button
+                    <button
                         name="partial_reconcile"
                         type="object"
                         attrs="{'invisible': ['|', ('state', '!=', 'start'), ('writeoff_type', '=', 'none')]}"
                         class="btn-primary"
                         string="Partial Reconcile"
                     />
-                            <button
+                    <button
                         name="go_to_writeoff"
                         type="object"
                         attrs="{'invisible': ['|', ('state', '!=', 'start'), ('writeoff_type', '=', 'none')]}"
                         class="btn-primary"
                         string="Reconcile with Write-off"
                     />
-                            <button
+                    <button
                         name="reconcile_with_writeoff"
                         type="object"
                         states="writeoff"
                         class="btn-primary"
                         string="Reconcile with Write-off"
                     />
-                            <button special="cancel" string="Cancel" />
-                    </footer>
-        </form>
-    </field>
-</record>
+                    <button special="cancel" string="Cancel" />
+                </footer>
+            </form>
+        </field>
+    </record>
 
-<record id="account_move_line_reconcile_manual_action" model="ir.actions.act_window">
-    <field name="name">Reconcile</field>
-    <field name="res_model">account.move.line.reconcile.manual</field>
-    <field name="view_mode">form</field>
-    <field name="target">new</field>
-</record>
-
+    <record
+        id="account_move_line_reconcile_manual_action"
+        model="ir.actions.act_window"
+    >
+        <field name="name">Reconcile</field>
+        <field name="res_model">account.move.line.reconcile.manual</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
 </odoo>
