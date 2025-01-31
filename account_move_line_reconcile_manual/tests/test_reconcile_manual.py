@@ -16,10 +16,10 @@ class TestReconcileManual(TransactionCase):
         cls.company = cls.env.ref("base.main_company")
         cls.ccur = cls.company.currency_id
         cls.rec_account = cls.env["account.account"].search(
-            [("company_id", "=", cls.company.id), ("reconcile", "=", True)], limit=1
+            [("company_ids", "=", cls.company.id), ("reconcile", "=", True)], limit=1
         )
         cls.other_account = cls.env["account.account"].search(
-            [("company_id", "=", cls.company.id), ("reconcile", "=", False)], limit=1
+            [("company_ids", "=", cls.company.id), ("reconcile", "=", False)], limit=1
         )
         cls.journal = cls.env["account.journal"].search(
             [("company_id", "=", cls.company.id), ("type", "=", "general")], limit=1
@@ -89,7 +89,7 @@ class TestReconcileManual(TransactionCase):
         )
         cls.writeoff_account = cls.env["account.account"].search(
             [
-                ("company_id", "=", cls.company.id),
+                ("company_ids", "=", cls.company.id),
                 ("reconcile", "=", False),
                 ("account_type", "=", "expense"),
             ],

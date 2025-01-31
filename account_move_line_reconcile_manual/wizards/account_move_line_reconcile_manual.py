@@ -81,7 +81,7 @@ class AccountMoveLineReconcileManual(models.TransientModel):
         store=True,
         precompute=True,
         string="Write-off Account",
-        domain="[('company_id', '=', company_id), ('deprecated', '=', False)]",
+        domain="[('company_ids', '=', company_id), ('deprecated', '=', False)]",
         check_company=True,
     )
     writeoff_analytic_distribution = fields.Json(
@@ -144,7 +144,7 @@ class AccountMoveLineReconcileManual(models.TransientModel):
         move_lines = self.env["account.move.line"].browse(
             self._context.get("active_ids")
         )
-        company = move_lines[0].account_id.company_id
+        company = move_lines[0].account_id.company_ids
         ccur = company.currency_id
         count = 0
         account = False
@@ -197,7 +197,7 @@ class AccountMoveLineReconcileManual(models.TransientModel):
             {
                 "count": count,
                 "account_id": account.id,
-                "company_id": account.company_id.id,
+                "company_id": account.company_ids.id,
                 "total_debit": total_debit,
                 "total_credit": total_credit,
                 "partner_count": len(partner_set),
@@ -212,15 +212,19 @@ class AccountMoveLineReconcileManual(models.TransientModel):
     def full_reconcile(self):
         self.ensure_one()
         self.move_line_ids.remove_move_reconcile()
-        res = self.move_line_ids.reconcile()
-        if not res.get("full_reconcile"):
-            raise UserError(_("Full reconciliation failed. It should never happen!"))
+        self.move_line_ids.reconcile()
+        for move_line in self.move_line_ids:
+            if not move_line.reconciled:
+                raise UserError(
+                    _("Full reconciliation failed. It should never happen!")
+                )
         action = {
             "type": "ir.actions.client",
             "tag": "display_notification",
             "params": {
                 "title": _("Successful reconciliation"),
-                "message": _("Reconcile mark: %s") % res["full_reconcile"].display_name,
+                "message": _("Reconcile mark: %s")
+                % self.move_line_ids.full_reconcile_id.display_name,
                 "next": {"type": "ir.actions.act_window_close"},
             },
         }
@@ -300,9 +304,12 @@ class AccountMoveLineReconcileManual(models.TransientModel):
         )
         assert len(to_rec_woff_line) == 1
         to_rec_lines = self.move_line_ids + to_rec_woff_line
-        res = to_rec_lines.reconcile()
-        if not res.get("full_reconcile"):
-            raise UserError(_("Full reconciliation failed. It should never happen!"))
+        to_rec_lines.reconcile()
+        for move_line in self.move_line_ids:
+            if not move_line.reconciled:
+                raise UserError(
+                    _("Full reconciliation failed. It should never happen!")
+                )
         action = {
             "type": "ir.actions.client",
             "tag": "display_notification",
@@ -310,7 +317,7 @@ class AccountMoveLineReconcileManual(models.TransientModel):
                 "title": _("Successful reconciliation"),
                 "message": _(
                     "Write-off journal entry: %(writeoff_move)s\nReconcile mark: %(full_rec)s",
-                    full_rec=res["full_reconcile"].display_name,
+                    full_rec=self.move_line_ids[0].full_reconcile_id.display_name,
                     writeoff_move=woff_move.name,
                 ),
                 "next": {"type": "ir.actions.act_window_close"},
