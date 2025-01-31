@@ -12,7 +12,7 @@
                 <div
                     class="alert alert-warning"
                     role="alert"
-                    attrs="{'invisible': [('partner_count', '&lt;', 2)]}"
+                    invisible="partner_count &lt; 2"
                 >
                             You are trying to reconcile journal items from <field
                     name="partner_count"
@@ -29,25 +29,26 @@
                     <field name="partner_count" invisible="1" />
                     <field name="partner_id" invisible="1" />
                 </group>
-                <group name="writeoff" string="Write-off" states="writeoff">
+                <group
+                    name="writeoff"
+                    string="Write-off"
+                    invisible="state != 'writeoff'"
+                >
                     <field name="writeoff_model_id" widget="selection" />
                     <field
                         name="writeoff_journal_id"
                         widget="selection"
-                        attrs="{'required': [('state', '=', 'writeoff')]}"
+                        required="state == 'writeoff'"
                     />
                     <field
                         name="writeoff_date"
-                        attrs="{'required': [('state', '=', 'writeoff')]}"
+                        required="state == 'writeoff'"
                         options="{'datepicker': {'warn_future': true}}"
                     />
                     <field name="writeoff_ref" />
                     <field name="writeoff_amount" />
                     <field name="writeoff_type" />
-                    <field
-                        name="writeoff_account_id"
-                        attrs="{'required': [('state', '=', 'writeoff')]}"
-                    />
+                    <field name="writeoff_account_id" required="state == 'writeoff'" />
                     <field
                         name="writeoff_analytic_distribution"
                         widget="analytic_distribution"
@@ -59,28 +60,28 @@
                     <button
                         name="full_reconcile"
                         type="object"
-                        attrs="{'invisible': ['|', ('state', '!=', 'start'), ('writeoff_type', '!=', 'none')]}"
+                        invisible="state != 'start' or writeoff_type != 'none'"
                         class="btn-primary"
                         string="Full Reconcile"
                     />
                     <button
                         name="partial_reconcile"
                         type="object"
-                        attrs="{'invisible': ['|', ('state', '!=', 'start'), ('writeoff_type', '=', 'none')]}"
+                        invisible="state != 'start' or writeoff_type == 'none'"
                         class="btn-primary"
                         string="Partial Reconcile"
                     />
                     <button
                         name="go_to_writeoff"
                         type="object"
-                        attrs="{'invisible': ['|', ('state', '!=', 'start'), ('writeoff_type', '=', 'none')]}"
+                        invisible="state == 'start' or writeoff_type == 'none'"
                         class="btn-primary"
                         string="Reconcile with Write-off"
                     />
                     <button
                         name="reconcile_with_writeoff"
                         type="object"
-                        states="writeoff"
+                        invisible="state != 'writeoff'"
                         class="btn-primary"
                         string="Reconcile with Write-off"
                     />
