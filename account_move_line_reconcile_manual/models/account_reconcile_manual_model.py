@@ -21,7 +21,7 @@ class AccountReconcileManualModel(models.Model):
         "account.account",
         string="Expense Write-off Account",
         required=True,
-        domain="[('company_id', '=', company_id), ('deprecated', '=', False), "
+        domain="[('company_ids', '=', company_id), ('deprecated', '=', False), "
         "('internal_group', '=', 'expense')]",
         check_company=True,
     )
@@ -29,7 +29,7 @@ class AccountReconcileManualModel(models.Model):
         "account.account",
         string="Income Write-off Account",
         required=True,
-        domain="[('company_id', '=', company_id), ('deprecated', '=', False), "
+        domain="[('company_ids', '=', company_id), ('deprecated', '=', False), "
         "('internal_group', '=', 'income')]",
         check_company=True,
     )
@@ -95,5 +95,9 @@ class AccountReconcileManualModel(models.Model):
                     "company_id": model.company_id.id,
                 }
             )
-            model.expense_analytic_distribution = expense_distri
-            model.income_analytic_distribution = income_distri
+            model.update(
+                {
+                    "expense_analytic_distribution": expense_distri,
+                    "income_analytic_distribution": income_distri,
+                }
+            )
