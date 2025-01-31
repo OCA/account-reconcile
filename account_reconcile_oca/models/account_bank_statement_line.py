@@ -585,6 +585,13 @@ class AccountBankStatementLine(models.Model):
                     self.company_id,
                     self.date,
                 )
+            if currency != self.company_id.currency_id:
+                currency_amount = self.company_id.currency_id._convert(
+                    amount,
+                    currency,
+                    self.company_id,
+                    self.date,
+                )
             new_line.update(
                 {
                     "reference": "reconcile_auxiliary;%s" % reconcile_auxiliary_id,
