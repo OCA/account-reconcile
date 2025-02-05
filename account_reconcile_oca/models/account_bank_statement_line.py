@@ -493,6 +493,8 @@ class AccountBankStatementLine(models.Model):
                         line["kind"] if line["kind"] != "suspense" else "other"
                     )
                     line.update(line_vals)
+                    if line["kind"] == "liquidity":
+                        self._update_move_partner()
             if self.manual_line_id and self.manual_line_id.id == line.get(
                 "original_exchange_line_id"
             ):
@@ -517,6 +519,11 @@ class AccountBankStatementLine(models.Model):
             self.manual_reference,
         )
         self.can_reconcile = self.reconcile_data_info.get("can_reconcile", False)
+
+    def _update_move_partner(self):
+        if self.partner_id == self.manual_partner_id:
+            return
+        self.partner_id = self.manual_partner_id
 
     @api.depends("reconcile_data", "is_reconciled")
     def _compute_reconcile_data_info(self):
@@ -972,61 +979,48 @@ class AccountBankStatementLine(models.Model):
             )(self._prepare_reconcile_line_data(data["data"]))
         return result
 
-    def _synchronize_to_moves_custom(self, changed_fields):
-        """Similar process to what _synchronize_to_moves() method would do but without
-        the relative to all the changed_fields, we just need to update partner_id.
-        We precisely do not do an onchange of self.partner_id = self.manual_partner_id
-        to avoid making all those unnecessary changes, but we need to apply this
-        change to the account.move and the lines without side effects.
-        A change of manual_partner_id that has been reconciled should NOT change the
-        values of the account.move lines.
+    def _synchronize_to_moves(self, changed_fields):
+        """We want to avoid to change stuff (mainly amounts ) in accounting entries
+        when some changes happen in the reconciliation widget. The only change
+        (among the fields triggering the synchronization) possible from the
+        reconciliation widget is the partner_id field.
+
+        So, in case of change on partner_id field we do not call super but make
+        only the required change (relative to partner) on accounting entries.
+
+        And if something else changes, we then re-define reconcile_data_info to
+        make the data consistent (for example, if debit/credit has changed by
+        applying a different rate or even if there was a correction on statement
+        line amount).
         """
         if self._context.get("skip_account_move_synchronization"):
             return
-
-        # we actually check reconcile_data to find the partner of the liquidity lines
-        # because the written manual_partner_id is not always related to the liquidity
-        # line...
-        if not any(f_name in changed_fields for f_name in ("reconcile_data",)):
-            return
-
-        for st_line in self.with_context(skip_account_move_synchronization=True):
-            data = st_line.reconcile_data_info.get("data", [])
-            partner_id = False
-            for line_data in data:
-                if line_data["kind"] == "liquidity":
-                    partner_id = (
-                        line_data.get("partner_id")
-                        and line_data.get("partner_id")[0]
-                        or False
-                    )
-                    break
-            if st_line.partner_id.id != partner_id:
+        if "partner_id" in changed_fields and not any(
+            field_name in changed_fields
+            for field_name in (
+                "payment_ref",
+                "amount",
+                "amount_currency",
+                "foreign_currency_id",
+                "currency_id",
+            )
+        ):
+            for st_line in self.with_context(skip_account_move_synchronization=True):
                 (
                     liquidity_lines,
                     suspense_lines,
                     _other_lines,
                 ) = st_line._seek_for_lines()
-                line_vals = {"partner_id": partner_id}
+                line_vals = {"partner_id": st_line.partner_id}
                 line_ids_commands = [(1, liquidity_lines.id, line_vals)]
                 if suspense_lines:
                     line_ids_commands.append((1, suspense_lines.id, line_vals))
                 st_line_vals = {"line_ids": line_ids_commands}
-                if st_line.move_id.partner_id.id != partner_id:
-                    st_line_vals["partner_id"] = partner_id
+                if st_line.move_id.partner_id != st_line.partner_id:
+                    st_line_vals["partner_id"] = st_line.partner_id.id
                 st_line.move_id.write(st_line_vals)
-                st_line.write({"partner_id": partner_id})
-
-    def _synchronize_to_moves(self, changed_fields):
-        """We take advantage of this method to call the custom method that does
-        specific things. Also, if something is changed, we will re-define
-        reconcile_data_info to make the data consistent (for example, if debit/credit
-        has changed by applying a different rate).
-        """
-        super()._synchronize_to_moves(changed_fields=changed_fields)
-        self._synchronize_to_moves_custom(changed_fields)
-        if self._context.get("skip_account_move_synchronization"):
-            return
+        else:
+            super()._synchronize_to_moves(changed_fields=changed_fields)
 
         if not any(
             field_name in changed_fields
@@ -1040,8 +1034,9 @@ class AccountBankStatementLine(models.Model):
             )
         ):
             return
-
-        for st_line in self.with_context(skip_account_move_synchronization=True):
+        # reset reconcile_data_info if amounts are not consistent anymore with the
+        # amounts of the accounting entries
+        for st_line in self:
             if st_line._check_reconcile_data_changed():
                 st_line.reconcile_data_info = st_line._default_reconcile_data()
 
