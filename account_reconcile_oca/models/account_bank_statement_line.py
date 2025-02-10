@@ -569,8 +569,11 @@ class AccountBankStatementLine(models.Model):
             new_line = line.copy()
             amount = line.get("balance")
             if self.foreign_currency_id:
-                amount = self.foreign_currency_id.compute(
-                    amount, self.journal_id.currency_id or self.company_currency_id
+                amount = self.foreign_currency_id._convert(
+                    amount,
+                    self.journal_id.currency_id or self.company_currency_id,
+                    self.company_id,
+                    self.date,
                 )
             if currency != self.company_id.currency_id:
                 currency_amount = self.company_id.currency_id._convert(
