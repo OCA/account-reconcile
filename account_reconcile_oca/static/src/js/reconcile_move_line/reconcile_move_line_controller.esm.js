@@ -8,6 +8,15 @@ export class ReconcileMoveLineController extends ListController {
         data[this.props.parentField] = [record.resId, record.display_name];
         this.props.parentRecord.update(data);
     }
+    async clickAddAll() {
+        await this.props.parentRecord.save();
+        await this.orm.call(this.props.parentRecord.resModel, "add_multiple_lines", [
+            this.props.parentRecord.resIds,
+            this.model.root.domain,
+        ]);
+        await this.props.parentRecord.load();
+        this.props.parentRecord.model.notify();
+    }
 }
 
 ReconcileMoveLineController.template = `account_reconcile_oca.ReconcileMoveLineController`;

@@ -132,15 +132,16 @@ class AccountAccountReconcile(models.Model):
     @api.onchange("add_account_move_line_id")
     def _onchange_add_account_move_line(self):
         if self.add_account_move_line_id:
-            data = self.reconcile_data_info
-            if self.add_account_move_line_id.id not in data["counterparts"]:
-                data["counterparts"].append(self.add_account_move_line_id.id)
-            else:
-                del data["counterparts"][
-                    data["counterparts"].index(self.add_account_move_line_id.id)
-                ]
-            self.reconcile_data_info = self._recompute_data(data)
+            self._add_account_move_line(self.add_account_move_line_id)
             self.add_account_move_line_id = False
+
+    def _add_account_move_line(self, move_line, keep_current=False):
+        data = self.reconcile_data_info
+        if move_line.id not in data["counterparts"]:
+            data["counterparts"].append(move_line.id)
+        elif not keep_current:
+            del data["counterparts"][data["counterparts"].index(move_line.id)]
+        self.reconcile_data_info = self._recompute_data(data)
 
     @api.onchange("manual_reference", "manual_delete")
     def _onchange_manual_reconcile_reference(self):
@@ -186,6 +187,13 @@ class AccountAccountReconcile(models.Model):
             [("user_id", "=", self.env.user.id), ("reconcile_id", "=", self.id)]
         )
         data_record.unlink()
+
+    def add_multiple_lines(self, domain):
+        res = super().add_multiple_lines(domain)
+        lines = self.env["account.move.line"].search(domain)
+        for line in lines:
+            self._add_account_move_line(line, keep_current=True)
+        return res
 
 
 class AccountAccountReconcileData(models.TransientModel):

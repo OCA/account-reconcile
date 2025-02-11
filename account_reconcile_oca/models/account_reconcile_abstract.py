@@ -124,3 +124,6 @@ class AccountReconcileAbstract(models.AbstractModel):
         if is_counterpart:
             vals["counterpart_line_ids"] = line.ids
         return [vals]
+
+    def add_multiple_lines(self, domain):
+        self.ensure_one()

@@ -194,36 +194,39 @@ class AccountBankStatementLine(models.Model):
     @api.onchange("add_account_move_line_id")
     def _onchange_add_account_move_line_id(self):
         if self.add_account_move_line_id:
-            data = self.reconcile_data_info["data"]
-            new_data = []
-            is_new_line = True
-            pending_amount = 0.0
-            currency = self._get_reconcile_currency()
-            for line in data:
-                if line["kind"] != "suspense":
-                    pending_amount += self._get_amount_currency(line, currency)
-                if self.add_account_move_line_id.id in line.get(
-                    "counterpart_line_ids", []
-                ):
-                    is_new_line = False
-                else:
-                    new_data.append(line)
-            if is_new_line:
-                reconcile_auxiliary_id, lines = self._get_reconcile_line(
-                    self.add_account_move_line_id,
-                    "other",
-                    is_counterpart=True,
-                    max_amount=currency.round(pending_amount),
-                    move=True,
-                )
-                new_data += lines
-            self.reconcile_data_info = self._recompute_suspense_line(
-                new_data,
-                self.reconcile_data_info["reconcile_auxiliary_id"],
-                self.manual_reference,
-            )
-            self.can_reconcile = self.reconcile_data_info.get("can_reconcile", False)
+            self._add_account_move_line(self.add_account_move_line_id)
             self.add_account_move_line_id = False
+
+    def _add_account_move_line(self, move_line, keep_current=False):
+        data = self.reconcile_data_info["data"]
+        new_data = []
+        is_new_line = True
+        pending_amount = 0.0
+        currency = self._get_reconcile_currency()
+        for line in data:
+            if line["kind"] != "suspense":
+                pending_amount += self._get_amount_currency(line, currency)
+            if move_line.id in line.get("counterpart_line_ids", []):
+                is_new_line = False
+                if keep_current:
+                    new_data.append(line)
+            else:
+                new_data.append(line)
+        if is_new_line:
+            reconcile_auxiliary_id, lines = self._get_reconcile_line(
+                move_line,
+                "other",
+                is_counterpart=True,
+                max_amount=currency.round(pending_amount),
+                move=True,
+            )
+            new_data += lines
+        self.reconcile_data_info = self._recompute_suspense_line(
+            new_data,
+            self.reconcile_data_info["reconcile_auxiliary_id"],
+            self.manual_reference,
+        )
+        self.can_reconcile = self.reconcile_data_info.get("can_reconcile", False)
 
     def _recompute_suspense_line(self, data, reconcile_auxiliary_id, manual_reference):
         can_reconcile = True
@@ -1260,3 +1263,10 @@ class AccountBankStatementLine(models.Model):
             or self.journal_id.currency_id
             or self.company_id.currency_id
         )
+
+    def add_multiple_lines(self, domain):
+        res = super().add_multiple_lines(domain)
+        lines = self.env["account.move.line"].search(domain)
+        for line in lines:
+            self._add_account_move_line(line, keep_current=True)
+        return res

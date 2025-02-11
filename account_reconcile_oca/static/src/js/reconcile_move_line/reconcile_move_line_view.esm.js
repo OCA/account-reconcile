@@ -10,6 +10,7 @@ export const ReconcileMoveLineView = {
     ...listView,
     Controller: ReconcileMoveLineController,
     Renderer: ReconcileMoveLineRenderer,
+    buttonTemplate: "reconcile_move_line.ListView.Buttons",
 };
 
 registry.category("views").add("reconcile_move_line", ReconcileMoveLineView);
