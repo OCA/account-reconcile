@@ -200,4 +200,7 @@
             <attribute name="parentField">props.parentField</attribute>
         </xpath>
     </t>
+    <t t-name="reconcile_move_line.ListView.Buttons">
+        <button class="btn btn-primary" t-on-click="clickAddAll">Add all</button>
+    </t>
 </templates>
