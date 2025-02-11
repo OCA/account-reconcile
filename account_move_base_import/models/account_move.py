@@ -385,10 +385,7 @@ class AccountMove(models.Model):
                 except Exception as exc:
                     msg_lines.append(repr(exc))
                     error_type, error_value, trbk = sys.exc_info()
-                    st = "Error: {}\nDescription: {}\nTraceback:".format(
-                        error_type.__name__,
-                        error_value,
-                    )
+                    st = f"Error: {error_type.__name__}\nDescription: {error_value}\nTraceback:"
                     st += "".join(traceback.format_tb(trbk, 30))
                     _logger.error(st)
                 if res:
@@ -397,10 +394,7 @@ class AccountMove(models.Model):
                     except Exception as exc:
                         msg_lines.append(repr(exc))
                         error_type, error_value, trbk = sys.exc_info()
-                        st = "Error: {}\nDescription: {}\nTraceback:".format(
-                            error_type.__name__,
-                            error_value,
-                        )
+                        st = f"Error: {error_type.__name__}\nDescription: {error_value}\nTraceback:"
                         st += "".join(traceback.format_tb(trbk, 30))
                         _logger.error(st)
             msg = "\n".join(msg_lines)

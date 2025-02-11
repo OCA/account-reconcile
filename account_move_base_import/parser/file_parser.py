@@ -16,7 +16,7 @@ _logger = logging.getLogger(__name__)
 
 try:
     import xlrd
-except (ImportError, IOError) as err:
+except (OSError, ImportError) as err:
     _logger.debug(err)
     xlrd = False
 
@@ -40,7 +40,7 @@ class FileParser(AccountMoveImportParser):
         header=None,
         dialect=None,
         move_ref=None,
-        **kwargs
+        **kwargs,
     ):
         """
         :param char: parse_name: The name of the parser
@@ -123,7 +123,7 @@ class FileParser(AccountMoveImportParser):
         csv_file = tempfile.NamedTemporaryFile()
         csv_file.write(self.filebuffer)
         csv_file.flush()
-        with open(csv_file.name, "r") as fobj:
+        with open(csv_file.name) as fobj:
             reader = UnicodeDictReader(
                 fobj, fieldnames=self.fieldnames, dialect=self.dialect
             )
@@ -141,7 +141,9 @@ class FileParser(AccountMoveImportParser):
             header = sheet.row_values(0)
             res = []
             for rownum in range(1, sheet.nrows):
-                res.append(dict(list(zip(header, sheet.row_values(rownum)))))
+                res.append(
+                    dict(list(zip(header, sheet.row_values(rownum), strict=False)))
+                )
         return res
 
     def _from_csv(self, result_set, conversion_rules):

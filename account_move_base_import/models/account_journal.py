@@ -286,7 +286,7 @@ class AccountJournal(models.Model):
         attachment_data = {
             "name": "statement file",
             "datas": file_stream,
-            "store_fname": "{}.{}".format(fields.Date.today(), ftype),
+            "store_fname": f"{fields.Date.today()}.{ftype}",
             "res_model": "account.move",
             "res_id": moves[0].id,
         }
@@ -373,7 +373,7 @@ class AccountJournal(models.Model):
             attachment_data = {
                 "name": "statement file",
                 "datas": file_stream,
-                "store_fname": "{}.{}".format(fields.Date.today(), ftype),
+                "store_fname": f"{fields.Date.today()}.{ftype}",
                 "res_model": "account.move",
                 "res_id": move.id,
             }
@@ -388,10 +388,7 @@ class AccountJournal(models.Model):
             raise
         except Exception:
             error_type, error_value, trbk = sys.exc_info()
-            st = "Error: {}\nDescription: {}\nTraceback:".format(
-                error_type.__name__,
-                error_value,
-            )
+            st = f"Error: {error_type.__name__}\nDescription: {error_value}\nTraceback:"
             st += "".join(traceback.format_tb(trbk, 30))
             raise ValidationError(
                 _("Statement import error " "The statement cannot be created: %s") % st

@@ -24,8 +24,7 @@ def UnicodeDictReader(utf8_data, **kwargs):
         yield {str(key or ""): str(value or "") for key, value in row.items()}
 
 
-class AccountMoveImportParser(object):
-
+class AccountMoveImportParser:
     """
     Generic abstract class for defining parser for different files and
     format to import in a bank statement. Inherit from it to create your
