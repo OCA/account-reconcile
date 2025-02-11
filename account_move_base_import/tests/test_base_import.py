@@ -7,9 +7,9 @@ import base64
 import os
 from operator import attrgetter
 
+import odoo
 import odoo.tests
 from odoo import fields
-from odoo.modules import get_resource_path
 
 from odoo.addons.account.tests.common import AccountTestInvoicingCommon
 
@@ -17,8 +17,8 @@ from odoo.addons.account.tests.common import AccountTestInvoicingCommon
 @odoo.tests.tagged("post_install", "-at_install")
 class TestCodaImport(AccountTestInvoicingCommon):
     @classmethod
-    def setUpClass(cls, chart_template_ref=None):
-        super().setUpClass(chart_template_ref=chart_template_ref)
+    def setUpClass(cls):
+        super().setUpClass()
         cls.account_move_obj = cls.env["account.move"]
         cls.account_move_line_obj = cls.env["account.move.line"]
         cls.journal = cls.company_data["default_journal_bank"]
@@ -54,16 +54,16 @@ class TestCodaImport(AccountTestInvoicingCommon):
 
     def test_simple_xls(self):
         """Test import from xls"""
-        file_name = get_resource_path(
-            "account_move_base_import", "tests", "data", "statement.xls"
+        file_name = odoo.tools.misc.file_path(
+            "account_move_base_import/tests/data/statement.xls"
         )
         move = self._import_file(file_name)
         self._validate_imported_move(move)
 
     def test_simple_csv(self):
         """Test import from csv"""
-        file_name = get_resource_path(
-            "account_move_base_import", "tests", "data", "statement.csv"
+        file_name = odoo.tools.misc.file_path(
+            "account_move_base_import/tests/data/statement.csv"
         )
         move = self._import_file(file_name)
         self._validate_imported_move(move)

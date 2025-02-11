@@ -7,7 +7,7 @@ import logging
 import sys
 import traceback
 
-from odoo import _, api, fields, models
+from odoo import api, fields, models
 from odoo.exceptions import ValidationError
 
 _logger = logging.getLogger(__name__)
@@ -82,7 +82,7 @@ class AccountMoveCompletionRule(models.Model):
             number_field = "name"
         else:
             raise ValidationError(
-                _("Invalid invoice type for completion: %s") % inv_type
+                self.env._("Invalid invoice type for completion: %s") % inv_type
             )
 
         invoices = inv_obj.search(
@@ -93,7 +93,7 @@ class AccountMoveCompletionRule(models.Model):
                 return invoices
             else:
                 raise ErrorTooManyPartner(
-                    _(
+                    self.env._(
                         'Line named "%(line_name)s" was matched by more than one '
                         "partner while looking on %(inv_type)s invoices"
                     )
@@ -105,7 +105,7 @@ class AccountMoveCompletionRule(models.Model):
         """Populate statement line values"""
         if inv_type not in ("supplier", "customer"):
             raise ValidationError(
-                _("Invalid invoice type for completion: %s") % inv_type
+                self.env._("Invalid invoice type for completion: %s") % inv_type
             )
         res = {}
         invoice = self._find_invoice(line, inv_type)
@@ -168,15 +168,15 @@ class AccountMoveCompletionRule(models.Model):
         """
         res = {}
         partner_obj = self.env["res.partner"]
-        or_regex = ".*;? *%s *;?.*" % line.name
-        self.env["res.partner"].flush(["bank_statement_label"])
+        or_regex = f".*;? *{line.name} *;?.*"
+        self.env["res.partner"].flush_model(["bank_statement_label"])
         sql = "SELECT id from res_partner" " WHERE bank_statement_label ~* %s"
         self.env.cr.execute(sql, (or_regex,))
         partner_ids = self.env.cr.fetchall()
         partners = partner_obj.browse([x[0] for x in partner_ids])
         if partners:
             if len(partners) > 1:
-                msg = _(
+                msg = self.env._(
                     'Line named "%(line_name)s" was matched by more than '
                     "one partner while looking on partner label: %(partner_labels)s"
                 ) % {
@@ -211,7 +211,7 @@ class AccountMoveCompletionRule(models.Model):
         # to:
         #  http://www.postgresql.org/docs/9.0/static/functions-matching.html
         # in chapter 9.7.3.6. Limits and Compatibility
-        self.env["res.partner"].flush(["name"])
+        self.env["res.partner"].flush_model(["name"])
         sql = r"""
         SELECT id FROM (
             SELECT id,
@@ -226,7 +226,7 @@ class AccountMoveCompletionRule(models.Model):
         if result:
             if len(result) > 1:
                 raise ErrorTooManyPartner(
-                    _(
+                    self.env._(
                         'Line named "%s" was matched by more than one '
                         "partner while looking on partner by name"
                     )
@@ -335,7 +335,7 @@ class AccountMove(models.Model):
         number_line = len(self.line_ids)
         log = self.completion_logs or ""
         completion_date = fields.Datetime.now()
-        message = _(
+        message = self.env._(
             "%(completion_date)s Account Move %(move_name)s has %(num_imported)s/"
             "%(number_line)s lines completed by "
             "%(user_name)s \n%(error_msg)s\n%(log)s\n"
@@ -352,7 +352,7 @@ class AccountMove(models.Model):
 
         body = (
             (
-                _(
+                self.env._(
                     "Statement ID %(move_name)s auto-completed for %(num_imported)s/"
                     "%(number_line)s lines completed"
                 )
@@ -385,7 +385,8 @@ class AccountMove(models.Model):
                 except Exception as exc:
                     msg_lines.append(repr(exc))
                     error_type, error_value, trbk = sys.exc_info()
-                    st = f"Error: {error_type.__name__}\nDescription: {error_value}\nTraceback:"
+                    st = f"Error: {error_type.__name__}\n\
+                    Description: {error_value}\nTraceback:"
                     st += "".join(traceback.format_tb(trbk, 30))
                     _logger.error(st)
                 if res:
@@ -394,7 +395,8 @@ class AccountMove(models.Model):
                     except Exception as exc:
                         msg_lines.append(repr(exc))
                         error_type, error_value, trbk = sys.exc_info()
-                        st = f"Error: {error_type.__name__}\nDescription: {error_value}\nTraceback:"
+                        st = f"Error: {error_type.__name__}\n\
+                        Description: {error_value}\nTraceback:"
                         st += "".join(traceback.format_tb(trbk, 30))
                         _logger.error(st)
             msg = "\n".join(msg_lines)

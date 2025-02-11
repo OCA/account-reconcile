@@ -6,7 +6,7 @@
 import base64
 import csv
 
-from odoo import _, fields
+from odoo import fields
 
 
 def UnicodeDictReader(utf8_data, **kwargs):
@@ -144,7 +144,7 @@ class AccountMoveImportParser:
         if filebuffer:
             self.filebuffer = filebuffer
         else:
-            raise Exception(_("No buffer file given."))
+            raise Exception(self.env._("No buffer file given."))
         self._format(*args, **kwargs)
         self._pre(*args, **kwargs)
         if self.support_multi_moves:
@@ -197,8 +197,7 @@ def itersubclasses(cls, _seen=None):
         if sub not in _seen:
             _seen.add(sub)
             yield sub
-            for sub in itersubclasses(sub, _seen):
-                yield sub
+            yield from itersubclasses(sub, _seen)
 
 
 def new_move_parser(journal, *args, **kwargs):

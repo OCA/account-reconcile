@@ -7,7 +7,7 @@ import os
 import sys
 import traceback
 
-from odoo import _, fields, models
+from odoo import fields, models
 from odoo.exceptions import UserError, ValidationError
 
 from ..parser.parser import new_move_parser
@@ -172,14 +172,17 @@ class AccountJournal(models.Model):
         partner_id = self.partner_id.id
         # Commission line
         if global_commission_amount > 0.0:
-            raise UserError(_("Commission amount should not be positive."))
+            raise UserError(self.env._("Commission amount should not be positive."))
         elif global_commission_amount < 0.0:
             if not self.commission_account_id:
-                raise UserError(_("No commission account is set on the journal."))
+                error_no_comission = self.env._(
+                    "No commission account is set on the journal."
+                )
+                raise UserError(error_no_comission)
             else:
                 commission_account_id = self.commission_account_id.id
                 comm_values = {
-                    "name": _("Commission line"),
+                    "name": self.env._("Commission line"),
                     "date_maturity": (
                         parser.get_move_vals().get("date") or fields.Date.today()
                     ),
@@ -217,7 +220,9 @@ class AccountJournal(models.Model):
         :return: True
         """
         self.message_post(
-            body=_("Move %(move_name)s have been imported with %(num_lines)s " "lines.")
+            body=self.env._(
+                "Move %(move_name)s have been imported with %(num_lines)s " "lines."
+            )
             % {"move_name": move.name, "num_lines": num_lines}
         )
         return True
@@ -340,12 +345,12 @@ class AccountJournal(models.Model):
             result_row_list = parser.result_row_list
         # Check all key are present in account.bank.statement.line!!
         if not result_row_list:
-            raise UserError(_("Nothing to import: " "The file is empty"))
+            raise UserError(self.env._("Nothing to import: " "The file is empty"))
         parsed_cols = list(parser.get_move_line_vals(result_row_list[0]).keys())
         for col in parsed_cols:
             if col not in move_line_obj._fields:
                 raise UserError(
-                    _(
+                    self.env._(
                         "Missing column! Column %s you try to import is not "
                         "present in the move line!"
                     )
@@ -391,6 +396,9 @@ class AccountJournal(models.Model):
             st = f"Error: {error_type.__name__}\nDescription: {error_value}\nTraceback:"
             st += "".join(traceback.format_tb(trbk, 30))
             raise ValidationError(
-                _("Statement import error " "The statement cannot be created: %s") % st
+                self.env._(
+                    "Statement import error " "The statement cannot be created: %s"
+                )
+                % st
             ) from None
         return move

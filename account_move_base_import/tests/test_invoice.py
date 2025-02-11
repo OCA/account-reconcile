@@ -1,20 +1,85 @@
 # Copyright 2019 Camptocamp SA
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl)
-import odoo.tests
-from odoo import fields
+import time
 
-from odoo.addons.account.tests.common import TestAccountReconciliationCommon
+import odoo.tests
+from odoo import Command, fields
+
+from odoo.addons.account.tests.common import AccountTestInvoicingCommon
 
 
 @odoo.tests.tagged("post_install", "-at_install")
-class TestInvoice(TestAccountReconciliationCommon):
+class TestInvoice(AccountTestInvoicingCommon):
     @classmethod
-    def setUpClass(cls, chart_template_ref=None):
-        super().setUpClass(chart_template_ref=chart_template_ref)
+    def setUpClass(cls):
+        super().setUpClass()
         cls.account_move_obj = cls.env["account.move"]
         cls.account_move_line_obj = cls.env["account.move.line"]
         cls.journal = cls.company_data["default_journal_bank"]
         cls.account_id = cls.journal.default_account_id.id
+        cls.partner_agrolait = cls.env["res.partner"].create(
+            {
+                "name": "Deco Agrolait",
+                "is_company": True,
+                "country_id": cls.env.ref("base.us").id,
+            }
+        )
+        cls.partner_agrolait_id = cls.partner_agrolait.id
+
+    def _create_invoice(
+        self,
+        move_type="out_invoice",
+        invoice_amount=50,
+        currency_id=None,
+        partner_id=None,
+        date_invoice=None,
+        payment_term_id=False,
+        auto_validate=False,
+        taxes=None,
+        state=None,
+    ):
+        if move_type == "entry":
+            raise AssertionError("Unexpected move_type : 'entry'.")
+
+        if not taxes:
+            taxes = self.env["account.tax"]
+
+        date_invoice = date_invoice or time.strftime("%Y") + "-07-01"
+
+        invoice_vals = {
+            "move_type": move_type,
+            "partner_id": partner_id or self.partner_agrolait.id,
+            "invoice_date": date_invoice,
+            "date": date_invoice,
+            "invoice_line_ids": [
+                Command.create(
+                    {
+                        "name": f"product that cost {invoice_amount}",
+                        "quantity": 1,
+                        "price_unit": invoice_amount,
+                        "tax_ids": [Command.set(taxes.ids)],
+                    }
+                )
+            ],
+        }
+
+        if payment_term_id:
+            invoice_vals["invoice_payment_term_id"] = payment_term_id
+
+        if currency_id:
+            invoice_vals["currency_id"] = currency_id
+
+        invoice = (
+            self.env["account.move"]
+            .with_context(default_move_type=move_type)
+            .create(invoice_vals)
+        )
+
+        if state == "cancel":
+            invoice.write({"state": "cancel"})
+        elif auto_validate or state == "posted":
+            invoice.action_post()
+        return invoice
 
     def test_all_completion_rules(self):
         # I fill in the field Bank Statement Label in a Partner

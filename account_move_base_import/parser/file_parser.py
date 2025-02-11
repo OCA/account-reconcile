@@ -7,7 +7,6 @@ import datetime
 import logging
 import tempfile
 
-from odoo import _
 from odoo.exceptions import UserError
 
 from .parser import AccountMoveImportParser, UnicodeDictReader
@@ -56,7 +55,7 @@ class FileParser(AccountMoveImportParser):
             self.ftype = ftype[0:3]
         else:
             raise UserError(
-                _("Invalid file type %s. Please use csv, xls or xlsx") % ftype
+                self.env._("Invalid file type %s. Please use csv, xls or xlsx") % ftype
             )
         self.conversion_dict = extra_fields
         self.keys_to_validate = list(self.conversion_dict.keys())
@@ -109,7 +108,7 @@ class FileParser(AccountMoveImportParser):
             parsed_cols = list(self.result_row_list[0].keys())
             for col in self.keys_to_validate:
                 if col not in parsed_cols:
-                    raise UserError(_("Column %s not present in file") % col)
+                    raise UserError(self.env._("Column %s not present in file") % col)
         return True
 
     def _post(self, *args, **kwargs):
@@ -158,7 +157,7 @@ class FileParser(AccountMoveImportParser):
                         line[rule] = datetime.datetime.strptime(date_string, "%Y-%m-%d")
                     except ValueError as err:
                         raise UserError(
-                            _(
+                            self.env._(
                                 "Date format is not valid."
                                 " It should be YYYY-MM-DD for column: %(rule)s"
                                 " value: %(line_value)s \n \n \n Please check"
@@ -167,7 +166,7 @@ class FileParser(AccountMoveImportParser):
                             )
                             % {
                                 "rule": rule,
-                                "line_value": line.get(rule, _("Missing")),
+                                "line_value": line.get(rule, self.env._("Missing")),
                                 "ref_value": line.get("ref", line),
                                 "error": repr(err),
                             }
@@ -177,13 +176,13 @@ class FileParser(AccountMoveImportParser):
                         line[rule] = conversion_rules[rule](line[rule])
                     except Exception as err:
                         raise UserError(
-                            _(
+                            self.env._(
                                 "Value %(line_value)s of column %(rule)s is not valid."
                                 "\n Please check the line with ref %(value_ref)s:\n "
                                 "\n Detail: %(error)s"
                             )
                             % {
-                                "line_value": line.get(rule, _("Missing")),
+                                "line_value": line.get(rule, self.env._("Missing")),
                                 "rule": rule,
                                 "value_ref": line.get("ref", line),
                                 "error": repr(err),
@@ -203,7 +202,7 @@ class FileParser(AccountMoveImportParser):
                         line[rule] = datetime.datetime(*t_tuple)
                     except Exception as err:
                         raise UserError(
-                            _(
+                            self.env._(
                                 "Date format is not valid. "
                                 "Please modify the cell formatting to date "
                                 "format for column: %(rule)s value: %(line_value)s\n "
@@ -212,7 +211,7 @@ class FileParser(AccountMoveImportParser):
                             )
                             % {
                                 "rule": rule,
-                                "line_value": line.get(rule, _("Missing")),
+                                "line_value": line.get(rule, self.env._("Missing")),
                                 "value_ref": line.get("ref", line),
                                 "error": repr(err),
                             }
@@ -222,13 +221,13 @@ class FileParser(AccountMoveImportParser):
                         line[rule] = conversion_rules[rule](line[rule])
                     except Exception as err:
                         raise UserError(
-                            _(
+                            self.env._(
                                 "Value %(line_value)s of column %(rule)s is not valid."
                                 "\n Please check the line with ref %(value_ref)s:\n "
                                 "\n Detail: %(error)s"
                             )
                             % {
-                                "line_value": line.get(rule, _("Missing")),
+                                "line_value": line.get(rule, self.env._("Missing")),
                                 "rule": rule,
                                 "value_ref": line.get("ref", line),
                                 "error": repr(err),
@@ -241,6 +240,6 @@ class FileParser(AccountMoveImportParser):
         providen. We call here _from_xls or _from_csv depending on the
         self.ftype variable.
         """
-        func = getattr(self, "_from_%s" % self.ftype)
+        func = getattr(self, f"_from_{self.ftype}")
         res = func(self.result_row_list, self.conversion_dict)
         return res

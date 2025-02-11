@@ -11,7 +11,6 @@
                         domain="[('used_for_import', '=', True)]"
                     />
                     <field name="input_statement" filename="file_name" />
-                    <field name="file_name" invisible="1" />
                 </group>
                 <group string="Import Parameters Summary" name="params">
                     <field name="partner_id" />
