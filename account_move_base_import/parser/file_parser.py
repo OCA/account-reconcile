@@ -16,7 +16,7 @@ _logger = logging.getLogger(__name__)
 
 try:
     import xlrd
-except (ImportError, IOError) as err:
+except (OSError, ImportError) as err:
     _logger.debug(err)
     xlrd = False
 
@@ -40,7 +40,7 @@ class FileParser(AccountMoveImportParser):
         header=None,
         dialect=None,
         move_ref=None,
-        **kwargs
+        **kwargs,
     ):
         """
         :param char: parse_name: The name of the parser
@@ -123,7 +123,7 @@ class FileParser(AccountMoveImportParser):
         csv_file = tempfile.NamedTemporaryFile()
         csv_file.write(self.filebuffer)
         csv_file.flush()
-        with open(csv_file.name, "r") as fobj:
+        with open(csv_file.name) as fobj:
             reader = UnicodeDictReader(
                 fobj, fieldnames=self.fieldnames, dialect=self.dialect
             )
@@ -141,7 +141,9 @@ class FileParser(AccountMoveImportParser):
             header = sheet.row_values(0)
             res = []
             for rownum in range(1, sheet.nrows):
-                res.append(dict(list(zip(header, sheet.row_values(rownum)))))
+                res.append(
+                    dict(list(zip(header, sheet.row_values(rownum), strict=False)))
+                )
         return res
 
     def _from_csv(self, result_set, conversion_rules):
@@ -161,14 +163,12 @@ class FileParser(AccountMoveImportParser):
                                 " It should be YYYY-MM-DD for column: %(rule)s"
                                 " value: %(line_value)s \n \n \n Please check"
                                 " the line with ref: %(ref_value)s \n \n Detail: "
-                                "%(error)s"
+                                "%(error)s",
+                                rule=rule,
+                                line_value=line.get(rule, _("Missing")),
+                                ref_value=line.get("ref", line),
+                                error=repr(err),
                             )
-                            % {
-                                "rule": rule,
-                                "line_value": line.get(rule, _("Missing")),
-                                "ref_value": line.get("ref", line),
-                                "error": repr(err),
-                            }
                         ) from err
                 else:
                     try:
@@ -178,14 +178,12 @@ class FileParser(AccountMoveImportParser):
                             _(
                                 "Value %(line_value)s of column %(rule)s is not valid."
                                 "\n Please check the line with ref %(value_ref)s:\n "
-                                "\n Detail: %(error)s"
+                                "\n Detail: %(error)s",
+                                line_value=line.get(rule, _("Missing")),
+                                rule=rule,
+                                value_ref=line.get("ref", line),
+                                error=repr(err),
                             )
-                            % {
-                                "line_value": line.get(rule, _("Missing")),
-                                "rule": rule,
-                                "value_ref": line.get("ref", line),
-                                "error": repr(err),
-                            }
                         ) from err
         return result_set
 
@@ -206,14 +204,12 @@ class FileParser(AccountMoveImportParser):
                                 "Please modify the cell formatting to date "
                                 "format for column: %(rule)s value: %(line_value)s\n "
                                 "Please check the line with ref: %(value_ref)s\n "
-                                "\n Detail: %(error)s"
+                                "\n Detail: %(error)s",
+                                rule=rule,
+                                line_value=line.get(rule, _("Missing")),
+                                value_ref=line.get("ref", line),
+                                error=repr(err),
                             )
-                            % {
-                                "rule": rule,
-                                "line_value": line.get(rule, _("Missing")),
-                                "value_ref": line.get("ref", line),
-                                "error": repr(err),
-                            }
                         ) from err
                 else:
                     try:
@@ -223,14 +219,12 @@ class FileParser(AccountMoveImportParser):
                             _(
                                 "Value %(line_value)s of column %(rule)s is not valid."
                                 "\n Please check the line with ref %(value_ref)s:\n "
-                                "\n Detail: %(error)s"
+                                "\n Detail: %(error)s",
+                                line_value=line.get(rule, _("Missing")),
+                                rule=rule,
+                                value_ref=line.get("ref", line),
+                                error=repr(err),
                             )
-                            % {
-                                "line_value": line.get(rule, _("Missing")),
-                                "rule": rule,
-                                "value_ref": line.get("ref", line),
-                                "error": repr(err),
-                            }
                         ) from err
         return result_set
 
@@ -239,6 +233,6 @@ class FileParser(AccountMoveImportParser):
         providen. We call here _from_xls or _from_csv depending on the
         self.ftype variable.
         """
-        func = getattr(self, "_from_%s" % self.ftype)
+        func = getattr(self, f"_from_{self.ftype}")
         res = func(self.result_row_list, self.conversion_dict)
         return res

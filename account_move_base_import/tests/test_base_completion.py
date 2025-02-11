@@ -43,8 +43,8 @@ NAMES_COMPLETION_CASES = [
 @odoo.tests.tagged("post_install", "-at_install")
 class BaseCompletion(AccountTestInvoicingCommon):
     @classmethod
-    def setUpClass(cls, chart_template_ref=None):
-        super().setUpClass(chart_template_ref=chart_template_ref)
+    def setUpClass(cls):
+        super().setUpClass()
         cls.account_move_obj = cls.env["account.move"]
         cls.account_move_line_obj = cls.env["account.move.line"]
         cls.journal = cls.company_data["default_journal_bank"]
@@ -88,18 +88,18 @@ class BaseCompletion(AccountTestInvoicingCommon):
             )
             self.move.with_context(check_move_validity=False).button_auto_completion()
             if case.should_match:
+                test_text = f"Missing expected partner id after completion \
+                (partner_name: {case.partner_name}, line_name: {case.line_label})"
                 self.assertEqual(
                     self.partner,
                     self.move_line.partner_id,
-                    "Missing expected partner id after completion "
-                    "(partner_name: %s, line_name: %s)"
-                    % (case.partner_name, case.line_label),
+                    test_text,
                 )
             else:
+                test_text = f"Partner id should be empty after completion \
+                (partner_name: {case.partner_name}, line_name: {case.line_label})"
                 self.assertNotEqual(
                     self.partner,
                     self.move_line.partner_id,
-                    "Partner id should be empty after completion "
-                    "(partner_name: %s, line_name: %s)"
-                    % (case.partner_name, case.line_label),
+                    test_text,
                 )

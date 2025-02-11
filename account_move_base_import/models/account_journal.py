@@ -203,7 +203,11 @@ class AccountJournal(models.Model):
                     comm_values["currency_id"] = currency.id
                 if self.commission_analytic_account_id:
                     comm_values.update(
-                        {"analytic_account_id": self.commission_analytic_account_id.id}
+                        {
+                            "analytic_distribution": {
+                                self.commission_analytic_account_id.id: 100
+                            }
+                        }
                     )
                 vals_list.append(comm_values)
         return vals_list
@@ -217,8 +221,11 @@ class AccountJournal(models.Model):
         :return: True
         """
         self.message_post(
-            body=_("Move %(move_name)s have been imported with %(num_lines)s " "lines.")
-            % {"move_name": move.name, "num_lines": num_lines}
+            body=_(
+                "Move %(move_name)s have been imported with %(num_lines)s lines.",
+                move_name=move.name,
+                num_lines=num_lines,
+            )
         )
         return True
 
@@ -286,7 +293,7 @@ class AccountJournal(models.Model):
         attachment_data = {
             "name": "statement file",
             "datas": file_stream,
-            "store_fname": "{}.{}".format(fields.Date.today(), ftype),
+            "store_fname": f"{fields.Date.today()}.{ftype}",
             "res_model": "account.move",
             "res_id": moves[0].id,
         }
@@ -346,10 +353,10 @@ class AccountJournal(models.Model):
             if col not in move_line_obj._fields:
                 raise UserError(
                     _(
-                        "Missing column! Column %s you try to import is not "
-                        "present in the move line!"
+                        "Missing column! Column %(column)s you try to import is not "
+                        "present in the move line!",
+                        column=col,
                     )
-                    % col
                 )
         move_vals = self.prepare_move_vals(result_row_list, parser)
         move = move_obj.create(move_vals)
@@ -373,7 +380,7 @@ class AccountJournal(models.Model):
             attachment_data = {
                 "name": "statement file",
                 "datas": file_stream,
-                "store_fname": "{}.{}".format(fields.Date.today(), ftype),
+                "store_fname": f"{fields.Date.today()}.{ftype}",
                 "res_model": "account.move",
                 "res_id": move.id,
             }
@@ -388,12 +395,13 @@ class AccountJournal(models.Model):
             raise
         except Exception:
             error_type, error_value, trbk = sys.exc_info()
-            st = "Error: {}\nDescription: {}\nTraceback:".format(
-                error_type.__name__,
-                error_value,
-            )
+            st = f"Error: {error_type.__name__}\nDescription: {error_value}\nTraceback:"
             st += "".join(traceback.format_tb(trbk, 30))
             raise ValidationError(
-                _("Statement import error " "The statement cannot be created: %s") % st
+                _(
+                    "Statement import error "
+                    "The statement cannot be created: %(statement)s",
+                    statement=st,
+                )
             ) from None
         return move

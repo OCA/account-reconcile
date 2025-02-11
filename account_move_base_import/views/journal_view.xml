@@ -10,39 +10,31 @@
                 <field name="used_for_completion" />
             </field>
             <notebook position="inside">
-                <page
-                    string="Import related infos"
-                    attrs="{'invisible': [('used_for_import', '=', False)]}"
-                >
+                <page string="Import related infos" invisible="not used_for_import">
                     <group>
                         <field
                             name="launch_import_completion"
-                            attrs="{'invisible': ['|',
-                                                                                     ('used_for_import', '=', False),
-                                                                                     ('used_for_completion', '=', False)]}"
+                            invisible="not used_for_import or not used_for_completion"
                         />
                         <field
                             name="autovalidate_completed_move"
-                            attrs="{'invisible': [('launch_import_completion', '=', False)]}"
+                            invisible="not launch_import_completion"
                         />
                         <field name="last_import_date" readonly="1" />
-                        <field
-                            name="import_type"
-                            attrs="{'required': [('used_for_import', '=', True)]}"
-                        />
+                        <field name="import_type" required="used_for_import" />
                     </group>
                     <group>
                         <field name="commission_account_id" />
                         <field name="commission_analytic_account_id" />
                         <field
                             name="receivable_account_id"
-                            attrs="{'required': [('used_for_import', '=', True)]}"
+                            required="used_for_import"
                         />
                         <field name="partner_id" />
                         <field name="create_counterpart" />
                         <field
                             name="split_counterpart"
-                            attrs="{'invisible': [('create_counterpart', '=', False)]}"
+                            invisible="not create_counterpart"
                         />
                     </group>
                     <group>
@@ -56,7 +48,7 @@
                 </page>
                 <page
                     string="Auto-Completion related infos"
-                    attrs="{'invisible': [('used_for_completion', '=', False)]}"
+                    invisible="not used_for_completion"
                 >
                     <group string="Auto-Completion Rules" name="completion_rules">
                         <field name="rule_ids" colspan="2" nolabel="1" />

@@ -9,7 +9,7 @@ Wizard to import financial institute date in bank statement
 
 import os
 
-from odoo import _, api, fields, models
+from odoo import api, fields, models
 from odoo.exceptions import UserError
 
 
@@ -52,7 +52,7 @@ class CreditPartnerStatementImporter(models.TransientModel):
         self.ensure_one()
         (__, ftype) = os.path.splitext(self.file_name)
         if not ftype:
-            raise UserError(_("Please use a file with an extension"))
+            raise UserError(self.env._("Please use a file with an extension"))
         return ftype
 
     def import_statement(self):

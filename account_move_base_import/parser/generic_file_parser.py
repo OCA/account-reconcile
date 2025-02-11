@@ -5,8 +5,6 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html)
 import datetime
 
-from odoo.tools import ustr
-
 from .file_parser import FileParser, float_or_zero
 
 
@@ -19,7 +17,7 @@ class GenericFileParser(FileParser):
 
     def __init__(self, journal, ftype="csv", **kwargs):
         conversion_dict = {
-            "label": ustr,
+            "label": str,
             "date": datetime.datetime,
             "amount": float_or_zero,
         }

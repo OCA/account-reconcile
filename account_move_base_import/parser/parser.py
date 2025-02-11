@@ -24,8 +24,7 @@ def UnicodeDictReader(utf8_data, **kwargs):
         yield {str(key or ""): str(value or "") for key, value in row.items()}
 
 
-class AccountMoveImportParser(object):
-
+class AccountMoveImportParser:
     """
     Generic abstract class for defining parser for different files and
     format to import in a bank statement. Inherit from it to create your
@@ -198,8 +197,7 @@ def itersubclasses(cls, _seen=None):
         if sub not in _seen:
             _seen.add(sub)
             yield sub
-            for sub in itersubclasses(sub, _seen):
-                yield sub
+            yield from itersubclasses(sub, _seen)
 
 
 def new_move_parser(journal, *args, **kwargs):
