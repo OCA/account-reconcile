@@ -1452,8 +1452,10 @@ class TestReconciliationWidget(TestAccountReconciliationCommon):
             }
         )
         self.assertTrue(bank_stmt_line_1.is_reconciled)
-        self.assertTrue("test partner"
-                        in bank_stmt_line_1.line_ids.mapped("partner_id.name"))
+        self.assertTrue(
+            "test partner" in bank_stmt_line_1.line_ids.mapped("partner_id.name")
+        )
         self.assertTrue(bank_stmt_line_2.is_reconciled)
-        self.assertTrue("test partner"
-                        not in bank_stmt_line_2.line_ids.mapped("partner_id.name"))
+        self.assertTrue(
+            "test partner" not in bank_stmt_line_2.line_ids.mapped("partner_id.name")
+        )
