@@ -1389,3 +1389,71 @@ class TestReconciliationWidget(TestAccountReconciliationCommon):
             self.assertEqual(3, len(f.reconcile_data_info["data"]))
             self.assertTrue(f.can_reconcile)
             self.assertEqual(f.reconcile_data_info["data"][-1]["amount"], 3.63)
+
+    def test_reconcile_rule_with_partner_mapping(self):
+        """
+        Testing the fill of the bank statement line with
+        writeoff suggestion reconcile model with auto_reconcile
+        and partner matching
+        """
+
+        partner = self.env["res.partner"].create(
+            {
+                "name": "test partner",
+            }
+        )
+        self.env["account.reconcile.model"].create(
+            {
+                "name": "write-off model suggestion with partner matching",
+                "rule_type": "writeoff_suggestion",
+                "match_label": "contains",
+                "match_label_param": "RECEIVED FROM",
+                "auto_reconcile": True,
+                "line_ids": [(0, 0, {"account_id": self.current_assets_account.id})],
+                "partner_mapping_line_ids": [
+                    (
+                        0,
+                        0,
+                        {
+                            "partner_id": partner.id,
+                            "payment_ref_regex": ".*TOTO.*",
+                        },
+                    )
+                ],
+            }
+        )
+
+        bank_stmt = self.acc_bank_stmt_model.create(
+            {
+                "company_id": self.env.ref("base.main_company").id,
+                "journal_id": self.bank_journal_euro.id,
+                "date": time.strftime("%Y-07-15"),
+                "name": "test",
+            }
+        )
+        bank_stmt_line_1 = self.acc_bank_stmt_line_model.create(
+            {
+                "name": "DEMO WRITEOFF WITH PARTNER MAPPING 1",
+                "payment_ref": "RECEIVED FROM TOTO42",
+                "journal_id": self.bank_journal_euro.id,
+                "statement_id": bank_stmt.id,
+                "amount": 100,
+                "date": time.strftime("%Y-07-15"),
+            }
+        )
+        bank_stmt_line_2 = self.acc_bank_stmt_line_model.create(
+            {
+                "name": "DEMO WRITEOFF WITH PARTNER MAPPING 2",
+                "payment_ref": "RECEIVED FROM TETE42",
+                "journal_id": self.bank_journal_euro.id,
+                "statement_id": bank_stmt.id,
+                "amount": 100,
+                "date": time.strftime("%Y-07-15"),
+            }
+        )
+        self.assertTrue(bank_stmt_line_1.is_reconciled)
+        self.assertTrue("test partner"
+                        in bank_stmt_line_1.line_ids.mapped("partner_id.name"))
+        self.assertTrue(bank_stmt_line_2.is_reconciled)
+        self.assertTrue("test partner"
+                        not in bank_stmt_line_2.line_ids.mapped("partner_id.name"))

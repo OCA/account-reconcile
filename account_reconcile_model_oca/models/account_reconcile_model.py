@@ -136,6 +136,8 @@ class AccountReconcileModel(models.Model):
                 continue
 
             writeoff_line = line._get_write_off_move_line_dict(balance, currency)
+            if partner_id:
+                writeoff_line["partner_id"] = partner_id
             lines_vals_list.append(writeoff_line)
 
             residual_balance -= balance
