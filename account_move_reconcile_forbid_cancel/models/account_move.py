@@ -1,7 +1,7 @@
 # Copyright 2022 Tecnativa - Ernesto Tejeda
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
-from odoo import _, models, tools
+from odoo import models, tools
 from odoo.exceptions import ValidationError
 
 
@@ -15,7 +15,7 @@ class AccountMove(models.Model):
         ):
             if self._get_reconciled_amls():
                 raise ValidationError(
-                    _("You cannot reset to draft reconciled entries.")
+                    self.env._("You cannot reset to draft reconciled entries.")
                 )
         return super().button_draft()
 
@@ -25,5 +25,7 @@ class AccountMove(models.Model):
             or self.env.context.get("test_reconcile_forbid_cancel")
         ):
             if self._get_reconciled_amls():
-                raise ValidationError(_("You cannot cancel reconciled entries."))
+                raise ValidationError(
+                    self.env._("You cannot cancel reconciled entries.")
+                )
         return super().button_cancel()
