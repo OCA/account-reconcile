@@ -685,13 +685,16 @@ class AccountBankStatementLine(models.Model):
                         reconciled_line.move_id.journal_id
                         == self.company_id.currency_exchange_journal_id
                     ):
-                        reconcile_auxiliary_id, lines = self._get_reconcile_line(
-                            reconciled_line.move_id.line_ids - reconciled_line,
-                            "other",
-                            from_unreconcile=False,
-                            move=True,
-                        )
-                        data += lines
+                        for rl_item in (
+                            reconciled_line.move_id.line_ids - reconciled_line
+                        ):
+                            reconcile_auxiliary_id, lines = self._get_reconcile_line(
+                                rl_item,
+                                "other",
+                                from_unreconcile=False,
+                                move=True,
+                            )
+                            data += lines
                         continue
                     partial = partial_lines.filtered(
                         lambda r, line=reconciled_line: r.debit_move_id == line
