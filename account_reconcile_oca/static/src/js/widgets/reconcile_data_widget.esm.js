@@ -1,3 +1,4 @@
+/* global CustomEvent */
 import {formatDate, parseDate} from "@web/core/l10n/dates";
 import {formatMonetary} from "@web/views/fields/formatters";
 import {registry} from "@web/core/registry";
@@ -75,6 +76,7 @@ export class AccountReconcileDataWidget extends Component {
     async openMove(ev, moveId) {
         ev.preventDefault();
         ev.stopPropagation();
+        // eslint-disable-next-line no-undef
         console.log(moveId);
         const action = await this.orm.call("account.move", "get_formview_action", [
             [moveId],
