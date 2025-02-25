@@ -28,3 +28,8 @@ msgid ""
 msgstr ""
 "Preimpostazione per creare registrazioni contabili durante la corrispondenza "
 "tra fatture e pagamenti"
+
+#. module: account_reconcile_model_oca
+#: model:ir.model,name:account_reconcile_model_oca.model_account_reconcile_model_line
+msgid "Rules for the reconciliation model"
+msgstr ""
