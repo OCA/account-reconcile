@@ -2,7 +2,6 @@
 <!-- Copyright 2023 Dixmit
      License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
 <odoo>
-
     <record id="account_bank_statement_form_edit" model="ir.ui.view">
         <field name="name">Edit Bank statement</field>
         <field name="model">account.bank.statement</field>
@@ -27,7 +26,6 @@
                         <field name="line_ids" invisible="1" />
                     </group>
                 </sheet>
-
             </form>
         </field>
     </record>

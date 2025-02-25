@@ -1371,7 +1371,7 @@ class TestReconciliationWidget(TestAccountReconciliationCommon):
             )
             # check that adding a partner does not recompute the amounts on accounting
             # entries, but is still synchronized with accounting entries
-            f.manual_reference = "account.move.line;%s" % liquidity_lines.id
+            f.manual_reference = f"account.move.line;{liquidity_lines.id}"
             f.manual_partner_id = inv1.partner_id
             self.assertEqual(f.partner_id, inv1.partner_id)
             self.assertEqual(liquidity_lines.debit, 83.33)
@@ -1380,7 +1380,7 @@ class TestReconciliationWidget(TestAccountReconciliationCommon):
             # partner change
             self.assertEqual(liquidity_lines.debit, 83.33)
             self.assertEqual(liquidity_lines.partner_id, inv1.partner_id)
-            f.manual_reference = "account.move.line;%s" % line["id"]
+            f.manual_reference = f"account.move.line;{line['id']}"
             # simulate click on statement line, check amount does not recompute
             f.manual_partner_id = inv1.partner_id
             self.assertEqual(f.manual_amount, 83.33)

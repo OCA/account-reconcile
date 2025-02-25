@@ -2,7 +2,6 @@
 <!-- Copyright 2023 Dixmit
      License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
 <odoo>
-
     <record id="bank_statement_line_reconcile_view" model="ir.ui.view">
         <field name="name">account.bank.statement.line.reconcile</field>
         <field name="model">account.bank.statement.line</field>
@@ -151,7 +150,7 @@
             <form js_class="reconcile_form">
                 <div class="o_form_statusbar o_account_reconcile_oca_statusbar">
                     <div class="o_statusbar_buttons">
-                    <button
+                        <button
                             name="reconcile_bank_line"
                             type="object"
                             string="Validate"
@@ -306,23 +305,23 @@
                                     insible="manual_move_type not in ['in_invoice', 'in_refund', 'out_invoice', 'out_refund'] or manual_original_amount == 0"
                                 >
                                     Invoice <field
-                                        class="oe_inline"
-                                        name="manual_move_id"
-                                    />
+                                    class="oe_inline"
+                                    name="manual_move_id"
+                                />
                                     with an open amount <field
-                                        class="oe_inline"
-                                        name="manual_original_amount"
-                                    /> will be reduced by <field
-                                        class="oe_inline"
-                                        name="manual_amount"
-                                        readonly="1"
-                                    />.
+                                    class="oe_inline"
+                                    name="manual_original_amount"
+                                /> will be reduced by <field
+                                    class="oe_inline"
+                                    name="manual_amount"
+                                    readonly="1"
+                                />.
                                     <br />
                                 You might want to set the invoice as <button
-                                        name="button_manual_reference_full_paid"
-                                        type="object"
-                                        method_args="[1]"
-                                    >fully paid</button>.
+                                    name="button_manual_reference_full_paid"
+                                    type="object"
+                                    method_args="[1]"
+                                >fully paid</button>.
                                 </div>
                             </group>
                         </group>
@@ -334,7 +333,7 @@
                         </group>
                     </page>
                     <page name="chatter" string="Chatter">
-                         <field name="move_id" widget="account_reconcile_oca_chatter" />
+                        <field name="move_id" widget="account_reconcile_oca_chatter" />
                     </page>
                 </notebook>
             </form>

@@ -71,8 +71,8 @@
         </xpath>
         <xpath expr="//Layout" position="inside">
             <div class="o_account_reconcile_oca_info">
-            <t t-if="state.selectedRecordId">
-                <View t-props="viewReconcileInfo" t-key="state.selectedRecordId" />
+                <t t-if="state.selectedRecordId">
+                    <View t-props="viewReconcileInfo" t-key="state.selectedRecordId" />
                 </t>
             </div>
         </xpath>
