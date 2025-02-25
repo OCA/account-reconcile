@@ -20,6 +20,8 @@ export class ReconcileManualController extends FormController {
         try {
             await this.model.root.load();
         } catch (error) {
+            // eslint-disable-next-line no-undef
+            console.error("Error reloading form controller:", error);
             // This should happen when we reconcile a line (no more possible data...)
             if (this.env.parentController) {
                 await this.env.parentController.model.root.load();
