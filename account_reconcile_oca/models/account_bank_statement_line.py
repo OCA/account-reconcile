@@ -1029,7 +1029,9 @@ class AccountBankStatementLine(models.Model):
                 st_line_vals = {"line_ids": line_ids_commands}
                 if st_line.move_id.partner_id != st_line.partner_id:
                     st_line_vals["partner_id"] = st_line.partner_id.id
-                st_line.move_id.write(st_line_vals)
+                st_line.move_id.with_context(skip_readonly_check=True).write(
+                    st_line_vals
+                )
         else:
             super()._synchronize_to_moves(changed_fields=changed_fields)
 
