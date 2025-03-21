@@ -352,7 +352,8 @@ class AccountMoveLineReconcileManual(models.TransientModel):
             "params": {
                 "title": _("Successful reconciliation"),
                 "message": _(
-                    "Write-off journal entry: %(writeoff_move)s\nReconcile mark: %(full_rec)s",
+                    "Write-off journal entry: %(writeoff_move)s\n\
+                    Reconcile mark: %(full_rec)s",
                     full_rec=self.move_line_ids[0].full_reconcile_id.display_name,
                     writeoff_move=woff_move.name,
                 ),
