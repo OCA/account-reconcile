@@ -28,24 +28,32 @@ Account Move Line Reconcile Manual
 
 |badge1| |badge2| |badge3| |badge4| |badge5|
 
-This module adds a wizard to reconcile manually selected journal items. If the selected journal items are balanced, it will propose a full reconcile. Otherwise, the user will have to choose between partial reconciliation and full reconciliation with a write-off.
+This module adds a wizard to reconcile manually selected journal items.
+If the selected journal items are balanced, it will propose a full
+reconcile. Otherwise, the user will have to choose between partial
+reconciliation and full reconciliation with a write-off.
 
-For the old-time Odoo users, the feature provided by this module is similar to the wizard that was provided in the **account** module up to Odoo 11.0. It was later replaced by the special reconciliation JS interface, which was working well, but was not as fast and convenient.
+For the old-time Odoo users, the feature provided by this module is
+similar to the wizard that was provided in the **account** module up to
+Odoo 11.0. It was later replaced by the special reconciliation JS
+interface, which was working well, but was not as fast and convenient.
 
 Full reconciliation:
 
-.. figure:: https://raw.githubusercontent.com/OCA/account-reconcile/18.0/account_move_line_reconcile_manual/static/description/sshot_full_rec.png
-   :alt: Full reconciliation
+|image1|
 
-Choose between partial reconciliation and full reconciliation with a write-off:
+Choose between partial reconciliation and full reconciliation with a
+write-off:
 
-.. figure:: https://raw.githubusercontent.com/OCA/account-reconcile/18.0/account_move_line_reconcile_manual/static/description/sshot_partial_rec.png
-   :alt: Choose between partial reconciliation and full reconciliation with a write-off
+|image2|
 
 Reconcile with write-off:
 
-.. figure:: https://raw.githubusercontent.com/OCA/account-reconcile/18.0/account_move_line_reconcile_manual/static/description/sshot_rec_writeoff.png
-   :alt: Reconcile with write-off
+|image3|
+
+.. |image1| image:: https://raw.githubusercontent.com/OCA/account-reconcile/18.0/account_move_line_reconcile_manual/static/description/sshot_full_rec.png
+.. |image2| image:: https://raw.githubusercontent.com/OCA/account-reconcile/18.0/account_move_line_reconcile_manual/static/description/sshot_partial_rec.png
+.. |image3| image:: https://raw.githubusercontent.com/OCA/account-reconcile/18.0/account_move_line_reconcile_manual/static/description/sshot_rec_writeoff.png
 
 **Table of contents**
 
@@ -66,17 +74,17 @@ Credits
 =======
 
 Authors
-~~~~~~~
+-------
 
 * Akretion
 
 Contributors
-~~~~~~~~~~~~
+------------
 
-* Alexis de Lattre <alexis.delattre@akretion.com>
+- Alexis de Lattre <alexis.delattre@akretion.com>
 
 Maintainers
-~~~~~~~~~~~
+-----------
 
 This module is maintained by the OCA.
 
