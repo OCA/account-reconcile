@@ -62,7 +62,7 @@ class MassReconcileBase(models.AbstractModel):
         return self._base_columns()
 
     def _select_query(self, *args, **kwargs):
-        return "SELECT %s" % ", ".join(self._selection_columns())
+        return f"SELECT {', '.join(self._selection_columns())}"
 
     def _from_query(self, *args, **kwargs):
         return "FROM account_move_line "
@@ -92,7 +92,7 @@ class MassReconcileBase(models.AbstractModel):
         if self._filter:
             dummy, where, params = ml_obj._where_calc(safe_eval(self._filter)).get_sql()
             if where:
-                where = " AND %s" % where
+                where = f" AND {where}"
         return where, params
 
     def _below_writeoff_limit(self, lines, writeoff_limit):
