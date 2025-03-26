@@ -55,7 +55,7 @@ class MassReconcileHistory(models.Model):
         name = _("Reconciliations")
         return {
             "name": name,
-            "view_mode": "tree,form",
+            "view_mode": "list,form",
             "view_id": False,
             "res_model": "account.move.line",
             "type": "ir.actions.act_window",

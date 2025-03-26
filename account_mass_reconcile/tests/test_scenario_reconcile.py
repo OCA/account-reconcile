@@ -231,13 +231,26 @@ class TestScenarioReconcile(AccountTestInvoicingCommon):
             currency_rate = fields.first(currency_rate)
             currency_rate.rate = 1.5
         # create invoice
-        invoice = self.init_invoice(
-            move_type="out_invoice",
-            currency=self.env.ref("base.USD"),
-            amounts=[50],
-            invoice_date=fields.Date.today(),
-            post=True,
+        invoice = self.env["account.move"].create(
+            {
+                "move_type": "out_invoice",
+                "currency_id": self.env.ref("base.USD").id,
+                "partner_id": self.partner_a.id,
+                "invoice_date": fields.Date.today(),
+                "invoice_line_ids": [
+                    (
+                        0,
+                        0,
+                        {
+                            "name": "Test",
+                            "quantity": 1,
+                            "price_unit": 50,
+                        },
+                    )
+                ],
+            }
         )
+        invoice.action_post()
         self.assertEqual("posted", invoice.state)
 
         self.env["res.currency.rate"].create(
@@ -292,11 +305,11 @@ class TestScenarioReconcile(AccountTestInvoicingCommon):
                 "destination_account_id": receivable_account_id,
                 "amount": 500.0,
                 "journal_id": self.bank_journal.id,
-                "ref": "test ref",
+                "memo": "test ref",
             }
         )
         payment.action_post()
-        line_payment = payment.line_ids.filtered(
+        line_payment = payment.move_id.line_ids.filtered(
             lambda line: line.account_id.id == receivable_account_id
         )
         self.assertEqual(line_payment.reconciled, False)

@@ -186,7 +186,10 @@ class AccountMassReconcile(models.Model):
                     )
                 ) from e
             ctx = self.env.context.copy()
-            ctx["commit_every"] = rec.account.company_id.reconciliation_commit_every
+            company = rec.account.company_ids.filtered(
+                lambda c, rec=rec: c.id == rec.env.company.id
+            )
+            ctx["commit_every"] = company.reconciliation_commit_every if company else 0
             if ctx["commit_every"]:
                 new_cr = sql_db.db_connect(self.env.cr.dbname).cursor()
                 new_env = api.Environment(new_cr, self.env.uid, ctx)
@@ -246,7 +249,7 @@ class AccountMassReconcile(models.Model):
     def _open_move_line_list(move_line_ids, name):
         return {
             "name": name,
-            "view_mode": "tree,form",
+            "view_mode": "list,form",
             "view_id": False,
             "res_model": "account.move.line",
             "type": "ir.actions.act_window",

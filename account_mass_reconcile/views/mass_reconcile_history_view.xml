@@ -66,10 +66,10 @@
         </field>
     </record>
     <record id="mass_reconcile_history_tree" model="ir.ui.view">
-        <field name="name">mass.reconcile.history.tree</field>
+        <field name="name">mass.reconcile.history.list</field>
         <field name="model">mass.reconcile.history</field>
         <field name="arch" type="xml">
-            <tree>
+            <list>
                 <field name="mass_reconcile_id" />
                 <field name="date" />
                 <button
@@ -78,13 +78,13 @@
                     string="Go to reconciled items"
                     type="object"
                 />
-            </tree>
+            </list>
         </field>
     </record>
     <record id="action_mass_reconcile_history" model="ir.actions.act_window">
         <field name="name">Mass Automatic Reconcile History</field>
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">mass.reconcile.history</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">list,form</field>
     </record>
 </odoo>

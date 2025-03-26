@@ -178,7 +178,7 @@ class MassReconcileAdvanced(models.AbstractModel):
             except StopIteration as e:
                 # if you fall here, you probably missed to put a `yield`
                 # in `_opposite_matchers()`
-                raise ValueError("Missing _opposite_matcher: %s" % matcher[0]) from e
+                raise ValueError(f"Missing _opposite_matcher: {matcher[0]}") from e
 
             if not self._compare_matchers(matcher, opp_matcher):
                 # if any of the matcher fails, the opposite line
@@ -273,7 +273,10 @@ class MassReconcileAdvanced(models.AbstractModel):
         # pylint: disable=invalid-commit
         reconciled_ids = []
         for rec in self:
-            commit_every = rec.account_id.company_id.reconciliation_commit_every
+            company = rec.account_id.company_ids.filtered(
+                lambda c, rec=rec: c.id == rec.env.company.id
+            )
+            commit_every = company.reconciliation_commit_every if company else 0
             reconcile_groups = []
             _logger.info("%d credit lines to reconcile", len(credit_lines))
             for idx, credit_line in enumerate(credit_lines, start=1):
