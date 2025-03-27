@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2025 Hunki Enterprises BV
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0) -->
+<data>
+    <record id="bank_statement_line_form_reconcile_view" model="ir.ui.view">
+        <field name="model">account.bank.statement.line</field>
+        <field
+            name="inherit_id"
+            ref="account_reconcile_oca.bank_statement_line_form_reconcile_view"
+        />
+        <field name="arch" type="xml">
+            <field name="analytic_distribution" position="after">
+                <field
+                    name="manual_tax_ids"
+                    widget="many2many_tags"
+                    attrs="{'readonly': ['|', '|', '|', ('manual_exchange_counterpart', '=', True),('manual_reference', '=', False), ('is_reconciled', '=', True), ('manual_line_id', '!=', False)], 'invisible': [('manual_kind', 'in', ['tax', 'liquidity'])]}"
+                />
+            </field>
+        </field>
+    </record>
+</data>
