@@ -131,6 +131,8 @@ class AccountReconcileModel(models.Model):
                 balance = currency.round(
                     line.amount * (1 if residual_balance > 0.0 else -1)
                 )
+            else:
+                balance = 0.0
 
             if currency.is_zero(balance):
                 continue
