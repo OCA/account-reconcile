@@ -1095,40 +1095,6 @@ class TestReconciliationMatchingRules(AccountTestInvoicingCommon):
         # Matching is back thanks to "coincoin".
         self.assertEqual(st_line._retrieve_partner(), self.partner_1)
 
-    def test_partner_name_in_communication(self):
-        self.invoice_line_1.partner_id.write({"name": "Archibald Haddock"})
-        self.bank_line_1.write(
-            {"partner_id": None, "payment_ref": "1234//HADDOCK-Archibald"}
-        )
-        self.bank_line_2.write({"partner_id": None})
-        self.rule_1.write({"match_partner": False})
-
-        # bank_line_1 should match, as its communic. contains the invoice's partner name
-        self._check_statement_matching(
-            self.rule_1,
-            {
-                self.bank_line_1: {"amls": self.invoice_line_1, "model": self.rule_1},
-                self.bank_line_2: {},
-            },
-        )
-
-    def test_partner_name_with_regexp_chars(self):
-        self.invoice_line_1.partner_id.write({"name": "Archibald + Haddock"})
-        self.bank_line_1.write(
-            {"partner_id": None, "payment_ref": "1234//HADDOCK+Archibald"}
-        )
-        self.bank_line_2.write({"partner_id": None})
-        self.rule_1.write({"match_partner": False})
-
-        # The query should still work
-        self._check_statement_matching(
-            self.rule_1,
-            {
-                self.bank_line_1: {"amls": self.invoice_line_1, "model": self.rule_1},
-                self.bank_line_2: {},
-            },
-        )
-
     def test_match_multi_currencies(self):
         """Ensure the matching of candidates is made using the right statement line
         currency. In this test, the value of the statement line is 100 USD = 300
@@ -1540,3 +1506,70 @@ class TestReconciliationMatchingRules(AccountTestInvoicingCommon):
             rule._apply_rules(st_line, None),
             {"amls": term_lines, "model": rule},
         )
+
+    @freeze_time("2019-01-01")
+    def test_matching_exact_amount_no_partner(self):
+        """In case the reconciliation model can't match via text or partner matching
+        we do a last check to find amls with the exact amount.
+        """
+        self.rule_1.write(
+            {
+                "match_text_location_label": False,
+                "match_partner": False,
+                "match_partner_ids": [Command.clear()],
+            }
+        )
+        self.bank_line_1.partner_id = None
+        self.bank_line_1.payment_ref = False
+
+        with self.subTest(test="single_currency"):
+            st_line = self._create_st_line(
+                amount=100, payment_ref=None, partner_id=None
+            )
+            invl = self._create_invoice_line(100, self.partner_1, "out_invoice")
+            self._check_statement_matching(
+                self.rule_1,
+                {
+                    st_line: {
+                        "amls": invl,
+                        "model": self.rule_1,
+                    },
+                },
+            )
+
+        with self.subTest(test="rounding"):
+            st_line = self._create_st_line(
+                amount=-208.73, payment_ref=None, partner_id=None
+            )
+            invl = self._create_invoice_line(208.73, self.partner_1, "in_invoice")
+            self._check_statement_matching(
+                self.rule_1,
+                {
+                    st_line: {
+                        "amls": invl,
+                        "model": self.rule_1,
+                    },
+                },
+            )
+
+        with self.subTest(test="multi_currencies"):
+            foreign_curr = self.other_currency
+            invl = self._create_invoice_line(
+                300, self.partner_1, "out_invoice", currency=foreign_curr
+            )
+            st_line = self._create_st_line(
+                amount=15.0,
+                foreign_currency_id=foreign_curr.id,
+                amount_currency=300.0,
+                payment_ref=None,
+                partner_id=None,
+            )
+            self._check_statement_matching(
+                self.rule_1,
+                {
+                    st_line: {
+                        "amls": invl,
+                        "model": self.rule_1,
+                    },
+                },
+            )
