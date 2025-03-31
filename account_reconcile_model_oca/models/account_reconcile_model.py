@@ -481,6 +481,15 @@ class AccountReconcileModel(models.Model):
                     "allow_auto_reconcile": True,
                     "amls": self.env["account.move.line"].browse(candidate_ids),
                 }
+            elif (
+                self.match_text_location_label
+                or self.match_text_location_note
+                or self.match_text_location_reference
+            ):
+                # In the case any of the Label, Note or Reference matching rule has been
+                # toggled, and the query didn't return
+                # any candidates, the model should not try to mount another aml instead.
+                return
 
         if not partner:
             st_line_currency = (
