@@ -773,7 +773,10 @@ class TestReconciliationMatchingRules(AccountTestInvoicingCommon):
         test_category = self.env["res.partner.category"].create(
             {"name": "Consulting Services"}
         )
-        self.partner_2.category_id = test_category
+        test_category2 = self.env["res.partner.category"].create(
+            {"name": "Consulting Services2"}
+        )
+        self.partner_2.category_id = test_category + test_category2
         self.rule_1.match_partner_category_ids |= test_category
         self._check_statement_matching(
             self.rule_1,

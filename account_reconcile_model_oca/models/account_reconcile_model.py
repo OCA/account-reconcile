@@ -258,7 +258,7 @@ class AccountReconcileModel(models.Model):
             or (
                 self.match_partner
                 and self.match_partner_category_ids
-                and partner.category_id not in self.match_partner_category_ids
+                and not (partner.category_id & self.match_partner_category_ids)
             )
         ):
             return False
