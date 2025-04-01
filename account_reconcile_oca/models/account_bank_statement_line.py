@@ -1282,3 +1282,11 @@ class AccountBankStatementLine(models.Model):
         for line in lines:
             self._add_account_move_line(line, keep_current=True)
         return res
+
+    def _retrieve_partner(self):
+        if self.env.context.get("skip_retrieve_partner"):
+            # This hook can be used, for example, when importing files.
+            # With large databases, we already have the information, moreover,
+            # the data might be preloaded, so it has no sense to import it again
+            return self.partner_id
+        return super()._retrieve_partner()
