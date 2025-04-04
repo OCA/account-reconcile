@@ -14,5 +14,8 @@
 
 - Simone Rubino \<simone.rubino@agilebg.com\>
 
-- [Trobz](https://trobz.com):  
+- [Trobz](https://trobz.com):
   - Dzung Tran \<dungtd@trobz.com\>
+
+- [Heliconia Solutions Pvt. Ltd.](https://www.heliconia.io)
+  - Bhavesh Heliconia
