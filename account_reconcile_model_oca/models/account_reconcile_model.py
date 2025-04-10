@@ -131,6 +131,8 @@ class AccountReconcileModel(models.Model):
                 balance = currency.round(
                     line.amount * (1 if residual_balance > 0.0 else -1)
                 )
+            else:
+                balance = 0.0
 
             if currency.is_zero(balance):
                 continue
@@ -260,7 +262,7 @@ class AccountReconcileModel(models.Model):
             or (
                 self.match_partner
                 and self.match_partner_category_ids
-                and partner.category_id not in self.match_partner_category_ids
+                and not (partner.category_id & self.match_partner_category_ids)
             )
         ):
             return False
@@ -316,36 +318,63 @@ class AccountReconcileModel(models.Model):
 
         return aml_domain
 
+    def _get_st_line_text_values_for_matching(self, st_line):
+        """Collect the strings that could be used on the statement line to perform
+        some matching.
+
+        :param st_line: The current statement line.
+        :return: A list of strings.
+        """
+        self.ensure_one()
+        allowed_fields = []
+        if self.match_text_location_label:
+            allowed_fields.append("payment_ref")
+        if self.match_text_location_note:
+            allowed_fields.append("narration")
+        if self.match_text_location_reference:
+            allowed_fields.append("ref")
+        return st_line._get_st_line_strings_for_matching(allowed_fields=allowed_fields)
+
     def _get_invoice_matching_st_line_tokens(self, st_line):
         """Parse the textual information from the statement line passed as parameter
         in order to extract from it the meaningful information in order to perform the
         matching.
         :param st_line: A statement line.
-        :return: A list of tokens, each one being a string.
+        :return:    A tuple of list of tokens, each one being a string.
+                    The first element is a list of tokens you may match on
+                    numerical information.
+                    The second element is a list of tokens you may match exactly.
         """
-        st_line_text_values = st_line._get_st_line_strings_for_matching(
-            allowed_fields=(
-                "payment_ref" if self.match_text_location_label else None,
-                "narration" if self.match_text_location_note else None,
-                "ref" if self.match_text_location_reference else None,
-            )
-        )
+        st_line_text_values = self._get_st_line_text_values_for_matching(st_line)
         significant_token_size = 4
-        tokens = []
+        numerical_tokens = []
+        exact_tokens = []
+        text_tokens = []
         for text_value in st_line_text_values:
-            for token in (text_value or "").split():
+            tokens = [
+                "".join(x for x in token if re.match(r"[0-9a-zA-Z\s]", x))
+                for token in (text_value or "").split()
+            ]
+
+            # Numerical tokens
+            for token in tokens:
                 # The token is too short to be significant.
                 if len(token) < significant_token_size:
                     continue
 
+                text_tokens.append(token)
                 formatted_token = "".join(x for x in token if x.isdecimal())
 
                 # The token is too short after formatting to be significant.
                 if len(formatted_token) < significant_token_size:
                     continue
 
-                tokens.append(formatted_token)
-        return tokens
+                numerical_tokens.append(formatted_token)
+
+            # Exact tokens.
+            if len(tokens) == 1:
+                exact_tokens.append(text_value)
+        return numerical_tokens, exact_tokens, text_tokens
 
     def _get_invoice_matching_amls_candidates(self, st_line, partner):
         """Returns the match candidates for the 'invoice_matching' rule, with respect to
@@ -353,53 +382,97 @@ class AccountReconcileModel(models.Model):
         :param st_line: A statement line.
         :param partner: The partner associated to the statement line.
         """
+
+        def get_order_by_clause(alias=None):
+            direction = "DESC" if self.matching_order == "new_first" else "ASC"
+            dotted_alias = f"{alias}." if alias else ""
+            return f"{dotted_alias}date_maturity {direction}, {dotted_alias}date {direction}, {dotted_alias}id {direction}"  # noqa: E501
+
         assert self.rule_type == "invoice_matching"
         self.env["account.move"].flush_model()
         self.env["account.move.line"].flush_model()
-
-        if self.matching_order == "new_first":
-            order_by = "sub.date_maturity DESC, sub.date DESC, sub.id DESC"
-        else:
-            order_by = "sub.date_maturity ASC, sub.date ASC, sub.id ASC"
 
         aml_domain = self._get_invoice_matching_amls_domain(st_line, partner)
         query = self.env["account.move.line"]._where_calc(aml_domain)
         tables, where_clause, where_params = query.get_sql()
 
-        tokens = self._get_invoice_matching_st_line_tokens(st_line)
-        if tokens:
-            sub_queries = []
-            for table_alias, field in (
-                ("account_move_line", "name"),
-                ("account_move_line__move_id", "name"),
-                ("account_move_line__move_id", "ref"),
-            ):
+        sub_queries = []
+        all_params = []
+        aml_cte = ""
+        (
+            numerical_tokens,
+            exact_tokens,
+            _text_tokens,
+        ) = self._get_invoice_matching_st_line_tokens(st_line)
+        if numerical_tokens or exact_tokens:
+            aml_cte = rf"""
+                WITH aml_cte AS (
+                    SELECT
+                        account_move_line.id as account_move_line_id,
+                        account_move_line.date as account_move_line_date,
+                        account_move_line.date_maturity as account_move_line_date_maturity,
+                        account_move_line.name as account_move_line_name,
+                        account_move_line__move_id.name as account_move_line__move_id_name,
+                        account_move_line__move_id.ref as account_move_line__move_id_ref
+                    FROM {tables}
+                    JOIN account_move account_move_line__move_id
+                        ON account_move_line__move_id.id = account_move_line.move_id
+                    WHERE {where_clause}
+                )
+            """  # noqa: E501
+            all_params += where_params
+
+        enabled_matches = []
+        if self.match_text_location_label:
+            enabled_matches.append(("account_move_line", "name"))
+        if self.match_text_location_note:
+            enabled_matches.append(("account_move_line__move_id", "name"))
+        if self.match_text_location_reference:
+            enabled_matches.append(("account_move_line__move_id", "ref"))
+
+        if numerical_tokens:
+            for table_alias, field in enabled_matches:
                 sub_queries.append(
                     rf"""
                     SELECT
-                        account_move_line.id,
-                        account_move_line.date,
-                        account_move_line.date_maturity,
+                        account_move_line_id as id,
+                        account_move_line_date as date,
+                        account_move_line_date_maturity as date_maturity,
                         UNNEST(
                             REGEXP_SPLIT_TO_ARRAY(
                                 SUBSTRING(
                                     REGEXP_REPLACE(
-                                        {table_alias}.{field}, '[^0-9\s]', '', 'g'
+                                        {table_alias}_{field}, '[^0-9\s]', '', 'g'
                                     ),
                                     '\S(?:.*\S)*'
                                 ),
                                 '\s+'
                             )
                         ) AS token
-                    FROM {tables}
-                    JOIN account_move account_move_line__move_id
-                        ON account_move_line__move_id.id = account_move_line.move_id
-                    WHERE {where_clause} AND {table_alias}.{field} IS NOT NULL
+                    FROM aml_cte
+                    WHERE {table_alias}_{field} IS NOT NULL
                 """
                 )
 
-            self._cr.execute(
+        if exact_tokens:
+            for table_alias, field in enabled_matches:
+                sub_queries.append(
+                    rf"""
+                    SELECT
+                        account_move_line_id as id,
+                        account_move_line_date as date,
+                        account_move_line_date_maturity as date_maturity,
+                        {table_alias}_{field} AS token
+                    FROM aml_cte
+                    WHERE COALESCE({table_alias}_{field}, '') != ''
                 """
+                )
+
+        if sub_queries:
+            order_by = get_order_by_clause(alias="sub")
+            self._cr.execute(
+                aml_cte
+                + """
                     SELECT
                         sub.id,
                         COUNT(*) AS nb_match
@@ -413,7 +486,7 @@ class AccountReconcileModel(models.Model):
                 + order_by
                 + """
                 """,
-                (where_params * 3) + [tuple(tokens)],
+                all_params + [tuple(numerical_tokens + exact_tokens)],
             )
             candidate_ids = [r[0] for r in self._cr.fetchall()]
             if candidate_ids:
@@ -421,20 +494,58 @@ class AccountReconcileModel(models.Model):
                     "allow_auto_reconcile": True,
                     "amls": self.env["account.move.line"].browse(candidate_ids),
                 }
+            elif (
+                self.match_text_location_label
+                or self.match_text_location_note
+                or self.match_text_location_reference
+            ):
+                # In the case any of the Label, Note or Reference matching rule has been
+                # toggled, and the query didn't return
+                # any candidates, the model should not try to mount another aml instead.
+                return
 
-        # Search without any matching based on textual information.
-        if partner:
-            if self.matching_order == "new_first":
-                order = "date_maturity DESC, date DESC, id DESC"
+        if not partner:
+            st_line_currency = (
+                st_line.foreign_currency_id
+                or st_line.journal_id.currency_id
+                or st_line.company_currency_id
+            )
+            if st_line_currency == self.company_id.currency_id:
+                aml_amount_field = "amount_residual"
             else:
-                order = "date_maturity ASC, date ASC, id ASC"
+                aml_amount_field = "amount_residual_currency"
 
-            amls = self.env["account.move.line"].search(aml_domain, order=order)
-            if amls:
-                return {
-                    "allow_auto_reconcile": False,
-                    "amls": amls,
-                }
+            order_by = get_order_by_clause(alias="account_move_line")
+            self._cr.execute(
+                f"""
+                    SELECT account_move_line.id
+                    FROM {tables}
+                    WHERE
+                        {where_clause}
+                        AND account_move_line.currency_id = %s
+                        AND ROUND(account_move_line.{aml_amount_field}, %s) = ROUND(%s, %s)
+                    ORDER BY {order_by}
+                """,  # noqa: E501
+                where_params
+                + [
+                    st_line_currency.id,
+                    st_line_currency.decimal_places,
+                    -st_line.amount_residual,
+                    st_line_currency.decimal_places,
+                ],
+            )
+            amls = self.env["account.move.line"].browse(
+                [row[0] for row in self._cr.fetchall()]
+            )
+        else:
+            amls = self.env["account.move.line"].search(
+                aml_domain, order=get_order_by_clause()
+            )
+        if amls:
+            return {
+                "allow_auto_reconcile": False,
+                "amls": amls,
+            }
 
     def _get_invoice_matching_rules_map(self):
         """Get a mapping <priority_order, rule> that could be overridden in others
@@ -645,7 +756,9 @@ class AccountReconcileModel(models.Model):
             for aml_values in amls_values_list
         )
         sign = 1 if st_line_amount_curr > 0.0 else -1
-        amount_curr_after_rec = sign * (amls_amount_curr + st_line_amount_curr)
+        amount_curr_after_rec = st_line_currency.round(
+            sign * (amls_amount_curr + st_line_amount_curr)
+        )
 
         # The statement line will be fully reconciled.
         if st_line_currency.is_zero(amount_curr_after_rec):
@@ -664,7 +777,10 @@ class AccountReconcileModel(models.Model):
         # amount doesn't exceed the tolerance.
         if (
             self.payment_tolerance_type == "fixed_amount"
-            and -amount_curr_after_rec <= self.payment_tolerance_param
+            and st_line_currency.compare_amounts(
+                -amount_curr_after_rec, self.payment_tolerance_param
+            )
+            <= 0
         ):
             return {"allow_write_off", "allow_auto_reconcile"}
 
@@ -674,7 +790,10 @@ class AccountReconcileModel(models.Model):
         ) * 100.0
         if (
             self.payment_tolerance_type == "percentage"
-            and reconciled_percentage_left <= self.payment_tolerance_param
+            and st_line_currency.compare_amounts(
+                reconciled_percentage_left, self.payment_tolerance_param
+            )
+            <= 0
         ):
             return {"allow_write_off", "allow_auto_reconcile"}
 

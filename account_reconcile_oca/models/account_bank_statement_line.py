@@ -613,7 +613,10 @@ class AccountBankStatementLine(models.Model):
                     self.env["res.partner"].browse(line["partner_id"]).display_name,
                 )
             elif self.partner_id:
-                new_line["partner_id"] = self.partner_id.name_get()[0]
+                new_line["partner_id"] = (
+                    self.partner_id.id,
+                    self.partner_id.display_name,
+                )
             new_data.append(new_line)
         return new_data, reconcile_auxiliary_id
 
@@ -681,13 +684,16 @@ class AccountBankStatementLine(models.Model):
                         reconciled_line.move_id.journal_id
                         == self.company_id.currency_exchange_journal_id
                     ):
-                        reconcile_auxiliary_id, lines = self._get_reconcile_line(
-                            reconciled_line.move_id.line_ids - reconciled_line,
-                            "other",
-                            from_unreconcile=False,
-                            move=True,
-                        )
-                        data += lines
+                        for rl_item in (
+                            reconciled_line.move_id.line_ids - reconciled_line
+                        ):
+                            reconcile_auxiliary_id, lines = self._get_reconcile_line(
+                                rl_item,
+                                "other",
+                                from_unreconcile=False,
+                                move=True,
+                            )
+                            data += lines
                         continue
                     partial = partial_lines.filtered(
                         lambda r, line=reconciled_line: r.debit_move_id == line
@@ -1017,7 +1023,7 @@ class AccountBankStatementLine(models.Model):
                     suspense_lines,
                     _other_lines,
                 ) = st_line._seek_for_lines()
-                line_vals = {"partner_id": st_line.partner_id}
+                line_vals = {"partner_id": st_line.partner_id.id}
                 line_ids_commands = [(1, liquidity_lines.id, line_vals)]
                 if suspense_lines:
                     line_ids_commands.append((1, suspense_lines.id, line_vals))
@@ -1270,3 +1276,11 @@ class AccountBankStatementLine(models.Model):
         for line in lines:
             self._add_account_move_line(line, keep_current=True)
         return res
+
+    def _retrieve_partner(self):
+        if self.env.context.get("skip_retrieve_partner"):
+            # This hook can be used, for example, when importing files.
+            # With large databases, we already have the information, moreover,
+            # the data might be preloaded, so it has no sense to import it again
+            return self.partner_id
+        return super()._retrieve_partner()
