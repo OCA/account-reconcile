@@ -566,11 +566,16 @@ class AccountBankStatementLine(models.Model):
                 continue
             new_data.append(line_data)
             liquidity_amount += line_data["amount"]
-
+        partner = (
+            reconcile_model._get_partner_from_mapping(self) or self._retrieve_partner()
+        )
         for line in reconcile_model._get_write_off_move_lines_dict(
-            -liquidity_amount, self._retrieve_partner().id
+            -liquidity_amount, partner.id
         ):
             new_line = line.copy()
+            new_line["partner_id"] = (
+                partner and [partner.id, partner.display_name] or False
+            )
             amount = line.get("balance")
             if self.foreign_currency_id:
                 amount = self.foreign_currency_id._convert(
