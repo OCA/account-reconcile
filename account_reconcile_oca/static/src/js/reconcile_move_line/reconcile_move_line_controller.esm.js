@@ -8,10 +8,11 @@ export class ReconcileMoveLineController extends ListController {
     }
     async clickAddAll() {
         await this.props.parentRecord.save();
-        await this.orm.call(this.props.parentRecord.resModel, "add_multiple_lines", [
-            this.props.parentRecord.resIds,
-            this.model.root.domain,
-        ]);
+        await this.model.orm.call(
+            this.props.parentRecord.resModel,
+            "add_multiple_lines",
+            [this.props.parentRecord.resIds, this.model.root.domain]
+        );
         await this.props.parentRecord.load();
         this.props.parentRecord.model.notify();
     }
