@@ -8,7 +8,7 @@
         >account.account.reconcile.form (in account_reconcile_oca)</field>
         <field name="model">account.account.reconcile</field>
         <field name="arch" type="xml">
-            <form js_class="reconcile_manual" create="0">
+            <form js_class="reconcile_form" create="0">
                 <field name="manual_delete" invisible="1" />
                 <field name="manual_reference" invisible="1" />
                 <field name="company_currency_id" invisible="1" />

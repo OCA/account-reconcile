@@ -36,7 +36,6 @@
             "account_reconcile_oca/static/src/js/widgets/reconcile_move_line_widget.esm.js",
             "account_reconcile_oca/static/src/js/reconcile_move_line/*.esm.js",
             "account_reconcile_oca/static/src/js/reconcile_form/*.esm.js",
-            "account_reconcile_oca/static/src/js/reconcile_manual/*.esm.js",
             "account_reconcile_oca/static/src/js/reconcile/*.esm.js",
             "account_reconcile_oca/static/src/xml/reconcile.xml",
             "account_reconcile_oca/static/src/scss/reconcile.scss",
