@@ -87,9 +87,9 @@ msgid "Created on"
 msgstr ""
 
 #. module: account_move_line_reconcile_manual
-#: model:ir.model.fields,field_description:account_move_line_reconcile_manual.field_account_move_line_reconcile_manual__company_currency_id
-msgid "Currency"
-msgstr ""
+#. #: model:ir.model.fields,field_description:account_move_line_reconcile_manual.field_account_move_line_reconcile_manual__company_currency_id
+#. msgid "Currency"
+#. msgstr ""
 
 #. module: account_move_line_reconcile_manual
 #: model:ir.model.fields,field_description:account_move_line_reconcile_manual.field_account_move_line_reconcile_manual__writeoff_date
