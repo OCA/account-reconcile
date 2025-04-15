@@ -158,11 +158,12 @@ class MassReconcileBase(models.AbstractModel):
         currency = same_curr and lines[0].currency_id or lines[0].company_id.currency_id
         journal = self.journal_id
         partners = lines.mapped("partner_id")
+
+        # We only pass amount_currency. Odoo will compute debit/credit automatically
+        # based on the exchange rate, avoiding sign constraint violations.
         write_off_vals = {
             "name": _("Automatic writeoff"),
             "amount_currency": same_curr and amount_curr or amount,
-            "debit": amount > 0.0 and amount or 0.0,
-            "credit": amount < 0.0 and -amount or 0.0,
             "partner_id": len(partners) == 1 and partners.id or False,
             "account_id": account.id,
             "journal_id": journal.id,
@@ -170,8 +171,6 @@ class MassReconcileBase(models.AbstractModel):
         }
         counterpart_account = lines.mapped("account_id")
         counter_part = write_off_vals.copy()
-        counter_part["debit"] = write_off_vals["credit"]
-        counter_part["credit"] = write_off_vals["debit"]
         counter_part["amount_currency"] = -write_off_vals["amount_currency"]
         counter_part["account_id"] = (counterpart_account.id,)
 
