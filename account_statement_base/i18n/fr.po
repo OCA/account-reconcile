@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 18.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2025-04-16 11:01+0000\n"
+"PO-Revision-Date: 2025-04-16 13:24+0000\n"
 "Last-Translator: Romain BONNINGUE <bonninguer@gmail.com>\n"
 "Language-Team: none\n"
 "Language: fr\n"
@@ -113,7 +113,7 @@ msgstr "Type de transaction"
 #. module: account_statement_base
 #: model_terms:ir.ui.view,arch_db:account_statement_base.view_bank_statement_form
 msgid "Transactions"
-msgstr ""
+msgstr "Transactions"
 
 #. module: account_statement_base
 #: model_terms:ir.ui.view,arch_db:account_statement_base.view_bank_statement_form
