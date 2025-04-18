@@ -10,6 +10,7 @@ from odoo import Command, _, api, fields, models
 from odoo.exceptions import UserError
 from odoo.fields import first
 from odoo.tools import float_compare, float_is_zero
+from odoo.tools.misc import formatLang
 
 
 class AccountBankStatementLine(models.Model):
@@ -86,6 +87,11 @@ class AccountBankStatementLine(models.Model):
         prefetch=False,
         currency_field="manual_in_currency_id",
     )
+    changed_manual_amount_in_currency = fields.Boolean(
+        store=False,
+        default=False,
+        prefetch=False,
+    )
     manual_exchange_counterpart = fields.Boolean(
         store=False,
     )
@@ -109,8 +115,16 @@ class AccountBankStatementLine(models.Model):
     manual_currency_id = fields.Many2one(
         "res.currency", readonly=True, store=False, prefetch=False
     )
-    manual_original_amount = fields.Monetary(
-        default=False, store=False, prefetch=False, readonly=True
+    manual_original_amount_in_currency = fields.Monetary(
+        default=False,
+        store=False,
+        prefetch=False,
+        readonly=True,
+        currency_field="manual_in_currency_id",
+    )
+    manual_amount_message = fields.Char(compute="_compute_manual_amount_message")
+    show_full_reconcile_button = fields.Boolean(
+        compute="_compute_manual_amount_message"
     )
     manual_move_type = fields.Selection(
         lambda r: r.env["account.move"]._fields["move_type"].selection,
@@ -139,6 +153,34 @@ class AccountBankStatementLine(models.Model):
     reconcile_aggregate = fields.Char(compute="_compute_reconcile_aggregate")
     aggregate_id = fields.Integer(compute="_compute_reconcile_aggregate")
     aggregate_name = fields.Char(compute="_compute_reconcile_aggregate")
+
+    @api.depends(
+        "manual_original_amount_in_currency",
+        "manual_currency_id",
+        "manual_amount_in_currency",
+        "manual_move_id",
+    )
+    def _compute_manual_amount_message(self):
+        for rec in self:
+            rec.show_full_reconcile_button = True
+            rec.manual_amount_message = ""
+            if not rec.manual_currency_id:
+                continue
+            resulting_amt = (
+                rec.manual_original_amount_in_currency - rec.manual_amount_in_currency
+            )
+            if rec.manual_currency_id.is_zero(resulting_amt):
+                msg = _("will be fully paid.")
+                rec.show_full_reconcile_button = False
+            else:
+                msg = _("will be reduced by %s") % (
+                    formatLang(
+                        self.env,
+                        rec.manual_amount_in_currency,
+                        currency_obj=rec.manual_currency_id,
+                    )
+                )
+            rec.manual_amount_message = msg
 
     @api.model
     def _reconcile_aggregate_map(self):
@@ -390,7 +432,7 @@ class AccountBankStatementLine(models.Model):
             "manual_move_id": False,
             "manual_move_type": False,
             "manual_kind": False,
-            "manual_original_amount": False,
+            "manual_original_amount_in_currency": False,
             "manual_currency_id": False,
             "analytic_distribution": False,
         }
@@ -415,7 +457,9 @@ class AccountBankStatementLine(models.Model):
             self.manual_move_id = self.manual_line_id.move_id
             self.manual_move_type = self.manual_line_id.move_id.move_type
         self.manual_kind = line["kind"]
-        self.manual_original_amount = line.get("original_amount", 0.0)
+        self.manual_original_amount_in_currency = line.get(
+            "original_amount_currency", 0.0
+        )
 
     @api.onchange("manual_reference", "manual_delete")
     def _onchange_manual_reconcile_reference(self):
@@ -446,6 +490,39 @@ class AccountBankStatementLine(models.Model):
         )
         self.can_reconcile = self.reconcile_data_info.get("can_reconcile", False)
 
+    @api.onchange("manual_amount_in_currency")
+    def _onchange_manual_amount_in_currency(self):
+        if (
+            self.manual_line_id.exists()
+            and self.manual_line_id
+            and self.manual_kind != "liquidity"
+        ):
+            self.manual_amount = self.manual_in_currency_id._convert(
+                self.manual_amount_in_currency,
+                self.company_id.currency_id,
+                self.company_id,
+                self.manual_line_id.date,
+            )
+        self.changed_manual_amount_in_currency = True
+        self._onchange_manual_reconcile_vals()
+
+    @api.onchange("manual_amount")
+    def _onchange_manual_amount(self):
+        if (
+            self.manual_line_id.exists()
+            and self.manual_line_id
+            and self.manual_kind != "liquidity"
+            and not self.changed_manual_amount_in_currency
+        ):
+            self.manual_amount_in_currency = self.company_id.currency_id._convert(
+                self.manual_amount,
+                self.manual_in_currency_id,
+                self.company_id,
+                self.manual_line_id.date,
+            )
+        self.changed_manual_amount_in_currency = False
+        self._onchange_manual_reconcile_vals()
+
     def _get_manual_reconcile_vals(self):
         vals = {
             "name": self.manual_name,
@@ -463,16 +540,19 @@ class AccountBankStatementLine(models.Model):
         }
         liquidity_lines, _suspense_lines, _other_lines = self._seek_for_lines()
         if self.manual_line_id and self.manual_line_id.id not in liquidity_lines.ids:
-            vals.update(
-                {
-                    "currency_amount": self.manual_currency_id._convert(
-                        self.manual_amount,
-                        self.manual_in_currency_id,
-                        self.company_id,
-                        self.manual_line_id.date,
-                    ),
-                }
-            )
+            if self.manual_in_currency_id and self.manual_amount_in_currency:
+                vals.update({"currency_amount": self.manual_amount_in_currency})
+            else:
+                vals.update(
+                    {
+                        "currency_amount": self.manual_currency_id._convert(
+                            self.manual_amount,
+                            self.manual_in_currency_id,
+                            self.company_id,
+                            self.manual_line_id.date,
+                        ),
+                    }
+                )
         return vals
 
     @api.onchange(
