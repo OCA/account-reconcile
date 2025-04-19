@@ -195,6 +195,105 @@ class TestReconciliationWidget(TestAccountReconciliationCommon):
             f.manual_reference = "account.move.line;%s" % receivable1.id
             self.assertEqual(-100, f.manual_amount)
 
+    def test_reconcile_invoice_reconcile_with_currency(self):
+        """
+        We want to test the reconcile widget for bank statements on invoices
+        with a different currency. We want to indicate manually in the bank
+        statement line the amount that we want to reconcile, expressed in
+        the invoice currency.
+        """
+        new_rate = 1.6299
+        self.env["res.currency.rate"].create(
+            {
+                "name": time.strftime("%Y-07-01"),
+                "rate": new_rate,
+                "currency_id": self.currency_usd_id,
+                "company_id": self.bank_journal_euro.company_id.id,
+            }
+        )
+        inv1 = self.create_invoice(currency_id=self.currency_usd_id, invoice_amount=100)
+        bank_stmt = self.acc_bank_stmt_model.create(
+            {
+                "journal_id": self.bank_journal_euro.id,
+                "date": time.strftime("%Y-07-15"),
+                "name": "test",
+            }
+        )
+        bank_stmt_line = self.acc_bank_stmt_line_model.create(
+            {
+                "name": "testLine",
+                "journal_id": self.bank_journal_euro.id,
+                "statement_id": bank_stmt.id,
+                "amount": 50,
+                "date": time.strftime("%Y-07-15"),
+            }
+        )
+        receivable1 = inv1.line_ids.filtered(
+            lambda l: l.account_id.account_type == "asset_receivable"
+        )
+        with Form(
+            bank_stmt_line,
+            view="account_reconcile_oca.bank_statement_line_form_reconcile_view",
+        ) as f:
+            self.assertFalse(f.can_reconcile)
+            f.add_account_move_line_id = receivable1
+            self.assertFalse(f.add_account_move_line_id)
+            self.assertTrue(f.can_reconcile)
+            f.manual_reference = "account.move.line;%s" % receivable1.id
+            f.manual_amount_in_currency = -100
+        bank_stmt_line.reconcile_bank_line()
+        self.assertEqual(inv1.amount_residual_signed, 0)
+        self.assertEqual(inv1.payment_state, "paid")
+
+    def test_reconcile_invoice_reconcile_full_with_currency(self):
+        """
+        We want to test the reconcile widget for bank statements on invoices
+        with a different currency. We want to press the button on the statement
+        line to force the full reconciliation.
+        """
+        new_rate = 1.6299
+        self.env["res.currency.rate"].create(
+            {
+                "name": time.strftime("%Y-07-01"),
+                "rate": new_rate,
+                "currency_id": self.currency_usd_id,
+                "company_id": self.bank_journal_euro.company_id.id,
+            }
+        )
+        inv1 = self.create_invoice(currency_id=self.currency_usd_id, invoice_amount=100)
+        bank_stmt = self.acc_bank_stmt_model.create(
+            {
+                "journal_id": self.bank_journal_euro.id,
+                "date": time.strftime("%Y-07-15"),
+                "name": "test",
+            }
+        )
+        bank_stmt_line = self.acc_bank_stmt_line_model.create(
+            {
+                "name": "testLine",
+                "journal_id": self.bank_journal_euro.id,
+                "statement_id": bank_stmt.id,
+                "amount": 50,
+                "date": time.strftime("%Y-07-15"),
+            }
+        )
+        receivable1 = inv1.line_ids.filtered(
+            lambda l: l.account_id.account_type == "asset_receivable"
+        )
+        with Form(
+            bank_stmt_line,
+            view="account_reconcile_oca.bank_statement_line_form_reconcile_view",
+        ) as f:
+            self.assertFalse(f.can_reconcile)
+            f.add_account_move_line_id = receivable1
+            self.assertFalse(f.add_account_move_line_id)
+            self.assertTrue(f.can_reconcile)
+            f.manual_reference = "account.move.line;%s" % receivable1.id
+        bank_stmt_line.button_manual_reference_full_paid()
+        bank_stmt_line.reconcile_bank_line()
+        self.assertEqual(inv1.amount_residual_signed, 0)
+        self.assertEqual(inv1.payment_state, "paid")
+
     def test_reconcile_invoice_unreconcile(self):
         """
         We want to test the reconcile widget for bank statements on invoices.
