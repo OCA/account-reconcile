@@ -151,12 +151,12 @@
                 <separator />
                 <filter
                     name="positive_amount"
-                    string="Sales Invoices"
+                    string="Incoming Statements"
                     domain="[('amount', '&gt;=', 0)]"
                 />
                 <filter
                     name="negative_amount"
-                    string="Purchase Invoices"
+                    string="Outgoing Statements"
                     domain="[('amount', '&lt;=', 0)]"
                 />
             </search>

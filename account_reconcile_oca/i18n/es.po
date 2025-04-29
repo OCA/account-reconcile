@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 17.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-04-29 06:56+0000\n"
-"PO-Revision-Date: 2025-04-29 06:56+0000\n"
+"POT-Creation-Date: 2025-04-29 08:16+0000\n"
+"PO-Revision-Date: 2025-04-29 08:16+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -298,7 +298,12 @@ msgstr "Balance global"
 #: model:ir.model.fields,field_description:account_reconcile_oca.field_account_account_reconcile__id
 #: model:ir.model.fields,field_description:account_reconcile_oca.field_account_account_reconcile_data__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
+
+#. module: account_reconcile_oca
+#: model_terms:ir.ui.view,arch_db:account_reconcile_oca.account_bank_statement_line_search
+msgid "Incoming Statements"
+msgstr "Movimientos positivos"
 
 #. module: account_reconcile_oca
 #: model_terms:ir.ui.view,arch_db:account_reconcile_oca.bank_statement_line_form_reconcile_view
@@ -495,6 +500,11 @@ msgid "Nothing to reconcile"
 msgstr "Nada para conciliar"
 
 #. module: account_reconcile_oca
+#: model_terms:ir.ui.view,arch_db:account_reconcile_oca.account_bank_statement_line_search
+msgid "Outgoing Statements"
+msgstr "Movimientos negativos"
+
+#. module: account_reconcile_oca
 #. odoo-javascript
 #: code:addons/account_reconcile_oca/static/src/xml/reconcile.xml:0
 #: code:addons/addons-oca/account_reconcile_oca/static/src/xml/reconcile.xml:0
@@ -508,11 +518,6 @@ msgstr "Empresa"
 #: model_terms:ir.ui.view,arch_db:account_reconcile_oca.account_move_line_search_reconcile_view
 msgid "Payable"
 msgstr "A pagar"
-
-#. module: account_reconcile_oca
-#: model_terms:ir.ui.view,arch_db:account_reconcile_oca.account_bank_statement_line_search
-msgid "Purchase Invoices"
-msgstr "Facturas de compra"
 
 #. module: account_reconcile_oca
 #: model_terms:ir.ui.view,arch_db:account_reconcile_oca.account_move_line_search_reconcile_view
@@ -603,11 +608,6 @@ msgstr "Reversión de: %s"
 #: model_terms:ir.ui.view,arch_db:account_reconcile_oca.account_move_line_search_reconcile_view
 msgid "Sales"
 msgstr "Ventas"
-
-#. module: account_reconcile_oca
-#: model_terms:ir.ui.view,arch_db:account_reconcile_oca.account_bank_statement_line_search
-msgid "Sales Invoices"
-msgstr "Facturas de venta"
 
 #. module: account_reconcile_oca
 #: model_terms:ir.ui.view,arch_db:account_reconcile_oca.bank_statement_line_form_add_view
