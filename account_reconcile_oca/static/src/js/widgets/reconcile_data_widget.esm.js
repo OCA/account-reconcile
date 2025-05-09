@@ -3,10 +3,15 @@ import {formatDate, parseDate} from "@web/core/l10n/dates";
 import {formatMonetary} from "@web/views/fields/formatters";
 import {registry} from "@web/core/registry";
 import {useService} from "@web/core/utils/hooks";
+import {standardFieldProps} from "@web/views/fields/standard_field_props";
 
 const {Component} = owl;
 
 export class AccountReconcileDataWidget extends Component {
+    static props = {
+        ...standardFieldProps,
+    };
+    static template = "account_reconcile_oca.ReconcileDataWidget";
     setup() {
         super.setup(...arguments);
         this.orm = useService("orm");
@@ -84,7 +89,6 @@ export class AccountReconcileDataWidget extends Component {
         this.action.doAction(action);
     }
 }
-AccountReconcileDataWidget.template = "account_reconcile_oca.ReconcileDataWidget";
 
 export const AccountReconcileDataWidgetField = {
     component: AccountReconcileDataWidget,
