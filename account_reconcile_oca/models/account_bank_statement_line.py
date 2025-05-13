@@ -670,6 +670,7 @@ class AccountBankStatementLine(models.Model):
                         is_counterpart=True,
                         max_amount=amount,
                         reconcile_auxiliary_id=reconcile_auxiliary_id,
+                        move=True,
                     )
                     amount -= sum(line.get("amount") for line in line_data)
                     data += line_data
