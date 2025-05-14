@@ -27,6 +27,14 @@ export class ReconcileController extends KanbanController {
         onWillStart(() => {
             this.updateJournalInfo();
         });
+
+        // Get the ID from the URL
+        const id = router.current?.id || null;
+        if (id) {
+            const idInt = parseInt(id, 10);
+            this.props.resId = idInt;
+        }
+
         onMounted(() => {
             this.selectRecord();
         });
