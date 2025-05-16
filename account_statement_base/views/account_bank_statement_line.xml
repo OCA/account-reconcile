@@ -180,7 +180,7 @@
     <record id="account_bank_statement_line_action" model="ir.actions.act_window">
         <field name="name">Bank Statement Lines</field>
         <field name="res_model">account.bank.statement.line</field>
-        <field name="view_mode">list,form</field>
+        <field name="view_mode">list,form,kanban</field>
         <field name="context">{'account_bank_statement_line_main_view': True}</field>
     </record>
 </odoo>
