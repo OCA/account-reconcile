@@ -18,6 +18,7 @@
     "data": [
         "views/res_config_settings.xml",
         "security/ir.model.access.csv",
+        "security/security.xml",
         "views/account_account_reconcile.xml",
         "views/account_bank_statement_line.xml",
         "views/account_move_line.xml",
