@@ -82,7 +82,8 @@ class AccountMoveCompletionRule(models.Model):
             number_field = "name"
         else:
             raise ValidationError(
-                self.env._("Invalid invoice type for completion: %s") % inv_type
+                self.env._("Invalid invoice type for completion: %(invoice_type)s"),
+                invoice_type=inv_type,
             )
 
         invoices = inv_obj.search(
@@ -95,9 +96,10 @@ class AccountMoveCompletionRule(models.Model):
                 raise ErrorTooManyPartner(
                     self.env._(
                         'Line named "%(line_name)s" was matched by more than one '
-                        "partner while looking on %(inv_type)s invoices"
+                        "partner while looking on %(inv_type)s invoices",
+                        line_name=line.name,
+                        inv_type=inv_type,
                     )
-                    % {"line_name": line.name, "inv_type": inv_type}
                 )
         return False
 
@@ -105,7 +107,9 @@ class AccountMoveCompletionRule(models.Model):
         """Populate statement line values"""
         if inv_type not in ("supplier", "customer"):
             raise ValidationError(
-                self.env._("Invalid invoice type for completion: %s") % inv_type
+                self.env._(
+                    "Invalid invoice type for completion: %(inv_type)s", inv_type
+                )
             )
         res = {}
         invoice = self._find_invoice(line, inv_type)
@@ -178,11 +182,10 @@ class AccountMoveCompletionRule(models.Model):
             if len(partners) > 1:
                 msg = self.env._(
                     'Line named "%(line_name)s" was matched by more than '
-                    "one partner while looking on partner label: %(partner_labels)s"
-                ) % {
-                    "line_name": line.name,
-                    "partner_labels": ",".join([x.name for x in partners]),
-                }
+                    "one partner while looking on partner label: %(partner_labels)s",
+                    line_name=line.name,
+                    partner_labels=",".join([x.name for x in partners]),
+                )
                 raise ErrorTooManyPartner(msg)
             res["partner_id"] = partners[0].id
         return res
@@ -227,10 +230,10 @@ class AccountMoveCompletionRule(models.Model):
             if len(result) > 1:
                 raise ErrorTooManyPartner(
                     self.env._(
-                        'Line named "%s" was matched by more than one '
-                        "partner while looking on partner by name"
+                        'Line named "%(line)s" was matched by more than one '
+                        "partner while looking on partner by name",
+                        line=line.name,
                     )
-                    % line.name
                 )
             res["partner_id"] = result[0][0]
         return res
@@ -338,30 +341,23 @@ class AccountMove(models.Model):
         message = self.env._(
             "%(completion_date)s Account Move %(move_name)s has %(num_imported)s/"
             "%(number_line)s lines completed by "
-            "%(user_name)s \n%(error_msg)s\n%(log)s\n"
-        ) % {
-            "completion_date": completion_date,
-            "move_name": self.name,
-            "num_imported": number_imported,
-            "number_line": number_line,
-            "user_name": user_name,
-            "error_msg": error_msg,
-            "log": log,
-        }
+            "%(user_name)s \n%(error_msg)s\n%(log)s\n",
+            completion_date=completion_date,
+            move_name=self.name,
+            num_imported=number_imported,
+            number_line=number_line,
+            user_name=user_name,
+            error_msg=error_msg,
+            log=log,
+        )
         self.write({"completion_logs": message})
 
-        body = (
-            (
-                self.env._(
-                    "Statement ID %(move_name)s auto-completed for %(num_imported)s/"
-                    "%(number_line)s lines completed"
-                )
-                % {
-                    "move_name": self.name,
-                    "num_imported": number_imported,
-                    "number_line": number_line,
-                }
-            ),
+        body = self.env._(
+            "Statement ID %(move_name)s auto-completed for %(num_imported)s/"
+            "%(number_line)s lines completed",
+            move_name=self.name,
+            num_imported=number_imported,
+            number_line=number_line,
         )
         self.message_post(body=body)
         return True

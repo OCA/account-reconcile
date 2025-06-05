@@ -221,9 +221,10 @@ class AccountJournal(models.Model):
         """
         self.message_post(
             body=self.env._(
-                "Move %(move_name)s have been imported with %(num_lines)s " "lines."
+                "Move %(move_name)s have been imported with %(num_lines)s lines.",
+                move_name=move.name,
+                num_lines=num_lines,
             )
-            % {"move_name": move.name, "num_lines": num_lines}
         )
         return True
 
@@ -351,10 +352,10 @@ class AccountJournal(models.Model):
             if col not in move_line_obj._fields:
                 raise UserError(
                     self.env._(
-                        "Missing column! Column %s you try to import is not "
-                        "present in the move line!"
+                        "Missing column! Column %(column)s you try to import is not "
+                        "present in the move line!",
+                        column=col,
                     )
-                    % col
                 )
         move_vals = self.prepare_move_vals(result_row_list, parser)
         move = move_obj.create(move_vals)
@@ -397,8 +398,9 @@ class AccountJournal(models.Model):
             st += "".join(traceback.format_tb(trbk, 30))
             raise ValidationError(
                 self.env._(
-                    "Statement import error " "The statement cannot be created: %s"
+                    "Statement import error "
+                    "The statement cannot be created: %(statement)s",
+                    statement=st,
                 )
-                % st
             ) from None
         return move

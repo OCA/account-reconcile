@@ -55,7 +55,10 @@ class FileParser(AccountMoveImportParser):
             self.ftype = ftype[0:3]
         else:
             raise UserError(
-                self.env._("Invalid file type %s. Please use csv, xls or xlsx") % ftype
+                self.env._(
+                    "Invalid file type %(ftype)s. Please use csv, xls or xlsx",
+                    ftype=ftype,
+                )
             )
         self.conversion_dict = extra_fields
         self.keys_to_validate = list(self.conversion_dict.keys())
@@ -108,7 +111,9 @@ class FileParser(AccountMoveImportParser):
             parsed_cols = list(self.result_row_list[0].keys())
             for col in self.keys_to_validate:
                 if col not in parsed_cols:
-                    raise UserError(self.env._("Column %s not present in file") % col)
+                    raise UserError(
+                        self.env._("Column %(col)s not present in file", col=col)
+                    )
         return True
 
     def _post(self, *args, **kwargs):
@@ -162,14 +167,12 @@ class FileParser(AccountMoveImportParser):
                                 " It should be YYYY-MM-DD for column: %(rule)s"
                                 " value: %(line_value)s \n \n \n Please check"
                                 " the line with ref: %(ref_value)s \n \n Detail: "
-                                "%(error)s"
+                                "%(error)s",
+                                rule=rule,
+                                line_value=line.get(rule, self.env._("Missing")),
+                                ref_value=line.get("ref", line),
+                                error=repr(err),
                             )
-                            % {
-                                "rule": rule,
-                                "line_value": line.get(rule, self.env._("Missing")),
-                                "ref_value": line.get("ref", line),
-                                "error": repr(err),
-                            }
                         ) from err
                 else:
                     try:
@@ -179,14 +182,12 @@ class FileParser(AccountMoveImportParser):
                             self.env._(
                                 "Value %(line_value)s of column %(rule)s is not valid."
                                 "\n Please check the line with ref %(value_ref)s:\n "
-                                "\n Detail: %(error)s"
+                                "\n Detail: %(error)s",
+                                line_value=line.get(rule, self.env._("Missing")),
+                                rule=rule,
+                                value_ref=line.get("ref", line),
+                                error=repr(err),
                             )
-                            % {
-                                "line_value": line.get(rule, self.env._("Missing")),
-                                "rule": rule,
-                                "value_ref": line.get("ref", line),
-                                "error": repr(err),
-                            }
                         ) from err
         return result_set
 
@@ -207,14 +208,12 @@ class FileParser(AccountMoveImportParser):
                                 "Please modify the cell formatting to date "
                                 "format for column: %(rule)s value: %(line_value)s\n "
                                 "Please check the line with ref: %(value_ref)s\n "
-                                "\n Detail: %(error)s"
+                                "\n Detail: %(error)s",
+                                rule=rule,
+                                line_value=line.get(rule, self.env._("Missing")),
+                                value_ref=line.get("ref", line),
+                                error=repr(err),
                             )
-                            % {
-                                "rule": rule,
-                                "line_value": line.get(rule, self.env._("Missing")),
-                                "value_ref": line.get("ref", line),
-                                "error": repr(err),
-                            }
                         ) from err
                 else:
                     try:
@@ -224,14 +223,12 @@ class FileParser(AccountMoveImportParser):
                             self.env._(
                                 "Value %(line_value)s of column %(rule)s is not valid."
                                 "\n Please check the line with ref %(value_ref)s:\n "
-                                "\n Detail: %(error)s"
+                                "\n Detail: %(error)s",
+                                line_value=line.get(rule, self.env._("Missing")),
+                                rule=rule,
+                                value_ref=line.get("ref", line),
+                                error=repr(err),
                             )
-                            % {
-                                "line_value": line.get(rule, self.env._("Missing")),
-                                "rule": rule,
-                                "value_ref": line.get("ref", line),
-                                "error": repr(err),
-                            }
                         ) from err
         return result_set
 
