@@ -56,7 +56,10 @@ class FileParser(AccountMoveImportParser):
             self.ftype = ftype[0:3]
         else:
             raise UserError(
-                _("Invalid file type %s. Please use csv, xls or xlsx") % ftype
+                _(
+                    "Invalid file type %(ftype)s. Please use csv, xls or xlsx",
+                    ftype=ftype,
+                )
             )
         self.conversion_dict = extra_fields
         self.keys_to_validate = list(self.conversion_dict.keys())
@@ -109,7 +112,7 @@ class FileParser(AccountMoveImportParser):
             parsed_cols = list(self.result_row_list[0].keys())
             for col in self.keys_to_validate:
                 if col not in parsed_cols:
-                    raise UserError(_("Column %s not present in file") % col)
+                    raise UserError(_("Column %(col)s not present in file", col=col))
         return True
 
     def _post(self, *args, **kwargs):
