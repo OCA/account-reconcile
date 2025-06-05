@@ -4,7 +4,7 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 16.0\n"
+"Project-Id-Version: Odoo Server 18.0\n"
 "Report-Msgid-Bugs-To: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -16,7 +16,6 @@ msgstr ""
 #. module: account_move_base_import
 #. odoo-python
 #: code:addons/account_move_base_import/models/account_move.py:0
-#, python-format
 msgid ""
 "%(completion_date)s Account Move %(move_name)s has %(num_imported)s/%(number_line)s lines completed by %(user_name)s \n"
 "%(error_msg)s\n"
@@ -110,8 +109,7 @@ msgstr ""
 #. module: account_move_base_import
 #. odoo-python
 #: code:addons/account_move_base_import/parser/file_parser.py:0
-#, python-format
-msgid "Column %s not present in file"
+msgid "Column %(col)s not present in file"
 msgstr ""
 
 #. module: account_move_base_import
@@ -128,21 +126,18 @@ msgstr ""
 #. module: account_move_base_import
 #. odoo-python
 #: code:addons/account_move_base_import/models/account_journal.py:0
-#, python-format
 msgid "Commission amount should not be positive."
 msgstr ""
 
 #. module: account_move_base_import
 #. odoo-python
 #: code:addons/account_move_base_import/models/account_journal.py:0
-#, python-format
 msgid "Commission line"
 msgstr ""
 
 #. module: account_move_base_import
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_bank_statement_line__completion_logs
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_move__completion_logs
-#: model:ir.model.fields,field_description:account_move_base_import.field_account_payment__completion_logs
 msgid "Completion Log"
 msgstr ""
 
@@ -176,7 +171,6 @@ msgstr ""
 #. module: account_move_base_import
 #. odoo-python
 #: code:addons/account_move_base_import/parser/file_parser.py:0
-#, python-format
 msgid ""
 "Date format is not valid. It should be YYYY-MM-DD for column: %(rule)s value: %(line_value)s \n"
 " \n"
@@ -189,7 +183,6 @@ msgstr ""
 #. module: account_move_base_import
 #. odoo-python
 #: code:addons/account_move_base_import/parser/file_parser.py:0
-#, python-format
 msgid ""
 "Date format is not valid. Please modify the cell formatting to date format for column: %(rule)s value: %(line_value)s\n"
 " Please check the line with ref: %(value_ref)s\n"
@@ -275,7 +268,9 @@ msgstr ""
 
 #. module: account_move_base_import
 #: model:ir.model.fields,help:account_move_base_import.field_account_journal__message_has_error
+#: model:ir.model.fields,help:account_move_base_import.field_account_journal__message_has_sms_error
 #: model:ir.model.fields,help:account_move_base_import.field_account_move__message_has_error
+#: model:ir.model.fields,help:account_move_base_import.field_account_move__message_has_sms_error
 msgid "If checked, some messages have a delivery error."
 msgstr ""
 
@@ -323,16 +318,19 @@ msgstr ""
 #. module: account_move_base_import
 #. odoo-python
 #: code:addons/account_move_base_import/parser/file_parser.py:0
-#, python-format
-msgid "Invalid file type %s. Please use csv, xls or xlsx"
+msgid "Invalid file type %(ftype)s. Please use csv, xls or xlsx"
 msgstr ""
 
 #. module: account_move_base_import
 #. odoo-python
 #: code:addons/account_move_base_import/models/account_move.py:0
+msgid "Invalid invoice type for completion: %(inv_type)s"
+msgstr ""
+
+#. module: account_move_base_import
+#. odoo-python
 #: code:addons/account_move_base_import/models/account_move.py:0
-#, python-format
-msgid "Invalid invoice type for completion: %s"
+msgid "Invalid invoice type for completion: %(invoice_type)s"
 msgstr ""
 
 #. module: account_move_base_import
@@ -360,7 +358,6 @@ msgstr ""
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_bank_statement_line__used_for_completion
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_journal__used_for_completion
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_move__used_for_completion
-#: model:ir.model.fields,field_description:account_move_base_import.field_account_payment__used_for_completion
 msgid "Journal used for completion"
 msgstr ""
 
@@ -372,12 +369,6 @@ msgstr ""
 #. module: account_move_base_import
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_journal__last_import_date
 msgid "Last Import Date"
-msgstr ""
-
-#. module: account_move_base_import
-#: model:ir.model.fields,field_description:account_move_base_import.field_account_move_completion_rule____last_update
-#: model:ir.model.fields,field_description:account_move_base_import.field_credit_statement_import____last_update
-msgid "Last Modified on"
 msgstr ""
 
 #. module: account_move_base_import
@@ -400,7 +391,14 @@ msgstr ""
 #. module: account_move_base_import
 #. odoo-python
 #: code:addons/account_move_base_import/models/account_move.py:0
-#, python-format
+msgid ""
+"Line named \"%(line)s\" was matched by more than one partner while looking "
+"on partner by name"
+msgstr ""
+
+#. module: account_move_base_import
+#. odoo-python
+#: code:addons/account_move_base_import/models/account_move.py:0
 msgid ""
 "Line named \"%(line_name)s\" was matched by more than one partner while "
 "looking on %(inv_type)s invoices"
@@ -409,30 +407,14 @@ msgstr ""
 #. module: account_move_base_import
 #. odoo-python
 #: code:addons/account_move_base_import/models/account_move.py:0
-#, python-format
 msgid ""
 "Line named \"%(line_name)s\" was matched by more than one partner while "
 "looking on partner label: %(partner_labels)s"
 msgstr ""
 
 #. module: account_move_base_import
-#. odoo-python
-#: code:addons/account_move_base_import/models/account_move.py:0
-#, python-format
-msgid ""
-"Line named \"%s\" was matched by more than one partner while looking on "
-"partner by name"
-msgstr ""
-
-#. module: account_move_base_import
 #: model:ir.model.fields,help:account_move_base_import.field_account_move_completion_rule__sequence
 msgid "Lower means parsed first."
-msgstr ""
-
-#. module: account_move_base_import
-#: model:ir.model.fields,field_description:account_move_base_import.field_account_journal__message_main_attachment_id
-#: model:ir.model.fields,field_description:account_move_base_import.field_account_move__message_main_attachment_id
-msgid "Main Attachment"
 msgstr ""
 
 #. module: account_move_base_import
@@ -454,37 +436,26 @@ msgstr ""
 
 #. module: account_move_base_import
 #. odoo-python
-#: code:addons/account_move_base_import/parser/file_parser.py:0
-#: code:addons/account_move_base_import/parser/file_parser.py:0
-#: code:addons/account_move_base_import/parser/file_parser.py:0
-#: code:addons/account_move_base_import/parser/file_parser.py:0
-#, python-format
-msgid "Missing"
-msgstr ""
-
-#. module: account_move_base_import
-#. odoo-python
 #: code:addons/account_move_base_import/models/account_journal.py:0
-#, python-format
 msgid ""
-"Missing column! Column %s you try to import is not present in the move line!"
+"Missing column! Column %(column)s you try to import is not present in the "
+"move line!"
 msgstr ""
 
 #. module: account_move_base_import
 #. odoo-python
 #: code:addons/account_move_base_import/models/account_journal.py:0
-#, python-format
 msgid "Move %(move_name)s have been imported with %(num_lines)s lines."
 msgstr ""
 
 #. module: account_move_base_import
-#: model:ir.ui.menu,name:account_move_base_import.menu_action_move_completion_rule_tree_menu
+#: model:ir.ui.menu,name:account_move_base_import.menu_action_move_completion_rule_list_menu
 #: model_terms:ir.ui.view,arch_db:account_move_base_import.move_completion_rule_view_form
 msgid "Move Completion Rule"
 msgstr ""
 
 #. module: account_move_base_import
-#: model:ir.actions.act_window,name:account_move_base_import.action_move_completion_rule_tree
+#: model:ir.actions.act_window,name:account_move_base_import.action_move_completion_rule_list
 msgid "Move Completion Rules"
 msgstr ""
 
@@ -496,21 +467,18 @@ msgstr ""
 #. module: account_move_base_import
 #. odoo-python
 #: code:addons/account_move_base_import/parser/parser.py:0
-#, python-format
 msgid "No buffer file given."
 msgstr ""
 
 #. module: account_move_base_import
 #. odoo-python
 #: code:addons/account_move_base_import/models/account_journal.py:0
-#, python-format
 msgid "No commission account is set on the journal."
 msgstr ""
 
 #. module: account_move_base_import
 #. odoo-python
 #: code:addons/account_move_base_import/models/account_journal.py:0
-#, python-format
 msgid "Nothing to import: The file is empty"
 msgstr ""
 
@@ -541,14 +509,12 @@ msgstr ""
 #. module: account_move_base_import
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_bank_statement_line__import_partner_id
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_move__import_partner_id
-#: model:ir.model.fields,field_description:account_move_base_import.field_account_payment__import_partner_id
 msgid "Partner from import"
 msgstr ""
 
 #. module: account_move_base_import
 #. odoo-python
 #: code:addons/account_move_base_import/wizard/import_statement.py:0
-#, python-format
 msgid "Please use a file with an extension"
 msgstr ""
 
@@ -578,6 +544,12 @@ msgid "Related journals"
 msgstr ""
 
 #. module: account_move_base_import
+#: model:ir.model.fields,field_description:account_move_base_import.field_account_journal__message_has_sms_error
+#: model:ir.model.fields,field_description:account_move_base_import.field_account_move__message_has_sms_error
+msgid "SMS Delivery error"
+msgstr ""
+
+#. module: account_move_base_import
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_move_completion_rule__sequence
 msgid "Sequence"
 msgstr ""
@@ -590,7 +562,6 @@ msgstr ""
 #. module: account_move_base_import
 #. odoo-python
 #: code:addons/account_move_base_import/models/account_move.py:0
-#, python-format
 msgid ""
 "Statement ID %(move_name)s auto-completed for "
 "%(num_imported)s/%(number_line)s lines completed"
@@ -604,8 +575,7 @@ msgstr ""
 #. module: account_move_base_import
 #. odoo-python
 #: code:addons/account_move_base_import/models/account_journal.py:0
-#, python-format
-msgid "Statement import error The statement cannot be created: %s"
+msgid "Statement import error The statement cannot be created: %(statement)s"
 msgstr ""
 
 #. module: account_move_base_import
@@ -652,8 +622,6 @@ msgstr ""
 #. module: account_move_base_import
 #. odoo-python
 #: code:addons/account_move_base_import/parser/file_parser.py:0
-#: code:addons/account_move_base_import/parser/file_parser.py:0
-#, python-format
 msgid ""
 "Value %(line_value)s of column %(rule)s is not valid.\n"
 " Please check the line with ref %(value_ref)s:\n"
