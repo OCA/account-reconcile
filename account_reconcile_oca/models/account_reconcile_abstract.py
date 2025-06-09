@@ -95,7 +95,7 @@ class AccountReconcileAbstract(models.AbstractModel):
             if line.partner_id
             else False,
             "date": fields.Date.to_string(line.date),
-            "name": line.name,
+            "name": line.name or line.move_id.name,
             "debit": amount if amount > 0 else 0.0,
             "credit": -amount if amount < 0 else 0.0,
             "amount": amount,
