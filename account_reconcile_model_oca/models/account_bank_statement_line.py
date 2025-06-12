@@ -88,14 +88,14 @@ class AccountBankStatementLine(models.Model):
                     aml.partner_id = partner.id
                     AND partner.name IS NOT NULL
                     AND partner.active
-                    AND (
+                    AND ((
             """)
             query_parts = SQL(") OR (").join(sub_queries)
             final_query = SQL(
                 """
                 %s
                     %s
-                )
+                ))
                 WHERE aml.company_id = %s
                 LIMIT 1
             """,
