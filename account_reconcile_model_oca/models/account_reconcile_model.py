@@ -3,11 +3,22 @@ from collections import defaultdict
 
 from dateutil.relativedelta import relativedelta
 
-from odoo import Command, fields, models, tools
+from odoo import Command, api, fields, models, tools
 
 
 class AccountReconcileModel(models.Model):
     _inherit = "account.reconcile.model"
+
+    unique_matching = fields.Boolean(
+        string="Unique match",
+        help="If this box is checked, counterparts will only be suggested if only "
+        "one possible counterpart is found.",
+    )
+
+    @api.onchange("rule_type")
+    def _onchange_rule_type(self):
+        if self.rule_type != "invoice_matching":
+            self.unique_matching = False
 
     ####################################################
     # RECONCILIATION PROCESS
@@ -490,7 +501,10 @@ class AccountReconcileModel(models.Model):
                 all_params + [tuple(numerical_tokens + exact_tokens)],
             )
             candidate_ids = [r[0] for r in self._cr.fetchall()]
-            if candidate_ids:
+            if candidate_ids and (
+                not self.unique_matching
+                or (self.unique_matching and len(candidate_ids) == 1)
+            ):
                 return {
                     "allow_auto_reconcile": True,
                     "amls": self.env["account.move.line"].browse(candidate_ids),
@@ -542,7 +556,9 @@ class AccountReconcileModel(models.Model):
             amls = self.env["account.move.line"].search(
                 aml_domain, order=get_order_by_clause()
             )
-        if amls:
+        if amls and (
+            not self.unique_matching or (self.unique_matching and len(amls) == 1)
+        ):
             return {
                 "allow_auto_reconcile": False,
                 "amls": amls,

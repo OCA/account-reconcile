@@ -4,6 +4,7 @@ from freezegun import freeze_time
 
 from odoo import Command
 from odoo.tests import Form, tagged
+from odoo.tools import mute_logger
 
 from odoo.addons.account.tests.common import AccountTestInvoicingCommon
 
@@ -812,6 +813,7 @@ class TestReconciliationMatchingRules(AccountTestInvoicingCommon):
             },
         )
 
+    @mute_logger("odoo.models.unlink")
     def test_larger_invoice_auto_reconcile(self):
         """Test auto reconciliation with an invoice with larger amount than the
         statement line's, for rules without write-offs."""
@@ -1048,6 +1050,7 @@ class TestReconciliationMatchingRules(AccountTestInvoicingCommon):
             },
         )
 
+    @mute_logger("odoo.models.unlink")
     def test_invoice_matching_rule_no_partner(self):
         """Tests that a statement line without any partner can be matched to the
         right invoice if they have the same payment reference.
@@ -1286,6 +1289,7 @@ class TestReconciliationMatchingRules(AccountTestInvoicingCommon):
             },
         )
 
+    @mute_logger("odoo.models.unlink")
     def test_payment_similar_communications(self):
         def create_payment_line(amount, memo, partner):
             payment = self.env["account.payment"].create(
@@ -1339,6 +1343,13 @@ class TestReconciliationMatchingRules(AccountTestInvoicingCommon):
                 },
             },
         )
+        self.rule_1.unique_matching = True
+        self._check_statement_matching(
+            self.rule_1,
+            {
+                self.bank_line_1: {},
+            },
+        )
 
     def test_no_amount_check_keep_first(self):
         """In case the reconciliation model doesn't check the total amount of the
@@ -1361,6 +1372,14 @@ class TestReconciliationMatchingRules(AccountTestInvoicingCommon):
                     "model": self.rule_1,
                     "status": "write_off",
                 },
+            },
+        )
+        self.rule_1.unique_matching = True
+        self._check_statement_matching(
+            self.rule_1,
+            {
+                self.bank_line_1: {},
+                self.bank_line_2: {},
             },
         )
 

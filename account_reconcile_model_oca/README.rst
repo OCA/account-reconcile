@@ -1,7 +1,3 @@
-.. image:: https://odoo-community.org/readme-banner-image
-   :target: https://odoo-community.org/get-involved?utm_source=readme
-   :alt: Odoo Community Association
-
 ===========================
 Account Reconcile Model Oca
 ===========================
@@ -17,7 +13,7 @@ Account Reconcile Model Oca
 .. |badge1| image:: https://img.shields.io/badge/maturity-Beta-yellow.png
     :target: https://odoo-community.org/page/development-status
     :alt: Beta
-.. |badge2| image:: https://img.shields.io/badge/license-LGPL--3-blue.png
+.. |badge2| image:: https://img.shields.io/badge/licence-LGPL--3-blue.png
     :target: http://www.gnu.org/licenses/lgpl-3.0-standalone.html
     :alt: License: LGPL-3
 .. |badge3| image:: https://img.shields.io/badge/github-OCA%2Faccount--reconcile-lightgray.png?logo=github
@@ -62,13 +58,17 @@ Authors
 Contributors
 ------------
 
-- Dixmit
+-  Dixmit
 
-  - Enric Tobella
+   -  Enric Tobella
 
-- Trobz <https://www.trobz.com/>
+-  Trobz <https://www.trobz.com/>
 
-  - Do Anh Duy <duyda@trobz.com>
+   -  Do Anh Duy <duyda@trobz.com>
+
+-  `Tecnativa <https://www.tecnativa.com>`__:
+
+   -  Víctor Martínez
 
 Other credits
 -------------
