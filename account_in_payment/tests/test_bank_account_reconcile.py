@@ -2,62 +2,25 @@ import time
 
 from odoo.tests import Form, tagged
 
-from odoo.addons.account.tests.common import TestAccountReconciliationCommon
+from odoo.addons.account_reconcile_oca.tests.test_bank_account_reconcile import (
+    TestReconciliationWidget,
+)
 
 
 @tagged("post_install", "-at_install")
-class TestReconciliationWidget(TestAccountReconciliationCommon):
+class TestReconciliationWidgetExt(TestReconciliationWidget):
     @classmethod
-    def setUpClass(cls, chart_template_ref=None):
-        super().setUpClass(chart_template_ref=chart_template_ref)
-        cls.env = cls.env(
-            context=dict(
-                cls.env.context,
-                test_get_invoice_in_payment_state=True,
-            )
-        )
+    def _setup_context(cls):
+        return {**cls.env.context, "test_get_invoice_in_payment_state": True}
+
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        cls.env = cls.env(context=cls._setup_context())
         cls.acc_bank_stmt_model = cls.env["account.bank.statement"]
         cls.acc_bank_stmt_line_model = cls.env["account.bank.statement.line"]
-        cls.bank_journal_usd.suspense_account_id = (
-            cls.company.account_journal_suspense_account_id
-        )
-        cls.bank_journal_euro.suspense_account_id = (
-            cls.company.account_journal_suspense_account_id
-        )
-        cls.current_assets_account = cls.env["account.account"].search(
-            [
-                ("account_type", "=", "asset_current"),
-                ("company_id", "=", cls.company.id),
-            ],
-            limit=1,
-        )
-        cls.current_assets_account.reconcile = True
-        # We need to make some fields visible in order to make the tests work
-        cls.env["ir.ui.view"].create(
-            {
-                "name": "DEMO Account bank statement",
-                "model": "account.bank.statement.line",
-                "inherit_id": cls.env.ref(
-                    "account_reconcile_oca.bank_statement_line_form_reconcile_view"
-                ).id,
-                "arch": """
-            <data>
-                <field name="manual_reference" position="attributes">
-                    <attribute name="invisible">0</attribute>
-                </field>
-                <field name="manual_delete" position="attributes">
-                    <attribute name="invisible">0</attribute>
-                </field>
-                <field name="partner_id" position="attributes">
-                    <attribute name="invisible">0</attribute>
-                </field>
-            </data>
-            """,
-            }
-        )
 
     # Testing reconcile action
-
     def test_payment(self):
         inv1 = self.create_invoice(
             currency_id=self.currency_euro_id,
@@ -127,7 +90,9 @@ class TestReconciliationWidget(TestAccountReconciliationCommon):
                 "date": time.strftime("%Y-07-15"),
             }
         )
-        receivable1 = payments.line_ids.filtered(lambda line: not line.reconciled)
+        receivable1 = payments.move_id.line_ids.filtered(
+            lambda line: not line.reconciled
+        )
         self.assertEqual(inv1.amount_residual_signed, 0)
         with Form(
             bank_stmt_line,
@@ -136,6 +101,7 @@ class TestReconciliationWidget(TestAccountReconciliationCommon):
             self.assertFalse(f.can_reconcile)
             f.add_account_move_line_id = receivable1
             self.assertFalse(f.add_account_move_line_id)
+
             self.assertTrue(f.can_reconcile)
         self.assertEqual(inv1.amount_residual_signed, 0)
         self.assertFalse(receivable1.reconciled)
