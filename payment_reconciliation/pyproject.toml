@@ -1,0 +1,19 @@
+[build-system]
+requires = ["whool"]
+build-backend = "whool.buildapi"
+
+
+[project]
+name = "odoo-addon-payment-reconciliation"
+version = "17.0.1.0.0"
+description = "Partial Reconciliation: Allows partial settlement across customer and vendor invoices."
+dependencies = [
+    "odoo >=17.0a, <18.0a",
+]
+license = {text = "LGPL-3"}
+authors = [
+    {name = "Areterix Technologies", email = "contact@areterix.com"},
+]
+
+[tool.odoo]
+odoo_version = "17.0"
