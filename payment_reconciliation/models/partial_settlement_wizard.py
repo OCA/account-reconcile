@@ -403,7 +403,7 @@ class PartialSettlementLine(models.TransientModel):
     _description = "Partial Settlement Line"
 
     wizard_id = fields.Many2one("partial.settlement.wizard", required=True)
-    invoice_id = fields.Many2one("account.move", string="Invoice")
+    invoice_id = fields.Many2one("account.move")
     invoice_date = fields.Date(string="Invoice Date")
     amount_total = fields.Monetary(string="Total Amount")
     amount_due = fields.Monetary(string="Pending Amount")
