@@ -14,7 +14,6 @@ This module enables users to perform partial reconciliations across customer inv
     'data': [
         'security/ir.model.access.csv',
         'views/account_inherit.xml',
-        'views/partial_settlement_menu.xml',
         'views/partial_settlement_wizard.xml',
     ],
     'license': 'LGPL-3',
