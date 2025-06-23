@@ -13,7 +13,11 @@ class PartialSettlementWizard(models.TransientModel):
     payment_id = fields.Many2one(
         "account.payment",
         string="Payment",
-        domain="[('partner_id', '=', partner_id), ('state', '=', 'posted'), ('is_reconciled', '=', False)]",
+        domain=[
+            ("partner_id", "=", partner_id),
+            ("state", "=", "posted"),
+            ("is_reconciled", "=", False),
+        ],
     )
 
     total_invoice_due = fields.Monetary(compute="_compute_invoice_due")
@@ -124,7 +128,8 @@ class PartialSettlementWizard(models.TransientModel):
         is_vendor_context = in_count >= out_count
 
         _logger.info(
-            f"🔍 Detected {'Vendor' if is_vendor_context else 'Customer'} context based on line_ids"
+            f"🔍 Detected {'Vendor' if is_vendor_context else 'Customer'} context "
+            "based on line_ids"
         )
 
         domain = [
