@@ -1,3 +1,4 @@
+from odoo.exceptions import ValidationError  # Import specific exception
 from odoo.tests.common import TransactionCase
 
 
@@ -34,5 +35,6 @@ class TestPartialSettlement(TransactionCase):
                 "payment_id": self.payment.id,
             }
         )
-        with self.assertRaises(Exception):
+        # Catch the specific exception instead of generic Exception
+        with self.assertRaises(ValidationError):
             wizard.action_reconcile()
