@@ -6,7 +6,6 @@ from odoo.tools import config
 
 
 class AccountMove(models.Model):
-
     _inherit = "account.move"
 
     @api.model
