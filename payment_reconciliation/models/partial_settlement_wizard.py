@@ -222,9 +222,12 @@ class PartialSettlementWizard(models.TransientModel):
         if self.total_to_reconcile > payment_residual_abs + 0.01:
             raise ValidationError(
                 _(
-                    "The total partial amounts (%(total).2f) exceed the available payment amount (%(available).2f)."
+                    "The total %(total).2f exceeds %(available).2f.",
+                    {
+                        "total": self.total_to_reconcile,
+                        "available": payment_residual_abs,
+                    },
                 )
-                % {"total": self.total_to_reconcile, "available": payment_residual_abs}
             )
 
         payment_lines = self.payment_id.move_id.line_ids.filtered(
