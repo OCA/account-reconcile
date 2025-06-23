@@ -109,8 +109,12 @@ class PartialSettlementWizard(models.TransientModel):
         in_types = ["in_invoice", "in_refund"]
         out_types = ["out_invoice", "out_refund"]
 
-        in_count = sum(1 for l in self.line_ids if l.invoice_id.move_type in in_types)
-        out_count = sum(1 for l in self.line_ids if l.invoice_id.move_type in out_types)
+        in_count = sum(
+            1 for line in self.line_ids if line.invoice_id.move_type in in_types
+        )
+        out_count = sum(
+            1 for line in self.line_ids if line.invoice_id.move_type in out_types
+        )
 
         is_vendor_context = in_count >= out_count
 
@@ -320,7 +324,6 @@ class PartialSettlementWizard(models.TransientModel):
                 continue
 
             account = invoice_lines[0].account_id
-            invoice_is_vendor = invoice.move_type in ["in_invoice", "in_refund"]
 
             payment_lines_to_reconcile = payment_lines.filtered(
                 lambda l: l.account_id == account
