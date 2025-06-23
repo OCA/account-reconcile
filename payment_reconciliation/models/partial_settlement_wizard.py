@@ -449,11 +449,13 @@ class PartialSettlementLine(models.TransientModel):
         for line in self:
             if line.partial_amount < 0:
                 raise ValidationError(_("Reconciliation amount cannot be negative."))
-
             if line.partial_amount > line.amount_due + 0.01:
                 raise ValidationError(
                     _(
-                        "Amount to reconcile (%.2f) cannot exceed pending amount (%.2f)."
-                        % (line.partial_amount, line.amount_due)
+                        "Amount to reconcile (%(reconcile).2f) cannot exceed pending amount (%(due).2f)."
                     )
+                    % {
+                        "reconcile": line.partial_amount,
+                        "due": line.amount_due,
+                    }
                 )
