@@ -1,7 +1,9 @@
 {
     "name": "Partial Reconciliation",
     "version": "17.0.1.0.0",
-    "summary": "Allows partial reconciliation between customer invoices and vendor bills.",
+    "summary": (
+        "Allows partial reconciliation between customer invoices " "and vendor bills."
+    ),
     "author": "Areterix Technologies, Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/account-reconcile",
     "category": "Accounting",
