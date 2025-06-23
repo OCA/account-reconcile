@@ -1,27 +1,29 @@
+import logging
+
 from odoo import _, api, fields, models
 from odoo.exceptions import ValidationError
+
+_logger = logging.getLogger(__name__)
 
 
 class PartialSettlementWizard(models.TransientModel):
     _name = "partial.settlement.wizard"
     _description = "Partial Settlement Wizard"
 
-    partner_id = fields.Many2one("res.partner", string="Customer", required=True)
+    partner_id = fields.Many2one("res.partner")
     payment_id = fields.Many2one(
         "account.payment",
         string="Payment",
         domain="[('partner_id', '=', partner_id), ('state', '=', 'posted'), ('is_reconciled', '=', False)]",
     )
 
-    total_invoice_due = fields.Monetary(
-        string="Total Invoice Due", compute="_compute_invoice_due"
-    )
+    total_invoice_due = fields.Monetary(compute="_compute_invoice_due")
     currency_id = fields.Many2one(
         "res.currency", related="partner_id.currency_id", readonly=True
     )
 
     total_to_reconcile = fields.Monetary(
-        string="Total to Reconcile", compute="_compute_total_to_reconcile", store=True
+        compute="_compute_total_to_reconcile", store=True
     )
     payment_residual = fields.Monetary(
         string="Payment Available", compute="_compute_payment_residual", store=True
@@ -31,12 +33,8 @@ class PartialSettlementWizard(models.TransientModel):
         "partial.settlement.line", "wizard_id", string="Invoices"
     )
 
-    payment_amount = fields.Monetary(
-        string="Payment Amount", compute="_compute_payment_amount"
-    )
-    has_payments = fields.Boolean(
-        string="Has Payments", compute="_compute_has_payments", store=False
-    )
+    payment_amount = fields.Monetary(compute="_compute_payment_amount")
+    has_payments = fields.Boolean(compute="_compute_has_payments", store=False)
 
     @api.depends("partner_id")
     def _compute_has_payments(self):
@@ -60,16 +58,16 @@ class PartialSettlementWizard(models.TransientModel):
             return
 
         payment_type = self.payment_id.payment_type
-        print(f"\n📌 Payment Type Selected: {payment_type}")
+        _logger.info(f"\n📌 Payment Type Selected: {payment_type}")
 
         if payment_type == "inbound":
             invoice_types = ["out_invoice", "out_refund"]
-            print("🔎 Loading Customer Invoices and Credit Notes...")
+            _logger.info("🔎 Loading Customer Invoices and Credit Notes...")
         elif payment_type == "outbound":
             invoice_types = ["in_invoice", "in_refund"]
-            print("🔎 Loading Vendor Bills and Refunds...")
+            _logger.info("🔎 Loading Vendor Bills and Refunds...")
         else:
-            print("⚠️ Unknown payment type, skipping invoice loading.")
+            _logger.info("⚠️ Unknown payment type, skipping invoice loading.")
             return
 
         invoices = (
@@ -85,7 +83,7 @@ class PartialSettlementWizard(models.TransientModel):
             )
         )
 
-        print(f"🧾 Found {len(invoices)} eligible invoices for reconciliation.")
+        _logger.info(f"🧾 Found {len(invoices)} eligible invoices for reconciliation.")
 
         self.line_ids = [
             (
@@ -117,7 +115,7 @@ class PartialSettlementWizard(models.TransientModel):
         is_vendor_context = in_count >= out_count
 
         # Log or debug
-        print(
+        _logger.info(
             f"🔍 Detected {'Vendor' if is_vendor_context else 'Customer'} context based on line_ids"
         )
 
@@ -199,7 +197,7 @@ class PartialSettlementWizard(models.TransientModel):
                     ]
                 }
             }
-            print("\n\n\n\n\nabc", abc)
+            _logger.info("\n\n\n\n\nabc", abc)
             return abc
 
     def _is_receivable_or_payable(self, account):
@@ -224,9 +222,9 @@ class PartialSettlementWizard(models.TransientModel):
         if self.total_to_reconcile > payment_residual_abs + 0.01:
             raise ValidationError(
                 _(
-                    "The total partial amounts (%.2f) exceed the available payment amount (%.2f)."
-                    % (self.total_to_reconcile, payment_residual_abs)
+                    "The total partial amounts (%(total).2f) exceed the available payment amount (%(available).2f)."
                 )
+                % {"total": self.total_to_reconcile, "available": payment_residual_abs}
             )
 
         payment_lines = self.payment_id.move_id.line_ids.filtered(
@@ -237,10 +235,10 @@ class PartialSettlementWizard(models.TransientModel):
             and abs(l.amount_residual_currency or l.amount_residual) > 0.0001
         )
 
-        print("\n\n✅ Available payment lines for reconciliation:")
+        _logger.info("\n\n✅ Available payment lines for reconciliation:")
         for l in payment_lines:
             residual = l.amount_residual_currency or l.amount_residual
-            print(
+            _logger.info(
                 f"💳 Payment Line ID {l.id} | Account: {l.account_id.name} | Residual: {residual}"
             )
 
@@ -272,7 +270,7 @@ class PartialSettlementWizard(models.TransientModel):
                 if invoice:
                     line.invoice_id = invoice
                     matched_invoice_ids.add(invoice.id)
-                    print(
+                    _logger.info(
                         f"🔗 Linked missing invoice: {invoice.name} (Amount: {invoice.amount_residual}) to line {line.id}"
                     )
 
@@ -287,15 +285,15 @@ class PartialSettlementWizard(models.TransientModel):
         for line in self.line_ids.filtered(lambda l: l.partial_amount > 0):
             invoice = line.invoice_id
             if not invoice:
-                print(f"❌ Skipping line {line.id}: no invoice linked.")
+                _logger.info(f"❌ Skipping line {line.id}: no invoice linked.")
                 continue
 
             invoice_residual = invoice.amount_residual or 0.0
-            print(f"\n\n🔍 Processing line ID: {line.id}")
-            print(f"📄 Invoice: {invoice.name}")
-            print(f"💰 Invoice Total Amount: {invoice.amount_total}")
-            print(f"📉 Invoice Due Amount: {invoice_residual}")
-            print(f"💵 Amount to Reconcile: {line.partial_amount}")
+            _logger.info(f"\n\n🔍 Processing line ID: {line.id}")
+            _logger.info(f"📄 Invoice: {invoice.name}")
+            _logger.info(f"💰 Invoice Total Amount: {invoice.amount_total}")
+            _logger.info(f"📉 Invoice Due Amount: {invoice_residual}")
+            _logger.info(f"💵 Amount to Reconcile: {line.partial_amount}")
 
             if line.partial_amount > remaining_payment_amount + 0.01:
                 raise ValidationError(
@@ -313,7 +311,7 @@ class PartialSettlementWizard(models.TransientModel):
             )
 
             if not invoice_lines:
-                print(
+                _logger.info(
                     f"⚠️ No residual invoice lines to reconcile for invoice {invoice.name}"
                 )
                 continue
@@ -329,7 +327,9 @@ class PartialSettlementWizard(models.TransientModel):
             )
 
             if not payment_lines_to_reconcile:
-                print(f"⚠️ No matching payment lines found for invoice {invoice.name}")
+                _logger.info(
+                    f"⚠️ No matching payment lines found for invoice {invoice.name}"
+                )
                 continue
 
             debit_line = invoice_lines[0]
@@ -376,13 +376,13 @@ class PartialSettlementWizard(models.TransientModel):
                     )
 
                 self.env["account.partial.reconcile"].create(reconcile_vals)
-                print(
+                _logger.info(
                     f"✅ Successfully reconciled {amount} out of {invoice_residual} for invoice {invoice.name}"
                 )
                 remaining_payment_amount -= abs(amount)
             except Exception as e:
                 error_msg = f"❌ Failed to reconcile {line.partial_amount} for invoice {invoice.name}: {str(e)}"
-                print(error_msg)
+                _logger.info(error_msg)
                 raise ValidationError(_(error_msg))
 
         return {
@@ -404,7 +404,7 @@ class PartialSettlementLine(models.TransientModel):
 
     wizard_id = fields.Many2one("partial.settlement.wizard", required=True)
     invoice_id = fields.Many2one("account.move")
-    invoice_date = fields.Date(string="Invoice Date")
+    invoice_date = fields.Date()
     amount_total = fields.Monetary(string="Total Amount")
     amount_due = fields.Monetary(string="Pending Amount")
     partial_amount = fields.Monetary(string="Amount to Reconcile")

@@ -2,7 +2,7 @@
 Customer Payment Reconciliation
 ===============================
 
-This module allows **partial payment settlement** for customers across multiple invoices.  
+This module allows **partial payment settlement** for customers across multiple invoices.
 It is designed to manage scenarios where:
 - Customers have outstanding invoices.
 - Customers want to make **partial payments** based on their available payment made in bulk.
@@ -42,10 +42,10 @@ This module is maintained by Areterix Technologies.
 
 Bug Tracker
 ===========
-Bugs are tracked on `GitHub Issues <https://github.com/YOUR-GITHUB-USERNAME/YOUR-REPOSITORY/issues>`_.  
+Bugs are tracked on `GitHub Issues <https://github.com/YOUR-GITHUB-USERNAME/YOUR-REPOSITORY/issues>`_.
 In case of problems, please log them there.
 
-To contribute to this module, please visit:  
+To contribute to this module, please visit:
 https://github.com/umaniar-plus/YOUR-REPOSITORY
 
 Roadmap
@@ -58,4 +58,3 @@ Known Issues
 ============
 - Currently supports only customer invoices.
 - Vendor bill partial reconciliation not yet implemented.
-
