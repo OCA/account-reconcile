@@ -1,5 +1,6 @@
-from odoo import models, fields, api
+from odoo import _, models, fields, api
 from odoo.exceptions import ValidationError
+
 
 class PartialSettlementWizard(models.TransientModel):
     _name = 'partial.settlement.wizard'
@@ -172,17 +173,17 @@ class PartialSettlementWizard(models.TransientModel):
         self.ensure_one()
 
         if not self.payment_id:
-            raise ValidationError("Please select a payment to reconcile.")
+            raise ValidationError(_("Please select a payment to reconcile."))
 
         if self.total_to_reconcile <= 0:
-            raise ValidationError("Please enter amounts greater than 0 to reconcile.")
+            raise ValidationError(_("Please enter amounts greater than 0 to reconcile."))
 
         payment_residual_abs = abs(self.payment_residual)
         if self.total_to_reconcile > payment_residual_abs + 0.01:
-            raise ValidationError(
+            raise ValidationError(_(
                 "The total partial amounts (%.2f) exceed the available payment amount (%.2f)." %
                 (self.total_to_reconcile, payment_residual_abs)
-            )
+            ))
 
         payment_lines = self.payment_id.move_id.line_ids.filtered(
             lambda l: l.account_id.account_type in ('asset_receivable', 'liability_payable')
@@ -197,7 +198,7 @@ class PartialSettlementWizard(models.TransientModel):
             print(f"💳 Payment Line ID {l.id} | Account: {l.account_id.name} | Residual: {residual}")
 
         if not payment_lines:
-            raise ValidationError("No reconcilable lines found in the payment.")
+            raise ValidationError(_("No reconcilable lines found in the payment."))
 
         # Track matched invoice IDs to avoid duplication
         matched_invoice_ids = set()
@@ -238,9 +239,9 @@ class PartialSettlementWizard(models.TransientModel):
             print(f"💵 Amount to Reconcile: {line.partial_amount}")
 
             if line.partial_amount > remaining_payment_amount + 0.01:
-                raise ValidationError(
+                raise ValidationError(_(
                     f"Partial amount {line.partial_amount} exceeds remaining payment amount {remaining_payment_amount}"
-                )
+                ))
 
             invoice_lines = invoice.line_ids.filtered(
                 lambda l: l.account_id.account_type in ('asset_receivable', 'liability_payable')
@@ -306,7 +307,7 @@ class PartialSettlementWizard(models.TransientModel):
             except Exception as e:
                 error_msg = f"❌ Failed to reconcile {line.partial_amount} for invoice {invoice.name}: {str(e)}"
                 print(error_msg)
-                raise ValidationError(error_msg)
+                raise ValidationError(_(error_msg))
 
         return {
             'type': 'ir.actions.client',
@@ -369,9 +370,10 @@ class PartialSettlementLine(models.TransientModel):
     def _check_partial_amount(self):
         for line in self:
             if line.partial_amount < 0:
-                raise ValidationError("Reconciliation amount cannot be negative.")
+                raise ValidationError(_("Reconciliation amount cannot be negative."))
+
             if line.partial_amount > line.amount_due + 0.01:
-                raise ValidationError(
+                raise ValidationError(_(
                     "Amount to reconcile (%.2f) cannot exceed pending amount (%.2f)." %
                     (line.partial_amount, line.amount_due)
-                )
+                ))

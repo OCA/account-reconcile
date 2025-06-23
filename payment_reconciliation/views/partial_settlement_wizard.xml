@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data>
-
         <record id="view_partial_settlement_form" model="ir.ui.view">
             <field name="name">partial.settlement.wizard.form</field>
             <field name="model">partial.settlement.wizard</field>
@@ -17,7 +16,6 @@
                                    required="has_payments ==  True"
                                    />
                         </group>
-
                         <group>
                             <field name="payment_amount" readonly="1"/>
                             <field name="payment_residual" readonly="1"/>
@@ -45,7 +43,5 @@
                 </form>
             </field>
         </record>
-
-
     </data>
 </odoo>

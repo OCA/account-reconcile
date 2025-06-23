@@ -1,24 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data>
-
         <menuitem id="menu_partial_settlement"
                   name="Partial Settlement"
                   parent="account.menu_account_customer"
                   sequence="15"/>
-
         <record id="action_partial_settlement_wizard" model="ir.actions.act_window">
             <field name="name">Partial Settlement</field>
             <field name="res_model">partial.settlement.wizard</field>
             <field name="view_mode">form</field>
             <field name="target">new</field>
         </record>
-
         <menuitem id="partial_settlement_action"
                   name="Partial Settlement"
                   parent="menu_partial_settlement"
                   action="action_partial_settlement_wizard"/>
-
 
     </data>
 </odoo>
