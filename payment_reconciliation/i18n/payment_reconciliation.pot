@@ -1,0 +1,163 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* payment_reconciliation
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 17.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-06-11 06:23+0000\n"
+"PO-Revision-Date: 2025-06-11 06:23+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: payment_reconciliation
+#: model:ir.model.fields,field_description:payment_reconciliation.field_partial_settlement_line__partial_amount
+msgid "Amount to Reconcile"
+msgstr ""
+
+#. module: payment_reconciliation
+#: model_terms:ir.ui.view,arch_db:payment_reconciliation.view_partial_settlement_form
+msgid "Cancel"
+msgstr ""
+
+#. module: payment_reconciliation
+#: model:ir.model.fields,field_description:payment_reconciliation.field_partial_settlement_line__create_uid
+#: model:ir.model.fields,field_description:payment_reconciliation.field_partial_settlement_wizard__create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: payment_reconciliation
+#: model:ir.model.fields,field_description:payment_reconciliation.field_partial_settlement_line__create_date
+#: model:ir.model.fields,field_description:payment_reconciliation.field_partial_settlement_wizard__create_date
+msgid "Created on"
+msgstr ""
+
+#. module: payment_reconciliation
+#: model:ir.model.fields.selection,name:payment_reconciliation.selection__partial_settlement_line__document_type__credit_note
+msgid "Credit Note"
+msgstr ""
+
+#. module: payment_reconciliation
+#: model:ir.model.fields,field_description:payment_reconciliation.field_partial_settlement_line__currency_id
+#: model:ir.model.fields,field_description:payment_reconciliation.field_partial_settlement_wizard__currency_id
+msgid "Currency"
+msgstr ""
+
+#. module: payment_reconciliation
+#: model:ir.model.fields,field_description:payment_reconciliation.field_partial_settlement_wizard__partner_id
+msgid "Customer"
+msgstr ""
+
+#. module: payment_reconciliation
+#: model:ir.model.fields,field_description:payment_reconciliation.field_partial_settlement_line__display_name
+#: model:ir.model.fields,field_description:payment_reconciliation.field_partial_settlement_wizard__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: payment_reconciliation
+#: model:ir.model.fields,field_description:payment_reconciliation.field_partial_settlement_line__document_type
+msgid "Document Type"
+msgstr ""
+
+#. module: payment_reconciliation
+#: model:ir.model.fields,field_description:payment_reconciliation.field_partial_settlement_line__id
+#: model:ir.model.fields,field_description:payment_reconciliation.field_partial_settlement_wizard__id
+msgid "ID"
+msgstr ""
+
+#. module: payment_reconciliation
+#: model:ir.model.fields,field_description:payment_reconciliation.field_partial_settlement_line__invoice_id
+#: model:ir.model.fields.selection,name:payment_reconciliation.selection__partial_settlement_line__document_type__invoice
+msgid "Invoice"
+msgstr ""
+
+#. module: payment_reconciliation
+#: model:ir.model.fields,field_description:payment_reconciliation.field_partial_settlement_line__invoice_date
+msgid "Invoice Date"
+msgstr ""
+
+#. module: payment_reconciliation
+#: model:ir.model.fields,field_description:payment_reconciliation.field_partial_settlement_wizard__line_ids
+#: model_terms:ir.ui.view,arch_db:payment_reconciliation.view_partial_settlement_form
+msgid "Invoices"
+msgstr ""
+
+#. module: payment_reconciliation
+#: model:ir.model.fields,field_description:payment_reconciliation.field_partial_settlement_line__write_uid
+#: model:ir.model.fields,field_description:payment_reconciliation.field_partial_settlement_wizard__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: payment_reconciliation
+#: model:ir.model.fields,field_description:payment_reconciliation.field_partial_settlement_line__write_date
+#: model:ir.model.fields,field_description:payment_reconciliation.field_partial_settlement_wizard__write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: payment_reconciliation
+#: model:ir.actions.act_window,name:payment_reconciliation.action_partial_settlement_wizard
+#: model:ir.ui.menu,name:payment_reconciliation.menu_partial_settlement
+#: model:ir.ui.menu,name:payment_reconciliation.partial_settlement_action
+#: model_terms:ir.ui.view,arch_db:payment_reconciliation.view_partial_settlement_form
+msgid "Partial Settlement"
+msgstr ""
+
+#. module: payment_reconciliation
+#: model:ir.model,name:payment_reconciliation.model_partial_settlement_line
+msgid "Partial Settlement Line"
+msgstr ""
+
+#. module: payment_reconciliation
+#: model:ir.model,name:payment_reconciliation.model_partial_settlement_wizard
+msgid "Partial Settlement Wizard"
+msgstr ""
+
+#. module: payment_reconciliation
+#: model:ir.model.fields,field_description:payment_reconciliation.field_partial_settlement_wizard__payment_id
+msgid "Payment"
+msgstr ""
+
+#. module: payment_reconciliation
+#: model:ir.model.fields,field_description:payment_reconciliation.field_partial_settlement_wizard__payment_amount
+msgid "Payment Amount"
+msgstr ""
+
+#. module: payment_reconciliation
+#: model:ir.model.fields,field_description:payment_reconciliation.field_partial_settlement_wizard__payment_residual
+msgid "Payment Available"
+msgstr ""
+
+#. module: payment_reconciliation
+#: model:ir.model.fields,field_description:payment_reconciliation.field_partial_settlement_line__amount_due
+msgid "Pending Amount"
+msgstr ""
+
+#. module: payment_reconciliation
+#: model_terms:ir.ui.view,arch_db:payment_reconciliation.view_partial_settlement_form
+msgid "Reconcile"
+msgstr ""
+
+#. module: payment_reconciliation
+#: model:ir.model.fields,field_description:payment_reconciliation.field_partial_settlement_line__amount_total
+msgid "Total Amount"
+msgstr ""
+
+#. module: payment_reconciliation
+#: model:ir.model.fields,field_description:payment_reconciliation.field_partial_settlement_wizard__total_invoice_due
+msgid "Total Invoice Due"
+msgstr ""
+
+#. module: payment_reconciliation
+#: model:ir.model.fields,field_description:payment_reconciliation.field_partial_settlement_wizard__total_to_reconcile
+msgid "Total to Reconcile"
+msgstr ""
+
+#. module: payment_reconciliation
+#: model:ir.model.fields,field_description:payment_reconciliation.field_partial_settlement_line__wizard_id
+msgid "Wizard"
+msgstr ""
