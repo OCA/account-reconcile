@@ -4,6 +4,20 @@ from odoo import api, fields, models
 
 _logger = logging.getLogger(__name__)
 
+class PartialSettlementLine(models.TransientModel):
+    _name = "partial.settlement.line"
+    _description = "Partial Settlement Line"
+
+    wizard_id = fields.Many2one("partial.settlement.wizard", required=True)
+    invoice_id = fields.Many2one("account.move", string="Invoice")
+    invoice_date = fields.Date(string="Invoice Date")
+    amount_total = fields.Monetary(string="Total Amount")
+    amount_due = fields.Monetary(string="Pending Amount")
+    partial_amount = fields.Monetary(string="Amount to Reconcile")
+    currency_id = fields.Many2one(
+        "res.currency", related="wizard_id.currency_id", readonly=True
+    )
+
 
 class PartialSettlementWizard(models.TransientModel):
     _name = "partial.settlement.wizard"
