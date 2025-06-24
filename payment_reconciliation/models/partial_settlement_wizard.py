@@ -1,6 +1,7 @@
 import logging
 
-from odoo import api, fields, models
+from odoo import _, api, fields, models
+from odoo.exceptions import UserError
 
 _logger = logging.getLogger(__name__)
 
@@ -46,6 +47,7 @@ class PartialSettlementWizard(models.TransientModel):
         compute="_compute_total_to_reconcile",
         store=True,
     )
+
     payment_residual = fields.Monetary(
         string="Payment Available",
         compute="_compute_payment_residual",
@@ -88,9 +90,11 @@ class PartialSettlementWizard(models.TransientModel):
         if payment_type == "inbound":
             invoice_types = ["out_invoice", "out_refund"]
             _logger.info("🔎 Loading Customer Invoices and Credit Notes...")
+
         elif payment_type == "outbound":
             invoice_types = ["in_invoice", "in_refund"]
             _logger.info("🔎 Loading Vendor Bills and Refunds...")
+
         else:
             _logger.info("⚠️ Unknown payment type, skipping invoice loading.")
             return
@@ -226,3 +230,192 @@ class PartialSettlementWizard(models.TransientModel):
             return account_type in ("asset_receivable", "liability_payable")
         legacy_type = getattr(account.user_type_id, "type", None)
         return legacy_type in ("receivable", "payable")
+
+    def action_reconcile(self):
+        self.ensure_one()
+
+        if not self.payment_id:
+            raise UserError(_("Please select a payment to reconcile."))
+
+        if self.total_to_reconcile <= 0:
+            raise UserError(_("Please enter amounts greater than 0 to reconcile."))
+
+        payment_residual_abs = abs(self.payment_residual)
+
+        if self.total_to_reconcile > payment_residual_abs + 0.01:
+            raise UserError(
+                _(
+                    "The total partial amounts (%(total)s) exceed the available "
+                    "payment amount (%(available)s)."
+                )
+                % {
+                    "total": self.total_to_reconcile,
+                    "available": payment_residual_abs,
+                }
+            )
+
+        payment_lines = self.payment_id.move_id.line_ids.filtered(
+            lambda line: line.account_id.account_type
+            in ("asset_receivable", "liability_payable")
+            and not line.reconciled
+            and (line.amount_residual_currency or line.amount_residual)
+            and abs(line.amount_residual_currency or line.amount_residual) > 0.0001
+        )
+
+        if not payment_lines:
+            raise UserError(_("No reconcilable lines found in the payment."))
+
+        _logger.info("✅ Available payment lines for reconciliation: %s", payment_lines)
+
+        matched_invoice_ids = set()
+
+        for line in self.line_ids:
+            if not line.invoice_id:
+                invoice = self.env["account.move"].search(
+                    [
+                        ("partner_id", "=", self.partner_id.id),
+                        ("invoice_date", "=", line.invoice_date),
+                        ("amount_total", "=", line.amount_total),
+                        ("state", "=", "posted"),
+                        (
+                            "move_type",
+                            "in",
+                            ["out_invoice", "out_refund", "in_invoice", "in_refund"],
+                        ),
+                        ("amount_residual", "!=", 0),
+                        ("id", "not in", list(matched_invoice_ids)),
+                    ],
+                    limit=1,
+                )
+
+                if invoice:
+                    line.invoice_id = invoice
+                    matched_invoice_ids.add(invoice.id)
+                    _logger.info(
+                        "🔗 Linked missing invoice: %s (Amount: %s) to line %s",
+                        invoice.name,
+                        invoice.amount_residual,
+                        line.id,
+                    )
+
+        remaining_payment_amount = abs(
+            sum(
+                payment_lines.mapped(
+                    lambda x: x.amount_residual_currency or x.amount_residual
+                )
+            )
+        )
+
+        for line in self.line_ids.filtered(
+            lambda settlement_line: settlement_line.partial_amount > 0
+        ):
+            invoice = line.invoice_id
+
+            if not invoice:
+                continue
+
+            if line.partial_amount > remaining_payment_amount + 0.01:
+                raise UserError(
+                    _(
+                        "Partial amount %(partial)s exceeds remaining payment amount "
+                        "%(remaining)s."
+                    )
+                    % {
+                        "partial": line.partial_amount,
+                        "remaining": remaining_payment_amount,
+                    }
+                )
+
+            invoice_lines = invoice.line_ids.filtered(
+                lambda line: line.account_id.account_type
+                in ("asset_receivable", "liability_payable")
+                and not line.reconciled
+                and (line.amount_residual_currency or line.amount_residual)
+                and abs(line.amount_residual_currency or line.amount_residual) > 0.0001
+            )
+
+            if not invoice_lines:
+                continue
+
+            payment_lines_to_reconcile = payment_lines.filtered(
+                lambda payment_line,
+                account_id=invoice_lines[0].account_id: payment_line.account_id
+                == account_id
+                and not payment_line.reconciled
+                and (
+                    payment_line.amount_residual_currency
+                    or payment_line.amount_residual
+                )
+                and abs(
+                    payment_line.amount_residual_currency
+                    or payment_line.amount_residual
+                )
+                > 0.0001
+            )
+
+            if not payment_lines_to_reconcile:
+                continue
+
+            debit_line = invoice_lines[0]
+            credit_line = payment_lines_to_reconcile[0]
+
+            debit_residual = (
+                debit_line.amount_residual_currency or debit_line.amount_residual
+            )
+            credit_residual = (
+                credit_line.amount_residual_currency or credit_line.amount_residual
+            )
+
+            amount = min(
+                abs(line.partial_amount),
+                abs(debit_residual),
+                abs(credit_residual),
+                remaining_payment_amount,
+            )
+
+            if invoice.move_type in ["out_refund", "in_invoice"]:
+                amount = -abs(amount)
+
+            try:
+                reconcile_vals = {
+                    "debit_move_id": debit_line.id if amount >= 0 else credit_line.id,
+                    "credit_move_id": credit_line.id if amount >= 0 else debit_line.id,
+                    "amount": abs(amount),
+                    "company_id": self.env.company.id,
+                }
+
+                if debit_line.amount_currency and credit_line.amount_currency:
+                    reconcile_vals.update(
+                        {
+                            "debit_amount_currency": min(
+                                abs(amount), abs(debit_line.amount_currency)
+                            ),
+                            "credit_amount_currency": min(
+                                abs(amount), abs(credit_line.amount_currency)
+                            ),
+                            "debit_currency_id": debit_line.currency_id.id,
+                            "credit_currency_id": credit_line.currency_id.id,
+                        }
+                    )
+
+                self.env["account.partial.reconcile"].create(reconcile_vals)
+                remaining_payment_amount -= abs(amount)
+
+            except Exception as e:
+                error_msg = _("❌ Failed to reconcile") % {
+                    "amount": line.partial_amount,
+                    "invoice": invoice.name,
+                    "error": str(e),
+                }
+                raise UserError(error_msg) from e
+
+        return {
+            "type": "ir.actions.client",
+            "tag": "display_notification",
+            "params": {
+                "title": _("Reconciliation Complete"),
+                "message": _("Partial settlement was successfully completed."),
+                "sticky": False,
+                "type": "success",
+            },
+        }
