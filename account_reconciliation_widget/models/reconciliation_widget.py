@@ -43,6 +43,8 @@ class AccountReconciliation(models.AbstractModel):
                 del aml_dict["counterpart_aml_id"]
 
             vals = {}
+            if datum.get("to_check"):
+                vals["to_check"] = datum["to_check"]
             if datum.get("partner_id") is not None:
                 vals["partner_id"] = datum["partner_id"]
             if datum.get("ref") is not None:
