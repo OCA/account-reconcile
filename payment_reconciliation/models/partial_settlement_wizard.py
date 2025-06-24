@@ -293,9 +293,6 @@ class PartialSettlementWizard(models.TransientModel):
                     matched_invoice_ids.add(invoice.id)
                     _logger.info(
                         "🔗 Linked missing invoice: %s (Amount: %s) to line %s",
-                        invoice.name,
-                        invoice.amount_residual,
-                        line.id,
                     )
 
         remaining_payment_amount = abs(

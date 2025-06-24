@@ -123,6 +123,27 @@ class TestPartialSettlement(TransactionCase):
                 ],
             }
         )
+        vendor_invoice = self.env["account.move"].create(
+            {
+                "move_type": "in_invoice",
+                "partner_id": self.partner.id,
+                # "invoice_date": fields.Date.today(),  # ✅ Required for posting
+                "invoice_line_ids": [
+                    (
+                        0,
+                        0,
+                        {
+                            "name": "Test Vendor Product",
+                            "quantity": 1,
+                            "price_unit": 500,
+                            "account_id": self.env["account.account"]
+                            .search([("user_type_id.type", "=", "expense")], limit=1)
+                            .id,
+                        },
+                    )
+                ],
+            }
+        )
         vendor_invoice.action_post()
 
         wizard = self.env["partial.settlement.wizard"].create(
