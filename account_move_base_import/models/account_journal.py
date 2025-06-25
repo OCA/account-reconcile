@@ -76,7 +76,8 @@ class AccountJournal(models.Model):
     commission_analytic_account_id = fields.Many2one(
         comodel_name="account.analytic.account",
         string="Commission Analytic Account",
-        help="Choose an analytic account to be used on the commission line.",
+        help="Choose an analytic account to be used on the commission "
+        "line analytic distribution.",
     )
     autovalidate_completed_move = fields.Boolean(
         string="Validate fully completed moves",
