@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-03-24 03:37+0000\n"
-"PO-Revision-Date: 2024-04-09 12:39+0000\n"
+"PO-Revision-Date: 2025-06-25 09:25+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: Italian (https://www.transifex.com/oca/teams/23907/it/)\n"
 "Language: it\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.17\n"
+"X-Generator: Weblate 5.10.4\n"
 
 #. module: account_move_base_import
 #. odoo-python
@@ -125,7 +125,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/account_move_base_import/parser/file_parser.py:0
 msgid "Column %(col)s not present in file"
-msgstr ""
+msgstr "La colonna %(col)s non è presente nel file"
 
 #. module: account_move_base_import
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_journal__commission_analytic_account_id
@@ -350,19 +350,19 @@ msgstr "Importa informazioni relative"
 #. odoo-python
 #: code:addons/account_move_base_import/parser/file_parser.py:0
 msgid "Invalid file type %(ftype)s. Please use csv, xls or xlsx"
-msgstr ""
+msgstr "Tipo file %(ftype)s non valido. Usare csv, xls o xlsx"
 
 #. module: account_move_base_import
 #. odoo-python
 #: code:addons/account_move_base_import/models/account_move.py:0
 msgid "Invalid invoice type for completion: %(inv_type)s"
-msgstr ""
+msgstr "Tipo fattura non valido per il completamento: %(inv_type)s"
 
 #. module: account_move_base_import
 #. odoo-python
 #: code:addons/account_move_base_import/models/account_move.py:0
 msgid "Invalid invoice type for completion: %(invoice_type)s"
-msgstr ""
+msgstr "Tipo fattura non valido per il completamento: %(invoice_type)s"
 
 #. module: account_move_base_import
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_journal__message_is_follower
@@ -426,6 +426,8 @@ msgid ""
 "Line named \"%(line)s\" was matched by more than one partner while looking "
 "on partner by name"
 msgstr ""
+"La riga nome \"%(line)s\" è stata associata a più di un partner cercando nei "
+"partner per nome"
 
 #. module: account_move_base_import
 #. odoo-python
@@ -476,6 +478,8 @@ msgid ""
 "Missing column! Column %(column)s you try to import is not present in the "
 "move line!"
 msgstr ""
+"Colonna mancante! La colonna %(column)s che si cerca di importare none è "
+"presente nella riga movimento!"
 
 #. module: account_move_base_import
 #. odoo-python
@@ -611,6 +615,7 @@ msgstr "File estratto conto"
 #: code:addons/account_move_base_import/models/account_journal.py:0
 msgid "Statement import error The statement cannot be created: %(statement)s"
 msgstr ""
+"Errore importazione \"L'estratto conto non può essere creato\": %(statement)s"
 
 #. module: account_move_base_import
 #: model:ir.model.fields,help:account_move_base_import.field_account_journal__create_counterpart
