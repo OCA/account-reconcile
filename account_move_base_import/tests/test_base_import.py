@@ -19,8 +19,17 @@ class TestCodaImport(AccountTestInvoicingCommon):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
+        cls.analytic_account_obj = cls.env["account.analytic.account"]
+        cls.analytic_plan_obj = cls.env["account.analytic.plan"]
         cls.account_move_obj = cls.env["account.move"]
         cls.account_move_line_obj = cls.env["account.move.line"]
+        cls.plan_a = cls.analytic_plan_obj.create({"name": "Plan A"})
+        cls.analytic_account_a = cls.analytic_account_obj.create(
+            {
+                "name": "analytic_account_a",
+                "plan_id": cls.plan_a.id,
+            }
+        )
         cls.journal = cls.company_data["default_journal_bank"]
         cls.partner = cls.env.ref("base.res_partner_12")
         cls.account_id = cls.journal.default_account_id.id
@@ -31,6 +40,7 @@ class TestCodaImport(AccountTestInvoicingCommon):
                 "import_type": "generic_csvxls_so",
                 "partner_id": cls.partner.id,
                 "commission_account_id": cls.account_id,
+                "commission_analytic_account_id": cls.analytic_account_a.id,
                 "receivable_account_id": cls.account_id,
                 "create_counterpart": True,
             }
@@ -76,3 +86,10 @@ class TestCodaImport(AccountTestInvoicingCommon):
         self.assertEqual(move_line.date_maturity, fields.Date.from_string("2011-03-07"))
         self.assertEqual(move_line.credit, 118.4)
         self.assertEqual(move_line.name, "label a")
+        commission_line = move.line_ids.filtered(
+            lambda line: line.name == "Commission line"
+        )
+        self.assertEqual(
+            commission_line.analytic_distribution,
+            {str(self.analytic_account_a.id): 100},
+        )

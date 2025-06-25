@@ -76,7 +76,8 @@ class AccountJournal(models.Model):
     commission_analytic_account_id = fields.Many2one(
         comodel_name="account.analytic.account",
         string="Commission Analytic Account",
-        help="Choose an analytic account to be used on the commission line.",
+        help="Choose an analytic account to be used on the commission "
+        "line analytic distribution.",
     )
     autovalidate_completed_move = fields.Boolean(
         string="Validate fully completed moves",
@@ -206,7 +207,11 @@ class AccountJournal(models.Model):
                     comm_values["currency_id"] = currency.id
                 if self.commission_analytic_account_id:
                     comm_values.update(
-                        {"analytic_account_id": self.commission_analytic_account_id.id}
+                        {
+                            "analytic_distribution": {
+                                self.commission_analytic_account_id.id: 100
+                            }
+                        }
                     )
                 vals_list.append(comm_values)
         return vals_list
