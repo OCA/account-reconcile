@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_partial_settlement_wizard,access.partial.settlement.wizard,model_partial_settlement_wizard,base.group_user,1,1,1,1
+access_partial_settlement_line,access.partial.settlement.line,model_partial_settlement_line,base.group_user,1,1,1,1
