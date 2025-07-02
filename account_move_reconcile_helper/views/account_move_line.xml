@@ -15,7 +15,7 @@
                     type="object"
                     title="Reconciled lines"
                     icon="fa-list"
-                    attrs="{'invisible': [('matching_number', '=', False)]}"
+                    invisible="not matching_number"
                 />
             </field>
         </field>
