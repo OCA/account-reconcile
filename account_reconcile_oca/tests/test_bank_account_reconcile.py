@@ -670,14 +670,79 @@ class TestReconciliationWidget(TestAccountReconciliationCommon):
             self.bank_journal_euro.suspense_account_id,
             bank_stmt_line.mapped("move_id.line_ids.account_id"),
         )
-        # Reset reconciliation
         reconcile_move = (
             bank_stmt_line.line_ids._all_reconciled_lines()
             .filtered(lambda line: line.move_id != bank_stmt_line.move_id)
             .move_id
         )
+        self.assertEqual(reconcile_move.date, bank_stmt_line.date)
+        # Reset reconciliation
         bank_stmt_line.unreconcile_bank_line()
         self.assertTrue(reconcile_move.reversal_move_id)
+        self.assertEqual(reconcile_move.reversal_move_id.date, bank_stmt_line.date)
+        self.assertFalse(bank_stmt_line.is_reconciled)
+
+    def test_reconcile_invoice_keep_with_lock_date(self):
+        """
+        We want to test how the keep mode works, keeping the original move lines,
+        and now considering that we have set a lock date.
+        """
+        self.bank_journal_euro.reconcile_mode = "keep"
+        self.bank_journal_euro.suspense_account_id.reconcile = True
+        inv1 = self.create_invoice(
+            currency_id=self.currency_euro_id, invoice_amount=100
+        )
+        bank_stmt = self.acc_bank_stmt_model.create(
+            {
+                "journal_id": self.bank_journal_euro.id,
+                "date": time.strftime("%Y-07-15"),
+                "name": "test",
+            }
+        )
+        bank_stmt_line = self.acc_bank_stmt_line_model.create(
+            {
+                "name": "testLine",
+                "journal_id": self.bank_journal_euro.id,
+                "statement_id": bank_stmt.id,
+                "amount": 100,
+                "date": time.strftime("%Y-07-15"),
+            }
+        )
+        # Set a period lock date in the company
+        self.env.user.groups_id -= self.env.ref("account.group_account_manager")
+        self.bank_journal_euro.company_id.period_lock_date = time.strftime("%Y-07-16")
+        receivable1 = inv1.line_ids.filtered(
+            lambda line: line.account_id.account_type == "asset_receivable"
+        )
+        with Form(
+            bank_stmt_line,
+            view="account_reconcile_oca.bank_statement_line_form_reconcile_view",
+        ) as f:
+            self.assertFalse(f.can_reconcile)
+            f.add_account_move_line_id = receivable1
+            self.assertFalse(f.add_account_move_line_id)
+        self.assertTrue(bank_stmt_line.can_reconcile)
+        number_of_lines = len(bank_stmt_line.reconcile_data_info["data"])
+        bank_stmt_line.reconcile_bank_line()
+        self.assertEqual(
+            number_of_lines, len(bank_stmt_line.reconcile_data_info["data"])
+        )
+        self.assertIn(
+            self.bank_journal_euro.suspense_account_id,
+            bank_stmt_line.mapped("move_id.line_ids.account_id"),
+        )
+        reconcile_move = (
+            bank_stmt_line.line_ids._all_reconciled_lines()
+            .filtered(lambda line: line.move_id != bank_stmt_line.move_id)
+            .move_id
+        )
+        self.assertEqual(str(reconcile_move.date), time.strftime("%Y-07-17"))
+        # Reset reconciliation
+        bank_stmt_line.unreconcile_bank_line()
+        self.assertTrue(reconcile_move.reversal_move_id)
+        self.assertEqual(
+            str(reconcile_move.reversal_move_id.date), time.strftime("%Y-07-17")
+        )
         self.assertFalse(bank_stmt_line.is_reconciled)
 
     def test_reconcile_model_with_foreign_currency(self):
