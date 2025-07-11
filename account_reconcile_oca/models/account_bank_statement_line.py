@@ -1,6 +1,5 @@
 # Copyright 2023 Dixmit
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
-
 from collections import defaultdict
 
 from dateutil import rrule
@@ -850,6 +849,7 @@ class AccountBankStatementLine(models.Model):
     def _reconcile_bank_line_keep_move_vals(self):
         return {
             "journal_id": self.journal_id.id,
+            "date": self.date,
         }
 
     def _reconcile_bank_line_keep(self, data):
@@ -911,7 +911,8 @@ class AccountBankStatementLine(models.Model):
                         | line
                     )
             move.invalidate_recordset()
-        move._post()
+        move.date = move._get_first_non_locked_date()
+        move._post(soft=False)
         for _account, lines in to_reconcile.items():
             lines.reconcile()
 
