@@ -196,6 +196,15 @@
                             accesskey="m"
                             string="View move"
                             class="btn btn-info"
+                            attrs="{'invisible': [('reconciled_line_ids', '!=', [])]}"
+                        />
+                        <button
+                            name="action_show_moves"
+                            type="object"
+                            accesskey="m"
+                            string="View moves"
+                            class="btn btn-info"
+                            attrs="{'invisible': [('reconciled_line_ids', '=', [])]}"
                         />
                     </div>
                 </div>
@@ -214,12 +223,42 @@
                 <field name="company_currency_id" invisible="1" />
                 <field name="previous_manual_amount_in_currency" invisible="1" />
                 <field name="currency_id" invisible="1" />
+                <field name="reconcile_mode" invisible="1" />
                 <field
                     name="reconcile_data_info"
                     nolabel="1"
                     widget="account_reconcile_oca_data"
                     class="w-100"
                 />
+                <field
+                    name="reconciled_line_ids"
+                    nolabel="1"
+                    attrs="{'invisible': ['|', ('reconcile_mode', '!=', 'keep'), ('reconciled_line_ids', '=', [])]}"
+                >
+                    <tree>
+                        <field name="company_currency_id" invisible="1" />
+                        <field name="currency_id" invisible="1" />
+                        <field name="account_id" />
+                        <field name="partner_id" />
+                        <field name="date" />
+                        <field name="name" />
+                        <field
+                            name="amount_currency"
+                            widget="monetary"
+                            options="{'currency_field': 'currency_id'}"
+                        />
+                        <field
+                            name="debit"
+                            widget="monetary"
+                            options="{'currency_field': 'company_currency_id'}"
+                        />
+                        <field
+                            name="credit"
+                            widget="monetary"
+                            options="{'currency_field': 'company_currency_id'}"
+                        />
+                    </tree>
+                </field>
                 <div>
                     <field
                         name="manual_model_id"
