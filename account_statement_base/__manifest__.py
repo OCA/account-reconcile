@@ -4,7 +4,7 @@
 
 {
     "name": "Bank Statement Base",
-    "version": "17.0.1.5.0",
+    "version": "17.0.1.6.0",
     "category": "Accounting",
     "license": "LGPL-3",
     "summary": "Base module for Bank Statements",

@@ -86,7 +86,11 @@ class AccountBankStatementLine(models.Model):
         store=False,
         default=False,
         prefetch=False,
-        domain=[("rule_type", "=", "writeoff_button")],
+        domain="""
+        [('rule_type', '=', 'writeoff_button'),
+        '|',
+        ('match_journal_ids', '=', False), ('match_journal_ids', '=', journal_id)]
+        """,
     )
     manual_name = fields.Char(store=False, default=False, prefetch=False)
     manual_amount = fields.Monetary(
@@ -669,6 +673,7 @@ class AccountBankStatementLine(models.Model):
                         is_counterpart=True,
                         max_amount=amount,
                         reconcile_auxiliary_id=reconcile_auxiliary_id,
+                        move=True,
                     )
                     amount -= sum(line.get("amount") for line in line_data)
                     data += line_data

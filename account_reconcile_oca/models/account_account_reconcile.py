@@ -21,6 +21,7 @@ class AccountAccountReconcile(models.Model):
     account_id = fields.Many2one("account.account", readonly=True)
     name = fields.Char(readonly=True)
     is_reconciled = fields.Boolean(readonly=True)
+    active = fields.Boolean(default=True)
 
     @property
     def _table_query(self):
@@ -56,7 +57,19 @@ class AccountAccountReconcile(models.Model):
                 FALSE as is_reconciled,
                 aml.currency_id as currency_id,
                 a.company_id,
-                null as foreign_currency_id
+                null as foreign_currency_id,
+                (
+                    SUM(
+                        CASE WHEN aml.amount_residual > 0
+                        THEN aml.amount_residual
+                        ELSE 0 END
+                    ) > 0
+                    AND SUM(
+                        CASE WHEN aml.amount_residual < 0
+                        THEN -aml.amount_residual
+                        ELSE 0 END
+                    ) > 0
+                ) as active
         """
 
     def _from(self):
@@ -71,7 +84,6 @@ class AccountAccountReconcile(models.Model):
         return """
             WHERE a.reconcile
                 AND am.state = 'posted'
-                AND aml.amount_residual != 0
         """
 
     def _groupby(self):
@@ -89,9 +101,6 @@ class AccountAccountReconcile(models.Model):
 
     def _having(self):
         return """
-            HAVING
-                SUM(aml.debit) > 0
-                AND SUM(aml.credit) > 0
         """
 
     def _compute_reconcile_data_info(self):
