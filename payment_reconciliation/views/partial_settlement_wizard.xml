@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo noupdate="1">
+    <record id="view_partial_settlement_form" model="ir.ui.view">
+        <field name="name">partial.settlement.wizard.form</field>
+        <field name="model">partial.settlement.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Partial Settlement">
+                <group>
+                    <group>
+                        <field name="has_payments" invisible="1" />
+                        <field name="partner_id" required="1" />
+                        <field name="total_invoice_due" readonly="1" />
+                        <field
+                            name="payment_id"
+                            invisible="has_payments ==  False"
+                            required="has_payments ==  True"
+                        />
+                    </group>
+                    <group>
+                        <field name="payment_amount" readonly="1" />
+                        <field name="payment_residual" readonly="1" />
+                        <field name="total_to_reconcile" readonly="1" />
+                    </group>
+                </group>
+                <notebook>
+                    <page string="Invoices">
+                        <field name="line_ids" force_save="1">
+                            <tree editable="bottom">
+                                <field name="invoice_id" readonly="1" />
+                                <!--                                    <field name="document_type_label" widget="html" readonly="1"/>-->
+                                <field name="invoice_date" />
+                                <field name="amount_total" />
+                                <field name="amount_due" />
+                                <field name="partial_amount" />
+                            </tree>
+                        </field>
+                    </page>
+                </notebook>
+                <footer>
+                    <button
+                        name="action_reconcile"
+                        string="Reconcile"
+                        type="object"
+                        class="btn-primary"
+                    />
+                    <button string="Cancel" special="cancel" />
+                </footer>
+            </form>
+        </field>
+    </record>
+</odoo>
