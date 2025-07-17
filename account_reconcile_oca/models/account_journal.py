@@ -36,10 +36,13 @@ class AccountJournal(models.Model):
         return _("Well done! Everything has been reconciled")
 
     def open_action(self):
-        self.ensure_one()
-        if self.type not in ["bank", "cash"]:
-            return super().open_action()
-        action = self.env["ir.actions.actions"]._for_xml_id(
-            "account_reconcile_oca.action_bank_statement_line_reconcile_all"
-        )
+        """
+        Return OCA *Reconcile All* when core *Bank Statements* tree is requested;
+        leave other actions unchanged.
+        """
+        action = super().open_action()
+        if action.get("xml_id") == "account.action_bank_statement_tree":
+            action = self.env["ir.actions.actions"]._for_xml_id(
+                "account_reconcile_oca.action_bank_statement_line_reconcile_all"
+            )
         return action
