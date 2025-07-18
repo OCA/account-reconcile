@@ -219,6 +219,7 @@
                 <field name="is_reconciled" invisible="1" />
                 <field name="foreign_currency_id" invisible="1" />
                 <field name="company_currency_id" invisible="1" />
+                <field name="previous_manual_amount_in_currency" invisible="1" />
                 <field name="currency_id" invisible="1" />
                 <field
                     name="reconcile_data_info"
