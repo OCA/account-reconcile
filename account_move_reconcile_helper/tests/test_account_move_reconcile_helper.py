@@ -1,10 +1,11 @@
 # Copyright 2017 ACSONE SA/NV
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
+from odoo import Command
 
-from odoo.tests.common import TransactionCase
+from odoo.addons.base.tests.common import BaseCommon
 
 
-class TestAccountMoveReconcileHelper(TransactionCase):
+class TestAccountMoveReconcileHelper(BaseCommon):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
@@ -44,18 +45,14 @@ class TestAccountMoveReconcileHelper(TransactionCase):
             {
                 "journal_id": self.sales_journal.id,
                 "line_ids": [
-                    (
-                        0,
-                        0,
+                    Command.create(
                         {
                             "name": "Receivable line",
                             "account_id": debit_account.id,
                             "debit": amount,
                         },
                     ),
-                    (
-                        0,
-                        0,
+                    Command.create(
                         {
                             "name": "Sales line",
                             "account_id": credit_account.id,
