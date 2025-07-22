@@ -484,6 +484,11 @@ msgid "Payable"
 msgstr "Betalbar"
 
 #. module: account_reconcile_oca
+#: model:ir.model.fields,field_description:account_reconcile_oca.field_account_bank_statement_line__previous_manual_amount_in_currency
+msgid "Previous Manual Amount In Currency"
+msgstr ""
+
+#. module: account_reconcile_oca
 #: model_terms:ir.ui.view,arch_db:account_reconcile_oca.account_move_line_search_reconcile_view
 msgid "Purchases"
 msgstr "Inköp"
