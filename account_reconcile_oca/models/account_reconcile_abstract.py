@@ -84,7 +84,7 @@ class AccountReconcileAbstract(models.AbstractModel):
                         date,
                     )
         elif is_reconciled:
-            currency_amount = line.amount_residual_currency or -line.amount_residual
+            currency_amount = line.amount_currency
         else:
             currency_amount = self.amount_currency or self.amount
             line_currency = self._get_reconcile_currency()
