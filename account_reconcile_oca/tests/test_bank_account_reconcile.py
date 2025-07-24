@@ -1262,8 +1262,12 @@ class TestReconciliationWidget(TestAccountReconciliationCommon):
         self.assertEqual(len(bank_stmt_line.reconcile_data_info["data"]), 3)
         exchange_line = bank_stmt_line.reconcile_data_info["data"][-1]
         self.assertEqual(exchange_line["amount"], 61.42)
+        self.assertEqual(exchange_line["currency_amount"], 0)
         bank_stmt_line.reconcile_bank_line()
         self.assertEqual(inv1.payment_state, "paid")
+        exchange_line = bank_stmt_line.reconcile_data_info["data"][-1]
+        self.assertEqual(exchange_line["amount"], 61.42)
+        self.assertEqual(exchange_line["currency_amount"], 0)
 
     def test_invoice_foreign_currency_change(self):
         self.env["res.currency.rate"].create(
