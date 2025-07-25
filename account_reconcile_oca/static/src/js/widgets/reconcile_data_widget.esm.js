@@ -1,6 +1,7 @@
 /** @odoo-module **/
 
 import fieldUtils from "web.field_utils";
+import {float_is_zero} from "web.utils";
 import {registry} from "@web/core/registry";
 import session from "web.session";
 import {useService} from "@web/core/utils/hooks";
@@ -24,6 +25,10 @@ export class AccountReconcileDataWidget extends Component {
     }
     getReconcileLines() {
         var data = this.props.record.data[this.props.name].data;
+        const totals = {debit: 0, credit: 0};
+        if (!data || !data.length) {
+            return {lines: [], totals};
+        }
         for (var line in data) {
             data[line].amount_format = fieldUtils.format.monetary(
                 data[line].amount,
@@ -64,8 +69,26 @@ export class AccountReconcileDataWidget extends Component {
             data[line].date_format = fieldUtils.format.date(
                 fieldUtils.parse.date(data[line].date, undefined, {isUTC: true})
             );
+            totals.debit += data[line].debit || 0;
+            totals.credit += data[line].credit || 0;
         }
-        return data;
+        totals.balance = totals.debit - totals.credit;
+        const firstLine = Object.values(data)[0] || {};
+        const currency = session.get_currency(firstLine.currency_id);
+        const decimals = currency.digits[1];
+        const hasOpenBalance = !float_is_zero(totals.balance, decimals);
+        let openDebitFmt = null;
+        let openCreditFmt = null;
+        if (totals.balance < 0) {
+            openDebitFmt = fieldUtils.format.monetary(Math.abs(totals.balance), {
+                currency: currency,
+            });
+        } else {
+            openCreditFmt = fieldUtils.format.monetary(totals.balance, {
+                currency: currency,
+            });
+        }
+        return {lines: data, hasOpenBalance, openDebitFmt, openCreditFmt};
     }
     onTrashLine(ev, line) {
         ev.stopPropagation();
