@@ -104,9 +104,10 @@
                 <th class="text-end">Credit</th>
                 <th t-if="! props.record.data.is_reconciled" />
             </thead>
+            <t t-set="rec" t-value="getReconcileLines()" />
             <tbody>
                 <t
-                    t-foreach="getReconcileLines()"
+                    t-foreach="rec.lines"
                     t-as="reconcile_line"
                     t-key="reconcile_line_index"
                 >
@@ -181,6 +182,12 @@
                         </td>
                     </tr>
                 </t>
+                <tr class="text-muted" t-if="rec.hasOpenBalance">
+                    <td colspan="5">Open Balance</td>
+                    <td class="text-end" t-esc="rec.openDebitFmt" />
+                    <td class="text-end" t-esc="rec.openCreditFmt" />
+                    <td />
+                </tr>
             </tbody>
         </table>
     </t>
