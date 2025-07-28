@@ -31,14 +31,14 @@ Account Mass Reconcile
 This is a shared work between Akretion and Camptocamp in order to
 provide:
 
--  Reconciliation facilities for big volume of transactions.
--  Setup different profiles of reconciliation by account.
--  Each profile can use many methods of reconciliation.
--  This module is also a base to create others reconciliation methods
-   which can plug in the profiles.
--  A profile a reconciliation can be run manually or by a cron.
--  Monitoring of reconciliation runs with an history which keep track of
-   the reconciled Journal items.
+- Reconciliation facilities for big volume of transactions.
+- Setup different profiles of reconciliation by account.
+- Each profile can use many methods of reconciliation.
+- This module is also a base to create others reconciliation methods
+  which can plug in the profiles.
+- A profile a reconciliation can be run manually or by a cron.
+- Monitoring of reconciliation runs with an history which keep track of
+  the reconciled Journal items.
 
 2 simple reconciliation methods are integrated in this module, the
 simple reconciliations works on 2 lines (1 debit / 1 credit) and do not
@@ -81,47 +81,47 @@ Authors
 Contributors
 ------------
 
--  Sébastien Beau <sebastien.beau@akretion.com>
+- Sébastien Beau <sebastien.beau@akretion.com>
 
--  Guewen Baconnier <guewen.baconnier@camptocamp.com>
+- Guewen Baconnier <guewen.baconnier@camptocamp.com>
 
--  Vincent Renaville <vincent.renaville@camptocamp.com>
+- Vincent Renaville <vincent.renaville@camptocamp.com>
 
--  Alexandre Fayolle <alexandre.fayolle@camptocamp.com>
+- Alexandre Fayolle <alexandre.fayolle@camptocamp.com>
 
--  Joël Grand-Guillaume <joel.grandguillaume@camptocamp.com>
+- Joël Grand-Guillaume <joel.grandguillaume@camptocamp.com>
 
--  Nicolas Bessi <nicolas.bessi@camptocamp.com>
+- Nicolas Bessi <nicolas.bessi@camptocamp.com>
 
--  Pedro M.Baeza <pedro.baeza@gmail.com>
+- Pedro M.Baeza <pedro.baeza@gmail.com>
 
--  Matthieu Dietrich <matthieu.dietrich@camptocamp.com>
+- Matthieu Dietrich <matthieu.dietrich@camptocamp.com>
 
--  Leonardo Pistone <leonardo.pistone@camptocamp.com>
+- Leonardo Pistone <leonardo.pistone@camptocamp.com>
 
--  Ecino <ecino@compassion.ch>
+- Ecino <ecino@compassion.ch>
 
--  Yannick Vaucher <yannick.vaucher@camptocamp.com>
+- Yannick Vaucher <yannick.vaucher@camptocamp.com>
 
--  Rudolf Schnapka <rs@techno-flex.de>
+- Rudolf Schnapka <rs@techno-flex.de>
 
--  Florian Dacosta <florian.dacosta@akretion.com>
+- Florian Dacosta <florian.dacosta@akretion.com>
 
--  Laetitia Gangloff <laetitia.gangloff@acsone.eu>
+- Laetitia Gangloff <laetitia.gangloff@acsone.eu>
 
--  Frédéric Clémenti <frederic.clementi@camptocamp.com>
+- Frédéric Clémenti <frederic.clementi@camptocamp.com>
 
--  Damien Crier <damien.crier@camptocamp.com>
+- Damien Crier <damien.crier@camptocamp.com>
 
--  Akim Juillerat <akim.juillerat@camptocamp.com>
+- Akim Juillerat <akim.juillerat@camptocamp.com>
 
--  Mykhailo Panarin <m.panarin@mobilunity.com>
+- Mykhailo Panarin <m.panarin@mobilunity.com>
 
--  Adrià Gil Sorribes <adria.gil@forgeflow.com>
+- Adrià Gil Sorribes <adria.gil@forgeflow.com>
 
--  `Trobz <https://trobz.com>`__:
+- `Trobz <https://trobz.com>`__:
 
-      -  Son Ho <sonhd@trobz.com>
+     - Son Ho <sonhd@trobz.com>
 
 Other credits
 -------------

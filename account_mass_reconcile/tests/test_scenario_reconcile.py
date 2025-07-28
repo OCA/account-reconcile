@@ -464,3 +464,129 @@ class TestScenarioReconcile(AccountTestInvoicingCommon):
         )
         self.assertEqual(len(writeoff_line), 1)
         self.assertEqual(writeoff_line.date, fields.Date.today())
+
+    def test_reconcile_with_writeoff_currency_opposite_signs(self):
+        """Test write-off when company and foreign residuals have opposite signs."""
+        self.env.ref("base.group_multi_currency").users |= self.env.user
+        self.company.currency_id = self.env.ref("base.EUR")
+        usd = self.env.ref("base.USD")
+        usd.active = True
+
+        inv_date = fields.Date.today() - timedelta(days=10)
+        pay_date = fields.Date.today() - timedelta(days=1)
+
+        # Create currency rates
+        self.env["res.currency.rate"].create(
+            [
+                {
+                    "name": inv_date,
+                    "currency_id": usd.id,
+                    "rate": 1.2,
+                    "company_id": self.company.id,
+                },
+                {
+                    "name": pay_date,
+                    "rate": 1.25,
+                    "currency_id": usd.id,
+                    "company_id": self.company.id,
+                },
+                {
+                    "name": fields.Date.today(),
+                    "rate": 1.25,
+                    "currency_id": usd.id,
+                    "company_id": self.company.id,
+                },
+            ]
+        )
+
+        # Create invoice and payment with opposing residual signs
+        common_memo = "INV-PAY-OPPOSITE-SIGNS"
+        invoice = self.init_invoice(
+            move_type="out_invoice",
+            partner=self.partner_a,
+            currency=usd,
+            amounts=[100],
+            invoice_date=inv_date,
+            post=True,
+        )
+        invoice.ref = common_memo
+
+        payment = self.env["account.payment"].create(
+            {
+                "partner_type": "customer",
+                "payment_type": "inbound",
+                "partner_id": self.partner_a.id,
+                "destination_account_id": self.company_data[
+                    "default_account_receivable"
+                ].id,
+                "amount": 100.10,
+                "currency_id": usd.id,
+                "journal_id": self.bank_journal.id,
+                "date": pay_date,
+                "memo": common_memo,
+            }
+        )
+        payment.action_post()
+
+        # Create and run mass reconciliation
+        mass_rec = self.mass_rec_obj.create(
+            {
+                "name": "mass_reconcile_currency_writeoff_opposite",
+                "account": self.company_data["default_account_receivable"].id,
+                "reconcile_method": [
+                    (
+                        0,
+                        0,
+                        {
+                            "name": "mass.reconcile.advanced.ref",
+                            "account_lost_id": self.company_data[
+                                "default_account_expense"
+                            ].id,
+                            "account_profit_id": self.company_data[
+                                "default_account_revenue"
+                            ].id,
+                            "journal_id": self.company_data["default_journal_misc"].id,
+                            "write_off": 3.50,
+                            "date_base_on": "newest",
+                        },
+                    )
+                ],
+            }
+        )
+        existing_moves = self.env["account.move"].search(
+            [("journal_id", "=", self.company_data["default_journal_misc"].id)]
+        )
+        mass_rec.run_reconcile()
+
+        # Validate write-off move
+        writeoff_move = self.env["account.move"].search(
+            [
+                ("journal_id", "=", self.company_data["default_journal_misc"].id),
+                ("id", "not in", existing_moves.ids),
+            ]
+        )
+        self.assertEqual(
+            len(writeoff_move), 1, "Exactly one write-off move should exist"
+        )
+        self.assertEqual(
+            writeoff_move.currency_id, usd, "USD should be the write-off currency"
+        )
+
+        pl_line = writeoff_move.line_ids.filtered(
+            lambda ml: ml.account_id == self.company_data["default_account_expense"]
+        )
+        receivable_line = writeoff_move.line_ids.filtered(
+            lambda ml: ml.account_id == self.company_data["default_account_receivable"]
+        )
+
+        # Check amounts (0.10 USD residual, 3.25 EUR residual)
+        self.assertAlmostEqual(pl_line.debit, 3.25, 2, "Expense line debit (EUR)")
+        self.assertAlmostEqual(
+            pl_line.amount_currency, 0.10, 2, "Expense line USD amount"
+        )
+        self.assertAlmostEqual(
+            receivable_line.credit, 3.25, 2, "Receivable line credit (EUR)"
+        )
+        self.assertAlmostEqual(
+            receivable_line.amount_currency, -0.10, 2, "Receivable line USD amount"
+        )
