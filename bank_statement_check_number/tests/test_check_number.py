@@ -6,11 +6,11 @@ from odoo.addons.account.tests.common import AccountTestInvoicingCommon
 @tagged("post_install", "-at_install")
 class TestCheckNumber(AccountTestInvoicingCommon):
     @classmethod
-    def setUpClass(cls, chart_template_ref=None):
-        super().setUpClass(chart_template_ref=chart_template_ref)
+    def setUpClass(cls):
+        super().setUpClass()
 
         cls.bank_journal = cls.company_data["default_journal_bank"]
-        cls.currency = cls.currency_data["currency"]
+        cls.currency = cls.company_data["currency"]
         cls.statement = cls.env["account.bank.statement"].create(
             {
                 "name": "test_statement",

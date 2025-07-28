@@ -4,8 +4,8 @@
 {
     "name": "Bank Statement Check Number",
     "summary": "Add the check number in the bank statements",
-    "version": "16.0.1.0.0",
-    "depends": ["account_move_line_check_number", "account_statement_base"],
+    "version": "18.0.1.0.0",
+    "depends": ["account", "account_statement_base"],
     "author": "Ecosoft, Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/account-reconcile",
     "category": "Accounting & Finance",
