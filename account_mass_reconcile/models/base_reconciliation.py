@@ -158,9 +158,18 @@ class MassReconcileBase(models.AbstractModel):
         currency = same_curr and lines[0].currency_id or lines[0].company_id.currency_id
         journal = self.journal_id
         partners = lines.mapped("partner_id")
+        # Adjust amount_currency to match the sign of the company's residual (amount)
+        if same_curr:
+            if amount != 0:
+                sign = 1 if amount > 0 else -1
+                adjusted_amount_curr = abs(amount_curr) * sign
+            else:
+                adjusted_amount_curr = 0.0
+        else:
+            adjusted_amount_curr = amount
         write_off_vals = {
             "name": _("Automatic writeoff"),
-            "amount_currency": same_curr and amount_curr or amount,
+            "amount_currency": adjusted_amount_curr if same_curr else amount,
             "debit": amount > 0.0 and amount or 0.0,
             "credit": amount < 0.0 and -amount or 0.0,
             "partner_id": len(partners) == 1 and partners.id or False,
