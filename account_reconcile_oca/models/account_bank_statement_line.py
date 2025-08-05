@@ -1,7 +1,7 @@
 # Copyright 2023 Dixmit
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
-
 from collections import defaultdict
+from datetime import timedelta
 
 from dateutil import rrule
 from dateutil.relativedelta import relativedelta
@@ -840,6 +840,7 @@ class AccountBankStatementLine(models.Model):
     def _reconcile_bank_line_keep_move_vals(self):
         return {
             "journal_id": self.journal_id.id,
+            "date": self._get_reconciled_move_date(),
         }
 
     def _reconcile_bank_line_keep(self, data):
@@ -901,7 +902,7 @@ class AccountBankStatementLine(models.Model):
                         | line
                     )
             move.invalidate_recordset()
-        move._post()
+        move._post(soft=False)
         for _account, lines in to_reconcile.items():
             lines.reconcile()
 
@@ -935,6 +936,23 @@ class AccountBankStatementLine(models.Model):
                 for move in to_reverse
             ]
             to_reverse._reverse_moves(default_values_list, cancel=True)
+
+    def _get_reconciled_move_date(self):
+        """Get the date of the move to reconcile, considering the lock
+        dates defined in the company (user defined and tax dates).
+        so that the date proposed is the lock date +1 day if there's a lock date,
+        and the move date otherwise."""
+        locks = []
+        user_lock_date = self.move_id.company_id._get_user_fiscal_lock_date()
+        if user_lock_date:
+            locks.append(user_lock_date)
+        if self.move_id._affect_tax_report() and self.move_id.company_id.tax_lock_date:
+            locks.append(self.tax_lock_date)
+        lock_date = max(locks)
+        if lock_date and self.move_id.date <= lock_date:
+            return lock_date + timedelta(days=1)
+        else:
+            return self.move_id.date
 
     def _reconcile_move_line_vals(self, line, move_id=False):
         vals = {
