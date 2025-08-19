@@ -212,15 +212,19 @@ class AccountMoveLineReconcileManual(models.TransientModel):
     def full_reconcile(self):
         self.ensure_one()
         self.move_line_ids.remove_move_reconcile()
-        res = self.move_line_ids.reconcile()
-        if not res.get("full_reconcile"):
-            raise UserError(_("Full reconciliation failed. It should never happen!"))
+        self.move_line_ids.reconcile()
+        for move_line in self.move_line_ids:
+            if not move_line.reconciled:
+                raise UserError(
+                    _("Full reconciliation failed. It should never happen!")
+                )
         action = {
             "type": "ir.actions.client",
             "tag": "display_notification",
             "params": {
                 "title": _("Successful reconciliation"),
-                "message": _("Reconcile mark: %s") % res["full_reconcile"].display_name,
+                "message": _("Reconcile mark: %s")
+                % self.move_line_ids.mapped("full_reconcile_id.display_name"),
                 "next": {"type": "ir.actions.act_window_close"},
             },
         }
@@ -300,17 +304,21 @@ class AccountMoveLineReconcileManual(models.TransientModel):
         )
         assert len(to_rec_woff_line) == 1
         to_rec_lines = self.move_line_ids + to_rec_woff_line
-        res = to_rec_lines.reconcile()
-        if not res.get("full_reconcile"):
-            raise UserError(_("Full reconciliation failed. It should never happen!"))
+        to_rec_lines.reconcile()
+        for move_line in self.move_line_ids:
+            if not move_line.reconciled:
+                raise UserError(
+                    _("Full reconciliation failed. It should never happen!")
+                )
         action = {
             "type": "ir.actions.client",
             "tag": "display_notification",
             "params": {
                 "title": _("Successful reconciliation"),
                 "message": _(
-                    "Write-off journal entry: %(writeoff_move)s\nReconcile mark: %(full_rec)s",
-                    full_rec=res["full_reconcile"].display_name,
+                    "Write-off journal entry: %(writeoff_move)s\n"
+                    "Reconcile mark: %(full_rec)s",
+                    full_rec=self.move_line_ids[0].full_reconcile_id.display_name,
                     writeoff_move=woff_move.name,
                 ),
                 "next": {"type": "ir.actions.act_window_close"},
