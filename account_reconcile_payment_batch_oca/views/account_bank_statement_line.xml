@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2024 Dixmit
+     Copyright 2025 Akretion France (https://www.akretion.com/)
+     @author: Alexis de Lattre <alexis.delattre@akretion.com>
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
+<odoo>
+    <record id="bank_statement_line_form_reconcile_view" model="ir.ui.view">
+        <field name="model">account.bank.statement.line</field>
+        <field
+            name="inherit_id"
+            ref="account_reconcile_oca.bank_statement_line_form_reconcile_view"
+        />
+        <field name="arch" type="xml">
+            <page name="manual" position="before">
+                <page
+                    name="inbound_payment_lots"
+                    string="Debit Lots"
+                    invisible="is_reconciled or amount &lt; 0"
+                >
+                    <field
+                        name="add_payment_lot_id"
+                        widget="account_reconcile_oca_match"
+                        domain="[('company_id', '=', company_id), ('is_matched', '=', False), ('payment_type', '=', 'inbound'), ('state', '=', 'uploaded'), ('journal_id', '=', journal_id)]"
+                        options="{'counterpart_field': 'payment_lot_counterparts'}"
+                        context="{'list_view_ref': 'account_reconcile_payment_batch_oca.account_payment_lot_reconcile_list', 'search_view_ref': 'account_reconcile_payment_batch_oca.account_payment_lot_reconcile_search'}"
+                    />
+                </page>
+                <page
+                    name="outbound_payment_lots"
+                    string="Payment Lots"
+                    invisible="is_reconciled or amount &gt; 0"
+                >
+                    <field
+                        name="add_payment_lot_id"
+                        widget="account_reconcile_oca_match"
+                        domain="[('company_id', '=', company_id), ('is_matched', '=', False), ('payment_type', '=', 'outbound'), ('state', '=', 'uploaded'), ('journal_id', '=', journal_id)]"
+                        options="{'counterpart_field': 'payment_lot_counterparts'}"
+                        context="{'list_view_ref': 'account_reconcile_payment_batch_oca.account_payment_lot_reconcile_list', 'search_view_ref': 'account_reconcile_payment_batch_oca.account_payment_lot_reconcile_search'}"
+                    />
+                </page>
+            </page>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+  Copyright 2025 Akretion France (https://www.akretion.com/)
+  @author: Alexis de Lattre <alexis.delattre@akretion.com>
+  License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
+-->
+<odoo>
+    <!-- List view dedicated to the bank statement reconcile interface -->
+    <record id="account_payment_lot_reconcile_list" model="ir.ui.view">
+        <field name="model">account.payment.lot</field>
+        <field name="priority">1000</field>
+        <field name="arch" type="xml">
+            <list
+                js_class="reconcile_move_line"
+                create="0"
+                edit="0"
+                export_xlsx="false"
+            >
+                <field name="name" decoration-bf="1" />
+                <field name="order_id" optional="hide" />
+                <field name="date" string="Date" />
+                <field name="payment_count" optional="show" />
+                <field name="amount" />
+                <field name="currency_id" column_invisible="1" />
+                <button
+                    name="open_form"
+                    string="View"
+                    type="object"
+                    class="btn btn-secondary"
+                />
+            </list>
+        </field>
+    </record>
+
+    <!-- Search view dedicated to the bank statement reconcile interface -->
+    <record id="account_payment_lot_reconcile_search" model="ir.ui.view">
+        <field name="model">account.payment.lot</field>
+        <field name="priority">1000</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name" />
+                <field name="order_id" />
+                <separator />
+                <filter name="date" date="date" />
+            </search>
+        </field>
+    </record>
+</odoo>
