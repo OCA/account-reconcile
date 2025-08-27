@@ -1463,3 +1463,97 @@ class TestReconciliationWidget(TestAccountReconciliationCommon):
             self.assertEqual(3, len(f.reconcile_data_info["data"]))
             self.assertTrue(f.can_reconcile)
             self.assertEqual(f.reconcile_data_info["data"][-1]["amount"], 3.63)
+
+    def test_foreign_currency_reconcile_model_differing_rate_exchange_gain(self):
+        """
+        Test that when the bank uses a different exchange rate than Odoo, but foreign
+        amounts match, the difference is assigned fully to exchange gains when reconciled
+        by model
+        """
+        # be sure only rate below is used
+        self.env["res.currency.rate"].search([]).unlink()
+        self.env["res.currency.rate"].create(
+            {
+                "currency_id": self.env.ref("base.USD").id,
+                "name": time.strftime("%Y-07-13"),
+                "rate": 2,
+            }
+        )
+        # be sure only the model below is used
+        self.env["account.reconcile.model"].search([]).unlink()
+        reconcile_model = self.env["account.reconcile.model"].create(
+            {
+                "name": "Match bill by currency, amount and label",
+                "rule_type": "invoice_matching",
+                "auto_reconcile": False,
+                "match_same_currency": True,
+                "match_partner": True,
+                "match_text_location_label": True,
+            }
+        )
+        invoice = self._create_invoice(
+            currency_id=self.currency_usd_id,
+            invoice_amount=100,
+            date_invoice=time.strftime("%Y-07-14"),
+            auto_validate=True,
+        )
+        bank_stmt = self.acc_bank_stmt_model.create(
+            {
+                "journal_id": self.bank_journal_euro.id,
+                "date": time.strftime("%Y-07-15"),
+                "name": "test",
+            }
+        )
+        bank_stmt_line = self.acc_bank_stmt_line_model.create(
+            {
+                "name": "Payment for %s" % invoice.name,
+                "partner_id": invoice.partner_id.id,
+                "journal_id": self.bank_journal_euro.id,
+                "statement_id": bank_stmt.id,
+                "amount": 60,
+                "amount_currency": 100,
+                "foreign_currency_id": self.currency_usd_id,
+                "date": time.strftime("%Y-07-15"),
+            }
+        )
+        with Form(
+            bank_stmt_line,
+            view="account_reconcile_oca.bank_statement_line_form_reconcile_view",
+        ) as f:
+            exchange_lines = [
+                line
+                for line in bank_stmt_line.reconcile_data_info["data"]
+                if line.get("is_exchange_counterpart")
+            ]
+            self.assertEqual(
+                len(exchange_lines),
+                1,
+                "No or more than one exchange counterpart lines found",
+            )
+            exchange_line = exchange_lines[0]
+            self.assertEqual(
+                exchange_line["amount"], -10, "Incorrect exchange gains calculated"
+            )
+            self.assertTrue(f.can_reconcile)
+
+        # be sure that the exchange line proposed above matches what happens with auto
+        # reconciliation
+        invoice_auto_reconciled = invoice.copy()
+        invoice_auto_reconciled.action_post()
+        reconcile_model.auto_reconcile = True
+        bank_stmt_line_auto_reconciled = bank_stmt_line.copy(
+            {
+                "name": "Payment for %s" % invoice_auto_reconciled.name,
+            }
+        )
+        reconcile_id = bank_stmt_line_auto_reconciled.move_id.line_ids.full_reconcile_id
+        reconciled_exchange_line = (
+            reconcile_id.reconciled_line_ids.move_id.line_ids.filtered(
+                lambda x: x.account_id.id == exchange_line["account_id"][0]
+            )
+        )
+        self.assertEqual(
+            exchange_line["amount"],
+            reconciled_exchange_line.balance,
+            "Proposed reconciliation does not match auto reconciliation",
+        )

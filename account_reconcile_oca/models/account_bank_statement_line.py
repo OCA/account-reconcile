@@ -675,14 +675,23 @@ class AccountBankStatementLine(models.Model):
                     self.manual_reference,
                 )
             elif res and res.get("amls"):
-                # TODO should be signed in currency get_reconcile_currency
                 amount = self.amount_total_signed
                 for line in res.get("amls", []):
+                    max_amount = amount
+                    if (
+                        line.currency_id == self._get_reconcile_currency()
+                        and self.amount_currency
+                        and self.amount_total_signed
+                    ):
+                        # convert max amount with rate of statement, not Odoo's rate
+                        max_amount = line.currency_id.round(
+                            max_amount * self.amount_currency / self.amount_total_signed
+                        )
                     reconcile_auxiliary_id, line_data = self._get_reconcile_line(
                         line,
                         "other",
                         is_counterpart=True,
-                        max_amount=amount,
+                        max_amount=max_amount,
                         reconcile_auxiliary_id=reconcile_auxiliary_id,
                         move=True,
                     )
