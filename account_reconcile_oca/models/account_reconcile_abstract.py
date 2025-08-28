@@ -90,7 +90,7 @@ class AccountReconcileAbstract(models.AbstractModel):
             line_currency = self._get_reconcile_currency()
         vals = {
             "move_id": move and line.move_id.id,
-            "move": move and line.move_id.name,
+            "move": move and line.move_id.display_name,
             "reference": f"account.move.line;{line.id}",
             "id": line.id,
             "account_id": [line.account_id.id, line.account_id.display_name],
