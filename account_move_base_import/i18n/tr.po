@@ -9,14 +9,15 @@ msgstr ""
 "Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-03-24 03:37+0000\n"
-"PO-Revision-Date: 2017-03-24 03:37+0000\n"
-"Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2017\n"
+"PO-Revision-Date: 2025-08-29 10:43+0000\n"
+"Last-Translator: Tamer Sezgin <tamer.sezgin@gmail.com>\n"
 "Language-Team: Turkish (https://www.transifex.com/oca/teams/23907/tr/)\n"
 "Language: tr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: Weblate 5.10.4\n"
 
 #. module: account_move_base_import
 #. odoo-python
@@ -27,65 +28,69 @@ msgid ""
 "%(error_msg)s\n"
 "%(log)s\n"
 msgstr ""
+"%(completion_date)s tarihli ve %(move_name)s isimli Hesap Hareketlerinin "
+"%(num_imported)s/%(number_line)s satırı %(user_name)s tarafından tamamlandı\n"
+"%(error_msg)s\n"
+"%(log)s\n"
 
 #. module: account_move_base_import
 #: model:ir.model,name:account_move_base_import.model_account_move_completion_rule
 msgid "Account move completion method"
-msgstr ""
+msgstr "Hesap hareketleri tamamlama yöntemi"
 
 #. module: account_move_base_import
 #: model_terms:ir.ui.view,arch_db:account_move_base_import.view_account_move_filter
 msgid "Account move that should be completed manually"
-msgstr ""
+msgstr "Manuel olarak tamamlanması gereken hesap hareketi"
 
 #. module: account_move_base_import
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_journal__message_needaction
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_move__message_needaction
 msgid "Action Needed"
-msgstr ""
+msgstr "Aksiyon Gerekiyor"
 
 #. module: account_move_base_import
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_journal__message_attachment_count
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_move__message_attachment_count
 msgid "Attachment Count"
-msgstr ""
+msgstr "Ekli Dosya Adedi"
 
 #. module: account_move_base_import
 #: model_terms:ir.ui.view,arch_db:account_move_base_import.view_move_importer_form
 msgid "Auto Completion"
-msgstr ""
+msgstr "Otomatik Tamamlama"
 
 #. module: account_move_base_import
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_move_line__already_completed
 msgid "Auto-Completed"
-msgstr ""
+msgstr "Otomatik-Tamamlandı"
 
 #. module: account_move_base_import
 #: model_terms:ir.ui.view,arch_db:account_move_base_import.journal_importer_view_form
 msgid "Auto-Completion Rules"
-msgstr ""
+msgstr "Otomatik Tamamlama Kuralları"
 
 #. module: account_move_base_import
 #: model_terms:ir.ui.view,arch_db:account_move_base_import.journal_importer_view_form
 msgid "Auto-Completion related infos"
-msgstr ""
+msgstr "Otomatik Tamamlama ile ilişkili bilgiler"
 
 #. module: account_move_base_import
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_journal__rule_ids
 msgid "Auto-completion rules"
-msgstr ""
+msgstr "Otomatik tamamlama kuralları"
 
 #. module: account_move_base_import
 #: model:ir.model.fields,field_description:account_move_base_import.field_res_partner__bank_statement_label
 #: model:ir.model.fields,field_description:account_move_base_import.field_res_users__bank_statement_label
 msgid "Bank Statement Label"
-msgstr ""
+msgstr "Banka Ekstresi Etiketi"
 
 #. module: account_move_base_import
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_journal__partner_id
 #: model:ir.model.fields,field_description:account_move_base_import.field_credit_statement_import__partner_id
 msgid "Bank/Payment Office partner"
-msgstr ""
+msgstr "Banka/Ödeme Ofisi partneri"
 
 #. module: account_move_base_import
 #: model_terms:ir.ui.view,arch_db:account_move_base_import.move_importer_view
@@ -99,11 +104,13 @@ msgid ""
 "Choose a receivable/payable account to use as the default debit/credit "
 "account."
 msgstr ""
+"Önseçili borç/alacak hesabı olarak kullanılmak üzere bir borçlular/"
+"alacaklılar hesabı seçin."
 
 #. module: account_move_base_import
 #: model:ir.model.fields,help:account_move_base_import.field_account_journal__commission_analytic_account_id
 msgid "Choose an analytic account to be used on the commission line."
-msgstr ""
+msgstr "Komisyon satırında kullanılmak üzere bir analitik hesap seçin."
 
 #. module: account_move_base_import
 #: model:ir.model.fields,help:account_move_base_import.field_account_journal__import_type
@@ -111,46 +118,48 @@ msgid ""
 "Choose here the method by which you want to import account moves for this "
 "journal."
 msgstr ""
+"Burada, bu yevmiye defterine hesap hareketlerini yüklemek için kullanılacak "
+"yöntemi seçin."
 
 #. module: account_move_base_import
 #. odoo-python
 #: code:addons/account_move_base_import/parser/file_parser.py:0
 msgid "Column %(col)s not present in file"
-msgstr ""
+msgstr "Sütun %(col)s dosyada yok"
 
 #. module: account_move_base_import
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_journal__commission_analytic_account_id
 msgid "Commission Analytic Account"
-msgstr ""
+msgstr "Komisyon Analitik Hesabı"
 
 #. module: account_move_base_import
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_journal__commission_account_id
 #: model:ir.model.fields,field_description:account_move_base_import.field_credit_statement_import__commission_account_id
 msgid "Commission account"
-msgstr ""
+msgstr "Komisyon hesabı"
 
 #. module: account_move_base_import
 #. odoo-python
 #: code:addons/account_move_base_import/models/account_journal.py:0
 msgid "Commission amount should not be positive."
-msgstr ""
+msgstr "Komisyon tutarı pozitif olmamalı."
 
 #. module: account_move_base_import
 #. odoo-python
 #: code:addons/account_move_base_import/models/account_journal.py:0
 msgid "Commission line"
-msgstr ""
+msgstr "Komisyon satırı"
 
 #. module: account_move_base_import
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_bank_statement_line__completion_logs
 #: model:ir.model.fields,field_description:account_move_base_import.field_account_move__completion_logs
 msgid "Completion Log"
-msgstr ""
+msgstr "Tamamlanma Kayıtları"
 
 #. module: account_move_base_import
 #: model_terms:ir.ui.view,arch_db:account_move_base_import.view_move_importer_form
 msgid "Completion Logs"
-msgstr ""
+msgstr "Tamamlanma Kayıtları"
 
 #. module: account_move_base_import
 #: model:ir.model,name:account_move_base_import.model_res_partner
