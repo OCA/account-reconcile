@@ -6,7 +6,7 @@
         <field name="inherit_id" ref="account.view_account_reconcile_model_form" />
         <field name="arch" type="xml">
             <xpath
-                expr="//field[@name='line_ids']/tree//field[@name='label']"
+                expr="//field[@name='line_ids']/list//field[@name='label']"
                 position="after"
             >
                 <field

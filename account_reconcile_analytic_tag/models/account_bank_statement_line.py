@@ -1,6 +1,6 @@
 # Copyright 2024 Tecnativa - Víctor Martínez
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl)
-from odoo import api, fields, models
+from odoo import Command, api, fields, models
 
 
 class AccountBankStatementLine(models.Model):
@@ -9,7 +9,7 @@ class AccountBankStatementLine(models.Model):
     manual_analytic_tag_ids = fields.Many2many(
         comodel_name="account.analytic.tag",
         string="Analytic Tags",
-        domain="['|', ('company_id', '=', False), ('company_id', '=', company_id)]",
+        check_company=True,
     )
 
     def _get_manual_delete_vals(self):
@@ -24,7 +24,9 @@ class AccountBankStatementLine(models.Model):
 
     def _get_manual_reconcile_vals(self):
         vals = super()._get_manual_reconcile_vals()
-        vals["manual_analytic_tag_ids"] = [(6, 0, self.manual_analytic_tag_ids.ids)]
+        vals["manual_analytic_tag_ids"] = [
+            Command.set(self.manual_analytic_tag_ids.ids)
+        ]
         return vals
 
     @api.onchange("manual_analytic_tag_ids")

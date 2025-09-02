@@ -16,7 +16,8 @@
                     name="manual_analytic_tag_ids"
                     groups="account_analytic_tag.group_analytic_tags"
                     widget="many2many_tags"
-                    attrs="{'invisible': ['|', ('manual_kind', '=', 'liquidity'), ('manual_reference', '=', False)], 'readonly': [('is_reconciled', '=', True)]}"
+                    invisible="manual_kind == 'liquidity' or manual_reference == False"
+                    readonly="is_reconciled"
                     options="{'color_field': 'color'}"
                 />
             </xpath>
