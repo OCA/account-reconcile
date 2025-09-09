@@ -4,12 +4,11 @@ from odoo import Command
 from odoo.tests import Form, tagged
 
 from odoo.addons.account_reconcile_model_oca.tests.common import (
-    TestAccountReconciliationCommon,
+    TestAccountReconciliationCommon as TestAccountReconciliationModelCommon,
 )
 
 
-@tagged("post_install", "-at_install")
-class TestReconciliationWidget(TestAccountReconciliationCommon):
+class TestAccountReconciliationCommon(TestAccountReconciliationModelCommon):
     @classmethod
     def _setup_context(cls):
         return {**cls.env.context, "_test_account_reconcile_oca": True}
@@ -88,6 +87,9 @@ class TestReconciliationWidget(TestAccountReconciliationCommon):
             }
         )
 
+
+@tagged("post_install", "-at_install")
+class TestReconciliationWidget(TestAccountReconciliationCommon):
     # Testing reconcile action
 
     def test_reconcile_invoice_currency(self):
