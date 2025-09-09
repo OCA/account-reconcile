@@ -1,4 +1,5 @@
 # Copyright 2023 Dixmit
+# Copyright 2025 Jacques-Etienne Baudoux (BCIM) <je@bcim.be>
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
 from collections import defaultdict
@@ -975,13 +976,17 @@ class AccountBankStatementLine(models.Model):
             "_test_account_reconcile_oca"
         ):
             return result
-        models = self.env["account.reconcile.model"].search(
-            [
-                ("rule_type", "in", ["invoice_matching", "writeoff_suggestion"]),
-                ("company_id", "in", result.company_id.ids),
-                ("auto_reconcile", "=", True),
-            ]
-        )
+        domain = [
+            ("rule_type", "in", ["invoice_matching", "writeoff_suggestion"]),
+            ("company_id", "in", result.company_id.ids),
+            ("auto_reconcile", "=", True),
+            "|",
+            ("match_journal_ids", "=", False),
+            ("match_journal_ids", "in", result.journal_id.id),
+        ]
+        models = self.env["account.reconcile.model"].search(domain)
+        if not models:
+            return result
         for record in result:
             res = models._apply_rules(record, record._retrieve_partner())
             if not res:
