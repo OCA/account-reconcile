@@ -73,6 +73,9 @@
                 &.selected {
                     background-color: rgba($o-brand-primary, 0.2);
                 }
+                &.suspense {
+                    color: $o-gray-500;
+                }
             }
         }
     }
