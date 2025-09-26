@@ -5,11 +5,11 @@
 
 
 {
-    'name': 'Account Bank Statement Reconcile Options',
-    'version': '12.0.1.0.0',
-    'category': 'Accounting',
-    'summary': "Give options on the reconciliation propositions",
-    'description': """
+    "name": "Account Bank Statement Reconcile Options",
+    "version": "12.0.1.0.0",
+    "category": "Accounting",
+    "summary": "Give options on the reconciliation propositions",
+    "description": """
         Give options on the reconciliation propositions
         Merge from account_bank_reconciliation_rule module:
         A new rule is applied when doing bank reconciliation:
@@ -20,14 +20,14 @@
         move.line on source account is allocated and counterpart
         on bank journal account is matched to the statement.
     """,
-    'author': 'La Louve, Druidoo',
-    'website': 'http://www.lalouve.net',
+    "author": "La Louve, Druidoo",
+    "website": "https://github.com/OCA/account-reconcile",
     "license": "AGPL-3",
-    'depends': [
-        'account',
+    "depends": [
+        "account",
     ],
-    'data': [
+    "data": [
         "views/account_journal.xml",
     ],
-    'installable': True,
+    "installable": True,
 }
