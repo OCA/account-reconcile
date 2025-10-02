@@ -8,27 +8,18 @@
 <odoo>
     <record id="view_account_journal_form" model="ir.ui.view">
         <field name="model">account.journal</field>
-        <field name="inherit_id" ref="account.view_account_journal_form" />
+        <field
+            name="inherit_id"
+            ref="account_reconcile_oca.view_account_journal_form"
+        />
         <field name="arch" type="xml">
-            <field name="type" position="after">
-                <field name="reconcile_mode" />
-            </field>
-            <xpath expr="//page[@name='bank_account']" position="after">
-                <page
-                    name="bank_reconcile"
-                    string="Bank Reconcile Account Allowed"
-                    attrs="{'invisible': [('reconcile_mode', '!=', 'journal_account')]}"
-                >
-                    <group>
-                        <field name="bank_reconcile_account_allowed_ids" nolabel="1" />
-                    </group>
-                </page>
-            </xpath>
-            <field name="bank_account_id" position="after">
-                <field name="search_limit_days" />
-            </field>
-            <field name="bank_id" position="after">
-                <field name="set_default_reconcile_partner" />
+            <field name="reconcile_mode" position="after">
+                <field
+                    name="bank_reconcile_account_allowed_ids"
+                    widget="many2many_tags"
+                    invisible="type != 'bank'"
+                />
+                <field name="search_limit_days" invisible="type != 'bank'" />
             </field>
         </field>
     </record>

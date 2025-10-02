@@ -6,27 +6,18 @@
 
 {
     "name": "Account Bank Statement Reconcile Options",
-    "version": "12.0.1.0.0",
+    "version": "18.0.1.0.0",
     "category": "Accounting",
     "summary": "Give options on the reconciliation propositions",
-    "description": """
-        Give options on the reconciliation propositions
-        Merge from account_bank_reconciliation_rule module:
-        A new rule is applied when doing bank reconciliation:
-        -   if account_code of account.move.line = account_code of
-        bank.statement.line  => the transaction is matched,
-        -   if account_code of account.move.line != account_code
-        of bank.statement.line => a new move is generated,
-        move.line on source account is allocated and counterpart
-        on bank journal account is matched to the statement.
-    """,
-    "author": "La Louve, Druidoo",
+    "author": "La Louve, Druidoo, Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/account-reconcile",
     "license": "AGPL-3",
     "depends": [
-        "account",
+        "account_reconcile_oca",
+        "base_view_inheritance_extension",  # to able to update the context of a field
     ],
     "data": [
+        "views/account_bank_statement_line.xml",
         "views/account_journal.xml",
     ],
     "installable": True,

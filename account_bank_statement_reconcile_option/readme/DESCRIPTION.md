@@ -4,10 +4,10 @@ filtering only on the current account of the given journal.
 
 This setting is made on each journal.
 
-- 'Normal' Option:
+- Don't set value for 'Bank Reconcile Account Allowed':
 
-![image](../static/description/account_reconcile_normal.png)
+![image1](../static/description/account_reconcile_normal.png)
 
-- 'Journal Accounts' Option:
+- Set value:
 
-![image](../static/description/account_reconcile_journal_account.png)
+![image2](../static/description/account_reconcile_journal_account.png)

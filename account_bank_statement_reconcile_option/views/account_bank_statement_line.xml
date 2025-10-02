@@ -1,0 +1,22 @@
+<?xml version="1.0" ?>
+<!--
+    License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
+-->
+<odoo>
+    <record id="bank_statement_line_form_reconcile_view" model="ir.ui.view">
+        <field name="model">account.bank.statement.line</field>
+        <field
+            name="inherit_id"
+            ref="account_reconcile_oca.bank_statement_line_form_reconcile_view"
+        />
+        <field name="arch" type="xml">
+            <field name="add_account_move_line_id" position="attributes">
+                <attribute name="context" operation="update">
+                    {
+                        "bank_statement_reconcile_option_statement_line_id": id,
+                    }
+                </attribute>
+            </field>
+        </field>
+    </record>
+</odoo>

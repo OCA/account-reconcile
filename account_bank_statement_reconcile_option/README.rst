@@ -34,16 +34,16 @@ filtering only on the current account of the given journal.
 
 This setting is made on each journal.
 
--  'Normal' Option:
-
-|image|
-
--  'Journal Accounts' Option:
+-  Don't set value for 'Bank Reconcile Account Allowed':
 
 |image1|
 
-.. |image| image:: https://raw.githubusercontent.com/OCA/account-reconcile/18.0/account_bank_statement_reconcile_option/static/description/account_reconcile_normal.png
-.. |image1| image:: https://raw.githubusercontent.com/OCA/account-reconcile/18.0/account_bank_statement_reconcile_option/static/description/account_reconcile_journal_account.png
+-  Set value:
+
+|image2|
+
+.. |image1| image:: https://raw.githubusercontent.com/OCA/account-reconcile/18.0/account_bank_statement_reconcile_option/static/description/account_reconcile_normal.png
+.. |image2| image:: https://raw.githubusercontent.com/OCA/account-reconcile/18.0/account_bank_statement_reconcile_option/static/description/account_reconcile_journal_account.png
 
 **Table of contents**
 
@@ -53,8 +53,8 @@ This setting is made on each journal.
 Configuration
 =============
 
-Once installed, go to each journal you want to configure, and set
-'Reconciliation Mode' with the correct value:
+Once installed, go to each journal you want to configure, then set 'Bank
+Reconcile Account Allowed' and 'Search Limit Days':
 
 |image|
 
@@ -84,6 +84,9 @@ Contributors
 
 -  Sylvain LE GAL <https://twitter.com/legalsylvain>
 -  Druidoo <https://www.druidoo.io>
+-  `Trobz <https://trobz.com>`__:
+
+   -  Nguyễn Minh Chiến
 
 Maintainers
 -----------
