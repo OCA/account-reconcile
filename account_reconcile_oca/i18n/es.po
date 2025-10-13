@@ -466,6 +466,12 @@ msgid "Nothing to reconcile"
 msgstr "Nada para conciliar"
 
 #. module: account_reconcile_oca
+#. odoo-javascript
+#: code:addons/account_reconcile_oca/static/src/xml/reconcile.xml:0
+msgid "Open Balance"
+msgstr ""
+
+#. module: account_reconcile_oca
 #: model_terms:ir.ui.view,arch_db:account_reconcile_oca.bank_statement_line_form_reconcile_view
 msgid "Other Info"
 msgstr ""
