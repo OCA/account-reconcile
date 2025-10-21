@@ -99,6 +99,11 @@
                     help="From Trade Receivable accounts"
                     name="trade_receivable"
                 />
+                    <filter
+                    string="Outstanding Payments/Receipts"
+                    name="payment_asset_current"
+                    domain="[('payment_id', '!=', False), ('account_id.account_type', '=', 'asset_current')]"
+                />
                 </search>
         </field>
     </record>
