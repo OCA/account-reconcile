@@ -6,8 +6,7 @@ class AccountBankStatement(models.Model):
 
     def action_open_statement_lines(self):
         self.ensure_one()
-        if not self:
-            return {}
+
         action = self.env["ir.actions.act_window"]._for_xml_id(
             "account_statement_base.account_bank_statement_line_action"
         )
@@ -16,8 +15,8 @@ class AccountBankStatement(models.Model):
                 "domain": [("statement_id", "=", self.id)],
                 "context": {
                     "default_statement_id": self.id,
-                    "default_journal_id": self._context.get("active_id")
-                    if self._context.get("active_model") == "account.journal"
+                    "default_journal_id": self.env.context.get("active_id")
+                    if self.env.context.get("active_model") == "account.journal"
                     else None,
                     "account_bank_statement_line_main_view": True,
                 },
