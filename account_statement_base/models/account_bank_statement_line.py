@@ -9,8 +9,7 @@ class AccountBankStatementLine(models.Model):
 
     def action_open_journal_entry(self):
         self.ensure_one()
-        if not self:
-            return {}
+
         result = self.env["ir.actions.act_window"]._for_xml_id(
             "account.action_move_line_form"
         )
