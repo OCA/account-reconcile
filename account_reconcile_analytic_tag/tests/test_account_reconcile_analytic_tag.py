@@ -1,8 +1,9 @@
-# Copyright 2024 Tecnativa - Víctor Martínez
+# Copyright 2024-2025 Tecnativa - Víctor Martínez
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 import time
 
 from odoo.tests import Form, tagged
+from odoo.tools import mute_logger
 
 from odoo.addons.account.tests.common import TestAccountReconciliationCommon
 
@@ -47,6 +48,7 @@ class TestAccountReconcileAnalyticTag(TestAccountReconciliationCommon):
         )
         cls.analytic_tag = cls.env["account.analytic.tag"].create({"name": "Test tag"})
 
+    @mute_logger("odoo.models.unlink")
     def test_account_reconcile_manual_with_tags(self):
         reconcile_data = self.bank_stmt_line._default_reconcile_data()
         data = reconcile_data["data"][1]
@@ -66,6 +68,7 @@ class TestAccountReconcileAnalyticTag(TestAccountReconciliationCommon):
             analytic_line.tag_ids, self.bank_stmt_line.manual_analytic_tag_ids
         )
 
+    @mute_logger("odoo.models.unlink")
     def test_account_reconcile_manual_without_tags(self):
         reconcile_data = self.bank_stmt_line._default_reconcile_data()
         data = reconcile_data["data"][1]
