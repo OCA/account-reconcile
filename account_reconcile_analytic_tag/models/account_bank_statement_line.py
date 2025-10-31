@@ -1,4 +1,4 @@
-# Copyright 2024 Tecnativa - Víctor Martínez
+# Copyright 2024-2025 Tecnativa - Víctor Martínez
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl)
 from odoo import api, fields, models
 
@@ -26,6 +26,12 @@ class AccountBankStatementLine(models.Model):
         vals = super()._get_manual_reconcile_vals()
         vals["manual_analytic_tag_ids"] = [(6, 0, self.manual_analytic_tag_ids.ids)]
         return vals
+
+    def _check_line_changed(self, line):
+        line_changed = super()._check_line_changed(line)
+        if not line_changed:
+            return bool(self.manual_analytic_tag_ids)
+        return line_changed
 
     @api.onchange("manual_analytic_tag_ids")
     def _onchange_analytic_tag_ids(self):
