@@ -2,7 +2,6 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 import time
 
-from odoo import Command
 from odoo.tests import Form, tagged
 from odoo.tools import mute_logger
 
@@ -45,30 +44,41 @@ class TestAccountReconcileAnalyticTag(TestAccountReconciliationCommon):
             },
         )
         cls.analytic_tag = cls.env["account.analytic.tag"].create({"name": "Test tag"})
+        # We need to make some fields visible in order to make the tests work
+        cls.env["ir.ui.view"].create(
+            {
+                "name": "DEMO Account bank statement",
+                "model": "account.bank.statement.line",
+                "inherit_id": cls.env.ref(
+                    "account_reconcile_oca.bank_statement_line_form_reconcile_view"
+                ).id,
+                "arch": """
+            <data>
+                <field name="manual_reference" position="attributes">
+                    <attribute name="invisible">0</attribute>
+                </field>
+                <field name="manual_delete" position="attributes">
+                    <attribute name="invisible">0</attribute>
+                </field>
+                <field name="partner_id" position="attributes">
+                    <attribute name="invisible">0</attribute>
+                </field>
+            </data>
+            """,
+            }
+        )
 
     @mute_logger("odoo.models.unlink")
     def test_account_reconcile_manual_with_tags(self):
-        reconcile_data = self.bank_stmt_line._default_reconcile_data()
-        data = reconcile_data["data"][1]
-        self.bank_stmt_line.manual_reference = data["reference"]
-        self.bank_stmt_line._process_manual_reconcile_from_line(data)
         line_form = Form(
             self.bank_stmt_line,
             view="account_reconcile_oca.bank_statement_line_form_reconcile_view",
         )
+        line_form.manual_reference = "reconcile_auxiliary;1"
         line_form.manual_partner_id = self.partner_a
+        line_form.analytic_distribution = {self.analytic_account.id: 100}
         line_form.manual_analytic_tag_ids.add(self.analytic_tag)
         line_form.save()
-        # The appropriate values are defined in reconcile_data_info (works properly
-        # in interface)
-        reconcile_data_info = self.bank_stmt_line.reconcile_data_info
-        reconcile_data_info["data"][1]["analytic_distribution"] = {
-            self.analytic_account.id: 100
-        }
-        reconcile_data_info["data"][1]["manual_analytic_tag_ids"] = [
-            Command.set(self.analytic_tag.ids)
-        ]
-        self.bank_stmt_line.reconcile_data_info = reconcile_data_info
         self.bank_stmt_line.reconcile_bank_line()
         analytic_line = self.bank_stmt_line.move_id.line_ids.analytic_line_ids
         self.assertTrue(analytic_line)
@@ -78,23 +88,14 @@ class TestAccountReconcileAnalyticTag(TestAccountReconciliationCommon):
 
     @mute_logger("odoo.models.unlink")
     def test_account_reconcile_manual_without_tags(self):
-        reconcile_data = self.bank_stmt_line._default_reconcile_data()
-        data = reconcile_data["data"][1]
-        self.bank_stmt_line.manual_reference = data["reference"]
-        self.bank_stmt_line._process_manual_reconcile_from_line(data)
         line_form = Form(
             self.bank_stmt_line,
             view="account_reconcile_oca.bank_statement_line_form_reconcile_view",
         )
+        line_form.manual_reference = "reconcile_auxiliary;1"
         line_form.manual_partner_id = self.partner_a
+        line_form.analytic_distribution = {self.analytic_account.id: 100}
         line_form.save()
-        # The appropriate values are defined in reconcile_data_info (works properly
-        # in interface)
-        reconcile_data_info = self.bank_stmt_line.reconcile_data_info
-        reconcile_data_info["data"][1]["analytic_distribution"] = {
-            self.analytic_account.id: 100
-        }
-        self.bank_stmt_line.reconcile_data_info = reconcile_data_info
         self.bank_stmt_line.reconcile_bank_line()
         analytic_line = self.bank_stmt_line.move_id.line_ids.analytic_line_ids
         self.assertTrue(analytic_line)

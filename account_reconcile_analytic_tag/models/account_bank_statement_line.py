@@ -29,6 +29,12 @@ class AccountBankStatementLine(models.Model):
         ]
         return vals
 
+    def _check_line_changed(self, line):
+        line_changed = super()._check_line_changed(line)
+        if not line_changed:
+            return bool(self.manual_analytic_tag_ids)
+        return line_changed
+
     @api.onchange("manual_analytic_tag_ids")
     def _onchange_analytic_tag_ids(self):
         return super()._onchange_manual_reconcile_vals()
