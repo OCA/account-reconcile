@@ -26,8 +26,7 @@ msgid ""
 "possible counterpart is found."
 msgstr ""
 "Si está marcada esta casilla, se aplicará la sugerencia de contrapartida "
-"correspondiente solo si únicamente se encuentra una posible "
-"contrapartida."
+"correspondiente solo si únicamente se encuentra una posible contrapartida."
 
 #. module: account_reconcile_model_oca
 #: model:ir.model,name:account_reconcile_model_oca.model_account_reconcile_model
