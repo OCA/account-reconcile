@@ -58,9 +58,13 @@ Authors
 Contributors
 ------------
 
-- Dixmit
+-  Dixmit
 
-  - Enric Tobella
+   -  Enric Tobella
+
+-  `Tecnativa <https://www.tecnativa.com>`__:
+
+   -  Víctor Martínez
 
 Maintainers
 -----------

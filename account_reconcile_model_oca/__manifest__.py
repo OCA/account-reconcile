@@ -11,6 +11,8 @@
     "website": "https://github.com/OCA/account-reconcile",
     "depends": ["account"],
     "excludes": ["account_accountant"],
-    "data": [],
+    "data": [
+        "views/account_reconcile_model_views.xml",
+    ],
     "demo": [],
 }
