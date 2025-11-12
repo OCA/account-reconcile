@@ -1,0 +1,122 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* account_statement_base
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 18.0\n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: 2025-09-12 15:42+0000\n"
+"Last-Translator: myacc-pro <ai@myacc.pro>\n"
+"Language-Team: none\n"
+"Language: lv\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=3; plural=(n % 10 == 0 || n % 100 >= 11 && n % 100 <= "
+"19) ? 0 : ((n % 10 == 1 && n % 100 != 11) ? 1 : 2);\n"
+"X-Generator: Weblate 5.10.4\n"
+
+#. module: account_statement_base
+#: model_terms:ir.ui.view,arch_db:account_statement_base.view_bank_statement_form
+msgid "<span class=\"o_stat_text\">Journal Items</span>"
+msgstr "<span class=\"o_stat_text\">Žurnāla ieraksti</span>"
+
+#. module: account_statement_base
+#: model:ir.model,name:account_statement_base.model_account_bank_statement
+#: model_terms:ir.ui.view,arch_db:account_statement_base.view_bank_statement_form
+msgid "Bank Statement"
+msgstr "Bankas izraksts"
+
+#. module: account_statement_base
+#: model:ir.model,name:account_statement_base.model_account_bank_statement_line
+msgid "Bank Statement Line"
+msgstr "Bankas izraksta rinda"
+
+#. module: account_statement_base
+#: model:ir.actions.act_window,name:account_statement_base.account_bank_statement_line_action
+msgid "Bank Statement Lines"
+msgstr "Bankas izraksta rindas"
+
+#. module: account_statement_base
+#: model_terms:ir.ui.view,arch_db:account_statement_base.account_bank_statement_line_search
+msgid "Date"
+msgstr "Datums"
+
+#. module: account_statement_base
+#: model:ir.model,name:account_statement_base.model_account_journal
+#: model_terms:ir.ui.view,arch_db:account_statement_base.account_bank_statement_line_search
+msgid "Journal"
+msgstr "Žurnāls"
+
+#. module: account_statement_base
+#. odoo-python
+#: code:addons/account_statement_base/models/account_bank_statement.py:0
+msgid "Journal Items"
+msgstr "Žurnāla ieraksti"
+
+#. module: account_statement_base
+#: model_terms:ir.ui.view,arch_db:account_statement_base.account_bank_statement_line_search
+msgid "Label, Ref or Notes"
+msgstr "Paskaidrojums, atsauce vai piezīmes"
+
+#. module: account_statement_base
+#: model_terms:ir.ui.view,arch_db:account_statement_base.account_bank_statement_line_search
+msgid "Not Reconciled"
+msgstr "Nav saskaņots"
+
+#. module: account_statement_base
+#: model_terms:ir.ui.view,arch_db:account_statement_base.account_bank_statement_line_form
+#: model_terms:ir.ui.view,arch_db:account_statement_base.account_bank_statement_line_tree
+msgid "Notes"
+msgstr "Piezīmes"
+
+#. module: account_statement_base
+#: model_terms:ir.ui.view,arch_db:account_statement_base.account_bank_statement_line_tree
+msgid "Open Journal Entry"
+msgstr "Atvērt grāmatojumu"
+
+#. module: account_statement_base
+#: model_terms:ir.ui.view,arch_db:account_statement_base.view_bank_statement_tree
+msgid "Open Statement Lines"
+msgstr "Atvērt izraksta rindas"
+
+#. module: account_statement_base
+#: model_terms:ir.ui.view,arch_db:account_statement_base.account_bank_statement_line_search
+msgid "Partner"
+msgstr "Partneris"
+
+#. module: account_statement_base
+#: model_terms:ir.ui.view,arch_db:account_statement_base.account_bank_statement_line_search
+msgid "Reconciled"
+msgstr "Saskaņots"
+
+#. module: account_statement_base
+#: model_terms:ir.ui.view,arch_db:account_statement_base.account_bank_statement_line_tree
+msgid "Revert reconciliation"
+msgstr "Atcelt saskaņošanu"
+
+#. module: account_statement_base
+#: model_terms:ir.ui.view,arch_db:account_statement_base.account_bank_statement_line_form
+msgid "Technical Information"
+msgstr "Tehniskā informācija"
+
+#. module: account_statement_base
+#: model_terms:ir.ui.view,arch_db:account_statement_base.account_bank_statement_line_search
+msgid "To check"
+msgstr "Jāpārbauda"
+
+#. module: account_statement_base
+#: model_terms:ir.ui.view,arch_db:account_statement_base.account_bank_statement_line_search
+msgid "Transaction Type"
+msgstr "Transakcijas veids"
+
+#. module: account_statement_base
+#: model_terms:ir.ui.view,arch_db:account_statement_base.view_bank_statement_form
+msgid "Transactions"
+msgstr "Transakcijas"
+
+#. module: account_statement_base
+#: model_terms:ir.ui.view,arch_db:account_statement_base.view_bank_statement_form
+msgid "e.g. BNK/2021/0001"
+msgstr "piem., BNK/2021/0001"

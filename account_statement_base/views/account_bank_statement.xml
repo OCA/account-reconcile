@@ -1,0 +1,117 @@
+<?xml version="1.0" ?>
+<!--
+  Copyright 2023 Therp BV
+  Licence LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl-3.0).
+-->
+<odoo>
+    <record id="view_bank_statement_form" model="ir.ui.view">
+        <field name="name">account.bank.statement.form</field>
+        <field name="model">account.bank.statement</field>
+        <field name="priority">1</field>
+        <field name="arch" type="xml">
+            <form string="Bank Statement">
+                <div
+                    class="alert alert-warning"
+                    role="alert"
+                    invisible="not problem_description"
+                >
+                    <field name="problem_description" />
+                </div>
+                <sheet>
+                    <div name="button_box" position="inside">
+                        <button
+                            class="oe_stat_button"
+                            type="action"
+                            name="%(account_bank_statement_line_action)d"
+                            icon="fa-bars"
+                            context="{'search_default_statement_id': id}"
+                            string="Transactions"
+                        />
+                        <button
+                            name="open_entries"
+                            type="object"
+                            class="oe_stat_button"
+                            icon="fa-bars"
+                        >
+                            <div class="o_stat_info">
+                                <span class="o_stat_text">Journal Items</span>
+                            </div>
+                        </button>
+                    </div>
+                    <div class="oe_title oe_inline">
+                        <label for="name" />
+                        <h1>
+                            <field name="name" placeholder="e.g. BNK/2021/0001" />
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="date" />
+                            <field
+                                name='company_id'
+                                options="{'no_create': True}"
+                                groups="base.group_multi_company"
+                            />
+                            <field name="currency_id" invisible="1" />
+                            <field name="journal_id" invisible="1" />
+                        </group>
+                        <group>
+                            <label for="balance_start" />
+                            <div>
+                                <field name="balance_start" class="oe_inline" />
+                            </div>
+                            <label for="balance_end_real" />
+                            <div>
+                                <field name="balance_end_real" class="oe_inline" />
+                            </div>
+                        </group>
+                    </group>
+                    <field
+                        name="line_ids"
+                        context="{'default_journal_id': journal_id}"
+                    />
+                    <group
+                        class="oe_subtotal_footer oe_right"
+                        name="sale_total"
+                        col="1"
+                    >
+                        <field
+                            name="balance_end"
+                            class="oe_subtotal_footer_separator"
+                        />
+                    </group>
+                    <field name="attachment_ids" widget="many2many_binary" />
+                    <div class="oe_clear" />
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Add form to view mode. -->
+    <record id="account.action_bank_statement_tree" model="ir.actions.act_window">
+        <field name="res_model">account.bank.statement</field>
+        <field name="view_mode">list,form,pivot,graph</field>
+    </record>
+    <record id="account.action_view_bank_statement_tree" model="ir.actions.act_window">
+        <field name="view_mode">list,form,pivot,graph</field>
+    </record>
+
+    <record id="view_bank_statement_tree" model="ir.ui.view">
+        <field name="name">account.bank.statement.list</field>
+        <field name="model">account.bank.statement</field>
+        <field name="inherit_id" ref="account.view_bank_statement_tree" />
+        <field name="arch" type="xml">
+            <list position="attributes">
+                <attribute name="create">true</attribute>
+            </list>
+            <field name="balance_end_real" position="after">
+                <button
+                    name="action_open_statement_lines"
+                    type="object"
+                    title="Open Statement Lines"
+                    icon="fa-folder-open-o"
+                />
+            </field>
+        </field>
+    </record>
+</odoo>
