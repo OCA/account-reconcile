@@ -60,7 +60,7 @@
         <field name="model">account.bank.statement.line</field>
         <field name="arch" type="xml">
             <list editable="top" multi_edit="1" decoration-muted="is_reconciled">
-                <field name="sequence" />
+                <field name="sequence" widget="handle" />
                 <field name="date" readonly="is_reconciled" />
                 <field
                     name="statement_id"
