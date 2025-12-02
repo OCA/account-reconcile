@@ -1,0 +1,48 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* account_reconcile_oca_queue
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 18.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: account_reconcile_oca_queue
+#. odoo-python
+#: code:addons/account_reconcile_oca_queue/models/account_bank_statement_line.py:0
+msgid "Auto reconcile %(label)s"
+msgstr ""
+
+#. module: account_reconcile_oca_queue
+#: model:ir.model.fields,field_description:account_reconcile_oca_queue.field_res_company__account_auto_reconcile_queue
+#: model:ir.model.fields,field_description:account_reconcile_oca_queue.field_res_config_settings__account_auto_reconcile_queue
+#: model_terms:ir.ui.view,arch_db:account_reconcile_oca_queue.res_config_settings_view_form
+msgid "Auto reconcile in background"
+msgstr ""
+
+#. module: account_reconcile_oca_queue
+#: model:ir.model.fields,help:account_reconcile_oca_queue.field_res_company__account_auto_reconcile_queue
+#: model:ir.model.fields,help:account_reconcile_oca_queue.field_res_config_settings__account_auto_reconcile_queue
+msgid "Auto reconcile using queue jobs"
+msgstr ""
+
+#. module: account_reconcile_oca_queue
+#: model:ir.model,name:account_reconcile_oca_queue.model_account_bank_statement_line
+msgid "Bank Statement Line"
+msgstr ""
+
+#. module: account_reconcile_oca_queue
+#: model:ir.model,name:account_reconcile_oca_queue.model_res_company
+msgid "Companies"
+msgstr ""
+
+#. module: account_reconcile_oca_queue
+#: model:ir.model,name:account_reconcile_oca_queue.model_res_config_settings
+msgid "Config Settings"
+msgstr ""
