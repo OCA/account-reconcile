@@ -99,6 +99,36 @@ class TestReconciliationMatchingRules(AccountTestInvoicingCommon):
                 "line_ids": [(0, 0, {"account_id": cls.current_assets_account.id})],
             }
         )
+        cls.rule_3 = cls.env["account.reconcile.model"].create(
+            {
+                "name": "Line with Bank Fees",
+                "rule_type": "writeoff_suggestion",
+                "match_label": "contains",
+                "match_label_param": "BRT",
+                "line_ids": [
+                    Command.create(
+                        {
+                            "label": "Due amount",
+                            "account_id": cls.company_data[
+                                "default_account_deferred_expense"
+                            ].id,
+                            "amount_type": "regex",
+                            "amount_string": r"BRT: ([\d,.]+)",
+                        }
+                    ),
+                    Command.create(
+                        {
+                            "label": "Bank Fees",
+                            "account_id": cls.company_data[
+                                "default_tax_account_receivable"
+                            ].id,
+                            "amount_type": "percentage",
+                            "amount_string": "100",
+                        }
+                    ),
+                ],
+            }
+        )
 
         ##################
         # Invoices setup #
@@ -1640,3 +1670,35 @@ class TestReconciliationMatchingRules(AccountTestInvoicingCommon):
                     },
                 },
             )
+
+    def test_regex_matching(self):
+        lines = self.rule_3._get_write_off_move_lines_dict(
+            90.0,
+            False,
+            label="R:9772938 10/07 AX 9415116318 T:5 BRT: 100.00 C/ croip",
+        )
+        self.assertEqual(len(lines), 2)
+        for line in lines:
+            if (
+                line["account_id"]
+                == self.company_data["default_account_deferred_expense"].id
+            ):
+                due_line = line
+            elif (
+                line["account_id"]
+                == self.company_data["default_tax_account_receivable"].id
+            ):
+                tax_line = line
+        self.assertTrue(due_line)
+        self.assertTrue(tax_line)
+        self.assertEqual(due_line["debit"], 100.0)
+        self.assertEqual(tax_line["credit"], 10.0)
+
+    def test_regex_not_matched(self):
+        lines = self.rule_3._get_write_off_move_lines_dict(
+            90.0,
+            False,
+            label="R:9772938 10/07 AX 9415116318 T:5 BRT: XX100.00 C/ croip",
+        )
+        self.assertEqual(len(lines), 1)
+        self.assertEqual(lines[0]["debit"], 90.0)

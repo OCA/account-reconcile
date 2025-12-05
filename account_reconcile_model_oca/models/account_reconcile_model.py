@@ -116,7 +116,7 @@ class AccountReconcileModel(models.Model):
         base_line_dict["tax_tag_ids"] = [(6, 0, res["base_tags"])]
         return new_aml_dicts
 
-    def _get_write_off_move_lines_dict(self, residual_balance, partner_id):
+    def _get_write_off_move_lines_dict(self, residual_balance, partner_id, label=None):
         """Get move.lines dict corresponding to the reconciliation model's write-off
         lines.
         :param residual_balance: The residual balance of the account on the manual
@@ -142,6 +142,15 @@ class AccountReconcileModel(models.Model):
                 balance = currency.round(
                     line.amount * (1 if residual_balance > 0.0 else -1)
                 )
+            elif line.amount_type == "regex":
+                m = re.findall(line.amount_string, label or "")
+                if m:
+                    extracted_amount = float(m[0])
+                    balance = currency.round(
+                        extracted_amount * (1 if residual_balance > 0.0 else -1)
+                    )
+                else:
+                    balance = 0.0
             else:
                 balance = 0.0
 
