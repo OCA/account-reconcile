@@ -223,7 +223,7 @@ class AccountMoveLineReconcileManual(models.TransientModel):
     def full_reconcile(self):
         self.ensure_one()
         self.move_line_ids.remove_move_reconcile()
-        self.move_line_ids.reconcile()
+        self.move_line_ids.with_context(no_exchange_difference=True).reconcile()
         for move_line in self.move_line_ids:
             if not move_line.reconciled:
                 raise UserError(
@@ -341,7 +341,7 @@ class AccountMoveLineReconcileManual(models.TransientModel):
         )
         assert len(to_rec_woff_line) == 1
         to_rec_lines = self.move_line_ids + to_rec_woff_line
-        to_rec_lines.reconcile()
+        to_rec_lines.with_context(no_exchange_difference=True).reconcile()
         for move_line in self.move_line_ids:
             if not move_line.reconciled:
                 raise UserError(
