@@ -144,7 +144,9 @@ class AccountMoveLineReconcileManual(models.TransientModel):
         move_lines = self.env["account.move.line"].browse(
             self._context.get("active_ids")
         )
-        company = move_lines[0].account_id.company_ids
+        company = move_lines.company_id
+        if len(company) > 1:
+            raise UserError(self.env._("All lines must belong to the same company"))
         ccur = company.currency_id
         count = 0
         account = False
@@ -181,7 +183,6 @@ class AccountMoveLineReconcileManual(models.TransientModel):
                 account = line.account_id
             if line.partner_id:
                 partner_set.add(line.partner_id.id)
-        # if lines have the same account, they are in the same company
         if not account.reconcile:
             raise UserError(
                 _("Account '%s' is not reconciliable.") % account.display_name
@@ -206,7 +207,7 @@ class AccountMoveLineReconcileManual(models.TransientModel):
             {
                 "count": count,
                 "account_id": account.id,
-                "company_id": account.company_ids.id,
+                "company_id": company.id,
                 "currency_id": currency.id,
                 "total_debit": total_debit,
                 "total_credit": total_credit,
