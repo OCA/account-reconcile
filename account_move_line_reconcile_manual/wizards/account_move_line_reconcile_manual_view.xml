@@ -74,7 +74,7 @@
                     <button
                         name="go_to_writeoff"
                         type="object"
-                        invisible="state == 'start' or writeoff_type == 'none'"
+                        invisible="state != 'start' or writeoff_type == 'none'"
                         class="btn-primary"
                         string="Reconcile with Write-off"
                     />
