@@ -253,8 +253,11 @@ class TestReconcileManual(TransactionCase):
 
         self.assertTrue(self.line1.full_reconcile_id)
         self.assertEqual(self.line1.full_reconcile_id, self.line2.full_reconcile_id)
+        self.assertTrue(self.line1.reconciled)
+        self.assertTrue(self.line2.reconciled)
         self.assertFalse(self.line1.amount_residual_currency)
         self.assertFalse(self.line1.amount_residual)
+        self.assertEqual(len(self.line1.full_reconcile_id.reconciled_line_ids), 3)
 
     def test_foreign_currency_reconcile_with_write_off(self):
         self.move1 = self._generate_debit_reconcile_move(100, currency_amount=95)
@@ -287,3 +290,5 @@ class TestReconcileManual(TransactionCase):
 
         self.assertTrue(self.line1.full_reconcile_id)
         self.assertEqual(self.line1.full_reconcile_id, self.line2.full_reconcile_id)
+        self.assertTrue(self.line1.reconciled)
+        self.assertTrue(self.line2.reconciled)
