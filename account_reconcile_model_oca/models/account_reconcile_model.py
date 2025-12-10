@@ -820,6 +820,39 @@ class AccountReconcileModel(models.Model):
 class AccountReconcileModelLine(models.Model):
     _inherit = "account.reconcile.model.line"
 
+    # TODO: remove this method if option 'percentage_st_line' is implemented
+    #  in the future
+    @api.model
+    def fields_get(self, allfields=None, attributes=None):
+        """Hide 'percentage_st_line' from amount_type selection in the UI.
+
+        'percentage_st_line' is implemented only in enterprise accounting version,
+        here there is no specific usage described, so we remove it from the selection
+        options.
+        """
+        res = super().fields_get(allfields=allfields, attributes=attributes)
+        field_name = "amount_type"
+
+        if field_name in res and "selection" in res[field_name]:
+            res[field_name]["selection"] = [
+                (key, label)
+                for key, label in res[field_name]["selection"]
+                if key != "percentage_st_line"
+            ]
+        return res
+
+    # TODO: remove this method if option 'percentage_st_line' is implemented
+    #  in the future
+    @api.depends("rule_type", "model_id.counterpart_type")
+    def _compute_amount_type(self):
+        res = super()._compute_amount_type()
+        # If the compute set 'percentage_st_line', change it to 'percentage'.
+        # percentage_st_line type is not implemented.
+        for line in self:
+            if line.amount_type == "percentage_st_line":
+                line.amount_type = "percentage"
+        return res
+
     def _get_write_off_move_line_dict(self, balance, currency):
         self.ensure_one()
         return {
