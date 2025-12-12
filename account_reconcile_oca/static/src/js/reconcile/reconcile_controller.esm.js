@@ -4,14 +4,22 @@ import {KanbanController} from "@web/views/kanban/kanban_controller";
 import {View} from "@web/views/view";
 import {formatMonetary} from "@web/views/fields/formatters";
 import {router} from "@web/core/browser/router";
+import {useSetupAction} from "@web/search/action_hook";
 
 export class ReconcileController extends KanbanController {
     async setup() {
         super.setup();
         this.state = useState({
-            selectedRecordId: null,
+            selectedRecordId: this.props.state?.selectedRecordId,
             journalBalance: 0,
             currency: false,
+        });
+        useSetupAction({
+            getLocalState: () => {
+                return {
+                    selectedRecordId: this.state.selectedRecordId,
+                };
+            },
         });
         useSubEnv({
             parentController: this,
@@ -97,6 +105,8 @@ export class ReconcileController extends KanbanController {
         var resId = false;
         if (record === undefined && this.props.resId) {
             resId = this.props.resId;
+        } else if (record === undefined && this.state.selectedRecordId) {
+            resId = this.state.selectedRecordId;
         } else if (record === undefined) {
             var records = this.model.root.records.filter(
                 (modelRecord) =>
