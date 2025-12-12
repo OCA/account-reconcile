@@ -30,7 +30,7 @@
         > div {
             border-right: thick solid rgba(0, 0, 0, 0);
         }
-        &.o_kanban_record_reconcile_oca_selected > div {
+        &.o_kanban_record_reconcile_oca_selected {
             border-right: thick solid $o-brand-primary;
         }
     }
