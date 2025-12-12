@@ -61,7 +61,7 @@
         t-inherit-mode="primary"
     >
         <!-- we pass to the component the selected record -->
-        <xpath expr="//Layout/t[2]" position="attributes">
+        <xpath expr="//Layout/t[7]" position="attributes">
             <attribute name="selectedRecordId">state.selectedRecordId</attribute>
         </xpath>
         <xpath expr="//Layout" position="attributes">
