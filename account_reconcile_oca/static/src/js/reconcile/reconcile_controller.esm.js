@@ -9,6 +9,7 @@ import {useSetupAction} from "@web/search/action_hook";
 export class ReconcileController extends KanbanController {
     async setup() {
         super.setup();
+        this.initialLoad = true;
         this.state = useState({
             selectedRecordId: this.props.state?.selectedRecordId,
             journalBalance: 0,
@@ -105,7 +106,11 @@ export class ReconcileController extends KanbanController {
         var resId = false;
         if (record === undefined && this.props.resId) {
             resId = this.props.resId;
-        } else if (record === undefined && this.state.selectedRecordId) {
+        } else if (
+            this.initialLoad &&
+            record === undefined &&
+            this.state.selectedRecordId
+        ) {
             resId = this.state.selectedRecordId;
         } else if (record === undefined) {
             var records = this.model.root.records.filter(
@@ -123,6 +128,7 @@ export class ReconcileController extends KanbanController {
         } else {
             resId = record.resId;
         }
+        this.initialLoad = false;
         if (this.state.selectedRecordId && this.state.selectedRecordId !== resId) {
             if (this.form_controller && this.form_controller?.model?.root?.isDirty) {
                 await this.form_controller.model.root.save({
