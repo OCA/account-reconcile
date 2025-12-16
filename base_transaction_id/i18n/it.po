@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: bank-statement-reconcile (8.0)\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-10-27 02:42+0000\n"
-"PO-Revision-Date: 2024-02-07 10:35+0000\n"
+"PO-Revision-Date: 2025-12-16 12:42+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: Italian (http://www.transifex.com/oca/"
 "OCA-bank-statement-reconcile-8-0/language/it/)\n"
@@ -21,7 +21,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.17\n"
+"X-Generator: Weblate 5.10.4\n"
 
 #. module: base_transaction_id
 #: model:ir.model,name:base_transaction_id.model_account_bank_statement_line
@@ -41,7 +41,7 @@ msgstr ""
 #. module: base_transaction_id
 #: model:ir.model,name:base_transaction_id.model_stock_picking
 msgid "Picking List"
-msgstr "Lista Picking"
+msgstr "Lista prelievo"
 
 #. module: base_transaction_id
 #: view:account.move.line:base_transaction_id.view_move_line_form
