@@ -17,21 +17,21 @@ export class ReconcileRenderer extends KanbanRenderer {
         }
         const {list} = this.props;
         const aggregates = [];
+        const seen = new Set();
         for (const record of list.records) {
-            const aggregateId = record.data.aggregate_id && record.data.aggregate_id;
-            if (
-                aggregateId &&
-                (!aggregates.length || aggregates[0].id !== aggregateId)
-            ) {
-                aggregates.push({
-                    id: aggregateId,
-                    name: record.data.aggregate_name,
-                    balance: record.data.statement_balance_end_real,
-                    balanceStr: formatMonetary(record.data.statement_balance_end_real, {
-                        currencyId: record.data.currency_id[0],
-                    }),
-                });
+            const aggregateId = record.data.aggregate_id;
+            if (!aggregateId || seen.has(aggregateId)) {
+                continue;
             }
+            seen.add(aggregateId);
+            aggregates.push({
+                id: aggregateId,
+                name: record.data.aggregate_name,
+                balance: record.data.statement_balance_end_real,
+                balanceStr: formatMonetary(record.data.statement_balance_end_real, {
+                    currencyId: record.data.currency_id[0],
+                }),
+            });
         }
         return aggregates;
     }
