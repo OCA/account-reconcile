@@ -2,7 +2,8 @@
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0)
 
 
-from odoo import fields, models
+from odoo import api, fields, models
+from odoo.osv.expression import is_leaf
 
 
 class AccountReconcileModel(models.AbstractModel):
@@ -16,9 +17,9 @@ class AccountReconcileModel(models.AbstractModel):
         string="Match tokens",
         help="When this is activated, the statement line's label is split into words "
         "and if one of those words match a sale order, it is considered a match. So "
-        "if the statement line's label is 'hello world', sale orders with names 'hello', "
-        "'world', 'some name containing hello', 'some name containing world' will be "
-        "considered matches, in that order",
+        "if the statement line's label is 'hello world', sale orders with names "
+        "'hello', 'world', 'some name containing hello', 'some name containing world' "
+        "will be considered matches, in that order",
     )
     sale_order_matching_token_length = fields.Integer(
         string="Minimum token length",
@@ -27,53 +28,89 @@ class AccountReconcileModel(models.AbstractModel):
         "statement line's label is 'hello you', it will only search for 'hello', not "
         "for 'you'",
     )
+    sale_order_matching_payment_method_ids = fields.Many2many(
+        comodel_name="payment.method",
+        relation="account_reconcile_model_sale_order_payment_method_rel",
+        string="Payment methods",
+        help="Set this field to restrict sale order matching to specific payment "
+        "methods used on the SO's payment transaction",
+    )
 
-    def _get_candidates(self, st_lines_with_partner, excluded_ids):
-        if self.rule_type == "sale_order_matching":
-            return self._get_candidates_sale_order(st_lines_with_partner, excluded_ids)
-        else:
-            return super()._get_candidates(st_lines_with_partner, excluded_ids)
+    @api.model
+    def _search(self, domain, offset=0, limit=None, order=None):
+        if self.env.context.get("account_reconcile_sale_order_inject_rule_type"):
+            domain = [
+                leaf
+                if not is_leaf(leaf) or leaf[0] != "rule_type" or leaf[1] != "in"
+                else tuple(list(leaf[:2]) + [list(leaf[2] + ["sale_order_matching"])])
+                for leaf in domain
+            ]
+        return super()._search(domain, offset=offset, limit=limit, order=order)
 
-    def _get_rule_result(
-        self, st_line, candidates, aml_ids_to_exclude, reconciled_amls_ids, partner_map
+    def _apply_rules(self, st_line, partner):
+        for this in self.sorted():
+            result = super(AccountReconcileModel, this)._apply_rules(st_line, partner)
+            if result:
+                return result
+            if this.rule_type == "sale_order_matching":
+                if not this._is_applicable_for(st_line, partner):
+                    continue
+                sale_orders = self.env["sale.order"]
+                while found_order := this._get_candidates_sale_order_best_match(
+                    st_line, partner, sale_orders.ids or None
+                ):
+                    sale_orders += found_order
+                if sale_orders:
+                    return {
+                        "status": "sale_order_matching",
+                        "model": this,
+                        "amls": sale_orders,
+                        "auto_reconcile": this.auto_reconcile,
+                    }
+        return {}
+
+    def _get_sale_orders_for_bank_statement_line_domain(
+        self,
+        bank_statement_line,
+        partner=None,
+        excluded_ids=None,
+        amount=None,
+        extra_domain=None,
     ):
-        if self.rule_type == "sale_order_matching":
-            return self._get_rule_result_sale_order(
-                st_line,
-                candidates,
-                aml_ids_to_exclude,
-                reconciled_amls_ids,
-                partner_map,
+        return (
+            [
+                ("state", "not in", ("done", "cancel")),
+                ("partner_id", "=?", partner.id),
+                ("amount_total", "=?", amount),
+                ("invoice_status", "not in", ("upselling", "invoiced")),
+            ]
+            + ([("id", "not in", excluded_ids)] if excluded_ids else [])
+            + (
+                self.sale_order_matching_payment_method_ids
+                and [
+                    (
+                        "transaction_ids.payment_method_id",
+                        "in",
+                        self.sale_order_matching_payment_method_ids.ids,
+                    )
+                ]
+                or []
             )
-        else:
-            return super()._get_rule_result(
-                st_line,
-                candidates,
-                aml_ids_to_exclude,
-                reconciled_amls_ids,
-                partner_map,
-            )
-
-    def _get_candidates_sale_order(self, st_lines_with_partner, excluded_ids):
-        """Return candidates for matching sale orders"""
-        return {
-            line.id: self._get_candidates_sale_order_best_match(
-                line, partner, excluded_ids
-            )
-            for line, partner in st_lines_with_partner
-        }
+            + (extra_domain or [])
+        )
 
     def _get_candidates_sale_order_best_match(
         self, bank_statement_line, partner, excluded_ids
     ):
-        """Return one sale order that is considered the best match for some line and partner"""
+        """
+        Return one sale order that is considered the best match for some line and
+        partner
+        """
 
         def domain(extra_domain):
-            widget = self.env["account.reconciliation.widget"]
-            return widget._get_sale_orders_for_bank_statement_line_domain(
-                bank_statement_line.id,
-                partner.id,
-                amount=bank_statement_line.amount,
+            return self._get_sale_orders_for_bank_statement_line_domain(
+                bank_statement_line,
+                partner,
                 excluded_ids=excluded_ids,
                 extra_domain=extra_domain,
             )
@@ -83,11 +120,11 @@ class AccountReconcileModel(models.AbstractModel):
 
         def first(field, operator, tokens):
             return sum(
-                (search([(field, operator, token)]) for token in tokens),
+                (search(domain([(field, operator, token)])) for token in tokens),
                 self.env["sale.order"],
             )[:1]
 
-        ref = bank_statement_line.payment_ref
+        ref = bank_statement_line.payment_ref or ""
         tokens = list(
             filter(
                 lambda x: len(x) >= self.sale_order_matching_token_length, ref.split()
@@ -102,23 +139,4 @@ class AccountReconcileModel(models.AbstractModel):
                 if self.sale_order_matching_token_match
                 else self.env["sale.order"]
             )
-        )
-
-    def _get_rule_result_sale_order(
-        self, st_line, candidates, aml_ids_to_exclude, reconciled_amls_ids, partner_map
-    ):
-        return (
-            {
-                "model": self,
-                "status": "sale_order_matching",
-                "aml_ids": candidates,
-                "write_off_vals": [
-                    self.env[
-                        "account.reconciliation.widget"
-                    ]._reconciliation_proposition_from_sale_order(order)
-                    for order in candidates
-                ],
-            },
-            set(),
-            set(),
         )

@@ -4,7 +4,7 @@
 {
     "name": "Reconcile sale orders",
     "summary": "Invoice and reconcile sale orders",
-    "version": "15.0.1.0.0",
+    "version": "18.0.1.0.0",
     "development_status": "Alpha",
     "category": "Accounting",
     "website": "https://github.com/OCA/account-reconcile",
@@ -13,17 +13,19 @@
     "license": "AGPL-3",
     "depends": [
         "sale",
-        "account_reconciliation_widget",
+        "account_reconcile_oca",
     ],
     "data": [
+        "views/account_bank_statement_line.xml",
         "views/account_reconcile_model.xml",
+        "views/sale_order.xml",
     ],
     "demo": [
         "demo/account_reconcile_model.xml",
     ],
     "assets": {
         "web.assets_backend": [
-            "account_reconcile_sale_order/static/src/js/*.js",
+            "/account_reconcile_sale_order/static/src/js/account_reconcile_sale_order.*",
         ],
     },
 }

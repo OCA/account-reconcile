@@ -1,0 +1,16 @@
+<odoo>
+    <record id="sale_order_tree" model="ir.ui.view">
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.sale_order_tree" />
+        <field name="mode">primary</field>
+        <field name="priority">999</field>
+        <field name="arch" type="xml">
+            <list position="attributes">
+                <attribute name="js_class">reconcile_sale_order</attribute>
+                <attribute name="create">false</attribute>
+                <attribute name="edit">false</attribute>
+                <attribute name="export_xlsx">false</attribute>
+            </list>
+        </field>
+    </record>
+</odoo>

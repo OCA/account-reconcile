@@ -1,0 +1,3 @@
+<templates>
+    <t t-name="reconcile_sale_order.ListView.Buttons" />
+</templates>

@@ -2,20 +2,22 @@
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0)
 
 from odoo.tests import tagged
-from odoo.tools.misc import mute_logger
 
-from odoo.addons.account.tests.common import TestAccountReconciliationCommon
+from odoo.addons.account_reconcile_model_oca.tests.common import (
+    TestAccountReconciliationCommon,
+)
 
 
 @tagged("post_install", "-at_install")
 class TestAccountReconcileSaleOrder(TestAccountReconciliationCommon):
     @classmethod
-    def setUpClass(cls, chart_template_ref=None):
-        super().setUpClass(chart_template_ref=chart_template_ref)
+    def setUpClass(cls):
+        super().setUpClass()
         partner = cls.env.ref("base.res_partner_12")  # Azure Interior
         cls.model = cls.env.ref(
             "account_reconcile_sale_order.reconcile_model_sale_order"
         )
+        cls.model.sudo().company_id = cls.company
         cls.sale_order = cls.env["sale.order"].create(
             {
                 "partner_id": partner.id,
@@ -54,41 +56,42 @@ class TestAccountReconcileSaleOrder(TestAccountReconciliationCommon):
         """Test that we find a sale order via reconciliation rules"""
         self.bank_statement.line_ids.payment_ref = self.sale_order.name
         self.assertEqual(self.sale_order.invoice_status, "no")
-        rule_result = self.model.sudo()._apply_rules(self.bank_statement.line_ids)
-        line_result = rule_result[self.bank_statement.line_ids.id]
-        self.assertTrue(line_result, "No order found")
-        self.assertEqual(line_result["status"], "sale_order_matching")
-        self.bank_statement.line_ids.process_reconciliation(
-            new_aml_dicts=line_result["write_off_vals"],
+        rule_result = self.model._apply_rules(
+            self.bank_statement.line_ids, self.bank_statement.line_ids.partner_id
         )
+        self.assertTrue(rule_result, "No order found")
+        self.assertEqual(rule_result["status"], "sale_order_matching")
+        self.bank_statement.line_ids.clean_reconcile()
+        self.bank_statement.line_ids.reconcile_bank_line()
         self.assertEqual(self.sale_order.invoice_status, "invoiced")
 
     def test_token_matching(self):
         """Test that we find orders by substrings of statement label"""
         self.model.sudo().sale_order_matching_token_match = True
-        self.bank_statement.line_ids.payment_ref = (
-            "payment for %s" % self.sale_order.name
+        self.bank_statement.line_ids.payment_ref = f"payment for {self.sale_order.name}"
+        rule_result = self.model._apply_rules(
+            self.bank_statement.line_ids, self.bank_statement.line_ids.partner_id
         )
-        rule_result = self.model.sudo()._apply_rules(self.bank_statement.line_ids)
-        line_result = rule_result[self.bank_statement.line_ids.id]
-        self.assertTrue(line_result, "No order found")
-        self.assertEqual(line_result["status"], "sale_order_matching")
+        self.assertTrue(rule_result, "No order found")
+        self.assertEqual(rule_result["status"], "sale_order_matching")
 
-    @mute_logger(
-        "odoo.addons.account_reconciliation_widget.models.reconciliation_widget"
-    )
-    # the base module logs a warning if search_str is not a number
     def test_manual_match(self):
-        """Test that we find orders when users fill in a name of a partner"""
-        widget = self.env["account.reconciliation.widget"]
-        propositions = widget.get_move_lines_for_bank_statement_line(
-            self.bank_statement.line_ids.id,
-            search_str=self.sale_order.partner_id.email,
-            mode="rp",
+        """Test that manual selection of sale order works"""
+        statement_line = self.bank_statement.line_ids
+        statement_line.clean_reconcile()
+        self.assertFalse(
+            any(
+                "sale_order_id" in line
+                for line in statement_line.reconcile_data_info["data"]
+            )
         )
-        self.assertTrue(propositions, "Sale order not found")
-        self.assertEqual(
-            propositions[0].get("sale_order_id"),
-            self.sale_order.id,
-            "Sale order not found",
+        statement_line.add_sale_order_id = self.sale_order
+        statement_line._onchange_add_sale_order_id()
+        self.assertTrue(
+            any(
+                "sale_order_id" in line
+                for line in statement_line.reconcile_data_info["data"]
+            )
         )
+        statement_line.reconcile_bank_line()
+        self.assertEqual(self.sale_order.invoice_status, "invoiced")
