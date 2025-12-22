@@ -13,13 +13,13 @@
                     name="account_reconcile_sale_order"
                     attrs="{'invisible': [('rule_type', '!=', 'sale_order_matching')]}"
                 >
-                        <field name="sale_order_matching_token_match" />
-                        <field
+                    <field name="sale_order_matching_token_match" />
+                    <field
                         name="sale_order_matching_token_length"
                         attrs="{'invisible': [('sale_order_matching_token_match', '=', False)]}"
                     />
-                    </group>
-                    </group>
+                </group>
+            </group>
         </field>
     </record>
 </odoo>
