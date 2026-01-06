@@ -28,8 +28,8 @@ msgid ""
 "%(error_msg)s\n"
 "%(log)s\n"
 msgstr ""
-"%(completion_date)s Grāmatojums %(move_name)s ir pabeigts ar %(num_imported)"
-"s/%(number_line)s rindām, ko veica %(user_name)s \n"
+"%(completion_date)s Grāmatojums %(move_name)s ir pabeigts ar "
+"%(num_imported)s/%(number_line)s rindām, ko veica %(user_name)s \n"
 "%(error_msg)s\n"
 "%(log)s\n"
 
@@ -109,8 +109,10 @@ msgstr ""
 
 #. module: account_move_base_import
 #: model:ir.model.fields,help:account_move_base_import.field_account_journal__commission_analytic_account_id
-msgid "Choose an analytic account to be used on the commission line."
-msgstr "Izvēlieties analītisko kontu, ko izmantot komisijas rindā."
+msgid ""
+"Choose an analytic account to be used on the commission line analytic "
+"distribution."
+msgstr ""
 
 #. module: account_move_base_import
 #: model:ir.model.fields,help:account_move_base_import.field_account_journal__import_type
@@ -696,3 +698,6 @@ msgid ""
 msgstr ""
 "Kad šī izvēles rūtiņa ir atzīmēta, automātiskās pabeigšanas process/poga "
 "ignorēs šo rindu."
+
+#~ msgid "Choose an analytic account to be used on the commission line."
+#~ msgstr "Izvēlieties analītisko kontu, ko izmantot komisijas rindā."
