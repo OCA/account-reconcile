@@ -21,7 +21,8 @@ export class ReconcileRenderer extends KanbanRenderer {
             const aggregateId = record.data.aggregate_id && record.data.aggregate_id;
             if (
                 aggregateId &&
-                (!aggregates.length || aggregates[0].id !== aggregateId)
+                (!aggregates.length ||
+                    aggregates[aggregates.length - 1].id !== aggregateId)
             ) {
                 aggregates.push({
                     id: aggregateId,
