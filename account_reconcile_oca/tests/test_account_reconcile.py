@@ -1,5 +1,6 @@
 from odoo import Command
 from odoo.tests import Form, tagged
+from odoo.tools import mute_logger
 
 from odoo.addons.account_reconcile_model_oca.tests.common import (
     TestAccountReconciliationCommon,
@@ -135,6 +136,7 @@ class TestReconciliationWidget(TestAccountReconciliationCommon):
         )
         cls.move_3.action_post()
 
+    @mute_logger("odoo.models.unlink")
     def test_reconcile(self):
         account = self.non_current_assets_account
         reconcile_account = self.env["account.account.reconcile"].search(
