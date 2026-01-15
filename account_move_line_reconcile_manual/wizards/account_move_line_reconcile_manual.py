@@ -158,14 +158,22 @@ class AccountMoveLineReconcileManual(models.TransientModel):
         for line in move_lines:
             count += 1
             if is_foreign_currency:
-                debit = line.amount_currency > 0.0 and line.amount_currency or 0.0
-                credit = line.amount_currency < 0.0 and abs(line.amount_currency) or 0.0
+                debit = (
+                    line.amount_residual_currency > 0.0
+                    and line.amount_residual_currency
+                    or 0.0
+                )
+                credit = (
+                    line.amount_residual_currency < 0.0
+                    and abs(line.amount_residual_currency)
+                    or 0.0
+                )
             else:
-                debit = line.debit
-                credit = line.credit
+                debit = line.amount_residual > 0.0 and line.amount_residual or 0.0
+                credit = line.amount_residual < 0.0 and abs(line.amount_residual) or 0.0
             total_debit += debit
             total_credit += credit
-            if line.full_reconcile_id:
+            if line.reconciled:
                 raise UserError(
                     _("Line '%s' is already fully reconciled.") % line.display_name
                 )
@@ -222,7 +230,6 @@ class AccountMoveLineReconcileManual(models.TransientModel):
 
     def full_reconcile(self):
         self.ensure_one()
-        self.move_line_ids.remove_move_reconcile()
         no_exchange_difference = len(self.move_line_ids.currency_id) > 1 or False
         self.move_line_ids.with_context(
             no_exchange_difference=no_exchange_difference
@@ -246,7 +253,6 @@ class AccountMoveLineReconcileManual(models.TransientModel):
 
     def partial_reconcile(self):
         self.ensure_one()
-        self.move_line_ids.remove_move_reconcile()
         self.move_line_ids.reconcile()
         return
 
@@ -335,7 +341,6 @@ class AccountMoveLineReconcileManual(models.TransientModel):
         assert self.writeoff_date
         assert self.writeoff_account_id
         assert self.state == "writeoff"
-        self.move_line_ids.remove_move_reconcile()
         vals = self._prepare_writeoff_move()
         woff_move = self.env["account.move"].create(vals)
         woff_move.with_context(validate_analytic=True)._post(soft=False)
