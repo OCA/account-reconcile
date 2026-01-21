@@ -7,7 +7,8 @@
     "version": "16.0.1.0.0",
     "category": "Accounting",
     "license": "AGPL-3",
-    "summary": "Add default filters in Reconcile tab when the bank statement line as a partner",
+    "summary": "Add default filters in Reconcile tab when the bank statement line "
+    "has a partner",
     "author": "Akretion,Odoo Community Association (OCA)",
     "maintainers": ["alexis-via"],
     "website": "https://github.com/OCA/account-reconcile",
