@@ -10,8 +10,9 @@ That way, when the bank statement line has a partner and your VAT
 accounts are reconciliable, you will not see the VAT lines by default in
 the *Reconcile* tab, but only:
 
-. the receivable accounts, . the payable accounts, . the journal items
-linked to a payment that have an account with type *Current Asset*.
+- the receivable accounts,
+- the payable accounts,
+- the journal items linked to a payment that have an account with type *Current Asset*.
 
 When there is no partner on the bank statement line, the behavior is
 unchanged: there are no filters by default.
