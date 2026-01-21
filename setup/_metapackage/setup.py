@@ -18,6 +18,7 @@ setuptools.setup(
         'odoo-addon-account_partner_reconcile>=16.0dev,<16.1dev',
         'odoo-addon-account_reconcile_analytic_tag>=16.0dev,<16.1dev',
         'odoo-addon-account_reconcile_oca>=16.0dev,<16.1dev',
+        'odoo-addon-account_reconcile_oca_add_default_filters>=16.0dev,<16.1dev',
         'odoo-addon-account_statement_base>=16.0dev,<16.1dev',
         'odoo-addon-bank_statement_check_number>=16.0dev,<16.1dev',
         'odoo-addon-base_transaction_id>=16.0dev,<16.1dev',
