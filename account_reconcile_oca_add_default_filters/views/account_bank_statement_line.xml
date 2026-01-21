@@ -5,31 +5,27 @@
   License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 -->
 <odoo>
-
-
-<record id="bank_statement_line_form_reconcile_view" model="ir.ui.view">
-    <field name="model">account.bank.statement.line</field>
-    <field
+    <record id="bank_statement_line_form_reconcile_view" model="ir.ui.view">
+        <field name="model">account.bank.statement.line</field>
+        <field
             name="inherit_id"
             ref="account_reconcile_oca.bank_statement_line_form_reconcile_view"
         />
-    <field name="arch" type="xml">
-        <field name="add_account_move_line_id" position="attributes">
-            <!--
+        <field name="arch" type="xml">
+            <field name="add_account_move_line_id" position="attributes">
+                <!--
                 Uses base_view_inheritance_extension.
                 Using "partner_id" as value is just a way to say: if a partner is
                 present, add the filter by default ; otherwise, don't add the filter.
             -->
-            <attribute name="context" operation="update">
+                <attribute name="context" operation="update">
             {
                 'search_default_trade_payable': partner_id,
                 'search_default_trade_receivable': partner_id,
                 'search_default_payment_asset_current': partner_id,
             }
             </attribute>
+            </field>
         </field>
-    </field>
-</record>
-
-
+    </record>
 </odoo>
