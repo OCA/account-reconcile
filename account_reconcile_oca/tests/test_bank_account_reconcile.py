@@ -1473,3 +1473,63 @@ class TestReconciliationWidget(TestAccountReconciliationCommon):
             self.assertEqual(3, len(f.reconcile_data_info["data"]))
             self.assertTrue(f.can_reconcile)
             self.assertEqual(f.reconcile_data_info["data"][-1]["amount"], 3.63)
+
+    def test_manual_partner_on_liquidity_propagates_to_other_line(self):
+        # GIVEN
+        partner = self.env["res.partner"].create({"name": "Widget Partner Propagate"})
+        bank_stmt = self.acc_bank_stmt_model.create(
+            {
+                "journal_id": self.bank_journal_euro.id,
+                "date": time.strftime("%Y-07-15"),
+                "name": "test",
+            }
+        )
+        bank_stmt_line = self.acc_bank_stmt_line_model.create(
+            {
+                "name": "testLine",
+                "journal_id": self.bank_journal_euro.id,
+                "statement_id": bank_stmt.id,
+                "amount": 100,
+                "date": time.strftime("%Y-07-15"),
+            }
+        )
+        with Form(
+            bank_stmt_line,
+            view="account_reconcile_oca.bank_statement_line_form_reconcile_view",
+        ) as f:
+            widget_lines = f.reconcile_data_info["data"]
+            liquidity_line = None
+            for line_data in widget_lines:
+                if line_data.get("kind") == "liquidity" and line_data.get("id"):
+                    liquidity_line = line_data
+                    break
+            self.assertTrue(liquidity_line)
+            non_liquidity_line = None
+            for line_data in widget_lines:
+                if line_data.get("kind") != "liquidity":
+                    non_liquidity_line = line_data
+                    break
+            self.assertTrue(non_liquidity_line)
+            partner_display_format = [partner.id, partner.display_name]
+            initial_partner = non_liquidity_line.get("partner_id")
+            self.assertNotEqual(
+                initial_partner,
+                partner_display_format,
+            )
+            # WHEN
+            f.manual_reference = f"account.move.line;{liquidity_line['id']}"
+            f.manual_partner_id = partner
+            # THEN
+            updated_widget_lines = f.reconcile_data_info["data"]
+            updated_non_liquidity_line = None
+            for line_data in updated_widget_lines:
+                if line_data.get("kind") != "liquidity":
+                    updated_non_liquidity_line = line_data
+                    break
+            self.assertTrue(
+                updated_non_liquidity_line,
+            )
+            self.assertEqual(
+                updated_non_liquidity_line.get("partner_id"),
+                partner_display_format,
+            )

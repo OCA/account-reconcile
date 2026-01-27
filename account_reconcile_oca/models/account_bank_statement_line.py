@@ -508,6 +508,7 @@ class AccountBankStatementLine(models.Model):
                 in_currency_date,
             )
         self.previous_manual_amount_in_currency = self.manual_amount_in_currency
+        edited_is_liquidity = False
         for line in data:
             if line["reference"] == self.manual_reference:
                 if self._check_line_changed(line):
@@ -516,7 +517,8 @@ class AccountBankStatementLine(models.Model):
                         line["kind"] if line["kind"] != "suspense" else "other"
                     )
                     line.update(line_vals)
-                    if line["kind"] == "liquidity":
+                    edited_is_liquidity = line.get("kind") == "liquidity"
+                    if edited_is_liquidity:
                         self._update_move_partner()
             if self.manual_line_id and self.manual_line_id.id == line.get(
                 "original_exchange_line_id"
@@ -543,6 +545,30 @@ class AccountBankStatementLine(models.Model):
             self.manual_reference,
         )
         self.can_reconcile = self.reconcile_data_info.get("can_reconcile", False)
+
+        # Ensure the UI shows consistent partner across all displayed lines:
+        # only when editing liquidity line
+        if not edited_is_liquidity:
+            return
+        partner_value = (
+            [self.manual_partner_id.id, self.manual_partner_id.display_name]
+            if self.manual_partner_id
+            else False
+        )
+        info = dict(self.reconcile_data_info or {})
+        reconcile_lines = list(info.get("data") or [])
+        if not reconcile_lines:
+            self.reconcile_data_info = info
+            return
+        updated_lines = []
+        for line in reconcile_lines:
+            new_line = dict(line)
+            # Update only the "other" displayed line(s)
+            if new_line.get("kind") != "liquidity":
+                new_line["partner_id"] = partner_value
+            updated_lines.append(new_line)
+        info["data"] = updated_lines
+        self.reconcile_data_info = info
 
     def _update_move_partner(self):
         if self.partner_id == self.manual_partner_id:
