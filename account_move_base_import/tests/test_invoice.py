@@ -15,6 +15,12 @@ class TestInvoice(TestAccountReconciliationCommon):
         cls.account_move_line_obj = cls.env["account.move.line"]
         cls.journal = cls.company_data["default_journal_bank"]
         cls.account_id = cls.journal.default_account_id.id
+        cls.partner_autocomplete = cls.env["res.partner"].create(
+            {
+                "name": "TestPartner",
+                "is_company": True,
+            }
+        )
 
     def test_all_completion_rules(self):
         # I fill in the field Bank Statement Label in a Partner
@@ -127,7 +133,7 @@ class TestInvoice(TestAccountReconciliationCommon):
             .with_context(check_move_validity=False)
             .create(
                 {
-                    "name": "Test autocompletion based on Partner Name Deco Addict",
+                    "name": "Test autocompletion based on Partner Name TestPartner",
                     "account_id": self.company_data["default_account_receivable"].id,
                     "move_id": move_test1.id,
                     "date_maturity": fields.Date.from_string("2013-12-17"),
@@ -194,7 +200,7 @@ class TestInvoice(TestAccountReconciliationCommon):
         # Line 4. I check that the partner name has been recognised.
         self.assertEqual(
             move_line_partner_name.partner_id.name,
-            "Deco Addict",
+            "TestPartner",
             msg="Check completion by partner name",
         )
         # Line 5. I check that the partner special label has been recognised.
