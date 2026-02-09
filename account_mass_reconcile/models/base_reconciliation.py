@@ -90,9 +90,11 @@ class MassReconcileBase(models.AbstractModel):
         where = ""
         params = []
         if self._filter:
-            dummy, where, params = ml_obj._where_calc(safe_eval(self._filter)).get_sql()
-            if where:
-                where = f" AND {where}"
+            query = ml_obj._where_calc(safe_eval(self._filter))
+            sql_obj = query.where_clause
+            if sql_obj:
+                where = f" AND {sql_obj.code}"
+                params = sql_obj.params
         return where, params
 
     def _below_writeoff_limit(self, lines, writeoff_limit):
