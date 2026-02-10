@@ -985,17 +985,15 @@ class AccountBankStatementLine(models.Model):
             vals["amount_currency"] = line["currency_amount"]
         return vals
 
-    @api.model_create_multi
-    def create(self, mvals):
-        result = super().create(mvals)
+    def _reconcile_statement_lines(self):
         models = self.env["account.reconcile.model"].search(
             [
                 ("rule_type", "in", ["invoice_matching", "writeoff_suggestion"]),
-                ("company_id", "in", result.company_id.ids),
+                ("company_id", "in", self.company_id.ids),
                 ("auto_reconcile", "=", True),
             ]
         )
-        for record in result:
+        for record in self:
             res = models._apply_rules(record, record._retrieve_partner())
             if not res:
                 continue
@@ -1034,6 +1032,11 @@ class AccountBankStatementLine(models.Model):
             getattr(
                 record, "_reconcile_bank_line_%s" % record.journal_id.reconcile_mode
             )(self._prepare_reconcile_line_data(data["data"]))
+
+    @api.model_create_multi
+    def create(self, mvals):
+        result = super().create(mvals)
+        result._reconcile_statement_lines()
         return result
 
     def _synchronize_to_moves(self, changed_fields):
