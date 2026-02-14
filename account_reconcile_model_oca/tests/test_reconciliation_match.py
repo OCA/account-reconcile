@@ -1671,7 +1671,7 @@ class TestReconciliationMatchingRules(AccountTestInvoicingCommon):
                 },
             )
 
-    def test_regex_matching(self):
+    def test_regex_matching_simple(self):
         lines = self.rule_3._get_write_off_move_lines_dict(
             90.0,
             False,
@@ -1693,6 +1693,36 @@ class TestReconciliationMatchingRules(AccountTestInvoicingCommon):
         self.assertTrue(tax_line)
         self.assertEqual(due_line["debit"], 100.0)
         self.assertEqual(tax_line["credit"], 10.0)
+
+    def test_regex_matching_thousand_sep(self):
+        lines = self.rule_3._get_write_off_move_lines_dict(
+            90.0,
+            False,
+            label="R:9772938 10/07 AX 9415116318 T:5 BRT: 1,234.56 C/ croip",
+        )
+        for line in lines:
+            if (
+                line["account_id"]
+                == self.company_data["default_account_deferred_expense"].id
+            ):
+                due_line = line
+        self.assertTrue(due_line)
+        self.assertEqual(due_line["debit"], 1234.56)
+
+    def test_regex_matching_comma_decimal(self):
+        lines = self.rule_3._get_write_off_move_lines_dict(
+            90.0,
+            False,
+            label="R:9772938 10/07 AX 9415116318 T:5 BRT: 1234,56 C/ croip",
+        )
+        for line in lines:
+            if (
+                line["account_id"]
+                == self.company_data["default_account_deferred_expense"].id
+            ):
+                due_line = line
+        self.assertTrue(due_line)
+        self.assertEqual(due_line["debit"], 1234.56)
 
     def test_regex_not_matched(self):
         lines = self.rule_3._get_write_off_move_lines_dict(
