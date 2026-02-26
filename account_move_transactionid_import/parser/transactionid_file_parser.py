@@ -2,8 +2,6 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html)
 import datetime
 
-from odoo.tools import ustr
-
 from odoo.addons.account_move_base_import.parser.file_parser import (
     FileParser,
     float_or_zero,
