@@ -29,7 +29,7 @@ class TestCompletionTransactionId(TestAccountReconciliationCommon):
                 "account_id": cls.account_euro.id,
                 "move_id": cls.move.id,
                 "ref": "some reference",
-                "date_maturity": "{}-01-06".format(datetime.now().year),
+                "date_maturity": f"{datetime.now().year}-01-06",
                 "credit": 0.0,
             }
         )
@@ -134,7 +134,8 @@ class TestCompletionTransactionId(TestAccountReconciliationCommon):
         invoice = (
             self.env["account.move"]
             # ir.attachment.type changed from out_invoice to url
-            .with_context(default_type="url").create(
+            .with_context(default_type="url")
+            .create(
                 {
                     "currency_id": self.env.ref("base.EUR").id,
                     "move_type": "out_invoice",
