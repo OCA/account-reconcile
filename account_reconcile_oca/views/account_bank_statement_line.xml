@@ -409,7 +409,9 @@
     >
         <field name="name">Reconcile bank statement lines</field>
         <field name="res_model">account.bank.statement.line</field>
-        <field name="context">{'search_default_move_id': active_id}</field>
+        <field
+            name="context"
+        >{'search_default_move_id': active_id, 'view_ref': 'account_reconcile_oca.bank_statement_line_form_reconcile_view'}</field>
         <field name="view_mode">kanban</field>
         <field
             name="view_ids"
