@@ -70,7 +70,7 @@ class AccountAccountReconcile(models.Model):
                         ELSE 0 END
                     ) > 0
                 ) as active
-        """
+        """  # noqa: E231,E241,E202
 
     def _from(self):
         return """
