@@ -2,7 +2,7 @@ from odoo import Command
 from odoo.tests import Form, tagged
 from odoo.tools import mute_logger
 
-from odoo.addons.account_reconcile_model_oca.tests.common import (
+from .common import (
     TestAccountReconciliationCommon,
 )
 

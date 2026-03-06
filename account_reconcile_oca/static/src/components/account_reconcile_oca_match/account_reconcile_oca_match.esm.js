@@ -78,7 +78,7 @@ AccountReconcileMatchWidget.components = {
 
 export const AccountReconcileMatchWidgetField = {
     component: AccountReconcileMatchWidget,
-    supportedTypes: [],
+    supportedTypes: ["many2one"],
     extractProps({attrs, context, decorations, options}, dynamicInfo) {
         const hasCreatePermission = attrs.can_create
             ? evaluateBooleanExpr(attrs.can_create)

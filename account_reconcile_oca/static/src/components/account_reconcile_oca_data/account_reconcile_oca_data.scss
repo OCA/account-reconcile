@@ -1,0 +1,20 @@
+.o_field_account_reconcile_oca_data {
+    .o_field_account_reconcile_oca_balance_float {
+        .o_field_account_reconcile_oca_balance_original_float {
+            text-decoration: line-through;
+        }
+    }
+    .o_reconcile_widget_table {
+        .o_reconcile_widget_line {
+            &.liquidity {
+                font-weight: bold;
+            }
+            &.selected {
+                background-color: rgba($o-brand-primary, 0.2);
+            }
+            &.suspense {
+                color: $o-gray-500;
+            }
+        }
+    }
+}

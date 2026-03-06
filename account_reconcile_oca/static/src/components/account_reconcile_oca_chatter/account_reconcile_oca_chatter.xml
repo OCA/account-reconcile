@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates>
+    <t t-name="account_reconcile_oca.AccountReconcileChatterWidget">
+        <Chatter
+            threadModel="this.props.record.fields[this.props.name].relation"
+            threadId="this.props.record.data[this.props.name].id"
+        />
+    </t>
+</templates>
