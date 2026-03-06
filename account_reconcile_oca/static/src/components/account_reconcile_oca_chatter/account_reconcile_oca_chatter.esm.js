@@ -14,7 +14,7 @@ AccountReconcileChatterWidget.template =
 AccountReconcileChatterWidget.components = {...Component.components, Chatter};
 export const AccountReconcileChatterWidgetField = {
     component: AccountReconcileChatterWidget,
-    supportedTypes: [],
+    supportedTypes: ["many2one"],
 };
 registry
     .category("fields")

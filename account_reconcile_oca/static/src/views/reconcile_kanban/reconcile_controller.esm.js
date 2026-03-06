@@ -1,4 +1,4 @@
-const {onMounted, onWillStart, useState, useSubEnv} = owl;
+const {onWillStart, useState, useSubEnv} = owl;
 import {useBus, useService} from "@web/core/utils/hooks";
 import {KanbanController} from "@web/views/kanban/kanban_controller";
 import {View} from "@web/views/view";
@@ -30,14 +30,12 @@ export class ReconcileController extends KanbanController {
         this.orm = useService("orm");
         this.action = useService("action");
         this.activeActions = this.props.archInfo.activeActions;
-        useBus(this.model.bus, "update", () => {
-            this.selectRecord();
+        useBus(this.model.bus, "update", async () => {
+            await this.selectRecord();
+            this.initialLoad = false;
         });
         onWillStart(() => {
             this.updateJournalInfo();
-        });
-        onMounted(() => {
-            this.selectRecord();
         });
     }
     get journalId() {
@@ -98,10 +96,10 @@ export class ReconcileController extends KanbanController {
                 form_view_ref: this.props.context.view_ref,
             },
             display: {controlPanel: false},
-            mode: this.props.mode || "edit",
             resModel: this.props.resModel,
         };
     }
+    // eslint-disable-next-line complexity
     async selectRecord(record) {
         var resId = false;
         if (record === undefined && this.props.resId) {
@@ -112,6 +110,13 @@ export class ReconcileController extends KanbanController {
             this.state.selectedRecordId
         ) {
             resId = this.state.selectedRecordId;
+        } else if (
+            this.initialLoad &&
+            record === undefined &&
+            router.current &&
+            router.current.id
+        ) {
+            resId = router.current.id;
         } else if (record === undefined) {
             var records = this.model.root.records.filter(
                 (modelRecord) =>
@@ -128,7 +133,6 @@ export class ReconcileController extends KanbanController {
         } else {
             resId = record.resId;
         }
-        this.initialLoad = false;
         if (this.state.selectedRecordId && this.state.selectedRecordId !== resId) {
             if (this.form_controller && this.form_controller?.model?.root?.isDirty) {
                 await this.form_controller.model.root.save({
@@ -151,6 +155,9 @@ export class ReconcileController extends KanbanController {
     updateURL(resId) {
         router.pushState({id: resId});
     }
+    get canCreate() {
+        return false;
+    }
 }
 
 ReconcileController.components = {
@@ -159,4 +166,6 @@ ReconcileController.components = {
 };
 
 ReconcileController.template = "account_reconcile_oca.ReconcileController";
-ReconcileController.defaultProps = {};
+ReconcileController.defaultProps = {
+    ...KanbanController.defaultProps,
+};

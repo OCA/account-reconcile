@@ -9,7 +9,7 @@ class AccountReconcileAbstract(models.AbstractModel):
     _name = "account.reconcile.abstract"
     _description = "Account Reconcile Abstract"
 
-    reconcile_data_info = fields.Serialized(
+    reconcile_data_info = fields.Json(
         compute="_compute_reconcile_data_info",
         prefetch=False,
     )

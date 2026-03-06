@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates>
+    <t t-name="account_reconcile_oca.ReconcileDataWidget">
+        <table
+            class="table table-sm position-relative mb-0 table-striped o_reconcile_widget_table"
+            style="table-layout: auto"
+        >
+            <thead>
+                <th>Account</th>
+                <th>Partner</th>
+                <th>Date</th>
+                <th>Label</th>
+                <th class="text-end" t-if="foreignCurrency">
+                    Amount in currency
+                </th>
+                <th class="text-end">Debit</th>
+                <th class="text-end">Credit</th>
+                <th t-if="! props.record.data.is_reconciled" />
+            </thead>
+            <t t-set="rec" t-value="getReconcileLines()" />
+            <tbody>
+                <t
+                    t-foreach="rec.lines"
+                    t-as="reconcile_line"
+                    t-key="reconcile_line_index"
+                >
+                    <tr
+                        t-on-click="(ev) => this.selectReconcileLine(ev, reconcile_line)"
+                        t-att-class="'o_reconcile_widget_line ' + reconcile_line.kind + (props.record.data.manual_reference == reconcile_line.reference ? ' selected ' :  ' ')"
+                    >
+                        <td class="o_account_reconcile_oca_data_line_account">
+                            <div t-esc="reconcile_line.account_id[1]" />
+                            <div t-if="reconcile_line.move_id">
+                                <a
+                                    t-att-href="'/web#id=' + reconcile_line.move_id + '&amp;view_type=form&amp;model=account.move'"
+                                    class="o_form_uri"
+                                    t-on-click="(ev) => this.openMove(ev, reconcile_line.move_id)"
+                                >
+                                    <small t-esc="reconcile_line.move" />
+                                </a>
+                            </div>
+                        </td>
+                        <td class="o_account_reconcile_oca_data_line_partner">
+                            <span
+                                t-esc="reconcile_line.partner_id[1]"
+                                t-if="reconcile_line.partner_id and reconcile_line.partner_id[1]"
+                            />
+                        </td>
+                        <td t-esc="reconcile_line.date_format" />
+                        <td class="o_account_reconcile_oca_data_line_name">
+                            <span
+                                t-esc="reconcile_line.name"
+                                t-if="reconcile_line.name"
+                            />
+                        </td>
+                        <td
+                            class="text-end o_field_account_reconcile_oca_balance_float o_account_reconcile_oca_data_line_balance"
+                            t-if="foreignCurrency"
+                        >
+                            <span t-esc="reconcile_line.amount_currency_format" />
+                        </td>
+                        <td
+                            class="text-end o_field_account_reconcile_oca_balance_float o_account_reconcile_oca_data_line_debit"
+                        >
+                            <div
+                                t-esc="reconcile_line.debit_format"
+                                t-if="reconcile_line.amount &gt; 0"
+                            />
+                            <div
+                                class="o_field_account_reconcile_oca_balance_original_float"
+                                t-esc="reconcile_line.original_amount_format"
+                                t-if="reconcile_line.amount &gt; 0 and reconcile_line.original_amount"
+                            />
+                        </td>
+                        <td
+                            class="text-end o_field_account_reconcile_oca_balance_float o_account_reconcile_oca_data_line_credit"
+                        >
+                            <div
+                                t-esc="reconcile_line.credit_format"
+                                t-if="reconcile_line.amount &lt; 0"
+                            />
+                            <div
+                                class="o_field_account_reconcile_oca_balance_original_float"
+                                t-esc="reconcile_line.original_amount_format"
+                                t-if="reconcile_line.amount &lt; 0  and reconcile_line.original_amount"
+                            />
+                        </td>
+                        <td>
+                            <button
+                                class="btn fa fa-trash-o"
+                                role="button"
+                                t-on-click="(ev) => this.onTrashLine(ev, reconcile_line)"
+                                t-if="reconcile_line.kind == 'other' &amp;&amp; ! props.record.data.is_reconciled"
+                            />
+                        </td>
+                    </tr>
+                </t>
+                <tr class="text-muted" t-if="rec.hasOpenBalance">
+                    <td colspan="5">Open Balance</td>
+                    <td class="text-end" t-esc="rec.openDebitFmt" />
+                    <td class="text-end" t-esc="rec.openCreditFmt" />
+                    <td />
+                </tr>
+            </tbody>
+        </table>
+    </t>
+</templates>

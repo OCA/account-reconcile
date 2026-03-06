@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates>
+    <t
+        t-name="account_reconcile_oca.ReconcileRenderer"
+        t-inherit="web.KanbanRenderer"
+        t-inherit-mode="primary"
+    >
+        <xpath expr="//t[@t-as='groupOrRecord']" position="before">
+            <div class="m-2 d-flex w-100" t-if="env.parentController.journalId">
+                <span
+                    class="flex-fill text-900 text-start ps-0 fw-bold fs-4 align-self-center"
+                >Global Balance</span>
+                <span
+                    class="pe-0 fw-bold fs-4 align-self-center"
+                    t-esc="env.parentController.journalBalanceStr"
+                />
+            </div>
+            <t t-set="aggregates" t-value="getAggregates()" />
+        </xpath>
+        <xpath expr="//t[@t-else='']/KanbanRecord" position="before">
+            <t
+                t-if="aggregates.length and groupOrRecord.record.data.aggregate_id and aggregates[0].id == groupOrRecord.record.data.aggregate_id"
+            >
+                <t t-set="aggregate" t-value="aggregates.shift()" />
+                <div class="m-2 d-flex w-100">
+                    <span
+                        class="flex-fill text-900 text-start ps-0 fw-bold fs-4 align-self-center"
+                        t-esc="aggregate.name"
+                    />
+                    <span
+                        t-if="groupOrRecord.record.data.reconcile_aggregate == 'statement'"
+                        t-on-click="() => this.onClickStatement(aggregate.id)"
+                        class="pe-0 fw-bold fs-4 align-self-center btn btn-link"
+                        t-esc="aggregate.balanceStr"
+                    />
+                    <!--
+                    <span
+                        t-if="groupOrRecord.record.data.reconcile_aggregate != 'statement'"
+                        class="pe-0 fw-bold fs-4 align-self-center text-link"
+                        t-esc="aggregate.balanceStr"
+                    />-->
+                </div>
+            </t>
+        </xpath>
+        <xpath expr="div[hasclass('o_kanban_renderer')]" position="attributes">
+            <attribute
+                name="class"
+                add="o_account_reconcile_oca_selector"
+                separator=" "
+            />
+        </xpath>
+        <!-- Group by selector disabled on the view, so we need to find the one without group,
+        then we pass to the component the selected record -->
+        <xpath expr="//KanbanRecord[not(@group)]" position="attributes">
+            <attribute name="selectedRecordId">props.selectedRecordId</attribute>
+        </xpath>
+    </t>
+    <t
+        t-name="account_reconcile_oca.ReconcileController"
+        t-inherit="web.KanbanView"
+        t-inherit-mode="primary"
+    >
+        <!-- we pass to the component the selected record -->
+        <xpath expr="//Layout/t[@Compiler]" position="attributes">
+            <attribute name="selectedRecordId">state.selectedRecordId</attribute>
+        </xpath>
+        <xpath expr="//Layout" position="attributes">
+            <attribute
+                name="className"
+            >model.useSampleModel ? 'o_view_sample_data o_account_reconcile_oca' : 'o_account_reconcile_oca'</attribute>
+        </xpath>
+        <xpath expr="//Layout" position="inside">
+            <div class="o_account_reconcile_oca_info">
+                <t t-if="state.selectedRecordId">
+                    <View t-props="viewReconcileInfo" t-key="state.selectedRecordId" />
+                </t>
+            </div>
+        </xpath>
+    </t>
+    <t t-name="account_reconcile.ReconcileView.Buttons">
+        <button
+            t-on-click="onClickNewButton"
+            class="btn btn-primary"
+            t-if="props.archInfo.activeActions.create"
+        >Create</button>
+    </t>
+</templates>

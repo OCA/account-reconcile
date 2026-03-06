@@ -1,11 +1,10 @@
-/* global CustomEvent */
 import {formatDate, parseDate} from "@web/core/l10n/dates";
-import {getCurrency} from "@web/core/currency";
 import {floatIsZero} from "@web/core/utils/numbers";
 import {formatMonetary} from "@web/views/fields/formatters";
+import {getCurrency} from "@web/core/currency";
 import {registry} from "@web/core/registry";
-import {useService} from "@web/core/utils/hooks";
 import {standardFieldProps} from "@web/views/fields/standard_field_props";
+import {useService} from "@web/core/utils/hooks";
 
 const {Component} = owl;
 
@@ -109,7 +108,7 @@ export class AccountReconcileDataWidget extends Component {
 
 export const AccountReconcileDataWidgetField = {
     component: AccountReconcileDataWidget,
-    supportedTypes: [],
+    supportedTypes: ["json"],
 };
 registry
     .category("fields")

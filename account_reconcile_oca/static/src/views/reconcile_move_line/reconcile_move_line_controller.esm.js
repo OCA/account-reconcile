@@ -3,7 +3,10 @@ import {ListController} from "@web/views/list/list_controller";
 export class ReconcileMoveLineController extends ListController {
     async openRecord(record) {
         var data = {};
-        data[this.props.parentField] = [record.resId, record.display_name];
+        data[this.props.parentField] = {
+            id: record.resId,
+            display_name: record.display_name,
+        };
         this.props.parentRecord.update(data);
     }
     async clickAddAll() {

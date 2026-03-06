@@ -25,6 +25,6 @@ class AccountBankStatement(models.Model):
         )
         action["domain"] = [("statement_id", "=", self.id)]
         action["context"] = safe_eval(
-            action["context"], locals_dict={"active_id": self._context.get("active_id")}
+            action["context"], {"active_id": self._context.get("active_id")}
         )
         return action

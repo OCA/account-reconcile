@@ -232,14 +232,14 @@
                         name="manual_model_id"
                         widget="selection_badge_uncheck"
                         nolabel="1"
-                        invisible="is_reconciled == True"
+                        invisible="is_reconciled"
                     />
                 </div>
                 <notebook>
                     <page
                         name="reconcile_line"
                         string="Reconcile"
-                        invisible="is_reconciled == True"
+                        invisible="is_reconciled"
                     >
                         <field
                             name="add_account_move_line_id"
@@ -255,44 +255,47 @@
                                 <field
                                     name="manual_exchange_counterpart"
                                     invisible="1"
+                                    readonly="is_reconciled"
                                 />
+                                <field name="manual_reference" invisible="1" />
                                 <field name="manual_in_currency_id" invisible="1" />
                                 <field name="manual_in_currency" invisible="1" />
                                 <field name="manual_kind" invisible="1" />
                                 <field
                                     name="manual_account_id"
                                     string="Account"
-                                    modifiers="{'readonly': ['|', '|', '|', ('manual_exchange_counterpart', '=', True),('manual_reference', '=', False), ('is_reconciled', '=', True), ('manual_line_id', '!=', False)]}"
+                                    readonly="is_reconciled or manual_exchange_counterpart or not manual_reference or manual_line_id"
                                 />
                                 <field
                                     name="manual_partner_id"
                                     string="Partner"
-                                    modifiers="{'readonly': ['|', '|', '|', ('manual_exchange_counterpart', '=', True),('manual_reference', '=', False), ('is_reconciled', '=', True), '&amp;', ('manual_line_id', '!=', False), ('manual_kind', '!=', 'liquidity')]}"
+                                    readonly="is_reconciled or manual_exchange_counterpart or not manual_reference"
                                 />
                                 <field
                                     name="analytic_distribution"
                                     widget="analytic_distribution"
                                     groups="analytic.group_analytic_accounting"
                                     options="{'account_field': 'manual_account_id', 'business_domain': 'general'}"
-                                    invisible="manual_kind == 'liquidity' or manual_reference == False"
-                                    readonly="is_reconciled == True"
+                                    invisible="manual_kind == 'liquidity' or not manual_reference"
+                                    readonly="is_reconciled"
                                 />
                             </group>
                             <group>
                                 <field
                                     name="manual_name"
                                     string="Name"
-                                    modifiers="{'readonly': ['|', '|', '|', ('manual_exchange_counterpart', '=', True), ('manual_reference', '=', False), ('is_reconciled', '=', True), '&amp;', ('manual_line_id', '!=', False), ('manual_kind', '!=', 'liquidity')]}"
+                                    readonly="is_reconciled or manual_exchange_counterpart or not manual_reference or manual_line_id"
                                 />
                                 <field
                                     name="manual_amount_in_currency"
                                     string="Amount in Currency"
-                                    modifiers="{'invisible': [('manual_in_currency', '=', False)], 'readonly': ['|', '|', ('manual_exchange_counterpart', '=', True), ('manual_reference', '=', False), ('is_reconciled', '=', True)]}"
+                                    invisible="not manual_in_currency"
+                                    readonly="manual_exchange_counterpart or not manual_reference or is_reconciled"
                                 />
                                 <field
                                     name="manual_amount"
                                     string="Amount"
-                                    modifiers="{'readonly': ['|', '|', ('manual_exchange_counterpart', '=', True), ('manual_reference', '=', False), ('is_reconciled', '=', True)]}"
+                                    readonly="is_reconciled or manual_exchange_counterpart or not manual_reference"
                                 />
                                 <field name="manual_currency_id" invisible="1" />
                                 <field name="manual_original_amount" invisible="1" />
@@ -300,10 +303,10 @@
                                 <label
                                     for="manual_move_id"
                                     string=""
-                                    insible="manual_move_type not in ['in_invoice', 'in_refund', 'out_invoice', 'out_refund'] or manual_original_amount == 0"
+                                    insible="manual_move_type not in ['in_invoice', 'in_refund', 'out_invoice', 'out_refund'] or manual_original_amount == 0 or is_reconciled"
                                 />
                                 <div
-                                    insible="manual_move_type not in ['in_invoice', 'in_refund', 'out_invoice', 'out_refund'] or manual_original_amount == 0"
+                                    insible="manual_move_type not in ['in_invoice', 'in_refund', 'out_invoice', 'out_refund'] or manual_original_amount == 0 or is_reconciled"
                                 >
                                     Invoice <field
                                     class="oe_inline"
@@ -329,8 +332,13 @@
                     </page>
                     <page name="narration" string="Other Info">
                         <group id="other-main">
-                            <field name="payment_ref" />
-                            <field name="narration" colspan="2" nolabel="1" />
+                            <field name="payment_ref" readonly="is_reconciled" />
+                            <field
+                                name="narration"
+                                colspan="2"
+                                nolabel="1"
+                                readonly="is_reconciled"
+                            />
                         </group>
                     </page>
                     <page name="chatter" string="Chatter">
