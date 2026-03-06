@@ -1,0 +1,726 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* account_reconcile_oca
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 16.0\n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: 2025-02-12 08:24+0000\n"
+"Last-Translator: \"Pedro M. Baeza\" <pedro.baeza@tecnativa.com>\n"
+"Language-Team: none\n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.6.2\n"
+
+#. module: account_reconcile_oca
+#: model_terms:ir.ui.view,arch_db:account_reconcile_oca.bank_statement_line_form_reconcile_view
+msgid ""
+".\n"
+"                                    <br/>\n"
+"                                You might want to set the invoice as"
+msgstr ""
+".\n"
+"                                    <br/>\n"
+"                                Podría querer establecer la factura como"
+
+#. module: account_reconcile_oca
+#. odoo-javascript
+#: code:addons/account_reconcile_oca/static/src/xml/reconcile.xml:0
+#: model:ir.model.fields,field_description:account_reconcile_oca.field_account_account_reconcile__account_id
+#: model_terms:ir.ui.view,arch_db:account_reconcile_oca.bank_statement_line_form_reconcile_view
+msgid "Account"
+msgstr "Cuenta"
+
+#. module: account_reconcile_oca
+#: model:ir.model,name:account_reconcile_oca.model_account_account_reconcile
+msgid "Account Account Reconcile"
+msgstr "Conciliación de cuenta contable"
+
+#. module: account_reconcile_oca
+#: model:ir.model,name:account_reconcile_oca.model_account_reconcile_abstract
+msgid "Account Reconcile Abstract"
+msgstr "Resumen de conciliación de cuenta"
+
+#. module: account_reconcile_oca
+#: model:ir.model.fields,field_description:account_reconcile_oca.field_account_account_reconcile__active
+msgid "Active"
+msgstr ""
+
+#. module: account_reconcile_oca
+#: model:ir.model.fields,field_description:account_reconcile_oca.field_account_account_reconcile__add_account_move_line_id
+#: model:ir.model.fields,field_description:account_reconcile_oca.field_account_bank_statement_line__add_account_move_line_id
+#: model:ir.model.fields,field_description:account_reconcile_oca.field_account_reconcile_abstract__add_account_move_line_id
+msgid "Add Account Move Line"
+msgstr "Añadir apunte contable"
+
+#. module: account_reconcile_oca
+#: model:ir.actions.act_window,name:account_reconcile_oca.action_bank_statement_line_create
+msgid "Add Bank Statement Line"
+msgstr "Añadir línea de extracto bancario"
+
+#. module: account_reconcile_oca
+#. odoo-javascript
+#: code:addons/account_reconcile_oca/static/src/xml/reconcile.xml:0
+msgid "Add all"
+msgstr "Añadir todo"
+
+#. module: account_reconcile_oca
+#: model:ir.model.fields,field_description:account_reconcile_oca.field_account_bank_statement_line__aggregate_id
+msgid "Aggregate"
+msgstr "Agregado"
+
+#. module: account_reconcile_oca
+#: model:ir.model.fields,field_description:account_reconcile_oca.field_account_bank_statement_line__aggregate_name
+msgid "Aggregate Name"
+msgstr "Nombre del agregado"
+
+#. module: account_reconcile_oca
+#: model:ir.model.fields,help:account_reconcile_oca.field_account_journal__reconcile_aggregate
+msgid "Aggregation to use on reconcile view"
+msgstr "Agregación a usar en la vista de conciliación"
+
+#. module: account_reconcile_oca
+#: model_terms:ir.ui.view,arch_db:account_reconcile_oca.bank_statement_line_form_reconcile_view
+msgid "Amount"
+msgstr "Importe"
+
+#. module: account_reconcile_oca
+#: model_terms:ir.ui.view,arch_db:account_reconcile_oca.bank_statement_line_form_reconcile_view
+msgid "Amount in Currency"
+msgstr "Importe en moneda"
+
+#. module: account_reconcile_oca
+#. odoo-javascript
+#: code:addons/account_reconcile_oca/static/src/xml/reconcile.xml:0
+msgid "Amount in currency"
+msgstr "Importe en moneda"
+
+#. module: account_reconcile_oca
+#: model:ir.model.fields,field_description:account_reconcile_oca.field_account_bank_statement_line__analytic_distribution
+msgid "Analytic Distribution"
+msgstr "Distribución analítica"
+
+#. module: account_reconcile_oca
+#: model:ir.model.fields,field_description:account_reconcile_oca.field_account_bank_statement_line__analytic_precision
+msgid "Analytic Precision"
+msgstr "Precisión analítica"
+
+#. module: account_reconcile_oca
+#: model_terms:ir.ui.view,arch_db:account_reconcile_oca.bank_statement_line_form_reconcile_view
+msgid "Are you sure that the move should be unreconciled?"
+msgstr "¿Está seguro de que el apunte se debería desconciliar?"
+
+#. module: account_reconcile_oca
+#: model_terms:ir.ui.view,arch_db:account_reconcile_oca.account_move_line_search_reconcile_view
+msgid "Bank"
+msgstr "Banco"
+
+#. module: account_reconcile_oca
+#: model:ir.model,name:account_reconcile_oca.model_account_bank_statement
+#: model_terms:ir.ui.view,arch_db:account_reconcile_oca.account_bank_statement_form_edit
+msgid "Bank Statement"
+msgstr "Extracto bancario"
+
+#. module: account_reconcile_oca
+#: model:ir.model,name:account_reconcile_oca.model_account_bank_statement_line
+msgid "Bank Statement Line"
+msgstr "Línea de extracto bancario"
+
+#. module: account_reconcile_oca
+#: model_terms:ir.ui.view,arch_db:account_reconcile_oca.account_move_form_view
+msgid "Bank reconcile"
+msgstr "Conciliación bancaria"
+
+#. module: account_reconcile_oca
+#: model:ir.model.fields,field_description:account_reconcile_oca.field_account_bank_statement_line__can_reconcile
+msgid "Can Reconcile"
+msgstr "Se puede conciliar"
+
+#. module: account_reconcile_oca
+#: model_terms:ir.ui.view,arch_db:account_reconcile_oca.bank_statement_line_form_add_view
+msgid "Cancel"
+msgstr "Cancelar"
+
+#. module: account_reconcile_oca
+#: model_terms:ir.ui.view,arch_db:account_reconcile_oca.account_move_line_search_reconcile_view
+msgid "Cash"
+msgstr "Efectivo"
+
+#. module: account_reconcile_oca
+#: model_terms:ir.ui.view,arch_db:account_reconcile_oca.bank_statement_line_form_reconcile_view
+msgid "Chatter"
+msgstr "Charla"
+
+#. module: account_reconcile_oca
+#: model_terms:ir.ui.view,arch_db:account_reconcile_oca.account_account_reconcile_form_view
+msgid "Clean"
+msgstr "Limpiar"
+
+#. module: account_reconcile_oca
+#: model:ir.model,name:account_reconcile_oca.model_res_company
+msgid "Companies"
+msgstr "Compañías"
+
+#. module: account_reconcile_oca
+#: model:ir.model.fields,field_description:account_reconcile_oca.field_account_account_reconcile__company_id
+#: model:ir.model.fields,field_description:account_reconcile_oca.field_account_bank_statement_line__company_id
+#: model:ir.model.fields,field_description:account_reconcile_oca.field_account_reconcile_abstract__company_id
+msgid "Company"
+msgstr "Compañía"
+
+#. module: account_reconcile_oca
+#: model:ir.model.fields,field_description:account_reconcile_oca.field_account_account_reconcile__company_currency_id
+#: model:ir.model.fields,field_description:account_reconcile_oca.field_account_bank_statement_line__company_currency_id
+#: model:ir.model.fields,field_description:account_reconcile_oca.field_account_journal__company_currency_id
+#: model:ir.model.fields,field_description:account_reconcile_oca.field_account_reconcile_abstract__company_currency_id
+msgid "Company Currency"
+msgstr "Moneda de la compañía"
+
+#. module: account_reconcile_oca
+#: model:ir.model,name:account_reconcile_oca.model_res_config_settings
+msgid "Config Settings"
+msgstr "Opciones de configuración"
+
+#. module: account_reconcile_oca
+#. odoo-javascript
+#: code:addons/account_reconcile_oca/static/src/xml/reconcile.xml:0
+msgid "Create"
+msgstr "Crear"
+
+#. module: account_reconcile_oca
+#: model:ir.model.fields,field_description:account_reconcile_oca.field_account_account_reconcile_data__create_uid
+msgid "Created by"
+msgstr "Creado por"
+
+#. module: account_reconcile_oca
+#: model:ir.model.fields,field_description:account_reconcile_oca.field_account_account_reconcile_data__create_date
+msgid "Created on"
+msgstr "Creado en"
+
+#. module: account_reconcile_oca
+#. odoo-javascript
+#: code:addons/account_reconcile_oca/static/src/xml/reconcile.xml:0
+msgid "Credit"
+msgstr "Haber"
+
+#. module: account_reconcile_oca
+#: model:ir.model.fields,field_description:account_reconcile_oca.field_account_account_reconcile__currency_id
+#: model:ir.model.fields,field_description:account_reconcile_oca.field_account_reconcile_abstract__currency_id
+msgid "Currency"
+msgstr "Moneda"
+
+#. module: account_reconcile_oca
+#: model:ir.model.fields,field_description:account_reconcile_oca.field_account_account_reconcile_data__data
+msgid "Data"
+msgstr "Datos"
+
+#. module: account_reconcile_oca
+#. odoo-javascript
+#: code:addons/account_reconcile_oca/static/src/xml/reconcile.xml:0
+msgid "Date"
+msgstr "Fecha"
+
+#. module: account_reconcile_oca
+#: model:ir.model.fields.selection,name:account_reconcile_oca.selection__account_journal__reconcile_aggregate__day
+msgid "Day"
+msgstr "Día"
+
+#. module: account_reconcile_oca
+#. odoo-javascript
+#: code:addons/account_reconcile_oca/static/src/xml/reconcile.xml:0
+msgid "Debit"
+msgstr "Debe"
+
+#. module: account_reconcile_oca
+#: model:ir.model.fields,field_description:account_reconcile_oca.field_account_account_reconcile__display_name
+#: model:ir.model.fields,field_description:account_reconcile_oca.field_account_account_reconcile_data__display_name
+msgid "Display Name"
+msgstr "Nombre mostrado"
+
+#. module: account_reconcile_oca
+#: model:ir.actions.act_window,name:account_reconcile_oca.account_bank_statement_action_edit
+msgid "Edit Bank Statement"
+msgstr "Editar extracto bancario"
+
+#. module: account_reconcile_oca
+#: model:ir.model.fields.selection,name:account_reconcile_oca.selection__account_journal__reconcile_mode__edit
+msgid "Edit Move"
+msgstr "Editar movimiento"
+
+#. module: account_reconcile_oca
+#: model:ir.model.fields,field_description:account_reconcile_oca.field_account_account_reconcile__foreign_currency_id
+#: model:ir.model.fields,field_description:account_reconcile_oca.field_account_bank_statement_line__foreign_currency_id
+#: model:ir.model.fields,field_description:account_reconcile_oca.field_account_reconcile_abstract__foreign_currency_id
+msgid "Foreign Currency"
+msgstr "Moneda extranjera"
+
+#. module: account_reconcile_oca
+#: model_terms:ir.ui.view,arch_db:account_reconcile_oca.account_move_line_search_reconcile_view
+msgid "From Trade Payable accounts"
+msgstr "De cuentas comerciales por pagar"
+
+#. module: account_reconcile_oca
+#: model_terms:ir.ui.view,arch_db:account_reconcile_oca.account_move_line_search_reconcile_view
+msgid "From Trade Receivable accounts"
+msgstr "De cuentas comerciales por cobrar"
+
+#. module: account_reconcile_oca
+#. odoo-javascript
+#: code:addons/account_reconcile_oca/static/src/xml/reconcile.xml:0
+msgid "Global Balance"
+msgstr "Balance global"
+
+#. module: account_reconcile_oca
+#: model:ir.model.fields,field_description:account_reconcile_oca.field_account_account_reconcile__id
+#: model:ir.model.fields,field_description:account_reconcile_oca.field_account_account_reconcile_data__id
+msgid "ID"
+msgstr "ID"
+
+#. module: account_reconcile_oca
+#: model_terms:ir.ui.view,arch_db:account_reconcile_oca.bank_statement_line_form_reconcile_view
+msgid "Invoice"
+msgstr "Factura"
+
+#. module: account_reconcile_oca
+#: model:ir.model.fields,field_description:account_reconcile_oca.field_account_account_reconcile__is_reconciled
+msgid "Is Reconciled"
+msgstr "Conciliado"
+
+#. module: account_reconcile_oca
+#: model_terms:ir.ui.view,arch_db:account_reconcile_oca.account_journal_dashboard_kanban_view
+msgid "Items"
+msgstr "Elementos"
+
+#. module: account_reconcile_oca
+#: model:ir.model,name:account_reconcile_oca.model_account_journal
+msgid "Journal"
+msgstr "Diario"
+
+#. module: account_reconcile_oca
+#: model:ir.model.fields,field_description:account_reconcile_oca.field_account_bank_statement_line__currency_id
+msgid "Journal Currency"
+msgstr "Moneda del diario"
+
+#. module: account_reconcile_oca
+#: model_terms:ir.ui.view,arch_db:account_reconcile_oca.account_move_line_search_reconcile_view
+msgid "Journal Entry"
+msgstr "Asiento contable"
+
+#. module: account_reconcile_oca
+#: model:ir.model,name:account_reconcile_oca.model_account_move_line
+#: model_terms:ir.ui.view,arch_db:account_reconcile_oca.account_move_line_search_reconcile_view
+msgid "Journal Item"
+msgstr "Apunte contable"
+
+#. module: account_reconcile_oca
+#: model:ir.model.fields.selection,name:account_reconcile_oca.selection__account_journal__reconcile_mode__keep
+msgid "Keep Suspense Accounts"
+msgstr "Mantener cuentas transitorias"
+
+#. module: account_reconcile_oca
+#. odoo-javascript
+#: code:addons/account_reconcile_oca/static/src/xml/reconcile.xml:0
+msgid "Label"
+msgstr "Etiqueta"
+
+#. module: account_reconcile_oca
+#: model:ir.model.fields,field_description:account_reconcile_oca.field_account_account_reconcile_data__write_uid
+msgid "Last Updated by"
+msgstr "Última modificación por"
+
+#. module: account_reconcile_oca
+#: model:ir.model.fields,field_description:account_reconcile_oca.field_account_account_reconcile_data__write_date
+msgid "Last Updated on"
+msgstr "Última actualización el"
+
+#. module: account_reconcile_oca
+#: model:ir.model.fields,field_description:account_reconcile_oca.field_account_bank_statement_line__manual_account_id
+msgid "Manual Account"
+msgstr "Cuenta manual"
+
+#. module: account_reconcile_oca
+#: model:ir.model.fields,field_description:account_reconcile_oca.field_account_bank_statement_line__manual_amount
+msgid "Manual Amount"
+msgstr "Importe manual"
+
+#. module: account_reconcile_oca
+#: model:ir.model.fields,field_description:account_reconcile_oca.field_account_bank_statement_line__manual_amount_in_currency
+msgid "Manual Amount In Currency"
+msgstr "Importe manuel en moneda"
+
+#. module: account_reconcile_oca
+#: model:ir.model.fields,field_description:account_reconcile_oca.field_account_bank_statement_line__manual_currency_id
+msgid "Manual Currency"
+msgstr "Moneda manual"
+
+#. module: account_reconcile_oca
+#: model:ir.model.fields,field_description:account_reconcile_oca.field_account_account_reconcile__manual_delete
+#: model:ir.model.fields,field_description:account_reconcile_oca.field_account_bank_statement_line__manual_delete
+#: model:ir.model.fields,field_description:account_reconcile_oca.field_account_reconcile_abstract__manual_delete
+msgid "Manual Delete"
+msgstr "Borrado manual"
+
+#. module: account_reconcile_oca
+#: model:ir.model.fields,field_description:account_reconcile_oca.field_account_bank_statement_line__manual_exchange_counterpart
+msgid "Manual Exchange Counterpart"
+msgstr "Contrapartida de cambio manual"
+
+#. module: account_reconcile_oca
+#: model:ir.model.fields,field_description:account_reconcile_oca.field_account_bank_statement_line__manual_in_currency_id
+msgid "Manual In Currency"
+msgstr "En moneda manual"
+
+#. module: account_reconcile_oca
+#: model:ir.model.fields,field_description:account_reconcile_oca.field_account_bank_statement_line__manual_in_currency
+msgid "Manual In Currency?"
+msgstr "¿Manual en moneda?"
+
+#. module: account_reconcile_oca
+#: model:ir.model.fields,field_description:account_reconcile_oca.field_account_bank_statement_line__manual_kind
+msgid "Manual Kind"
+msgstr "Tipo manual"
+
+#. module: account_reconcile_oca
+#: model:ir.model.fields,field_description:account_reconcile_oca.field_account_bank_statement_line__manual_line_id
+msgid "Manual Line"
+msgstr "Línea manual"
+
+#. module: account_reconcile_oca
+#: model:ir.model.fields,field_description:account_reconcile_oca.field_account_bank_statement_line__manual_model_id
+msgid "Manual Model"
+msgstr "Modelo manual"
+
+#. module: account_reconcile_oca
+#: model:ir.model.fields,field_description:account_reconcile_oca.field_account_bank_statement_line__manual_move_id
+msgid "Manual Move"
+msgstr "Asiento manual"
+
+#. module: account_reconcile_oca
+#: model:ir.model.fields,field_description:account_reconcile_oca.field_account_bank_statement_line__manual_move_type
+msgid "Manual Move Type"
+msgstr "Tipo de asiento manual"
+
+#. module: account_reconcile_oca
+#: model:ir.model.fields,field_description:account_reconcile_oca.field_account_bank_statement_line__manual_name
+msgid "Manual Name"
+msgstr "Nombre manual"
+
+#. module: account_reconcile_oca
+#: model:ir.model.fields,field_description:account_reconcile_oca.field_account_bank_statement_line__manual_original_amount
+msgid "Manual Original Amount"
+msgstr "Importe original manual"
+
+#. module: account_reconcile_oca
+#: model:ir.model.fields,field_description:account_reconcile_oca.field_account_bank_statement_line__manual_partner_id
+msgid "Manual Partner"
+msgstr "Empresa manual"
+
+#. module: account_reconcile_oca
+#: model:ir.model.fields,field_description:account_reconcile_oca.field_account_account_reconcile__manual_reference
+#: model:ir.model.fields,field_description:account_reconcile_oca.field_account_bank_statement_line__manual_reference
+#: model:ir.model.fields,field_description:account_reconcile_oca.field_account_reconcile_abstract__manual_reference
+msgid "Manual Reference"
+msgstr "Referencia manual"
+
+#. module: account_reconcile_oca
+#: model_terms:ir.ui.view,arch_db:account_reconcile_oca.bank_statement_line_form_reconcile_view
+msgid "Manual operation"
+msgstr "Operación manual"
+
+#. module: account_reconcile_oca
+#: model_terms:ir.ui.view,arch_db:account_reconcile_oca.account_move_line_search_reconcile_view
+msgid "Miscellaneous"
+msgstr "Varios"
+
+#. module: account_reconcile_oca
+#: model:ir.model.fields.selection,name:account_reconcile_oca.selection__account_journal__reconcile_aggregate__month
+msgid "Month"
+msgstr "Mes"
+
+#. module: account_reconcile_oca
+#: model:ir.model.fields,field_description:account_reconcile_oca.field_account_account_reconcile__name
+#: model_terms:ir.ui.view,arch_db:account_reconcile_oca.bank_statement_line_form_reconcile_view
+msgid "Name"
+msgstr "Nombre"
+
+#. module: account_reconcile_oca
+#. odoo-python
+#: code:addons/account_reconcile_oca/models/account_bank_statement_line.py:0
+msgid "No supense lines are allowed when reconciling"
+msgstr "No se permiten líneas en suspenso al conciliar"
+
+#. module: account_reconcile_oca
+#: model_terms:ir.actions.act_window,help:account_reconcile_oca.action_bank_statement_line_reconcile_to_check
+msgid "Nothing to check"
+msgstr "Nada que comprobar"
+
+#. module: account_reconcile_oca
+#: model_terms:ir.actions.act_window,help:account_reconcile_oca.action_bank_statement_line_move_view_reconcile
+#: model_terms:ir.actions.act_window,help:account_reconcile_oca.action_bank_statement_line_reconcile
+#: model_terms:ir.actions.act_window,help:account_reconcile_oca.action_bank_statement_line_reconcile_all
+msgid "Nothing to reconcile"
+msgstr "Nada para conciliar"
+
+#. module: account_reconcile_oca
+#. odoo-javascript
+#: code:addons/account_reconcile_oca/static/src/xml/reconcile.xml:0
+msgid "Open Balance"
+msgstr ""
+
+#. module: account_reconcile_oca
+#: model_terms:ir.ui.view,arch_db:account_reconcile_oca.bank_statement_line_form_reconcile_view
+msgid "Other Info"
+msgstr ""
+
+#. module: account_reconcile_oca
+#. odoo-javascript
+#: code:addons/account_reconcile_oca/static/src/xml/reconcile.xml:0
+#: model:ir.model.fields,field_description:account_reconcile_oca.field_account_account_reconcile__partner_id
+#: model_terms:ir.ui.view,arch_db:account_reconcile_oca.bank_statement_line_form_reconcile_view
+msgid "Partner"
+msgstr "Empresa"
+
+#. module: account_reconcile_oca
+#: model_terms:ir.ui.view,arch_db:account_reconcile_oca.account_move_line_search_reconcile_view
+msgid "Payable"
+msgstr "A pagar"
+
+#. module: account_reconcile_oca
+#: model:ir.model.fields,field_description:account_reconcile_oca.field_account_bank_statement_line__previous_manual_amount_in_currency
+msgid "Previous Manual Amount In Currency"
+msgstr ""
+
+#. module: account_reconcile_oca
+#: model_terms:ir.ui.view,arch_db:account_reconcile_oca.account_move_line_search_reconcile_view
+msgid "Purchases"
+msgstr "Compras"
+
+#. module: account_reconcile_oca
+#: model_terms:ir.ui.view,arch_db:account_reconcile_oca.account_move_line_search_reconcile_view
+msgid "Receivable"
+msgstr "A cobrar"
+
+#. module: account_reconcile_oca
+#: model:ir.actions.act_window,name:account_reconcile_oca.account_account_account_account_reconcile_act_window
+#: model:ir.actions.act_window,name:account_reconcile_oca.account_account_reconcile_act_window
+#: model:ir.actions.act_window,name:account_reconcile_oca.res_partner_account_account_reconcile_act_window
+#: model:ir.actions.server,name:account_reconcile_oca.action_reconcile
+#: model:ir.model.fields,field_description:account_reconcile_oca.field_account_account_reconcile_data__reconcile_id
+#: model:ir.ui.menu,name:account_reconcile_oca.account_account_reconcile_menu
+#: model_terms:ir.ui.view,arch_db:account_reconcile_oca.account_account_reconcile_form_view
+#: model_terms:ir.ui.view,arch_db:account_reconcile_oca.account_journal_dashboard_kanban_view
+#: model_terms:ir.ui.view,arch_db:account_reconcile_oca.bank_statement_line_form_reconcile_view
+#: model_terms:ir.ui.view,arch_db:account_reconcile_oca.view_account_list
+msgid "Reconcile"
+msgstr "Conciliar"
+
+#. module: account_reconcile_oca
+#: model:ir.model.fields,field_description:account_reconcile_oca.field_account_bank_statement_line__reconcile_aggregate
+#: model:ir.model.fields,field_description:account_reconcile_oca.field_res_company__reconcile_aggregate
+#: model:ir.model.fields,field_description:account_reconcile_oca.field_res_config_settings__reconcile_aggregate
+msgid "Reconcile Aggregate"
+msgstr "Agregación de conciliación"
+
+#. module: account_reconcile_oca
+#: model:ir.model.fields,field_description:account_reconcile_oca.field_account_bank_statement_line__reconcile_data
+msgid "Reconcile Data"
+msgstr "Datos de conciliación"
+
+#. module: account_reconcile_oca
+#: model:ir.model.fields,field_description:account_reconcile_oca.field_account_account_reconcile__reconcile_data_info
+#: model:ir.model.fields,field_description:account_reconcile_oca.field_account_bank_statement_line__reconcile_data_info
+#: model:ir.model.fields,field_description:account_reconcile_oca.field_account_reconcile_abstract__reconcile_data_info
+msgid "Reconcile Data Info"
+msgstr "Información de conciliación"
+
+#. module: account_reconcile_oca
+#: model:ir.model.fields,field_description:account_reconcile_oca.field_account_bank_statement_line__reconcile_mode
+#: model:ir.model.fields,field_description:account_reconcile_oca.field_account_journal__reconcile_mode
+msgid "Reconcile Mode"
+msgstr "Modo de conciliación"
+
+#. module: account_reconcile_oca
+#: model:ir.model.fields,field_description:account_reconcile_oca.field_account_journal__reconcile_aggregate
+#: model_terms:ir.ui.view,arch_db:account_reconcile_oca.res_config_settings_form_view
+msgid "Reconcile aggregation"
+msgstr "Agregación de conciliación"
+
+#. module: account_reconcile_oca
+#: model:ir.actions.act_window,name:account_reconcile_oca.action_bank_statement_line_move_view_reconcile
+#: model:ir.actions.act_window,name:account_reconcile_oca.action_bank_statement_line_reconcile_all
+#: model:ir.actions.act_window,name:account_reconcile_oca.action_bank_statement_line_reconcile_to_check
+msgid "Reconcile bank statement lines"
+msgstr "Conciliar líneas de extracto bancario"
+
+#. module: account_reconcile_oca
+#: model:ir.model,name:account_reconcile_oca.model_account_account_reconcile_data
+msgid "Reconcile data model to store user info"
+msgstr "Modelo de datos de conciliación para almacenar información de usuario"
+
+#. module: account_reconcile_oca
+#: model_terms:ir.ui.view,arch_db:account_reconcile_oca.bank_statement_line_reconcile_view
+msgid "Reconciled"
+msgstr "Conciliado"
+
+#. module: account_reconcile_oca
+#: model_terms:ir.ui.view,arch_db:account_reconcile_oca.bank_statement_line_form_reconcile_view
+msgid "Reset reconciliation"
+msgstr "Restablecer conciliación"
+
+#. module: account_reconcile_oca
+#. odoo-python
+#: code:addons/account_reconcile_oca/models/account_bank_statement_line.py:0
+msgid "Reversal of: %s"
+msgstr "Reversión de: %s"
+
+#. module: account_reconcile_oca
+#: model_terms:ir.ui.view,arch_db:account_reconcile_oca.account_move_line_search_reconcile_view
+msgid "Sales"
+msgstr "Ventas"
+
+#. module: account_reconcile_oca
+#: model_terms:ir.ui.view,arch_db:account_reconcile_oca.bank_statement_line_form_add_view
+msgid "Save"
+msgstr "Guardar"
+
+#. module: account_reconcile_oca
+#: model_terms:ir.ui.view,arch_db:account_reconcile_oca.account_move_line_search_reconcile_view
+msgid "Search Journal Items"
+msgstr "Buscar apuntes"
+
+#. module: account_reconcile_oca
+#: model_terms:ir.ui.view,arch_db:account_reconcile_oca.bank_statement_line_form_reconcile_view
+msgid "Set as Checked"
+msgstr "Marcar como revisado"
+
+#. module: account_reconcile_oca
+#: model_terms:ir.ui.view,arch_db:account_reconcile_oca.res_config_settings_form_view
+msgid "Standard aggregation to use on bank reconciliation"
+msgstr "Agregación estándar a usar en la conciliación bancaria"
+
+#. module: account_reconcile_oca
+#: model:ir.model.fields.selection,name:account_reconcile_oca.selection__account_journal__reconcile_aggregate__statement
+#: model_terms:ir.ui.view,arch_db:account_reconcile_oca.bank_statement_line_reconcile_view
+msgid "Statement"
+msgstr "Extracto"
+
+#. module: account_reconcile_oca
+#: model:ir.actions.act_window,name:account_reconcile_oca.action_bank_statement_line_reconcile
+msgid "Statement lines"
+msgstr "Líneas de extracto bancario"
+
+#. module: account_reconcile_oca
+#: model:ir.model.fields,help:account_reconcile_oca.field_account_bank_statement_line__foreign_currency_id
+msgid "The optional other currency if it is a multi-currency entry."
+msgstr "La otra moneda opcional si se trata de una entrada multi-moneda."
+
+#. module: account_reconcile_oca
+#: model_terms:ir.ui.view,arch_db:account_reconcile_oca.bank_statement_line_form_reconcile_view
+msgid "To Check"
+msgstr "A revisar"
+
+#. module: account_reconcile_oca
+#: model_terms:ir.ui.view,arch_db:account_reconcile_oca.bank_statement_line_reconcile_view
+msgid "To check"
+msgstr "A revisar"
+
+#. module: account_reconcile_oca
+#: model_terms:ir.ui.view,arch_db:account_reconcile_oca.account_journal_dashboard_kanban_view
+msgid "Transactions"
+msgstr "Transacciones"
+
+#. module: account_reconcile_oca
+#. odoo-python
+#: code:addons/account_reconcile_oca/models/account_bank_statement_line.py:0
+msgid "Undefined"
+msgstr "Indefinido"
+
+#. module: account_reconcile_oca
+#: model_terms:ir.ui.view,arch_db:account_reconcile_oca.bank_statement_line_form_reconcile_view
+msgid "Unreconcile"
+msgstr "No conciliado"
+
+#. module: account_reconcile_oca
+#: model:ir.model.fields,field_description:account_reconcile_oca.field_account_account_reconcile_data__user_id
+msgid "User"
+msgstr "Usuario"
+
+#. module: account_reconcile_oca
+#: model_terms:ir.ui.view,arch_db:account_reconcile_oca.bank_statement_line_form_reconcile_view
+msgid "Validate"
+msgstr "Validar"
+
+#. module: account_reconcile_oca
+#: model_terms:ir.ui.view,arch_db:account_reconcile_oca.account_move_line_tree_reconcile_view
+msgid "View"
+msgstr "Ver"
+
+#. module: account_reconcile_oca
+#: model_terms:ir.ui.view,arch_db:account_reconcile_oca.bank_statement_line_form_reconcile_view
+msgid "View move"
+msgstr "Ver asiento"
+
+#. module: account_reconcile_oca
+#: model:ir.model.fields.selection,name:account_reconcile_oca.selection__account_journal__reconcile_aggregate__week
+msgid "Week"
+msgstr "Semana"
+
+#. module: account_reconcile_oca
+#. odoo-python
+#: code:addons/account_reconcile_oca/models/account_journal.py:0
+msgid "Well done! Everything has been reconciled"
+msgstr "¡Bien hecho! Todo ha sido conciliado"
+
+#. module: account_reconcile_oca
+#. odoo-python
+#: code:addons/account_reconcile_oca/models/account_move_line.py:0
+msgid "You can only reconcile journal items belonging to the same account."
+msgstr "Sólo se pueden conciliar asientos que pertenezcan a la misma cuenta."
+
+#. module: account_reconcile_oca
+#: model_terms:ir.ui.view,arch_db:account_reconcile_oca.bank_statement_line_form_reconcile_view
+msgid "fully paid"
+msgstr "totalmente pagado"
+
+#. module: account_reconcile_oca
+#: model_terms:ir.ui.view,arch_db:account_reconcile_oca.account_journal_dashboard_kanban_view
+msgid "to check"
+msgstr "a revisar"
+
+#. module: account_reconcile_oca
+#: model_terms:ir.ui.view,arch_db:account_reconcile_oca.bank_statement_line_form_reconcile_view
+msgid "will be reduced by"
+msgstr "será disminuido por"
+
+#. module: account_reconcile_oca
+#: model_terms:ir.ui.view,arch_db:account_reconcile_oca.bank_statement_line_form_reconcile_view
+msgid "with an open amount"
+msgstr "con un importe pendiente de"
+
+#~ msgid "Company related to this journal"
+#~ msgstr "Compañía del diario"
+
+#~ msgid "Narration"
+#~ msgstr "Narración"
+
+#, python-format
+#~ msgid "Keep suspense move lines mode cannot be unreconciled"
+#~ msgstr ""
+#~ "Mantener en modo suspenso las líneas que no pueden ser desconciliadas"
+
+#~ msgid "Due Date"
+#~ msgstr "Fecha de vencimiento"
+
+#~ msgid "Last Modified on"
+#~ msgstr "Última modficación en"
+
+#, python-format
+#~ msgid "You must reconcile information on the same partner"
+#~ msgstr "Debe conciliar la información sobre el mismo socio"
+
+#~ msgid "Reset"
+#~ msgstr "Restablecer"

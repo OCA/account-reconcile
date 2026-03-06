@@ -1,0 +1,85 @@
+.o_account_reconcile_oca {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-flow: row wrap;
+    flex-flow: row wrap;
+    height: 100%;
+    .o_kanban_renderer.o_kanban_ungrouped .o_kanban_record {
+        &:hover {
+            .o_reconcile_create_statement {
+                opacity: 100;
+            }
+        }
+        .row {
+            // We need to add this in order to make remove horizontal scroll
+            margin: 0;
+        }
+        margin: 0 0 0;
+        min-width: fit-content;
+        width: 100%;
+        .o_reconcile_create_statement {
+            position: absolute;
+            height: 0px;
+            margin: 0;
+            padding: 0 0 0 0;
+            border: 0;
+            top: -14px;
+            opacity: 0;
+        }
+        > div {
+            border-right: thick solid rgba(0, 0, 0, 0);
+        }
+        &.o_kanban_record_reconcile_oca_selected {
+            border-right: thick solid $o-brand-primary;
+        }
+    }
+    .o_account_reconcile_oca_selector {
+        width: 30%;
+        height: 100%;
+        padding: 0;
+        position: relative;
+        border-right: 1px solid $o-gray-300;
+        overflow: auto;
+    }
+    .o_account_reconcile_oca_info {
+        width: 70%;
+        height: 100%;
+        overflow: auto;
+    }
+    .o_form_view {
+        .o_form_statusbar.o_account_reconcile_oca_statusbar {
+            height: 40px;
+        }
+        .o_field_account_reconcile_oca_data {
+            .o_field_account_reconcile_oca_balance_float {
+                .o_field_account_reconcile_oca_balance_original_float {
+                    text-decoration: line-through;
+                }
+            }
+        }
+        .o_field_widget.o_field_account_reconcile_oca_match {
+            display: inline;
+        }
+        .o_field_account_reconcile_oca_move_line_selected {
+            background-color: rgba($o-brand-primary, 0.2);
+            color: #000;
+        }
+        .o_reconcile_widget_table {
+            .o_reconcile_widget_line {
+                &.liquidity {
+                    font-weight: bold;
+                }
+                &.selected {
+                    background-color: rgba($o-brand-primary, 0.2);
+                }
+                &.suspense {
+                    color: $o-gray-500;
+                }
+            }
+        }
+    }
+}
+.o_field_account_reconcile_oca_chatter {
+    width: 100%;
+}
