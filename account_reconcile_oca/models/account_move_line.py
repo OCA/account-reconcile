@@ -15,7 +15,8 @@ class AccountMoveLine(models.Model):
         if len(accounts) > 1:
             raise ValidationError(
                 self.env._(
-                    "You can only reconcile journal items belonging to the same account."
+                    "You can only reconcile journal items "
+                    "belonging to the same account."
                 )
             )
         partner = self.mapped("partner_id")
