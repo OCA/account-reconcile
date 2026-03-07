@@ -23,7 +23,6 @@ class TestAccountReconciliationCommon(TestAccountReconciliationModelCommon):
         cls.invoice_matching_models = cls.env["account.reconcile.model"].search(
             [
                 ("trigger", "=", "invoice_matching"),
-                ("auto_reconcile", "=", True),
                 ("company_id", "=", cls.company.id),
             ]
         )
@@ -612,10 +611,9 @@ class TestReconciliationWidget(TestAccountReconciliationCommon):
         self.env["account.reconcile.model"].create(
             {
                 "name": "write-off model suggestion",
-                "trigger": "writeoff_suggestion",
+                "trigger": "manual",
                 "match_label": "contains",
                 "match_label_param": "DEMO WRITEOFF",
-                "auto_reconcile": True,
                 "line_ids": [
                     Command.create({"account_id": self.current_assets_account.id})
                 ],
