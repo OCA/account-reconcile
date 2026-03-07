@@ -1,9 +1,9 @@
+import { Component, useSubEnv } from "@odoo/owl";
 import {View} from "@web/views/view";
 import {evaluateBooleanExpr} from "@web/core/py_js/py";
 import {getFieldContext} from "@web/model/relational_model/utils";
 import {registry} from "@web/core/registry";
 import {standardFieldProps} from "@web/views/fields/standard_field_props";
-import { Component, useSubEnv } from "@odoo/owl";
 
 export class AccountReconcileMatchWidget extends Component {
     setup() {
@@ -48,7 +48,8 @@ export class AccountReconcileMatchWidget extends Component {
             display: {
                 controlPanel: {
                     // V19: Show Create button (top-left) but hide other layout actions
-                    "top-left": true,  // Changed from false to show Create button
+                    // Changed from false to show Create button
+                    "top-left": true,
                     "bottom-left": true,
                     layoutActions: false,
                 },

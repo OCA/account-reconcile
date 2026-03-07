@@ -1,8 +1,8 @@
+import { useRef } from "@odoo/owl";
 import {FormController} from "@web/views/form/form_controller";
 import {useService} from "@web/core/utils/hooks";
 import {useViewButtons} from "@web/views/view_button/view_button_hook";
 import {FetchRecordError} from "@web/model/relational_model/errors";
-import { useRef } from "@odoo/owl";
 
 export class ReconcileFormController extends FormController {
     setup() {
@@ -44,10 +44,11 @@ export class ReconcileFormController extends FormController {
                 // This only happens when we press the reconcile button for showing rainbow man
                 // Should not affect if we are in the reconcile view
                 // v19 change: journalId is now an object {id: N} instead of array [N, "Name"]
+                // V19 uses .id property, fallback to [0] for safety
                 const message = await this.orm.call(
                     "account.journal",
                     "get_rainbowman_message",
-                    [journalId.id || journalId[0]]  // v19 uses .id property, fallback to [0] for safety
+                    [journalId.id || journalId[0]]
                 );
                 if (message) {
                     this.env.parentController.setRainbowMan(message);

@@ -1,4 +1,4 @@
-import { Component, onMounted, onWillStart, useState, useSubEnv } from "@odoo/owl";
+import { onMounted, onWillStart, useState, useSubEnv } from "@odoo/owl";
 import {useBus, useService} from "@web/core/utils/hooks";
 import {KanbanController} from "@web/views/kanban/kanban_controller";
 import {View} from "@web/views/view";
