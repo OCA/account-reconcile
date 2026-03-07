@@ -45,12 +45,14 @@ class TestAccountReconciliationCommon(TestAccountReconciliationModelCommon):
         )
         cls.current_assets_account.reconcile = True
 
+        # TODO v19: match_partner and match_partner_ids fields removed in v19
+        # Need OCA maintainer guidance on v19 equivalent fields
         cls.rule = cls.env["account.reconcile.model"].create(
             {
                 "name": "write-off model",
                 "trigger": "writeoff_button",
-                "match_partner": True,
-                "match_partner_ids": [],
+                # "match_partner": True,  # Removed in v19
+                # "match_partner_ids": [],  # Removed in v19
                 "line_ids": [
                     Command.create({"account_id": cls.current_assets_account.id})
                 ],
