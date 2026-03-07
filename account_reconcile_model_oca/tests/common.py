@@ -38,7 +38,6 @@ class TestAccountReconciliationCommon(AccountTestInvoicingCommon):
                 "standard_price": 500.0,
                 "list_price": 750.0,
                 "type": "consu",
-                "categ_id": cls.env.ref("product.product_category_all").id,
             }
         )
 

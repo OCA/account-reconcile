@@ -1069,7 +1069,7 @@ class AccountBankStatementLine(models.Model):
         applying a different rate or even if there was a correction on statement
         line amount).
         """
-        if self._context.get("skip_account_move_synchronization"):
+        if self.env.context.get("skip_account_move_synchronization"):
             return
         if "partner_id" in changed_fields and not any(
             field_name in changed_fields

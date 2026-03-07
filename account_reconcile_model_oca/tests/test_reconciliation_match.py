@@ -74,7 +74,6 @@ class TestReconciliationMatchingRules(AccountTestInvoicingCommon):
                 "name": "Invoices Matching Rule",
                 "sequence": "1",
                 "trigger": "invoice_matching",
-                "auto_reconcile": False,
                 "match_nature": "both",
                 "match_same_currency": True,
                 "allow_payment_tolerance": True,
@@ -93,7 +92,7 @@ class TestReconciliationMatchingRules(AccountTestInvoicingCommon):
         cls.rule_2 = cls.env["account.reconcile.model"].create(
             {
                 "name": "write-off model",
-                "trigger": "writeoff_suggestion",
+                "trigger": "manual",
                 "match_partner": True,
                 "match_partner_ids": [],
                 "line_ids": [(0, 0, {"account_id": cls.current_assets_account.id})],
@@ -102,7 +101,7 @@ class TestReconciliationMatchingRules(AccountTestInvoicingCommon):
         cls.rule_3 = cls.env["account.reconcile.model"].create(
             {
                 "name": "Line with Bank Fees",
-                "trigger": "writeoff_suggestion",
+                "trigger": "manual",
                 "match_label": "contains",
                 "match_label_param": "BRT",
                 "line_ids": [
@@ -882,7 +881,7 @@ class TestReconciliationMatchingRules(AccountTestInvoicingCommon):
         self.rule_1.write(
             {
                 "auto_reconcile": True,
-                "trigger": "writeoff_suggestion",
+                "trigger": "manual",
                 "line_ids": [
                     (
                         1,
@@ -930,7 +929,7 @@ class TestReconciliationMatchingRules(AccountTestInvoicingCommon):
         self.rule_1.write(
             {
                 "auto_reconcile": True,
-                "trigger": "writeoff_suggestion",
+                "trigger": "manual",
                 "line_ids": [
                     (
                         1,
