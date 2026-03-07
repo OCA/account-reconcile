@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2023 Dixmit
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
+<odoo>
+    <record id="account_move_line_tree_reconcile_view" model="ir.ui.view">
+        <field name="name">account.move.line.list.reconcile</field>
+        <field name="model">account.move.line</field>
+        <field name="priority">99</field>
+        <field name="arch" type="xml">
+            <list
+                js_class="reconcile_move_line"
+                create="0"
+                edit="0"
+                export_xlsx="false"
+            >
+                <field name="date" />
+                <field name="move_id" optional="show" />
+                <field name="date_maturity" optional="show" />
+                <field name="account_id" optional="show" />
+                <field name="partner_id" />
+                <field name="company_currency_id" column_invisible="1" />
+                <field name="currency_id" column_invisible="1" />
+                <field name="name" optional="show" />
+                <field name="amount_residual_currency" optional="hide" />
+                <field name="amount_residual" optional="show" />
+                <field name="debit" optional="hide" />
+                <field name="credit" optional="hide" />
+                <button
+                    type="object"
+                    name="action_open_business_doc"
+                    string="View"
+                    class="btn btn-secondary"
+                />
+            </list>
+        </field>
+    </record>
+
+    <record id="account_move_line_search_reconcile_view" model="ir.ui.view">
+        <field name="name">account.move.line.search.reconcile</field>
+        <field name="model">account.move.line</field>
+        <field name="priority">99</field>
+        <field name="arch" type="xml">
+            <search string="Search Journal Items">
+                <field
+                    name="name"
+                    string="Journal Item"
+                    filter_domain="['|','|','|','|','|',('name', 'ilike', self), ('ref', 'ilike', self), ('account_id', 'ilike', self), ('partner_id', 'ilike', self),('amount_residual', 'ilike', self),('amount_residual_currency', 'ilike', self)]"
+                />
+                <field name="name" />
+                <field name="ref" />
+                <field name="date" />
+                <field name="account_id" />
+                <field name="account_root_id" />
+                <field name="account_type" />
+                <field name="partner_id" domain="[('parent_id', '=', False)]" />
+                <field name="journal_id" />
+                <field
+                    name="move_id"
+                    string="Journal Entry"
+                    filter_domain="[                         '|', '|', ('move_id.name', 'ilike', self), ('move_id.ref', 'ilike', self), ('move_id.partner_id', 'ilike', self)]"
+                />
+                <separator />
+                <filter
+                    string="Sales"
+                    name="sales"
+                    domain="[('journal_id.type', '=', 'sale')]"
+                    context="{'default_journal_type': 'sale'}"
+                />
+                <filter
+                    string="Purchases"
+                    name="purchases"
+                    domain="[('journal_id.type', '=', 'purchase')]"
+                    context="{'default_journal_type': 'purchase'}"
+                />
+                <filter
+                    string="Bank"
+                    name="bank"
+                    domain="[('journal_id.type', '=', 'bank')]"
+                    context="{'default_journal_type': 'bank'}"
+                />
+                <filter
+                    string="Cash"
+                    name="cash"
+                    domain="[('journal_id.type', '=', 'cash')]"
+                    context="{'default_journal_type': 'cash'}"
+                />
+                <filter
+                    string="Miscellaneous"
+                    domain="[('journal_id.type', '=', 'general')]"
+                    name="misc_filter"
+                    context="{'default_journal_type': 'general'}"
+                />
+                <separator />
+                <filter
+                    string="Payable"
+                    domain="[('account_id.account_type', '=', 'liability_payable'), ('account_id.non_trade', '=', False)]"
+                    help="From Trade Payable accounts"
+                    name="trade_payable"
+                />
+                <filter
+                    string="Receivable"
+                    domain="[('account_id.account_type', '=', 'asset_receivable'), ('account_id.non_trade', '=', False)]"
+                    help="From Trade Receivable accounts"
+                    name="trade_receivable"
+                />
+            </search>
+        </field>
+    </record>
+
+    <record id="action_reconcile" model="ir.actions.server">
+        <field name="name">Reconcile</field>
+        <field name="model_id" ref="account.model_account_move_line" />
+        <field name="binding_model_id" ref="account.model_account_move_line" />
+        <field name="binding_view_types">list</field>
+        <field name="state">code</field>
+        <field name="code">action = records.action_reconcile_manually()</field>
+    </record>
+</odoo>
