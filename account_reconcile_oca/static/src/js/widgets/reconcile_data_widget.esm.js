@@ -1,4 +1,4 @@
-import { Component } from "@odoo/owl";
+import {Component} from "@odoo/owl";
 import {formatDate, parseDate} from "@web/core/l10n/dates";
 import {getCurrency} from "@web/core/currency";
 import {floatIsZero} from "@web/core/utils/numbers";

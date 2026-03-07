@@ -1,4 +1,4 @@
-import { Component, useSubEnv } from "@odoo/owl";
+import {Component, useSubEnv} from "@odoo/owl";
 import {View} from "@web/views/view";
 import {evaluateBooleanExpr} from "@web/core/py_js/py";
 import {getFieldContext} from "@web/model/relational_model/utils";
@@ -32,7 +32,7 @@ export class AccountReconcileMatchWidget extends Component {
             // Call add_move_line_by_id (RPC-friendly method that accepts IDs)
             await this.props.record.model.orm.call(
                 this.props.record.resModel,
-                'add_move_line_by_id',
+                "add_move_line_by_id",
                 [[this.props.record.resId], record.resId]
             );
 

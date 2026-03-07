@@ -145,7 +145,8 @@ class AccountAccountReconcile(models.Model):
     def add_move_line_by_id(self, move_line_id):
         """
         RPC-friendly method to add a move line by ID.
-        v19: Called from JavaScript via RPC since onchange doesn't trigger programmatically.
+        v19: Called from JavaScript via RPC since onchange doesn't
+        trigger programmatically.
         """
         move_line = self.env["account.move.line"].browse(move_line_id)
         if move_line.exists():
