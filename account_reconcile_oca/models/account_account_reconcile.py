@@ -214,12 +214,3 @@ class AccountAccountReconcile(models.Model):
         for line in lines:
             self._add_account_move_line(line, keep_current=True)
         return res
-
-
-class AccountAccountReconcileData(models.TransientModel):
-    _name = "account.account.reconcile.data"
-    _description = "Reconcile data model to store user info"
-
-    user_id = fields.Many2one("res.users", required=True)
-    reconcile_id = fields.Integer(required=True)
-    data = fields.Serialized()
