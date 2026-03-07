@@ -910,7 +910,9 @@ class AccountBankStatementLine(models.Model):
                 if line_vals["kind"] == "liquidity":
                     continue
                 if line_vals["kind"] == "suspense":
-                    raise UserError(self.env._("No supense lines are allowed when reconciling"))
+                    raise UserError(
+                        self.env._("No supense lines are allowed when reconciling")
+                    )
                 line = (
                     self.env["account.move.line"]
                     .with_context(check_move_validity=False, skip_invoice_sync=True)
