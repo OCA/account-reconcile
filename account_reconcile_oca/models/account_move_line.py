@@ -1,7 +1,7 @@
 # Copyright 2023 Dixmit
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
-from odoo import _, models
+from odoo import models
 from odoo.exceptions import ValidationError
 
 
@@ -14,7 +14,7 @@ class AccountMoveLine(models.Model):
         accounts = self.mapped("account_id")
         if len(accounts) > 1:
             raise ValidationError(
-                _("You can only reconcile journal items belonging to the same account.")
+                self.env._("You can only reconcile journal items belonging to the same account.")
             )
         partner = self.mapped("partner_id")
         action = self.env["ir.actions.act_window"]._for_xml_id(

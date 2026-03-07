@@ -3,7 +3,7 @@
 
 import logging
 
-from odoo import _, api, fields, models
+from odoo import api, fields, models
 
 _logger = logging.getLogger(__name__)
 
@@ -67,7 +67,7 @@ class AccountJournal(models.Model):
         )
         if unreconciled_count > 0:
             return False
-        return _("Well done! Everything has been reconciled")
+        return self.env._("Well done! Everything has been reconciled")
 
     def open_action(self):
         """

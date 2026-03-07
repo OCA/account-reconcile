@@ -7,13 +7,11 @@ from collections import defaultdict
 from dateutil import rrule
 from dateutil.relativedelta import relativedelta
 
-from odoo import Command, _, api, fields, models, tools
+from odoo import Command, api, fields, models, tools
 from odoo.exceptions import UserError
 
 # first() helper removed in Odoo 19 - use recordset slicing instead
-from odoo.tools import LazyTranslate, float_compare, float_is_zero, groupby
-
-_lt = LazyTranslate(__name__, default_lang="en_US")
+from odoo.tools import float_compare, float_is_zero, groupby
 
 
 class AccountBankStatementLine(models.Model):
@@ -464,7 +462,7 @@ class AccountBankStatementLine(models.Model):
             "account_id": (
                 [self.manual_account_id.id, self.manual_account_id.display_name]
                 if self.manual_account_id
-                else [False, _lt("Undefined")]
+                else [False, self.env._lt("Undefined")]
             ),
             "amount": self.manual_amount,
             "credit": -self.manual_amount if self.manual_amount < 0 else 0.0,
@@ -912,7 +910,7 @@ class AccountBankStatementLine(models.Model):
                 if line_vals["kind"] == "liquidity":
                     continue
                 if line_vals["kind"] == "suspense":
-                    raise UserError(_("No supense lines are allowed when reconciling"))
+                    raise UserError(self.env._("No supense lines are allowed when reconciling"))
                 line = (
                     self.env["account.move.line"]
                     .with_context(check_move_validity=False, skip_invoice_sync=True)
@@ -955,7 +953,7 @@ class AccountBankStatementLine(models.Model):
             default_values_list = [
                 {
                     "date": move.date,
-                    "ref": _lt("Reversal of: %s", move.name),
+                    "ref": self.env._lt("Reversal of: %s", move.name),
                 }
                 for move in to_reverse
             ]
