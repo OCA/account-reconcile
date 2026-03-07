@@ -679,7 +679,7 @@ class AccountBankStatementLine(models.Model):
                         (
                             "trigger",
                             "in",
-                            ["invoice_matching", "writeoff_suggestion"],
+                            ["invoice_matching", "manual"],
                         ),
                         ("company_id", "=", self.company_id.id),
                     ]

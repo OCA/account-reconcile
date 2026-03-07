@@ -244,7 +244,7 @@ class AccountReconcileModel(models.Model):
                                 "model": rec_model,
                             }
 
-            elif rec_model.trigger == "writeoff_suggestion":
+            elif rec_model.trigger == "manual":
                 return {
                     "model": rec_model,
                     "status": "write_off",
@@ -612,7 +612,7 @@ class AccountReconcileModel(models.Model):
         """
         self.ensure_one()
 
-        if self.trigger not in ("invoice_matching", "writeoff_suggestion"):
+        if self.trigger not in ("invoice_matching", "manual"):
             return self.env["res.partner"]
 
         for partner_mapping in self.partner_mapping_line_ids:
