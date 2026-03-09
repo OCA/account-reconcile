@@ -6,26 +6,23 @@
         <field name="arch" type="xml">
             <group id="conditions_tab_group" position="after">
                 <group
-                    name="account_reconcile_sale_order"
-                    invisible="rule_type != 'sale_order_matching'"
+                    attrs="{'invisible': [('rule_type', '!=', 'sale_order_matching')]}"
                 >
                     <field
-                        name="sale_order_matching_payment_method_ids"
+                        name="sale_order_matching_provider_id_ids"
                         widget="many2many_tags"
                     />
                     <field name="sale_order_matching_token_match" />
                     <field
                         name="sale_order_matching_token_length"
-                        invisible="not sale_order_matching_token_match"
+                        attrs="{'invisible': [('sale_order_matching_token_match', '=', False)]}"
                     />
                 </group>
             </group>
             <xpath expr="//field[@name='line_ids']/.." position="attributes">
                 <attribute
-                    name="invisible"
-                    separator=" or "
-                    add="rule_type == 'sale_order_matching'"
-                />
+                    name="attrs"
+                >{'invisible': [('rule_type', '=', 'sale_order_matching')]}</attribute>
             </xpath>
         </field>
     </record>

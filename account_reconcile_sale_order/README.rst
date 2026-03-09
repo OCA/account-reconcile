@@ -1,3 +1,7 @@
+.. image:: https://odoo-community.org/readme-banner-image
+   :target: https://odoo-community.org/get-involved?utm_source=readme
+   :alt: Odoo Community Association
+
 =====================
 Reconcile sale orders
 =====================
@@ -13,7 +17,7 @@ Reconcile sale orders
 .. |badge1| image:: https://img.shields.io/badge/maturity-Alpha-red.png
     :target: https://odoo-community.org/page/development-status
     :alt: Alpha
-.. |badge2| image:: https://img.shields.io/badge/licence-AGPL--3-blue.png
+.. |badge2| image:: https://img.shields.io/badge/license-AGPL--3-blue.png
     :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
     :alt: License: AGPL-3
 .. |badge3| image:: https://img.shields.io/badge/github-OCA%2Faccount--reconcile-lightgray.png?logo=github
@@ -53,6 +57,9 @@ To configure this module, you need to:
 
 1. Go to Invoicing/Configuration/Reconciliation Models
 2. Create a model of type *Rule to match sale orders*
+3. Set payment providers *usually bank transfer*
+4. Activate *match token* for advanced reconcilation match (read field
+   help)
 
 Usage
 =====

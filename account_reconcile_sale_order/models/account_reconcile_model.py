@@ -28,16 +28,24 @@ class AccountReconcileModel(models.AbstractModel):
         "statement line's label is 'hello you', it will only search for 'hello', not "
         "for 'you'",
     )
-    sale_order_matching_payment_method_ids = fields.Many2many(
-        comodel_name="payment.method",
-        relation="account_reconcile_model_sale_order_payment_method_rel",
-        string="Payment methods",
+    sale_order_matching_provider_id_ids = fields.Many2many(
+        comodel_name="payment.provider",
+        relation="account_reconcile_model_sale_order_payment_provider_rel",
+        string="Payment providers",
         help="Set this field to restrict sale order matching to specific payment "
-        "methods used on the SO's payment transaction",
+        "providers used on the SO's payment transaction",
     )
 
     @api.model
-    def _search(self, domain, offset=0, limit=None, order=None):
+    def _search(
+        self,
+        domain,
+        offset=0,
+        limit=None,
+        order=None,
+        count=False,
+        access_rights_uid=None,
+    ):
         if self.env.context.get("account_reconcile_sale_order_inject_rule_type"):
             domain = [
                 leaf
@@ -45,7 +53,14 @@ class AccountReconcileModel(models.AbstractModel):
                 else tuple(list(leaf[:2]) + [list(leaf[2] + ["sale_order_matching"])])
                 for leaf in domain
             ]
-        return super()._search(domain, offset=offset, limit=limit, order=order)
+        return super()._search(
+            domain,
+            offset=offset,
+            limit=limit,
+            order=order,
+            count=count,
+            access_rights_uid=access_rights_uid,
+        )
 
     def _apply_rules(self, st_line, partner):
         for this in self.sorted():
@@ -86,12 +101,12 @@ class AccountReconcileModel(models.AbstractModel):
             ]
             + ([("id", "not in", excluded_ids)] if excluded_ids else [])
             + (
-                self.sale_order_matching_payment_method_ids
+                self.sale_order_matching_provider_id_ids
                 and [
                     (
-                        "transaction_ids.payment_method_id",
+                        "transaction_ids.provider_id",
                         "in",
-                        self.sale_order_matching_payment_method_ids.ids,
+                        self.sale_order_matching_provider_id_ids.ids,
                     )
                 ]
                 or []

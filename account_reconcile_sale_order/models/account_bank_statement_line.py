@@ -2,7 +2,7 @@
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0)
 
 
-from odoo import api, fields, models
+from odoo import _, api, fields, models
 
 
 class AccountBankStatementLine(models.Model):
@@ -87,8 +87,8 @@ class AccountBankStatementLine(models.Model):
         account = sale_order.partner_id.property_account_receivable_id
         return {
             "id": False,
-            "reference": f"reconcile_auxiliary;{reconcile_auxiliary_id}",
-            "account_id": (account.id, self.env._("Sale Order %s", sale_order.name)),
+            "reference": "reconcile_auxiliary;{}".format(reconcile_auxiliary_id),
+            "account_id": (account.id, _("Sale Order %s", sale_order.name)),
             "partner_id": (
                 sale_order.partner_id.id,
                 sale_order.partner_id.display_name,

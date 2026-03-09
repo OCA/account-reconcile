@@ -3,9 +3,7 @@
 
 from odoo.tests import tagged
 
-from odoo.addons.account_reconcile_model_oca.tests.common import (
-    TestAccountReconciliationCommon,
-)
+from odoo.addons.account.tests.common import TestAccountReconciliationCommon
 
 
 @tagged("post_install", "-at_install")
@@ -42,6 +40,7 @@ class TestAccountReconcileSaleOrder(TestAccountReconciliationCommon):
                         0,
                         {
                             "name": "bank payment",
+                            "journal_id": cls.bank_journal_euro.id,
                             "amount": 4242,
                             "payment_ref": "/",
                             "partner_id": partner.id,

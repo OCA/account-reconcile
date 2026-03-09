@@ -1,3 +1,22 @@
 <templates>
-    <t t-name="reconcile_sale_order.ListView.Buttons" />
+
+    <t
+        t-name="account_reconcile_sale_order.ReconcileSaleOrderController"
+        t-inherit="web.ListView"
+        t-inherit-mode="primary"
+        owl="1"
+    >
+        <xpath expr="//t[@list='model.root']" position="attributes">
+            <attribute name="parentRecord">props.parentRecord</attribute>
+            <attribute name="parentField">props.parentField</attribute>
+        </xpath>
+    </t>
+    <t
+        t-name="reconcile_sale_order.ListView.Buttons"
+        t-inherit="web.ListView.Buttons"
+        t-inherit-mode="primary"
+        owl="1"
+    >
+    </t>
+
 </templates>
