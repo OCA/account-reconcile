@@ -1,0 +1,58 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* account_statement_reconcile_status
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 18.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: account_statement_reconcile_status
+#: model:ir.model,name:account_statement_reconcile_status.model_account_bank_statement
+msgid "Bank Statement"
+msgstr ""
+
+#. module: account_statement_reconcile_status
+#: model_terms:ir.ui.view,arch_db:account_statement_reconcile_status.view_bank_statement_search
+msgid "Changed After Reconciliation"
+msgstr ""
+
+#. module: account_statement_reconcile_status
+#: model:ir.model.fields,field_description:account_statement_reconcile_status.field_account_bank_statement__date_first_fully_reconciled
+msgid "First Fully Reconciled On"
+msgstr ""
+
+#. module: account_statement_reconcile_status
+#: model:ir.model.fields.selection,name:account_statement_reconcile_status.selection__account_bank_statement__reconcile_state__done
+#: model_terms:ir.ui.view,arch_db:account_statement_reconcile_status.view_bank_statement_search
+msgid "Fully Reconciled"
+msgstr ""
+
+#. module: account_statement_reconcile_status
+#: model:ir.model.fields.selection,name:account_statement_reconcile_status.selection__account_bank_statement__reconcile_state__in_progress
+#: model_terms:ir.ui.view,arch_db:account_statement_reconcile_status.view_bank_statement_search
+msgid "In Progress"
+msgstr ""
+
+#. module: account_statement_reconcile_status
+#: model:ir.model.fields.selection,name:account_statement_reconcile_status.selection__account_bank_statement__reconcile_state__not_started
+#: model_terms:ir.ui.view,arch_db:account_statement_reconcile_status.view_bank_statement_search
+msgid "Not Started"
+msgstr ""
+
+#. module: account_statement_reconcile_status
+#: model:ir.model.fields,field_description:account_statement_reconcile_status.field_account_bank_statement__reconcile_state
+#: model_terms:ir.ui.view,arch_db:account_statement_reconcile_status.view_bank_statement_search
+msgid "Reconciliation Status"
+msgstr ""
+
+#. module: account_statement_reconcile_status
+#: model_terms:ir.ui.view,arch_db:account_statement_reconcile_status.view_bank_statement_form
+msgid "This statement was fully reconciled but has been modified."
+msgstr ""
