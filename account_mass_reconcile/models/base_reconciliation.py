@@ -73,12 +73,13 @@ class MassReconcileBase(models.AbstractModel):
             "WHERE account_move_line.account_id = %s "
             "AND NOT account_move_line.reconciled "
             "AND parent_state = 'posted'"
+            "AND account_move_line.company_id = %s"
         )
         # it would be great to use dict for params
         # but as we use _where_calc in _get_filter
         # which returns a list, we have to
         # accommodate with that
-        params = [self.account_id.id]
+        params = [self.account_id.id, self.company_id.id]
         if self.partner_ids:
             where += " AND account_move_line.partner_id IN %s"
             params.append(tuple(line.id for line in self.partner_ids))

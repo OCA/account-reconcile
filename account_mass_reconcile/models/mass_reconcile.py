@@ -25,6 +25,7 @@ class MassReconcileOptions(models.AbstractModel):
 
     _name = "mass.reconcile.options"
     _description = "Options of a reconciliation profile"
+    _check_company_auto = True
 
     @api.model
     def _get_rec_base_date(self):
@@ -35,15 +36,28 @@ class MassReconcileOptions(models.AbstractModel):
         ]
 
     write_off = fields.Float("Write off allowed", default=0.0)
-    account_lost_id = fields.Many2one("account.account", string="Account Lost")
-    account_profit_id = fields.Many2one("account.account", string="Account Profit")
-    journal_id = fields.Many2one("account.journal", string="Journal")
+    account_lost_id = fields.Many2one(
+        "account.account",
+        string="Account Lost",
+        check_company=True,
+    )
+    account_profit_id = fields.Many2one(
+        "account.account",
+        string="Account Profit",
+        check_company=True,
+    )
+    journal_id = fields.Many2one(
+        "account.journal",
+        string="Journal",
+        check_company=True,
+    )
     date_base_on = fields.Selection(
         "_get_rec_base_date",
         required=True,
         string="Date of reconciliation",
         default="newest",
     )
+    company_id = fields.Many2one("res.company")
     _filter = fields.Char(string="Filter")
 
 
@@ -88,16 +102,18 @@ class AccountMassReconcile(models.Model):
     _name = "account.mass.reconcile"
     _inherit = ["mail.thread"]
     _description = "Account Mass Reconcile"
+    _check_company_auto = True
 
-    @api.depends("account")
+    @api.depends("account_id")
     def _compute_total_unrec(self):
         obj_move_line = self.env["account.move.line"]
         for rec in self:
             rec.unreconciled_count = obj_move_line.search_count(
                 [
-                    ("account_id", "=", rec.account.id),
+                    ("account_id", "=", rec.account_id.id),
                     ("reconciled", "=", False),
                     ("parent_state", "=", "posted"),
+                    ("company_id", "=", rec.company_id.id),
                 ]
             )
 
@@ -114,7 +130,11 @@ class AccountMassReconcile(models.Model):
             rec.last_history = last_history_rs or False
 
     name = fields.Char(required=True)
-    account = fields.Many2one("account.account", required=True)
+    account_id = fields.Many2one(
+        "account.account",
+        required=True,
+        check_company=True,
+    )
     reconcile_method = fields.One2many(
         "account.mass.reconcile.method", "task_id", string="Method"
     )
@@ -130,18 +150,25 @@ class AccountMassReconcile(models.Model):
         readonly=True,
         compute="_compute_last_history",
     )
-    company_id = fields.Many2one("res.company", string="Company")
+    company_id = fields.Many2one(
+        "res.company",
+        string="Company",
+        required=True,
+        default=lambda self: self.env.company,
+        readonly=True,
+    )
 
     @staticmethod
     def _prepare_run_transient(rec_method):
         return {
-            "account_id": rec_method.task_id.account.id,
+            "account_id": rec_method.task_id.account_id.id,
             "write_off": rec_method.write_off,
             "account_lost_id": rec_method.account_lost_id.id,
             "account_profit_id": rec_method.account_profit_id.id,
             "journal_id": rec_method.journal_id.id,
             "date_base_on": rec_method.date_base_on,
             "_filter": rec_method._filter,
+            "company_id": rec_method.company_id.id,
         }
 
     def _run_reconcile_method(self, reconcile_method):
@@ -186,9 +213,7 @@ class AccountMassReconcile(models.Model):
                     )
                 ) from e
             ctx = self.env.context.copy()
-            company = rec.account.company_ids.filtered(
-                lambda c, rec=rec: c.id == rec.env.company.id
-            )
+            company = rec.company_id
             ctx["commit_every"] = company.reconciliation_commit_every if company else 0
             if ctx["commit_every"]:
                 new_cr = sql_db.db_connect(self.env.cr.dbname).cursor()
@@ -264,9 +289,10 @@ class AccountMassReconcile(models.Model):
         obj_move_line = self.env["account.move.line"]
         lines = obj_move_line.search(
             [
-                ("account_id", "=", self.account.id),
+                ("account_id", "=", self.account_id.id),
                 ("reconciled", "=", False),
                 ("parent_state", "=", "posted"),
+                ("company_id", "=", self.company_id.id),
             ]
         )
         name = _("Unreconciled items")

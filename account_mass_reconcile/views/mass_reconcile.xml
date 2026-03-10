@@ -26,7 +26,7 @@
                     <group>
                         <group>
                             <field name="name" select="1" />
-                            <field name="account" />
+                            <field name="account_id" />
                             <field
                                 name="company_id"
                                 groups="base.group_multi_company"
@@ -116,7 +116,7 @@ The lines should have the same partner, and the credit entry ref. is matched wit
         <field name="arch" type="xml">
             <list>
                 <field name="name" />
-                <field name="account" />
+                <field name="account_id" />
                 <field name="company_id" groups="base.group_multi_company" />
                 <field name="unreconciled_count" />
                 <button

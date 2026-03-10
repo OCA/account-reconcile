@@ -18,7 +18,11 @@ class TestReconcile(AccountTestInvoicingCommon):
 
         cls.sale_journal = cls.company_data["default_journal_sale"]
         cls.mass_rec = cls.mass_rec_obj.create(
-            {"name": "Sale Account", "account": cls.sale_journal.default_account_id.id}
+            {
+                "name": "Sale Account",
+                "account_id": cls.sale_journal.default_account_id.id,
+                "company_id": cls.sale_journal.company_id.id,
+            }
         )
         cls.mass_rec_method = cls.mass_rec_method_obj.create(
             {
@@ -28,7 +32,7 @@ class TestReconcile(AccountTestInvoicingCommon):
             }
         )
         cls.mass_rec_no_history = cls.mass_rec_obj.create(
-            {"name": "AER3", "account": cls.sale_journal.default_account_id.id}
+            {"name": "AER3", "account_id": cls.sale_journal.default_account_id.id}
         )
         cls.rec_history = cls.rec_history_obj.create(
             {"mass_reconcile_id": cls.mass_rec.id, "date": fields.Datetime.now()}
