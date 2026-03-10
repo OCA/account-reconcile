@@ -64,7 +64,7 @@ class TestScenarioReconcile(AccountTestInvoicingCommon):
         mass_rec = self.mass_rec_obj.create(
             {
                 "name": "mass_reconcile_1",
-                "account": invoice.partner_id.property_account_receivable_id.id,
+                "account_id": invoice.partner_id.property_account_receivable_id.id,
                 "reconcile_method": [(0, 0, {"name": "mass.reconcile.simple.partner"})],
             }
         )
@@ -111,7 +111,7 @@ class TestScenarioReconcile(AccountTestInvoicingCommon):
         mass_rec = self.mass_rec_obj.create(
             {
                 "name": "mass_reconcile_1",
-                "account": invoice.partner_id.property_account_receivable_id.id,
+                "account_id": invoice.partner_id.property_account_receivable_id.id,
                 "reconcile_method": [
                     (
                         0,
@@ -178,7 +178,7 @@ class TestScenarioReconcile(AccountTestInvoicingCommon):
         mass_rec = self.mass_rec_obj.create(
             {
                 "name": "mass_reconcile_1",
-                "account": invoice.partner_id.property_account_receivable_id.id,
+                "account_id": invoice.partner_id.property_account_receivable_id.id,
                 "reconcile_method": [
                     (
                         0,
@@ -280,7 +280,7 @@ class TestScenarioReconcile(AccountTestInvoicingCommon):
         mass_rec = self.mass_rec_obj.create(
             {
                 "name": "mass_reconcile_1",
-                "account": invoice.partner_id.property_account_receivable_id.id,
+                "account_id": invoice.partner_id.property_account_receivable_id.id,
                 "reconcile_method": [(0, 0, {"name": "mass.reconcile.simple.partner"})],
             }
         )
@@ -326,7 +326,7 @@ class TestScenarioReconcile(AccountTestInvoicingCommon):
         mass_rec = self.mass_rec_obj.create(
             {
                 "name": "mass_reconcile_1",
-                "account": receivable_account_id,
+                "account_id": receivable_account_id,
                 "reconcile_method": [(0, 0, reconcile_method_vals)],
             }
         )
@@ -370,7 +370,7 @@ class TestScenarioReconcile(AccountTestInvoicingCommon):
         mass_rec = self.mass_rec_obj.create(
             {
                 "name": "mass_reconcile_1",
-                "account": invoice.partner_id.property_account_receivable_id.id,
+                "account_id": invoice.partner_id.property_account_receivable_id.id,
                 "reconcile_method": [
                     (
                         0,
@@ -434,7 +434,7 @@ class TestScenarioReconcile(AccountTestInvoicingCommon):
         mass_rec = self.mass_rec_obj.create(
             {
                 "name": "mass_reconcile_1",
-                "account": invoice.partner_id.property_account_receivable_id.id,
+                "account_id": invoice.partner_id.property_account_receivable_id.id,
                 "reconcile_method": [
                     (
                         0,
