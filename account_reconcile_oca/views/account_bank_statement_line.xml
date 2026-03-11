@@ -319,9 +319,43 @@
                             </group>
                         </group>
                     </page>
-                    <page name="narration" string="Narration">
-                        <field name="payment_ref" />
-                        <field name="narration" />
+                    <page name="narration" string="Statement Details">
+                        <group>
+                            <group string="Transaction">
+                                <field
+                                    name="payment_ref"
+                                    string="Label"
+                                    attrs="{'readonly': [('is_reconciled', '=', True)]}"
+                                />
+                                <field
+                                    name="transaction_type"
+                                    string="Type"
+                                    attrs="{'readonly': [('is_reconciled', '=', True)]}"
+                                />
+                                <field
+                                    name="ref"
+                                    string="Reference"
+                                    attrs="{'readonly': [('is_reconciled', '=', True)]}"
+                                />
+                                <field
+                                    name="narration"
+                                    string="Note"
+                                    attrs="{'readonly': [('is_reconciled', '=', True)]}"
+                                />
+                            </group>
+                            <group string="Source">
+                                <field
+                                    name="partner_name"
+                                    string="Partner Name (raw)"
+                                    attrs="{'readonly': [('is_reconciled', '=', True)]}"
+                                />
+                                <field
+                                    name="account_number"
+                                    string="Account Number"
+                                    attrs="{'readonly': [('is_reconciled', '=', True)]}"
+                                />
+                            </group>
+                        </group>
                     </page>
                     <page name="chatter" string="Chatter">
                         <field name="move_id" widget="account_reconcile_oca_chatter" />
