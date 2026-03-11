@@ -2,10 +2,10 @@
 # Copyright 2010 Sébastien Beau
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
+import ast
 from operator import itemgetter
 
 from odoo import _, fields, models
-from odoo.tools.safe_eval import safe_eval
 
 
 class MassReconcileBase(models.AbstractModel):
@@ -91,7 +91,11 @@ class MassReconcileBase(models.AbstractModel):
         where = ""
         params = []
         if self._filter:
-            query = ml_obj._where_calc(safe_eval(self._filter))
+            try:
+                domain = ast.literal_eval(self._filter)
+            except (ValueError, SyntaxError):
+                return "", []
+            query = ml_obj._where_calc(domain)
             sql_obj = query.where_clause
             if sql_obj:
                 where = f" AND {sql_obj.code}"
