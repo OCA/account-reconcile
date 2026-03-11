@@ -42,6 +42,11 @@ msgid "Account Account Reconcile"
 msgstr "Conciliación de cuenta contable"
 
 #. module: account_reconcile_oca
+#: model_terms:ir.ui.view,arch_db:account_reconcile_oca.bank_statement_line_form_reconcile_view
+msgid "Account Number"
+msgstr ""
+
+#. module: account_reconcile_oca
 #: model:ir.model,name:account_reconcile_oca.model_account_reconcile_abstract
 msgid "Account Reconcile Abstract"
 msgstr "Resumen de conciliación de cuenta"
@@ -357,6 +362,7 @@ msgstr "Mantener cuentas transitorias"
 #. module: account_reconcile_oca
 #. odoo-javascript
 #: code:addons/account_reconcile_oca/static/src/xml/reconcile.xml:0
+#: model_terms:ir.ui.view,arch_db:account_reconcile_oca.bank_statement_line_form_reconcile_view
 #, python-format
 msgid "Label"
 msgstr "Etiqueta"
@@ -483,16 +489,16 @@ msgid "Name"
 msgstr "Nombre"
 
 #. module: account_reconcile_oca
-#: model_terms:ir.ui.view,arch_db:account_reconcile_oca.bank_statement_line_form_reconcile_view
-msgid "Narration"
-msgstr "Narración"
-
-#. module: account_reconcile_oca
 #. odoo-python
 #: code:addons/account_reconcile_oca/models/account_bank_statement_line.py:0
 #, python-format
 msgid "No supense lines are allowed when reconciling"
 msgstr "No se permiten líneas en suspenso al conciliar"
+
+#. module: account_reconcile_oca
+#: model_terms:ir.ui.view,arch_db:account_reconcile_oca.bank_statement_line_form_reconcile_view
+msgid "Note"
+msgstr ""
 
 #. module: account_reconcile_oca
 #: model_terms:ir.actions.act_window,help:account_reconcile_oca.action_bank_statement_line_reconcile_to_check
@@ -521,6 +527,11 @@ msgstr ""
 #, python-format
 msgid "Partner"
 msgstr "Empresa"
+
+#. module: account_reconcile_oca
+#: model_terms:ir.ui.view,arch_db:account_reconcile_oca.bank_statement_line_form_reconcile_view
+msgid "Partner Name (raw)"
+msgstr ""
 
 #. module: account_reconcile_oca
 #: model_terms:ir.ui.view,arch_db:account_reconcile_oca.account_move_line_search_reconcile_view
@@ -606,6 +617,11 @@ msgstr "Conciliado"
 
 #. module: account_reconcile_oca
 #: model_terms:ir.ui.view,arch_db:account_reconcile_oca.bank_statement_line_form_reconcile_view
+msgid "Reference"
+msgstr ""
+
+#. module: account_reconcile_oca
+#: model_terms:ir.ui.view,arch_db:account_reconcile_oca.bank_statement_line_form_reconcile_view
 msgid "Reset reconciliation"
 msgstr "Restablecer conciliación"
 
@@ -637,6 +653,11 @@ msgid "Set as Checked"
 msgstr "Marcar como revisado"
 
 #. module: account_reconcile_oca
+#: model_terms:ir.ui.view,arch_db:account_reconcile_oca.bank_statement_line_form_reconcile_view
+msgid "Source"
+msgstr ""
+
+#. module: account_reconcile_oca
 #: model_terms:ir.ui.view,arch_db:account_reconcile_oca.res_config_settings_form_view
 msgid "Standard aggregation to use on bank reconciliation"
 msgstr "Agregación estándar a usar en la conciliación bancaria"
@@ -646,6 +667,11 @@ msgstr "Agregación estándar a usar en la conciliación bancaria"
 #: model_terms:ir.ui.view,arch_db:account_reconcile_oca.bank_statement_line_reconcile_view
 msgid "Statement"
 msgstr "Extracto"
+
+#. module: account_reconcile_oca
+#: model_terms:ir.ui.view,arch_db:account_reconcile_oca.bank_statement_line_form_reconcile_view
+msgid "Statement Details"
+msgstr ""
 
 #. module: account_reconcile_oca
 #: model:ir.model.fields,field_description:account_reconcile_oca.field_account_bank_statement_line__statement_name
@@ -673,9 +699,19 @@ msgid "To check"
 msgstr "A revisar"
 
 #. module: account_reconcile_oca
+#: model_terms:ir.ui.view,arch_db:account_reconcile_oca.bank_statement_line_form_reconcile_view
+msgid "Transaction"
+msgstr ""
+
+#. module: account_reconcile_oca
 #: model_terms:ir.ui.view,arch_db:account_reconcile_oca.account_journal_dashboard_kanban_view
 msgid "Transactions"
 msgstr "Transacciones"
+
+#. module: account_reconcile_oca
+#: model_terms:ir.ui.view,arch_db:account_reconcile_oca.bank_statement_line_form_reconcile_view
+msgid "Type"
+msgstr ""
 
 #. module: account_reconcile_oca
 #. odoo-python
@@ -747,6 +783,9 @@ msgstr "será disminuido por"
 #: model_terms:ir.ui.view,arch_db:account_reconcile_oca.bank_statement_line_form_reconcile_view
 msgid "with an open amount"
 msgstr "con un importe pendiente de"
+
+#~ msgid "Narration"
+#~ msgstr "Narración"
 
 #, python-format
 #~ msgid "Keep suspense move lines mode cannot be unreconciled"

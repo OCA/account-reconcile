@@ -43,6 +43,11 @@ msgid "Account Account Reconcile"
 msgstr "Hesap Hesap Mutabakatı"
 
 #. module: account_reconcile_oca
+#: model_terms:ir.ui.view,arch_db:account_reconcile_oca.bank_statement_line_form_reconcile_view
+msgid "Account Number"
+msgstr ""
+
+#. module: account_reconcile_oca
 #: model:ir.model,name:account_reconcile_oca.model_account_reconcile_abstract
 msgid "Account Reconcile Abstract"
 msgstr "Hesap Mutabakat Özeti"
@@ -359,6 +364,7 @@ msgstr "Askı Hesapları Tutun"
 #. module: account_reconcile_oca
 #. odoo-javascript
 #: code:addons/account_reconcile_oca/static/src/xml/reconcile.xml:0
+#: model_terms:ir.ui.view,arch_db:account_reconcile_oca.bank_statement_line_form_reconcile_view
 #, python-format
 msgid "Label"
 msgstr "Etiket"
@@ -485,16 +491,16 @@ msgid "Name"
 msgstr "Adı"
 
 #. module: account_reconcile_oca
-#: model_terms:ir.ui.view,arch_db:account_reconcile_oca.bank_statement_line_form_reconcile_view
-msgid "Narration"
-msgstr "Notlar"
-
-#. module: account_reconcile_oca
 #. odoo-python
 #: code:addons/account_reconcile_oca/models/account_bank_statement_line.py:0
 #, python-format
 msgid "No supense lines are allowed when reconciling"
 msgstr "Uzlaştırma yapılırken bekleyen satırlara izin verilmez"
+
+#. module: account_reconcile_oca
+#: model_terms:ir.ui.view,arch_db:account_reconcile_oca.bank_statement_line_form_reconcile_view
+msgid "Note"
+msgstr ""
 
 #. module: account_reconcile_oca
 #: model_terms:ir.actions.act_window,help:account_reconcile_oca.action_bank_statement_line_reconcile_to_check
@@ -523,6 +529,11 @@ msgstr ""
 #, python-format
 msgid "Partner"
 msgstr "İş Ortağı"
+
+#. module: account_reconcile_oca
+#: model_terms:ir.ui.view,arch_db:account_reconcile_oca.bank_statement_line_form_reconcile_view
+msgid "Partner Name (raw)"
+msgstr ""
 
 #. module: account_reconcile_oca
 #: model_terms:ir.ui.view,arch_db:account_reconcile_oca.account_move_line_search_reconcile_view
@@ -608,6 +619,11 @@ msgstr "Uzlaştırıldı"
 
 #. module: account_reconcile_oca
 #: model_terms:ir.ui.view,arch_db:account_reconcile_oca.bank_statement_line_form_reconcile_view
+msgid "Reference"
+msgstr ""
+
+#. module: account_reconcile_oca
+#: model_terms:ir.ui.view,arch_db:account_reconcile_oca.bank_statement_line_form_reconcile_view
 msgid "Reset reconciliation"
 msgstr "Uzlaşmayı Sıfırla"
 
@@ -639,6 +655,11 @@ msgid "Set as Checked"
 msgstr "Kontrol Edildi Olarak İşaretle"
 
 #. module: account_reconcile_oca
+#: model_terms:ir.ui.view,arch_db:account_reconcile_oca.bank_statement_line_form_reconcile_view
+msgid "Source"
+msgstr ""
+
+#. module: account_reconcile_oca
 #: model_terms:ir.ui.view,arch_db:account_reconcile_oca.res_config_settings_form_view
 msgid "Standard aggregation to use on bank reconciliation"
 msgstr "Banka uzlaştırmada kullanılacak standart toplama yöntemi"
@@ -648,6 +669,11 @@ msgstr "Banka uzlaştırmada kullanılacak standart toplama yöntemi"
 #: model_terms:ir.ui.view,arch_db:account_reconcile_oca.bank_statement_line_reconcile_view
 msgid "Statement"
 msgstr "Hesap Ektresi"
+
+#. module: account_reconcile_oca
+#: model_terms:ir.ui.view,arch_db:account_reconcile_oca.bank_statement_line_form_reconcile_view
+msgid "Statement Details"
+msgstr ""
 
 #. module: account_reconcile_oca
 #: model:ir.model.fields,field_description:account_reconcile_oca.field_account_bank_statement_line__statement_name
@@ -675,9 +701,19 @@ msgid "To check"
 msgstr "Kontrol edilecek"
 
 #. module: account_reconcile_oca
+#: model_terms:ir.ui.view,arch_db:account_reconcile_oca.bank_statement_line_form_reconcile_view
+msgid "Transaction"
+msgstr ""
+
+#. module: account_reconcile_oca
 #: model_terms:ir.ui.view,arch_db:account_reconcile_oca.account_journal_dashboard_kanban_view
 msgid "Transactions"
 msgstr "İşlemler"
+
+#. module: account_reconcile_oca
+#: model_terms:ir.ui.view,arch_db:account_reconcile_oca.bank_statement_line_form_reconcile_view
+msgid "Type"
+msgstr ""
 
 #. module: account_reconcile_oca
 #. odoo-python
@@ -751,6 +787,9 @@ msgstr "kadar azaltılacak"
 #: model_terms:ir.ui.view,arch_db:account_reconcile_oca.bank_statement_line_form_reconcile_view
 msgid "with an open amount"
 msgstr "açık bir miktarla"
+
+#~ msgid "Narration"
+#~ msgstr "Notlar"
 
 #, python-format
 #~ msgid "Keep suspense move lines mode cannot be unreconciled"
