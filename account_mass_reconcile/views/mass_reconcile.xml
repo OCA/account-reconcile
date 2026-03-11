@@ -167,6 +167,12 @@ The lines should have the same partner, and the credit entry ref. is matched wit
                 <field name="account_profit_id" required="write_off &gt; 0" />
                 <field name="journal_id" required="write_off &gt; 0" />
                 <field name="date_base_on" />
+                <field
+                    name="_filter"
+                    optional="hide"
+                    widget="domain"
+                    options="{'model': 'account.move.line', 'in_dialog': True}"
+                />
             </list>
         </field>
     </record>

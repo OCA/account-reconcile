@@ -58,7 +58,7 @@ class MassReconcileOptions(models.AbstractModel):
         default="newest",
     )
     company_id = fields.Many2one("res.company")
-    _filter = fields.Char(string="Filter")
+    _filter = fields.Text(string="Accounting Entries Domain")
 
 
 class AccountMassReconcileMethod(models.Model):
