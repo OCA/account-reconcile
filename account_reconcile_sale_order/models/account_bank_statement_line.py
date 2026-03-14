@@ -87,6 +87,7 @@ class AccountBankStatementLine(models.Model):
         Return dict to be added to reconcile_data_info["data"] for sale order
         """
         account = sale_order.partner_id.property_account_receivable_id
+        amount = sale_order.amount_total - sale_order.amount_invoiced
         return {
             "id": False,
             "reference": f"reconcile_auxiliary;{reconcile_auxiliary_id}",
@@ -97,12 +98,12 @@ class AccountBankStatementLine(models.Model):
             ),
             "date": fields.Date.to_string(sale_order.date_order),
             "name": sale_order.name,
-            "amount": -sale_order.amount_total,
-            "credit": sale_order.amount_total,
+            "amount": -amount,
+            "credit": amount,
             "debit": 0,
             "kind": kind,
             "currency_id": sale_order.currency_id.id,
-            "currency_amount": -sale_order.amount_total,
+            "currency_amount": -amount,
             "line_currency_id": sale_order.currency_id.id,
             "sale_order_id": sale_order.id,
         }
