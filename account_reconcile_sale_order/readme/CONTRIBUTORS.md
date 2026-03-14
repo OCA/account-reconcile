@@ -1,1 +1,2 @@
--   Holger Brunn \<mail@hunki-enterprises.com> (https://hunki-enterprises.com)
+- Holger Brunn \<mail@hunki-enterprises.com\> (https://hunki-enterprises.com)
+- Jacques-Etienne Baudoux (BCIM) \<je@bcim.be\>

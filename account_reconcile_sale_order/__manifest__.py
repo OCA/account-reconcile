@@ -9,10 +9,10 @@
     "category": "Accounting",
     "website": "https://github.com/OCA/account-reconcile",
     "author": "Hunki Enterprises BV, Odoo Community Association (OCA)",
-    "maintainers": ["hbrunn"],
+    "maintainers": ["hbrunn", "jbaudoux"],
     "license": "AGPL-3",
     "depends": [
-        "sale",
+        "sale_action_paid",  # OCA/sale-workflow
         "account_reconcile_oca",
     ],
     "data": [

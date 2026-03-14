@@ -1,8 +1,10 @@
 # Copyright 2024 Hunki Enterprises BV
+# Copyright 2026 Jacques-Etienne Baudoux (BCIM) <je@bcim.be>
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0)
 
 
 from odoo import api, fields, models
+from odoo.exceptions import UserError
 
 
 class AccountBankStatementLine(models.Model):
@@ -120,10 +122,13 @@ class AccountBankStatementLine(models.Model):
         """
         Invoice selected sale orders and post the invoices
         """
-        if order.state in ("draft", "sent"):
-            order.action_confirm()
-        invoices = order._create_invoices()
-        invoices.action_post()
+        order.ensure_one()
+        invoices = order._action_paid(force_invoice=True)
+        invoices = invoices.filtered(lambda inv: inv.state == "posted")
+        if not invoices:
+            raise UserError(
+                self.env._("The reconciliation could not create a posted invoice")
+            )
         return invoices.line_ids.filtered(
             lambda x: x.account_id.account_type == "asset_receivable"
         )
