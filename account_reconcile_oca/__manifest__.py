@@ -5,7 +5,7 @@
     "name": "Account Reconcile OCA",
     "summary": """
         Reconcile addons for Odoo CE accounting""",
-    "version": "16.0.2.5.0",
+    "version": "16.0.2.5.1",
     "license": "AGPL-3",
     "author": "CreuBlanca,Dixmit,Odoo Community Association (OCA)",
     "maintainers": ["etobella"],
