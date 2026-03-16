@@ -7,3 +7,5 @@
 
 - [Tecnativa](https://www.tecnativa.com):
   - Víctor Martínez
+
+- Jacques-Etienne Baudoux (BCIM) \<<je@bcim.be>\>

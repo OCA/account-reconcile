@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2024 ACSONE SA/V
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
+<odoo>
+    <record id="res_config_settings_view_form" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="account.res_config_settings_view_form" />
+        <field name="arch" type="xml">
+            <block id="quick_edit_mode" position="after">
+                <block
+                    title="Partners Mismatch Restriction on Reconcile"
+                    name="account_reconcile_restrict_partner_mismatch"
+                >
+                    <setting
+                        id="restrict_partner_mismatch_on_reconcile"
+                        help="Check this if you want to avoid partner mismatch (several different partners) on reconciliation."
+                    >
+                        <field name="restrict_partner_mismatch_on_reconcile" />
+                    </setting>
+                </block>
+            </block>
+        </field>
+    </record>
+</odoo>

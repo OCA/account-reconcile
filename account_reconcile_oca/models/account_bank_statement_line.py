@@ -43,6 +43,7 @@ class AccountBankStatementLine(models.Model):
         store=False,
         default=False,
         prefetch=False,
+        domain=[("deprecated", "=", False)],
     )
     manual_partner_id = fields.Many2one(
         "res.partner",
@@ -589,7 +590,7 @@ class AccountBankStatementLine(models.Model):
             reconcile_model._get_partner_from_mapping(self) or self._retrieve_partner()
         )
         for line in reconcile_model._get_write_off_move_lines_dict(
-            -liquidity_amount, partner.id
+            -liquidity_amount, partner.id, label=self.payment_ref
         ):
             new_line = line.copy()
             new_line["partner_id"] = (

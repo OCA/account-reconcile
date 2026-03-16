@@ -26,6 +26,13 @@ class TestInvoice(AccountTestInvoicingCommon):
         )
         cls.partner_agrolait_id = cls.partner_agrolait.id
 
+        cls.partner_autocomplete = cls.env["res.partner"].create(
+            {
+                "name": "TestPartner",
+                "is_company": True,
+            }
+        )
+
     def _create_invoice(
         self,
         move_type="out_invoice",
@@ -192,7 +199,7 @@ class TestInvoice(AccountTestInvoicingCommon):
             .with_context(check_move_validity=False)
             .create(
                 {
-                    "name": "Test autocompletion based on Partner Name Deco Addict",
+                    "name": "Test autocompletion based on Partner Name TestPartner",
                     "account_id": self.company_data["default_account_receivable"].id,
                     "move_id": move_test1.id,
                     "date_maturity": fields.Date.from_string("2013-12-17"),
@@ -259,7 +266,7 @@ class TestInvoice(AccountTestInvoicingCommon):
         # Line 4. I check that the partner name has been recognised.
         self.assertEqual(
             move_line_partner_name.partner_id.name,
-            "Deco Addict",
+            "TestPartner",
             msg="Check completion by partner name",
         )
         # Line 5. I check that the partner special label has been recognised.

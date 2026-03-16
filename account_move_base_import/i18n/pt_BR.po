@@ -111,8 +111,10 @@ msgstr ""
 
 #. module: account_move_base_import
 #: model:ir.model.fields,help:account_move_base_import.field_account_journal__commission_analytic_account_id
-msgid "Choose an analytic account to be used on the commission line."
-msgstr "Escolha uma conta analítica para ser usada na linha de comissão."
+msgid ""
+"Choose an analytic account to be used on the commission line analytic "
+"distribution."
+msgstr ""
 
 #. module: account_move_base_import
 #: model:ir.model.fields,help:account_move_base_import.field_account_journal__import_type
@@ -696,6 +698,9 @@ msgid ""
 msgstr ""
 "Quando esta caixa de seleção estiver marcada, o processo/botão de "
 "preenchimento automático irá ignorar esta linha."
+
+#~ msgid "Choose an analytic account to be used on the commission line."
+#~ msgstr "Escolha uma conta analítica para ser usada na linha de comissão."
 
 #, python-format
 #~ msgid "Column %s not present in file"

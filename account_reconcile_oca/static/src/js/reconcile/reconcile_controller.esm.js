@@ -4,14 +4,23 @@ import {KanbanController} from "@web/views/kanban/kanban_controller";
 import {View} from "@web/views/view";
 import {formatMonetary} from "@web/views/fields/formatters";
 import {router} from "@web/core/browser/router";
+import {useSetupAction} from "@web/search/action_hook";
 
 export class ReconcileController extends KanbanController {
     async setup() {
         super.setup();
+        this.initialLoad = true;
         this.state = useState({
-            selectedRecordId: null,
+            selectedRecordId: this.props.state?.selectedRecordId,
             journalBalance: 0,
             currency: false,
+        });
+        useSetupAction({
+            getLocalState: () => {
+                return {
+                    selectedRecordId: this.state.selectedRecordId,
+                };
+            },
         });
         useSubEnv({
             parentController: this,
@@ -97,6 +106,12 @@ export class ReconcileController extends KanbanController {
         var resId = false;
         if (record === undefined && this.props.resId) {
             resId = this.props.resId;
+        } else if (
+            this.initialLoad &&
+            record === undefined &&
+            this.state.selectedRecordId
+        ) {
+            resId = this.state.selectedRecordId;
         } else if (record === undefined) {
             var records = this.model.root.records.filter(
                 (modelRecord) =>
@@ -113,8 +128,9 @@ export class ReconcileController extends KanbanController {
         } else {
             resId = record.resId;
         }
+        this.initialLoad = false;
         if (this.state.selectedRecordId && this.state.selectedRecordId !== resId) {
-            if (this.form_controller && this.form_controller.model.root.isDirty) {
+            if (this.form_controller && this.form_controller?.model?.root?.isDirty) {
                 await this.form_controller.model.root.save({
                     noReload: true,
                     stayInEdition: true,

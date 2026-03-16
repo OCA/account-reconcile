@@ -1,0 +1,7 @@
+- [Tecnativa](https://www.tecnativa.com):
+  - Ernesto Tejeda
+- [Trobz](https://trobz.com):
+  - Nguyen Ho \<<nguyenhk@trobz.com>\>
+  - Nhan Tran \<<nhant@trobz.com>\>
+- [ACSONE SA](https://acsone.eu):
+  - Souheil Bejaoui \<<souheil.bejaoui@acsone.eu>\>

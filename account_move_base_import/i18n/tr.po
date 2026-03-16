@@ -109,8 +109,10 @@ msgstr ""
 
 #. module: account_move_base_import
 #: model:ir.model.fields,help:account_move_base_import.field_account_journal__commission_analytic_account_id
-msgid "Choose an analytic account to be used on the commission line."
-msgstr "Komisyon satırında kullanılmak üzere bir analitik hesap seçin."
+msgid ""
+"Choose an analytic account to be used on the commission line analytic "
+"distribution."
+msgstr ""
 
 #. module: account_move_base_import
 #: model:ir.model.fields,help:account_move_base_import.field_account_journal__import_type
@@ -700,6 +702,9 @@ msgid ""
 msgstr ""
 "Bu kutucuk işaretlendiğinde, otomatik-tamamlama işlemi/butonu bu satırı "
 "dikkate almayacaktır."
+
+#~ msgid "Choose an analytic account to be used on the commission line."
+#~ msgstr "Komisyon satırında kullanılmak üzere bir analitik hesap seçin."
 
 #~ msgid "Last Modified on"
 #~ msgstr "Son değişiklik"

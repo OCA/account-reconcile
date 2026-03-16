@@ -1,0 +1,25 @@
+<odoo>
+    <record id="bank_statement_line_form_reconcile_view" model="ir.ui.view">
+        <field name="model">account.bank.statement.line</field>
+        <field
+            name="inherit_id"
+            ref="account_reconcile_oca.bank_statement_line_form_reconcile_view"
+        />
+        <field name="arch" type="xml">
+            <page name="reconcile_line" position="after">
+                <page
+                    name="reconcile_sale_order"
+                    string="Sale orders"
+                    invisible="is_reconciled == True"
+                >
+                    <field
+                        name="add_sale_order_id"
+                        widget="account_reconcile_oca_match"
+                        domain="[('state', 'not in', ('done', 'cancel')), ('invoice_status', 'not in', ('upselling', 'invoiced'))]"
+                        context="{'search_default_partner_id': partner_id, 'list_view_ref': 'account_reconcile_sale_order.sale_order_tree'}"
+                    />
+                </page>
+            </page>
+        </field>
+    </record>
+</odoo>
