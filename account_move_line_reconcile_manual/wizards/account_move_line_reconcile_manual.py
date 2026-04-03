@@ -20,6 +20,9 @@ class AccountMoveLineReconcileManual(models.TransientModel):
     )
     company_id = fields.Many2one("res.company", required=True, readonly=True)
     currency_id = fields.Many2one("res.currency")
+    company_currency_id = fields.Many2one(
+        "res.currency", related="company_id.currency_id"
+    )
     count = fields.Integer(string="# of Journal Items", readonly=True)
     total_debit = fields.Monetary(currency_field="currency_id", readonly=True)
     total_credit = fields.Monetary(currency_field="currency_id", readonly=True)
@@ -37,6 +40,7 @@ class AccountMoveLineReconcileManual(models.TransientModel):
         default="start",
     )
     # START WRITE-OFF FIELDS
+    writeoff_currency_id = fields.Many2one("res.currency")
     writeoff_model_id = fields.Many2one(
         "account.reconcile.manual.model",
         string="Model",
@@ -72,7 +76,10 @@ class AccountMoveLineReconcileManual(models.TransientModel):
         string="Type",
     )
     writeoff_amount = fields.Monetary(
-        currency_field="currency_id", readonly=True, string="Amount"
+        currency_field="company_currency_id", readonly=True, string="Amount"
+    )
+    writeoff_amount_currency = fields.Monetary(
+        currency_field="writeoff_currency_id", readonly=True, string="Amount Currency"
     )
     writeoff_account_id = fields.Many2one(
         "account.account",
@@ -96,6 +103,7 @@ class AccountMoveLineReconcileManual(models.TransientModel):
             "Percentage Analytic"
         ),
     )
+    is_multi_currency = fields.Boolean()
 
     @api.depends("writeoff_model_id")
     def _compute_writeoff(self):
@@ -201,7 +209,6 @@ class AccountMoveLineReconcileManual(models.TransientModel):
             raise UserError(_("You selected only credit journal items."))
         if currency.is_zero(total_credit):
             raise UserError(_("You selected only debit journal items."))
-        writeoff_amount = currency.round(abs(total_debit - total_credit))
         total_debit = currency.round(total_debit)
         total_credit = currency.round(total_credit)
         compare_res = currency.compare_amounts(total_debit, total_credit)
@@ -222,8 +229,8 @@ class AccountMoveLineReconcileManual(models.TransientModel):
                 "partner_count": len(partner_set),
                 "partner_id": len(partner_set) == 1 and partner_set.pop() or False,
                 "move_line_ids": move_lines.ids,
+                "is_multi_currency": len(currencies) > 1,
                 "writeoff_type": writeoff_type,
-                "writeoff_amount": writeoff_amount,
             }
         )
         return res
@@ -256,8 +263,99 @@ class AccountMoveLineReconcileManual(models.TransientModel):
         self.move_line_ids.reconcile()
         return
 
+    def _get_writeoff_vals_by_simulation(self):
+        """
+        In some multi-currency reconciliation case, it is too complicated to 'guess'
+        the needed writeoff amounts. For these case, we do simulate the reconciliation
+        too get the real writeoff amounts
+        """
+        amls = self.move_line_ids
+        # From _reconcile_plan_with_sync
+        plan_list, all_amls = self.env[
+            "account.move.line"
+        ]._optimize_reconciliation_plan([amls])
+        aml_values_map = {
+            aml: {
+                "aml": aml,
+                "amount_residual": aml.amount_residual,
+                "amount_residual_currency": aml.amount_residual_currency,
+            }
+            for aml in all_amls
+        }
+        plan = plan_list[0]
+        # Simulate the reconciliation
+        # disable exchange difference because the writeoff will take care of it
+        # anyway.
+        self.env["account.move.line"].with_context(
+            no_exchange_difference=True
+        )._prepare_reconciliation_plan(plan, aml_values_map)
+
+        # aml_values_map is updated by the simulation, check residuals in order to
+        # compute the writeoff amounts we need to complete the reconciliation
+
+        residual_lines = self.env["account.move.line"]
+        residual = residual_currency = 0.0
+        currency = False
+        writeoff = True
+        for aml, vals in aml_values_map.items():
+            if vals["amount_residual"] or vals["amount_residual_currency"]:
+                residual_lines |= aml
+                residual += vals["amount_residual"]
+                residual_currency += vals["amount_residual_currency"]
+                if not currency:
+                    currency = aml.currency_id
+                if currency != aml.currency_id:
+                    writeoff = False
+                    break
+        if not writeoff:
+            return False
+        return {
+            "writeoff_amount": -residual,
+            "writeoff_amount_currency": -residual_currency,
+            "writeoff_currency_id": currency.id,
+        }
+
+    def _compute_writeoff_amounts(self):
+        # avoid redoing simulation if we do have the amounts already
+        if self.writeoff_amount or self.writeoff_amount_currency:
+            return
+        if self.is_multi_currency:
+            vals = self._get_writeoff_vals_by_simulation()
+            if vals:
+                self.write(vals)
+            else:
+                raise UserError(
+                    self.env._(
+                        "Can't compute the writeoff amount, it may be caused by too "
+                        "much currencies to be reconciled together. Yoy should probably"
+                        " do a partial reconciliation and create the required write-off"
+                        " entries manually to fully reconcile the remaining "
+                        "unreconciled entries."
+                    )
+                )
+
+        else:
+            writeoff_amount = self.currency_id.round(
+                -(self.total_debit - self.total_credit)
+            )
+            if self.currency_id != self.company_currency_id:
+                self.write(
+                    {
+                        "writeoff_amount_currency": writeoff_amount,
+                        "writeoff_currency_id": self.currency_id.id,
+                    }
+                )
+            else:
+                self.write(
+                    {
+                        "writeoff_amount": writeoff_amount,
+                        "writeoff_currency_id": self.currency_id.id,
+                    }
+                )
+
     def go_to_writeoff(self):
         self.ensure_one()
+        self._compute_writeoff_amounts()
         self.write({"state": "writeoff"})
         action = self.env["ir.actions.actions"]._for_xml_id(
             "account_move_line_reconcile_manual.account_move_line_reconcile_manual_action"
@@ -266,18 +364,21 @@ class AccountMoveLineReconcileManual(models.TransientModel):
         return action
 
     def _prepare_writeoff_move(self):
-        cur = self.currency_id
-        is_foreign_currency = self.company_id.currency_id != self.currency_id
+        # TODO manage case with not computed ccur amount
+        # Manage case of + currency and - euro ?
+        # could strategy be : partial reconcile
+        # reconcile resildual with write off by currency ?
+        cur = self.writeoff_currency_id
+        is_foreign_currency = self.company_currency_id != self.writeoff_currency_id
 
-        bal = cur.round(self.total_debit - self.total_credit)
+        bal_cur = cur.round(self.writeoff_amount_currency)
+        bal = self.company_id.currency_id.round(self.writeoff_amount)
         compare_res = cur.compare_amounts(bal, 0)
-        assert compare_res
+        debit = credit = 0.0
         if compare_res > 0:
-            credit = bal
-            debit = 0
+            debit = bal
         else:
-            debit = bal * -1
-            credit = 0
+            credit = bal * -1
         payment_term_line_vals = {
             "display_type": "payment_term",
             "account_id": self.account_id.id,
@@ -293,17 +394,32 @@ class AccountMoveLineReconcileManual(models.TransientModel):
         if is_foreign_currency:
             payment_term_line_vals.update(
                 {
-                    "currency_id": self.currency_id.id,
-                    "amount_currency": debit - credit,
+                    "currency_id": cur.id,
+                    "amount_currency": bal_cur,
                 }
             )
             product_line_vals.update(
                 {
-                    "currency_id": self.currency_id.id,
-                    "amount_currency": credit - debit,
+                    "currency_id": cur.id,
+                    "amount_currency": -bal_cur,
                 }
             )
-
+            # in multi currency mode, we simulate the reconciliation and we know
+            # both currency and company currency amounts while in normal case (mono
+            # currency reconciliation) we leave Odoo generates the exchange rate entries
+            if self.is_multi_currency:
+                payment_term_line_vals.update(
+                    {
+                        "debit": debit,
+                        "credit": credit,
+                    }
+                )
+                product_line_vals.update(
+                    {
+                        "debit": credit,
+                        "credit": debit,
+                    }
+                )
         else:
             payment_term_line_vals.update({"debit": debit, "credit": credit})
             product_line_vals.update(
@@ -332,7 +448,7 @@ class AccountMoveLineReconcileManual(models.TransientModel):
             ],
         }
         if is_foreign_currency:
-            vals["currency_id"] = self.currency_id.id
+            vals["currency_id"] = cur.id
         return vals
 
     def reconcile_with_writeoff(self):
@@ -348,11 +464,10 @@ class AccountMoveLineReconcileManual(models.TransientModel):
             lambda x: x.account_id.id == self.account_id.id
         )
         assert len(to_rec_woff_line) == 1
-        to_rec_lines = self.move_line_ids + to_rec_woff_line
         no_exchange_difference = len(self.move_line_ids.currency_id) > 1 or False
-        to_rec_lines.with_context(
+        self.env["account.move.line"].with_context(
             no_exchange_difference=no_exchange_difference
-        ).reconcile()
+        )._reconcile_plan([[self.move_line_ids, to_rec_woff_line]])
         for move_line in self.move_line_ids:
             if not move_line.reconciled:
                 raise UserError(
