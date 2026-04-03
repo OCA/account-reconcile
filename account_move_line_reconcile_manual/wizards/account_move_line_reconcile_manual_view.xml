@@ -26,6 +26,7 @@
                     <field name="state" invisible="1" />
                     <field name="company_id" invisible="1" />
                     <field name="currency_id" invisible="1" />
+                    <field name="company_currency_id" invisible="1" />
                     <field name="partner_count" invisible="1" />
                     <field name="partner_id" invisible="1" />
                 </group>
@@ -46,7 +47,12 @@
                         options="{'datepicker': {'warn_future': true}}"
                     />
                     <field name="writeoff_ref" />
-                    <field name="writeoff_amount" />
+                    <field name="writeoff_amount" invisible="not writeoff_amount" />
+                    <field
+                        name="writeoff_amount_currency"
+                        invisible="not writeoff_amount_currency or writeoff_currency_id == company_currency_id"
+                    />
+                    <field name="writeoff_currency_id" invisible="1" />
                     <field name="writeoff_type" />
                     <field name="writeoff_account_id" required="state == 'writeoff'" />
                     <field
