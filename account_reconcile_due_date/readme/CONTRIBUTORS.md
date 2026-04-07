@@ -1,3 +1,4 @@
 - [Tecnativa](https://www.tecnativa.com):
   - Víctor Martínez
   - Alexandre D. Díaz
+  - Eduardo Ezerouali
