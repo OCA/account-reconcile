@@ -44,6 +44,16 @@ msgid "Date"
 msgstr "Datums"
 
 #. module: account_statement_base
+#: model_terms:ir.ui.view,arch_db:account_statement_base.account_bank_statement_line_search
+msgid "Foreign Currency"
+msgstr ""
+
+#. module: account_statement_base
+#: model_terms:ir.ui.view,arch_db:account_statement_base.account_bank_statement_line_search
+msgid "Inbound"
+msgstr ""
+
+#. module: account_statement_base
 #: model:ir.model,name:account_statement_base.model_account_journal
 #: model_terms:ir.ui.view,arch_db:account_statement_base.account_bank_statement_line_search
 msgid "Journal"
@@ -80,6 +90,11 @@ msgstr "Atvērt grāmatojumu"
 #: model_terms:ir.ui.view,arch_db:account_statement_base.view_bank_statement_tree
 msgid "Open Statement Lines"
 msgstr "Atvērt izraksta rindas"
+
+#. module: account_statement_base
+#: model_terms:ir.ui.view,arch_db:account_statement_base.account_bank_statement_line_search
+msgid "Outbound"
+msgstr ""
 
 #. module: account_statement_base
 #: model_terms:ir.ui.view,arch_db:account_statement_base.account_bank_statement_line_search
