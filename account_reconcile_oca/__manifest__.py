@@ -24,6 +24,7 @@
         "views/account_move.xml",
         "views/account_account.xml",
         "views/account_bank_statement.xml",
+        "views/account_reconcile_model.xml",
     ],
     "demo": ["demo/demo.xml"],
     "post_init_hook": "post_init_hook",

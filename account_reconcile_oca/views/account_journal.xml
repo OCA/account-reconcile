@@ -70,6 +70,14 @@
                     >Transactions</a>
                 </div>
             </xpath>
+            <xpath
+                expr="//a[@name='%(account.action_account_reconcile_model)d']"
+                position="attributes"
+            >
+                <attribute
+                    name="t-attf-context"
+                >{'search_default_search_journal_id': #{record.id.raw_value} }</attribute>
+            </xpath>
         </field>
     </record>
 </odoo>

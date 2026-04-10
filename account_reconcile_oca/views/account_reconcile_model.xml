@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2023 Dixmit
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
+<odoo>
+    <record model="ir.ui.view" id="view_account_reconcile_model_search">
+        <field
+            name="name"
+        >account.reconcile.model.search (in account_reconcile_oca)</field>
+        <field name="model">account.reconcile.model</field>
+        <field name="inherit_id" ref="account.view_account_reconcile_model_search" />
+        <field name="arch" type="xml">
+            <field name="name" position="after">
+                <field name="search_journal_id" />
+            </field>
+        </field>
+    </record>
+    <menuitem
+        id="menu_account_reconcile_model"
+        name="Reconciliation Models"
+        parent="account.account_account_menu"
+        action="account.action_account_reconcile_model"
+        sequence="20"
+    />
+</odoo>
