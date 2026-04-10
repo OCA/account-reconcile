@@ -590,6 +590,63 @@ class TestReconciliationWidget(TestAccountReconciliationCommon):
         )
         self.assertTrue(bank_stmt_line.is_reconciled)
 
+    def test_reconcile_rule_tax(self):
+        """
+        We want to test what happens when we select an reconcile model to fill a
+        bank statement and the model involves taxes.
+        """
+        tax = self.env["account.tax"].create(
+            {
+                "name": "Test Tax",
+                "amount": 25,
+                "type_tax_use": "sale",
+                "amount_type": "percent",
+                "company_id": self.env.company.id,
+            }
+        )
+        self.rule.line_ids.amount_string = "80"
+        self.rule.line_ids.tax_ids = tax
+        bank_stmt = self.acc_bank_stmt_model.create(
+            {
+                "journal_id": self.bank_journal_euro.id,
+                "date": time.strftime("%Y-07-15"),
+                "name": "test",
+            }
+        )
+        bank_stmt_line = self.acc_bank_stmt_line_model.create(
+            {
+                "name": "testLine",
+                "journal_id": self.bank_journal_euro.id,
+                "statement_id": bank_stmt.id,
+                "amount": 100,
+                "date": time.strftime("%Y-07-15"),
+            }
+        )
+        with Form(
+            bank_stmt_line,
+            view="account_reconcile_oca.bank_statement_line_form_reconcile_view",
+        ) as f:
+            self.assertFalse(f.can_reconcile)
+            f.manual_model_id = self.rule
+            self.assertTrue(f.can_reconcile)
+        number_of_lines = len(bank_stmt_line.reconcile_data_info["data"])
+        bank_stmt_line.reconcile_bank_line()
+        self.assertEqual(
+            number_of_lines, len(bank_stmt_line.reconcile_data_info["data"])
+        )
+        self.assertEqual(3, len(bank_stmt_line.move_id.line_ids))
+        self.assertTrue(
+            bank_stmt_line.move_id.line_ids.filtered(
+                lambda r: r.account_id == self.current_assets_account
+            )
+        )
+        self.assertTrue(
+            bank_stmt_line.move_id.line_ids.filtered(lambda r: r.tax_ids == tax)
+        )
+        self.assertTrue(
+            bank_stmt_line.move_id.line_ids.filtered(lambda r: r.tax_line_id == tax)
+        )
+
     @mute_logger("odoo.models.unlink")
     def test_reconcile_invoice_keep(self):
         """
@@ -1542,4 +1599,197 @@ class TestReconciliationWidget(TestAccountReconciliationCommon):
                 lambda r: r.account_id == self.company_data["default_account_revenue"]
             ).balance,
             -20,
+        )
+
+    def test_reconcile_aggregate_none(self):
+        self.bank_journal_euro.reconcile_aggregate = False
+        bank_stmt = self.acc_bank_stmt_model.create(
+            {
+                "journal_id": self.bank_journal_euro.id,
+                "date": time.strftime("%Y-07-15"),
+                "name": "test",
+            }
+        )
+        bank_stmt_line = self.acc_bank_stmt_line_model.create(
+            {
+                "name": "testLine",
+                "journal_id": self.bank_journal_euro.id,
+                "statement_id": bank_stmt.id,
+                "amount": 50,
+                "date": time.strftime("%Y-07-15"),
+            }
+        )
+        self.assertFalse(bank_stmt_line.aggregate_id)
+        self.assertFalse(bank_stmt_line.aggregate_name)
+
+    def test_reconcile_aggregate_statement(self):
+        self.bank_journal_euro.reconcile_aggregate = "statement"
+        bank_stmt = self.acc_bank_stmt_model.create(
+            {
+                "journal_id": self.bank_journal_euro.id,
+                "date": time.strftime("%Y-07-15"),
+                "name": "test",
+            }
+        )
+        bank_stmt_line = self.acc_bank_stmt_line_model.create(
+            {
+                "name": "testLine",
+                "journal_id": self.bank_journal_euro.id,
+                "statement_id": bank_stmt.id,
+                "amount": 50,
+                "date": time.strftime("%Y-07-15"),
+            }
+        )
+        self.assertEqual(bank_stmt_line.aggregate_id, bank_stmt.id)
+        self.assertEqual(bank_stmt_line.aggregate_name, bank_stmt.name)
+
+    def test_reconcile_aggregate_day(self):
+        self.bank_journal_euro.reconcile_aggregate = "day"
+        self.env.user.lang = "en_US"
+        date = time.strftime("2025-07-15")
+        bank_stmt = self.acc_bank_stmt_model.create(
+            {
+                "journal_id": self.bank_journal_euro.id,
+                "date": date,
+                "name": "test",
+            }
+        )
+        bank_stmt_line = self.acc_bank_stmt_line_model.create(
+            {
+                "name": "testLine",
+                "journal_id": self.bank_journal_euro.id,
+                "statement_id": bank_stmt.id,
+                "amount": 50,
+                "date": date,
+            }
+        )
+        self.assertEqual(bank_stmt_line.aggregate_id, 739447)
+        self.assertEqual(bank_stmt_line.aggregate_name, "07/15/2025")
+
+    def test_reconcile_aggregate_week(self):
+        self.bank_journal_euro.reconcile_aggregate = "week"
+        self.env.user.lang = "en_US"
+        date = time.strftime("2025-07-15")
+        bank_stmt = self.acc_bank_stmt_model.create(
+            {
+                "journal_id": self.bank_journal_euro.id,
+                "date": date,
+                "name": "test",
+            }
+        )
+        bank_stmt_line = self.acc_bank_stmt_line_model.create(
+            {
+                "name": "testLine",
+                "journal_id": self.bank_journal_euro.id,
+                "statement_id": bank_stmt.id,
+                "amount": 50,
+                "date": date,
+            }
+        )
+        self.assertEqual(bank_stmt_line.aggregate_id, 739445)
+        self.assertEqual(bank_stmt_line.aggregate_name, "07/13/2025")
+
+    def test_reconcile_aggregate_month(self):
+        self.bank_journal_euro.reconcile_aggregate = "month"
+        self.env.user.lang = "en_US"
+        date = time.strftime("2025-07-15")
+        bank_stmt = self.acc_bank_stmt_model.create(
+            {
+                "journal_id": self.bank_journal_euro.id,
+                "date": date,
+                "name": "test",
+            }
+        )
+        bank_stmt_line = self.acc_bank_stmt_line_model.create(
+            {
+                "name": "testLine",
+                "journal_id": self.bank_journal_euro.id,
+                "statement_id": bank_stmt.id,
+                "amount": 50,
+                "date": date,
+            }
+        )
+        self.assertEqual(bank_stmt_line.aggregate_id, 739433)
+        self.assertEqual(bank_stmt_line.aggregate_name, "07/01/2025")
+
+    def test_add_statement(self):
+        bank_stmt_line_01 = self.acc_bank_stmt_line_model.create(
+            {
+                "name": "testLine",
+                "journal_id": self.bank_journal_euro.id,
+                "amount": 50,
+                "date": time.strftime("%Y-07-15"),
+            }
+        )
+        bank_stmt_line_02 = self.acc_bank_stmt_line_model.create(
+            {
+                "name": "testLine",
+                "journal_id": self.bank_journal_euro.id,
+                "amount": 50,
+                "date": time.strftime("%Y-07-16"),
+            }
+        )
+        bank_stmt_line_03 = self.acc_bank_stmt_line_model.create(
+            {
+                "name": "testLine",
+                "journal_id": self.bank_journal_euro.id,
+                "amount": 50,
+                "date": time.strftime("%Y-07-17"),
+            }
+        )
+        action = bank_stmt_line_02.add_statement()
+        self.assertFalse(bank_stmt_line_01.statement_id)
+        self.assertFalse(bank_stmt_line_02.statement_id)
+        self.assertFalse(bank_stmt_line_03.statement_id)
+        statement = (
+            self.env[action["res_model"]].with_context(**action["context"]).create({})
+        )
+        self.assertEqual(bank_stmt_line_01.statement_id, statement)
+        self.assertEqual(bank_stmt_line_02.statement_id, statement)
+        self.assertFalse(bank_stmt_line_03.statement_id)
+
+    def test_add_multiple_lines(self):
+        bank_stmt_line = self.acc_bank_stmt_line_model.create(
+            {
+                "name": "testLine",
+                "journal_id": self.bank_journal_euro.id,
+                "amount": 100,
+                "date": time.strftime("%Y-07-15"),
+            }
+        )
+        inv1 = self.create_invoice(currency_id=self.currency_euro_id, invoice_amount=50)
+        inv2 = self.create_invoice(currency_id=self.currency_euro_id, invoice_amount=50)
+        receivables = (inv1 | inv2).line_ids.filtered(
+            lambda line: line.account_id.account_type == "asset_receivable"
+        )
+        self.assertFalse(bank_stmt_line.can_reconcile)
+        bank_stmt_line.add_multiple_lines(
+            [
+                ("id", "in", receivables.ids),
+            ]
+        )
+        self.assertTrue(bank_stmt_line.can_reconcile)
+
+    def test_invoice_matching(self):
+        """
+        We want to test that the reconciliation is correctly done when we have a match
+        on the statement line.
+        """
+        inv1 = self.create_invoice(
+            currency_id=self.currency_euro_id, invoice_amount=100
+        )
+        bank_stmt_line = self.acc_bank_stmt_line_model.create(
+            {
+                "name": "testLine",
+                "journal_id": self.bank_journal_euro.id,
+                "amount": 100,
+                "date": time.strftime("%Y-07-15"),
+                "payment_ref": inv1.name,
+            }
+        )
+        self.assertTrue(bank_stmt_line.is_reconciled)
+        self.assertTrue(
+            inv1.line_ids.filtered(
+                lambda line: line.account_id.account_type == "asset_receivable"
+            ).full_reconcile_id
         )
