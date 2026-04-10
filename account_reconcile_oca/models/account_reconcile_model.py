@@ -2,12 +2,28 @@
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 import re
 
-from odoo import Command, models
+from odoo import Command, fields, models
 from odoo.tools import SQL, Query
 
 
 class AccountReconcileModel(models.Model):
     _inherit = "account.reconcile.model"
+
+    search_journal_id = fields.Many2one(
+        "account.journal",
+        string="Applies on Journal",
+        store=False,
+        search="_search_search_journal_id",
+    )
+
+    def _search_search_journal_id(self, operator, value):
+        if operator not in ["=", "in"]:
+            return []
+        return [
+            "|",
+            ("match_journal_ids", operator, value),
+            ("match_journal_ids", "=", False),
+        ]
 
     def _get_rules(self, bank_statement_lines, trigger="auto_reconcile"):
         if not bank_statement_lines:
