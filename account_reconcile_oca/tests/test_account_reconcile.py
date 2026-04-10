@@ -287,3 +287,36 @@ class TestReconciliationWidget(TestAccountReconciliationCommon):
         )
         self.assertTrue(reconcile_account)
         self.assertEqual(reconcile_account.partner_id, self.env.user.partner_id)
+
+    def test_reconcile_manually_button_01(self):
+        """
+        Check that there is result when the line have sense
+        """
+        lines = (self.move_1 | self.move_2).line_ids.filtered(
+            lambda r: r.account_id == self.non_current_assets_account
+        )
+        self.assertEqual(2, len(lines))
+        action = lines[0].action_reconcile_manually()
+        result = (
+            self.env[action["res_model"]]
+            .with_context(**action.get("context", {}))
+            .search(action["domain"])
+        )
+        self.assertTrue(result)
+
+    def test_reconcile_manually_button_02(self):
+        """
+        Check that there is no result when the lines have sense
+        """
+        self.equity_account.reconcile = True
+        lines = (self.move_2 | self.move_3).line_ids.filtered(
+            lambda r: r.account_id == self.equity_account
+        )
+        self.assertEqual(2, len(lines))
+        action = lines[0].action_reconcile_manually()
+        result = (
+            self.env[action["res_model"]]
+            .with_context(**action.get("context", {}))
+            .search(action["domain"])
+        )
+        self.assertFalse(result)
