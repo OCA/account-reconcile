@@ -138,7 +138,9 @@ class AccountReconcileModel(models.Model):
             return 0.0
         return self._str2float(m[0])
 
-    def _get_write_off_move_lines_dict(self, residual_balance, partner_id, label=None):
+    def _get_write_off_move_lines_dict(
+        self, residual_balance, partner_id, label=None, note=None
+    ):
         """Get move.lines dict corresponding to the reconciliation model's write-off
         lines.
         :param residual_balance: The residual balance of the account on the manual
@@ -166,6 +168,11 @@ class AccountReconcileModel(models.Model):
                 balance = self._get_write_off_amount_from_string(
                     line.amount_string, label
                 )
+                if not balance:
+                    balance = self._get_write_off_amount_from_string(
+                        line.amount_string, note
+                    )
+
             balance = currency.round(balance * (1 if residual_balance > 0.0 else -1))
 
             if currency.is_zero(balance):
