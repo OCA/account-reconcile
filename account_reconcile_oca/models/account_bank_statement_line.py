@@ -1,5 +1,6 @@
 # Copyright 2023 Dixmit
 # Copyright 2025 Jacques-Etienne Baudoux (BCIM) <je@bcim.be>
+# Copyright 2026 Michael Tietz (MT Software) <mtietz@mt-software.de>
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
 from collections import defaultdict
@@ -590,7 +591,7 @@ class AccountBankStatementLine(models.Model):
             reconcile_model._get_partner_from_mapping(self) or self._retrieve_partner()
         )
         for line in reconcile_model._get_write_off_move_lines_dict(
-            -liquidity_amount, partner.id, label=self.payment_ref
+            -liquidity_amount, partner.id, label=self.payment_ref, note=self.narration
         ):
             new_line = line.copy()
             new_line["partner_id"] = (
