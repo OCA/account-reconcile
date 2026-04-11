@@ -1,3 +1,7 @@
+# Copyright 2024 Dixmit
+# Copyright 2025 Victor M.M. Torres, Tecnativa SL
+# Copyright 2026 Jacques-Etienne Baudoux (BICM) <je@bcim.be>
+# Licence LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl-3.0).
 import re
 from collections import defaultdict
 
