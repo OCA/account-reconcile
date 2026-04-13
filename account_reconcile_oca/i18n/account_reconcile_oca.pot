@@ -4,7 +4,7 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 18.0\n"
+"Project-Id-Version: Odoo Server 19.0\n"
 "Report-Msgid-Bugs-To: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -23,7 +23,7 @@ msgstr ""
 
 #. module: account_reconcile_oca
 #. odoo-javascript
-#: code:addons/account_reconcile_oca/static/src/xml/reconcile.xml:0
+#: code:addons/account_reconcile_oca/static/src/components/account_reconcile_oca_data/account_reconcile_oca_data.xml:0
 #: model:ir.model.fields,field_description:account_reconcile_oca.field_account_account_reconcile__account_id
 #: model_terms:ir.ui.view,arch_db:account_reconcile_oca.bank_statement_line_form_reconcile_view
 msgid "Account"
@@ -58,7 +58,7 @@ msgstr ""
 
 #. module: account_reconcile_oca
 #. odoo-javascript
-#: code:addons/account_reconcile_oca/static/src/xml/reconcile.xml:0
+#: code:addons/account_reconcile_oca/static/src/views/reconcile_move_line/reconcile_move_line.xml:0
 msgid "Add all"
 msgstr ""
 
@@ -89,7 +89,7 @@ msgstr ""
 
 #. module: account_reconcile_oca
 #. odoo-javascript
-#: code:addons/account_reconcile_oca/static/src/xml/reconcile.xml:0
+#: code:addons/account_reconcile_oca/static/src/components/account_reconcile_oca_data/account_reconcile_oca_data.xml:0
 msgid "Amount in currency"
 msgstr ""
 
@@ -101,6 +101,11 @@ msgstr ""
 #. module: account_reconcile_oca
 #: model:ir.model.fields,field_description:account_reconcile_oca.field_account_bank_statement_line__analytic_precision
 msgid "Analytic Precision"
+msgstr ""
+
+#. module: account_reconcile_oca
+#: model:ir.model.fields,field_description:account_reconcile_oca.field_account_reconcile_model__search_journal_id
+msgid "Applies on Journal"
 msgstr ""
 
 #. module: account_reconcile_oca
@@ -181,7 +186,7 @@ msgstr ""
 
 #. module: account_reconcile_oca
 #. odoo-javascript
-#: code:addons/account_reconcile_oca/static/src/xml/reconcile.xml:0
+#: code:addons/account_reconcile_oca/static/src/views/reconcile_kanban/reconcile.xml:0
 msgid "Create"
 msgstr ""
 
@@ -197,7 +202,7 @@ msgstr ""
 
 #. module: account_reconcile_oca
 #. odoo-javascript
-#: code:addons/account_reconcile_oca/static/src/xml/reconcile.xml:0
+#: code:addons/account_reconcile_oca/static/src/components/account_reconcile_oca_data/account_reconcile_oca_data.xml:0
 msgid "Credit"
 msgstr ""
 
@@ -214,7 +219,7 @@ msgstr ""
 
 #. module: account_reconcile_oca
 #. odoo-javascript
-#: code:addons/account_reconcile_oca/static/src/xml/reconcile.xml:0
+#: code:addons/account_reconcile_oca/static/src/components/account_reconcile_oca_data/account_reconcile_oca_data.xml:0
 msgid "Date"
 msgstr ""
 
@@ -225,13 +230,22 @@ msgstr ""
 
 #. module: account_reconcile_oca
 #. odoo-javascript
-#: code:addons/account_reconcile_oca/static/src/xml/reconcile.xml:0
+#: code:addons/account_reconcile_oca/static/src/components/account_reconcile_oca_data/account_reconcile_oca_data.xml:0
 msgid "Debit"
 msgstr ""
 
 #. module: account_reconcile_oca
 #: model:ir.model.fields,field_description:account_reconcile_oca.field_account_account_reconcile__display_name
 #: model:ir.model.fields,field_description:account_reconcile_oca.field_account_account_reconcile_data__display_name
+#: model:ir.model.fields,field_description:account_reconcile_oca.field_account_bank_statement__display_name
+#: model:ir.model.fields,field_description:account_reconcile_oca.field_account_bank_statement_line__display_name
+#: model:ir.model.fields,field_description:account_reconcile_oca.field_account_journal__display_name
+#: model:ir.model.fields,field_description:account_reconcile_oca.field_account_move_line__display_name
+#: model:ir.model.fields,field_description:account_reconcile_oca.field_account_reconcile_abstract__display_name
+#: model:ir.model.fields,field_description:account_reconcile_oca.field_account_reconcile_model__display_name
+#: model:ir.model.fields,field_description:account_reconcile_oca.field_account_reconcile_model_line__display_name
+#: model:ir.model.fields,field_description:account_reconcile_oca.field_res_company__display_name
+#: model:ir.model.fields,field_description:account_reconcile_oca.field_res_config_settings__display_name
 msgid "Display Name"
 msgstr ""
 
@@ -264,13 +278,22 @@ msgstr ""
 
 #. module: account_reconcile_oca
 #. odoo-javascript
-#: code:addons/account_reconcile_oca/static/src/xml/reconcile.xml:0
+#: code:addons/account_reconcile_oca/static/src/views/reconcile_kanban/reconcile.xml:0
 msgid "Global Balance"
 msgstr ""
 
 #. module: account_reconcile_oca
 #: model:ir.model.fields,field_description:account_reconcile_oca.field_account_account_reconcile__id
 #: model:ir.model.fields,field_description:account_reconcile_oca.field_account_account_reconcile_data__id
+#: model:ir.model.fields,field_description:account_reconcile_oca.field_account_bank_statement__id
+#: model:ir.model.fields,field_description:account_reconcile_oca.field_account_bank_statement_line__id
+#: model:ir.model.fields,field_description:account_reconcile_oca.field_account_journal__id
+#: model:ir.model.fields,field_description:account_reconcile_oca.field_account_move_line__id
+#: model:ir.model.fields,field_description:account_reconcile_oca.field_account_reconcile_abstract__id
+#: model:ir.model.fields,field_description:account_reconcile_oca.field_account_reconcile_model__id
+#: model:ir.model.fields,field_description:account_reconcile_oca.field_account_reconcile_model_line__id
+#: model:ir.model.fields,field_description:account_reconcile_oca.field_res_company__id
+#: model:ir.model.fields,field_description:account_reconcile_oca.field_res_config_settings__id
 msgid "ID"
 msgstr ""
 
@@ -317,7 +340,7 @@ msgstr ""
 
 #. module: account_reconcile_oca
 #. odoo-javascript
-#: code:addons/account_reconcile_oca/static/src/xml/reconcile.xml:0
+#: code:addons/account_reconcile_oca/static/src/components/account_reconcile_oca_data/account_reconcile_oca_data.xml:0
 msgid "Label"
 msgstr ""
 
@@ -461,7 +484,7 @@ msgstr ""
 
 #. module: account_reconcile_oca
 #. odoo-javascript
-#: code:addons/account_reconcile_oca/static/src/xml/reconcile.xml:0
+#: code:addons/account_reconcile_oca/static/src/components/account_reconcile_oca_data/account_reconcile_oca_data.xml:0
 msgid "Open Balance"
 msgstr ""
 
@@ -472,7 +495,7 @@ msgstr ""
 
 #. module: account_reconcile_oca
 #. odoo-javascript
-#: code:addons/account_reconcile_oca/static/src/xml/reconcile.xml:0
+#: code:addons/account_reconcile_oca/static/src/components/account_reconcile_oca_data/account_reconcile_oca_data.xml:0
 #: model:ir.model.fields,field_description:account_reconcile_oca.field_account_account_reconcile__partner_id
 #: model_terms:ir.ui.view,arch_db:account_reconcile_oca.bank_statement_line_form_reconcile_view
 msgid "Partner"
@@ -481,6 +504,12 @@ msgstr ""
 #. module: account_reconcile_oca
 #: model_terms:ir.ui.view,arch_db:account_reconcile_oca.account_move_line_search_reconcile_view
 msgid "Payable"
+msgstr ""
+
+#. module: account_reconcile_oca
+#: model:ir.model,name:account_reconcile_oca.model_account_reconcile_model
+msgid ""
+"Preset to create journal entries during a invoices and payments matching"
 msgstr ""
 
 #. module: account_reconcile_oca
@@ -561,6 +590,11 @@ msgid "Reconciled"
 msgstr ""
 
 #. module: account_reconcile_oca
+#: model:ir.ui.menu,name:account_reconcile_oca.menu_account_reconcile_model
+msgid "Reconciliation Models"
+msgstr ""
+
+#. module: account_reconcile_oca
 #: model_terms:ir.ui.view,arch_db:account_reconcile_oca.bank_statement_line_form_reconcile_view
 msgid "Reset reconciliation"
 msgstr ""
@@ -569,6 +603,11 @@ msgstr ""
 #. odoo-python
 #: code:addons/account_reconcile_oca/models/account_bank_statement_line.py:0
 msgid "Reversal of: %s"
+msgstr ""
+
+#. module: account_reconcile_oca
+#: model:ir.model,name:account_reconcile_oca.model_account_reconcile_model_line
+msgid "Rules for the reconciliation model"
 msgstr ""
 
 #. module: account_reconcile_oca
