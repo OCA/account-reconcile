@@ -5,7 +5,7 @@ import time
 from odoo.tests import Form, tagged
 from odoo.tools import mute_logger
 
-from odoo.addons.account_reconcile_model_oca.tests.common import (
+from odoo.addons.account_reconcile_oca.tests.common import (
     TestAccountReconciliationCommon,
 )
 
@@ -15,8 +15,8 @@ class TestAccountReconcileAnalyticTag(TestAccountReconciliationCommon):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        cls.env.user.groups_id += cls.env.ref("analytic.group_analytic_accounting")
-        cls.env.user.groups_id += cls.env.ref(
+        cls.env.user.group_ids += cls.env.ref("analytic.group_analytic_accounting")
+        cls.env.user.group_ids += cls.env.ref(
             "account_analytic_tag.group_analytic_tags"
         )
         bank_stmt = cls.env["account.bank.statement"].create(

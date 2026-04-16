@@ -14,7 +14,7 @@ class AccountBankStatementLine(models.Model):
 
     def _get_manual_delete_vals(self):
         vals = super()._get_manual_delete_vals()
-        vals["manual_analytic_tag_ids"] = False
+        vals["manual_analytic_tag_ids"] = [Command.clear()]
         return vals
 
     def _process_manual_reconcile_from_line(self, line):
@@ -32,7 +32,9 @@ class AccountBankStatementLine(models.Model):
     def _check_line_changed(self, line):
         line_changed = super()._check_line_changed(line)
         if not line_changed:
-            return bool(self.manual_analytic_tag_ids)
+            line_tag_cmd = line.get("manual_analytic_tag_ids")
+            line_tag_ids = set(line_tag_cmd[0][2]) if line_tag_cmd else set()
+            return set(self.manual_analytic_tag_ids.ids) != line_tag_ids
         return line_changed
 
     @api.onchange("manual_analytic_tag_ids")
@@ -41,5 +43,5 @@ class AccountBankStatementLine(models.Model):
 
     def _reconcile_move_line_vals(self, line, move_id=False):
         vals = super()._reconcile_move_line_vals(line=line, move_id=move_id)
-        vals["analytic_tag_ids"] = line.get("manual_analytic_tag_ids")
+        vals["analytic_tag_ids"] = line.get("manual_analytic_tag_ids") or []
         return vals
