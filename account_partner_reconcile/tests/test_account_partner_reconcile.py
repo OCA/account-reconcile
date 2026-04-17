@@ -1,23 +1,18 @@
 # Copyright 2017-20 ForgeFlow S.L. (http://www.forgeflow.com)
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 
-from odoo.tests.common import TransactionCase
+from odoo.addons.base.tests.common import BaseCommon
 
 
-class TestAccountPartnerReconcile(TransactionCase):
+class TestAccountPartnerReconcile(BaseCommon):
     """Tests for Account Partner Reconcile."""
 
-    def setUp(self):
-        super().setUp()
-
-        self.partner1 = self.env.ref("base.res_partner_1")
-
     def test_account_partner_reconcile(self):
-        receivable_account = self.partner1.property_account_receivable_id
-        payable_account = self.partner1.property_account_payable_id
+        receivable_account = self.partner.property_account_receivable_id
+        payable_account = self.partner.property_account_payable_id
 
         # reconcile_mode="customers" (Match Receivables)
-        res = self.partner1.with_context(
+        res = self.partner.with_context(
             reconcile_mode="customers"
         ).action_open_reconcile()
         expect = {
@@ -25,7 +20,7 @@ class TestAccountPartnerReconcile(TransactionCase):
             "xml_id": "account_reconcile_oca.account_account_reconcile_act_window",
             "domain": [
                 ("account_id", "=", receivable_account.id),
-                ("partner_id", "=", self.partner1.id),
+                ("partner_id", "=", self.partner.id),
             ],
         }
         self.assertDictEqual(
@@ -35,7 +30,7 @@ class TestAccountPartnerReconcile(TransactionCase):
         )
 
         # reconcile_mode="suppliers" (Match Payables)
-        res = self.partner1.with_context(
+        res = self.partner.with_context(
             reconcile_mode="suppliers"
         ).action_open_reconcile()
         expect = {
@@ -43,7 +38,7 @@ class TestAccountPartnerReconcile(TransactionCase):
             "xml_id": "account_reconcile_oca.account_account_reconcile_act_window",
             "domain": [
                 ("account_id", "=", payable_account.id),
-                ("partner_id", "=", self.partner1.id),
+                ("partner_id", "=", self.partner.id),
             ],
         }
         self.assertDictEqual(
