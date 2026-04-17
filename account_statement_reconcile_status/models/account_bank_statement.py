@@ -19,6 +19,8 @@ class AccountBankStatement(models.Model):
     )
     date_first_fully_reconciled = fields.Datetime(
         string="First Fully Reconciled On",
+        compute="_compute_date_first_fully_reconciled",
+        store=True,
         readonly=True,
         copy=False,
     )
@@ -36,10 +38,8 @@ class AccountBankStatement(models.Model):
             else:
                 stmt.reconcile_state = "not_started"
 
-    @api.constrains("reconcile_state")
-    def _set_date_first_fully_reconciled(self):
-        newly_done = self.filtered(
-            lambda s: s.reconcile_state == "done" and not s.date_first_fully_reconciled
-        )
-        if newly_done:
-            newly_done.write({"date_first_fully_reconciled": fields.Datetime.now()})
+    @api.depends("reconcile_state")
+    def _compute_date_first_fully_reconciled(self):
+        for stmt in self:
+            if stmt.reconcile_state == "done" and not stmt.date_first_fully_reconciled:
+                stmt.date_first_fully_reconciled = fields.Datetime.now()
