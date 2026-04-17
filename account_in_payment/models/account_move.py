@@ -14,7 +14,7 @@ class AccountMove(models.Model):
         We override this method to change the state of the invoice to in_payment
         when the payment is created from the invoice.
         """
-        if config["test_enable"] and not self._context.get(
+        if config["test_enable"] and not self.env.context.get(
             "test_get_invoice_in_payment_state"
         ):
             return super()._get_invoice_in_payment_state()
