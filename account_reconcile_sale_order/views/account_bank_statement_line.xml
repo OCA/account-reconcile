@@ -9,7 +9,7 @@
             <page name="reconcile_line" position="after">
                 <page
                     name="reconcile_sale_order"
-                    string="Sale orders"
+                    string="Sales orders"
                     invisible="is_reconciled == True"
                 >
                     <field

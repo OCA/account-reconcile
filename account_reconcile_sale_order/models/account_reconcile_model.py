@@ -10,14 +10,14 @@ class AccountReconcileModel(models.AbstractModel):
     _inherit = "account.reconcile.model"
 
     rule_type = fields.Selection(
-        selection_add=[("sale_order_matching", "Rule to match sale orders")],
+        selection_add=[("sale_order_matching", "Rule to match sales orders")],
         ondelete={"sale_order_matching": "cascade"},
     )
     sale_order_matching_token_match = fields.Boolean(
         string="Match tokens",
         help="When this is activated, the statement line's label is split into words "
-        "and if one of those words match a sale order, it is considered a match. So "
-        "if the statement line's label is 'hello world', sale orders with names "
+        "and if one of those words match a sales order, it is considered a match. So "
+        "if the statement line's label is 'hello world', sales orders with names "
         "'hello', 'world', 'some name containing hello', 'some name containing world' "
         "will be considered matches, in that order",
     )
@@ -32,7 +32,7 @@ class AccountReconcileModel(models.AbstractModel):
         comodel_name="payment.method",
         relation="account_reconcile_model_sale_order_payment_method_rel",
         string="Payment methods",
-        help="Set this field to restrict sale order matching to specific payment "
+        help="Set this field to restrict sales order matching to specific payment "
         "methods used on the SO's payment transaction",
     )
 
@@ -103,7 +103,7 @@ class AccountReconcileModel(models.AbstractModel):
         self, bank_statement_line, partner, excluded_ids
     ):
         """
-        Return one sale order that is considered the best match for some line and
+        Return one sales order that is considered the best match for some line and
         partner
         """
 

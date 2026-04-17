@@ -25,7 +25,7 @@ msgstr ""
 
 #. module: account_reconcile_sale_order
 #: model:account.reconcile.model,name:account_reconcile_sale_order.reconcile_model_sale_order
-msgid "Match sale orders"
+msgid "Match sales orders"
 msgstr ""
 
 #. module: account_reconcile_sale_order
@@ -51,18 +51,18 @@ msgstr ""
 
 #. module: account_reconcile_sale_order
 #: model:ir.model.fields.selection,name:account_reconcile_sale_order.selection__account_reconcile_model__rule_type__sale_order_matching
-msgid "Rule to match sale orders"
+msgid "Rule to match sales orders"
 msgstr ""
 
 #. module: account_reconcile_sale_order
 #. odoo-python
 #: code:addons/account_reconcile_sale_order/models/account_bank_statement_line.py:0
-msgid "Sale Order %s"
+msgid "Sales Order %s"
 msgstr ""
 
 #. module: account_reconcile_sale_order
 #: model_terms:ir.ui.view,arch_db:account_reconcile_sale_order.bank_statement_line_form_reconcile_view
-msgid "Sale orders"
+msgid "Sales orders"
 msgstr ""
 
 #. module: account_reconcile_sale_order
@@ -76,7 +76,7 @@ msgstr ""
 #. module: account_reconcile_sale_order
 #: model:ir.model.fields,help:account_reconcile_sale_order.field_account_reconcile_model__sale_order_matching_payment_method_ids
 msgid ""
-"Set this field to restrict sale order matching to specific payment methods "
+"Set this field to restrict sales order matching to specific payment methods "
 "used on the SO's payment transaction"
 msgstr ""
 
@@ -89,8 +89,8 @@ msgstr ""
 #: model:ir.model.fields,help:account_reconcile_sale_order.field_account_reconcile_model__sale_order_matching_token_match
 msgid ""
 "When this is activated, the statement line's label is split into words and "
-"if one of those words match a sale order, it is considered a match. So if "
-"the statement line's label is 'hello world', sale orders with names 'hello',"
-" 'world', 'some name containing hello', 'some name containing world' will be"
-" considered matches, in that order"
+"if one of those words match a sales order, it is considered a match. So if "
+"the statement line's label is 'hello world', sales orders with names "
+"'hello', 'world', 'some name containing hello', 'some name containing world'"
+" will be considered matches, in that order"
 msgstr ""

@@ -53,7 +53,7 @@ class TestAccountReconcileSaleOrder(TestAccountReconciliationCommon):
         )
 
     def test_reconcile_sale_order(self):
-        """Test that we find a sale order via reconciliation rules"""
+        """Test that we find a sales order via reconciliation rules"""
         self.bank_statement.line_ids.payment_ref = self.sale_order.name
         self.assertEqual(self.sale_order.invoice_status, "no")
         rule_result = self.model._apply_rules(
@@ -76,7 +76,7 @@ class TestAccountReconcileSaleOrder(TestAccountReconciliationCommon):
         self.assertEqual(rule_result["status"], "sale_order_matching")
 
     def test_manual_match(self):
-        """Test that manual selection of sale order works"""
+        """Test that manual selection of sales order works"""
         statement_line = self.bank_statement.line_ids
         statement_line.clean_reconcile()
         self.assertFalse(

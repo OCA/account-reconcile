@@ -82,13 +82,13 @@ class AccountBankStatementLine(models.Model):
         self, sale_order, kind, reconcile_auxiliary_id
     ):
         """
-        Return dict to be added to reconcile_data_info["data"] for sale order
+        Return dict to be added to reconcile_data_info["data"] for sales order
         """
         account = sale_order.partner_id.property_account_receivable_id
         return {
             "id": False,
             "reference": f"reconcile_auxiliary;{reconcile_auxiliary_id}",
-            "account_id": (account.id, self.env._("Sale Order %s", sale_order.name)),
+            "account_id": (account.id, self.env._("Sales Order %s", sale_order.name)),
             "partner_id": (
                 sale_order.partner_id.id,
                 sale_order.partner_id.display_name,
@@ -118,7 +118,7 @@ class AccountBankStatementLine(models.Model):
 
     def _prepare_reconcile_line_data_sale_order_invoice(self, order):
         """
-        Invoice selected sale orders and post the invoices
+        Invoice selected sales orders and post the invoices
         """
         if order.state in ("draft", "sent"):
             order.action_confirm()
