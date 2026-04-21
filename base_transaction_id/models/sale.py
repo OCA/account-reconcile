@@ -9,8 +9,8 @@ class SaleOrder(models.Model):
     _inherit = "sale.order"
 
     transaction_id = fields.Char(
-        "Transaction ID",
-        required=False,
+        string="Transaction ID",
+        index=True,
         copy=False,
         help="Transaction id from the financial institute",
     )
