@@ -595,14 +595,11 @@ class AccountBankStatementLine(models.Model):
                 (partner.id, partner.display_name) if partner else False
             )
             amount = line.get("balance")
-            if self.foreign_currency_id:
-                amount = self.foreign_currency_id._convert(
-                    amount,
-                    self.journal_id.currency_id or self.company_currency_id,
-                    self.company_id,
-                    self.date,
+            if self.foreign_currency_id and self.amount:
+                currency_amount = currency.round(
+                    amount * self.amount_currency / self.amount
                 )
-            if currency != self.company_id.currency_id:
+            elif currency != self.company_id.currency_id:
                 currency_amount = self.company_id.currency_id._convert(
                     amount,
                     currency,
