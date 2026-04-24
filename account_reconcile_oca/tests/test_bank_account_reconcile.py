@@ -796,6 +796,82 @@ class TestReconciliationWidget(TestAccountReconciliationCommon):
         self.assertEqual(bank_stmt_line.move_id.line_ids[0].debit, expected_amount)
         self.assertEqual(bank_stmt_line.move_id.line_ids[1].credit, expected_amount)
 
+    def test_reconcile_model_with_statement_line_foreign_currency(self):
+        """
+        Regression test for a bank statement line whose journal is in the
+        company currency but with a foreign-currency amount
+        """
+        bank_stmt = self.acc_bank_stmt_model.create(
+            {
+                "journal_id": self.bank_journal_euro.id,
+                "date": time.strftime("%Y-07-15"),
+                "name": "test",
+            }
+        )
+        # Implied rate of 2.0 USD/EUR is deliberately false from the
+        # active system rate (1.5289) so the test fails if the
+        # code falls back to `res.currency._convert()` at `self.date`.
+        bank_stmt_line = self.acc_bank_stmt_line_model.create(
+            {
+                "name": "testLine",
+                "journal_id": self.bank_journal_euro.id,
+                "statement_id": bank_stmt.id,
+                "amount": 100.0,
+                "foreign_currency_id": self.currency_usd_id,
+                "amount_currency": 200.0,
+                "date": time.strftime("%Y-07-15"),
+            }
+        )
+        with Form(
+            bank_stmt_line,
+            view="account_reconcile_oca.bank_statement_line_form_reconcile_view",
+        ) as f:
+            self.assertFalse(f.can_reconcile)
+            f.manual_model_id = self.rule
+            self.assertTrue(f.can_reconcile)
+
+        writeoff = next(
+            line
+            for line in bank_stmt_line.reconcile_data_info["data"]
+            if line["account_id"][0] == self.current_assets_account.id
+        )
+        self.assertEqual(writeoff["amount"], -100.0)
+        self.assertEqual(writeoff["credit"], 100.0)
+        self.assertEqual(writeoff["debit"], 0.0)
+        self.assertEqual(
+            writeoff["currency_amount"],
+            -200.0,
+            "Write-off must use the statement line's implied rate "
+            "(2.0 USD/EUR), not the available rate.",
+        )
+        self.assertEqual(writeoff["line_currency_id"], self.currency_usd_id)
+
+        self.assertEqual(bank_stmt_line.amount_currency, 200.0)
+
+        bank_stmt_line.reconcile_bank_line()
+        liquidity = bank_stmt_line.move_id.line_ids.filtered(
+            lambda ml: ml.account_id == self.bank_journal_euro.default_account_id
+        )
+        counterpart = bank_stmt_line.move_id.line_ids.filtered(
+            lambda ml: ml.account_id == self.current_assets_account
+        )
+        self.assertEqual(len(liquidity), 1)
+        self.assertEqual(len(counterpart), 1)
+        self.assertEqual(liquidity.debit, 100.0)
+        self.assertEqual(liquidity.balance, 100.0)
+        self.assertEqual(counterpart.credit, 100.0)
+        self.assertEqual(counterpart.balance, -100.0)
+        self.assertEqual(counterpart.currency_id.id, self.currency_usd_id)
+        self.assertEqual(
+            counterpart.amount_currency,
+            -200.0,
+            "The counterpart must carry -200 USD, matching the statement "
+            "line's implied rate (2.0 USD/EUR).",
+        )
+        self.assertAlmostEqual(
+            sum(bank_stmt_line.move_id.line_ids.mapped("balance")), 0.0
+        )
+
     # Testing to check functionality
 
     def test_reconcile_invoice_to_check_reconciled(self):
