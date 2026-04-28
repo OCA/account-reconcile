@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="account_manual_reconcile_wizard_form_view" model="ir.ui.view">
+        <field name="name">account.manual.reconcile.wizard.form</field>
+        <field name="model">account.manual.reconcile.wizard</field>
+        <field name="arch" type="xml">
+            <form>
+                <field name="company_id" invisible="1" />
+                <field name="company_currency_id" invisible="1" />
+                <field name="move_line_ids" invisible="1" force_save="1" />
+                <field name="reconciliation_account_id" invisible="1" />
+                <sheet>
+                    <group>
+                        <group invisible="not display_allow_partial_reconcile">
+                            <field
+                                name="allow_partial_reconcile"
+                                string="Keep open balance"
+                            />
+                        </group>
+                        <group>
+                            <field name="balance_difference" />
+                        </group>
+                    </group>
+                    <group
+                        name="reconcile_model_section"
+                        string="Reconciliation Models"
+                        invisible="allow_partial_reconcile or not need_write_off"
+                    >
+                        <field
+                            name="reconcile_model_id"
+                            widget="selection_badge"
+                            nolabel="1"
+                            options="{'horizontal': true}"
+                        />
+                    </group>
+                    <notebook>
+                        <page
+                            string="Write-Off"
+                            invisible="allow_partial_reconcile and display_allow_partial_reconcile"
+                        >
+                            <group>
+                                <group>
+                                    <field
+                                        name="journal_id"
+                                        required="not allow_partial_reconcile and need_write_off"
+                                        invisible="allow_partial_reconcile and display_allow_partial_reconcile"
+                                        options="{'no_create': True, 'no_open': True}"
+                                    />
+                                    <field
+                                        name="date"
+                                        required="not allow_partial_reconcile and need_write_off"
+                                        invisible="allow_partial_reconcile and display_allow_partial_reconcile"
+                                    />
+                                </group>
+                                <group>
+                                    <field
+                                        name="reference"
+                                        invisible="allow_partial_reconcile and display_allow_partial_reconcile"
+                                    />
+                                </group>
+                            </group>
+                            <field
+                                name="write_off_line_ids"
+                                colspan="2"
+                                invisible="allow_partial_reconcile and display_allow_partial_reconcile"
+                                required="not allow_partial_reconcile and need_write_off"
+                            >
+                                <list editable="bottom">
+                                    <field
+                                        name="account_id"
+                                        options="{'no_create': True, 'no_open': True}"
+                                    />
+                                    <field name="name" optional="show" />
+                                    <field name="debit" sum="Total Debit" />
+                                    <field name="credit" sum="Total Credit" />
+                                    <field
+                                        name="analytic_distribution"
+                                        widget="analytic_distribution"
+                                        groups="analytic.group_analytic_accounting"
+                                        optional="show"
+                                    />
+                                    <field
+                                        name="company_currency_id"
+                                        column_invisible="1"
+                                    />
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <footer>
+                    <button
+                        string="Reconcile"
+                        name="action_reconcile"
+                        type="object"
+                        class="btn-primary"
+                    />
+                    <button
+                        string="Reconcile &amp; Open"
+                        name="action_reconcile_and_open"
+                        type="object"
+                        class="btn-primary"
+                    />
+                    <button string="Cancel" class="btn-secondary" special="cancel" />
+                </footer>
+            </form>
+        </field>
+    </record>
+</odoo>

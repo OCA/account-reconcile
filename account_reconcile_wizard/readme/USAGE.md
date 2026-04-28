@@ -1,0 +1,4 @@
+- Go to Invoicing / Accounting / Reconcile.
+- Filter and select the journal items you wish to reconcile.
+- A button is displayed in the list view header.
+- If the balance is zero, the reconciliation is done automatically. Otherwise, a popup is displayed to select the write-off account or allow partial reconciliation.
