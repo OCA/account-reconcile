@@ -717,12 +717,18 @@ class TestReconciliationMatchingRules(AccountTestInvoicingCommon):
 
     def test_matching_fields_match_partner_category_ids(self):
         self.rule_1.match_text_location_label = False
-        test_category = self.env["res.partner.category"].create(
-            {"name": "Consulting Services"}
-        )
-        test_category2 = self.env["res.partner.category"].create(
-            {"name": "Consulting Services2"}
-        )
+        # Use sudo to bypass access rights on res.partner.category,
+        # when this test is executed with the partner_category_security module.
+        # This module disables access to create in res.partner.category,
+        # and without sudo, the test will fail with an access error.
+        # https://github.com/OCA/partner-contact/blob/418726c3539eda61ce444f02729494d9bc8cf706/partner_category_security/security/ir.model.access.csv#L4
+        # Because this class inherits from AccountTestInvoicingCommon,
+        # the test is executed with the rights of a user
+        # who does not have access to res.partner.category.
+        # See https://github.com/odoo/odoo/blob/d1955028bb95eff8d33c1c2b1c211d8520bb33a2/addons/account/tests/common.py#L237
+        PartnerCategory = self.env["res.partner.category"].sudo()
+        test_category = PartnerCategory.create({"name": "Consulting Services"})
+        test_category2 = PartnerCategory.create({"name": "Consulting Services2"})
         self.partner_2.category_id = test_category + test_category2
         self.rule_1.match_partner_category_ids |= test_category
         self._check_statement_matching(
