@@ -1,0 +1,1 @@
+- Allow reconciliation with multiple currencies and partners
