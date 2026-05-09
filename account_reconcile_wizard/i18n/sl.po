@@ -6,7 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 18.0\n"
 "Report-Msgid-Bugs-To: \n"
-"Last-Translator: Automatically generated\n"
+"PO-Revision-Date: 2026-05-09 14:55+0000\n"
+"Last-Translator: Matjaz Mozetic <matjaz@luxim.si>\n"
 "Language-Team: none\n"
 "Language: sl\n"
 "MIME-Version: 1.0\n"
@@ -14,186 +15,187 @@ msgstr ""
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || "
 "n%100==4 ? 2 : 3;\n"
+"X-Generator: Weblate 5.15.2\n"
 
 #. module: account_reconcile_wizard
 #: model:ir.model.fields,field_description:account_reconcile_wizard.field_account_manual_reconcile_wizard_line__account_id
 msgid "Account"
-msgstr ""
+msgstr "Konto"
 
 #. module: account_reconcile_wizard
 #: model:ir.model,name:account_reconcile_wizard.model_account_manual_reconcile_wizard_line
 msgid "Account Manual Reconcile Line"
-msgstr ""
+msgstr "Ročno usklajevanje postavk"
 
 #. module: account_reconcile_wizard
 #: model:ir.model.fields,help:account_reconcile_wizard.field_account_manual_reconcile_wizard__write_off_line_ids
 msgid "Add lines for write-offs, adjustments, counterparts, etc."
-msgstr ""
+msgstr "Dodajte vrstice za odpise, popravke, nasprotne vknjižbe itd."
 
 #. module: account_reconcile_wizard
 #. odoo-python
 #: code:addons/account_reconcile_wizard/wizard/account_manual_reconcile_wizard.py:0
 msgid "All selected lines must be from the same company."
-msgstr ""
+msgstr "Vse izbrane postavke morajo pripadati isti družbi."
 
 #. module: account_reconcile_wizard
 #: model:ir.model.fields,field_description:account_reconcile_wizard.field_account_manual_reconcile_wizard__allow_partial_reconcile
 msgid "Allow Partial Reconcile"
-msgstr ""
+msgstr "Dovoli delno uskladitev"
 
 #. module: account_reconcile_wizard
 #: model:ir.model.fields,help:account_reconcile_wizard.field_account_manual_reconcile_wizard__allow_partial_reconcile
 msgid "Allow reconciliation even if balances do not match exactly"
-msgstr ""
+msgstr "Dovoli uskladitev tudi, če se stanje ne popolnoma ujema"
 
 #. module: account_reconcile_wizard
 #: model:ir.model.fields,field_description:account_reconcile_wizard.field_account_manual_reconcile_wizard_line__analytic_distribution
 msgid "Analytic Distribution"
-msgstr ""
+msgstr "Analitična porazdelitev"
 
 #. module: account_reconcile_wizard
 #: model:ir.model.fields,field_description:account_reconcile_wizard.field_account_manual_reconcile_wizard_line__analytic_precision
 msgid "Analytic Precision"
-msgstr ""
+msgstr "Analitična natančnost"
 
 #. module: account_reconcile_wizard
 #: model:ir.model.fields,field_description:account_reconcile_wizard.field_account_manual_reconcile_wizard__balance_difference
 msgid "Balance Difference"
-msgstr ""
+msgstr "Razlika v stanju"
 
 #. module: account_reconcile_wizard
 #: model_terms:ir.ui.view,arch_db:account_reconcile_wizard.account_manual_reconcile_wizard_form_view
 msgid "Cancel"
-msgstr ""
+msgstr "Prekliči"
 
 #. module: account_reconcile_wizard
 #. odoo-python
 #: code:addons/account_reconcile_wizard/wizard/account_manual_reconcile_wizard.py:0
 msgid "Cannot reconcile already reconciled lines."
-msgstr ""
+msgstr "Že usklajenih postavk ne morete usklajevati."
 
 #. module: account_reconcile_wizard
 #: model:ir.model.fields,field_description:account_reconcile_wizard.field_account_manual_reconcile_wizard__company_id
 #: model:ir.model.fields,field_description:account_reconcile_wizard.field_account_manual_reconcile_wizard_line__company_id
 msgid "Company"
-msgstr ""
+msgstr "Družba"
 
 #. module: account_reconcile_wizard
 #: model:ir.model.fields,field_description:account_reconcile_wizard.field_account_manual_reconcile_wizard__company_currency_id
 msgid "Company Currency"
-msgstr ""
+msgstr "Valuta družbe"
 
 #. module: account_reconcile_wizard
 #: model:ir.model.fields,field_description:account_reconcile_wizard.field_account_manual_reconcile_wizard__create_uid
 #: model:ir.model.fields,field_description:account_reconcile_wizard.field_account_manual_reconcile_wizard_line__create_uid
 msgid "Created by"
-msgstr ""
+msgstr "Ustvaril"
 
 #. module: account_reconcile_wizard
 #: model:ir.model.fields,field_description:account_reconcile_wizard.field_account_manual_reconcile_wizard__create_date
 #: model:ir.model.fields,field_description:account_reconcile_wizard.field_account_manual_reconcile_wizard_line__create_date
 msgid "Created on"
-msgstr ""
+msgstr "Ustvarjeno"
 
 #. module: account_reconcile_wizard
 #: model:ir.model.fields,field_description:account_reconcile_wizard.field_account_manual_reconcile_wizard_line__credit
 msgid "Credit"
-msgstr ""
+msgstr "Dobro"
 
 #. module: account_reconcile_wizard
 #: model:ir.model.fields,field_description:account_reconcile_wizard.field_account_manual_reconcile_wizard_line__company_currency_id
 msgid "Currency"
-msgstr ""
+msgstr "Valuta"
 
 #. module: account_reconcile_wizard
 #: model:ir.model.fields,field_description:account_reconcile_wizard.field_account_manual_reconcile_wizard__date
 msgid "Date"
-msgstr ""
+msgstr "Datum"
 
 #. module: account_reconcile_wizard
 #: model:ir.model.fields,field_description:account_reconcile_wizard.field_account_manual_reconcile_wizard_line__debit
 msgid "Debit"
-msgstr ""
+msgstr "Breme"
 
 #. module: account_reconcile_wizard
 #. odoo-python
 #: code:addons/account_reconcile_wizard/wizard/account_manual_reconcile_wizard.py:0
 msgid "Debit and credit amounts must be positive."
-msgstr ""
+msgstr "Zneski v breme in dobro morajo biti pozitivni."
 
 #. module: account_reconcile_wizard
 #: model:ir.model.fields,field_description:account_reconcile_wizard.field_account_manual_reconcile_wizard_line__name
 msgid "Description"
-msgstr ""
+msgstr "Opis"
 
 #. module: account_reconcile_wizard
 #: model:ir.model.fields,field_description:account_reconcile_wizard.field_account_manual_reconcile_wizard__display_allow_partial_reconcile
 msgid "Display Allow Partial Reconcile"
-msgstr ""
+msgstr "Prikaži dovoli delno usklajevanje"
 
 #. module: account_reconcile_wizard
 #: model:ir.model.fields,field_description:account_reconcile_wizard.field_account_manual_reconcile_wizard__display_name
 #: model:ir.model.fields,field_description:account_reconcile_wizard.field_account_manual_reconcile_wizard_line__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Prikazani naziv"
 
 #. module: account_reconcile_wizard
 #: model:ir.model.fields,field_description:account_reconcile_wizard.field_account_manual_reconcile_wizard_line__distribution_analytic_account_ids
 msgid "Distribution Analytic Account"
-msgstr ""
+msgstr "Distribucijski analitični konto"
 
 #. module: account_reconcile_wizard
 #: model:ir.model.fields,field_description:account_reconcile_wizard.field_account_manual_reconcile_wizard__id
 #: model:ir.model.fields,field_description:account_reconcile_wizard.field_account_manual_reconcile_wizard_line__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: account_reconcile_wizard
 #: model:ir.model.fields,field_description:account_reconcile_wizard.field_account_manual_reconcile_wizard__journal_id
 msgid "Journal"
-msgstr ""
+msgstr "Dnevnik"
 
 #. module: account_reconcile_wizard
 #: model:ir.model,name:account_reconcile_wizard.model_account_move_line
 msgid "Journal Item"
-msgstr ""
+msgstr "Dnevniška postavka"
 
 #. module: account_reconcile_wizard
 #: model_terms:ir.ui.view,arch_db:account_reconcile_wizard.account_manual_reconcile_wizard_form_view
 msgid "Keep open balance"
-msgstr ""
+msgstr "Obdrži otvoritveno stanje"
 
 #. module: account_reconcile_wizard
 #: model:ir.model.fields,field_description:account_reconcile_wizard.field_account_manual_reconcile_wizard__write_uid
 #: model:ir.model.fields,field_description:account_reconcile_wizard.field_account_manual_reconcile_wizard_line__write_uid
 msgid "Last Updated by"
-msgstr ""
+msgstr "Zadnjič posodobil"
 
 #. module: account_reconcile_wizard
 #: model:ir.model.fields,field_description:account_reconcile_wizard.field_account_manual_reconcile_wizard__write_date
 #: model:ir.model.fields,field_description:account_reconcile_wizard.field_account_manual_reconcile_wizard_line__write_date
 msgid "Last Updated on"
-msgstr ""
+msgstr "Zadnjič posodobljeno"
 
 #. module: account_reconcile_wizard
 #: model:ir.model,name:account_reconcile_wizard.model_account_manual_reconcile_wizard
 msgid "Manual Reconciliation Wizard"
-msgstr ""
+msgstr "Čarovnik za ročno usklajevanje"
 
 #. module: account_reconcile_wizard
 #: model:ir.model.fields,field_description:account_reconcile_wizard.field_account_manual_reconcile_wizard__move_line_ids
 msgid "Move Lines to Reconcile"
-msgstr ""
+msgstr "Postavke za uskladitev"
 
 #. module: account_reconcile_wizard
 #: model:ir.model.fields,field_description:account_reconcile_wizard.field_account_manual_reconcile_wizard__need_transfer
 msgid "Need Transfer"
-msgstr ""
+msgstr "Potreben transfer"
 
 #. module: account_reconcile_wizard
 #: model:ir.model.fields,field_description:account_reconcile_wizard.field_account_manual_reconcile_wizard__need_write_off
 msgid "Need Write Off"
-msgstr ""
+msgstr "Potreben odpis"
 
 #. module: account_reconcile_wizard
 #: model:ir.actions.act_window,name:account_reconcile_wizard.account_move_line_reconcile_act_window
@@ -201,114 +203,114 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:account_reconcile_wizard.account_manual_reconcile_wizard_form_view
 #: model_terms:ir.ui.view,arch_db:account_reconcile_wizard.account_move_line_reconcile_list_view
 msgid "Reconcile"
-msgstr ""
+msgstr "Uskladi"
 
 #. module: account_reconcile_wizard
 #: model_terms:ir.ui.view,arch_db:account_reconcile_wizard.account_manual_reconcile_wizard_form_view
 msgid "Reconcile & Open"
-msgstr ""
+msgstr "Uskladi in odpri"
 
 #. module: account_reconcile_wizard
 #: model:ir.model.fields,field_description:account_reconcile_wizard.field_account_manual_reconcile_wizard__reconcile_model_id
 msgid "Reconcile Model"
-msgstr ""
+msgstr "Uskladitveni model"
 
 #. module: account_reconcile_wizard
 #. odoo-python
 #: code:addons/account_reconcile_wizard/models/account_move_line.py:0
 msgid "Reconciliation"
-msgstr ""
+msgstr "Uskladitev"
 
 #. module: account_reconcile_wizard
 #: model:ir.model.fields,field_description:account_reconcile_wizard.field_account_manual_reconcile_wizard__reconciliation_account_id
 msgid "Reconciliation Account"
-msgstr ""
+msgstr "Konto uskladitve"
 
 #. module: account_reconcile_wizard
 #: model_terms:ir.ui.view,arch_db:account_reconcile_wizard.account_manual_reconcile_wizard_form_view
 msgid "Reconciliation Models"
-msgstr ""
+msgstr "Modeli usklajevanja"
 
 #. module: account_reconcile_wizard
 #: model:ir.model.fields,field_description:account_reconcile_wizard.field_account_manual_reconcile_wizard__reference
 msgid "Reference"
-msgstr ""
+msgstr "Sklic"
 
 #. module: account_reconcile_wizard
 #: model:ir.model.fields,help:account_reconcile_wizard.field_account_manual_reconcile_wizard__reconcile_model_id
 msgid "Select a reconciliation model to auto-load lines"
-msgstr ""
+msgstr "Izberi model usklajevanja za samodejno nalaganje postavk"
 
 #. module: account_reconcile_wizard
 #. odoo-python
 #: code:addons/account_reconcile_wizard/wizard/account_manual_reconcile_wizard.py:0
 msgid "Success"
-msgstr ""
+msgstr "Uspeh"
 
 #. module: account_reconcile_wizard
 #. odoo-python
 #: code:addons/account_reconcile_wizard/wizard/account_manual_reconcile_wizard.py:0
 msgid "The selected lines have been successfully reconciled."
-msgstr ""
+msgstr "Izbrane postavke so bile uspešno usklajene."
 
 #. module: account_reconcile_wizard
 #. odoo-python
 #: code:addons/account_reconcile_wizard/wizard/account_manual_reconcile_wizard.py:0
 msgid "The total of write-off lines must balance the difference of %s."
-msgstr ""
+msgstr "Skupni znesek odpisov mora izravnati razliko v višini %s."
 
 #. module: account_reconcile_wizard
 #: model_terms:ir.ui.view,arch_db:account_reconcile_wizard.account_manual_reconcile_wizard_form_view
 msgid "Total Credit"
-msgstr ""
+msgstr "Skupaj v dobro"
 
 #. module: account_reconcile_wizard
 #: model_terms:ir.ui.view,arch_db:account_reconcile_wizard.account_manual_reconcile_wizard_form_view
 msgid "Total Debit"
-msgstr ""
+msgstr "Skupaj v breme"
 
 #. module: account_reconcile_wizard
 #. odoo-python
 #: code:addons/account_reconcile_wizard/wizard/account_manual_reconcile_wizard.py:0
 msgid "Transfer from %s"
-msgstr ""
+msgstr "Transfer iz %s"
 
 #. module: account_reconcile_wizard
 #. odoo-python
 #: code:addons/account_reconcile_wizard/wizard/account_manual_reconcile_wizard.py:0
 msgid "Transfer to %s"
-msgstr ""
+msgstr "Transfer v %s"
 
 #. module: account_reconcile_wizard
 #: model:ir.model.fields,field_description:account_reconcile_wizard.field_account_manual_reconcile_wizard_line__wizard_id
 msgid "Wizard"
-msgstr ""
+msgstr "Čarovnik"
 
 #. module: account_reconcile_wizard
 #: model:ir.model.fields,field_description:account_reconcile_wizard.field_account_manual_reconcile_wizard__write_off_amount
 msgid "Write Off Amount"
-msgstr ""
+msgstr "Znesek odpisa"
 
 #. module: account_reconcile_wizard
 #: model:ir.model.fields,field_description:account_reconcile_wizard.field_account_manual_reconcile_wizard__write_off_line_ids
 msgid "Write Off Line"
-msgstr ""
+msgstr "Postavka odpisa"
 
 #. module: account_reconcile_wizard
 #. odoo-python
 #: code:addons/account_reconcile_wizard/wizard/account_manual_reconcile_wizard.py:0
 #: model_terms:ir.ui.view,arch_db:account_reconcile_wizard.account_manual_reconcile_wizard_form_view
 msgid "Write-Off"
-msgstr ""
+msgstr "Odpis"
 
 #. module: account_reconcile_wizard
 #. odoo-python
 #: code:addons/account_reconcile_wizard/wizard/account_manual_reconcile_wizard.py:0
 msgid "You can only reconcile entries from the same partner."
-msgstr ""
+msgstr "Usklajujete lahko le postavke istega partnerja."
 
 #. module: account_reconcile_wizard
 #. odoo-python
 #: code:addons/account_reconcile_wizard/wizard/account_manual_reconcile_wizard.py:0
 msgid "You can only reconcile entries from up to 2 different accounts."
-msgstr ""
+msgstr "Usklajujete lahko le postavke iz do 2 različnih kontov."
