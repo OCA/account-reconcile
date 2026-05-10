@@ -7,15 +7,15 @@ msgstr ""
 "Project-Id-Version: Odoo Server 18.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-04-28 19:03+0000\n"
-"PO-Revision-Date: 2026-04-28 14:11-0500\n"
-"Last-Translator: \n"
+"PO-Revision-Date: 2026-05-10 09:05+0000\n"
+"Last-Translator: Ed-Spain <eduamoros@gmail.com>\n"
 "Language-Team: \n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.9\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.15.2\n"
 
 #. module: account_reconcile_wizard
 #: model:ir.model.fields,field_description:account_reconcile_wizard.field_account_manual_reconcile_wizard_line__account_id
@@ -25,12 +25,12 @@ msgstr "Cuenta"
 #. module: account_reconcile_wizard
 #: model:ir.model,name:account_reconcile_wizard.model_account_manual_reconcile_wizard_line
 msgid "Account Manual Reconcile Line"
-msgstr ""
+msgstr "Línea de conciliación manual de cuenta"
 
 #. module: account_reconcile_wizard
 #: model:ir.model.fields,help:account_reconcile_wizard.field_account_manual_reconcile_wizard__write_off_line_ids
 msgid "Add lines for write-offs, adjustments, counterparts, etc."
-msgstr ""
+msgstr "Añadir líneas para cancelaciones, ajustes, contrapartidas, etc."
 
 #. module: account_reconcile_wizard
 #. odoo-python
@@ -57,7 +57,7 @@ msgstr "Distribución analítica"
 #. module: account_reconcile_wizard
 #: model:ir.model.fields,field_description:account_reconcile_wizard.field_account_manual_reconcile_wizard_line__analytic_precision
 msgid "Analytic Precision"
-msgstr ""
+msgstr "Precisión analítica"
 
 #. module: account_reconcile_wizard
 #: model:ir.model.fields,field_description:account_reconcile_wizard.field_account_manual_reconcile_wizard__balance_difference
@@ -84,19 +84,19 @@ msgstr "Compañía"
 #. module: account_reconcile_wizard
 #: model:ir.model.fields,field_description:account_reconcile_wizard.field_account_manual_reconcile_wizard__company_currency_id
 msgid "Company Currency"
-msgstr ""
+msgstr "Divisa de la empresa"
 
 #. module: account_reconcile_wizard
 #: model:ir.model.fields,field_description:account_reconcile_wizard.field_account_manual_reconcile_wizard__create_uid
 #: model:ir.model.fields,field_description:account_reconcile_wizard.field_account_manual_reconcile_wizard_line__create_uid
 msgid "Created by"
-msgstr ""
+msgstr "Creado por"
 
 #. module: account_reconcile_wizard
 #: model:ir.model.fields,field_description:account_reconcile_wizard.field_account_manual_reconcile_wizard__create_date
 #: model:ir.model.fields,field_description:account_reconcile_wizard.field_account_manual_reconcile_wizard_line__create_date
 msgid "Created on"
-msgstr ""
+msgstr "Creado el"
 
 #. module: account_reconcile_wizard
 #: model:ir.model.fields,field_description:account_reconcile_wizard.field_account_manual_reconcile_wizard_line__credit
@@ -106,7 +106,7 @@ msgstr "Haber"
 #. module: account_reconcile_wizard
 #: model:ir.model.fields,field_description:account_reconcile_wizard.field_account_manual_reconcile_wizard_line__company_currency_id
 msgid "Currency"
-msgstr ""
+msgstr "Divisa"
 
 #. module: account_reconcile_wizard
 #: model:ir.model.fields,field_description:account_reconcile_wizard.field_account_manual_reconcile_wizard__date
@@ -132,24 +132,24 @@ msgstr "Descripción"
 #. module: account_reconcile_wizard
 #: model:ir.model.fields,field_description:account_reconcile_wizard.field_account_manual_reconcile_wizard__display_allow_partial_reconcile
 msgid "Display Allow Partial Reconcile"
-msgstr ""
+msgstr "Mostrar permitir conciliación parcial"
 
 #. module: account_reconcile_wizard
 #: model:ir.model.fields,field_description:account_reconcile_wizard.field_account_manual_reconcile_wizard__display_name
 #: model:ir.model.fields,field_description:account_reconcile_wizard.field_account_manual_reconcile_wizard_line__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Nombre a mostrar"
 
 #. module: account_reconcile_wizard
 #: model:ir.model.fields,field_description:account_reconcile_wizard.field_account_manual_reconcile_wizard_line__distribution_analytic_account_ids
 msgid "Distribution Analytic Account"
-msgstr ""
+msgstr "Cuenta analítica de distribución"
 
 #. module: account_reconcile_wizard
 #: model:ir.model.fields,field_description:account_reconcile_wizard.field_account_manual_reconcile_wizard__id
 #: model:ir.model.fields,field_description:account_reconcile_wizard.field_account_manual_reconcile_wizard_line__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: account_reconcile_wizard
 #: model:ir.model.fields,field_description:account_reconcile_wizard.field_account_manual_reconcile_wizard__journal_id
@@ -170,33 +170,33 @@ msgstr "Mantener el saldo abierto"
 #: model:ir.model.fields,field_description:account_reconcile_wizard.field_account_manual_reconcile_wizard__write_uid
 #: model:ir.model.fields,field_description:account_reconcile_wizard.field_account_manual_reconcile_wizard_line__write_uid
 msgid "Last Updated by"
-msgstr ""
+msgstr "Última actualización por"
 
 #. module: account_reconcile_wizard
 #: model:ir.model.fields,field_description:account_reconcile_wizard.field_account_manual_reconcile_wizard__write_date
 #: model:ir.model.fields,field_description:account_reconcile_wizard.field_account_manual_reconcile_wizard_line__write_date
 msgid "Last Updated on"
-msgstr ""
+msgstr "Última actualización el"
 
 #. module: account_reconcile_wizard
 #: model:ir.model,name:account_reconcile_wizard.model_account_manual_reconcile_wizard
 msgid "Manual Reconciliation Wizard"
-msgstr ""
+msgstr "Asistente de conciliación manual"
 
 #. module: account_reconcile_wizard
 #: model:ir.model.fields,field_description:account_reconcile_wizard.field_account_manual_reconcile_wizard__move_line_ids
 msgid "Move Lines to Reconcile"
-msgstr ""
+msgstr "Líneas de movimiento a conciliar"
 
 #. module: account_reconcile_wizard
 #: model:ir.model.fields,field_description:account_reconcile_wizard.field_account_manual_reconcile_wizard__need_transfer
 msgid "Need Transfer"
-msgstr ""
+msgstr "Necesita transferencia"
 
 #. module: account_reconcile_wizard
 #: model:ir.model.fields,field_description:account_reconcile_wizard.field_account_manual_reconcile_wizard__need_write_off
 msgid "Need Write Off"
-msgstr ""
+msgstr "Necesita cancelación"
 
 #. module: account_reconcile_wizard
 #: model:ir.actions.act_window,name:account_reconcile_wizard.account_move_line_reconcile_act_window
@@ -225,7 +225,7 @@ msgstr "Conciliación"
 #. module: account_reconcile_wizard
 #: model:ir.model.fields,field_description:account_reconcile_wizard.field_account_manual_reconcile_wizard__reconciliation_account_id
 msgid "Reconciliation Account"
-msgstr ""
+msgstr "Cuenta de conciliación"
 
 #. module: account_reconcile_wizard
 #: model_terms:ir.ui.view,arch_db:account_reconcile_wizard.account_manual_reconcile_wizard_form_view
@@ -287,17 +287,17 @@ msgstr "Transferir a %s"
 #. module: account_reconcile_wizard
 #: model:ir.model.fields,field_description:account_reconcile_wizard.field_account_manual_reconcile_wizard_line__wizard_id
 msgid "Wizard"
-msgstr ""
+msgstr "Asistente"
 
 #. module: account_reconcile_wizard
 #: model:ir.model.fields,field_description:account_reconcile_wizard.field_account_manual_reconcile_wizard__write_off_amount
 msgid "Write Off Amount"
-msgstr ""
+msgstr "Importe de cancelación"
 
 #. module: account_reconcile_wizard
 #: model:ir.model.fields,field_description:account_reconcile_wizard.field_account_manual_reconcile_wizard__write_off_line_ids
 msgid "Write Off Line"
-msgstr ""
+msgstr "Línea de cancelación"
 
 #. module: account_reconcile_wizard
 #. odoo-python
