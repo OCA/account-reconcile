@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="bank_statement_line_form_reconcile_view" model="ir.ui.view">
+        <field name="name">account.bank.statement.line.reconcile</field>
+        <field name="model">account.bank.statement.line</field>
+        <field
+            name="inherit_id"
+            ref="account_reconcile_oca.bank_statement_line_form_reconcile_view"
+        />
+        <field name="arch" type="xml">
+            <xpath
+                expr="//page[@name='manual']//field[@name='analytic_distribution']"
+                position="after"
+            >
+                <field
+                    name="manual_analytic_tag_ids"
+                    groups="account_analytic_tag.group_analytic_tags"
+                    widget="many2many_tags"
+                    invisible="manual_kind == 'liquidity' or manual_reference == False"
+                    readonly="is_reconciled"
+                    options="{'color_field': 'color'}"
+                />
+            </xpath>
+        </field>
+    </record>
+</odoo>
