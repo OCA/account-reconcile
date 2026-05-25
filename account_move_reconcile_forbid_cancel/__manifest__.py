@@ -8,5 +8,5 @@
     "website": "https://github.com/OCA/account-reconcile",
     "author": "Tecnativa, Odoo Community Association (OCA)",
     "license": "AGPL-3",
-    "depends": ["account"],
+    "depends": ["account", "account_payment"],
 }

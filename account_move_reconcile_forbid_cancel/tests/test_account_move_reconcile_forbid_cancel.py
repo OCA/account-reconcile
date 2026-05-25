@@ -3,12 +3,24 @@
 
 from odoo import fields
 from odoo.exceptions import ValidationError
-from odoo.tests import Form
+from odoo.tests import Form, tagged
 
-from odoo.addons.base.tests.common import BaseCommon
+from odoo.addons.account.tests.common import AccountTestInvoicingCommon
 
 
-class TestAccountMoveReconcileForbidCancel(BaseCommon):
+@tagged("post_install", "-at_install")
+class TestAccountMoveReconcileForbidCancel(AccountTestInvoicingCommon):
+    """Use AccountTestInvoicingCommon as the base — it sets up the full chart
+    of accounts, journals (bank/purchase/sale/general), payment methods, and
+    the outstanding-payments/receipts accounts needed for action_register_payment.
+
+    The original 18.0 version of this test built a minimal scaffold by hand;
+    19.0 enforces additional invariants (purchase/sale journals required for
+    Form(), account.move.line.check_accountable_required_fields, outstanding
+    accounts on payment methods) that make the hand-rolled scaffold too
+    fragile to keep in sync with core.
+    """
+
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
@@ -22,55 +34,11 @@ class TestAccountMoveReconcileForbidCancel(BaseCommon):
                 tracking_disable=True,
             )
         )
-        cls.env["account.journal"].create(
-            {"name": "Bank Journal", "code": "BANK", "type": "bank"}
-        )
-        receivable_account = cls.env["account.account"].create(
-            {
-                "name": "Receivable Account",
-                "code": "REC",
-                "account_type": "asset_receivable",
-                "reconcile": True,
-            }
-        )
-        payable_account = cls.env["account.account"].create(
-            {
-                "name": "Payable Account",
-                "code": "PAY",
-                "account_type": "liability_payable",
-                "reconcile": True,
-            }
-        )
-        income_account = cls.env["account.account"].create(
-            {
-                "name": "Income Account",
-                "code": "INC",
-                "account_type": "income",
-                "reconcile": False,
-            }
-        )
-        expense_account = cls.env["account.account"].create(
-            {
-                "name": "Expense Account",
-                "code": "EXP",
-                "account_type": "expense",
-                "reconcile": False,
-            }
-        )
-        cls.partner = cls.env["res.partner"].create(
-            {
-                "name": "Partner test",
-                "property_account_receivable_id": receivable_account.id,
-                "property_account_payable_id": payable_account.id,
-            }
-        )
-        cls.product = cls.env["product.product"].create(
-            {
-                "name": "Product Test",
-                "property_account_income_id": income_account.id,
-                "property_account_expense_id": expense_account.id,
-            }
-        )
+        # Use the partner + product from the common test fixture; these
+        # already have receivable/payable/income/expense accounts set by
+        # AccountTestInvoicingCommon.
+        cls.partner = cls.partner_a
+        cls.product = cls.product_a
         # Create a purchase invoice
         cls.purchase_invoice = cls._create_invoice(cls, "in_invoice")
         cls.purchase_invoice.action_post()
