@@ -6,7 +6,6 @@ from odoo.addons.account_move_base_import.models.account_move import ErrorTooMan
 
 
 class AccountMoveCompletionRule(models.Model):
-
     _name = "account.move.completion.rule"
     _inherit = "account.move.completion.rule"
 
