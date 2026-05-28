@@ -47,7 +47,7 @@ class AccountMoveCompletionRule(models.Model):
                 % line.name
             )
         if len(partners) == 1:
-            res["partner_id"] = partners.id
+            res["partner_id"] = partners.commercial_partner_id.id or partners.id
             res["account_id"] = partners.property_account_receivable_id.id
         return res
 
