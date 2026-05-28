@@ -55,6 +55,7 @@ Authors
 -------
 
 * Camptocamp
+* Akretion
 
 Contributors
 ------------
@@ -62,6 +63,7 @@ Contributors
 - Joël Grand-Guillaume <joel.grandguillaume@camptocamp.com>
 - Leonardo Pistone <leonardo.pistone@camptocamp.com>
 - Matthieu Dietrich <matthieu.dietrich@camptocamp.com>
+- Florian da Costa <florian.dacosta@akretion.com>
 
 Maintainers
 -----------
@@ -75,6 +77,14 @@ This module is maintained by the OCA.
 OCA, or the Odoo Community Association, is a nonprofit organization whose
 mission is to support the collaborative development of Odoo features and
 promote its widespread use.
+
+.. |maintainer-florian-dacosta| image:: https://github.com/florian-dacosta.png?size=40px
+    :target: https://github.com/florian-dacosta
+    :alt: florian-dacosta
+
+Current `maintainer <https://odoo-community.org/page/maintainer-role>`__:
+
+|maintainer-florian-dacosta| 
 
 This module is part of the `OCA/account-reconcile <https://github.com/OCA/account-reconcile/tree/18.0/account_move_so_import>`_ project on GitHub.
 
