@@ -690,7 +690,7 @@ class AccountBankStatementLine(models.Model):
                         reconcile_auxiliary_id=reconcile_auxiliary_id,
                         move=True,
                     )
-                    amount -= sum(line.get("amount") for line in line_data)
+                    amount += sum(line.get("amount") for line in line_data)
                     data += line_data
                 if res.get("auto_reconcile") and self.reconcile_data_info:
                     self.reconcile_bank_line()
@@ -1024,7 +1024,7 @@ class AccountBankStatementLine(models.Model):
                     reconcile_auxiliary_id, line_datas = record._get_reconcile_line(
                         line, "other", is_counterpart=True, max_amount=amount, move=True
                     )
-                    amount -= sum(line_data.get("amount") for line_data in line_datas)
+                    amount += sum(line_data.get("amount") for line_data in line_datas)
                     data += line_datas
                 data = record._recompute_suspense_line(
                     data,
