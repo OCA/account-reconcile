@@ -17,27 +17,22 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Generator: Weblate 4.3.2\n"
 
-#. module: account_reconciliation_widget_due_date
-#: model:ir.model,name:account_reconciliation_widget_due_date.model_account_reconciliation_widget
-msgid "Account Reconciliation widget"
-msgstr "Widget de conciliación de cuenta"
-
-#. module: account_reconciliation_widget_due_date
-#: model:ir.model,name:account_reconciliation_widget_due_date.model_account_bank_statement_line
+#. module: account_reconcile_due_date
+#: model:ir.model,name:account_reconcile_due_date.model_account_bank_statement_line
 msgid "Bank Statement Line"
 msgstr "Línea de extracto bancario"
 
-#. module: account_reconciliation_widget_due_date
-#: model:ir.model.fields,field_description:account_reconciliation_widget_due_date.field_account_bank_statement_line__date_due
+#. module: account_reconcile_due_date
+#: model:ir.model.fields,field_description:account_reconcile_due_date.field_account_bank_statement_line__date_due
 msgid "Due date"
 msgstr "Fecha vencimiento"
 
-#. module: account_reconciliation_widget_due_date
-#. openerp-web
-#: code:addons/account_reconciliation_widget_due_date/static/src/js/reconciliation_renderer.js:0
+#~ msgid "Account Reconciliation widget"
+#~ msgstr "Widget de conciliación de cuenta"
+
 #, python-format
-msgid "Select Due date"
-msgstr "Seleccionar fecha vencimiento"
+#~ msgid "Select Due date"
+#~ msgstr "Seleccionar fecha vencimiento"
 
 #, python-format
 #~ msgid "Open balance"
