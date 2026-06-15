@@ -46,6 +46,7 @@ class AccountReconcileAbstract(models.AbstractModel):
         move=False,
         is_reconciled=False,
     ):
+        line = line.with_company(line.company_id)
         date = self.date if "date" in self._fields else line.date
         original_amount = amount = net_amount = line.debit - line.credit
         line_currency = line.currency_id
