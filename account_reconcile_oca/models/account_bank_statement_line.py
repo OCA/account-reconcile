@@ -622,6 +622,7 @@ class AccountBankStatementLine(models.Model):
                     "account_id": [
                         line["account_id"],
                         self.env["account.account"]
+                        .with_company(self.company_id)
                         .browse(line["account_id"])
                         .display_name,
                     ],
