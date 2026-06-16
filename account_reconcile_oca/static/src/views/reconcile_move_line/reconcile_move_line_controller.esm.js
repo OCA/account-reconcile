@@ -2,12 +2,31 @@ import {ListController} from "@web/views/list/list_controller";
 
 export class ReconcileMoveLineController extends ListController {
     async openRecord(record) {
+        // Selecting a counterpart updates the parent record, which re-renders
+        // the whole reconcile form and reloads this list. Keep the scroll
+        // position of the right panel so the user stays where they were (the
+        // current page is preserved by ReconcileMoveLineModel).
+        const scroller = document.querySelector(".o_account_reconcile_oca_info");
+        const scrollTop = scroller ? scroller.scrollTop : null;
         var data = {};
         data[this.props.parentField] = {
             id: record.resId,
             display_name: record.display_name,
         };
-        this.props.parentRecord.update(data);
+        await this.props.parentRecord.update(data);
+        if (scroller && scrollTop !== null) {
+            // The update re-renders the form asynchronously, so restore the
+            // scroll across the next couple of frames to make sure it sticks
+            // once the DOM has been patched.
+            const restore = () => {
+                scroller.scrollTop = scrollTop;
+            };
+            restore();
+            requestAnimationFrame(() => {
+                restore();
+                requestAnimationFrame(restore);
+            });
+        }
     }
     async clickAddAll() {
         await this.props.parentRecord.save();
