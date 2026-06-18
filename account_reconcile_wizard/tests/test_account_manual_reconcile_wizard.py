@@ -16,6 +16,8 @@ class TestAccountManualReconcileWizard(AccountTestInvoicingCommon):
         cls.expense_account = cls.company_data["default_account_expense"]
         cls.expense_account2 = cls.expense_account.copy()
         cls.partner = cls.env["res.partner"].create({"name": "Test Partner"})
+        cls.partner2 = cls.env["res.partner"].create({"name": "Test Partner2"})
+        cls.account_receivable = cls.partner.property_account_receivable_id
         cls.invoice1 = cls._create_invoice_one_line(
             price_unit=100.0,
             move_type="out_invoice",
@@ -28,6 +30,32 @@ class TestAccountManualReconcileWizard(AccountTestInvoicingCommon):
             partner_id=cls.partner.id,
             post=True,
         )
+        cls.move1 = cls.env["account.move"].create(
+            {
+                "move_type": "entry",
+                "line_ids": [
+                    (
+                        Command.create(
+                            {
+                                "account_id": cls.account_receivable.id,
+                                "credit": 150.0,
+                                "partner_id": cls.partner2.id,
+                            }
+                        )
+                    ),
+                    (
+                        Command.create(
+                            {
+                                "account_id": cls.expense_account.id,
+                                "debit": 150.0,
+                                "partner_id": cls.partner2.id,
+                            }
+                        )
+                    ),
+                ],
+            }
+        )
+        cls.move1.action_post()
         cls.bill1 = cls._create_invoice_one_line(
             price_unit=100.0,
             move_type="in_invoice",
@@ -38,6 +66,12 @@ class TestAccountManualReconcileWizard(AccountTestInvoicingCommon):
             price_unit=150.0,
             move_type="in_invoice",
             partner_id=cls.partner.id,
+            post=True,
+        )
+        cls.bill3 = cls._create_invoice_one_line(
+            price_unit=150.0,
+            move_type="in_invoice",
+            partner_id=cls.partner2.id,
             post=True,
         )
         cls.payment1 = cls.init_payment(100, post=True, partner=cls.partner)
@@ -115,6 +149,7 @@ class TestAccountManualReconcileWizard(AccountTestInvoicingCommon):
         result_lines = wizard._action_reconcile()
         self.assertEqual(len(result_lines), 4)
         new_move_lines = result_lines - lines_to_reconcile
+        self.assertEqual(new_move_lines.partner_id, self.partner)
         # Check the transfer lines
         transfer_origin = new_move_lines.filtered(
             lambda line: line.account_id.account_type == "liability_payable"
@@ -157,6 +192,7 @@ class TestAccountManualReconcileWizard(AccountTestInvoicingCommon):
         self.assertEqual(len(new_move_lines), 2)
         self.assertEqual(len(new_move_lines.move_id), 1)
         self.assertEqual(new_move_lines.move_id.move_type, "entry")
+        self.assertEqual(new_move_lines.partner_id, self.partner)
         # Check the transfer lines
         transfer_origin = new_move_lines.filtered(
             lambda line: line.account_id.account_type == "liability_payable"
@@ -199,6 +235,7 @@ class TestAccountManualReconcileWizard(AccountTestInvoicingCommon):
         self.assertEqual(len(new_move_lines), 2)
         self.assertEqual(len(new_move_lines.move_id), 1)
         self.assertEqual(new_move_lines.move_id.move_type, "entry")
+        self.assertEqual(new_move_lines.partner_id, self.partner)
         # Check the transfer lines
         transfer_origin = new_move_lines.filtered(
             lambda line: line.account_id.account_type == "asset_receivable"
@@ -258,9 +295,7 @@ class TestAccountManualReconcileWizard(AccountTestInvoicingCommon):
             transfer_origin.account_id, self.partner.property_account_payable_id
         )
         self.assertEqual(transfer_origin.debit, 100.0)
-        self.assertEqual(
-            transfer_dest.account_id, self.partner.property_account_receivable_id
-        )
+        self.assertEqual(transfer_dest.account_id, self.account_receivable)
         self.assertEqual(transfer_dest.credit, 100.0)
         # Check the write-off lines
         write_off_lines = new_move_lines - transfer_origin - transfer_dest
@@ -268,12 +303,13 @@ class TestAccountManualReconcileWizard(AccountTestInvoicingCommon):
             lambda line: line.account_id == self.expense_account
         )
         write_off_receivable = write_off_lines.filtered(
-            lambda line: line.account_id == self.partner.property_account_receivable_id
+            lambda line: line.account_id == self.account_receivable
         )
         self.assertEqual(len(write_off_expense), 1)
         self.assertEqual(write_off_expense.debit, 50.0)
         self.assertEqual(len(write_off_receivable), 1)
         self.assertEqual(write_off_receivable.credit, 50.0)
+        self.assertEqual(write_off_receivable.partner_id, self.partner)
         # Check the invoices and bill are fully reconciled
         self.assertTrue(all(line.reconciled for line in lines_to_reconcile))
         self.assertTrue(lines_to_reconcile.full_reconcile_id)
@@ -318,9 +354,7 @@ class TestAccountManualReconcileWizard(AccountTestInvoicingCommon):
         transfer_dest = new_move_lines.filtered(
             lambda line: "Transfer from" in line.name
         )
-        self.assertEqual(
-            transfer_origin.account_id, self.partner.property_account_receivable_id
-        )
+        self.assertEqual(transfer_origin.account_id, self.account_receivable)
         self.assertEqual(transfer_origin.credit, 100.0)
         self.assertEqual(
             transfer_dest.account_id, self.partner.property_account_payable_id
@@ -379,7 +413,7 @@ class TestAccountManualReconcileWizard(AccountTestInvoicingCommon):
             lambda line: line.account_id == self.expense_account
         )
         write_off_receivable = write_off_lines.filtered(
-            lambda line: line.account_id == self.partner.property_account_receivable_id
+            lambda line: line.account_id == self.account_receivable
         )
         self.assertEqual(len(write_off_expense), 1)
         self.assertEqual(write_off_expense.debit, 100.0)
@@ -431,7 +465,7 @@ class TestAccountManualReconcileWizard(AccountTestInvoicingCommon):
             lambda line: line.account_id == self.expense_account2
         )
         write_off_receivable = write_off_lines.filtered(
-            lambda line: line.account_id == self.partner.property_account_receivable_id
+            lambda line: line.account_id == self.account_receivable
         )
         self.assertEqual(len(write_off_expense1), 1)
         self.assertEqual(write_off_expense1.debit, 60.0)
@@ -478,7 +512,7 @@ class TestAccountManualReconcileWizard(AccountTestInvoicingCommon):
             lambda line: line.account_id == self.expense_account2
         )
         write_off_receivable = write_off_lines.filtered(
-            lambda line: line.account_id == self.partner.property_account_receivable_id
+            lambda line: line.account_id == self.account_receivable
         )
         self.assertEqual(len(write_off_expense1), 1)
         self.assertEqual(write_off_expense1.debit, 60.0)
@@ -490,3 +524,117 @@ class TestAccountManualReconcileWizard(AccountTestInvoicingCommon):
         self.assertTrue(all(line.reconciled for line in lines_to_reconcile))
         self.assertTrue(lines_to_reconcile.full_reconcile_id)
         self.assertEqual(self.invoice1.amount_residual, 0.0)
+
+    def test_full_reconcile_two_partners(self):
+        """
+        Invoice 1 = 100 Partner 1
+        Invoice 2 = 50 Partner 1
+        move1 = 150 Partner 2
+        The difference is 0, so no write-off is needed.
+        All documents should be fully reconciled.
+        """
+        lines_to_reconcile = (
+            self.invoice1 + self.invoice2 + self.move1
+        ).line_ids.filtered(
+            lambda line: line.account_id.account_type == "asset_receivable"
+        )
+        self.assertEqual(len(lines_to_reconcile), 3)
+        wizard = self._create_reconcile_wizard(lines_to_reconcile)
+        self.assertFalse(wizard.need_transfer)
+        self.assertFalse(wizard.need_write_off)
+        self.assertTrue(wizard.display_allow_partial_reconcile)
+        self.assertTrue(wizard.allow_partial_reconcile)
+        self.assertEqual(wizard.balance_difference, 0.0)
+        self.assertEqual(wizard.write_off_amount, 0.0)
+        result_lines = wizard._action_reconcile()
+        self.assertEqual(result_lines, lines_to_reconcile)
+        self.assertTrue(all(line.reconciled for line in lines_to_reconcile))
+        self.assertTrue(lines_to_reconcile.full_reconcile_id)
+        self.assertEqual(self.invoice1.amount_residual, 0.0)
+        self.assertEqual(self.invoice2.amount_residual, 0.0)
+        aml1_to_reconcile = self.move1.line_ids.filtered(
+            lambda line: line.account_id.account_type == "asset_receivable"
+        )
+        self.assertEqual(aml1_to_reconcile.amount_residual, 0.0)
+
+    def test_partial_reconcile_two_partners_without_write_off(self):
+        """
+        Invoice 1 = 100 Partner 1
+        move1 = 150 Partner 2
+        The difference is 50, write-off is needed but reconcile partially
+        The invoice1 should be fully reconciled.
+        The move1 should be partially reconciled with 100
+        """
+        lines_to_reconcile = (self.invoice1 + self.move1).line_ids.filtered(
+            lambda line: line.account_id.account_type == "asset_receivable"
+        )
+        self.assertEqual(len(lines_to_reconcile), 2)
+        wizard = self._create_reconcile_wizard(lines_to_reconcile)
+        self.assertFalse(wizard.need_transfer)
+        self.assertTrue(wizard.need_write_off)
+        self.assertTrue(wizard.display_allow_partial_reconcile)
+        self.assertTrue(wizard.allow_partial_reconcile)
+        self.assertEqual(wizard.balance_difference, -50.0)
+        self.assertEqual(wizard.write_off_amount, 0.0)
+        result_lines = wizard._action_reconcile()
+        self.assertEqual(result_lines, lines_to_reconcile)
+        self.assertEqual(self.invoice1.amount_residual, 0.0)
+        aml1_to_reconcile = self.move1.line_ids.filtered(
+            lambda line: line.account_id.account_type == "asset_receivable"
+        )
+        self.assertEqual(aml1_to_reconcile.amount_residual, -50.0)
+
+    def test_partial_reconcile_two_partners_with_write_off(self):
+        """
+        Invoice 1 = 100 Partner 1
+        move1 = 150 Partner 2
+        The difference is 50, with no transfer,
+        50 is written off with an expense account.
+        The invoice1 and move1 should be fully reconciled.
+        """
+        lines_to_reconcile = (self.invoice1 + self.move1).line_ids.filtered(
+            lambda line: line.account_id.account_type == "asset_receivable"
+        )
+        self.assertEqual(len(lines_to_reconcile), 2)
+        wizard = self._create_reconcile_wizard(lines_to_reconcile)
+        self.assertFalse(wizard.need_transfer)
+        self.assertTrue(wizard.need_write_off)
+        self.assertTrue(wizard.display_allow_partial_reconcile)
+        wizard.allow_partial_reconcile = False
+        self.assertEqual(wizard.balance_difference, -50.0)
+        self.assertEqual(wizard.write_off_amount, 0.0)
+        with Form(wizard) as wizard_form:
+            with wizard_form.write_off_line_ids.new() as line:
+                line.account_id = self.expense_account
+                line.debit = 50.0
+        self.assertEqual(wizard.write_off_amount, 50.0)
+        result_lines = wizard._action_reconcile()
+        self.assertEqual(len(result_lines), 4)  # 2 originals + 2 write-off
+        write_off_lines = result_lines - lines_to_reconcile
+        self.assertFalse(write_off_lines.partner_id)  # no partner on write-off lines
+        self.assertTrue(all(line.reconciled for line in lines_to_reconcile))
+        self.assertTrue(lines_to_reconcile.full_reconcile_id)
+        self.assertEqual(self.invoice1.amount_residual, 0.0)
+        aml1_to_reconcile = self.move1.line_ids.filtered(
+            lambda line: line.account_id.account_type == "asset_receivable"
+        )
+        self.assertEqual(aml1_to_reconcile.amount_residual, 0.0)
+
+    def test_reconcile_two_partners_with_two_accounts(self):
+        """
+        Invoice 1 = 100 Partner 1
+        bill3 = 150 Partner 2
+        Two partners with two different accounts is not allowed
+        a exception should be raised
+        """
+        lines_to_reconcile = (self.invoice1 + self.bill3).line_ids.filtered(
+            lambda line: line.account_id.account_type
+            in ["asset_receivable", "liability_payable"]
+        )
+        self.assertEqual(len(lines_to_reconcile), 2)
+        with self.assertRaisesRegex(
+            UserError,
+            "You cannot reconcile entries "
+            "that belong to different partners and accounts",
+        ):
+            self._create_reconcile_wizard(lines_to_reconcile)
