@@ -178,9 +178,12 @@ class AccountManualReconcileWizard(models.TransientModel):
                     "You can only reconcile entries from up to 2 different accounts."
                 )
             )
-        if len(move_lines.partner_id) > 1:
+        if len(move_lines.partner_id) > 1 and len(move_lines.account_id) > 1:
             raise UserError(
-                self.env._("You can only reconcile entries from the same partner.")
+                self.env._(
+                    "You cannot reconcile entries "
+                    "that belong to different partners and accounts."
+                )
             )
 
     @api.model
@@ -240,6 +243,8 @@ class AccountManualReconcileWizard(models.TransientModel):
 
     def _prepare_write_off_lines(self):
         partner = self.move_line_ids.partner_id
+        if partner and len(partner) > 1:
+            partner = self.env["res.partner"]
         line_values = [
             Command.create(
                 {
