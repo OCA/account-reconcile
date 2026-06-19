@@ -265,9 +265,9 @@ class AccountMoveLineReconcileManual(models.TransientModel):
 
     def _get_writeoff_vals_by_simulation(self):
         """
-        In some multi-currency reconciliation case, it is too complicated to 'guess'
-        the needed writeoff amounts. For these case, we do simulate the reconciliation
-        too get the real writeoff amounts
+        In some multi-currency reconciliation cases, it is too complicated to 'guess'
+        the required write-off amounts. For these cases, we simulate the reconciliation
+        to obtain the actual write-off amounts.
         """
         amls = self.move_line_ids
         # From _reconcile_plan_with_sync
