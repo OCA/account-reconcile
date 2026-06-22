@@ -17,6 +17,12 @@ class TestAccountReconciliationCommon(TestAccountReconciliationModelCommon):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
+        bank_account_access = cls.env.ref(
+            "base.access_res_partner_bank_group_partner_manager"
+        )
+        cls.env.user.write(
+            {"group_ids": [Command.link(bank_account_access.group_id.id)]}
+        )
         cls.env = cls.env(context=cls._setup_context())
         # Auto-disable reconciliation model created automatically with
         # generate_account_reconcile_model() to avoid side effects in tests
