@@ -6,193 +6,196 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 18.0\n"
 "Report-Msgid-Bugs-To: \n"
-"Last-Translator: Automatically generated\n"
+"PO-Revision-Date: 2026-06-10 18:46+0000\n"
+"Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.15.2\n"
 
 #. module: account_reconcile_wizard
 #: model:ir.model.fields,field_description:account_reconcile_wizard.field_account_manual_reconcile_wizard_line__account_id
 msgid "Account"
-msgstr ""
+msgstr "Conto"
 
 #. module: account_reconcile_wizard
 #: model:ir.model,name:account_reconcile_wizard.model_account_manual_reconcile_wizard_line
 msgid "Account Manual Reconcile Line"
-msgstr ""
+msgstr "Riga riconciliazione manuale conto"
 
 #. module: account_reconcile_wizard
 #: model:ir.model.fields,help:account_reconcile_wizard.field_account_manual_reconcile_wizard__write_off_line_ids
 msgid "Add lines for write-offs, adjustments, counterparts, etc."
-msgstr ""
+msgstr "Aggiungi righe per storni, correzioni, contropartite, ecc."
 
 #. module: account_reconcile_wizard
 #. odoo-python
 #: code:addons/account_reconcile_wizard/wizard/account_manual_reconcile_wizard.py:0
 msgid "All selected lines must be from the same company."
-msgstr ""
+msgstr "Tutte le righe selezionate devono essere della stessa azienda."
 
 #. module: account_reconcile_wizard
 #: model:ir.model.fields,field_description:account_reconcile_wizard.field_account_manual_reconcile_wizard__allow_partial_reconcile
 msgid "Allow Partial Reconcile"
-msgstr ""
+msgstr "Consenti riconciliazione parziale"
 
 #. module: account_reconcile_wizard
 #: model:ir.model.fields,help:account_reconcile_wizard.field_account_manual_reconcile_wizard__allow_partial_reconcile
 msgid "Allow reconciliation even if balances do not match exactly"
 msgstr ""
+"Consenti la riconciliazione anche se il saldo non corrisponde esattamente"
 
 #. module: account_reconcile_wizard
 #: model:ir.model.fields,field_description:account_reconcile_wizard.field_account_manual_reconcile_wizard_line__analytic_distribution
 msgid "Analytic Distribution"
-msgstr ""
+msgstr "Distribuzione analitica"
 
 #. module: account_reconcile_wizard
 #: model:ir.model.fields,field_description:account_reconcile_wizard.field_account_manual_reconcile_wizard_line__analytic_precision
 msgid "Analytic Precision"
-msgstr ""
+msgstr "Precisione analitica"
 
 #. module: account_reconcile_wizard
 #: model:ir.model.fields,field_description:account_reconcile_wizard.field_account_manual_reconcile_wizard__balance_difference
 msgid "Balance Difference"
-msgstr ""
+msgstr "Differenza saldo"
 
 #. module: account_reconcile_wizard
 #: model_terms:ir.ui.view,arch_db:account_reconcile_wizard.account_manual_reconcile_wizard_form_view
 msgid "Cancel"
-msgstr ""
+msgstr "Annulla"
 
 #. module: account_reconcile_wizard
 #. odoo-python
 #: code:addons/account_reconcile_wizard/wizard/account_manual_reconcile_wizard.py:0
 msgid "Cannot reconcile already reconciled lines."
-msgstr ""
+msgstr "Non si possono riconciliare righe già riconciliate."
 
 #. module: account_reconcile_wizard
 #: model:ir.model.fields,field_description:account_reconcile_wizard.field_account_manual_reconcile_wizard__company_id
 #: model:ir.model.fields,field_description:account_reconcile_wizard.field_account_manual_reconcile_wizard_line__company_id
 msgid "Company"
-msgstr ""
+msgstr "Azienda"
 
 #. module: account_reconcile_wizard
 #: model:ir.model.fields,field_description:account_reconcile_wizard.field_account_manual_reconcile_wizard__company_currency_id
 msgid "Company Currency"
-msgstr ""
+msgstr "Valuta aziendale"
 
 #. module: account_reconcile_wizard
 #: model:ir.model.fields,field_description:account_reconcile_wizard.field_account_manual_reconcile_wizard__create_uid
 #: model:ir.model.fields,field_description:account_reconcile_wizard.field_account_manual_reconcile_wizard_line__create_uid
 msgid "Created by"
-msgstr ""
+msgstr "Creato da"
 
 #. module: account_reconcile_wizard
 #: model:ir.model.fields,field_description:account_reconcile_wizard.field_account_manual_reconcile_wizard__create_date
 #: model:ir.model.fields,field_description:account_reconcile_wizard.field_account_manual_reconcile_wizard_line__create_date
 msgid "Created on"
-msgstr ""
+msgstr "Creato il"
 
 #. module: account_reconcile_wizard
 #: model:ir.model.fields,field_description:account_reconcile_wizard.field_account_manual_reconcile_wizard_line__credit
 msgid "Credit"
-msgstr ""
+msgstr "Accredito"
 
 #. module: account_reconcile_wizard
 #: model:ir.model.fields,field_description:account_reconcile_wizard.field_account_manual_reconcile_wizard_line__company_currency_id
 msgid "Currency"
-msgstr ""
+msgstr "Valuta"
 
 #. module: account_reconcile_wizard
 #: model:ir.model.fields,field_description:account_reconcile_wizard.field_account_manual_reconcile_wizard__date
 msgid "Date"
-msgstr ""
+msgstr "Data"
 
 #. module: account_reconcile_wizard
 #: model:ir.model.fields,field_description:account_reconcile_wizard.field_account_manual_reconcile_wizard_line__debit
 msgid "Debit"
-msgstr ""
+msgstr "Debito"
 
 #. module: account_reconcile_wizard
 #. odoo-python
 #: code:addons/account_reconcile_wizard/wizard/account_manual_reconcile_wizard.py:0
 msgid "Debit and credit amounts must be positive."
-msgstr ""
+msgstr "Il debito e il credito devono essere positivi."
 
 #. module: account_reconcile_wizard
 #: model:ir.model.fields,field_description:account_reconcile_wizard.field_account_manual_reconcile_wizard_line__name
 msgid "Description"
-msgstr ""
+msgstr "Descrizione"
 
 #. module: account_reconcile_wizard
 #: model:ir.model.fields,field_description:account_reconcile_wizard.field_account_manual_reconcile_wizard__display_allow_partial_reconcile
 msgid "Display Allow Partial Reconcile"
-msgstr ""
+msgstr "Visualizza abilitazione riconciliazione parziale"
 
 #. module: account_reconcile_wizard
 #: model:ir.model.fields,field_description:account_reconcile_wizard.field_account_manual_reconcile_wizard__display_name
 #: model:ir.model.fields,field_description:account_reconcile_wizard.field_account_manual_reconcile_wizard_line__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Nome visualizzato"
 
 #. module: account_reconcile_wizard
 #: model:ir.model.fields,field_description:account_reconcile_wizard.field_account_manual_reconcile_wizard_line__distribution_analytic_account_ids
 msgid "Distribution Analytic Account"
-msgstr ""
+msgstr "Conto distribuzione analitica"
 
 #. module: account_reconcile_wizard
 #: model:ir.model.fields,field_description:account_reconcile_wizard.field_account_manual_reconcile_wizard__id
 #: model:ir.model.fields,field_description:account_reconcile_wizard.field_account_manual_reconcile_wizard_line__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: account_reconcile_wizard
 #: model:ir.model.fields,field_description:account_reconcile_wizard.field_account_manual_reconcile_wizard__journal_id
 msgid "Journal"
-msgstr ""
+msgstr "Registro"
 
 #. module: account_reconcile_wizard
 #: model:ir.model,name:account_reconcile_wizard.model_account_move_line
 msgid "Journal Item"
-msgstr ""
+msgstr "Movimento contabile"
 
 #. module: account_reconcile_wizard
 #: model_terms:ir.ui.view,arch_db:account_reconcile_wizard.account_manual_reconcile_wizard_form_view
 msgid "Keep open balance"
-msgstr ""
+msgstr "Mantieni saldo aperto"
 
 #. module: account_reconcile_wizard
 #: model:ir.model.fields,field_description:account_reconcile_wizard.field_account_manual_reconcile_wizard__write_uid
 #: model:ir.model.fields,field_description:account_reconcile_wizard.field_account_manual_reconcile_wizard_line__write_uid
 msgid "Last Updated by"
-msgstr ""
+msgstr "Ultimo aggiornamento di"
 
 #. module: account_reconcile_wizard
 #: model:ir.model.fields,field_description:account_reconcile_wizard.field_account_manual_reconcile_wizard__write_date
 #: model:ir.model.fields,field_description:account_reconcile_wizard.field_account_manual_reconcile_wizard_line__write_date
 msgid "Last Updated on"
-msgstr ""
+msgstr "Ultimo aggiornamento il"
 
 #. module: account_reconcile_wizard
 #: model:ir.model,name:account_reconcile_wizard.model_account_manual_reconcile_wizard
 msgid "Manual Reconciliation Wizard"
-msgstr ""
+msgstr "Procedura guidata riconciliazione manuale"
 
 #. module: account_reconcile_wizard
 #: model:ir.model.fields,field_description:account_reconcile_wizard.field_account_manual_reconcile_wizard__move_line_ids
 msgid "Move Lines to Reconcile"
-msgstr ""
+msgstr "Righe movimento da riconciliare"
 
 #. module: account_reconcile_wizard
 #: model:ir.model.fields,field_description:account_reconcile_wizard.field_account_manual_reconcile_wizard__need_transfer
 msgid "Need Transfer"
-msgstr ""
+msgstr "Richiede trasferimento"
 
 #. module: account_reconcile_wizard
 #: model:ir.model.fields,field_description:account_reconcile_wizard.field_account_manual_reconcile_wizard__need_write_off
 msgid "Need Write Off"
-msgstr ""
+msgstr "Richiede storno"
 
 #. module: account_reconcile_wizard
 #: model:ir.actions.act_window,name:account_reconcile_wizard.account_move_line_reconcile_act_window
@@ -200,114 +203,115 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:account_reconcile_wizard.account_manual_reconcile_wizard_form_view
 #: model_terms:ir.ui.view,arch_db:account_reconcile_wizard.account_move_line_reconcile_list_view
 msgid "Reconcile"
-msgstr ""
+msgstr "Riconcilia"
 
 #. module: account_reconcile_wizard
 #: model_terms:ir.ui.view,arch_db:account_reconcile_wizard.account_manual_reconcile_wizard_form_view
 msgid "Reconcile & Open"
-msgstr ""
+msgstr "Riconcilia e apri"
 
 #. module: account_reconcile_wizard
 #: model:ir.model.fields,field_description:account_reconcile_wizard.field_account_manual_reconcile_wizard__reconcile_model_id
 msgid "Reconcile Model"
-msgstr ""
+msgstr "Modello riconciliazione"
 
 #. module: account_reconcile_wizard
 #. odoo-python
 #: code:addons/account_reconcile_wizard/models/account_move_line.py:0
 msgid "Reconciliation"
-msgstr ""
+msgstr "Riconciliazione"
 
 #. module: account_reconcile_wizard
 #: model:ir.model.fields,field_description:account_reconcile_wizard.field_account_manual_reconcile_wizard__reconciliation_account_id
 msgid "Reconciliation Account"
-msgstr ""
+msgstr "Conto riconciliazione"
 
 #. module: account_reconcile_wizard
 #: model_terms:ir.ui.view,arch_db:account_reconcile_wizard.account_manual_reconcile_wizard_form_view
 msgid "Reconciliation Models"
-msgstr ""
+msgstr "Modelli di riconciliazione"
 
 #. module: account_reconcile_wizard
 #: model:ir.model.fields,field_description:account_reconcile_wizard.field_account_manual_reconcile_wizard__reference
 msgid "Reference"
-msgstr ""
+msgstr "Riferimento"
 
 #. module: account_reconcile_wizard
 #: model:ir.model.fields,help:account_reconcile_wizard.field_account_manual_reconcile_wizard__reconcile_model_id
 msgid "Select a reconciliation model to auto-load lines"
 msgstr ""
+"Selezionare un modello di riconciliazione per caricare le righe in automatico"
 
 #. module: account_reconcile_wizard
 #. odoo-python
 #: code:addons/account_reconcile_wizard/wizard/account_manual_reconcile_wizard.py:0
 msgid "Success"
-msgstr ""
+msgstr "Successo"
 
 #. module: account_reconcile_wizard
 #. odoo-python
 #: code:addons/account_reconcile_wizard/wizard/account_manual_reconcile_wizard.py:0
 msgid "The selected lines have been successfully reconciled."
-msgstr ""
+msgstr "Le righe selezionate sono state riconciliate con successo."
 
 #. module: account_reconcile_wizard
 #. odoo-python
 #: code:addons/account_reconcile_wizard/wizard/account_manual_reconcile_wizard.py:0
 msgid "The total of write-off lines must balance the difference of %s."
-msgstr ""
+msgstr "Il totale delle righe di storno deve bilanciare la differenza di %s."
 
 #. module: account_reconcile_wizard
 #: model_terms:ir.ui.view,arch_db:account_reconcile_wizard.account_manual_reconcile_wizard_form_view
 msgid "Total Credit"
-msgstr ""
+msgstr "Credito totale"
 
 #. module: account_reconcile_wizard
 #: model_terms:ir.ui.view,arch_db:account_reconcile_wizard.account_manual_reconcile_wizard_form_view
 msgid "Total Debit"
-msgstr ""
+msgstr "Debito totale"
 
 #. module: account_reconcile_wizard
 #. odoo-python
 #: code:addons/account_reconcile_wizard/wizard/account_manual_reconcile_wizard.py:0
 msgid "Transfer from %s"
-msgstr ""
+msgstr "Trasferimento da %s"
 
 #. module: account_reconcile_wizard
 #. odoo-python
 #: code:addons/account_reconcile_wizard/wizard/account_manual_reconcile_wizard.py:0
 msgid "Transfer to %s"
-msgstr ""
+msgstr "Trasferimento a %s"
 
 #. module: account_reconcile_wizard
 #: model:ir.model.fields,field_description:account_reconcile_wizard.field_account_manual_reconcile_wizard_line__wizard_id
 msgid "Wizard"
-msgstr ""
+msgstr "Procedura guidata"
 
 #. module: account_reconcile_wizard
 #: model:ir.model.fields,field_description:account_reconcile_wizard.field_account_manual_reconcile_wizard__write_off_amount
 msgid "Write Off Amount"
-msgstr ""
+msgstr "Importo storno"
 
 #. module: account_reconcile_wizard
 #: model:ir.model.fields,field_description:account_reconcile_wizard.field_account_manual_reconcile_wizard__write_off_line_ids
 msgid "Write Off Line"
-msgstr ""
+msgstr "Riga storno"
 
 #. module: account_reconcile_wizard
 #. odoo-python
 #: code:addons/account_reconcile_wizard/wizard/account_manual_reconcile_wizard.py:0
 #: model_terms:ir.ui.view,arch_db:account_reconcile_wizard.account_manual_reconcile_wizard_form_view
 msgid "Write-Off"
-msgstr ""
+msgstr "Storno"
 
 #. module: account_reconcile_wizard
 #. odoo-python
 #: code:addons/account_reconcile_wizard/wizard/account_manual_reconcile_wizard.py:0
 msgid "You can only reconcile entries from the same partner."
-msgstr ""
+msgstr "Si possono riconciliare registrazioni solo dello stesso partner."
 
 #. module: account_reconcile_wizard
 #. odoo-python
 #: code:addons/account_reconcile_wizard/wizard/account_manual_reconcile_wizard.py:0
 msgid "You can only reconcile entries from up to 2 different accounts."
-msgstr ""
+msgstr "Si possono riconciliare registrazioni solo tra due conti differenti."

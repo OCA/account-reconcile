@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 18.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2026-05-09 17:45+0000\n"
+"PO-Revision-Date: 2026-05-31 16:26+0000\n"
 "Last-Translator: Matjaz Mozetic <matjaz@luxim.si>\n"
 "Language-Team: none\n"
 "Language: sl\n"
@@ -20,7 +20,7 @@ msgstr ""
 #. module: account_reconcile_analytic_tag
 #: model:ir.model,name:account_reconcile_analytic_tag.model_account_reconcile_abstract
 msgid "Account Reconcile Abstract"
-msgstr "Povzetek usklajevanja računov"
+msgstr "Povzetek usklajevanja kontov"
 
 #. module: account_reconcile_analytic_tag
 #: model:ir.model.fields,field_description:account_reconcile_analytic_tag.field_account_bank_statement_line__manual_analytic_tag_ids

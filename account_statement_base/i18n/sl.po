@@ -6,131 +6,132 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 18.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2026-06-11 12:46+0000\n"
-"Last-Translator: Yann Papouin <ypa@decgroupe.com>\n"
+"PO-Revision-Date: 2026-05-30 08:45+0000\n"
+"Last-Translator: Matjaz Mozetic <matjaz@luxim.si>\n"
 "Language-Team: none\n"
-"Language: fr\n"
+"Language: sl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=2; plural=n > 1;\n"
+"Plural-Forms: nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || "
+"n%100==4 ? 2 : 3;\n"
 "X-Generator: Weblate 5.15.2\n"
 
 #. module: account_statement_base
 #: model_terms:ir.ui.view,arch_db:account_statement_base.view_bank_statement_form
 msgid "<span class=\"o_stat_text\">Journal Items</span>"
-msgstr "<span class=\"o_stat_text\">Écritures comptables</span>"
+msgstr "<span class=\"o_stat_text\">Dnevniške postavke</span>"
 
 #. module: account_statement_base
 #: model:ir.model,name:account_statement_base.model_account_bank_statement
 #: model_terms:ir.ui.view,arch_db:account_statement_base.view_bank_statement_form
 msgid "Bank Statement"
-msgstr "Relevé bancaire"
+msgstr "Bančni izpisek"
 
 #. module: account_statement_base
 #: model:ir.model,name:account_statement_base.model_account_bank_statement_line
 msgid "Bank Statement Line"
-msgstr "Ligne de relevé bancaire"
+msgstr "Postavka bančnega izpiska"
 
 #. module: account_statement_base
 #: model:ir.actions.act_window,name:account_statement_base.account_bank_statement_line_action
 msgid "Bank Statement Lines"
-msgstr "Lignes de relevé bancaire"
+msgstr "Postavke bančnega izpiska"
 
 #. module: account_statement_base
 #: model_terms:ir.ui.view,arch_db:account_statement_base.account_bank_statement_line_search
 msgid "Date"
-msgstr "Date"
+msgstr "Datum"
 
 #. module: account_statement_base
 #: model_terms:ir.ui.view,arch_db:account_statement_base.account_bank_statement_line_search
 msgid "Foreign Currency"
-msgstr "Devise étrangère"
+msgstr "Tuja valuta"
 
 #. module: account_statement_base
 #: model_terms:ir.ui.view,arch_db:account_statement_base.account_bank_statement_line_search
 msgid "Inbound"
-msgstr "Entrant"
+msgstr "Vhodno"
 
 #. module: account_statement_base
 #: model:ir.model,name:account_statement_base.model_account_journal
 #: model_terms:ir.ui.view,arch_db:account_statement_base.account_bank_statement_line_search
 msgid "Journal"
-msgstr "Journal"
+msgstr "Dnevnik"
 
 #. module: account_statement_base
 #. odoo-python
 #: code:addons/account_statement_base/models/account_bank_statement.py:0
 msgid "Journal Items"
-msgstr "Écritures comptables"
+msgstr "Dnevniške postavke"
 
 #. module: account_statement_base
 #: model_terms:ir.ui.view,arch_db:account_statement_base.account_bank_statement_line_search
 msgid "Label, Ref or Notes"
-msgstr "Libellé, Réf ou Notes"
+msgstr "Oznaka, sklic ali opombe"
 
 #. module: account_statement_base
 #: model_terms:ir.ui.view,arch_db:account_statement_base.account_bank_statement_line_search
 msgid "Not Reconciled"
-msgstr "Non lettré"
+msgstr "Ne usklajeno"
 
 #. module: account_statement_base
 #: model_terms:ir.ui.view,arch_db:account_statement_base.account_bank_statement_line_form
 #: model_terms:ir.ui.view,arch_db:account_statement_base.account_bank_statement_line_tree
 msgid "Notes"
-msgstr "Notes"
+msgstr "Opombe"
 
 #. module: account_statement_base
 #: model_terms:ir.ui.view,arch_db:account_statement_base.account_bank_statement_line_tree
 msgid "Open Journal Entry"
-msgstr "Ouvrir la pièce comptable"
+msgstr "Odpri temeljnico"
 
 #. module: account_statement_base
 #: model_terms:ir.ui.view,arch_db:account_statement_base.view_bank_statement_tree
 msgid "Open Statement Lines"
-msgstr "Ouvrir les lignes de relevé"
+msgstr "Odpri postavke izpiska"
 
 #. module: account_statement_base
 #: model_terms:ir.ui.view,arch_db:account_statement_base.account_bank_statement_line_search
 msgid "Outbound"
-msgstr "Sortant"
+msgstr "Izhodno"
 
 #. module: account_statement_base
 #: model_terms:ir.ui.view,arch_db:account_statement_base.account_bank_statement_line_search
 msgid "Partner"
-msgstr "Partenaire"
+msgstr "Partner"
 
 #. module: account_statement_base
 #: model_terms:ir.ui.view,arch_db:account_statement_base.account_bank_statement_line_search
 msgid "Reconciled"
-msgstr "Lettré"
+msgstr "Usklajeno"
 
 #. module: account_statement_base
 #: model_terms:ir.ui.view,arch_db:account_statement_base.account_bank_statement_line_tree
 msgid "Revert reconciliation"
-msgstr "Dé-lettrer"
+msgstr "Razveljavi uskladitev"
 
 #. module: account_statement_base
 #: model_terms:ir.ui.view,arch_db:account_statement_base.account_bank_statement_line_form
 msgid "Technical Information"
-msgstr "Informations techniques"
+msgstr "Tehnični podatki"
 
 #. module: account_statement_base
 #: model_terms:ir.ui.view,arch_db:account_statement_base.account_bank_statement_line_search
 msgid "To check"
-msgstr "À vérifier"
+msgstr "Preveriti"
 
 #. module: account_statement_base
 #: model_terms:ir.ui.view,arch_db:account_statement_base.account_bank_statement_line_search
 msgid "Transaction Type"
-msgstr "Type de transaction"
+msgstr "Tip transakcije"
 
 #. module: account_statement_base
 #: model_terms:ir.ui.view,arch_db:account_statement_base.view_bank_statement_form
 msgid "Transactions"
-msgstr "Transactions"
+msgstr "Transakcije"
 
 #. module: account_statement_base
 #: model_terms:ir.ui.view,arch_db:account_statement_base.view_bank_statement_form
 msgid "e.g. BNK/2021/0001"
-msgstr "ex. : BNK/2021/0001"
+msgstr "npr. BNK/2021/0001"
