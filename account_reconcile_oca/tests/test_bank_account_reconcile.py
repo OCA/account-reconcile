@@ -1371,19 +1371,27 @@ class TestReconciliationWidget(TestAccountReconciliationCommon):
 
     def test_bank_partner_match_account(self):
         account_number = "GB33BUKB20201555555555"
-        partner = self.env["res.partner"].create(
-            {
-                "name": "Test Partner",
-                "bank_ids": [
-                    (
-                        0,
-                        0,
-                        {
-                            "acc_number": account_number,
-                        },
-                    )
-                ],
-            }
+        # Use sudo to create the bank account: when account_payment_order is
+        # installed alongside, creating res.partner.bank requires its payment
+        # group, which the accounting test user doesn't have. This test only
+        # needs the bank account to check partner matching, not ACLs.
+        partner = (
+            self.env["res.partner"]
+            .sudo()
+            .create(
+                {
+                    "name": "Test Partner",
+                    "bank_ids": [
+                        (
+                            0,
+                            0,
+                            {
+                                "acc_number": account_number,
+                            },
+                        )
+                    ],
+                }
+            )
         )
         bank_stmt = self.acc_bank_stmt_model.create(
             {
