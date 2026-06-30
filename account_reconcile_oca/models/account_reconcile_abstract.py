@@ -36,6 +36,70 @@ class AccountReconcileAbstract(models.AbstractModel):
     def _get_reconcile_currency(self):
         return self.currency_id or self.company_id._currency_id
 
+    def _get_reconcile_residual_in_reconcile_currency(
+        self,
+        amount,
+        currency_amount,
+        currency,
+        dest_currency,
+        date,
+    ):
+        """Express the residual amount of a counterpart line in the
+        reconcile currency, so it can be compared against ``max_amount``
+        in ``_get_reconcile_line``.
+
+        Default implementation goes through ``currency._convert`` at
+        ``date`` for the cross-currency case, which queries
+        ``res.currency.rate``. Subclasses with a more reliable rate
+        available (for instance the rate booked on a bank statement line)
+        should override this method.
+        """
+        if currency == dest_currency:
+            return currency_amount
+        if self.company_id.currency_id == dest_currency:
+            return amount
+        return self.company_id.currency_id._convert(
+            amount,
+            dest_currency,
+            self.company_id,
+            date,
+        )
+
+    def _get_reconcile_amounts_capped(
+        self,
+        max_amount,
+        currency,
+        dest_currency,
+        date,
+    ):
+        """Compute ``(amount, currency_amount)`` for a counterpart line
+        capped at ``max_amount`` (expressed in ``dest_currency``, i.e. the
+        reconcile currency). ``amount`` is in company currency,
+        ``currency_amount`` is in ``currency`` (the counterpart line
+        currency).
+
+        Default implementation goes through ``currency._convert`` at
+        ``date``, which queries ``res.currency.rate``. Subclasses with a
+        more reliable rate available (for instance the rate booked on a
+        bank statement line) should override this method to derive the
+        amounts from that rate, so that the reconciliation stays
+        consistent with what was actually posted.
+        """
+        currency_max_amount = dest_currency._convert(
+            max_amount,
+            currency,
+            self.company_id,
+            date,
+        )
+        currency_amount = -currency_max_amount
+        amount = currency._convert(
+            currency_amount,
+            self.company_id.currency_id,
+            self.company_id,
+            date,
+        )
+        return amount, currency_amount
+
     def _get_reconcile_line(
         self,
         line,
@@ -56,33 +120,26 @@ class AccountReconcileAbstract(models.AbstractModel):
             original_amount = net_amount = -line.amount_residual
             if max_amount:
                 dest_currency = self._get_reconcile_currency()
-                if currency == dest_currency:
-                    real_currency_amount = currency_amount
-                elif self.company_id.currency_id == dest_currency:
-                    real_currency_amount = amount
-                else:
-                    real_currency_amount = self.company_id.currency_id._convert(
+                real_currency_amount = (
+                    self._get_reconcile_residual_in_reconcile_currency(
                         amount,
+                        currency_amount,
+                        currency,
                         dest_currency,
-                        self.company_id,
                         date,
                     )
+                )
                 if (
                     -real_currency_amount > max_amount > 0
                     or -real_currency_amount < max_amount < 0
                 ):
-                    currency_max_amount = self._get_reconcile_currency()._convert(
-                        max_amount, currency, self.company_id, date
-                    )
-                    amount = currency_max_amount
-                    net_amount = -max_amount
-                    currency_amount = -amount
-                    amount = currency._convert(
-                        currency_amount,
-                        self.company_id.currency_id,
-                        self.company_id,
+                    amount, currency_amount = self._get_reconcile_amounts_capped(
+                        max_amount,
+                        currency,
+                        dest_currency,
                         date,
                     )
+                    net_amount = -max_amount
         elif is_reconciled:
             currency_amount = line.amount_currency
         else:

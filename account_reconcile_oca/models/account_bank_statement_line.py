@@ -206,17 +206,136 @@ class AccountBankStatementLine(models.Model):
             )._default_reconcile_data()
         self.can_reconcile = self.reconcile_data_info.get("can_reconcile", False)
 
+    def _to_reconcile_currency_at_st_line_rate(self, amount_company):
+        """Convert ``amount_company`` (expressed in company currency) into
+        the reconcile currency using the rate booked on this statement
+        line's move, rather than ``res.currency.rate`` at ``self.date``.
+
+        The reconcile currency is ``self._get_reconcile_currency()`` (i.e.
+        ``foreign_currency_id or journal currency``), so this handles both
+        a foreign-currency journal and a company-currency journal carrying
+        a foreign-currency transaction via ``foreign_currency_id``. The
+        rate used is ``transaction_amount / company_amount`` taken from the
+        booked liquidity line.
+
+        Returns ``None`` when no statement-booked rate is usable
+        (statement in company currency, or booked amounts missing), so
+        callers can fall back to their original behaviour.
+        """
+        reconcile_currency = self._get_reconcile_currency()
+        if reconcile_currency == self.company_id.currency_id:
+            return None
+        (
+            transaction_amount,
+            _transaction_currency,
+            _journal_amount,
+            _journal_currency,
+            company_amount,
+            _company_currency,
+        ) = self._get_accounting_amounts_and_currencies()
+        if not transaction_amount or not company_amount:
+            return None
+        return reconcile_currency.round(
+            amount_company * abs(transaction_amount) / abs(company_amount)
+        )
+
+    def _get_reconcile_residual_in_reconcile_currency(
+        self,
+        amount,
+        currency_amount,
+        currency,
+        dest_currency,
+        date,
+    ):
+        """Override: when the statement is in a foreign currency and the
+        counterpart line is NOT in that same currency (company currency, or a
+        third currency), express the residual in the reconcile currency using
+        the rate booked on the statement move rather than ``res.currency.rate``
+        at ``date``. This keeps the ``max_amount`` capping decision consistent
+        with the booked amounts on the statement. A counterpart already in the
+        reconcile currency falls back to the default (its own exchange-rate
+        difference is handled separately).
+        """
+        reconcile_currency = self._get_reconcile_currency()
+        if (
+            reconcile_currency != self.company_id.currency_id
+            and currency != reconcile_currency
+        ):
+            converted = self._to_reconcile_currency_at_st_line_rate(amount)
+            if converted is not None:
+                return converted
+        return super()._get_reconcile_residual_in_reconcile_currency(
+            amount,
+            currency_amount,
+            currency,
+            dest_currency,
+            date,
+        )
+
+    def _get_reconcile_amounts_capped(
+        self,
+        max_amount,
+        currency,
+        dest_currency,
+        date,
+    ):
+        """Override: when the statement is in a foreign currency and the
+        counterpart line is NOT in that same currency, derive the capped
+        company-currency amount from the rate booked on the statement move (via
+        ``_prepare_counterpart_amounts_using_st_line_rate``) rather than from
+        ``res.currency.rate`` at ``date``. A counterpart already in the reconcile
+        currency falls back to the default, preserving its legitimate
+        exchange-rate difference.
+        """
+        reconcile_currency = self._get_reconcile_currency()
+        company_currency = self.company_id.currency_id
+        if reconcile_currency != company_currency and currency != reconcile_currency:
+            amounts = self._prepare_counterpart_amounts_using_st_line_rate(
+                dest_currency,
+                0.0,
+                -max_amount,
+            )
+            # Company-currency value of the capped capacity, at the booked rate.
+            amount_in_company = amounts["balance"]
+            if currency == company_currency:
+                # Counterpart in company currency: amount and currency_amount
+                # carry the same value.
+                return amount_in_company, amount_in_company
+            # Counterpart in a third currency: express the booked company amount
+            # in the counterpart currency; its own realised exchange difference
+            # is handled by the reconciliation engine at validation.
+            currency_amount = company_currency._convert(
+                amount_in_company,
+                currency,
+                self.company_id,
+                date,
+            )
+            return amount_in_company, currency_amount
+        return super()._get_reconcile_amounts_capped(
+            max_amount,
+            currency,
+            dest_currency,
+            date,
+        )
+
     def _get_amount_currency(self, line, dest_curr):
         if line["line_currency_id"] == dest_curr.id:
-            amount = line["currency_amount"]
-        else:
-            amount = self.company_id.currency_id._convert(
-                line["amount"],
-                dest_curr,
-                self.company_id,
-                self.date,
-            )
-        return amount
+            return line["currency_amount"]
+        if dest_curr == self._get_reconcile_currency():
+            # Express a company-currency counterpart in the reconcile currency
+            # at the statement-booked rate, so the remaining capacity stays
+            # consistent with how the next counterpart is imputed (otherwise a
+            # prior counterpart converted at the day rate leaves a residual
+            # when several counterparts are reconciled).
+            converted = self._to_reconcile_currency_at_st_line_rate(line["amount"])
+            if converted is not None:
+                return converted
+        return self.company_id.currency_id._convert(
+            line["amount"],
+            dest_curr,
+            self.company_id,
+            self.date,
+        )
 
     @api.onchange("add_account_move_line_id")
     def _onchange_add_account_move_line_id(self):
@@ -606,12 +725,20 @@ class AccountBankStatementLine(models.Model):
                     amount, self.journal_id.currency_id or self.company_currency_id
                 )
             if currency != self.company_id.currency_id:
-                currency_amount = self.company_id.currency_id._convert(
+                # Derive the currency amount from the rate booked on the
+                # statement when applicable, so that a rate change in
+                # res.currency.rate after the statement was posted does
+                # not introduce a discrepancy with the booked amounts.
+                currency_amount = self._to_reconcile_currency_at_st_line_rate(
                     amount,
-                    currency,
-                    self.company_id,
-                    self.date,
                 )
+                if currency_amount is None:
+                    currency_amount = self.company_id.currency_id._convert(
+                        amount,
+                        currency,
+                        self.company_id,
+                        self.date,
+                    )
             new_line.update(
                 {
                     "reference": "reconcile_auxiliary;%s" % reconcile_auxiliary_id,
@@ -678,15 +805,17 @@ class AccountBankStatementLine(models.Model):
                 amount = self.amount_total_signed
                 for line in res.get("amls", []):
                     max_amount = amount
-                    if (
-                        line.currency_id == self._get_reconcile_currency()
-                        and self.amount_currency
-                        and self.amount_total_signed
-                    ):
-                        # convert max amount with rate of statement, not Odoo's rate
-                        max_amount = line.currency_id.round(
-                            max_amount * self.amount_currency / self.amount_total_signed
-                        )
+                    # max_amount must be expressed in the reconcile
+                    # currency. When the statement is in a foreign
+                    # currency, convert via the rate booked on the
+                    # statement rather than res.currency.rate, so that
+                    # rates created after the statement was posted do not
+                    # shift the cap.
+                    converted = self._to_reconcile_currency_at_st_line_rate(
+                        max_amount,
+                    )
+                    if converted is not None:
+                        max_amount = converted
                     reconcile_auxiliary_id, line_data = self._get_reconcile_line(
                         line,
                         "other",
@@ -1138,6 +1267,14 @@ class AccountBankStatementLine(models.Model):
             if line["reference"] == manual_reference and line.get("id"):
                 total_amount = -line["amount"] + line["original_amount_unsigned"]
                 original_amount = line["original_amount_unsigned"]
+                # original_amount is in company currency but _get_reconcile_line
+                # expects max_amount in reconcile currency. Convert via the
+                # statement-booked rate when applicable.
+                converted = self._to_reconcile_currency_at_st_line_rate(
+                    original_amount,
+                )
+                if converted is not None:
+                    original_amount = converted
                 reconcile_auxiliary_id, lines = self._get_reconcile_line(
                     self.env["account.move.line"].browse(line["id"]),
                     "other",
