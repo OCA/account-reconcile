@@ -6,7 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0\n"
 "Report-Msgid-Bugs-To: \n"
-"Last-Translator: Automatically generated\n"
+"PO-Revision-Date: 2026-06-30 12:46+0000\n"
+"Last-Translator: Matjaz Mozetic <matjaz@luxim.si>\n"
 "Language-Team: none\n"
 "Language: sl\n"
 "MIME-Version: 1.0\n"
@@ -14,6 +15,7 @@ msgstr ""
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || "
 "n%100==4 ? 2 : 3;\n"
+"X-Generator: Weblate 5.15.2\n"
 
 #. module: account_reconcile_oca
 #: model_terms:ir.ui.view,arch_db:account_reconcile_oca.bank_statement_line_form_reconcile_view
@@ -22,6 +24,9 @@ msgid ""
 "                                    <br/>\n"
 "                                You might want to set the invoice as"
 msgstr ""
+".\n"
+"                                    <br/>\n"
+"                                Morda želite nastaviti račun kot"
 
 #. module: account_reconcile_oca
 #. odoo-javascript
@@ -29,149 +34,149 @@ msgstr ""
 #: model:ir.model.fields,field_description:account_reconcile_oca.field_account_account_reconcile__account_id
 #: model_terms:ir.ui.view,arch_db:account_reconcile_oca.bank_statement_line_form_reconcile_view
 msgid "Account"
-msgstr ""
+msgstr "Konto"
 
 #. module: account_reconcile_oca
 #: model:ir.model,name:account_reconcile_oca.model_account_account_reconcile
 msgid "Account Account Reconcile"
-msgstr ""
+msgstr "Usklajevanje konta"
 
 #. module: account_reconcile_oca
 #: model:ir.model,name:account_reconcile_oca.model_account_reconcile_abstract
 msgid "Account Reconcile Abstract"
-msgstr ""
+msgstr "Povzetek usklajevanja kontov"
 
 #. module: account_reconcile_oca
 #: model:ir.model.fields,field_description:account_reconcile_oca.field_account_account_reconcile__active
 msgid "Active"
-msgstr ""
+msgstr "Aktivno"
 
 #. module: account_reconcile_oca
 #: model:ir.model.fields,field_description:account_reconcile_oca.field_account_account_reconcile__add_account_move_line_id
 #: model:ir.model.fields,field_description:account_reconcile_oca.field_account_bank_statement_line__add_account_move_line_id
 #: model:ir.model.fields,field_description:account_reconcile_oca.field_account_reconcile_abstract__add_account_move_line_id
 msgid "Add Account Move Line"
-msgstr ""
+msgstr "Dodaj postavko temeljnice"
 
 #. module: account_reconcile_oca
 #: model:ir.actions.act_window,name:account_reconcile_oca.action_bank_statement_line_create
 msgid "Add Bank Statement Line"
-msgstr ""
+msgstr "Dodaj postavko bančnega izpiska"
 
 #. module: account_reconcile_oca
 #. odoo-javascript
 #: code:addons/account_reconcile_oca/static/src/views/reconcile_move_line/reconcile_move_line.xml:0
 msgid "Add all"
-msgstr ""
+msgstr "Dodaj vse"
 
 #. module: account_reconcile_oca
 #: model:ir.model.fields,field_description:account_reconcile_oca.field_account_bank_statement_line__aggregate_id
 msgid "Aggregate"
-msgstr ""
+msgstr "Združevanje"
 
 #. module: account_reconcile_oca
 #: model:ir.model.fields,field_description:account_reconcile_oca.field_account_bank_statement_line__aggregate_name
 msgid "Aggregate Name"
-msgstr ""
+msgstr "Naziv združevanja"
 
 #. module: account_reconcile_oca
 #: model:ir.model.fields,help:account_reconcile_oca.field_account_journal__reconcile_aggregate
 msgid "Aggregation to use on reconcile view"
-msgstr ""
+msgstr "Združevanje za uporabo v prikazu usklajevanja"
 
 #. module: account_reconcile_oca
 #: model_terms:ir.ui.view,arch_db:account_reconcile_oca.bank_statement_line_form_reconcile_view
 msgid "Amount"
-msgstr ""
+msgstr "Znesek"
 
 #. module: account_reconcile_oca
 #: model_terms:ir.ui.view,arch_db:account_reconcile_oca.bank_statement_line_form_reconcile_view
 msgid "Amount in Currency"
-msgstr ""
+msgstr "Znesek v valuti"
 
 #. module: account_reconcile_oca
 #. odoo-javascript
 #: code:addons/account_reconcile_oca/static/src/components/account_reconcile_oca_data/account_reconcile_oca_data.xml:0
 msgid "Amount in currency"
-msgstr ""
+msgstr "Znesek v valuti"
 
 #. module: account_reconcile_oca
 #: model:ir.model.fields,field_description:account_reconcile_oca.field_account_bank_statement_line__analytic_distribution
 msgid "Analytic Distribution"
-msgstr ""
+msgstr "Analitična porazdelitev"
 
 #. module: account_reconcile_oca
 #: model:ir.model.fields,field_description:account_reconcile_oca.field_account_bank_statement_line__analytic_precision
 msgid "Analytic Precision"
-msgstr ""
+msgstr "Analitična natančnost"
 
 #. module: account_reconcile_oca
 #: model:ir.model.fields,field_description:account_reconcile_oca.field_account_reconcile_model__search_journal_id
 msgid "Applies on Journal"
-msgstr ""
+msgstr "Velja za dnevnik"
 
 #. module: account_reconcile_oca
 #: model_terms:ir.ui.view,arch_db:account_reconcile_oca.bank_statement_line_form_reconcile_view
 msgid "Are you sure that the move should be unreconciled?"
-msgstr ""
+msgstr "Ali ste prepričani, da želite temeljnico razvezati?"
 
 #. module: account_reconcile_oca
 #: model_terms:ir.ui.view,arch_db:account_reconcile_oca.account_move_line_search_reconcile_view
 msgid "Bank"
-msgstr ""
+msgstr "Banka"
 
 #. module: account_reconcile_oca
 #: model:ir.model,name:account_reconcile_oca.model_account_bank_statement
 #: model_terms:ir.ui.view,arch_db:account_reconcile_oca.account_bank_statement_form_edit
 msgid "Bank Statement"
-msgstr ""
+msgstr "Bančni izpisek"
 
 #. module: account_reconcile_oca
 #: model:ir.model,name:account_reconcile_oca.model_account_bank_statement_line
 msgid "Bank Statement Line"
-msgstr ""
+msgstr "Postavka bančnega izpiska"
 
 #. module: account_reconcile_oca
 #: model_terms:ir.ui.view,arch_db:account_reconcile_oca.account_move_form_view
 msgid "Bank reconcile"
-msgstr ""
+msgstr "Bančna uskladitev"
 
 #. module: account_reconcile_oca
 #: model:ir.model.fields,field_description:account_reconcile_oca.field_account_bank_statement_line__can_reconcile
 msgid "Can Reconcile"
-msgstr ""
+msgstr "Lahko uskladi"
 
 #. module: account_reconcile_oca
 #: model_terms:ir.ui.view,arch_db:account_reconcile_oca.bank_statement_line_form_add_view
 msgid "Cancel"
-msgstr ""
+msgstr "Prekliči"
 
 #. module: account_reconcile_oca
 #: model_terms:ir.ui.view,arch_db:account_reconcile_oca.account_move_line_search_reconcile_view
 msgid "Cash"
-msgstr ""
+msgstr "Gotovina"
 
 #. module: account_reconcile_oca
 #: model_terms:ir.ui.view,arch_db:account_reconcile_oca.bank_statement_line_form_reconcile_view
 msgid "Chatter"
-msgstr ""
+msgstr "Klepetalnica"
 
 #. module: account_reconcile_oca
 #: model_terms:ir.ui.view,arch_db:account_reconcile_oca.account_account_reconcile_form_view
 msgid "Clean"
-msgstr ""
+msgstr "Počisti"
 
 #. module: account_reconcile_oca
 #: model:ir.model,name:account_reconcile_oca.model_res_company
 msgid "Companies"
-msgstr ""
+msgstr "Družbe"
 
 #. module: account_reconcile_oca
 #: model:ir.model.fields,field_description:account_reconcile_oca.field_account_account_reconcile__company_id
 #: model:ir.model.fields,field_description:account_reconcile_oca.field_account_bank_statement_line__company_id
 #: model:ir.model.fields,field_description:account_reconcile_oca.field_account_reconcile_abstract__company_id
 msgid "Company"
-msgstr ""
+msgstr "Družba"
 
 #. module: account_reconcile_oca
 #: model:ir.model.fields,field_description:account_reconcile_oca.field_account_account_reconcile__company_currency_id
@@ -179,62 +184,62 @@ msgstr ""
 #: model:ir.model.fields,field_description:account_reconcile_oca.field_account_journal__company_currency_id
 #: model:ir.model.fields,field_description:account_reconcile_oca.field_account_reconcile_abstract__company_currency_id
 msgid "Company Currency"
-msgstr ""
+msgstr "Valuta družbe"
 
 #. module: account_reconcile_oca
 #: model:ir.model,name:account_reconcile_oca.model_res_config_settings
 msgid "Config Settings"
-msgstr ""
+msgstr "Nastavitve"
 
 #. module: account_reconcile_oca
 #. odoo-javascript
 #: code:addons/account_reconcile_oca/static/src/views/reconcile_kanban/reconcile.xml:0
 msgid "Create"
-msgstr ""
+msgstr "Ustvari"
 
 #. module: account_reconcile_oca
 #: model:ir.model.fields,field_description:account_reconcile_oca.field_account_account_reconcile_data__create_uid
 msgid "Created by"
-msgstr ""
+msgstr "Ustvaril"
 
 #. module: account_reconcile_oca
 #: model:ir.model.fields,field_description:account_reconcile_oca.field_account_account_reconcile_data__create_date
 msgid "Created on"
-msgstr ""
+msgstr "Ustvarjeno"
 
 #. module: account_reconcile_oca
 #. odoo-javascript
 #: code:addons/account_reconcile_oca/static/src/components/account_reconcile_oca_data/account_reconcile_oca_data.xml:0
 msgid "Credit"
-msgstr ""
+msgstr "Dobro"
 
 #. module: account_reconcile_oca
 #: model:ir.model.fields,field_description:account_reconcile_oca.field_account_account_reconcile__currency_id
 #: model:ir.model.fields,field_description:account_reconcile_oca.field_account_reconcile_abstract__currency_id
 msgid "Currency"
-msgstr ""
+msgstr "Valuta"
 
 #. module: account_reconcile_oca
 #: model:ir.model.fields,field_description:account_reconcile_oca.field_account_account_reconcile_data__data
 msgid "Data"
-msgstr ""
+msgstr "Podatki"
 
 #. module: account_reconcile_oca
 #. odoo-javascript
 #: code:addons/account_reconcile_oca/static/src/components/account_reconcile_oca_data/account_reconcile_oca_data.xml:0
 msgid "Date"
-msgstr ""
+msgstr "Datum"
 
 #. module: account_reconcile_oca
 #: model:ir.model.fields.selection,name:account_reconcile_oca.selection__account_journal__reconcile_aggregate__day
 msgid "Day"
-msgstr ""
+msgstr "Dan"
 
 #. module: account_reconcile_oca
 #. odoo-javascript
 #: code:addons/account_reconcile_oca/static/src/components/account_reconcile_oca_data/account_reconcile_oca_data.xml:0
 msgid "Debit"
-msgstr ""
+msgstr "Breme"
 
 #. module: account_reconcile_oca
 #: model:ir.model.fields,field_description:account_reconcile_oca.field_account_account_reconcile__display_name
@@ -249,40 +254,40 @@ msgstr ""
 #: model:ir.model.fields,field_description:account_reconcile_oca.field_res_company__display_name
 #: model:ir.model.fields,field_description:account_reconcile_oca.field_res_config_settings__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Prikazani naziv"
 
 #. module: account_reconcile_oca
 #: model:ir.actions.act_window,name:account_reconcile_oca.account_bank_statement_action_edit
 msgid "Edit Bank Statement"
-msgstr ""
+msgstr "Uredi bančni izpisek"
 
 #. module: account_reconcile_oca
 #: model:ir.model.fields.selection,name:account_reconcile_oca.selection__account_journal__reconcile_mode__edit
 msgid "Edit Move"
-msgstr ""
+msgstr "Uredi temeljnico"
 
 #. module: account_reconcile_oca
 #: model:ir.model.fields,field_description:account_reconcile_oca.field_account_account_reconcile__foreign_currency_id
 #: model:ir.model.fields,field_description:account_reconcile_oca.field_account_bank_statement_line__foreign_currency_id
 #: model:ir.model.fields,field_description:account_reconcile_oca.field_account_reconcile_abstract__foreign_currency_id
 msgid "Foreign Currency"
-msgstr ""
+msgstr "Tuja valuta"
 
 #. module: account_reconcile_oca
 #: model_terms:ir.ui.view,arch_db:account_reconcile_oca.account_move_line_search_reconcile_view
 msgid "From Trade Payable accounts"
-msgstr ""
+msgstr "Iz kontov obveznosti do dobaviteljev"
 
 #. module: account_reconcile_oca
 #: model_terms:ir.ui.view,arch_db:account_reconcile_oca.account_move_line_search_reconcile_view
 msgid "From Trade Receivable accounts"
-msgstr ""
+msgstr "Iz kontov terjatev do kupcev"
 
 #. module: account_reconcile_oca
 #. odoo-javascript
 #: code:addons/account_reconcile_oca/static/src/views/reconcile_kanban/reconcile.xml:0
 msgid "Global Balance"
-msgstr ""
+msgstr "Skupno stanje"
 
 #. module: account_reconcile_oca
 #: model:ir.model.fields,field_description:account_reconcile_oca.field_account_account_reconcile__id
@@ -297,203 +302,203 @@ msgstr ""
 #: model:ir.model.fields,field_description:account_reconcile_oca.field_res_company__id
 #: model:ir.model.fields,field_description:account_reconcile_oca.field_res_config_settings__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: account_reconcile_oca
 #: model_terms:ir.ui.view,arch_db:account_reconcile_oca.bank_statement_line_form_reconcile_view
 msgid "Invoice"
-msgstr ""
+msgstr "Račun"
 
 #. module: account_reconcile_oca
 #: model:ir.model.fields,field_description:account_reconcile_oca.field_account_account_reconcile__is_reconciled
 msgid "Is Reconciled"
-msgstr ""
+msgstr "Je usklajeno"
 
 #. module: account_reconcile_oca
 #: model_terms:ir.ui.view,arch_db:account_reconcile_oca.account_journal_dashboard_kanban_view
 msgid "Items"
-msgstr ""
+msgstr "Postavke"
 
 #. module: account_reconcile_oca
 #: model:ir.model,name:account_reconcile_oca.model_account_journal
 msgid "Journal"
-msgstr ""
+msgstr "Dnevnik"
 
 #. module: account_reconcile_oca
 #: model:ir.model.fields,field_description:account_reconcile_oca.field_account_bank_statement_line__currency_id
 msgid "Journal Currency"
-msgstr ""
+msgstr "Valuta dnevnika"
 
 #. module: account_reconcile_oca
 #: model_terms:ir.ui.view,arch_db:account_reconcile_oca.account_move_line_search_reconcile_view
 msgid "Journal Entry"
-msgstr ""
+msgstr "Temeljnica"
 
 #. module: account_reconcile_oca
 #: model:ir.model,name:account_reconcile_oca.model_account_move_line
 #: model_terms:ir.ui.view,arch_db:account_reconcile_oca.account_move_line_search_reconcile_view
 msgid "Journal Item"
-msgstr ""
+msgstr "Dnevniška postavka"
 
 #. module: account_reconcile_oca
 #: model:ir.model.fields.selection,name:account_reconcile_oca.selection__account_journal__reconcile_mode__keep
 msgid "Keep Suspense Accounts"
-msgstr ""
+msgstr "Ohrani prehodne konte"
 
 #. module: account_reconcile_oca
 #. odoo-javascript
 #: code:addons/account_reconcile_oca/static/src/components/account_reconcile_oca_data/account_reconcile_oca_data.xml:0
 msgid "Label"
-msgstr ""
+msgstr "Oznaka"
 
 #. module: account_reconcile_oca
 #: model:ir.model.fields,field_description:account_reconcile_oca.field_account_account_reconcile_data__write_uid
 msgid "Last Updated by"
-msgstr ""
+msgstr "Zadnji posodobil"
 
 #. module: account_reconcile_oca
 #: model:ir.model.fields,field_description:account_reconcile_oca.field_account_account_reconcile_data__write_date
 msgid "Last Updated on"
-msgstr ""
+msgstr "Zadnjič posodobljeno"
 
 #. module: account_reconcile_oca
 #: model:ir.model.fields,field_description:account_reconcile_oca.field_account_bank_statement_line__manual_account_id
 msgid "Manual Account"
-msgstr ""
+msgstr "Ročni konto"
 
 #. module: account_reconcile_oca
 #: model:ir.model.fields,field_description:account_reconcile_oca.field_account_bank_statement_line__manual_amount
 msgid "Manual Amount"
-msgstr ""
+msgstr "Ročni znesek"
 
 #. module: account_reconcile_oca
 #: model:ir.model.fields,field_description:account_reconcile_oca.field_account_bank_statement_line__manual_amount_in_currency
 msgid "Manual Amount In Currency"
-msgstr ""
+msgstr "Ročni znesek v valuti"
 
 #. module: account_reconcile_oca
 #: model:ir.model.fields,field_description:account_reconcile_oca.field_account_bank_statement_line__manual_currency_id
 msgid "Manual Currency"
-msgstr ""
+msgstr "Ročno valuta"
 
 #. module: account_reconcile_oca
 #: model:ir.model.fields,field_description:account_reconcile_oca.field_account_account_reconcile__manual_delete
 #: model:ir.model.fields,field_description:account_reconcile_oca.field_account_bank_statement_line__manual_delete
 #: model:ir.model.fields,field_description:account_reconcile_oca.field_account_reconcile_abstract__manual_delete
 msgid "Manual Delete"
-msgstr ""
+msgstr "Ročno brisanje"
 
 #. module: account_reconcile_oca
 #: model:ir.model.fields,field_description:account_reconcile_oca.field_account_bank_statement_line__manual_exchange_counterpart
 msgid "Manual Exchange Counterpart"
-msgstr ""
+msgstr "Ročna protipostavka tečajnih razlik"
 
 #. module: account_reconcile_oca
 #: model:ir.model.fields,field_description:account_reconcile_oca.field_account_bank_statement_line__manual_in_currency_id
 msgid "Manual In Currency"
-msgstr ""
+msgstr "Ročno v valuti"
 
 #. module: account_reconcile_oca
 #: model:ir.model.fields,field_description:account_reconcile_oca.field_account_bank_statement_line__manual_in_currency
 msgid "Manual In Currency?"
-msgstr ""
+msgstr "Ročno v valuti?"
 
 #. module: account_reconcile_oca
 #: model:ir.model.fields,field_description:account_reconcile_oca.field_account_bank_statement_line__manual_kind
 msgid "Manual Kind"
-msgstr ""
+msgstr "Tip ročne obdelave"
 
 #. module: account_reconcile_oca
 #: model:ir.model.fields,field_description:account_reconcile_oca.field_account_bank_statement_line__manual_line_id
 msgid "Manual Line"
-msgstr ""
+msgstr "Postavka ročne obdelave"
 
 #. module: account_reconcile_oca
 #: model:ir.model.fields,field_description:account_reconcile_oca.field_account_bank_statement_line__manual_model_id
 msgid "Manual Model"
-msgstr ""
+msgstr "Model ročne obdelave"
 
 #. module: account_reconcile_oca
 #: model:ir.model.fields,field_description:account_reconcile_oca.field_account_bank_statement_line__manual_move_id
 msgid "Manual Move"
-msgstr ""
+msgstr "Ročno premik"
 
 #. module: account_reconcile_oca
 #: model:ir.model.fields,field_description:account_reconcile_oca.field_account_bank_statement_line__manual_move_type
 msgid "Manual Move Type"
-msgstr ""
+msgstr "Tip ročnega premika"
 
 #. module: account_reconcile_oca
 #: model:ir.model.fields,field_description:account_reconcile_oca.field_account_bank_statement_line__manual_name
 msgid "Manual Name"
-msgstr ""
+msgstr "Naziv ročne obdelave"
 
 #. module: account_reconcile_oca
 #: model:ir.model.fields,field_description:account_reconcile_oca.field_account_bank_statement_line__manual_original_amount
 msgid "Manual Original Amount"
-msgstr ""
+msgstr "Ročno izvorni znesek"
 
 #. module: account_reconcile_oca
 #: model:ir.model.fields,field_description:account_reconcile_oca.field_account_bank_statement_line__manual_partner_id
 msgid "Manual Partner"
-msgstr ""
+msgstr "Ročno partner"
 
 #. module: account_reconcile_oca
 #: model:ir.model.fields,field_description:account_reconcile_oca.field_account_account_reconcile__manual_reference
 #: model:ir.model.fields,field_description:account_reconcile_oca.field_account_bank_statement_line__manual_reference
 #: model:ir.model.fields,field_description:account_reconcile_oca.field_account_reconcile_abstract__manual_reference
 msgid "Manual Reference"
-msgstr ""
+msgstr "Ročno sklic"
 
 #. module: account_reconcile_oca
 #: model_terms:ir.ui.view,arch_db:account_reconcile_oca.bank_statement_line_form_reconcile_view
 msgid "Manual operation"
-msgstr ""
+msgstr "Ročna operacija"
 
 #. module: account_reconcile_oca
 #: model_terms:ir.ui.view,arch_db:account_reconcile_oca.account_move_line_search_reconcile_view
 msgid "Miscellaneous"
-msgstr ""
+msgstr "Razno"
 
 #. module: account_reconcile_oca
 #: model:ir.model.fields.selection,name:account_reconcile_oca.selection__account_journal__reconcile_aggregate__month
 msgid "Month"
-msgstr ""
+msgstr "Mesec"
 
 #. module: account_reconcile_oca
 #: model:ir.model.fields,field_description:account_reconcile_oca.field_account_account_reconcile__name
 #: model_terms:ir.ui.view,arch_db:account_reconcile_oca.bank_statement_line_form_reconcile_view
 msgid "Name"
-msgstr ""
+msgstr "Naziv"
 
 #. module: account_reconcile_oca
 #. odoo-python
 #: code:addons/account_reconcile_oca/models/account_bank_statement_line.py:0
 msgid "No supense lines are allowed when reconciling"
-msgstr ""
+msgstr "Pri usklajevanju vrstice prehodnih kontov niso dovoljene"
 
 #. module: account_reconcile_oca
 #: model_terms:ir.actions.act_window,help:account_reconcile_oca.action_bank_statement_line_reconcile_to_check
 msgid "Nothing to check"
-msgstr ""
+msgstr "Nič za preverjanje"
 
 #. module: account_reconcile_oca
 #: model_terms:ir.actions.act_window,help:account_reconcile_oca.action_bank_statement_line_move_view_reconcile
 #: model_terms:ir.actions.act_window,help:account_reconcile_oca.action_bank_statement_line_reconcile
 #: model_terms:ir.actions.act_window,help:account_reconcile_oca.action_bank_statement_line_reconcile_all
 msgid "Nothing to reconcile"
-msgstr ""
+msgstr "Nič za usklajevanje"
 
 #. module: account_reconcile_oca
 #. odoo-javascript
 #: code:addons/account_reconcile_oca/static/src/components/account_reconcile_oca_data/account_reconcile_oca_data.xml:0
 msgid "Open Balance"
-msgstr ""
+msgstr "Odprto stanje"
 
 #. module: account_reconcile_oca
 #: model_terms:ir.ui.view,arch_db:account_reconcile_oca.bank_statement_line_form_reconcile_view
 msgid "Other Info"
-msgstr ""
+msgstr "Druge informacije"
 
 #. module: account_reconcile_oca
 #. odoo-javascript
@@ -501,33 +506,35 @@ msgstr ""
 #: model:ir.model.fields,field_description:account_reconcile_oca.field_account_account_reconcile__partner_id
 #: model_terms:ir.ui.view,arch_db:account_reconcile_oca.bank_statement_line_form_reconcile_view
 msgid "Partner"
-msgstr ""
+msgstr "Partner"
 
 #. module: account_reconcile_oca
 #: model_terms:ir.ui.view,arch_db:account_reconcile_oca.account_move_line_search_reconcile_view
 msgid "Payable"
-msgstr ""
+msgstr "Obveznost"
 
 #. module: account_reconcile_oca
 #: model:ir.model,name:account_reconcile_oca.model_account_reconcile_model
 msgid ""
 "Preset to create journal entries during a invoices and payments matching"
 msgstr ""
+"Nastavitev za ustvarjanje vknjižb v poslovni knjigi med usklajevanjem "
+"računov in plačil"
 
 #. module: account_reconcile_oca
 #: model:ir.model.fields,field_description:account_reconcile_oca.field_account_bank_statement_line__previous_manual_amount_in_currency
 msgid "Previous Manual Amount In Currency"
-msgstr ""
+msgstr "Prejšnji ročni znesek v valuti"
 
 #. module: account_reconcile_oca
 #: model_terms:ir.ui.view,arch_db:account_reconcile_oca.account_move_line_search_reconcile_view
 msgid "Purchases"
-msgstr ""
+msgstr "Nabave"
 
 #. module: account_reconcile_oca
 #: model_terms:ir.ui.view,arch_db:account_reconcile_oca.account_move_line_search_reconcile_view
 msgid "Receivable"
-msgstr ""
+msgstr "Terjatev"
 
 #. module: account_reconcile_oca
 #: model:ir.actions.act_window,name:account_reconcile_oca.account_account_account_account_reconcile_act_window
@@ -541,197 +548,197 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:account_reconcile_oca.bank_statement_line_form_reconcile_view
 #: model_terms:ir.ui.view,arch_db:account_reconcile_oca.view_account_list
 msgid "Reconcile"
-msgstr ""
+msgstr "Uskladi"
 
 #. module: account_reconcile_oca
 #: model:ir.model.fields,field_description:account_reconcile_oca.field_account_bank_statement_line__reconcile_aggregate
 #: model:ir.model.fields,field_description:account_reconcile_oca.field_res_company__reconcile_aggregate
 #: model:ir.model.fields,field_description:account_reconcile_oca.field_res_config_settings__reconcile_aggregate
 msgid "Reconcile Aggregate"
-msgstr ""
+msgstr "Združevanje usklajevanja"
 
 #. module: account_reconcile_oca
 #: model:ir.model.fields,field_description:account_reconcile_oca.field_account_bank_statement_line__reconcile_data
 msgid "Reconcile Data"
-msgstr ""
+msgstr "Podatki usklajevanja"
 
 #. module: account_reconcile_oca
 #: model:ir.model.fields,field_description:account_reconcile_oca.field_account_account_reconcile__reconcile_data_info
 #: model:ir.model.fields,field_description:account_reconcile_oca.field_account_bank_statement_line__reconcile_data_info
 #: model:ir.model.fields,field_description:account_reconcile_oca.field_account_reconcile_abstract__reconcile_data_info
 msgid "Reconcile Data Info"
-msgstr ""
+msgstr "Informacije o podatkih usklajevanja"
 
 #. module: account_reconcile_oca
 #: model:ir.model.fields,field_description:account_reconcile_oca.field_account_bank_statement_line__reconcile_mode
 #: model:ir.model.fields,field_description:account_reconcile_oca.field_account_journal__reconcile_mode
 msgid "Reconcile Mode"
-msgstr ""
+msgstr "Način usklajevanja"
 
 #. module: account_reconcile_oca
 #: model:ir.model.fields,field_description:account_reconcile_oca.field_account_journal__reconcile_aggregate
 #: model_terms:ir.ui.view,arch_db:account_reconcile_oca.res_config_settings_form_view
 msgid "Reconcile aggregation"
-msgstr ""
+msgstr "Združevanje usklajevanja"
 
 #. module: account_reconcile_oca
 #: model:ir.actions.act_window,name:account_reconcile_oca.action_bank_statement_line_move_view_reconcile
 #: model:ir.actions.act_window,name:account_reconcile_oca.action_bank_statement_line_reconcile_all
 #: model:ir.actions.act_window,name:account_reconcile_oca.action_bank_statement_line_reconcile_to_check
 msgid "Reconcile bank statement lines"
-msgstr ""
+msgstr "Uskladi postavke bančnega izpiska"
 
 #. module: account_reconcile_oca
 #: model:ir.model,name:account_reconcile_oca.model_account_account_reconcile_data
 msgid "Reconcile data model to store user info"
-msgstr ""
+msgstr "Podatkovni model usklajevanja za shranjevanje uporabniških informacij"
 
 #. module: account_reconcile_oca
 #: model_terms:ir.ui.view,arch_db:account_reconcile_oca.bank_statement_line_reconcile_view
 msgid "Reconciled"
-msgstr ""
+msgstr "Usklajeno"
 
 #. module: account_reconcile_oca
 #: model:ir.ui.menu,name:account_reconcile_oca.menu_account_reconcile_model
 msgid "Reconciliation Models"
-msgstr ""
+msgstr "Modeli usklajevanja"
 
 #. module: account_reconcile_oca
 #: model_terms:ir.ui.view,arch_db:account_reconcile_oca.bank_statement_line_form_reconcile_view
 msgid "Reset reconciliation"
-msgstr ""
+msgstr "Ponastavi usklajevanje"
 
 #. module: account_reconcile_oca
 #. odoo-python
 #: code:addons/account_reconcile_oca/models/account_bank_statement_line.py:0
 msgid "Reversal of: %s"
-msgstr ""
+msgstr "Storno za: %s"
 
 #. module: account_reconcile_oca
 #: model:ir.model,name:account_reconcile_oca.model_account_reconcile_model_line
 msgid "Rules for the reconciliation model"
-msgstr ""
+msgstr "Pravila za uskladitveni model"
 
 #. module: account_reconcile_oca
 #: model_terms:ir.ui.view,arch_db:account_reconcile_oca.account_move_line_search_reconcile_view
 msgid "Sales"
-msgstr ""
+msgstr "Prodaja"
 
 #. module: account_reconcile_oca
 #: model_terms:ir.ui.view,arch_db:account_reconcile_oca.bank_statement_line_form_add_view
 msgid "Save"
-msgstr ""
+msgstr "Shrani"
 
 #. module: account_reconcile_oca
 #: model_terms:ir.ui.view,arch_db:account_reconcile_oca.account_move_line_search_reconcile_view
 msgid "Search Journal Items"
-msgstr ""
+msgstr "Iskanje dnevniških postavk"
 
 #. module: account_reconcile_oca
 #: model_terms:ir.ui.view,arch_db:account_reconcile_oca.bank_statement_line_form_reconcile_view
 msgid "Set as Checked"
-msgstr ""
+msgstr "Nastavi kot preverjeno"
 
 #. module: account_reconcile_oca
 #: model_terms:ir.ui.view,arch_db:account_reconcile_oca.res_config_settings_form_view
 msgid "Standard aggregation to use on bank reconciliation"
-msgstr ""
+msgstr "Privzeto združevanje za uporabo pri bančnem usklajevanju"
 
 #. module: account_reconcile_oca
 #: model:ir.model.fields.selection,name:account_reconcile_oca.selection__account_journal__reconcile_aggregate__statement
 #: model_terms:ir.ui.view,arch_db:account_reconcile_oca.bank_statement_line_reconcile_view
 msgid "Statement"
-msgstr ""
+msgstr "Izpisek"
 
 #. module: account_reconcile_oca
 #: model:ir.actions.act_window,name:account_reconcile_oca.action_bank_statement_line_reconcile
 msgid "Statement lines"
-msgstr ""
+msgstr "Postavke izpiska"
 
 #. module: account_reconcile_oca
 #: model:ir.model.fields,help:account_reconcile_oca.field_account_bank_statement_line__foreign_currency_id
 msgid "The optional other currency if it is a multi-currency entry."
-msgstr ""
+msgstr "Opcijska druga valuta pri več-valutnih vnosih."
 
 #. module: account_reconcile_oca
 #: model_terms:ir.ui.view,arch_db:account_reconcile_oca.bank_statement_line_form_reconcile_view
 msgid "To Check"
-msgstr ""
+msgstr "Preveriti"
 
 #. module: account_reconcile_oca
 #: model_terms:ir.ui.view,arch_db:account_reconcile_oca.bank_statement_line_reconcile_view
 msgid "To check"
-msgstr ""
+msgstr "Preveriti"
 
 #. module: account_reconcile_oca
 #: model_terms:ir.ui.view,arch_db:account_reconcile_oca.account_journal_dashboard_kanban_view
 msgid "Transactions"
-msgstr ""
+msgstr "Transakcije"
 
 #. module: account_reconcile_oca
 #. odoo-python
 #: code:addons/account_reconcile_oca/models/account_bank_statement_line.py:0
 msgid "Undefined"
-msgstr ""
+msgstr "Nedoločeno"
 
 #. module: account_reconcile_oca
 #: model_terms:ir.ui.view,arch_db:account_reconcile_oca.bank_statement_line_form_reconcile_view
 msgid "Unreconcile"
-msgstr ""
+msgstr "Razveži uskladitev"
 
 #. module: account_reconcile_oca
 #: model:ir.model.fields,field_description:account_reconcile_oca.field_account_account_reconcile_data__user_id
 msgid "User"
-msgstr ""
+msgstr "Uporabnik"
 
 #. module: account_reconcile_oca
 #: model_terms:ir.ui.view,arch_db:account_reconcile_oca.bank_statement_line_form_reconcile_view
 msgid "Validate"
-msgstr ""
+msgstr "Potrdi"
 
 #. module: account_reconcile_oca
 #: model_terms:ir.ui.view,arch_db:account_reconcile_oca.account_move_line_tree_reconcile_view
 msgid "View"
-msgstr ""
+msgstr "Prikaz"
 
 #. module: account_reconcile_oca
 #: model_terms:ir.ui.view,arch_db:account_reconcile_oca.bank_statement_line_form_reconcile_view
 msgid "View move"
-msgstr ""
+msgstr "Prikaz temeljnice"
 
 #. module: account_reconcile_oca
 #: model:ir.model.fields.selection,name:account_reconcile_oca.selection__account_journal__reconcile_aggregate__week
 msgid "Week"
-msgstr ""
+msgstr "Teden"
 
 #. module: account_reconcile_oca
 #. odoo-python
 #: code:addons/account_reconcile_oca/models/account_journal.py:0
 msgid "Well done! Everything has been reconciled"
-msgstr ""
+msgstr "Odlično! Vse je bilo usklajeno"
 
 #. module: account_reconcile_oca
 #. odoo-python
 #: code:addons/account_reconcile_oca/models/account_move_line.py:0
 msgid "You can only reconcile journal items belonging to the same account."
-msgstr ""
+msgstr "Uskladite lahko samo postavke dnevnika, ki pripadajo istemu kontu."
 
 #. module: account_reconcile_oca
 #: model_terms:ir.ui.view,arch_db:account_reconcile_oca.bank_statement_line_form_reconcile_view
 msgid "fully paid"
-msgstr ""
+msgstr "v celoti plačano"
 
 #. module: account_reconcile_oca
 #: model_terms:ir.ui.view,arch_db:account_reconcile_oca.account_journal_dashboard_kanban_view
 msgid "to check"
-msgstr ""
+msgstr "preveriti"
 
 #. module: account_reconcile_oca
 #: model_terms:ir.ui.view,arch_db:account_reconcile_oca.bank_statement_line_form_reconcile_view
 msgid "will be reduced by"
-msgstr ""
+msgstr "bo zmanjšano za"
 
 #. module: account_reconcile_oca
 #: model_terms:ir.ui.view,arch_db:account_reconcile_oca.bank_statement_line_form_reconcile_view
 msgid "with an open amount"
-msgstr ""
+msgstr "z odprtim zneskom"
