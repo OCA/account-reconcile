@@ -121,7 +121,18 @@ class AccountBankStatementLine(models.Model):
         Invoice selected sales orders and post the invoices
         """
         if order.state in ("draft", "sent"):
+            order = order.with_context(mail_create_nosubscribe=True)
+            has_pickings = "picking_ids" in order._fields
+            # Track existing pickings to only touch the ones we create
+            pickings_before = (
+                order.picking_ids if has_pickings else self.env["sale.order"].browse()
+            )
             order.action_confirm()
+            # Don't subscribe the reconciling user to the new delivery order(s)
+            if has_pickings:
+                (order.picking_ids - pickings_before).message_unsubscribe(
+                    self.env.user.partner_id.ids
+                )
         invoices = order._create_invoices()
         invoices.action_post()
         return invoices.line_ids.filtered(
