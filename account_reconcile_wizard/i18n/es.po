@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 18.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-04-28 19:03+0000\n"
-"PO-Revision-Date: 2026-05-10 09:05+0000\n"
+"PO-Revision-Date: 2026-07-06 13:56+0000\n"
 "Last-Translator: Ed-Spain <eduamoros@gmail.com>\n"
 "Language-Team: \n"
 "Language: es\n"
@@ -122,7 +122,7 @@ msgstr "Debe"
 #. odoo-python
 #: code:addons/account_reconcile_wizard/wizard/account_manual_reconcile_wizard.py:0
 msgid "Debit and credit amounts must be positive."
-msgstr "El debe y haber deben ser positivos"
+msgstr "Los Importes en debe y haber deben ser positivos."
 
 #. module: account_reconcile_wizard
 #: model:ir.model.fields,field_description:account_reconcile_wizard.field_account_manual_reconcile_wizard_line__name
