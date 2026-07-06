@@ -257,8 +257,10 @@ class TestReconciliationMatchingRules(AccountTestInvoicingCommon):
         invoice.action_post()
         lines = invoice.line_ids
         return lines.filtered(
-            lambda line: line.account_id.account_type
-            in ("asset_receivable", "liability_payable")
+            lambda line: (
+                line.account_id.account_type
+                in ("asset_receivable", "liability_payable")
+            )
         )
 
     @classmethod
@@ -961,19 +963,15 @@ class TestReconciliationMatchingRules(AccountTestInvoicingCommon):
         self.bank_line_1.amount = -121
         self.bank_line_2.amount = -112
 
+        # Odoo 19: fiscal position tax mapping is defined by linking the
+        # destination taxes (tax_ids) and their original_tax_ids.
+        self.tax12.original_tax_ids = [Command.set(self.tax21.ids)]
         self.env["account.fiscal.position"].create(
             {
                 "name": "Test",
                 "country_id": belgium.id,
                 "auto_apply": True,
-                "tax_ids": [
-                    Command.create(
-                        {
-                            "tax_src_id": self.tax21.id,
-                            "tax_dest_id": self.tax12.id,
-                        }
-                    ),
-                ],
+                "tax_ids": [Command.set(self.tax12.ids)],
             }
         )
 
@@ -1343,8 +1341,10 @@ class TestReconciliationMatchingRules(AccountTestInvoicingCommon):
             payment.action_post()
 
             return payment.move_id.line_ids.filtered(
-                lambda x: x.account_id.account_type
-                not in {"asset_receivable", "liability_payable"}
+                lambda x: (
+                    x.account_id.account_type
+                    not in {"asset_receivable", "liability_payable"}
+                )
             )
 
         payment_partner = self.env["res.partner"].create(

@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_account_reconcile_model_partner_mapping_readonly,account.reconcile.model.partner.mapping.readonly,model_account_reconcile_model_partner_mapping,account.group_account_readonly,1,0,0,0
+access_account_reconcile_model_partner_mapping_billing,account.reconcile.model.partner.mapping.billing,model_account_reconcile_model_partner_mapping,account.group_account_invoice,1,0,1,0
+access_account_reconcile_model_partner_mapping,account.reconcile.model.partner.mapping,model_account_reconcile_model_partner_mapping,account.group_account_user,1,1,1,1

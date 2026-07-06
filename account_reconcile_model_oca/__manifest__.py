@@ -5,13 +5,14 @@
     "name": "Account Reconcile Model Oca",
     "summary": """
         This includes the logic moved from Odoo Community to Odoo Enterprise""",
-    "version": "18.0.1.1.3",
+    "version": "19.0.1.0.0",
     "license": "LGPL-3",
     "author": "Dixmit,Odoo,Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/account-reconcile",
     "depends": ["account"],
     "excludes": ["account_accountant"],
     "data": [
+        "security/ir.model.access.csv",
         "views/account_reconcile_model_views.xml",
     ],
     "demo": [],
