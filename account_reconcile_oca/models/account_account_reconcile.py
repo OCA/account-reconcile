@@ -181,7 +181,7 @@ class AccountAccountReconcile(models.Model):
                 move=True,
             )
             new_data["data"] += lines
-            amount += sum(line["amount"] for line in lines)
+            amount += sum(line["currency_amount"] for line in lines)
         return new_data
 
     def clean_reconcile(self):
