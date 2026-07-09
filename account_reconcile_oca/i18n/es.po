@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2026-05-10 09:05+0000\n"
+"PO-Revision-Date: 2026-07-06 13:56+0000\n"
 "Last-Translator: Ed-Spain <eduamoros@gmail.com>\n"
 "Language-Team: none\n"
 "Language: es\n"
@@ -91,7 +91,7 @@ msgstr "Importe"
 #. module: account_reconcile_oca
 #: model_terms:ir.ui.view,arch_db:account_reconcile_oca.bank_statement_line_form_reconcile_view
 msgid "Amount in Currency"
-msgstr "Importe en moneda"
+msgstr "Importe en Moneda"
 
 #. module: account_reconcile_oca
 #. odoo-javascript

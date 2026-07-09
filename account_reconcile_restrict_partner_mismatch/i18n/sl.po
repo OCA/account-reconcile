@@ -1,0 +1,169 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* account_reconcile_restrict_partner_mismatch
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 18.0\n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: 2026-06-26 08:46+0000\n"
+"Last-Translator: Matjaz Mozetic <matjaz@luxim.si>\n"
+"Language-Team: none\n"
+"Language: sl\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || "
+"n%100==4 ? 2 : 3;\n"
+"X-Generator: Weblate 5.15.2\n"
+
+#. module: account_reconcile_restrict_partner_mismatch
+#: model:ir.model.fields,field_description:account_reconcile_restrict_partner_mismatch.field_account_reconcile_partner_mismatch_report__account_id
+msgid "Account"
+msgstr "Konto"
+
+#. module: account_reconcile_restrict_partner_mismatch
+#: model:ir.model,name:account_reconcile_restrict_partner_mismatch.model_account_reconcile_partner_mismatch_report
+msgid "Account Reconcile Partner Mismatch Report"
+msgstr "Poročilo o neusklajenosti partnerjev pri usklajevanju računov"
+
+#. module: account_reconcile_restrict_partner_mismatch
+#: model:ir.model.fields,field_description:account_reconcile_restrict_partner_mismatch.field_account_reconcile_partner_mismatch_report__account_type
+msgid "Account Type"
+msgstr "Tip konta"
+
+#. module: account_reconcile_restrict_partner_mismatch
+#: model:ir.model.fields,help:account_reconcile_restrict_partner_mismatch.field_account_journal__no_restrict_partner_mismatch_on_reconcile
+msgid ""
+"Check this if you don't want to restrict partner mismatch (several "
+"differents) on reconcile."
+msgstr ""
+"Označite to možnost, če pri usklajevanju ne želite omejiti neusklajenosti "
+"partnerjev (več različnih)."
+
+#. module: account_reconcile_restrict_partner_mismatch
+#: model:ir.model.fields,help:account_reconcile_restrict_partner_mismatch.field_res_company__restrict_partner_mismatch_on_reconcile
+#: model:ir.model.fields,help:account_reconcile_restrict_partner_mismatch.field_res_config_settings__restrict_partner_mismatch_on_reconcile
+#: model_terms:ir.ui.view,arch_db:account_reconcile_restrict_partner_mismatch.res_config_settings_view_form
+msgid ""
+"Check this if you want to avoid partner mismatch (several different "
+"partners) on reconciliation."
+msgstr ""
+"Označite to možnost, če se želite izogniti neusklajenosti partnerjev (več "
+"različnih partnerjev) pri usklajevanju."
+
+#. module: account_reconcile_restrict_partner_mismatch
+#: model:ir.model,name:account_reconcile_restrict_partner_mismatch.model_res_company
+msgid "Companies"
+msgstr "Družbe"
+
+#. module: account_reconcile_restrict_partner_mismatch
+#: model:ir.model,name:account_reconcile_restrict_partner_mismatch.model_res_config_settings
+msgid "Config Settings"
+msgstr "Nastavitve"
+
+#. module: account_reconcile_restrict_partner_mismatch
+#: model:ir.model.fields,field_description:account_reconcile_restrict_partner_mismatch.field_account_reconcile_partner_mismatch_report__credit_amount
+msgid "Credit amount"
+msgstr "Znesek v dobro"
+
+#. module: account_reconcile_restrict_partner_mismatch
+#: model:ir.model.fields,field_description:account_reconcile_restrict_partner_mismatch.field_account_reconcile_partner_mismatch_report__credit_move_id
+msgid "Credit move"
+msgstr "Premik v dobro"
+
+#. module: account_reconcile_restrict_partner_mismatch
+#: model:ir.model.fields,field_description:account_reconcile_restrict_partner_mismatch.field_account_reconcile_partner_mismatch_report__credit_partner_id
+msgid "Credit partner"
+msgstr "Partner v dobro"
+
+#. module: account_reconcile_restrict_partner_mismatch
+#: model:ir.model.fields,field_description:account_reconcile_restrict_partner_mismatch.field_account_reconcile_partner_mismatch_report__debit_amount
+msgid "Debit amount"
+msgstr "Znesek v breme"
+
+#. module: account_reconcile_restrict_partner_mismatch
+#: model:ir.model.fields,field_description:account_reconcile_restrict_partner_mismatch.field_account_reconcile_partner_mismatch_report__debit_move_id
+msgid "Debit move"
+msgstr "Premik v breme"
+
+#. module: account_reconcile_restrict_partner_mismatch
+#: model:ir.model.fields,field_description:account_reconcile_restrict_partner_mismatch.field_account_reconcile_partner_mismatch_report__debit_partner_id
+msgid "Debit partner"
+msgstr "Partner v breme"
+
+#. module: account_reconcile_restrict_partner_mismatch
+#: model:ir.model.fields,field_description:account_reconcile_restrict_partner_mismatch.field_account_reconcile_partner_mismatch_report__display_name
+msgid "Display Name"
+msgstr "Prikazani naziv"
+
+#. module: account_reconcile_restrict_partner_mismatch
+#: model:ir.model.fields,field_description:account_reconcile_restrict_partner_mismatch.field_account_reconcile_partner_mismatch_report__full_reconcile_id
+msgid "Full Reconcile"
+msgstr "V celoti uskladi"
+
+#. module: account_reconcile_restrict_partner_mismatch
+#: model:ir.model.fields,field_description:account_reconcile_restrict_partner_mismatch.field_account_reconcile_partner_mismatch_report__id
+msgid "ID"
+msgstr "ID"
+
+#. module: account_reconcile_restrict_partner_mismatch
+#: model:ir.model,name:account_reconcile_restrict_partner_mismatch.model_account_journal
+msgid "Journal"
+msgstr "Dnevnik"
+
+#. module: account_reconcile_restrict_partner_mismatch
+#: model:ir.model,name:account_reconcile_restrict_partner_mismatch.model_account_move_line
+msgid "Journal Item"
+msgstr "Dnevniška postavka"
+
+#. module: account_reconcile_restrict_partner_mismatch
+#: model:ir.model.fields,field_description:account_reconcile_restrict_partner_mismatch.field_account_journal__no_restrict_partner_mismatch_on_reconcile
+msgid "No Restrict Partner Mismatch On Reconcile"
+msgstr "Neujemanje partnerjev brez omejitve pri usklajevanju"
+
+#. module: account_reconcile_restrict_partner_mismatch
+#: model:ir.model.fields,field_description:account_reconcile_restrict_partner_mismatch.field_account_reconcile_partner_mismatch_report__partial_reconcile_id
+msgid "Partial Reconcile"
+msgstr "Delno uskladi"
+
+#. module: account_reconcile_restrict_partner_mismatch
+#: model_terms:ir.ui.view,arch_db:account_reconcile_restrict_partner_mismatch.view_account_journal_form
+msgid "Partner Mismatch on Reconcile"
+msgstr "Neujemanje partnerjev pri usklajevanju"
+
+#. module: account_reconcile_restrict_partner_mismatch
+#: model_terms:ir.ui.view,arch_db:account_reconcile_restrict_partner_mismatch.res_config_settings_view_form
+msgid "Partners Mismatch Restriction on Reconcile"
+msgstr "Omejitev neujemanja partnerjev pri usklajevanju"
+
+#. module: account_reconcile_restrict_partner_mismatch
+#: model:ir.model.fields.selection,name:account_reconcile_restrict_partner_mismatch.selection__account_reconcile_partner_mismatch_report__account_type__liability_payable
+msgid "Payable"
+msgstr "Obveznosti"
+
+#. module: account_reconcile_restrict_partner_mismatch
+#: model:ir.model.fields.selection,name:account_reconcile_restrict_partner_mismatch.selection__account_reconcile_partner_mismatch_report__account_type__asset_receivable
+msgid "Receivable"
+msgstr "Terjatve"
+
+#. module: account_reconcile_restrict_partner_mismatch
+#: model:ir.actions.act_window,name:account_reconcile_restrict_partner_mismatch.action_account_reconcile_partner_mismatch_report
+#: model:ir.ui.menu,name:account_reconcile_restrict_partner_mismatch.menu_account_reconcile_partner_mismatch_report
+#: model_terms:ir.ui.view,arch_db:account_reconcile_restrict_partner_mismatch.account_reconcile_partner_mismatch_report_view_form
+msgid "Reconciled items with partner mismatch"
+msgstr "Usklajene postavke z neujemanjem partnerjev"
+
+#. module: account_reconcile_restrict_partner_mismatch
+#: model:ir.model.fields,field_description:account_reconcile_restrict_partner_mismatch.field_res_company__restrict_partner_mismatch_on_reconcile
+#: model:ir.model.fields,field_description:account_reconcile_restrict_partner_mismatch.field_res_config_settings__restrict_partner_mismatch_on_reconcile
+msgid "Restrict Partner Mismatch On Reconcile"
+msgstr "Omeji neujemanje partnerjev pri usklajevanju"
+
+#. module: account_reconcile_restrict_partner_mismatch
+#. odoo-python
+#: code:addons/account_reconcile_restrict_partner_mismatch/models/account_move_line.py:0
+msgid ""
+"The partner has to be the same on all lines for receivable and payable "
+"accounts!"
+msgstr "Partner mora biti isti v vseh postavkah za terjatve in obveznosti!"
