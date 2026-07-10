@@ -307,11 +307,15 @@ msgstr "Storno"
 #. module: account_reconcile_wizard
 #. odoo-python
 #: code:addons/account_reconcile_wizard/wizard/account_manual_reconcile_wizard.py:0
-msgid "You can only reconcile entries from the same partner."
-msgstr "Si possono riconciliare registrazioni solo dello stesso partner."
+msgid "You can only reconcile entries from up to 2 different accounts."
+msgstr "Si possono riconciliare registrazioni solo tra due conti differenti."
 
 #. module: account_reconcile_wizard
 #. odoo-python
 #: code:addons/account_reconcile_wizard/wizard/account_manual_reconcile_wizard.py:0
-msgid "You can only reconcile entries from up to 2 different accounts."
-msgstr "Si possono riconciliare registrazioni solo tra due conti differenti."
+msgid ""
+"You cannot reconcile entries that belong to different partners and accounts."
+msgstr ""
+
+#~ msgid "You can only reconcile entries from the same partner."
+#~ msgstr "Si possono riconciliare registrazioni solo dello stesso partner."
