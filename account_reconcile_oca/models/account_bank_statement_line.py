@@ -370,7 +370,7 @@ class AccountBankStatementLine(models.Model):
             stmt_credit += line_data["credit"]
         prec = self.currency_id.rounding
         return (
-            float_compare(move_amount_cur, move_amount_cur, precision_rounding=prec)
+            float_compare(move_amount_cur, stmt_amount_curr, precision_rounding=prec)
             != 0
             or float_compare(move_credit, stmt_credit, precision_rounding=prec) != 0
             or float_compare(move_debit, stmt_debit, precision_rounding=prec) != 0
