@@ -682,8 +682,12 @@ class AccountBankStatementLine(models.Model):
                     self.manual_reference,
                 )
             elif res and res.get("amls"):
-                # TODO should be signed in currency get_reconcile_currency
-                amount = self.amount_total_signed
+                # Use the signed statement amount (as in _do_auto_reconcile) so
+                # that _get_reconcile_line can clamp the counterpart to the
+                # remaining amount. amount_total_signed drops the sign (it is
+                # the absolute amount), which prevented the partial clamp for
+                # outgoing payments of vendor bills, applying the full residual.
+                amount = self.amount_currency or self.amount
                 for line in res.get("amls", []):
                     reconcile_auxiliary_id, line_data = self._get_reconcile_line(
                         line,
