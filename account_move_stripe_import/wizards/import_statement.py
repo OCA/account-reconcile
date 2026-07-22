@@ -21,5 +21,5 @@ class CreditStatementImport(models.TransientModel):
 
     def _check_extension(self):
         if self.need_file:
-            return super(CreditStatementImport, self)._check_extension()
+            return super()._check_extension()
         return ""
