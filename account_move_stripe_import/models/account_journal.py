@@ -31,7 +31,7 @@ class AccountJournal(models.Model):
 
 class StripeParser(AccountMoveImportParser):
     def __init__(self, journal, *args, **kwargs):
-        super(StripeParser, self).__init__(journal, *args, **kwargs)
+        super().__init__(journal, *args, **kwargs)
         self.env = journal.env
 
     @classmethod
