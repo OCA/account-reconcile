@@ -6,9 +6,7 @@
         <field name="user_id" ref="base.user_root" />
         <field name="interval_number">1</field>
         <field name="interval_type">days</field>
-        <field name="numbercall">-1</field>
         <field name="model_id" ref="account.model_account_journal" />
         <field name="code">model.run_import_stripe_deposit()</field>
-        <field name="doall" eval="False" />
     </record>
 </odoo>
