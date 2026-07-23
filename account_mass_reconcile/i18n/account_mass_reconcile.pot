@@ -4,7 +4,7 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 17.0\n"
+"Project-Id-Version: Odoo Server 18.0\n"
 "Report-Msgid-Bugs-To: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -16,7 +16,6 @@ msgstr ""
 #. module: account_mass_reconcile
 #. odoo-python
 #: code:addons/account_mass_reconcile/models/mass_reconcile.py:0
-#, python-format
 msgid ""
 "A mass reconcile is already ongoing for this account, please try again "
 "later."
@@ -25,7 +24,6 @@ msgstr ""
 #. module: account_mass_reconcile
 #. odoo-python
 #: code:addons/account_mass_reconcile/models/base_advanced_reconciliation.py:0
-#, python-format
 msgid ""
 "A matcher %(mkey)s is compared with a matcher %(omkey)s, the _matchers and "
 "_opposite_matchers are probably wrong"
@@ -41,7 +39,7 @@ msgid ""
 msgstr ""
 
 #. module: account_mass_reconcile
-#: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile__account
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile__account_id
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_advanced__account_id
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_advanced_name__account_id
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_advanced_ref__account_id
@@ -87,6 +85,20 @@ msgid "Account Profit"
 msgstr ""
 
 #. module: account_mass_reconcile
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile_method___filter
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_advanced___filter
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_advanced_name___filter
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_advanced_ref___filter
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_base___filter
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_options___filter
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple___filter
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_name___filter
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_partner___filter
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_reference___filter
+msgid "Accounting Entries Domain"
+msgstr ""
+
+#. module: account_mass_reconcile
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile__message_needaction
 msgid "Action Needed"
 msgstr ""
@@ -115,14 +127,12 @@ msgstr ""
 #. module: account_mass_reconcile
 #. odoo-python
 #: code:addons/account_mass_reconcile/models/base_reconciliation.py:0
-#, python-format
 msgid "Automatic Write Off"
 msgstr ""
 
 #. module: account_mass_reconcile
 #. odoo-python
 #: code:addons/account_mass_reconcile/models/base_reconciliation.py:0
-#, python-format
 msgid "Automatic writeoff"
 msgstr ""
 
@@ -144,7 +154,16 @@ msgstr ""
 #. module: account_mass_reconcile
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile__company_id
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile_method__company_id
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_advanced__company_id
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_advanced_name__company_id
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_advanced_ref__company_id
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_base__company_id
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_history__company_id
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_options__company_id
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple__company_id
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_name__company_id
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_partner__company_id
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_reference__company_id
 msgid "Company"
 msgstr ""
 
@@ -217,20 +236,6 @@ msgstr ""
 #. module: account_mass_reconcile
 #: model:ir.actions.server,name:account_mass_reconcile.ir_cron_run_reconciliations_ir_actions_server
 msgid "Do Automatic Reconciliations"
-msgstr ""
-
-#. module: account_mass_reconcile
-#: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile_method___filter
-#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_advanced___filter
-#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_advanced_name___filter
-#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_advanced_ref___filter
-#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_base___filter
-#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_options___filter
-#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple___filter
-#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_name___filter
-#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_partner___filter
-#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_reference___filter
-msgid "Filter"
 msgstr ""
 
 #. module: account_mass_reconcile
@@ -527,7 +532,6 @@ msgstr ""
 #. odoo-python
 #: code:addons/account_mass_reconcile/models/mass_reconcile_history.py:0
 #: model_terms:ir.ui.view,arch_db:account_mass_reconcile.mass_reconcile_history_form
-#, python-format
 msgid "Reconciliations"
 msgstr ""
 
@@ -601,14 +605,12 @@ msgstr ""
 #. module: account_mass_reconcile
 #. odoo-python
 #: code:addons/account_mass_reconcile/models/mass_reconcile.py:0
-#, python-format
 msgid "There is no history of reconciled items on the task: %s."
 msgstr ""
 
 #. module: account_mass_reconcile
 #. odoo-python
 #: code:addons/account_mass_reconcile/models/mass_reconcile.py:0
-#, python-format
 msgid "There was an error during reconciliation : %s"
 msgstr ""
 
@@ -630,7 +632,6 @@ msgstr ""
 #. module: account_mass_reconcile
 #. odoo-python
 #: code:addons/account_mass_reconcile/models/mass_reconcile.py:0
-#, python-format
 msgid "Unreconciled items"
 msgstr ""
 
