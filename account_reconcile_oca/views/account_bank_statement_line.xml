@@ -220,6 +220,7 @@
                 <field name="foreign_currency_id" invisible="1" />
                 <field name="company_currency_id" invisible="1" />
                 <field name="previous_manual_amount_in_currency" invisible="1" />
+                <field name="previous_manual_amount" invisible="1" />
                 <field name="currency_id" invisible="1" />
                 <field
                     name="reconcile_data_info"
@@ -295,34 +296,40 @@
                                     modifiers="{'readonly': ['|', '|', ('manual_exchange_counterpart', '=', True), ('manual_reference', '=', False), ('is_reconciled', '=', True)]}"
                                 />
                                 <field name="manual_currency_id" invisible="1" />
-                                <field name="manual_original_amount" invisible="1" />
+                                <field
+                                    name="manual_original_amount_in_currency"
+                                    invisible="1"
+                                />
                                 <field name="manual_move_type" invisible="1" />
+                                <field
+                                    name="show_full_reconcile_button"
+                                    invisible="1"
+                                />
                                 <label
                                     for="manual_move_id"
                                     string=""
-                                    insible="manual_move_type not in ['in_invoice', 'in_refund', 'out_invoice', 'out_refund'] or manual_original_amount == 0"
+                                    invisible="manual_move_type not in ['in_invoice', 'in_refund', 'out_invoice', 'out_refund'] or manual_original_amount_in_currency == 0"
                                 />
+
                                 <div
-                                    insible="manual_move_type not in ['in_invoice', 'in_refund', 'out_invoice', 'out_refund'] or manual_original_amount == 0"
+                                    invisible="manual_move_type not in ['in_invoice', 'in_refund', 'out_invoice', 'out_refund'] or manual_original_amount_in_currency == 0"
                                 >
                                     Invoice <field
                                     class="oe_inline"
                                     name="manual_move_id"
                                 />
-                                    with an open amount <field
+                                    <field
                                     class="oe_inline"
-                                    name="manual_original_amount"
-                                /> will be reduced by <field
-                                    class="oe_inline"
-                                    name="manual_amount"
-                                    readonly="1"
-                                />.
-                                    <br />
-                                You might want to set the invoice as <button
+                                    name="manual_amount_message"
+                                />
+                                    <div invisible="not show_full_reconcile_button">
+                                        <br />
+                                        You might want to set the invoice as <button
                                     name="button_manual_reference_full_paid"
                                     type="object"
                                     method_args="[1]"
                                 >fully paid</button>.
+                                    </div>
                                 </div>
                             </group>
                         </group>

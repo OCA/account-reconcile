@@ -50,8 +50,11 @@ class AccountReconcileAbstract(models.AbstractModel):
         date = self.date if "date" in self._fields else line.date
         original_amount = amount = net_amount = line.debit - line.credit
         line_currency = line.currency_id
+        original_amount_currency = line.amount_currency
         if is_counterpart:
-            currency_amount = -line.amount_residual_currency or line.amount_residual
+            currency_amount = original_amount_currency = (
+                -line.amount_residual_currency or line.amount_residual
+            )
             amount = -line.amount_residual
             currency = line.currency_id or line.company_id.currency_id
             original_amount = net_amount = -line.amount_residual
@@ -88,6 +91,7 @@ class AccountReconcileAbstract(models.AbstractModel):
             currency_amount = line.amount_currency
         else:
             currency_amount = self.amount_currency or self.amount
+            original_amount_currency = self.amount_currency
             line_currency = self._get_reconcile_currency()
         vals = {
             "move_id": move and line.move_id.id,
@@ -109,6 +113,7 @@ class AccountReconcileAbstract(models.AbstractModel):
             "currency_amount": currency_amount,
             "analytic_distribution": line.analytic_distribution,
             "kind": kind,
+            "original_amount_currency": original_amount_currency,
         }
         if from_unreconcile:
             vals.update(
