@@ -125,30 +125,27 @@ class AccountBankStatementLine(models.Model):
     reconcile_aggregate = fields.Char(compute="_compute_reconcile_aggregate")
     aggregate_id = fields.Integer(compute="_compute_reconcile_aggregate")
     aggregate_name = fields.Char(compute="_compute_reconcile_aggregate")
-    reconciled_move_id = fields.Many2one(
+    reconciled_move_ids = fields.Many2many(
         "account.move",
         string="Reconciled Move",
         readonly=True,
-        compute="_compute_reconciled_move_id",
+        compute="_compute_reconciled_move_ids",
     )
     reconciled_line_ids = fields.Many2many(
         "account.move.line",
         string="Reconciled Move Lines",
         readonly=True,
-        compute="_compute_reconciled_move_id",
+        compute="_compute_reconciled_move_ids",
     )
 
-    def _compute_reconciled_move_id(self):
+    def _compute_reconciled_move_ids(self):
         for line in self:
-            line.reconciled_move_id = (
-                self.line_ids._all_reconciled_lines()
-                .filtered(
-                    lambda line: line.move_id != self.move_id
-                    and (line.matched_debit_ids or line.matched_credit_ids)
-                )
-                .mapped("move_id")
+            counterpart_lines = line.line_ids._all_reconciled_lines().filtered(
+                lambda aml, line=line: aml.move_id != line.move_id
+                and (aml.matched_debit_ids or aml.matched_credit_ids)
             )
-            line.reconciled_line_ids = line.reconciled_move_id.line_ids
+            line.reconciled_move_ids = counterpart_lines.move_id
+            line.reconciled_line_ids = line.reconciled_move_ids.line_ids
 
     @api.model
     def _reconcile_aggregate_map(self):
@@ -602,8 +599,8 @@ class AccountBankStatementLine(models.Model):
         action = self.env["ir.actions.act_window"]._for_xml_id(
             "account.action_move_journal_line"
         )
-        moves = self.move_id + self.reconciled_move_id
-        action.update({"domain": [("id", "in", moves.ids)], "view_mode": "tree,form"})
+        moves = self.move_id + self.reconciled_move_ids
+        action.update({"domain": [("id", "in", moves.ids)], "view_mode": "list,form"})
         return action
 
     def _inverse_reconcile_data_info(self):
