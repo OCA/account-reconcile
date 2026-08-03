@@ -1,0 +1,701 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# * account_mass_reconcile
+#
+# Translators:
+# OCA Transbot <transbot@odoo-community.org>, 2017
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 10.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-03-24 03:37+0000\n"
+"PO-Revision-Date: 2024-08-13 08:58+0000\n"
+"Last-Translator: Metin GÜLSOY <metin.gulsoy@kitayazilim.com>\n"
+"Language-Team: Turkish (https://www.transifex.com/oca/teams/23907/tr/)\n"
+"Language: tr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: Weblate 5.6.2\n"
+
+#. module: account_mass_reconcile
+#. odoo-python
+#: code:addons/account_mass_reconcile/models/mass_reconcile.py:0
+#, python-format
+msgid ""
+"A mass reconcile is already ongoing for this account, please try again later."
+msgstr ""
+"Bu hesap için toplu bir denkleştirme zaten devam ediyor, lütfen daha sonra\n"
+"tekrar deneyin."
+
+#. module: account_mass_reconcile
+#. odoo-python
+#: code:addons/account_mass_reconcile/models/base_advanced_reconciliation.py:0
+#, python-format
+msgid ""
+"A matcher %(mkey)s is compared with a matcher %(omkey)s, the _matchers and "
+"_opposite_matchers are probably wrong"
+msgstr ""
+"Bir dahası %(mkey)s bir %(omkey)s ile karşılaştırıldığında, _matchers ve \n"
+"_opposite_matchers muhtemelen yanlış"
+
+#. module: account_mass_reconcile
+#: model_terms:ir.actions.act_window,help:account_mass_reconcile.action_account_mass_reconcile
+msgid ""
+"A reconciliation profile specifies, for one account, how\n"
+"            the entries should be reconciled.\n"
+"            You can select one or many reconciliation methods which will\n"
+"            be run sequentially to match the entries between them."
+msgstr ""
+"Bir denkleştirme profili, bir hesap için, nasıl\\n"
+"\n"
+"            kayıtları denkleştirilmelidir.\\n"
+"\n"
+"            Bir veya birden fazla denkleştirme yöntemi seçebilirsiniz\\n"
+"\n"
+"            aralarındaki kayıtları eşleştirmek için sırayla çalıştırılabilir."
+
+#. module: account_mass_reconcile
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile__account
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_advanced__account_id
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_advanced_name__account_id
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_advanced_ref__account_id
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_base__account_id
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple__account_id
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_name__account_id
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_partner__account_id
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_reference__account_id
+msgid "Account"
+msgstr "Hesap"
+
+#. module: account_mass_reconcile
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile_method__account_lost_id
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_advanced__account_lost_id
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_advanced_name__account_lost_id
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_advanced_ref__account_lost_id
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_base__account_lost_id
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_options__account_lost_id
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple__account_lost_id
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_name__account_lost_id
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_partner__account_lost_id
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_reference__account_lost_id
+msgid "Account Lost"
+msgstr "Zarar Hesap"
+
+#. module: account_mass_reconcile
+#: model:ir.model,name:account_mass_reconcile.model_account_mass_reconcile
+msgid "Account Mass Reconcile"
+msgstr "Hesap Toplu Denkleştirme"
+
+#. module: account_mass_reconcile
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile_method__account_profit_id
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_advanced__account_profit_id
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_advanced_name__account_profit_id
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_advanced_ref__account_profit_id
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_base__account_profit_id
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_options__account_profit_id
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple__account_profit_id
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_name__account_profit_id
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_partner__account_profit_id
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_reference__account_profit_id
+msgid "Account Profit"
+msgstr "Kar Hesabı"
+
+#. module: account_mass_reconcile
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile__message_needaction
+msgid "Action Needed"
+msgstr "Aksiyon Gerekiyor"
+
+#. module: account_mass_reconcile
+#: model_terms:ir.ui.view,arch_db:account_mass_reconcile.account_mass_reconcile_form
+msgid "Advanced. Partner and Ref"
+msgstr "Gelişmiş. İş Ortağı ve Ref"
+
+#. module: account_mass_reconcile
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile__message_attachment_count
+msgid "Attachment Count"
+msgstr "Ek Sayısı"
+
+#. module: account_mass_reconcile
+#: model_terms:ir.ui.view,arch_db:account_mass_reconcile.account_mass_reconcile_form
+msgid "Automatic Mass Reconcile"
+msgstr "Otomatik Toplu Denkleştirme"
+
+#. module: account_mass_reconcile
+#: model_terms:ir.ui.view,arch_db:account_mass_reconcile.mass_reconcile_history_form
+#: model_terms:ir.ui.view,arch_db:account_mass_reconcile.view_mass_reconcile_history_search
+msgid "Automatic Mass Reconcile History"
+msgstr "Otomatik Toplu Denkleştirme Geçmişi"
+
+#. module: account_mass_reconcile
+#. odoo-python
+#: code:addons/account_mass_reconcile/models/base_reconciliation.py:0
+#, python-format
+msgid "Automatic Write Off"
+msgstr "Otomatik Tutar Kapatma"
+
+#. module: account_mass_reconcile
+#. odoo-python
+#: code:addons/account_mass_reconcile/models/base_reconciliation.py:0
+#, python-format
+msgid "Automatic writeoff"
+msgstr "Otomatik Tutar Kapatma"
+
+#. module: account_mass_reconcile
+#: model_terms:ir.actions.act_window,help:account_mass_reconcile.action_account_mass_reconcile
+msgid "Click to add a reconciliation profile."
+msgstr "Denkleştirme profili eklemek için tıklatın"
+
+#. module: account_mass_reconcile
+#: model_terms:ir.ui.view,arch_db:account_mass_reconcile.view_account_config
+msgid "Commit frequency"
+msgstr "İşleme Sıklığı"
+
+#. module: account_mass_reconcile
+#: model:ir.model,name:account_mass_reconcile.model_res_company
+msgid "Companies"
+msgstr "Şirketler"
+
+#. module: account_mass_reconcile
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile__company_id
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile_method__company_id
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_history__company_id
+msgid "Company"
+msgstr "Şirket"
+
+#. module: account_mass_reconcile
+#: model:ir.model,name:account_mass_reconcile.model_res_config_settings
+#, fuzzy
+msgid "Config Settings"
+msgstr "Yapılandırma"
+
+#. module: account_mass_reconcile
+#: model_terms:ir.ui.view,arch_db:account_mass_reconcile.account_mass_reconcile_form
+msgid "Configuration"
+msgstr "Yapılandırma"
+
+#. module: account_mass_reconcile
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile__create_uid
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile_method__create_uid
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_advanced_name__create_uid
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_advanced_ref__create_uid
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_history__create_uid
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_name__create_uid
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_partner__create_uid
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_reference__create_uid
+msgid "Created by"
+msgstr "Oluşturan"
+
+#. module: account_mass_reconcile
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile__create_date
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile_method__create_date
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_advanced_name__create_date
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_advanced_ref__create_date
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_history__create_date
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_name__create_date
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_partner__create_date
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_reference__create_date
+msgid "Created on"
+msgstr "Oluşturuldu"
+
+#. module: account_mass_reconcile
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile_method__date_base_on
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_advanced__date_base_on
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_advanced_name__date_base_on
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_advanced_ref__date_base_on
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_base__date_base_on
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_options__date_base_on
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple__date_base_on
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_name__date_base_on
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_partner__date_base_on
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_reference__date_base_on
+msgid "Date of reconciliation"
+msgstr "Denkleştirme Tarihi"
+
+#. module: account_mass_reconcile
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile__display_name
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile_method__display_name
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_advanced_name__display_name
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_advanced_ref__display_name
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_history__display_name
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_name__display_name
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_partner__display_name
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_reference__display_name
+msgid "Display Name"
+msgstr "Görünen İsim"
+
+#. module: account_mass_reconcile
+#: model_terms:ir.ui.view,arch_db:account_mass_reconcile.account_mass_reconcile_form
+#: model_terms:ir.ui.view,arch_db:account_mass_reconcile.account_mass_reconcile_tree
+msgid "Display items reconciled on the last run"
+msgstr "Son çalıştırmada denleştirilen öğeleri göster"
+
+#. module: account_mass_reconcile
+#: model:ir.actions.server,name:account_mass_reconcile.ir_cron_run_reconciliations_ir_actions_server
+msgid "Do Automatic Reconciliations"
+msgstr "Otomatik Denkleştirmeler Yapın"
+
+#. module: account_mass_reconcile
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile_method___filter
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_advanced___filter
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_advanced_name___filter
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_advanced_ref___filter
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_base___filter
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_options___filter
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple___filter
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_name___filter
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_partner___filter
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_reference___filter
+msgid "Filter"
+msgstr "Filtre"
+
+#. module: account_mass_reconcile
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile__message_follower_ids
+msgid "Followers"
+msgstr "Takipçiler"
+
+#. module: account_mass_reconcile
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile__message_partner_ids
+msgid "Followers (Partners)"
+msgstr "Takipçiler (İş ortakları)"
+
+#. module: account_mass_reconcile
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_history__reconcile_ids
+msgid "Full Reconciliations"
+msgstr "Tam Denkleştirmeler"
+
+#. module: account_mass_reconcile
+#: model_terms:ir.ui.view,arch_db:account_mass_reconcile.account_mass_reconcile_form
+#: model_terms:ir.ui.view,arch_db:account_mass_reconcile.mass_reconcile_history_form
+#: model_terms:ir.ui.view,arch_db:account_mass_reconcile.mass_reconcile_history_tree
+msgid "Go to reconciled items"
+msgstr "Denkleştirilmiş öğelere git"
+
+#. module: account_mass_reconcile
+#: model_terms:ir.ui.view,arch_db:account_mass_reconcile.account_mass_reconcile_form
+msgid "Go to unreconciled items"
+msgstr "Denkleştirilmemiş öğelere git"
+
+#. module: account_mass_reconcile
+#: model_terms:ir.ui.view,arch_db:account_mass_reconcile.view_mass_reconcile_history_search
+msgid "Group By..."
+msgstr "Grupla..."
+
+#. module: account_mass_reconcile
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile__has_message
+msgid "Has Message"
+msgstr "Mesaj Var"
+
+#. module: account_mass_reconcile
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile__history_ids
+#: model_terms:ir.ui.view,arch_db:account_mass_reconcile.account_mass_reconcile_form
+msgid "History"
+msgstr "Geçmiş"
+
+#. module: account_mass_reconcile
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_res_company__reconciliation_commit_every
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_res_config_settings__reconciliation_commit_every
+msgid "How often to commit when performing automatic reconciliation."
+msgstr "Otomatik denkleştirme uygulanıyorken ne sıklıkta işleyecek."
+
+#. module: account_mass_reconcile
+#: model_terms:ir.ui.view,arch_db:account_mass_reconcile.view_account_config
+msgid ""
+"How often to commit when performing automatic reconciliation.\n"
+"                  Leave zero to commit only at the end of the process."
+msgstr ""
+"Otomatik uzlaştırma gerçekleştirirken ne sıklıkta taahhüt etmek.\\n"
+"\n"
+"                  Yalnızca işlemin sonunda işlemek için sıfır bırakın."
+
+#. module: account_mass_reconcile
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile__id
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile_method__id
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_advanced_name__id
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_advanced_ref__id
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_history__id
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_name__id
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_partner__id
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_reference__id
+msgid "ID"
+msgstr "ID"
+
+#. module: account_mass_reconcile
+#: model:ir.model.fields,help:account_mass_reconcile.field_account_mass_reconcile__message_needaction
+msgid "If checked, new messages require your attention."
+msgstr "İşaretliyse, yeni mesajlar dikkatinize sunulacak."
+
+#. module: account_mass_reconcile
+#: model:ir.model.fields,help:account_mass_reconcile.field_account_mass_reconcile__message_has_error
+msgid "If checked, some messages have a delivery error."
+msgstr "İşaretliyse,bazı mesajlar gönderi hatası içermektedir."
+
+#. module: account_mass_reconcile
+#: model_terms:ir.ui.view,arch_db:account_mass_reconcile.account_mass_reconcile_form
+msgid "Information"
+msgstr "Bilgi"
+
+#. module: account_mass_reconcile
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile__message_is_follower
+msgid "Is Follower"
+msgstr "Takipçi mi"
+
+#. module: account_mass_reconcile
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile_method__journal_id
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_advanced__journal_id
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_advanced_name__journal_id
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_advanced_ref__journal_id
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_base__journal_id
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_options__journal_id
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple__journal_id
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_name__journal_id
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_partner__journal_id
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_reference__journal_id
+msgid "Journal"
+msgstr "Yevmiye"
+
+#. module: account_mass_reconcile
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile__write_uid
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile_method__write_uid
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_advanced_name__write_uid
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_advanced_ref__write_uid
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_history__write_uid
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_name__write_uid
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_partner__write_uid
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_reference__write_uid
+msgid "Last Updated by"
+msgstr "Son güncelleyen"
+
+#. module: account_mass_reconcile
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile__write_date
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile_method__write_date
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_advanced_name__write_date
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_advanced_ref__write_date
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_history__write_date
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_name__write_date
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_partner__write_date
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_reference__write_date
+msgid "Last Updated on"
+msgstr "Son güncelleme"
+
+#. module: account_mass_reconcile
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile__last_history
+msgid "Last history"
+msgstr "Son tarih"
+
+#. module: account_mass_reconcile
+#: model:ir.model.fields,help:account_mass_reconcile.field_res_company__reconciliation_commit_every
+#: model:ir.model.fields,help:account_mass_reconcile.field_res_config_settings__reconciliation_commit_every
+msgid "Leave zero to commit only at the end of the process."
+msgstr "Yalnızca işlemin sonunda işlemek için sıfır bırakın."
+
+#. module: account_mass_reconcile
+#: model:ir.actions.act_window,name:account_mass_reconcile.action_account_mass_reconcile
+#: model:ir.ui.menu,name:account_mass_reconcile.menu_mass_reconcile
+msgid "Mass Automatic Reconcile"
+msgstr "Toplu Otomatik Denkleştirme"
+
+#. module: account_mass_reconcile
+#: model:ir.actions.act_window,name:account_mass_reconcile.action_mass_reconcile_history
+msgid "Mass Automatic Reconcile History"
+msgstr "Toplu Otomatik Denkleştirme Geçmişi"
+
+#. module: account_mass_reconcile
+#: model:ir.model,name:account_mass_reconcile.model_mass_reconcile_advanced
+msgid "Mass Reconcile Advanced"
+msgstr "Toplu Otomatik Denkleştirme"
+
+#. module: account_mass_reconcile
+#: model:ir.model,name:account_mass_reconcile.model_mass_reconcile_advanced_name
+msgid "Mass Reconcile Advanced Name"
+msgstr "Toplu Denkleştirme Gelişmiş Ad"
+
+#. module: account_mass_reconcile
+#: model:ir.model,name:account_mass_reconcile.model_mass_reconcile_advanced_ref
+msgid "Mass Reconcile Advanced Ref"
+msgstr "Toplu Denkleştirme Gelişmiş Ref"
+
+#. module: account_mass_reconcile
+#: model:ir.model,name:account_mass_reconcile.model_mass_reconcile_base
+msgid "Mass Reconcile Base"
+msgstr "Toplu Denkleştirme Tabanı"
+
+#. module: account_mass_reconcile
+#: model:ir.model,name:account_mass_reconcile.model_mass_reconcile_simple
+msgid "Mass Reconcile Simple"
+msgstr "Toplu Denkleştirme. Basit"
+
+#. module: account_mass_reconcile
+#: model:ir.model,name:account_mass_reconcile.model_mass_reconcile_simple_name
+msgid "Mass Reconcile Simple Name"
+msgstr "Toplu Denkleştirme. Basit Ad"
+
+#. module: account_mass_reconcile
+#: model:ir.model,name:account_mass_reconcile.model_mass_reconcile_simple_partner
+msgid "Mass Reconcile Simple Partner"
+msgstr "Toplu Denkleştirme. Basit İş Ortağı"
+
+#. module: account_mass_reconcile
+#: model:ir.model,name:account_mass_reconcile.model_mass_reconcile_simple_reference
+msgid "Mass Reconcile Simple Reference"
+msgstr "Toplu Denkleştirme. Basit Referans"
+
+#. module: account_mass_reconcile
+#: model_terms:ir.ui.view,arch_db:account_mass_reconcile.account_mass_reconcile_form
+msgid ""
+"Match multiple debit vs multiple credit entries. Allow partial "
+"reconciliation. The lines should have the same partner, and the credit entry "
+"ref. is matched with the debit entry ref. or name."
+msgstr ""
+"Birden çok borç ve birden çok alacak girişini eşleştirin. Kısmi uzlaştırmaya "
+"izin verin. Satırlar aynı ortağa sahip olmalıdır ve alacak girişi borç\n"
+"girişi ref. veya adı ile eşleşir."
+
+#. module: account_mass_reconcile
+#: model_terms:ir.ui.view,arch_db:account_mass_reconcile.account_mass_reconcile_form
+msgid ""
+"Match one debit line vs one credit line. Do not allow partial "
+"reconciliation. The lines should have the same amount (with the write-off) "
+"and the same name to be reconciled."
+msgstr ""
+"Bir borç satırı ile bir alacak satırını denkleştirin. Kısmi denkleştirmeye \n"
+"izin verin. Satırlar aynı miktarda (silme ile) ve denkleştirilecek aynı ada "
+"\n"
+"sahip olmalıdır."
+
+#. module: account_mass_reconcile
+#: model_terms:ir.ui.view,arch_db:account_mass_reconcile.account_mass_reconcile_form
+msgid ""
+"Match one debit line vs one credit line. Do not allow partial "
+"reconciliation. The lines should have the same amount (with the write-off) "
+"and the same partner to be reconciled."
+msgstr ""
+"Bir borç satırı ile bir alacak satırını denkleştirin. Kısmi denkleştirmeye \n"
+"izin verin. Satırlar aynı miktarda (silme ile) ve denkleştirilecek aynı İş \n"
+"Ortağına sahip olmalıdır."
+
+#. module: account_mass_reconcile
+#: model_terms:ir.ui.view,arch_db:account_mass_reconcile.account_mass_reconcile_form
+msgid ""
+"Match one debit line vs one credit line. Do not allow partial "
+"reconciliation. The lines should have the same amount (with the write-off) "
+"and the same reference to be reconciled."
+msgstr ""
+"Bir borç satırı ile bir alacak satırını denkleştirin. Kısmi denkleştirmeye\n"
+"izin verin. Satırlar aynı miktarda (silme ile) ve denkleştirilecek aynı\n"
+"referansa sahip olmalıdır."
+
+#. module: account_mass_reconcile
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile__message_has_error
+msgid "Message Delivery error"
+msgstr "Mesaj Teslim hatası"
+
+#. module: account_mass_reconcile
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile__message_ids
+msgid "Messages"
+msgstr "Mesajlar"
+
+#. module: account_mass_reconcile
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile__reconcile_method
+msgid "Method"
+msgstr "Method"
+
+#. module: account_mass_reconcile
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile__name
+msgid "Name"
+msgstr "Adı"
+
+#. module: account_mass_reconcile
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile__message_needaction_counter
+msgid "Number of Actions"
+msgstr "Eylemlerin Sayısı"
+
+#. module: account_mass_reconcile
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile__message_has_error_counter
+msgid "Number of errors"
+msgstr "Hata sayısı"
+
+#. module: account_mass_reconcile
+#: model:ir.model.fields,help:account_mass_reconcile.field_account_mass_reconcile__message_needaction_counter
+msgid "Number of messages requiring action"
+msgstr "Eylem gerektiren mesaj sayısı"
+
+#. module: account_mass_reconcile
+#: model:ir.model.fields,help:account_mass_reconcile.field_account_mass_reconcile__message_has_error_counter
+msgid "Number of messages with delivery error"
+msgstr "Teslimat hatası olan mesaj sayısı"
+
+#. module: account_mass_reconcile
+#: model:ir.model,name:account_mass_reconcile.model_mass_reconcile_options
+msgid "Options of a reconciliation profile"
+msgstr "Denkleştirme profili seçenekleri"
+
+#. module: account_mass_reconcile
+#: model_terms:ir.ui.view,arch_db:account_mass_reconcile.account_mass_reconcile_form
+msgid "Profile Information"
+msgstr "Profil Bilgileri"
+
+#. module: account_mass_reconcile
+#: model:ir.model,name:account_mass_reconcile.model_account_mass_reconcile_method
+msgid "Reconcile Method for account_mass_reconcile"
+msgstr "Accounting_mass_reconcile için Mutabakat Yöntemi"
+
+#. module: account_mass_reconcile
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_history__mass_reconcile_id
+msgid "Reconcile Profile"
+msgstr "Denkleştirme Profili"
+
+#. module: account_mass_reconcile
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_history__reconcile_line_ids
+msgid "Reconciled Items"
+msgstr "Denkleştirilen Öğeler"
+
+#. module: account_mass_reconcile
+#: model_terms:ir.ui.view,arch_db:account_mass_reconcile.view_account_config
+msgid "Reconciliation"
+msgstr "Denkleştirme"
+
+#. module: account_mass_reconcile
+#. odoo-python
+#: code:addons/account_mass_reconcile/models/mass_reconcile_history.py:0
+#: model_terms:ir.ui.view,arch_db:account_mass_reconcile.mass_reconcile_history_form
+#, python-format
+msgid "Reconciliations"
+msgstr "Denkleştirmeler"
+
+#. module: account_mass_reconcile
+#: model_terms:ir.ui.view,arch_db:account_mass_reconcile.view_mass_reconcile_history_search
+msgid "Reconciliations of last 7 days"
+msgstr "Son 7 günün denkleştirmeleri"
+
+#. module: account_mass_reconcile
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_advanced__partner_ids
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_advanced_name__partner_ids
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_advanced_ref__partner_ids
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_base__partner_ids
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple__partner_ids
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_name__partner_ids
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_partner__partner_ids
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_reference__partner_ids
+msgid "Restrict on partners"
+msgstr "İş ortaklarındaki kısıtlama"
+
+#. module: account_mass_reconcile
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_history__date
+msgid "Run date"
+msgstr "Çalıştırma tarihi"
+
+#. module: account_mass_reconcile
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile_method__sequence
+msgid "Sequence"
+msgstr "Sıra"
+
+#. module: account_mass_reconcile
+#: model_terms:ir.ui.view,arch_db:account_mass_reconcile.account_mass_reconcile_form
+msgid "Simple. Amount and Name"
+msgstr "Basit. Tutar ve İsim"
+
+#. module: account_mass_reconcile
+#: model_terms:ir.ui.view,arch_db:account_mass_reconcile.account_mass_reconcile_form
+msgid "Simple. Amount and Partner"
+msgstr "Basit. Tutar ve İş Ortağı"
+
+#. module: account_mass_reconcile
+#: model_terms:ir.ui.view,arch_db:account_mass_reconcile.account_mass_reconcile_form
+msgid "Simple. Amount and Reference"
+msgstr "Basit. Tutar ve Referans"
+
+#. module: account_mass_reconcile
+#: model_terms:ir.ui.view,arch_db:account_mass_reconcile.account_mass_reconcile_tree
+msgid "Start Auto Reconcilation"
+msgstr "Otomatik Denkleştirmeyi Başlat"
+
+#. module: account_mass_reconcile
+#: model_terms:ir.ui.view,arch_db:account_mass_reconcile.account_mass_reconcile_form
+msgid "Start Auto Reconciliation"
+msgstr "Otomatik Denkleştirmeyi Başlat"
+
+#. module: account_mass_reconcile
+#: model:ir.model,name:account_mass_reconcile.model_mass_reconcile_history
+msgid "Store an history of the runs per profile"
+msgstr "Profil başına çalıştırma geçmişini depolama"
+
+#. module: account_mass_reconcile
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile_method__task_id
+msgid "Task"
+msgstr "Görev"
+
+#. module: account_mass_reconcile
+#: model:ir.model.fields,help:account_mass_reconcile.field_account_mass_reconcile_method__sequence
+msgid "The sequence field is used to order the reconcile method"
+msgstr "Sıra alanı, denkleştirme yöntemini sıralamak için kullanılır"
+
+#. module: account_mass_reconcile
+#. odoo-python
+#: code:addons/account_mass_reconcile/models/mass_reconcile.py:0
+#, python-format
+msgid "There is no history of reconciled items on the task: %s."
+msgstr "Görevde denkleştirilen öğelerin geçmişi yoktur: %s."
+
+#. module: account_mass_reconcile
+#. odoo-python
+#: code:addons/account_mass_reconcile/models/mass_reconcile.py:0
+#, python-format
+msgid "There was an error during reconciliation : %s"
+msgstr "Denkleştirme sırasında bir hata oluştu : %s"
+
+#. module: account_mass_reconcile
+#: model_terms:ir.ui.view,arch_db:account_mass_reconcile.view_mass_reconcile_history_search
+msgid "Todays' Reconcilations"
+msgstr "Bugünün Denkleştirmeleri"
+
+#. module: account_mass_reconcile
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile_method__name
+msgid "Type"
+msgstr "Tipi"
+
+#. module: account_mass_reconcile
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile__unreconciled_count
+msgid "Unreconciled Items"
+msgstr "Denkleştirilmemiş Öğeler"
+
+#. module: account_mass_reconcile
+#. odoo-python
+#: code:addons/account_mass_reconcile/models/mass_reconcile.py:0
+#, python-format
+msgid "Unreconciled items"
+msgstr "Denkleştirilmemiş Öğeler"
+
+#. module: account_mass_reconcile
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile__website_message_ids
+msgid "Website Messages"
+msgstr "Websitesi Mesajları"
+
+#. module: account_mass_reconcile
+#: model:ir.model.fields,help:account_mass_reconcile.field_account_mass_reconcile__website_message_ids
+msgid "Website communication history"
+msgstr "Web Sitesi iletişim geçmişi"
+
+#. module: account_mass_reconcile
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile_method__write_off
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_advanced__write_off
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_advanced_name__write_off
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_advanced_ref__write_off
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_base__write_off
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_options__write_off
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple__write_off
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_name__write_off
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_partner__write_off
+#: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_reference__write_off
+msgid "Write off allowed"
+msgstr "İzin verilen borç silme"
+
+#~ msgid "Last Modified on"
+#~ msgstr "Son değişiklik"
+
+#~ msgid "Date"
+#~ msgstr "Tarih"
+
+#~ msgid "Options"
+#~ msgstr "Seçenekler"

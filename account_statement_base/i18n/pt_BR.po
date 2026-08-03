@@ -6,31 +6,31 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 18.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2023-06-22 15:09+0000\n"
-"Last-Translator: Adriano Prado <adrianojprado@gmail.com>\n"
+"PO-Revision-Date: 2026-07-24 20:41+0000\n"
+"Last-Translator: Douglas Custódio <douglascstd@yahoo.com>\n"
 "Language-Team: none\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 4.17\n"
+"X-Generator: Weblate 5.15.2\n"
 
 #. module: account_statement_base
 #: model_terms:ir.ui.view,arch_db:account_statement_base.view_bank_statement_form
 msgid "<span class=\"o_stat_text\">Journal Items</span>"
-msgstr ""
+msgstr "<span class=\"o_stat_text\">Itens de diário</span>"
 
 #. module: account_statement_base
 #: model:ir.model,name:account_statement_base.model_account_bank_statement
 #: model_terms:ir.ui.view,arch_db:account_statement_base.view_bank_statement_form
 msgid "Bank Statement"
-msgstr ""
+msgstr "Extrato bancário"
 
 #. module: account_statement_base
 #: model:ir.model,name:account_statement_base.model_account_bank_statement_line
 msgid "Bank Statement Line"
-msgstr ""
+msgstr "Linha do Extrato bancário"
 
 #. module: account_statement_base
 #: model:ir.actions.act_window,name:account_statement_base.account_bank_statement_line_action
@@ -45,12 +45,12 @@ msgstr "Data"
 #. module: account_statement_base
 #: model_terms:ir.ui.view,arch_db:account_statement_base.account_bank_statement_line_search
 msgid "Foreign Currency"
-msgstr ""
+msgstr "Moeda estrangeira"
 
 #. module: account_statement_base
 #: model_terms:ir.ui.view,arch_db:account_statement_base.account_bank_statement_line_search
 msgid "Inbound"
-msgstr ""
+msgstr "Na Entrada"
 
 #. module: account_statement_base
 #: model:ir.model,name:account_statement_base.model_account_journal
@@ -93,7 +93,7 @@ msgstr ""
 #. module: account_statement_base
 #: model_terms:ir.ui.view,arch_db:account_statement_base.account_bank_statement_line_search
 msgid "Outbound"
-msgstr ""
+msgstr "Na Saída"
 
 #. module: account_statement_base
 #: model_terms:ir.ui.view,arch_db:account_statement_base.account_bank_statement_line_search
@@ -128,9 +128,9 @@ msgstr "Tipo de Transação"
 #. module: account_statement_base
 #: model_terms:ir.ui.view,arch_db:account_statement_base.view_bank_statement_form
 msgid "Transactions"
-msgstr ""
+msgstr "Transação"
 
 #. module: account_statement_base
 #: model_terms:ir.ui.view,arch_db:account_statement_base.view_bank_statement_form
 msgid "e.g. BNK/2021/0001"
-msgstr ""
+msgstr "ex. BNK/2021/0001"
