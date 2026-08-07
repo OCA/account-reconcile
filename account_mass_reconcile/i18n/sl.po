@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 10.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-03-24 03:37+0000\n"
-"PO-Revision-Date: 2023-04-11 12:22+0000\n"
+"PO-Revision-Date: 2026-08-07 15:46+0000\n"
 "Last-Translator: Matjaz Mozetic <matjaz@luxim.si>\n"
 "Language-Team: Slovenian (https://www.transifex.com/oca/teams/23907/sl/)\n"
 "Language: sl\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || "
 "n%100==4 ? 2 : 3;\n"
-"X-Generator: Weblate 4.14.1\n"
+"X-Generator: Weblate 5.15.2\n"
 
 #. module: account_mass_reconcile
 #. odoo-python
@@ -95,7 +95,7 @@ msgstr "Konto dobička"
 #. module: account_mass_reconcile
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile__message_needaction
 msgid "Action Needed"
-msgstr ""
+msgstr "Potrebno ukrepanje"
 
 #. module: account_mass_reconcile
 #: model_terms:ir.ui.view,arch_db:account_mass_reconcile.account_mass_reconcile_form
@@ -105,7 +105,7 @@ msgstr "Napredno. Partner in sklic"
 #. module: account_mass_reconcile
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile__message_attachment_count
 msgid "Attachment Count"
-msgstr ""
+msgstr "Št. priponk"
 
 #. module: account_mass_reconcile
 #: model_terms:ir.ui.view,arch_db:account_mass_reconcile.account_mass_reconcile_form
@@ -123,14 +123,14 @@ msgstr "Zgodovina samodejnih preprostih usklajevanj"
 #: code:addons/account_mass_reconcile/models/base_reconciliation.py:0
 #, python-format
 msgid "Automatic Write Off"
-msgstr ""
+msgstr "Samodejni odpis"
 
 #. module: account_mass_reconcile
 #. odoo-python
 #: code:addons/account_mass_reconcile/models/base_reconciliation.py:0
 #, python-format
 msgid "Automatic writeoff"
-msgstr ""
+msgstr "Samodejni odpis"
 
 #. module: account_mass_reconcile
 #: model_terms:ir.actions.act_window,help:account_mass_reconcile.action_account_mass_reconcile
@@ -156,9 +156,8 @@ msgstr "Družba"
 
 #. module: account_mass_reconcile
 #: model:ir.model,name:account_mass_reconcile.model_res_config_settings
-#, fuzzy
 msgid "Config Settings"
-msgstr "account.config.settings"
+msgstr "Nastavitve"
 
 #. module: account_mass_reconcile
 #: model_terms:ir.ui.view,arch_db:account_mass_reconcile.account_mass_reconcile_form
@@ -223,9 +222,8 @@ msgstr "Prikaz usklajenih postavk po zadnjem zagonu"
 
 #. module: account_mass_reconcile
 #: model:ir.actions.server,name:account_mass_reconcile.ir_cron_run_reconciliations_ir_actions_server
-#, fuzzy
 msgid "Do Automatic Reconciliations"
-msgstr "Zagon samodejnega usklajevanja"
+msgstr "Izvedi samodejne odpise"
 
 #. module: account_mass_reconcile
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile_method___filter
@@ -244,17 +242,17 @@ msgstr "Filter"
 #. module: account_mass_reconcile
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile__message_follower_ids
 msgid "Followers"
-msgstr ""
+msgstr "Sledilci"
 
 #. module: account_mass_reconcile
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile__message_partner_ids
 msgid "Followers (Partners)"
-msgstr ""
+msgstr "Sledilci (partnerji)"
 
 #. module: account_mass_reconcile
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_history__reconcile_ids
 msgid "Full Reconciliations"
-msgstr ""
+msgstr "V celoti usklajeno"
 
 #. module: account_mass_reconcile
 #: model_terms:ir.ui.view,arch_db:account_mass_reconcile.account_mass_reconcile_form
@@ -276,7 +274,7 @@ msgstr "Združi po..."
 #. module: account_mass_reconcile
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile__has_message
 msgid "Has Message"
-msgstr ""
+msgstr "Vsebuje sporočilo"
 
 #. module: account_mass_reconcile
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile__history_ids
@@ -292,11 +290,14 @@ msgstr "Pogostost knjiženja ob samodejnem usklajevanju."
 
 #. module: account_mass_reconcile
 #: model_terms:ir.ui.view,arch_db:account_mass_reconcile.view_account_config
-#, fuzzy
 msgid ""
 "How often to commit when performing automatic reconciliation.\n"
 "                  Leave zero to commit only at the end of the process."
-msgstr "Pogostost knjiženja ob samodejnem usklajevanju."
+msgstr ""
+"Kako pogosto naj se podatki shranijo med izvajanjem samodejnega "
+"usklajevanja.\n"
+"                  Če pustite vrednost nič, se podatki shranijo šele ob koncu "
+"postopka."
 
 #. module: account_mass_reconcile
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile__id
@@ -313,12 +314,14 @@ msgstr "ID"
 #. module: account_mass_reconcile
 #: model:ir.model.fields,help:account_mass_reconcile.field_account_mass_reconcile__message_needaction
 msgid "If checked, new messages require your attention."
-msgstr ""
+msgstr "Če je označeno, nova sporočila zahtevajo vašo pozornost."
 
 #. module: account_mass_reconcile
 #: model:ir.model.fields,help:account_mass_reconcile.field_account_mass_reconcile__message_has_error
 msgid "If checked, some messages have a delivery error."
 msgstr ""
+"Kadar je označeno, pomeni, da je pri nekaterih sporočilih prišlo do napake "
+"pri dostavi."
 
 #. module: account_mass_reconcile
 #: model_terms:ir.ui.view,arch_db:account_mass_reconcile.account_mass_reconcile_form
@@ -328,7 +331,7 @@ msgstr "Informacije"
 #. module: account_mass_reconcile
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile__message_is_follower
 msgid "Is Follower"
-msgstr ""
+msgstr "Je sledilec"
 
 #. module: account_mass_reconcile
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile_method__journal_id
@@ -371,7 +374,7 @@ msgstr "Zadnjič posodobljeno"
 #. module: account_mass_reconcile
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile__last_history
 msgid "Last history"
-msgstr ""
+msgstr "Zadnja kronologija"
 
 #. module: account_mass_reconcile
 #: model:ir.model.fields,help:account_mass_reconcile.field_res_company__reconciliation_commit_every
@@ -393,7 +396,7 @@ msgstr "Zgodovina samodejnih preprostih usklajevanj"
 #. module: account_mass_reconcile
 #: model:ir.model,name:account_mass_reconcile.model_mass_reconcile_advanced
 msgid "Mass Reconcile Advanced"
-msgstr ""
+msgstr "Napredno masovno usklajevanje"
 
 #. module: account_mass_reconcile
 #: model:ir.model,name:account_mass_reconcile.model_mass_reconcile_advanced_name
@@ -432,15 +435,15 @@ msgstr ""
 
 #. module: account_mass_reconcile
 #: model_terms:ir.ui.view,arch_db:account_mass_reconcile.account_mass_reconcile_form
-#, fuzzy
 msgid ""
 "Match multiple debit vs multiple credit entries. Allow partial "
 "reconciliation. The lines should have the same partner, and the credit entry "
 "ref. is matched with the debit entry ref. or name."
 msgstr ""
-"Primerjaj več vnosov terjatev z več vnosi obveznosti. Dovoli delno "
-"usklajevanje. Postavke morajo vsebovati partnerja, sklic vnosa terjatev se "
-"primerja s sklicem vnosa obveznosti ali nazivom."
+"Uskladi več knjižb na debet z več knjižbami na kredit. Dovoli delno "
+"usklajevanje. Vnosi morajo imeti istega partnerja, referenčna številka "
+"knjižbe na kredit pa mora ustrezati referenčni številki ali imenu knjižbe na "
+"debet."
 
 #. module: account_mass_reconcile
 #: model_terms:ir.ui.view,arch_db:account_mass_reconcile.account_mass_reconcile_form
@@ -450,8 +453,8 @@ msgid ""
 "and the same name to be reconciled."
 msgstr ""
 "Primerjanje ene postavke v breme z eno postavko v dobro. Ne dovoli delnega "
-"usklajevanja.  Da bi se lahko uskladile, morajo imeti postavke isti znesek "
-"(z odpisom) in isti naziv."
+"usklajevanja. Da bi se lahko uskladile, morajo imeti postavke isti znesek (z "
+"odpisom) in isti naziv."
 
 #. module: account_mass_reconcile
 #: model_terms:ir.ui.view,arch_db:account_mass_reconcile.account_mass_reconcile_form
@@ -461,8 +464,8 @@ msgid ""
 "and the same partner to be reconciled."
 msgstr ""
 "Primerjanje ene postavke v breme z eno postavko v dobro. Ne dovoli delnega "
-"usklajevanja.  Da bi se lahko uskladile, morajo imeti postavke isti znesek "
-"(z odpisom) in istega partnerja."
+"usklajevanja. Da bi se lahko uskladile, morajo imeti postavke isti znesek (z "
+"odpisom) in istega partnerja."
 
 #. module: account_mass_reconcile
 #: model_terms:ir.ui.view,arch_db:account_mass_reconcile.account_mass_reconcile_form
@@ -472,18 +475,18 @@ msgid ""
 "and the same reference to be reconciled."
 msgstr ""
 "Primerjanje ene postavke v breme z eno postavko v dobro. Ne dovoli delnega "
-"usklajevanja.  Da bi se lahko uskladile, morajo imeti postavke isti znesek "
-"(z odpisom) in isti sklic."
+"usklajevanja. Da bi se lahko uskladile, morajo imeti postavke isti znesek (z "
+"odpisom) in isti sklic."
 
 #. module: account_mass_reconcile
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile__message_has_error
 msgid "Message Delivery error"
-msgstr ""
+msgstr "Napaka ob dostavi sporočila"
 
 #. module: account_mass_reconcile
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile__message_ids
 msgid "Messages"
-msgstr ""
+msgstr "Sporočila"
 
 #. module: account_mass_reconcile
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile__reconcile_method
@@ -498,28 +501,27 @@ msgstr "Naziv"
 #. module: account_mass_reconcile
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile__message_needaction_counter
 msgid "Number of Actions"
-msgstr ""
+msgstr "Število ukrepov"
 
 #. module: account_mass_reconcile
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile__message_has_error_counter
 msgid "Number of errors"
-msgstr ""
+msgstr "Število napak"
 
 #. module: account_mass_reconcile
 #: model:ir.model.fields,help:account_mass_reconcile.field_account_mass_reconcile__message_needaction_counter
 msgid "Number of messages requiring action"
-msgstr ""
+msgstr "Število sporočil, ki zahtevajo ukrepanje"
 
 #. module: account_mass_reconcile
 #: model:ir.model.fields,help:account_mass_reconcile.field_account_mass_reconcile__message_has_error_counter
 msgid "Number of messages with delivery error"
-msgstr ""
+msgstr "Število sporočil, ki niso bila pravilno dostavljena"
 
 #. module: account_mass_reconcile
 #: model:ir.model,name:account_mass_reconcile.model_mass_reconcile_options
-#, fuzzy
 msgid "Options of a reconciliation profile"
-msgstr "Usklajevalni profil"
+msgstr "Možnosti profila usklajevanja"
 
 #. module: account_mass_reconcile
 #: model_terms:ir.ui.view,arch_db:account_mass_reconcile.account_mass_reconcile_form
@@ -529,7 +531,7 @@ msgstr "Podatki o profilu"
 #. module: account_mass_reconcile
 #: model:ir.model,name:account_mass_reconcile.model_account_mass_reconcile_method
 msgid "Reconcile Method for account_mass_reconcile"
-msgstr ""
+msgstr "Metoda usklajevanja za preprosto usklajevanje konta"
 
 #. module: account_mass_reconcile
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_history__mass_reconcile_id
@@ -539,7 +541,7 @@ msgstr "Usklajevalni profil"
 #. module: account_mass_reconcile
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_history__reconcile_line_ids
 msgid "Reconciled Items"
-msgstr ""
+msgstr "Usklajene postavke"
 
 #. module: account_mass_reconcile
 #: model_terms:ir.ui.view,arch_db:account_mass_reconcile.view_account_config
@@ -648,7 +650,7 @@ msgstr "Tip"
 #. module: account_mass_reconcile
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile__unreconciled_count
 msgid "Unreconciled Items"
-msgstr ""
+msgstr "Neusklajene postavke"
 
 #. module: account_mass_reconcile
 #. odoo-python
@@ -660,12 +662,12 @@ msgstr "Neusklajene postavke"
 #. module: account_mass_reconcile
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile__website_message_ids
 msgid "Website Messages"
-msgstr ""
+msgstr "Sporočila spletne strani"
 
 #. module: account_mass_reconcile
 #: model:ir.model.fields,help:account_mass_reconcile.field_account_mass_reconcile__website_message_ids
 msgid "Website communication history"
-msgstr ""
+msgstr "Kronologija komunikacij spletne strani"
 
 #. module: account_mass_reconcile
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_account_mass_reconcile_method__write_off
