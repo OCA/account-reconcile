@@ -3,10 +3,44 @@
 
 from odoo import models
 from odoo.exceptions import ValidationError
+from odoo.tools.sql import create_index
 
 
 class AccountMoveLine(models.Model):
     _inherit = "account.move.line"
+
+    def init(self):
+        """Index the candidate counterparts of the reconcile widget.
+
+        The `add_account_move_line_id` field of the reconcile view searches the
+        counterparts with the domain::
+
+            [("parent_state", "=", "posted"), ("amount_residual", "!=", 0),
+             ("account_id.reconcile", "=", True), ("company_id", "=", company_id),
+             ("statement_line_id", "!=", id)]
+
+        No index of the ``account`` module supports it: the standard
+        ``account_move_line__unreconciled_index`` is built on ``reconciled``,
+        not on ``amount_residual``. On big databases that means a full scan of
+        ``account_move_line`` on every single interaction with the widget,
+        because ``web_search_read`` also runs a ``search_count`` for the pager.
+        """
+        res = super().init()
+        create_index(
+            self.env.cr,
+            "account_move_line_reconcile_widget_idx",
+            self._table,
+            ["company_id", "account_id", "partner_id", "statement_line_id"],
+            where="parent_state = 'posted' AND amount_residual <> 0",
+        )
+        create_index(
+            self.env.cr,
+            "account_move_line_reconcile_order_idx",
+            self._table,
+            ["date DESC", "move_name DESC", "id"],
+            where="parent_state = 'posted' AND amount_residual <> 0",
+        )
+        return res
 
     def action_reconcile_manually(self):
         if not self:
