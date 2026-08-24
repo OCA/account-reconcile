@@ -134,7 +134,8 @@ export class ReconcileController extends KanbanController {
             resId = record.resId;
         }
         if (this.state.selectedRecordId && this.state.selectedRecordId !== resId) {
-            if (this.form_controller && this.form_controller?.model?.root?.isDirty) {
+            const formRecord = this.form_controller?.model?.root;
+            if (formRecord && (await formRecord.isDirty())) {
                 await this.form_controller.model.root.save({
                     noReload: true,
                     stayInEdition: true,
