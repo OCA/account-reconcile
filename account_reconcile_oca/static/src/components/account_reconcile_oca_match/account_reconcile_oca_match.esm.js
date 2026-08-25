@@ -37,10 +37,7 @@ export class AccountReconcileMatchWidget extends Component {
             resModel: this.props.record.fields[this.props.name].relation,
             searchMenuTypes: ["filter"],
             domain: this.getDomain(),
-            context: {
-                ...this.props.context,
-                ...getFieldContext(this.props.record, this.props.name),
-            },
+            context: getFieldContext(this.props.record, this.props.name),
             // Disables selector
             allowSelectors: false,
             // We need to force the search view in order to show the right one
@@ -59,7 +56,6 @@ AccountReconcileMatchWidget.props = {
     canWrite: {type: Boolean, optional: true},
     canQuickCreate: {type: Boolean, optional: true},
     canCreateEdit: {type: Boolean, optional: true},
-    context: {type: String, optional: true},
     domain: {type: [Array, Function], optional: true},
     nameCreateField: {type: String, optional: true},
     searchLimit: {type: Number, optional: true},
@@ -79,7 +75,7 @@ AccountReconcileMatchWidget.components = {
 export const AccountReconcileMatchWidgetField = {
     component: AccountReconcileMatchWidget,
     supportedTypes: ["many2one"],
-    extractProps({attrs, context, decorations, options}, dynamicInfo) {
+    extractProps({attrs, decorations, options}, dynamicInfo) {
         const hasCreatePermission = attrs.can_create
             ? evaluateBooleanExpr(attrs.can_create)
             : true;
@@ -94,7 +90,6 @@ export const AccountReconcileMatchWidgetField = {
             canWrite: hasWritePermission,
             canQuickCreate: canCreate && !options.no_quick_create,
             canCreateEdit: canCreate && !options.no_create_edit,
-            context: context,
             decorations,
             domain: dynamicInfo.domain,
         };
