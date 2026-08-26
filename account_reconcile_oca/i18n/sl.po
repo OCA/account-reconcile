@@ -692,11 +692,6 @@ msgid "User"
 msgstr "Uporabnik"
 
 #. module: account_reconcile_oca
-#: model_terms:ir.ui.view,arch_db:account_reconcile_oca.bank_statement_line_form_reconcile_view
-msgid "Validate"
-msgstr "Potrdi"
-
-#. module: account_reconcile_oca
 #: model_terms:ir.ui.view,arch_db:account_reconcile_oca.account_move_line_tree_reconcile_view
 msgid "View"
 msgstr "Prikaz"
@@ -742,3 +737,6 @@ msgstr "bo zmanjšano za"
 #: model_terms:ir.ui.view,arch_db:account_reconcile_oca.bank_statement_line_form_reconcile_view
 msgid "with an open amount"
 msgstr "z odprtim zneskom"
+
+#~ msgid "Validate"
+#~ msgstr "Potrdi"
