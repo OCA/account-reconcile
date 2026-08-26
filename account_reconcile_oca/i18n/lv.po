@@ -651,11 +651,6 @@ msgid "User"
 msgstr "Lietotājs"
 
 #. module: account_reconcile_oca
-#: model_terms:ir.ui.view,arch_db:account_reconcile_oca.bank_statement_line_form_reconcile_view
-msgid "Validate"
-msgstr "Apstiprināt"
-
-#. module: account_reconcile_oca
 #: model_terms:ir.ui.view,arch_db:account_reconcile_oca.account_move_line_tree_reconcile_view
 msgid "View"
 msgstr "Skats"
@@ -701,3 +696,6 @@ msgstr "tiks samazināts par"
 #: model_terms:ir.ui.view,arch_db:account_reconcile_oca.bank_statement_line_form_reconcile_view
 msgid "with an open amount"
 msgstr "ar neatmaksāto summu"
+
+#~ msgid "Validate"
+#~ msgstr "Apstiprināt"

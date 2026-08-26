@@ -649,11 +649,6 @@ msgid "User"
 msgstr "Benutzer"
 
 #. module: account_reconcile_oca
-#: model_terms:ir.ui.view,arch_db:account_reconcile_oca.bank_statement_line_form_reconcile_view
-msgid "Validate"
-msgstr "Bestätigen"
-
-#. module: account_reconcile_oca
 #: model_terms:ir.ui.view,arch_db:account_reconcile_oca.account_move_line_tree_reconcile_view
 msgid "View"
 msgstr "Ansehen"
@@ -699,3 +694,6 @@ msgstr "wird reduziert um"
 #: model_terms:ir.ui.view,arch_db:account_reconcile_oca.bank_statement_line_form_reconcile_view
 msgid "with an open amount"
 msgstr "mit einem offenen Betrag"
+
+#~ msgid "Validate"
+#~ msgstr "Bestätigen"
