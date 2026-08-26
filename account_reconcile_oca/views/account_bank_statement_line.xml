@@ -153,8 +153,8 @@
                         <button
                             name="reconcile_bank_line"
                             type="object"
-                            string="Validate"
-                            accesskey="v"
+                            string="Reconcile"
+                            accesskey="r"
                             class="btn btn-primary mx-1"
                             invisible="is_reconciled or not can_reconcile"
                         />
