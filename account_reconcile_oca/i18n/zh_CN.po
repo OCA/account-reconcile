@@ -29,7 +29,7 @@ msgstr ""
 
 #. module: account_reconcile_oca
 #. odoo-javascript
-#: code:addons/account_reconcile_oca/static/src/xml/reconcile.xml:0
+#: code:addons/account_reconcile_oca/static/src/components/account_reconcile_oca_data/account_reconcile_oca_data.xml:0
 #: model:ir.model.fields,field_description:account_reconcile_oca.field_account_account_reconcile__account_id
 #: model_terms:ir.ui.view,arch_db:account_reconcile_oca.bank_statement_line_form_reconcile_view
 msgid "Account"
@@ -64,7 +64,7 @@ msgstr "添加银行对账单明细"
 
 #. module: account_reconcile_oca
 #. odoo-javascript
-#: code:addons/account_reconcile_oca/static/src/xml/reconcile.xml:0
+#: code:addons/account_reconcile_oca/static/src/views/reconcile_move_line/reconcile_move_line.xml:0
 msgid "Add all"
 msgstr ""
 
@@ -95,7 +95,7 @@ msgstr ""
 
 #. module: account_reconcile_oca
 #. odoo-javascript
-#: code:addons/account_reconcile_oca/static/src/xml/reconcile.xml:0
+#: code:addons/account_reconcile_oca/static/src/components/account_reconcile_oca_data/account_reconcile_oca_data.xml:0
 msgid "Amount in currency"
 msgstr "外币金额"
 
@@ -108,6 +108,11 @@ msgstr "分析分配"
 #: model:ir.model.fields,field_description:account_reconcile_oca.field_account_bank_statement_line__analytic_precision
 msgid "Analytic Precision"
 msgstr "分析精度"
+
+#. module: account_reconcile_oca
+#: model:ir.model.fields,field_description:account_reconcile_oca.field_account_reconcile_model__search_journal_id
+msgid "Applies on Journal"
+msgstr ""
 
 #. module: account_reconcile_oca
 #: model_terms:ir.ui.view,arch_db:account_reconcile_oca.bank_statement_line_form_reconcile_view
@@ -187,7 +192,7 @@ msgstr "设置"
 
 #. module: account_reconcile_oca
 #. odoo-javascript
-#: code:addons/account_reconcile_oca/static/src/xml/reconcile.xml:0
+#: code:addons/account_reconcile_oca/static/src/views/reconcile_kanban/reconcile.xml:0
 msgid "Create"
 msgstr "创建"
 
@@ -203,7 +208,7 @@ msgstr "创建于"
 
 #. module: account_reconcile_oca
 #. odoo-javascript
-#: code:addons/account_reconcile_oca/static/src/xml/reconcile.xml:0
+#: code:addons/account_reconcile_oca/static/src/components/account_reconcile_oca_data/account_reconcile_oca_data.xml:0
 msgid "Credit"
 msgstr "贷方"
 
@@ -220,7 +225,7 @@ msgstr "数据"
 
 #. module: account_reconcile_oca
 #. odoo-javascript
-#: code:addons/account_reconcile_oca/static/src/xml/reconcile.xml:0
+#: code:addons/account_reconcile_oca/static/src/components/account_reconcile_oca_data/account_reconcile_oca_data.xml:0
 msgid "Date"
 msgstr "日期"
 
@@ -231,13 +236,22 @@ msgstr "天"
 
 #. module: account_reconcile_oca
 #. odoo-javascript
-#: code:addons/account_reconcile_oca/static/src/xml/reconcile.xml:0
+#: code:addons/account_reconcile_oca/static/src/components/account_reconcile_oca_data/account_reconcile_oca_data.xml:0
 msgid "Debit"
 msgstr "货方"
 
 #. module: account_reconcile_oca
 #: model:ir.model.fields,field_description:account_reconcile_oca.field_account_account_reconcile__display_name
 #: model:ir.model.fields,field_description:account_reconcile_oca.field_account_account_reconcile_data__display_name
+#: model:ir.model.fields,field_description:account_reconcile_oca.field_account_bank_statement__display_name
+#: model:ir.model.fields,field_description:account_reconcile_oca.field_account_bank_statement_line__display_name
+#: model:ir.model.fields,field_description:account_reconcile_oca.field_account_journal__display_name
+#: model:ir.model.fields,field_description:account_reconcile_oca.field_account_move_line__display_name
+#: model:ir.model.fields,field_description:account_reconcile_oca.field_account_reconcile_abstract__display_name
+#: model:ir.model.fields,field_description:account_reconcile_oca.field_account_reconcile_model__display_name
+#: model:ir.model.fields,field_description:account_reconcile_oca.field_account_reconcile_model_line__display_name
+#: model:ir.model.fields,field_description:account_reconcile_oca.field_res_company__display_name
+#: model:ir.model.fields,field_description:account_reconcile_oca.field_res_config_settings__display_name
 msgid "Display Name"
 msgstr "显示名称"
 
@@ -270,13 +284,22 @@ msgstr "从交易的应收科目"
 
 #. module: account_reconcile_oca
 #. odoo-javascript
-#: code:addons/account_reconcile_oca/static/src/xml/reconcile.xml:0
+#: code:addons/account_reconcile_oca/static/src/views/reconcile_kanban/reconcile.xml:0
 msgid "Global Balance"
 msgstr "整体余额"
 
 #. module: account_reconcile_oca
 #: model:ir.model.fields,field_description:account_reconcile_oca.field_account_account_reconcile__id
 #: model:ir.model.fields,field_description:account_reconcile_oca.field_account_account_reconcile_data__id
+#: model:ir.model.fields,field_description:account_reconcile_oca.field_account_bank_statement__id
+#: model:ir.model.fields,field_description:account_reconcile_oca.field_account_bank_statement_line__id
+#: model:ir.model.fields,field_description:account_reconcile_oca.field_account_journal__id
+#: model:ir.model.fields,field_description:account_reconcile_oca.field_account_move_line__id
+#: model:ir.model.fields,field_description:account_reconcile_oca.field_account_reconcile_abstract__id
+#: model:ir.model.fields,field_description:account_reconcile_oca.field_account_reconcile_model__id
+#: model:ir.model.fields,field_description:account_reconcile_oca.field_account_reconcile_model_line__id
+#: model:ir.model.fields,field_description:account_reconcile_oca.field_res_company__id
+#: model:ir.model.fields,field_description:account_reconcile_oca.field_res_config_settings__id
 msgid "ID"
 msgstr "ID"
 
@@ -323,7 +346,7 @@ msgstr "保留挂账科目"
 
 #. module: account_reconcile_oca
 #. odoo-javascript
-#: code:addons/account_reconcile_oca/static/src/xml/reconcile.xml:0
+#: code:addons/account_reconcile_oca/static/src/components/account_reconcile_oca_data/account_reconcile_oca_data.xml:0
 msgid "Label"
 msgstr "摘要"
 
@@ -467,7 +490,7 @@ msgstr "无未对账内容"
 
 #. module: account_reconcile_oca
 #. odoo-javascript
-#: code:addons/account_reconcile_oca/static/src/xml/reconcile.xml:0
+#: code:addons/account_reconcile_oca/static/src/components/account_reconcile_oca_data/account_reconcile_oca_data.xml:0
 msgid "Open Balance"
 msgstr ""
 
@@ -478,7 +501,7 @@ msgstr ""
 
 #. module: account_reconcile_oca
 #. odoo-javascript
-#: code:addons/account_reconcile_oca/static/src/xml/reconcile.xml:0
+#: code:addons/account_reconcile_oca/static/src/components/account_reconcile_oca_data/account_reconcile_oca_data.xml:0
 #: model:ir.model.fields,field_description:account_reconcile_oca.field_account_account_reconcile__partner_id
 #: model_terms:ir.ui.view,arch_db:account_reconcile_oca.bank_statement_line_form_reconcile_view
 msgid "Partner"
@@ -488,6 +511,12 @@ msgstr "合作伙伴"
 #: model_terms:ir.ui.view,arch_db:account_reconcile_oca.account_move_line_search_reconcile_view
 msgid "Payable"
 msgstr "应付"
+
+#. module: account_reconcile_oca
+#: model:ir.model,name:account_reconcile_oca.model_account_reconcile_model
+msgid ""
+"Preset to create journal entries during a invoices and payments matching"
+msgstr ""
 
 #. module: account_reconcile_oca
 #: model:ir.model.fields,field_description:account_reconcile_oca.field_account_bank_statement_line__previous_manual_amount_in_currency
@@ -567,6 +596,11 @@ msgid "Reconciled"
 msgstr "已对账"
 
 #. module: account_reconcile_oca
+#: model:ir.ui.menu,name:account_reconcile_oca.menu_account_reconcile_model
+msgid "Reconciliation Models"
+msgstr ""
+
+#. module: account_reconcile_oca
 #: model_terms:ir.ui.view,arch_db:account_reconcile_oca.bank_statement_line_form_reconcile_view
 msgid "Reset reconciliation"
 msgstr "重置对账"
@@ -576,6 +610,11 @@ msgstr "重置对账"
 #: code:addons/account_reconcile_oca/models/account_bank_statement_line.py:0
 msgid "Reversal of: %s"
 msgstr "冲销：%s"
+
+#. module: account_reconcile_oca
+#: model:ir.model,name:account_reconcile_oca.model_account_reconcile_model_line
+msgid "Rules for the reconciliation model"
+msgstr ""
 
 #. module: account_reconcile_oca
 #: model_terms:ir.ui.view,arch_db:account_reconcile_oca.account_move_line_search_reconcile_view
@@ -650,11 +689,6 @@ msgid "User"
 msgstr "用户"
 
 #. module: account_reconcile_oca
-#: model_terms:ir.ui.view,arch_db:account_reconcile_oca.bank_statement_line_form_reconcile_view
-msgid "Validate"
-msgstr "验证"
-
-#. module: account_reconcile_oca
 #: model_terms:ir.ui.view,arch_db:account_reconcile_oca.account_move_line_tree_reconcile_view
 msgid "View"
 msgstr "查看"
@@ -700,6 +734,9 @@ msgstr "将被减少"
 #: model_terms:ir.ui.view,arch_db:account_reconcile_oca.bank_statement_line_form_reconcile_view
 msgid "with an open amount"
 msgstr "的未结金额"
+
+#~ msgid "Validate"
+#~ msgstr "验证"
 
 #~ msgid "Company related to this journal"
 #~ msgstr "关联到此日记账的公司"
