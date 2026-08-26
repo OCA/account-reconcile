@@ -652,11 +652,6 @@ msgid "User"
 msgstr "Utilisateur"
 
 #. module: account_reconcile_oca
-#: model_terms:ir.ui.view,arch_db:account_reconcile_oca.bank_statement_line_form_reconcile_view
-msgid "Validate"
-msgstr "Valider"
-
-#. module: account_reconcile_oca
 #: model_terms:ir.ui.view,arch_db:account_reconcile_oca.account_move_line_tree_reconcile_view
 msgid "View"
 msgstr "Voir"
@@ -704,6 +699,9 @@ msgstr "sera réduite de"
 #: model_terms:ir.ui.view,arch_db:account_reconcile_oca.bank_statement_line_form_reconcile_view
 msgid "with an open amount"
 msgstr "avec un montant ouvert"
+
+#~ msgid "Validate"
+#~ msgstr "Valider"
 
 #~ msgid "Company related to this journal"
 #~ msgstr "Société liée à ce journal"

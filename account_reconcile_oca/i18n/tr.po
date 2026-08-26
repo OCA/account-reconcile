@@ -651,11 +651,6 @@ msgid "User"
 msgstr "Kullanıcı"
 
 #. module: account_reconcile_oca
-#: model_terms:ir.ui.view,arch_db:account_reconcile_oca.bank_statement_line_form_reconcile_view
-msgid "Validate"
-msgstr "Doğrulama"
-
-#. module: account_reconcile_oca
 #: model_terms:ir.ui.view,arch_db:account_reconcile_oca.account_move_line_tree_reconcile_view
 msgid "View"
 msgstr "Görme"
@@ -703,6 +698,9 @@ msgstr "kadar azaltılacak"
 #: model_terms:ir.ui.view,arch_db:account_reconcile_oca.bank_statement_line_form_reconcile_view
 msgid "with an open amount"
 msgstr "açık bir miktarla"
+
+#~ msgid "Validate"
+#~ msgstr "Doğrulama"
 
 #~ msgid "Company related to this journal"
 #~ msgstr "İlişkili olduğu şirket"

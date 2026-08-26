@@ -650,11 +650,6 @@ msgid "User"
 msgstr "用户"
 
 #. module: account_reconcile_oca
-#: model_terms:ir.ui.view,arch_db:account_reconcile_oca.bank_statement_line_form_reconcile_view
-msgid "Validate"
-msgstr "验证"
-
-#. module: account_reconcile_oca
 #: model_terms:ir.ui.view,arch_db:account_reconcile_oca.account_move_line_tree_reconcile_view
 msgid "View"
 msgstr "查看"
@@ -700,6 +695,9 @@ msgstr "将被减少"
 #: model_terms:ir.ui.view,arch_db:account_reconcile_oca.bank_statement_line_form_reconcile_view
 msgid "with an open amount"
 msgstr "的未结金额"
+
+#~ msgid "Validate"
+#~ msgstr "验证"
 
 #~ msgid "Company related to this journal"
 #~ msgstr "关联到此日记账的公司"

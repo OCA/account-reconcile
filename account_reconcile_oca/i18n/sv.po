@@ -650,11 +650,6 @@ msgid "User"
 msgstr "Användare"
 
 #. module: account_reconcile_oca
-#: model_terms:ir.ui.view,arch_db:account_reconcile_oca.bank_statement_line_form_reconcile_view
-msgid "Validate"
-msgstr "Bekräfta"
-
-#. module: account_reconcile_oca
 #: model_terms:ir.ui.view,arch_db:account_reconcile_oca.account_move_line_tree_reconcile_view
 msgid "View"
 msgstr "Vy"
@@ -700,6 +695,9 @@ msgstr "kommer att reduceras med"
 #: model_terms:ir.ui.view,arch_db:account_reconcile_oca.bank_statement_line_form_reconcile_view
 msgid "with an open amount"
 msgstr "med ett valfritt belopp"
+
+#~ msgid "Validate"
+#~ msgstr "Bekräfta"
 
 #~ msgid "Company related to this journal"
 #~ msgstr "Företag relaterad till denna journalen"

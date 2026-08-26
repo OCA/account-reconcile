@@ -98,8 +98,6 @@ export class AccountReconcileDataWidget extends Component {
     async openMove(ev, moveId) {
         ev.preventDefault();
         ev.stopPropagation();
-        // eslint-disable-next-line no-undef
-        console.log(moveId);
         const action = await this.orm.call("account.move", "get_formview_action", [
             [moveId],
         ]);

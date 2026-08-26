@@ -650,11 +650,6 @@ msgid "User"
 msgstr "Usuari"
 
 #. module: account_reconcile_oca
-#: model_terms:ir.ui.view,arch_db:account_reconcile_oca.bank_statement_line_form_reconcile_view
-msgid "Validate"
-msgstr "Validar"
-
-#. module: account_reconcile_oca
 #: model_terms:ir.ui.view,arch_db:account_reconcile_oca.account_move_line_tree_reconcile_view
 msgid "View"
 msgstr "Veure"
@@ -701,6 +696,9 @@ msgstr "serà reduït per"
 #: model_terms:ir.ui.view,arch_db:account_reconcile_oca.bank_statement_line_form_reconcile_view
 msgid "with an open amount"
 msgstr "amb un import pendent"
+
+#~ msgid "Validate"
+#~ msgstr "Validar"
 
 #~ msgid "Company related to this journal"
 #~ msgstr "Companyia relacionada amb el diari"

@@ -650,11 +650,6 @@ msgid "User"
 msgstr "Gebruiker"
 
 #. module: account_reconcile_oca
-#: model_terms:ir.ui.view,arch_db:account_reconcile_oca.bank_statement_line_form_reconcile_view
-msgid "Validate"
-msgstr "Bevestig"
-
-#. module: account_reconcile_oca
 #: model_terms:ir.ui.view,arch_db:account_reconcile_oca.account_move_line_tree_reconcile_view
 msgid "View"
 msgstr "Weergave"
@@ -700,6 +695,9 @@ msgstr "wordt verminderd met"
 #: model_terms:ir.ui.view,arch_db:account_reconcile_oca.bank_statement_line_form_reconcile_view
 msgid "with an open amount"
 msgstr "met een open bedrag"
+
+#~ msgid "Validate"
+#~ msgstr "Bevestig"
 
 #~ msgid "Company related to this journal"
 #~ msgstr "Bedrijf gerelateerd aan dit dagboek"
