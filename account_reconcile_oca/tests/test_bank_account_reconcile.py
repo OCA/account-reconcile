@@ -553,10 +553,25 @@ class TestReconciliationWidget(TestAccountReconciliationCommon):
 
     @mute_logger("odoo.models.unlink")
     def test_reconcile_rule_on_create(self):
-        """
-        Testing the fill of the bank statment line with
-        writeoff suggestion reconcile model with auto_reconcile
-        """
+        """Test auto reconciliation on create and on existing lines."""
+        bank_stmt = self.acc_bank_stmt_model.create(
+            {
+                "journal_id": self.bank_journal_euro.id,
+                "date": time.strftime("%Y-07-15"),
+                "name": "test",
+            }
+        )
+        existing_line = self.acc_bank_stmt_line_model.create(
+            {
+                "name": "DEMO WRITEOFF",
+                "payment_ref": "DEMO WRITEOFF",
+                "journal_id": self.bank_journal_euro.id,
+                "statement_id": bank_stmt.id,
+                "amount": 100,
+                "date": time.strftime("%Y-07-15"),
+            }
+        )
+        self.assertFalse(existing_line.is_reconciled)
         model = self.env["account.reconcile.model"].create(
             {
                 "name": "write-off model suggestion",
@@ -570,14 +585,6 @@ class TestReconciliationWidget(TestAccountReconciliationCommon):
             }
         )
         model.flush_recordset()
-
-        bank_stmt = self.acc_bank_stmt_model.create(
-            {
-                "journal_id": self.bank_journal_euro.id,
-                "date": time.strftime("%Y-07-15"),
-                "name": "test",
-            }
-        )
         bank_stmt_line = self.acc_bank_stmt_line_model.create(
             {
                 "name": "DEMO WRITEOFF",
@@ -589,6 +596,9 @@ class TestReconciliationWidget(TestAccountReconciliationCommon):
             }
         )
         self.assertTrue(bank_stmt_line.is_reconciled)
+        existing_line.invalidate_recordset()
+        existing_line._auto_reconcile()
+        self.assertTrue(existing_line.is_reconciled)
 
     def test_reconcile_rule_tax(self):
         """
