@@ -949,7 +949,7 @@ class AccountBankStatementLine(models.Model):
         res = self.env["account.reconcile.model"]._get_rules(to_do)
         done = self.browse()
         for record_id, rule_models in res.items():
-            record = self.browse(record_id).with_prefetch(to_do)
+            record = self.browse(record_id).with_prefetch(to_do.ids)
             liquidity_lines, suspense_lines, other_lines = record._seek_for_lines()
             data = []
             reconcile_auxiliary_id = 1
