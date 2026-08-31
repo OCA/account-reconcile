@@ -1557,3 +1557,59 @@ class TestReconciliationWidget(TestAccountReconciliationCommon):
             reconciled_exchange_line.balance,
             "Proposed reconciliation does not match auto reconciliation",
         )
+
+    def test_invoice_matching_usd_journal_without_amount_currency(self):
+        """USD invoice on a USD journal must be capped in journal currency.
+
+        amount_currency is empty on a foreign-currency journal without
+        foreign_currency_id. The model proposal must not use company-currency
+        amount_total_signed as the USD cap.
+        """
+        self.env["res.currency.rate"].search([]).unlink()
+        self.env["res.currency.rate"].create(
+            {
+                "currency_id": self.env.ref("base.USD").id,
+                "name": time.strftime("%Y-07-13"),
+                "rate": 2,
+            }
+        )
+        self.env["account.reconcile.model"].search([]).unlink()
+        self.env["account.reconcile.model"].create(
+            {
+                "name": "Match USD invoice on USD journal",
+                "rule_type": "invoice_matching",
+                "auto_reconcile": False,
+                "match_same_currency": True,
+                "match_partner": True,
+                "match_text_location_label": True,
+            }
+        )
+        invoice = self.create_invoice(
+            currency_id=self.currency_usd_id, invoice_amount=100
+        )
+        bank_stmt = self.acc_bank_stmt_model.create(
+            {
+                "journal_id": self.bank_journal_usd.id,
+                "date": time.strftime("%Y-07-15"),
+                "name": "test",
+            }
+        )
+        bank_stmt_line = self.acc_bank_stmt_line_model.create(
+            {
+                "name": "Payment for %s" % invoice.name,
+                "partner_id": invoice.partner_id.id,
+                "journal_id": self.bank_journal_usd.id,
+                "statement_id": bank_stmt.id,
+                "amount": 100,
+                "date": time.strftime("%Y-07-15"),
+            }
+        )
+        self.assertFalse(bank_stmt_line.amount_currency)
+        data = bank_stmt_line._default_reconcile_data()
+        counterpart = [
+            line
+            for line in data["data"]
+            if line.get("kind") == "other" and not line.get("is_exchange_counterpart")
+        ]
+        self.assertEqual(len(counterpart), 1)
+        self.assertAlmostEqual(abs(counterpart[0]["currency_amount"]), 100.0)

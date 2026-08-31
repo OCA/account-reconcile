@@ -676,16 +676,19 @@ class AccountBankStatementLine(models.Model):
                 )
             elif res and res.get("amls"):
                 amount = self.amount_total_signed
+                # amount_currency is 0 on a foreign-currency journal without
+                # foreign_currency_id; fall back to the journal amount.
+                journal_amount = self.amount_currency or self.amount
                 for line in res.get("amls", []):
                     max_amount = amount
                     if (
                         line.currency_id == self._get_reconcile_currency()
-                        and self.amount_currency
+                        and journal_amount
                         and self.amount_total_signed
                     ):
                         # convert max amount with rate of statement, not Odoo's rate
                         max_amount = line.currency_id.round(
-                            max_amount * self.amount_currency / self.amount_total_signed
+                            max_amount * journal_amount / self.amount_total_signed
                         )
                     reconcile_auxiliary_id, line_data = self._get_reconcile_line(
                         line,
