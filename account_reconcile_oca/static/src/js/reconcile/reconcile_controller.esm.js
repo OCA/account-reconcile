@@ -10,6 +10,7 @@ export class ReconcileController extends KanbanController {
     async setup() {
         super.setup();
         this.initialLoad = true;
+        this.selectedRecordIndex = -1;
         this.state = useState({
             selectedRecordId: this.props.state?.selectedRecordId,
             journalBalance: 0,
@@ -113,18 +114,19 @@ export class ReconcileController extends KanbanController {
         ) {
             resId = this.state.selectedRecordId;
         } else if (record === undefined) {
-            var records = this.model.root.records.filter(
+            var candidates = this.model.root.records.filter(
                 (modelRecord) =>
                     !modelRecord.data.is_reconciled || modelRecord.data.to_check
             );
-            if (records.length === 0) {
-                records = this.model.root.records;
-                if (records.length === 0) {
+            if (candidates.length === 0) {
+                candidates = this.model.root.records;
+                if (candidates.length === 0) {
                     this.state.selectedRecordId = false;
+                    this.selectedRecordIndex = -1;
                     return;
                 }
             }
-            resId = records[0].resId;
+            resId = this.getRecordIdToSelect(candidates);
         } else {
             resId = record.resId;
         }
@@ -144,7 +146,40 @@ export class ReconcileController extends KanbanController {
         if (!this.state.selectedRecordId || this.state.selectedRecordId !== resId) {
             this.state.selectedRecordId = resId;
         }
+        this.selectedRecordIndex = this.model.root.records.findIndex(
+            (modelRecord) => modelRecord.resId === resId
+        );
         this.updateURL(resId);
+    }
+    getRecordIdToSelect(candidates) {
+        // When the selected record is no longer a candidate (usually because it
+        // has just been reconciled), we select the next one instead of going
+        // back to the first one of the list. If there is no next candidate, we
+        // select the last one.
+        const records = this.model.root.records;
+        const previousId = this.state.selectedRecordId;
+        var index = 0;
+        if (previousId) {
+            const previousIndex = records.findIndex(
+                (modelRecord) => modelRecord.resId === previousId
+            );
+            if (previousIndex === -1) {
+                // The record is not displayed anymore (e.g. the unreconciled
+                // filter is set), so its former position is now held by the
+                // record that followed it.
+                index = this.selectedRecordIndex;
+            } else if (candidates.some((candidate) => candidate.resId === previousId)) {
+                return previousId;
+            } else {
+                index = previousIndex + 1;
+            }
+        }
+        for (var i = Math.max(index, 0); i < records.length; i++) {
+            if (candidates.includes(records[i])) {
+                return records[i].resId;
+            }
+        }
+        return candidates[candidates.length - 1].resId;
     }
     async openRecord(record) {
         this.selectRecord(record);
