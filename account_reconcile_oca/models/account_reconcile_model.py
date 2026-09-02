@@ -181,6 +181,17 @@ class AccountReconcileModel(models.Model):
                 tuple(bank_statement_lines.ids),
             )
         )
+        self_sudo = bank_statement_lines.with_context(active_test=False)
+        sec_domain = self.env["ir.rule"]._compute_domain(
+            bank_statement_lines._name, "read"
+        )
+        sec_domain = sec_domain.optimize_full(self_sudo)
+        if sec_domain.is_false():
+            return self.browse()._as_query()
+        if not sec_domain.is_true():
+            query.add_where(
+                sec_domain._to_sql(self_sudo, bank_statement_lines._table, query)
+            )
         query.add_where(SQL("%s = %s", SQL.identifier(self._table, "trigger"), trigger))
         query.order = SQL.identifier(self._table, "sequence").code
         return query

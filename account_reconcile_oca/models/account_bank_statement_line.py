@@ -1056,6 +1056,20 @@ class AccountBankStatementLine(models.Model):
                 move_name=SQL.identifier(move._table, "name"),
             )
         )
+        self_sudo = self.sudo().with_context(active_test=False)
+        sec_domain = self.env["ir.rule"]._compute_domain(self._name, "read")
+        sec_domain = sec_domain.optimize_full(self_sudo)
+        if sec_domain.is_false():
+            return self.browse()._as_query()
+        if not sec_domain.is_true():
+            query.add_where(sec_domain._to_sql(self_sudo, self._table, query))
+        self_sudo = move_line.sudo().with_context(active_test=False)
+        sec_domain = self.env["ir.rule"]._compute_domain(move_line._name, "read")
+        sec_domain = sec_domain.optimize_full(self_sudo)
+        if sec_domain.is_false():
+            return self.browse()._as_query()
+        if not sec_domain.is_true():
+            query.add_where(sec_domain._to_sql(self_sudo, move_line._table, query))
         query.groupby = SQL.identifier(self._table, "id")
         query.having = SQL("COUNT(*) = 1")
         return query
