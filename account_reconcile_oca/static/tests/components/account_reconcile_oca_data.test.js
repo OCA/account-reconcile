@@ -96,14 +96,17 @@ test("Check Data info handling", async () => {
         `[name="reconcile_data_info"] .o_reconcile_widget_line:first-child .o_account_reconcile_oca_data_line_name`
     ).toHaveText("FIRST LINE");
     expect(
-        `[name="reconcile_data_info"] .o_reconcile_widget_line:first-child .o_account_reconcile_oca_data_line_debit`
+        `[name="reconcile_data_info"] .o_reconcile_widget_line:first-child .o_desktop_only.o_account_reconcile_oca_data_line_debit`
     ).toHaveText("$ 100.00");
     expect(
         `[name="reconcile_data_info"] .o_reconcile_widget_line:last-child .o_account_reconcile_oca_data_line_name`
     ).toHaveText("SECOND LINE");
     expect(
-        `[name="reconcile_data_info"] .o_reconcile_widget_line:last-child .o_account_reconcile_oca_data_line_credit`
+        `[name="reconcile_data_info"] .o_reconcile_widget_line:last-child .o_desktop_only.o_account_reconcile_oca_data_line_credit`
     ).toHaveText("$ 100.00");
+    expect(
+        `[name="reconcile_data_info"] .o_reconcile_widget_line:last-child .o_mobile_only.o_account_reconcile_oca_data_line_credit`
+    ).toHaveText("$ -100.00");
 
     expect(`[name="manual_reference"] input`).toHaveValue("");
     expect(`[name="manual_delete"] input`).not.toBeChecked();
@@ -127,7 +130,7 @@ test("Delete Line", async () => {
         `[name="reconcile_data_info"] .o_reconcile_widget_line:first-child .o_account_reconcile_oca_data_line_name`
     ).toHaveText("FIRST LINE");
     expect(
-        `[name="reconcile_data_info"] .o_reconcile_widget_line:first-child .o_account_reconcile_oca_data_line_debit`
+        `[name="reconcile_data_info"] .o_reconcile_widget_line:first-child .o_desktop_only.o_account_reconcile_oca_data_line_debit`
     ).toHaveText("$ 100.00");
     expect(
         `[name="reconcile_data_info"] .o_reconcile_widget_line:first-child .fa-trash-o`
@@ -136,8 +139,11 @@ test("Delete Line", async () => {
         `[name="reconcile_data_info"] .o_reconcile_widget_line:last-child .o_account_reconcile_oca_data_line_name`
     ).toHaveText("SECOND LINE");
     expect(
-        `[name="reconcile_data_info"] .o_reconcile_widget_line:last-child .o_account_reconcile_oca_data_line_credit`
+        `[name="reconcile_data_info"] .o_reconcile_widget_line:last-child .o_desktop_only.o_account_reconcile_oca_data_line_credit`
     ).toHaveText("$ 100.00");
+    expect(
+        `[name="reconcile_data_info"] .o_reconcile_widget_line:last-child .o_mobile_only.o_account_reconcile_oca_data_line_credit`
+    ).toHaveText("$ -100.00");
     expect(
         `[name="reconcile_data_info"] .o_reconcile_widget_line:last-child .fa-trash-o`
     ).toHaveCount(1);
