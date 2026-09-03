@@ -151,7 +151,14 @@ export class ReconcileController extends KanbanController {
         this.updateURL(resId);
     }
     async openRecord(record) {
+        this.rootRef.el.classList.remove("o_account_reconcile_oca_open_selector_click");
         this.selectRecord(record);
+    }
+    async onClickOpenSelector() {
+        this.rootRef.el.classList.add("o_account_reconcile_oca_open_selector_click");
+    }
+    async onClickCloseSelector() {
+        this.rootRef.el.classList.remove("o_account_reconcile_oca_open_selector_click");
     }
     updateURL(resId) {
         router.pushState({id: resId});

@@ -1,3 +1,23 @@
+@include media-breakpoint-down(sm) {
+    .o_account_reconcile_oca_open_selector_click .o_account_reconcile_oca {
+        .o_kanban_renderer {
+            display: block !important;
+        }
+        .o_account_reconcile_oca_info {
+            display: none !important;
+        }
+        .o_account_reconcile_oca_open_selector {
+            left: unset;
+            right: 0px;
+            .o_account_reconcile_oca_close_selector_btn {
+                display: unset;
+            }
+            .o_account_reconcile_oca_open_selector_btn {
+                display: none;
+            }
+        }
+    }
+}
 .o_account_reconcile_oca {
     display: -webkit-box;
     display: -webkit-flex;
@@ -5,6 +25,12 @@
     -webkit-flex-flow: row wrap;
     flex-flow: row wrap;
     height: 100%;
+
+    @include media-breakpoint-down(sm) {
+        .o_kanban_renderer {
+            display: none !important;
+        }
+    }
     .o_kanban_renderer.o_kanban_ungrouped .o_kanban_record {
         &:hover {
             .o_reconcile_create_statement {
@@ -35,6 +61,9 @@
         }
     }
     .o_account_reconcile_oca_selector {
+        @include media-breakpoint-down(sm) {
+            width: 100%;
+        }
         width: 30%;
         height: 100%;
         padding: 0;
@@ -43,8 +72,28 @@
         overflow: auto;
     }
     .o_account_reconcile_oca_info {
+        @include media-breakpoint-down(sm) {
+            width: 100%;
+        }
         width: 70%;
         height: 100%;
         overflow: auto;
+    }
+    .o_account_reconcile_oca_open_selector {
+        position: absolute;
+        top: 50%;
+        left: 0px;
+        z-index: 99;
+        .o_account_reconcile_oca_open_selector_btn,
+        .o_account_reconcile_oca_close_selector_btn {
+            border-radius: 50%;
+            padding: 0.4rem;
+            display: none;
+        }
+        .o_account_reconcile_oca_open_selector_btn {
+            @include media-breakpoint-down(sm) {
+                display: unset;
+            }
+        }
     }
 }
