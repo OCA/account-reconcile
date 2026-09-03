@@ -88,9 +88,12 @@
         .o_account_reconcile_oca_close_selector_btn {
             border-radius: 50%;
             padding: 0.4rem;
-        }
-        .o_account_reconcile_oca_close_selector_btn {
             display: none;
+        }
+        .o_account_reconcile_oca_open_selector_btn {
+            @include media-breakpoint-down(sm) {
+                display: unset;
+            }
         }
     }
 }
