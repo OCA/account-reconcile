@@ -65,6 +65,31 @@ class TestAccountReconcileSaleOrder(TestAccountReconciliationCommon):
         self.bank_statement.line_ids.reconcile_bank_line()
         self.assertEqual(self.sale_order.invoice_status, "invoiced")
 
+    def test_reconcile_sale_order_no_user_subscription(self):
+        """Reconciling must not subscribe the current user to the sale order
+        nor to its delivery orders"""
+        self.bank_statement.line_ids.payment_ref = self.sale_order.name
+        self.bank_statement.line_ids.clean_reconcile()
+        self.bank_statement.line_ids.reconcile_bank_line()
+        self.assertEqual(self.sale_order.state, "sale")
+        current_partner = self.env.user.partner_id
+        self.assertNotIn(
+            current_partner,
+            self.sale_order.message_follower_ids.mapped("partner_id"),
+            "The current user should not be subscribed to the sale order"
+            " after reconciliation",
+        )
+        # Delivery orders only exist when sale_stock is installed
+        if "picking_ids" in self.sale_order._fields:
+            self.assertTrue(self.sale_order.picking_ids, "No delivery order created")
+            for picking in self.sale_order.picking_ids:
+                self.assertNotIn(
+                    current_partner,
+                    picking.message_follower_ids.mapped("partner_id"),
+                    "The current user should not be subscribed to the delivery order"
+                    " after reconciliation",
+                )
+
     def test_token_matching(self):
         """Test that we find orders by substrings of statement label"""
         self.model.sudo().sale_order_matching_token_match = True
