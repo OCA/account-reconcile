@@ -16,8 +16,9 @@
                     context="{'reconcile_mode': 'customers'}"
                     icon="fa-usd"
                     groups="account.group_account_invoice"
-                    string="Match Receivables"
-                />
+                >
+                    <span class="o_stat_text">Match Receivables</span>
+                </button>
                 <button
                     class="oe_stat_button"
                     type="object"
@@ -25,8 +26,9 @@
                     context="{'reconcile_mode': 'suppliers'}"
                     groups="account.group_account_invoice"
                     icon="fa-usd"
-                    string="Match Payables"
-                />
+                >
+                    <span class="o_stat_text">Match Payables</span>
+                </button>
             </div>
         </field>
     </record>
