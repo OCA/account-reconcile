@@ -1,0 +1,6 @@
+[project]
+name = "odoo-addon-account_statement_reconcile_status"
+
+[build-system]
+requires = ["whool"]
+build-backend = "whool.buildapi"
