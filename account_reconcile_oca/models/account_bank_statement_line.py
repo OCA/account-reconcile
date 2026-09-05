@@ -451,7 +451,7 @@ class AccountBankStatementLine(models.Model):
             "account_id": (
                 [self.manual_account_id.id, self.manual_account_id.display_name]
                 if self.manual_account_id
-                else [False, _lt("Undefined")]
+                else [False, _("Undefined")]
             ),
             "amount": self.manual_amount,
             "credit": -self.manual_amount if self.manual_amount < 0 else 0.0,
