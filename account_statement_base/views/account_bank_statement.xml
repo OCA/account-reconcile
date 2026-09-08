@@ -68,7 +68,7 @@
                     </group>
                     <field
                         name="line_ids"
-                        context="{'default_journal_id': journal_id}"
+                        context="{'default_journal_id': journal_id or context.get('default_journal_id') or context.get('active_id')}"
                     />
                     <group
                         class="oe_subtotal_footer oe_right"
