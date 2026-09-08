@@ -70,6 +70,22 @@
             >model.useSampleModel ? 'o_view_sample_data o_account_reconcile_oca' : 'o_account_reconcile_oca'</attribute>
         </xpath>
         <xpath expr="//Layout" position="inside">
+            <div class="o_account_reconcile_oca_open_selector">
+                <i
+                    class="o_account_reconcile_oca_open_selector_btn btn btn-secondary oi oi-chevron-right"
+                    role="img"
+                    aria-label="Select Element"
+                    title="Select element"
+                    t-on-click="() => this.onClickOpenSelector()"
+                />
+                <i
+                    class="o_account_reconcile_oca_close_selector_btn btn btn-secondary oi oi-chevron-left"
+                    role="img"
+                    aria-label="Select Element"
+                    title="Select element"
+                    t-on-click="() => this.onClickCloseSelector()"
+                />
+            </div>
             <div class="o_account_reconcile_oca_info">
                 <t t-if="state.selectedRecordId">
                     <View t-props="viewReconcileInfo" t-key="state.selectedRecordId" />
