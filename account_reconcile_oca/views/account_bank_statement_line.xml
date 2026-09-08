@@ -303,10 +303,10 @@
                                 <label
                                     for="manual_move_id"
                                     string=""
-                                    insible="manual_move_type not in ['in_invoice', 'in_refund', 'out_invoice', 'out_refund'] or manual_original_amount == 0 or is_reconciled"
+                                    invisible="manual_move_type not in ['in_invoice', 'in_refund', 'out_invoice', 'out_refund'] or manual_original_amount == 0 or is_reconciled"
                                 />
                                 <div
-                                    insible="manual_move_type not in ['in_invoice', 'in_refund', 'out_invoice', 'out_refund'] or manual_original_amount == 0 or is_reconciled"
+                                    invisible="manual_move_type not in ['in_invoice', 'in_refund', 'out_invoice', 'out_refund'] or manual_original_amount == 0 or is_reconciled"
                                 >
                                     Invoice <field
                                     class="oe_inline"
