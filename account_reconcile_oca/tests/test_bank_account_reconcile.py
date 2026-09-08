@@ -1473,3 +1473,41 @@ class TestReconciliationWidget(TestAccountReconciliationCommon):
             self.assertEqual(3, len(f.reconcile_data_info["data"]))
             self.assertTrue(f.can_reconcile)
             self.assertEqual(f.reconcile_data_info["data"][-1]["amount"], 3.63)
+
+    def test_partner_accounts_follow_the_line_company(self):
+        """The proposed counterpart uses the statement line's company."""
+        other = self.setup_other_company()
+        other_company = other["company"]
+        self.env.user.company_ids |= other_company
+        partner = self.partner_agrolait
+        partner.with_company(other_company).write(
+            {
+                "property_account_receivable_id": other[
+                    "default_account_receivable"
+                ].id,
+                "property_account_payable_id": other["default_account_payable"].id,
+            }
+        )
+        self.assertNotEqual(other["default_account_receivable"], self.account_rcv)
+        journal = other["default_journal_bank"]
+        cases = (
+            (100, other["default_account_receivable"]),
+            (-100, other["default_account_payable"]),
+        )
+        for amount, expected in cases:
+            line = self.acc_bank_stmt_line_model.create(
+                {
+                    "name": "cross-company",
+                    "journal_id": journal.id,
+                    "amount": amount,
+                    "partner_id": partner.id,
+                    "date": time.strftime("%Y-07-15"),
+                }
+            )
+            counterparts = [
+                data
+                for data in line.reconcile_data_info["data"]
+                if data.get("kind") == "suspense"
+            ]
+            self.assertEqual(len(counterparts), 1)
+            self.assertEqual(counterparts[0]["account_id"][0], expected.id)
