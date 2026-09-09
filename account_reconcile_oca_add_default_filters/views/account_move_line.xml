@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+  Copyright 2026 Akretion France (https://www.akretion.com/)
+  @author: Alexis de Lattre <alexis.delattre@akretion.com>
+  License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
+-->
+<odoo>
+    <record id="account_move_line_search_reconcile_view" model="ir.ui.view">
+        <field name="model">account.move.line</field>
+        <field
+            name="inherit_id"
+            ref="account_reconcile_oca.account_move_line_search_reconcile_view"
+        />
+        <field name="arch" type="xml">
+            <filter name="trade_receivable" position="after">
+                <filter
+                    string="Outstanding Payments/Receipts"
+                    name="payment_asset_current"
+                    domain="[('payment_id', '!=', False), ('account_id.account_type', '=', 'asset_current')]"
+                />
+            </filter>
+        </field>
+    </record>
+</odoo>
