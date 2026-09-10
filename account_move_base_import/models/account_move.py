@@ -402,3 +402,20 @@ class AccountMove(models.Model):
             ):
                 move._post()
         return True
+
+    def _post(self, soft=True):
+        for move in self:
+            if move.journal_id.check_autocompleted:
+                fully_completed = all(
+                    [line.already_completed for line in move.line_ids]
+                )
+                if not fully_completed:
+                    raise ValidationError(
+                        self.env._(
+                            "The journal entry %s is not fully completed, please "
+                            "complete it and make sure the account are correctly "
+                            "set"
+                        )
+                        % move.id
+                    )
+        return super()._post(soft=soft)
