@@ -455,6 +455,158 @@ class TestReconciliationWidget(TestAccountReconciliationCommon):
         self.assertEqual(inv1.amount_residual_signed, -30)
         self.assertEqual(inv2.amount_residual_signed, -70)
 
+    def _suggest_invoice_via_model(self, invoice, account_type, amount):
+        """Build a partner-matching invoice_matching model and a statement line
+        so that ``_default_reconcile_data`` auto-suggests ``invoice``.
+
+        Returns the statement line and the invoice counterpart move line.
+        """
+        counterpart_line = invoice.line_ids.filtered(
+            lambda line: line.account_id.account_type == account_type
+        )
+        self.env["account.reconcile.model"].create(
+            {
+                "name": "partner match (no tolerance)",
+                "rule_type": "invoice_matching",
+                "match_partner": True,
+                "allow_payment_tolerance": False,
+                "match_journal_ids": [Command.set(self.bank_journal_euro.ids)],
+                "company_id": self.company.id,
+            }
+        )
+        bank_stmt = self.acc_bank_stmt_model.create(
+            {
+                "journal_id": self.bank_journal_euro.id,
+                "date": time.strftime("%Y-07-15"),
+                "name": "test",
+            }
+        )
+        bank_stmt_line = self.acc_bank_stmt_line_model.create(
+            {
+                "name": "testLine",
+                "journal_id": self.bank_journal_euro.id,
+                "statement_id": bank_stmt.id,
+                "amount": amount,
+                "partner_id": invoice.partner_id.id,
+                "date": time.strftime("%Y-07-15"),
+            }
+        )
+        return bank_stmt_line, counterpart_line
+
+    @mute_logger("odoo.models.unlink")
+    def test_reconcile_model_partial_supplier_suggestion(self):
+        """Auto-suggestion of a partial payment of a supplier bill.
+
+        Regression test: when an ``invoice_matching`` model auto-suggests a
+        vendor bill whose residual is larger than the incoming (outgoing)
+        statement amount, the suggested counterpart must be clamped to the
+        statement amount (partial), not the full residual. Previously the seed
+        amount used ``amount_total_signed`` (which drops the sign), so the
+        clamp in ``_get_reconcile_line`` never triggered for payable lines and
+        the whole residual was applied, leaving an unbalanced suspense line.
+        """
+        invoice = self.create_invoice(
+            currency_id=self.currency_euro_id,
+            invoice_amount=100,
+            move_type="in_invoice",
+        )
+        bank_stmt_line, payable = self._suggest_invoice_via_model(
+            invoice, "liability_payable", -30
+        )
+        data = bank_stmt_line.reconcile_data_info["data"]
+        counterpart = [
+            line for line in data if line.get("counterpart_line_ids") == payable.ids
+        ]
+        self.assertEqual(len(counterpart), 1)
+        # The counterpart must be the partial amount (30), not the full residual.
+        self.assertEqual(counterpart[0]["amount"], 30)
+        # No leftover suspense line: the proposal is balanced and reconcilable.
+        self.assertFalse([line for line in data if line["kind"] == "suspense"])
+        self.assertTrue(bank_stmt_line.reconcile_data_info["can_reconcile"])
+        bank_stmt_line.reconcile_bank_line()
+        self.assertEqual(invoice.amount_residual_signed, -70)
+
+    @mute_logger("odoo.models.unlink")
+    def test_reconcile_model_full_supplier_suggestion(self):
+        """Auto-suggestion of a full payment of a supplier bill.
+
+        Whole-amount outgoing reconciliation must keep working: the counterpart
+        is the full residual, no suspense line remains and the bill is fully
+        paid.
+        """
+        invoice = self.create_invoice(
+            currency_id=self.currency_euro_id,
+            invoice_amount=100,
+            move_type="in_invoice",
+        )
+        bank_stmt_line, payable = self._suggest_invoice_via_model(
+            invoice, "liability_payable", -100
+        )
+        data = bank_stmt_line.reconcile_data_info["data"]
+        counterpart = [
+            line for line in data if line.get("counterpart_line_ids") == payable.ids
+        ]
+        self.assertEqual(len(counterpart), 1)
+        self.assertEqual(counterpart[0]["amount"], 100)
+        self.assertFalse([line for line in data if line["kind"] == "suspense"])
+        self.assertTrue(bank_stmt_line.reconcile_data_info["can_reconcile"])
+        bank_stmt_line.reconcile_bank_line()
+        self.assertEqual(invoice.amount_residual_signed, 0)
+
+    @mute_logger("odoo.models.unlink")
+    def test_reconcile_model_partial_customer_suggestion(self):
+        """Auto-suggestion of a partial payment of a customer invoice.
+
+        Money-in counterpart: proves the signed-amount fix stays neutral for
+        receivables, where the seed sign already matched. The counterpart must
+        be clamped to the partial amount.
+        """
+        invoice = self.create_invoice(
+            currency_id=self.currency_euro_id,
+            invoice_amount=100,
+            move_type="out_invoice",
+        )
+        bank_stmt_line, receivable = self._suggest_invoice_via_model(
+            invoice, "asset_receivable", 30
+        )
+        data = bank_stmt_line.reconcile_data_info["data"]
+        counterpart = [
+            line for line in data if line.get("counterpart_line_ids") == receivable.ids
+        ]
+        self.assertEqual(len(counterpart), 1)
+        self.assertEqual(counterpart[0]["amount"], -30)
+        self.assertFalse([line for line in data if line["kind"] == "suspense"])
+        self.assertTrue(bank_stmt_line.reconcile_data_info["can_reconcile"])
+        bank_stmt_line.reconcile_bank_line()
+        self.assertEqual(invoice.amount_residual_signed, 70)
+
+    @mute_logger("odoo.models.unlink")
+    def test_reconcile_model_full_customer_suggestion(self):
+        """Auto-suggestion of a full payment of a customer invoice.
+
+        Whole-amount incoming reconciliation must keep working: the counterpart
+        is the full residual, no suspense line remains and the invoice is fully
+        paid.
+        """
+        invoice = self.create_invoice(
+            currency_id=self.currency_euro_id,
+            invoice_amount=100,
+            move_type="out_invoice",
+        )
+        bank_stmt_line, receivable = self._suggest_invoice_via_model(
+            invoice, "asset_receivable", 100
+        )
+        data = bank_stmt_line.reconcile_data_info["data"]
+        counterpart = [
+            line for line in data if line.get("counterpart_line_ids") == receivable.ids
+        ]
+        self.assertEqual(len(counterpart), 1)
+        self.assertEqual(counterpart[0]["amount"], -100)
+        self.assertFalse([line for line in data if line["kind"] == "suspense"])
+        self.assertTrue(bank_stmt_line.reconcile_data_info["can_reconcile"])
+        bank_stmt_line.reconcile_bank_line()
+        self.assertEqual(invoice.amount_residual_signed, 0)
+
     @mute_logger("odoo.models.unlink")
     def test_reconcile_model(self):
         """
