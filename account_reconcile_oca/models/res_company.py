@@ -13,6 +13,19 @@ class ResCompany(models.Model):
         ._fields["reconcile_aggregate"]
         .selection
     )
+    # reconcile fields conditions
+    reconcile_invoices_past_months_limit = fields.Integer(default=18)
+    reconcile_invoices_auto_reconcile = fields.Boolean()
+    reconcile_invoices_unique_matching = fields.Boolean()
+    reconcile_invoices_match_partner = fields.Boolean()
+    reconcile_invoices_match_partner_ids = fields.Many2many(
+        string="Auto-reconcile Invoices Matching partners", comodel_name="res.partner"
+    )
+    reconcile_invoices_match_partner_category_ids = fields.Many2many(
+        comodel_name="res.partner.category"
+    )
+    reconcile_invoices_match_same_currency = fields.Boolean(default=True)
+    reconcile_invoices_match_text = fields.Boolean()
 
     def _get_unreconciled_statement_lines_redirect_action(
         self, unreconciled_statement_lines
