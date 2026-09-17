@@ -61,7 +61,7 @@ Known issues / Roadmap
 
 The following bugs are already detected:
 
-- Creation of activities on the chatter do show automatically
+-  Creation of activities on the chatter do show automatically
 
 Bug Tracker
 ===========
@@ -85,8 +85,11 @@ Authors
 Contributors
 ------------
 
-- Enric Tobella
-- Jacques-Etienne Baudoux (BCIM) <je@bcim.be>
+-  Enric Tobella
+-  Jacques-Etienne Baudoux (BCIM) <je@bcim.be>
+-  `Tecnativa <https://www.tecnativa.com>`__:
+
+   -  Víctor Martínez
 
 Other credits
 -------------
