@@ -986,6 +986,7 @@ class AccountBankStatementLine(models.Model):
         move = self.env["account.move"]
         move_line = self.env["account.move.line"]
         account = self.env["account.account"]
+        company = self.company_id
         query.add_join(
             "JOIN",
             move_line._table,
@@ -1021,11 +1022,37 @@ class AccountBankStatementLine(models.Model):
                 SQL.identifier(move_line._table, "move_id"),
             ),
         )
+        if company.reconcile_invoices_match_partner:
+            st_partner = SQL.identifier(self._table, "partner_id")
+            aml_partner = SQL.identifier(move_line._table, "partner_id")
+            query.add_where(SQL("%s = %s", aml_partner, st_partner))
+            partners = company.reconcile_invoices_match_partner_ids
+            if partners:
+                query.add_where(
+                    SQL(
+                        "%s IN (%s)",
+                        st_partner,
+                        SQL(", ").join(partners.ids),
+                    )
+                )
+            categories = company.reconcile_invoices_match_partner_category_ids
+            if categories:
+                query.add_where(
+                    SQL(
+                        "%s IN ("
+                        "SELECT res_partner_id "
+                        "FROM res_partner_res_partner_category_rel "
+                        "WHERE res_partner_category_id IN (%s)"
+                        ")",
+                        st_partner,
+                        SQL(", ").join(categories.ids),
+                    )
+                )
         query.add_where(
             SQL(
-                "(%(st_partner)s is NULL OR %(st_partner)s = %(move_partner)s)",
-                st_partner=SQL.identifier(self._table, "partner_id"),
-                move_partner=SQL.identifier(move._table, "partner_id"),
+                "%s = %s",
+                SQL.identifier(self._table, "currency_id"),
+                SQL.identifier(move_line._table, "currency_id"),
             )
         )
         query.add_where(
@@ -1038,26 +1065,40 @@ class AccountBankStatementLine(models.Model):
         query.add_where(
             SQL("%s in %s", SQL.identifier(self._table, "id"), tuple(self.ids))
         )
-        query.add_where(
-            SQL(
-                """((
-                %(move_ref)s IS NOT NULL AND %(move_ref)s
-                ILIKE '%%' || %(st_ref)s || '%%'
-            ) OR (
-                %(line_ref)s IS NOT NULL AND %(line_ref)s
-                ILIKE '%%' || %(st_ref)s || '%%'
-            ) OR (
-                %(move_name)s IS NOT NULL AND %(move_name)s
-                ILIKE '%%' || %(st_ref)s || '%%'
-            ))""",
-                move_ref=SQL.identifier(move._table, "payment_reference"),
-                st_ref=SQL.identifier(self._table, "payment_ref"),
-                line_ref=SQL.identifier(move_line._table, "ref"),
-                move_name=SQL.identifier(move._table, "name"),
+        if company.reconcile_invoices_match_text:
+            enabled_matches = [
+                (move_line._table, "name"),
+                (move._table, "name"),
+                (move._table, "ref"),
+            ]
+            ref = SQL.identifier(self._table, "payment_ref")
+            conditions = []
+            for table, field in enabled_matches:
+                match_field = SQL.identifier(table, field)
+                conditions.append(
+                    SQL(
+                        "%s IS NOT NULL AND %s ILIKE '%%' || %s || '%%'",
+                        match_field,
+                        match_field,
+                        ref,
+                    )
+                )
+            query.add_where(SQL("(%s)", SQL(" OR ").join(conditions)))
+        past_months_limit = company.reconcile_invoices_past_months_limit
+        if past_months_limit:
+            date_limit = fields.Date.context_today(self) - relativedelta(
+                months=past_months_limit
             )
-        )
+            query.add_where(
+                SQL(
+                    "%s >= %s",
+                    SQL.identifier(move._table, "date"),
+                    date_limit,
+                )
+            )
         query.groupby = SQL.identifier(self._table, "id")
-        query.having = SQL("COUNT(*) = 1")
+        if company.reconcile_invoices_unique_matching:
+            query.having = SQL("COUNT(*) = 1")
         return query
 
     def _do_auto_reconcile_invoices(self):
@@ -1097,6 +1138,8 @@ class AccountBankStatementLine(models.Model):
                 record.manual_reference,
             )
             if record.reconcile_data_info.get("can_reconcile"):
+                if record.company_id.reconcile_invoices_auto_reconcile:
+                    record._auto_reconcile()
                 done |= record
         return self - done, done
 
