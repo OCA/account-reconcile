@@ -15,6 +15,156 @@
                     <field name="reconcile_aggregate" />
                 </setting>
             </block>
+            <block id="bank_cash" position="after">
+                <block title="Auto reconcile invoices" id="reconcile_invoices">
+                    <div class="row">
+                        <!-- LEFT -->
+                        <div class="col-lg-6">
+                            <setting id="reconcile_invoices_auto_reconcile">
+                                <field
+                                    name="reconcile_invoices_auto_reconcile"
+                                    nolabel="1"
+                                />
+                                <div class="d-flex align-items-center">
+                                    <label
+                                        for="reconcile_invoices_auto_reconcile"
+                                        string="Auto-validate"
+                                    />
+                                    <span
+                                        class="fa fa-question-circle"
+                                        title="Validate the statement line automatically (reconciliation based on your rule)."
+                                    />
+                                </div>
+                            </setting>
+                            <setting id="reconcile_invoices_past_months_limit">
+                                <div class="d-flex align-items-center">
+                                    <label
+                                        for="reconcile_invoices_past_months_limit"
+                                        string="Search Months Limit"
+                                    />
+                                    <span
+                                        class="fa fa-question-circle"
+                                        title="Number of months in the past to consider entries from when applying this model."
+                                    />
+                                </div>
+                                <field
+                                    name="reconcile_invoices_past_months_limit"
+                                    nolabel="1"
+                                />
+                            </setting>
+                            <setting id="reconcile_invoices_unique_matching">
+                                <field
+                                    name="reconcile_invoices_unique_matching"
+                                    nolabel="1"
+                                />
+                                <div class="d-flex align-items-center">
+                                    <label
+                                        for="reconcile_invoices_unique_matching"
+                                        string="Unique match"
+                                    />
+                                    <span
+                                        class="fa fa-question-circle"
+                                        title="If this box is checked, counterparts will only be suggested if only one possible counterpart is found."
+                                    />
+                                </div>
+                            </setting>
+                            <setting id="reconcile_invoices_match_same_currency">
+                                <field
+                                    name="reconcile_invoices_match_same_currency"
+                                    nolabel="1"
+                                />
+                                <div class="d-flex align-items-center">
+                                    <label
+                                        for="reconcile_invoices_match_same_currency"
+                                        string="Same Currency"
+                                    />
+                                    <span
+                                        class="fa fa-question-circle"
+                                        title="Restrict to propositions having the same currency as the statement line."
+                                    />
+                                </div>
+                            </setting>
+                        </div>
+                        <!-- RIGHT -->
+                        <div class="col-lg-6">
+                            <setting id="reconcile_invoices_match_partner">
+                                <field
+                                    name="reconcile_invoices_match_partner"
+                                    nolabel="1"
+                                />
+                                <div class="d-flex align-items-center">
+                                    <label
+                                        for="reconcile_invoices_match_partner"
+                                        string="Partner is Set"
+                                    />
+                                    <span
+                                        class="fa fa-question-circle"
+                                        title="Only be applied when a customer/vendor is set."
+                                    />
+                                </div>
+                            </setting>
+                            <setting
+                                id="reconcile_invoices_match_partner_ids"
+                                invisible="not reconcile_invoices_match_partner"
+                            >
+                                <div class="d-flex align-items-center">
+                                    <label
+                                        for="reconcile_invoices_match_partner_ids"
+                                        string="Matching partners"
+                                    />
+                                    <span
+                                        class="fa fa-question-circle"
+                                        title="Only be applied to the selected customers/vendors."
+                                    />
+                                </div>
+                                <field
+                                    name="reconcile_invoices_match_partner_ids"
+                                    nolabel="1"
+                                    widget="many2many_tags"
+                                    options="{'no_quick_create': True}"
+                                />
+                            </setting>
+                            <setting
+                                id="reconcile_invoices_match_partner_category_ids"
+                                invisible="not reconcile_invoices_match_partner"
+                            >
+                                <div class="d-flex align-items-center">
+                                    <label
+                                        for="reconcile_invoices_match_partner_category_ids"
+                                        string="Matching categories"
+                                    />
+                                    <span
+                                        class="fa fa-question-circle"
+                                        title="Only be applied to the selected customer/vendor categories."
+                                    />
+                                </div>
+                                <field
+                                    name="reconcile_invoices_match_partner_category_ids"
+                                    nolabel="1"
+                                    widget="many2many_tags"
+                                    options="{'no_quick_create': True}"
+                                />
+                            </setting>
+                            <setting id="reconcile_invoices_match_text">
+                                <field
+                                    name="reconcile_invoices_match_text"
+                                    nolabel="1"
+                                />
+                                <div class="d-flex align-items-center">
+                                    <label
+                                        for="reconcile_invoices_match_text"
+                                        string="Match Invoice/bill"
+                                    />
+                                    <span
+                                        class="fa fa-question-circle"
+                                        title="Search in the Statement's (Label + Note + Reference) to find the Invoice/Payment's reference."
+                                    />
+                                </div>
+                            </setting>
+                        </div>
+                    </div>
+                </block>
+            </block>
         </field>
     </record>
 </odoo>

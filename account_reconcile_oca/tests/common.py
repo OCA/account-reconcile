@@ -18,6 +18,7 @@ class TestAccountReconciliationCommon(AccountTestInvoicingCommon):
 
         cls.company = cls.company_data["company"]
         cls.company.currency_id = cls.env.ref("base.EUR")
+        cls.company.reconcile_invoices_match_text = True
 
         cls.partner_agrolait = cls.env["res.partner"].create(
             {
@@ -214,12 +215,17 @@ class TestAccountReconciliationCommon(AccountTestInvoicingCommon):
         return invoice
 
     def create_invoice(
-        self, move_type="out_invoice", invoice_amount=50, currency_id=None
+        self,
+        move_type="out_invoice",
+        invoice_amount=50,
+        currency_id=None,
+        partner_id=None,
     ):
         return self._create_invoice(
             move_type=move_type,
             invoice_amount=invoice_amount,
             currency_id=currency_id,
+            partner_id=partner_id,
             auto_validate=True,
         )
 
