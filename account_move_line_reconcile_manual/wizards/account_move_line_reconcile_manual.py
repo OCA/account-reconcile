@@ -21,7 +21,7 @@ class AccountMoveLineReconcileManual(models.TransientModel):
     company_id = fields.Many2one("res.company", required=True, readonly=True)
     currency_id = fields.Many2one("res.currency")
     company_currency_id = fields.Many2one(
-        "res.currency", related="company_id.currency_id"
+        "res.currency", string="Company Currency", related="company_id.currency_id"
     )
     count = fields.Integer(string="# of Journal Items", readonly=True)
     total_debit = fields.Monetary(currency_field="currency_id", readonly=True)
