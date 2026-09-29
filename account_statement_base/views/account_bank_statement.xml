@@ -23,7 +23,7 @@
                             class="oe_stat_button"
                             type="action"
                             name="%(account_bank_statement_line_action)d"
-                            icon="fa-bars"
+                            icon="menu"
                             context="{'search_default_statement_id': id}"
                             string="Transactions"
                         />
@@ -31,7 +31,7 @@
                             name="open_entries"
                             type="object"
                             class="oe_stat_button"
-                            icon="fa-bars"
+                            icon="menu"
                         >
                             <div class="o_stat_info">
                                 <span class="o_stat_text">Journal Items</span>
@@ -100,7 +100,7 @@
                     name="action_open_statement_lines"
                     type="object"
                     title="Open Statement Lines"
-                    icon="fa-folder-open-o"
+                    icon="folder"
                 />
             </field>
         </field>

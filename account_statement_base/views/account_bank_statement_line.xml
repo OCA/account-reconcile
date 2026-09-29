@@ -103,14 +103,14 @@
                     name="action_undo_reconciliation"
                     type="object"
                     string="Revert reconciliation"
-                    icon="fa-undo"
+                    icon="undo"
                     invisible="not is_reconciled"
                 />
                 <button
                     name="action_open_journal_entry"
                     type="object"
                     title="Open Journal Entry"
-                    icon="fa-folder-open-o"
+                    icon="folder"
                 />
                 <field name="company_id" column_invisible="True" />
                 <field name="is_reconciled" column_invisible="True" />
@@ -151,8 +151,8 @@
                 <separator />
                 <filter
                     name="to_check"
-                    string="To check"
-                    domain="[('checked', '=', False)]"
+                    string="To Review"
+                    domain="[('review_state', 'in', ('todo', 'anomaly'))]"
                 />
                 <separator />
                 <filter name="date" string="Date" date="date" />

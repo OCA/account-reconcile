@@ -21,13 +21,13 @@ Bank Statement Base
     :target: http://www.gnu.org/licenses/lgpl-3.0-standalone.html
     :alt: License: LGPL-3
 .. |badge3| image:: https://img.shields.io/badge/github-OCA%2Faccount--reconcile-lightgray.png?logo=github
-    :target: https://github.com/OCA/account-reconcile/tree/19.0/account_statement_base
+    :target: https://github.com/OCA/account-reconcile/tree/20.0/account_statement_base
     :alt: OCA/account-reconcile
 .. |badge4| image:: https://img.shields.io/badge/weblate-Translate%20me-F47D42.png
-    :target: https://translation.odoo-community.org/projects/account-reconcile-19-0/account-reconcile-19-0-account_statement_base
+    :target: https://translation.odoo-community.org/projects/account-reconcile-20-0/account-reconcile-20-0-account_statement_base
     :alt: Translate me on Weblate
 .. |badge5| image:: https://img.shields.io/badge/runboat-Try%20me-875A7B.png
-    :target: https://runboat.odoo-community.org/builds?repo=OCA/account-reconcile&target_branch=19.0
+    :target: https://runboat.odoo-community.org/builds?repo=OCA/account-reconcile&target_branch=20.0
     :alt: Try me on Runboat
 
 |badge1| |badge2| |badge3| |badge4| |badge5|
@@ -41,13 +41,37 @@ module any more).
 .. contents::
    :local:
 
+Usage
+=====
+
+Users need the *Show Full Accounting Features* access right.
+
+In *Invoicing > Dashboard*, open the menu of a bank journal and click
+*Statements*. With this module, the list of bank statements allows to
+create statements, and each statement has an *Open Statement Lines*
+button (folder icon) at the end of the line:
+
+|Bank statements|
+
+The button opens the editable list of the lines of that statement. Click
+*New* to add a transaction (label and amount); the new line is created
+in the opened statement and in its journal:
+
+|Bank statement lines|
+
+On each line, the buttons at the end allow to revert the reconciliation
+of the line and to open its journal entry.
+
+.. |Bank statements| image:: https://raw.githubusercontent.com/OCA/account-reconcile/20.0/account_statement_base/static/img/bank_statement_list.png
+.. |Bank statement lines| image:: https://raw.githubusercontent.com/OCA/account-reconcile/20.0/account_statement_base/static/img/bank_statement_lines.png
+
 Bug Tracker
 ===========
 
 Bugs are tracked on `GitHub Issues <https://github.com/OCA/account-reconcile/issues>`_.
 In case of trouble, please check there if your issue has already been reported.
 If you spotted it first, help us to smash it by providing a detailed and welcomed
-`feedback <https://github.com/OCA/account-reconcile/issues/new?body=module:%20account_statement_base%0Aversion:%2019.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
+`feedback <https://github.com/OCA/account-reconcile/issues/new?body=module:%20account_statement_base%0Aversion:%2020.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
 
 Do not contact contributors directly about support or help with technical issues.
 
@@ -106,6 +130,6 @@ Current `maintainer <https://odoo-community.org/page/maintainer-role>`__:
 
 |maintainer-alexis-via| 
 
-This module is part of the `OCA/account-reconcile <https://github.com/OCA/account-reconcile/tree/19.0/account_statement_base>`_ project on GitHub.
+This module is part of the `OCA/account-reconcile <https://github.com/OCA/account-reconcile/tree/20.0/account_statement_base>`_ project on GitHub.
 
 You are welcome to contribute. To learn how please visit https://odoo-community.org/page/Contribute.
