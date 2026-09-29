@@ -10,12 +10,13 @@ from dateutil.relativedelta import relativedelta
 
 from odoo import Command, api, fields, models, tools
 from odoo.exceptions import UserError
-from odoo.tools import SQL, Query, float_compare, float_is_zero
+from odoo.models import Query
+from odoo.tools import SQL, float_compare, float_is_zero
 
 
 class AccountBankStatementLine(models.Model):
     _name = "account.bank.statement.line"
-    _inherit = ["account.bank.statement.line", "account.reconcile.abstract"]
+    _inherit = ("account.bank.statement.line", "account.reconcile.abstract")
 
     reconcile_data_info = fields.Json(
         inverse="_inverse_reconcile_data_info", compute="_compute_reconcile_data_info"
@@ -72,7 +73,6 @@ class AccountBankStatementLine(models.Model):
         readonly=True,
         store=False,
         prefetch=False,
-        string="Manual In Currency",
     )
     manual_amount_in_currency = fields.Monetary(
         store=False,
@@ -223,7 +223,7 @@ class AccountBankStatementLine(models.Model):
             else:
                 new_data.append(line)
         if is_new_line:
-            reconcile_auxiliary_id, lines = self._get_reconcile_line(
+            _reconcile_auxiliary_id, lines = self._get_reconcile_line(
                 move_line,
                 "other",
                 is_counterpart=True,
@@ -506,15 +506,16 @@ class AccountBankStatementLine(models.Model):
             )
         self.previous_manual_amount_in_currency = self.manual_amount_in_currency
         for line in data:
-            if line["reference"] == self.manual_reference:
-                if self._check_line_changed(line):
-                    line_vals = self._get_manual_reconcile_vals()
-                    line_vals["kind"] = (
-                        line["kind"] if line["kind"] != "suspense" else "other"
-                    )
-                    line.update(line_vals)
-                    if line["kind"] == "liquidity":
-                        self._update_move_partner()
+            if line["reference"] == self.manual_reference and self._check_line_changed(
+                line
+            ):
+                line_vals = self._get_manual_reconcile_vals()
+                line_vals["kind"] = (
+                    line["kind"] if line["kind"] != "suspense" else "other"
+                )
+                line.update(line_vals)
+                if line["kind"] == "liquidity":
+                    self._update_move_partner()
             if self.manual_line_id and self.manual_line_id.id == line.get(
                 "original_exchange_line_id"
             ):
@@ -647,7 +648,7 @@ class AccountBankStatementLine(models.Model):
         return new_data, reconcile_auxiliary_id
 
     def _default_reconcile_data(self):
-        liquidity_lines, suspense_lines, other_lines = self._seek_for_lines()
+        liquidity_lines, _suspense_lines, other_lines = self._seek_for_lines()
         data = []
         reconcile_auxiliary_id = 1
         for line in liquidity_lines:
@@ -878,7 +879,7 @@ class AccountBankStatementLine(models.Model):
                     )
             move.invalidate_recordset()
         move._post()
-        for _account, lines in to_reconcile.items():
+        for lines in to_reconcile.values():
             lines.reconcile()
 
     def unreconcile_bank_line(self):
@@ -957,7 +958,7 @@ class AccountBankStatementLine(models.Model):
         done = self.browse()
         for record_id, rule_models in res.items():
             record = self.browse(record_id).with_prefetch(to_do.ids)
-            liquidity_lines, suspense_lines, other_lines = record._seek_for_lines()
+            liquidity_lines, _suspense_lines, _other_lines = record._seek_for_lines()
             data = []
             reconcile_auxiliary_id = 1
             for line in liquidity_lines:
@@ -989,7 +990,7 @@ class AccountBankStatementLine(models.Model):
         self.flush_recordset()
         self.env["account.move"].flush_model()
         self.env["account.move.line"].flush_model()
-        query = Query(self.env, self._table, self._table_sql)
+        query = Query(self, self._table, self._table_sql)
         move = self.env["account.move"]
         move_line = self.env["account.move.line"]
         account = self.env["account.account"]
@@ -1079,7 +1080,7 @@ class AccountBankStatementLine(models.Model):
         done = self.browse()
         for statement_line_id, move_line_id in self.env.cr.fetchall():
             record = self.browse(statement_line_id)
-            liquidity_lines, suspense_lines, other_lines = record._seek_for_lines()
+            liquidity_lines, _suspense_lines, _other_lines = record._seek_for_lines()
             data = []
             reconcile_auxiliary_id = 1
             for line in liquidity_lines:
@@ -1248,13 +1249,13 @@ class AccountBankStatementLine(models.Model):
 
     def action_to_check(self):
         self.ensure_one()
-        self.move_id.write({"checked": False})
+        self.move_id.write({"review_state": "todo"})
         if self.can_reconcile and self.journal_id.reconcile_mode == "edit":
             self.reconcile_bank_line()
 
     def action_checked(self):
         self.ensure_one()
-        self.move_id.write({"checked": True})
+        self.move_id.write({"review_state": "reviewed"})
 
     def _get_reconcile_line(
         self,
@@ -1462,7 +1463,7 @@ class AccountBankStatementLine(models.Model):
         # TODO: Add more checks
 
     def _get_retrieve_partner_account_query(self):
-        query = Query(self.env, self._table, self._table_sql)
+        query = Query(self, self._table, self._table_sql)
         query.add_join(
             "JOIN",
             self.env["res.partner.bank"]._table,
@@ -1470,7 +1471,7 @@ class AccountBankStatementLine(models.Model):
             SQL(
                 "%s ILIKE '%%' || %s || '%%'",
                 SQL.identifier(
-                    self.env["res.partner.bank"]._table, "sanitized_acc_number"
+                    self.env["res.partner.bank"]._table, "sanitized_account_number"
                 ),
                 SQL.identifier(self._table, "account_number"),
             ),
@@ -1525,7 +1526,7 @@ class AccountBankStatementLine(models.Model):
         return query
 
     def _get_retrieve_partner_name_query(self):
-        query = Query(self.env, self._table, self._table_sql)
+        query = Query(self, self._table, self._table_sql)
         query.add_join(
             "JOIN",
             self.env["res.partner"]._table,

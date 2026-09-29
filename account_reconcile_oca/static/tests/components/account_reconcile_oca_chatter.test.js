@@ -1,12 +1,5 @@
 import {animationFrame, click, expect, test} from "@odoo/hoot";
-import {
-    asyncStep,
-    defineModels,
-    fields,
-    models,
-    mountView,
-    waitForSteps,
-} from "@web/../tests/web_test_helpers";
+import {defineModels, fields, models, mountView} from "@web/../tests/web_test_helpers";
 import {
     contains,
     defineMailModels,
@@ -44,7 +37,7 @@ defineModels([MainElement, ChildElement]);
 
 test("Check Chatter from Child Model", async () => {
     onRpcBefore("/mail/message/post", (args) => {
-        asyncStep("/mail/message/post");
+        expect.step("/mail/message/post");
         const expected = {
             context: args.context,
             post_data: {
@@ -82,5 +75,5 @@ test("Check Chatter from Child Model", async () => {
     await animationFrame();
     await insertText(".o-mail-Composer-input", "hey");
     await click(".o-mail-Composer-send:enabled");
-    await waitForSteps(["/mail/message/post"]);
+    await expect.waitForSteps(["/mail/message/post"]);
 });

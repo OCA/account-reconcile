@@ -21,13 +21,13 @@ Account Reconcile Oca
     :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
     :alt: License: AGPL-3
 .. |badge3| image:: https://img.shields.io/badge/github-OCA%2Faccount--reconcile-lightgray.png?logo=github
-    :target: https://github.com/OCA/account-reconcile/tree/19.0/account_reconcile_oca
+    :target: https://github.com/OCA/account-reconcile/tree/20.0/account_reconcile_oca
     :alt: OCA/account-reconcile
 .. |badge4| image:: https://img.shields.io/badge/weblate-Translate%20me-F47D42.png
-    :target: https://translation.odoo-community.org/projects/account-reconcile-19-0/account-reconcile-19-0-account_reconcile_oca
+    :target: https://translation.odoo-community.org/projects/account-reconcile-20-0/account-reconcile-20-0-account_reconcile_oca
     :alt: Translate me on Weblate
 .. |badge5| image:: https://img.shields.io/badge/runboat-Try%20me-875A7B.png
-    :target: https://runboat.odoo-community.org/builds?repo=OCA/account-reconcile&target_branch=19.0
+    :target: https://runboat.odoo-community.org/builds?repo=OCA/account-reconcile&target_branch=20.0
     :alt: Try me on Runboat
 
 |badge1| |badge2| |badge3| |badge4| |badge5|
@@ -46,15 +46,29 @@ Usage
 Bank reconcile
 --------------
 
-Access Invoicing / Dashboard with a user with Full Acounting
-capabilities. Select reconcile on the journal of your choice.
+Access *Invoicing > Dashboard* with a user with *Show Full Accounting
+Features*. On the bank journal of your choice, click *Reconcile*.
+
+The statement lines to reconcile are listed on the left. Select one: on
+the right, the *Reconcile* tab lists the open journal items of the
+partner. Click on the items that match the statement line (for instance
+the receivable line of the invoice): they are added to the
+reconciliation. Then click *Reconcile*.
+
+|Bank reconcile|
+
+The *Manual operation* tab allows to create a counterpart on any
+account, and the reconcile models of the journal are available as
+buttons.
 
 Account reconcile
 -----------------
 
-Access Invoicing / Accounting / Actions / Reconcile All the possible
-reconcile options will show and you will be able to reconcile properly.
-You can access the same widget from accounts and Partners.
+Access *Invoicing > Accounting > Reconcile*. All the possible reconcile
+options will show and you will be able to reconcile properly. You can
+access the same widget from accounts and Partners.
+
+.. |Bank reconcile| image:: https://raw.githubusercontent.com/OCA/account-reconcile/20.0/account_reconcile_oca/static/img/bank_reconcile.png
 
 Known issues / Roadmap
 ======================
@@ -69,7 +83,7 @@ Bug Tracker
 Bugs are tracked on `GitHub Issues <https://github.com/OCA/account-reconcile/issues>`_.
 In case of trouble, please check there if your issue has already been reported.
 If you spotted it first, help us to smash it by providing a detailed and welcomed
-`feedback <https://github.com/OCA/account-reconcile/issues/new?body=module:%20account_reconcile_oca%0Aversion:%2019.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
+`feedback <https://github.com/OCA/account-reconcile/issues/new?body=module:%20account_reconcile_oca%0Aversion:%2020.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
 
 Do not contact contributors directly about support or help with technical issues.
 
@@ -115,6 +129,6 @@ Current `maintainer <https://odoo-community.org/page/maintainer-role>`__:
 
 |maintainer-etobella| 
 
-This module is part of the `OCA/account-reconcile <https://github.com/OCA/account-reconcile/tree/19.0/account_reconcile_oca>`_ project on GitHub.
+This module is part of the `OCA/account-reconcile <https://github.com/OCA/account-reconcile/tree/20.0/account_reconcile_oca>`_ project on GitHub.
 
 You are welcome to contribute. To learn how please visit https://odoo-community.org/page/Contribute.

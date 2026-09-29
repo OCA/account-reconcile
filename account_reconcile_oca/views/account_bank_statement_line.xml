@@ -12,7 +12,7 @@
                 <field name="foreign_currency_id" />
                 <field name="statement_id" />
                 <field name="statement_balance_end_real" />
-                <field name="checked" />
+                <field name="review_state" />
                 <field name="reconcile_aggregate" />
                 <field name="aggregate_id" />
                 <field name="aggregate_name" />
@@ -58,7 +58,7 @@
                             </div>
                             <div class="col-4" style="text-align:right">
                                 <div
-                                    t-if="!record.checked.raw_value"
+                                    t-if="['todo', 'anomaly'].includes(record.review_state.raw_value)"
                                     class="badge text-bg-warning"
                                 >
                                         To check
@@ -187,7 +187,7 @@
                             class="btn btn-secondary mx-1"
                             accesskey="c"
                             type="object"
-                            invisible="not checked"
+                            invisible="review_state in ('todo', 'anomaly')"
                         />
                         <button
                             name="action_checked"
@@ -195,7 +195,7 @@
                             class="btn btn-secondary mx-1"
                             accesskey="c"
                             type="object"
-                            invisible="checked"
+                            invisible="review_state not in ('todo', 'anomaly')"
                         />
                         <button
                             name="action_show_move"
@@ -209,7 +209,7 @@
                 <field name="id" invisible="1" />
                 <field name="name" invisible="1" />
                 <field name="can_reconcile" invisible="1" />
-                <field name="checked" invisible="1" />
+                <field name="review_state" invisible="1" />
                 <field name="partner_id" invisible="1" />
                 <field name="company_id" invisible="1" />
                 <field name="journal_id" invisible="1" />

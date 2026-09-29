@@ -1,17 +1,18 @@
-const {onWillStart, useState, useSubEnv} = owl;
+import {onWillStart, proxy} from "@odoo/owl";
 import {useBus, useService} from "@web/core/utils/hooks";
 import {KanbanController} from "@web/views/kanban/kanban_controller";
 import {View} from "@web/views/view";
 import {formatMonetary} from "@web/views/fields/formatters";
 import {router} from "@web/core/browser/router";
 import {useSetupAction} from "@web/search/action_hook";
+import {useSubEnv} from "@web/owl2/utils";
 
 export class ReconcileController extends KanbanController {
-    async setup() {
+    setup() {
         super.setup();
         this.initialLoad = true;
         this.selectedRecordIndex = -1;
-        this.state = useState({
+        this.state = proxy({
             selectedRecordId: this.props.state?.selectedRecordId,
             journalBalance: 0,
             currency: false,
@@ -202,6 +203,3 @@ ReconcileController.components = {
 };
 
 ReconcileController.template = "account_reconcile_oca.ReconcileController";
-ReconcileController.defaultProps = {
-    ...KanbanController.defaultProps,
-};

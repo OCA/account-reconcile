@@ -37,7 +37,7 @@
                     class="btn btn-primary"
                     type="action"
                     name="%(account_reconcile_oca.action_bank_statement_line_reconcile)s"
-                > Reconcile <t t-esc="dashboard.number_to_reconcile" /> Items</button>
+                > Reconcile <t t-out="dashboard.number_to_reconcile" /> Items</button>
             </xpath>
             <xpath
                 expr="//kanban/templates//div[@id='dashboard_bank_cash_right']"
@@ -50,11 +50,11 @@
                                 type="action"
                                 name="%(account_reconcile_oca.action_bank_statement_line_reconcile_to_check)s"
                             >
-                                <t t-esc="dashboard.number_to_check" /> to check</a>
+                                <t t-out="dashboard.number_to_check" /> to check</a>
                         </div>
                         <div class="col-auto text-right">
                             <span>
-                                <t t-esc="dashboard.to_check_balance" />
+                                <t t-out="dashboard.to_check_balance" />
                             </span>
                         </div>
                     </div>

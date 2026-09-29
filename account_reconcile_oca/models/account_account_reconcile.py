@@ -2,12 +2,12 @@
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
 from odoo import api, fields, models
-from odoo.tools.sql import pg_varchar
+from odoo.tools import SQL
 
 
 class CharId(fields.Id):
     type = "string"
-    column_type = ("varchar", pg_varchar())
+    column_type = ("varchar", "varchar")
 
 
 class AccountAccountReconcile(models.Model):
@@ -25,12 +25,12 @@ class AccountAccountReconcile(models.Model):
     active = fields.Boolean(default=True)
 
     @property
-    def _table_query(self):
+    def _table_sql(self):
         query = (
             f"{self._select()} {self._from()} {self._where()} "
             f"{self._groupby()} {self._having()}"
         )
-        return query
+        return SQL("(%s)", SQL(query))
 
     def _select(self):
         account_account_name_field = (
@@ -157,9 +157,8 @@ class AccountAccountReconcile(models.Model):
         data = self.reconcile_data_info
         counterparts = []
         for line in data["data"]:
-            if line["reference"] == self.manual_reference:
-                if self.manual_delete:
-                    continue
+            if line["reference"] == self.manual_reference and self.manual_delete:
+                continue
             counterparts.append(line["id"])
         data["counterparts"] = counterparts
         self.reconcile_data_info = self._recompute_data(data)

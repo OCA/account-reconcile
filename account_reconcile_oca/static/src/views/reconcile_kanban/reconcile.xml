@@ -6,16 +6,16 @@
         t-inherit-mode="primary"
     >
         <xpath expr="//t[@t-as='groupOrRecord']" position="before">
-            <div t-if="env.parentController.journalId" class="m-2 d-flex w-100">
+            <div t-if="this.env.parentController.journalId" class="m-2 d-flex w-100">
                 <span
                     class="flex-fill text-900 text-start ps-0 fw-bold fs-4 align-self-center"
                 >Global Balance</span>
                 <span
                     class="pe-0 fw-bold fs-4 align-self-center"
-                    t-esc="env.parentController.journalBalanceStr"
+                    t-out="this.env.parentController.journalBalanceStr"
                 />
             </div>
-            <t t-set="aggregates" t-value="getAggregates()" />
+            <t t-set="aggregates" t-value="this.getAggregates()" />
         </xpath>
         <xpath expr="//t[@t-else='']/KanbanRecord" position="before">
             <t
@@ -25,19 +25,19 @@
                 <div class="m-2 d-flex w-100">
                     <span
                         class="flex-fill text-900 text-start ps-0 fw-bold fs-4 align-self-center"
-                        t-esc="aggregate.name"
+                        t-out="aggregate.name"
                     />
                     <span
                         t-if="groupOrRecord.record.data.reconcile_aggregate == 'statement'"
                         class="pe-0 fw-bold fs-4 align-self-center btn btn-link"
                         t-on-click="() => this.onClickStatement(aggregate.id)"
-                        t-esc="aggregate.balanceStr"
+                        t-out="aggregate.balanceStr"
                     />
                     <!--
                     <span
                         t-if="groupOrRecord.record.data.reconcile_aggregate != 'statement'"
                         class="pe-0 fw-bold fs-4 align-self-center text-link"
-                        t-esc="aggregate.balanceStr"
+                        t-out="aggregate.balanceStr"
                     />-->
                 </div>
             </t>
@@ -51,8 +51,8 @@
         </xpath>
         <!-- Group by selector disabled on the view, so we need to find the one without group,
         then we pass to the component the selected record -->
-        <xpath expr="//KanbanRecord[not(@group)]" position="attributes">
-            <attribute name="selectedRecordId">props.selectedRecordId</attribute>
+        <xpath expr="//t[@t-else='']/KanbanRecord" position="attributes">
+            <attribute name="selectedRecordId">this.props.selectedRecordId</attribute>
         </xpath>
     </t>
     <t
@@ -62,26 +62,29 @@
     >
         <!-- we pass to the component the selected record -->
         <xpath expr="//Layout/t[@Compiler]" position="attributes">
-            <attribute name="selectedRecordId">state.selectedRecordId</attribute>
+            <attribute name="selectedRecordId">this.state.selectedRecordId</attribute>
         </xpath>
         <xpath expr="//Layout" position="attributes">
             <attribute
                 name="className"
-            >model.useSampleModel ? 'o_view_sample_data o_account_reconcile_oca' : 'o_account_reconcile_oca'</attribute>
+            >this.model.useSampleModel ? 'o_view_sample_data o_account_reconcile_oca' : 'o_account_reconcile_oca'</attribute>
         </xpath>
         <xpath expr="//Layout" position="inside">
             <div class="o_account_reconcile_oca_info">
-                <t t-if="state.selectedRecordId">
-                    <View t-props="viewReconcileInfo" t-key="state.selectedRecordId" />
+                <t t-if="this.state.selectedRecordId">
+                    <View
+                        t-props="this.viewReconcileInfo"
+                        t-key="this.state.selectedRecordId"
+                    />
                 </t>
             </div>
         </xpath>
     </t>
     <t t-name="account_reconcile.ReconcileView.Buttons">
         <button
-            t-if="props.archInfo.activeActions.create"
+            t-if="this.props.archInfo.activeActions.create"
             class="btn btn-primary"
-            t-on-click="onClickNewButton"
+            t-on-click="this.onClickNewButton"
         >Create</button>
     </t>
 </templates>

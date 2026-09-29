@@ -3,7 +3,8 @@
 import re
 
 from odoo import Command, fields, models
-from odoo.tools import SQL, Query
+from odoo.models import Query
+from odoo.tools import SQL
 
 
 class AccountReconcileModel(models.Model):
@@ -51,7 +52,9 @@ class AccountReconcileModel(models.Model):
         By default it will get all the rules that match
         """
         query = Query(
-            self.env, bank_statement_lines._table, bank_statement_lines._table_sql
+            bank_statement_lines,
+            bank_statement_lines._table,
+            bank_statement_lines._table_sql,
         )
         query.add_join(
             "JOIN",
@@ -182,7 +185,7 @@ class AccountReconcileModel(models.Model):
             )
         )
         query.add_where(SQL("%s = %s", SQL.identifier(self._table, "trigger"), trigger))
-        query.order = SQL.identifier(self._table, "sequence").code
+        query.order = SQL.identifier(self._table, "sequence")
         return query
 
     # After this code comes from odoo old versions. It is necessary to remove it...

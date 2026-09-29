@@ -12,7 +12,7 @@ export class ReconcileFormNotebook extends Notebook {
         });
     }
     onPageNavigate(ev) {
-        for (const page of this.pages) {
+        for (const page of this.pages()) {
             if (
                 ev.detail.detail.name === page[1].name &&
                 this.state.currentPage !== page[0]
@@ -25,7 +25,3 @@ export class ReconcileFormNotebook extends Notebook {
         }
     }
 }
-
-ReconcileFormNotebook.props = {
-    ...Notebook.props,
-};

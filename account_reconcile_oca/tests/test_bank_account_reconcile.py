@@ -165,10 +165,11 @@ class TestReconciliationWidget(TestAccountReconciliationCommon):
         on manual lines with foreign currency.
         We enforce the currency rate to be sure that the amounts are correct
         """
+        # Since 20.0, a currency rate applies from the day after its date
         self.env["res.currency.rate"].create(
             {
                 "currency_id": self.env.ref("base.USD").id,
-                "name": time.strftime("%Y-07-15"),
+                "name": time.strftime("%Y-07-14"),
                 "rate": 2,
             }
         )
@@ -805,13 +806,13 @@ class TestReconciliationWidget(TestAccountReconciliationCommon):
             f.add_account_move_line_id = receivable1
             self.assertTrue(f.can_reconcile)
         self.assertFalse(bank_stmt_line.is_reconciled)
-        self.assertTrue(bank_stmt_line.checked)
+        self.assertNotIn(bank_stmt_line.review_state, ("todo", "anomaly"))
         bank_stmt_line.action_to_check()
         self.assertTrue(bank_stmt_line.is_reconciled)
-        self.assertFalse(bank_stmt_line.checked)
+        self.assertIn(bank_stmt_line.review_state, ("todo", "anomaly"))
         bank_stmt_line.action_checked()
         self.assertTrue(bank_stmt_line.is_reconciled)
-        self.assertTrue(bank_stmt_line.checked)
+        self.assertNotIn(bank_stmt_line.review_state, ("todo", "anomaly"))
 
     def test_reconcile_invoice_to_check_not_reconciled(self):
         """
@@ -836,13 +837,13 @@ class TestReconciliationWidget(TestAccountReconciliationCommon):
             }
         )
         self.assertFalse(bank_stmt_line.is_reconciled)
-        self.assertTrue(bank_stmt_line.checked)
+        self.assertNotIn(bank_stmt_line.review_state, ("todo", "anomaly"))
         bank_stmt_line.action_to_check()
         self.assertFalse(bank_stmt_line.is_reconciled)
-        self.assertFalse(bank_stmt_line.checked)
+        self.assertIn(bank_stmt_line.review_state, ("todo", "anomaly"))
         bank_stmt_line.action_checked()
         self.assertFalse(bank_stmt_line.is_reconciled)
-        self.assertTrue(bank_stmt_line.checked)
+        self.assertNotIn(bank_stmt_line.review_state, ("todo", "anomaly"))
 
     # Testing widget
 
@@ -986,7 +987,9 @@ class TestReconciliationWidget(TestAccountReconciliationCommon):
                 "date": time.strftime("%Y-07-15"),
             }
         )
-        liquidity_lines, suspense_lines, other_lines = bank_stmt_line._seek_for_lines()
+        liquidity_lines, _suspense_lines, _other_lines = (
+            bank_stmt_line._seek_for_lines()
+        )
         with Form(
             bank_stmt_line,
             view="account_reconcile_oca.bank_statement_line_form_reconcile_view",
@@ -1132,16 +1135,17 @@ class TestReconciliationWidget(TestAccountReconciliationCommon):
                 "currency_id": cny.id,
             }
         )
+        # Since 20.0, a currency rate applies from the day after its date
         self.env["res.currency.rate"].create(
             {
-                "name": time.strftime("%Y-09-10"),
+                "name": time.strftime("%Y-09-09"),
                 "currency_id": cny.id,
                 "inverse_company_rate": 0.125989013758,
             }
         )
         self.env["res.currency.rate"].create(
             {
-                "name": time.strftime("%Y-09-09"),
+                "name": time.strftime("%Y-09-08"),
                 "currency_id": cny.id,
                 "inverse_company_rate": 0.126225969731,
             }
@@ -1296,17 +1300,18 @@ class TestReconciliationWidget(TestAccountReconciliationCommon):
         # Test we can reconcile lines in foreign currency even if the rate was updated
         # late in odoo, meaning the statement line was created and the rate was updated
         # in odoo after that.
+        # Since 20.0, a currency rate applies from the day after its date
         self.env["res.currency.rate"].create(
             {
                 "currency_id": self.env.ref("base.USD").id,
-                "name": time.strftime("%Y-07-14"),
+                "name": time.strftime("%Y-07-13"),
                 "rate": 1.15,
             }
         )
         self.env["res.currency.rate"].create(
             {
                 "currency_id": self.env.ref("base.USD").id,
-                "name": time.strftime("%Y-07-15"),
+                "name": time.strftime("%Y-07-14"),
                 "rate": 1.2,
             }
         )
@@ -1337,11 +1342,13 @@ class TestReconciliationWidget(TestAccountReconciliationCommon):
         self.env["res.currency.rate"].create(
             {
                 "currency_id": self.env.ref("base.USD").id,
-                "name": time.strftime("%Y-07-16"),
+                "name": time.strftime("%Y-07-15"),
                 "rate": 1.25,
             }
         )
-        liquidity_lines, suspense_lines, other_lines = bank_stmt_line._seek_for_lines()
+        liquidity_lines, _suspense_lines, _other_lines = (
+            bank_stmt_line._seek_for_lines()
+        )
         with Form(
             bank_stmt_line,
             view="account_reconcile_oca.bank_statement_line_form_reconcile_view",
@@ -1396,7 +1403,7 @@ class TestReconciliationWidget(TestAccountReconciliationCommon):
                             0,
                             0,
                             {
-                                "acc_number": account_number,
+                                "account_number": account_number,
                             },
                         )
                     ],

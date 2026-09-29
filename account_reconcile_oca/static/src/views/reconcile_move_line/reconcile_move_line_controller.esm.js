@@ -9,11 +9,11 @@ export class ReconcileMoveLineController extends ListController {
         const scroller = document.querySelector(".o_account_reconcile_oca_info");
         const scrollTop = scroller ? scroller.scrollTop : null;
         var data = {};
-        data[this.props.parentField] = {
+        data[this.env.reconcileParent.field] = {
             id: record.resId,
             display_name: record.display_name,
         };
-        await this.props.parentRecord.update(data);
+        await this.env.reconcileParent.record.update(data);
         if (scroller && scrollTop !== null) {
             // The update re-renders the form asynchronously, so restore the
             // scroll across the next couple of frames to make sure it sticks
@@ -29,20 +29,13 @@ export class ReconcileMoveLineController extends ListController {
         }
     }
     async clickAddAll() {
-        await this.props.parentRecord.save();
-        await this.model.orm.call(
-            this.props.parentRecord.resModel,
-            "add_multiple_lines",
-            [this.props.parentRecord.resIds, this.model.root.domain]
-        );
-        await this.props.parentRecord.load();
-        this.props.parentRecord.model.notify();
+        const parentRecord = this.env.reconcileParent.record;
+        await parentRecord.save();
+        await this.model.orm.call(parentRecord.resModel, "add_multiple_lines", [
+            parentRecord.resIds,
+            this.model.root.domain,
+        ]);
+        await parentRecord.load();
+        parentRecord.model.notify();
     }
 }
-
-ReconcileMoveLineController.template = `account_reconcile_oca.ReconcileMoveLineController`;
-ReconcileMoveLineController.props = {
-    ...ListController.props,
-    parentRecord: {type: Object, optional: true},
-    parentField: {type: String, optional: true},
-};

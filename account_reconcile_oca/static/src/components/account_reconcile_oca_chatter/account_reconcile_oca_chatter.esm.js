@@ -1,14 +1,12 @@
-// Import {ChatterContainer} from "@mail/components/chatter_container/chatter_container";
-// import {Chatter} from "@mail/core/web/chatter";
-import {Chatter} from "@mail/chatter/web_portal/chatter";
+import {Component, useProps} from "@odoo/owl";
+import {Chatter} from "@mail/chatter/web_portal_project/chatter";
 
 import {registry} from "@web/core/registry";
 import {standardFieldProps} from "@web/views/fields/standard_field_props";
 
-const {Component} = owl;
-
-export class AccountReconcileChatterWidget extends Component {}
-AccountReconcileChatterWidget.props = {...standardFieldProps};
+export class AccountReconcileChatterWidget extends Component {
+    props = useProps(standardFieldProps);
+}
 AccountReconcileChatterWidget.template =
     "account_reconcile_oca.AccountReconcileChatterWidget";
 AccountReconcileChatterWidget.components = {...Component.components, Chatter};

@@ -1,3 +1,4 @@
+import {Component, useProps} from "@odoo/owl";
 import {formatDate, parseDate} from "@web/core/l10n/dates";
 import {floatIsZero} from "@web/core/utils/numbers";
 import {formatMonetary} from "@web/views/fields/formatters";
@@ -6,12 +7,8 @@ import {registry} from "@web/core/registry";
 import {standardFieldProps} from "@web/views/fields/standard_field_props";
 import {useService} from "@web/core/utils/hooks";
 
-const {Component} = owl;
-
 export class AccountReconcileDataWidget extends Component {
-    static props = {
-        ...standardFieldProps,
-    };
+    props = useProps(standardFieldProps);
     static template = "account_reconcile_oca.ReconcileDataWidget";
     setup() {
         super.setup(...arguments);
@@ -21,8 +18,8 @@ export class AccountReconcileDataWidget extends Component {
             this.props &&
             this.props.record &&
             (this.props.record.data.foreign_currency_id ||
-                this.props.record.data.currency_id[0] !==
-                    this.props.record.data.company_currency_id[0] ||
+                this.props.record.data.currency_id?.id !==
+                    this.props.record.data.company_currency_id?.id ||
                 this.props.record.data[this.props.name].data.some(
                     (item) => item.line_currency_id !== item.currency_id
                 ));
@@ -98,7 +95,6 @@ export class AccountReconcileDataWidget extends Component {
         ev.preventDefault();
         ev.stopPropagation();
 
-        console.log(moveId);
         const action = await this.orm.call("account.move", "get_formview_action", [
             [moveId],
         ]);

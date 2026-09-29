@@ -1,27 +1,16 @@
-import {
-    BadgeSelectionField,
-    badgeSelectionField,
-} from "@web/views/fields/badge_selection/badge_selection_field";
+import {badgesMany2oneField} from "@web/views/fields/badges_many2one/badges_many2one_field";
 import {registry} from "@web/core/registry";
 
-export class FieldSelectionBadgeUncheck extends BadgeSelectionField {
-    async onChange(value) {
-        var old_value = this.props.value;
-        if (this.props.type === "many2one") {
-            old_value = old_value[0];
-        }
-        if (value === old_value) {
-            this.props.update(false);
-            return;
-        }
-        super.onChange(...arguments);
-    }
-}
-
+// Clicking on the selected badge unselects it, even if the field is required
+// in the view (the core widget only allows it for optional fields).
 export const FieldSelectionBadgeUncheckField = {
-    ...badgeSelectionField,
-    component: FieldSelectionBadgeUncheck,
-    supportedTypes: ["many2one"],
+    ...badgesMany2oneField,
+    extractProps(fieldInfo, dynamicInfo) {
+        return {
+            ...badgesMany2oneField.extractProps(fieldInfo, dynamicInfo),
+            canDeselect: true,
+        };
+    },
 };
 registry
     .category("fields")

@@ -49,4 +49,8 @@ test("Check Badge Selection and management", async () => {
     await animationFrame();
     expect(`[name="child_id"] .o_selection_badge.active`).toHaveCount(1);
     expect(`[name="child_id"] .o_selection_badge.active`).toHaveText("value 1");
+    // Clicking again on the selected badge unselects it
+    await click(`[name="child_id"] .o_selection_badge:contains("value 1")`);
+    await animationFrame();
+    expect(`[name="child_id"] .o_selection_badge.active`).toHaveCount(0);
 });

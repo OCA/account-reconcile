@@ -1,9 +1,14 @@
-import {KanbanRenderer} from "@web/views/kanban/kanban_renderer";
+import {KanbanRenderer, kanbanRendererProps} from "@web/views/kanban/kanban_renderer";
+import {t, useProps} from "@odoo/owl";
 import {ReconcileKanbanRecord} from "./reconcile_kanban_record.esm.js";
 import {formatMonetary} from "@web/views/fields/formatters";
 import {useService} from "@web/core/utils/hooks";
 
 export class ReconcileRenderer extends KanbanRenderer {
+    props = useProps({
+        ...kanbanRendererProps,
+        selectedRecordId: t.any().optional(),
+    });
     setup() {
         super.setup();
         this.action = useService("action");
@@ -29,7 +34,7 @@ export class ReconcileRenderer extends KanbanRenderer {
                     name: record.data.aggregate_name,
                     balance: record.data.statement_balance_end_real,
                     balanceStr: formatMonetary(record.data.statement_balance_end_real, {
-                        currencyId: record.data.currency_id[0],
+                        currencyId: record.data.currency_id.id,
                     }),
                 });
             }
@@ -59,4 +64,3 @@ ReconcileRenderer.components = {
     KanbanRecord: ReconcileKanbanRecord,
 };
 ReconcileRenderer.template = "account_reconcile_oca.ReconcileRenderer";
-ReconcileRenderer.props = [...KanbanRenderer.props, "selectedRecordId?"];

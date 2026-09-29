@@ -2,15 +2,13 @@ import {FetchRecordError} from "@web/model/relational_model/errors";
 import {FormController} from "@web/views/form/form_controller";
 import {useService} from "@web/core/utils/hooks";
 import {useViewButtons} from "@web/views/view_button/view_button_hook";
-const {useRef} = owl;
 
 export class ReconcileFormController extends FormController {
     setup() {
         super.setup(...arguments);
         this.env.exposeController(this);
         this.orm = useService("orm");
-        const rootRef = useRef("root");
-        useViewButtons(rootRef, {
+        useViewButtons(this.rootRef, {
             reload: this.reloadFormController.bind(this),
             beforeExecuteAction: this.beforeExecuteActionButton.bind(this),
             afterExecuteAction: this.afterExecuteActionButton.bind(this),
