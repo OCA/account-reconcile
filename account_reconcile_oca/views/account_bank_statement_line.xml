@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <!-- Copyright 2023 Dixmit
      License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
 <odoo>
@@ -82,7 +82,7 @@
             name="name"
         >Simple form view to manually create an account.bank.statement.line</field>
         <field name="model">account.bank.statement.line</field>
-        <field name="priority">99</field>
+        <field name="priority" eval="99" />
         <field name="arch" type="xml">
             <form>
                 <group>
@@ -145,7 +145,7 @@
     <record id="bank_statement_line_form_reconcile_view" model="ir.ui.view">
         <field name="name">account.bank.statement.line.reconcile</field>
         <field name="model">account.bank.statement.line</field>
-        <field name="priority">99</field>
+        <field name="priority" eval="99" />
         <field name="arch" type="xml">
             <form js_class="reconcile_form">
                 <div class="o_form_statusbar o_account_reconcile_oca_statusbar">

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <!-- Copyright 2023 Dixmit
      License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
 <odoo>
@@ -33,10 +33,10 @@
                 position="inside"
             >
                 <button
-                    type="action"
                     t-if="dashboard.number_to_reconcile > 0"
-                    name="%(account_reconcile_oca.action_bank_statement_line_reconcile)s"
                     class="btn btn-primary"
+                    type="action"
+                    name="%(account_reconcile_oca.action_bank_statement_line_reconcile)s"
                 > Reconcile <t t-esc="dashboard.number_to_reconcile" /> Items</button>
             </xpath>
             <xpath

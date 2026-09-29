@@ -10,7 +10,7 @@
                 <th>Partner</th>
                 <th>Date</th>
                 <th>Label</th>
-                <th class="text-end" t-if="foreignCurrency">
+                <th t-if="foreignCurrency" class="text-end">
                     Amount in currency
                 </th>
                 <th class="text-end">Debit</th>
@@ -54,8 +54,8 @@
                             />
                         </td>
                         <td
-                            class="text-end o_field_account_reconcile_oca_balance_float o_account_reconcile_oca_data_line_balance"
                             t-if="foreignCurrency"
+                            class="text-end o_field_account_reconcile_oca_balance_float o_account_reconcile_oca_data_line_balance"
                         >
                             <span t-esc="reconcile_line.amount_currency_format" />
                         </td>
@@ -67,9 +67,9 @@
                                 t-if="reconcile_line.amount &gt; 0"
                             />
                             <div
+                                t-if="reconcile_line.amount &gt; 0 and reconcile_line.original_amount"
                                 class="o_field_account_reconcile_oca_balance_original_float"
                                 t-esc="reconcile_line.original_amount_format"
-                                t-if="reconcile_line.amount &gt; 0 and reconcile_line.original_amount"
                             />
                         </td>
                         <td
@@ -80,22 +80,22 @@
                                 t-if="reconcile_line.amount &lt; 0"
                             />
                             <div
+                                t-if="reconcile_line.amount &lt; 0  and reconcile_line.original_amount"
                                 class="o_field_account_reconcile_oca_balance_original_float"
                                 t-esc="reconcile_line.original_amount_format"
-                                t-if="reconcile_line.amount &lt; 0  and reconcile_line.original_amount"
                             />
                         </td>
                         <td>
                             <button
+                                t-if="reconcile_line.kind == 'other' &amp;&amp; ! props.record.data.is_reconciled"
                                 class="btn fa fa-trash-o"
                                 role="button"
                                 t-on-click="(ev) => this.onTrashLine(ev, reconcile_line)"
-                                t-if="reconcile_line.kind == 'other' &amp;&amp; ! props.record.data.is_reconciled"
                             />
                         </td>
                     </tr>
                 </t>
-                <tr class="text-muted" t-if="rec.hasOpenBalance">
+                <tr t-if="rec.hasOpenBalance" class="text-muted">
                     <td colspan="5">Open Balance</td>
                     <td class="text-end" t-esc="rec.openDebitFmt" />
                     <td class="text-end" t-esc="rec.openCreditFmt" />

@@ -1,8 +1,8 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <!-- Copyright 2023 Dixmit
      License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
 <odoo>
-    <record model="ir.ui.view" id="view_account_list">
+    <record id="view_account_list" model="ir.ui.view">
         <field name="name">account.account.list (in account_reconcile_oca)</field>
         <field name="model">account.account</field>
         <field name="inherit_id" ref="account.view_account_list" />

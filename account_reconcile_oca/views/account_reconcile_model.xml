@@ -1,8 +1,8 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <!-- Copyright 2023 Dixmit
      License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
 <odoo>
-    <record model="ir.ui.view" id="view_account_reconcile_model_search">
+    <record id="view_account_reconcile_model_search" model="ir.ui.view">
         <field
             name="name"
         >account.reconcile.model.search (in account_reconcile_oca)</field>

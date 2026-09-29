@@ -9,9 +9,9 @@ class ResCompany(models.Model):
     _inherit = "res.company"
 
     reconcile_aggregate = fields.Selection(
-        selection=lambda self: self.env["account.journal"]
-        ._fields["reconcile_aggregate"]
-        .selection
+        selection=lambda self: (
+            self.env["account.journal"]._fields["reconcile_aggregate"].selection
+        )
     )
 
     def _get_unreconciled_statement_lines_redirect_action(

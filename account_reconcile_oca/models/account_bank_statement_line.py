@@ -21,9 +21,9 @@ class AccountBankStatementLine(models.Model):
         inverse="_inverse_reconcile_data_info", compute="_compute_reconcile_data_info"
     )
     reconcile_mode = fields.Selection(
-        selection=lambda self: self.env["account.journal"]
-        ._fields["reconcile_mode"]
-        .selection
+        selection=lambda self: (
+            self.env["account.journal"]._fields["reconcile_mode"].selection
+        )
     )
     reconcile_data = fields.Json()
     manual_line_id = fields.Many2one(
@@ -615,7 +615,7 @@ class AccountBankStatementLine(models.Model):
                     "reference": f"reconcile_auxiliary;{reconcile_auxiliary_id}",
                     "id": False,
                     "amount": amount,
-                    "debit": amount if amount > 0 else 0,
+                    "debit": max(0, amount),
                     "credit": -amount if amount < 0 else 0,
                     "kind": "other",
                     "account_id": [
@@ -681,8 +681,9 @@ class AccountBankStatementLine(models.Model):
                             data += lines
                         continue
                     partial = partial_lines.filtered(
-                        lambda r, line=reconciled_line: r.debit_move_id == line
-                        or r.credit_move_id == line
+                        lambda r, line=reconciled_line: (
+                            r.debit_move_id == line or r.credit_move_id == line
+                        )
                     )
                     partial_amount = sum(
                         partial.filtered(
@@ -702,14 +703,16 @@ class AccountBankStatementLine(models.Model):
                             "debit": partial_amount < 0 and -partial_amount,
                             "currency_amount": sum(
                                 partial.filtered(
-                                    lambda r, line=reconciled_line: r.credit_move_id
-                                    == line
+                                    lambda r, line=reconciled_line: (
+                                        r.credit_move_id == line
+                                    )
                                 ).mapped("credit_amount_currency")
                             )
                             - sum(
                                 partial.filtered(
-                                    lambda r, line=reconciled_line: r.debit_move_id
-                                    == line
+                                    lambda r, line=reconciled_line: (
+                                        r.debit_move_id == line
+                                    )
                                 ).mapped("debit_amount_currency")
                             ),
                         },
@@ -733,8 +736,10 @@ class AccountBankStatementLine(models.Model):
 
     def _all_partials_lines(self, lines):
         reconciliation_lines = lines.filtered(
-            lambda x: x.account_id.reconcile
-            or x.account_id.account_type in ("asset_cash", "liability_credit_card")
+            lambda x: (
+                x.account_id.reconcile
+                or x.account_id.account_type in ("asset_cash", "liability_credit_card")
+            )
         )
         current_lines = reconciliation_lines
         current_partials = self.env["account.partial.reconcile"]
@@ -892,8 +897,10 @@ class AccountBankStatementLine(models.Model):
         to_reverse = (
             self.line_ids._all_reconciled_lines()
             .filtered(
-                lambda line: line.move_id != self.move_id
-                and (line.matched_debit_ids or line.matched_credit_ids)
+                lambda line: (
+                    line.move_id != self.move_id
+                    and (line.matched_debit_ids or line.matched_credit_ids)
+                )
             )
             .mapped("move_id")
         )

@@ -1,8 +1,8 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <!-- Copyright 2023 Dixmit
      License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
 <odoo>
-    <record model="ir.ui.view" id="account_account_reconcile_form_view">
+    <record id="account_account_reconcile_form_view" model="ir.ui.view">
         <field
             name="name"
         >account.account.reconcile.form (in account_reconcile_oca)</field>
@@ -65,7 +65,7 @@
         </field>
     </record>
 
-    <record model="ir.ui.view" id="account_account_reconcile_search_view">
+    <record id="account_account_reconcile_search_view" model="ir.ui.view">
         <field
             name="name"
         >account.account.reconcile.search (in account_reconcile_oca)</field>
@@ -78,7 +78,7 @@
         </field>
     </record>
 
-    <record model="ir.ui.view" id="account_account_reconcile_tree_view">
+    <record id="account_account_reconcile_tree_view" model="ir.ui.view">
         <field
             name="name"
         >account.account.reconcile.list (in account_reconcile_oca)</field>
@@ -93,7 +93,7 @@
         </field>
     </record>
 
-    <record model="ir.ui.view" id="account_account_reconcile_kanban_view">
+    <record id="account_account_reconcile_kanban_view" model="ir.ui.view">
         <field
             name="name"
         >account.account.reconcile.kanban (in account_reconcile_oca)</field>
@@ -114,7 +114,7 @@
         </field>
     </record>
 
-    <record model="ir.actions.act_window" id="account_account_reconcile_act_window">
+    <record id="account_account_reconcile_act_window" model="ir.actions.act_window">
         <field name="name">Reconcile</field>
         <field name="res_model">account.account.reconcile</field>
         <field name="view_mode">kanban</field>
@@ -153,7 +153,7 @@
         <field name="binding_view_types">form</field>
     </record>
 
-    <record model="ir.ui.menu" id="account_account_reconcile_menu">
+    <record id="account_account_reconcile_menu" model="ir.ui.menu">
         <field name="name">Reconcile</field>
         <field name="parent_id" ref="account.menu_finance_entries" />
         <field name="action" ref="account_account_reconcile_act_window" />

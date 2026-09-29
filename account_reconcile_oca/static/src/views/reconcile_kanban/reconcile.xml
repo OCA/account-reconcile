@@ -6,7 +6,7 @@
         t-inherit-mode="primary"
     >
         <xpath expr="//t[@t-as='groupOrRecord']" position="before">
-            <div class="m-2 d-flex w-100" t-if="env.parentController.journalId">
+            <div t-if="env.parentController.journalId" class="m-2 d-flex w-100">
                 <span
                     class="flex-fill text-900 text-start ps-0 fw-bold fs-4 align-self-center"
                 >Global Balance</span>
@@ -29,8 +29,8 @@
                     />
                     <span
                         t-if="groupOrRecord.record.data.reconcile_aggregate == 'statement'"
-                        t-on-click="() => this.onClickStatement(aggregate.id)"
                         class="pe-0 fw-bold fs-4 align-self-center btn btn-link"
+                        t-on-click="() => this.onClickStatement(aggregate.id)"
                         t-esc="aggregate.balanceStr"
                     />
                     <!--
@@ -79,9 +79,9 @@
     </t>
     <t t-name="account_reconcile.ReconcileView.Buttons">
         <button
-            t-on-click="onClickNewButton"
-            class="btn btn-primary"
             t-if="props.archInfo.activeActions.create"
+            class="btn btn-primary"
+            t-on-click="onClickNewButton"
         >Create</button>
     </t>
 </templates>

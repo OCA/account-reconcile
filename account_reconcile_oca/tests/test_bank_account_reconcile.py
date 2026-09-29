@@ -1561,15 +1561,18 @@ class TestReconciliationWidget(TestAccountReconciliationCommon):
         self.assertEqual(5, len(bank_stmt_line_01.move_id.line_ids))
         self.assertEqual(
             bank_stmt_line_01.move_id.line_ids.filtered(
-                lambda r: r.account_id
-                == self.company_data["default_account_receivable"]
+                lambda r: (
+                    r.account_id == self.company_data["default_account_receivable"]
+                )
             ).balance,
             -80,
         )
         self.assertEqual(
             bank_stmt_line_01.move_id.line_ids.filtered(
-                lambda r: r.account_id
-                == self.company_data["default_account_deferred_expense"]
+                lambda r: (
+                    r.account_id
+                    == self.company_data["default_account_deferred_expense"]
+                )
             ).balance,
             -10.1,
         )
@@ -1600,15 +1603,18 @@ class TestReconciliationWidget(TestAccountReconciliationCommon):
         self.assertEqual(4, len(bank_stmt_line_02.move_id.line_ids))
         self.assertEqual(
             bank_stmt_line_02.move_id.line_ids.filtered(
-                lambda r: r.account_id
-                == self.company_data["default_account_receivable"]
+                lambda r: (
+                    r.account_id == self.company_data["default_account_receivable"]
+                )
             ).balance,
             -80,
         )
         self.assertEqual(
             bank_stmt_line_02.move_id.line_ids.filtered(
-                lambda r: r.account_id
-                == self.company_data["default_account_deferred_expense"]
+                lambda r: (
+                    r.account_id
+                    == self.company_data["default_account_deferred_expense"]
+                )
             ).balance,
             -100,
         )
