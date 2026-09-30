@@ -7,7 +7,7 @@
     "maintainer": "Camptocamp",
     "category": "Finance",
     "complexity": "normal",
-    "depends": ["account_move_base_import", "base_transaction_id"],
+    "depends": ["account_move_so_import", "base_transaction_id"],
     "data": ["data/completion_rule_data.xml"],
     "website": "https://github.com/OCA/account-reconcile",
     "installable": True,

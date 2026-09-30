@@ -37,19 +37,9 @@ class AccountMoveCompletionRule(models.Model):
             'account_id' : value,
             ...}
         """
-        res = {}
         so_obj = self.env["sale.order"]
         sales = so_obj.search([("transaction_id", "=", line.name)])
-        partners = sales.mapped("partner_id")
-        if len(partners) > 1:
-            raise ErrorTooManyPartner(
-                _('Line named "%s" was matched by more than ' "one partner.")
-                % line.name
-            )
-        if len(partners) == 1:
-            res["partner_id"] = partners.commercial_partner_id.id or partners.id
-            res["account_id"] = partners.property_account_receivable_id.id
-        return res
+        return self._get_aml_values_from_sales(sales)
 
     def get_from_transaction_id_and_invoice(self, line):
         """Match the partner based on the transaction ID field of the invoice.
