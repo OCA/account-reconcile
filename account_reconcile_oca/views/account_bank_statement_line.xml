@@ -244,7 +244,7 @@
                         <field
                             name="add_account_move_line_id"
                             widget="account_reconcile_oca_match"
-                            domain="[('parent_state', '=', 'posted'),('amount_residual', '!=', 0),('account_id.reconcile', '=', True), ('company_id', '=', company_id), ('statement_line_id', '!=', id)]"
+                            domain="[('parent_state', '=', 'posted'),('amount_residual', '!=', 0),('account_id.reconcile', '=', True), ('statement_line_id', '!=', id), '|', ('company_id', 'parent_of', company_id), ('company_id', 'child_of', company_id)]"
                             context="{'search_default_partner_id': partner_id, 'list_view_ref': 'account_reconcile_oca.account_move_line_tree_reconcile_view', 'search_view_ref': 'account_reconcile_oca.account_move_line_search_reconcile_view'}"
                         />
                     </page>
