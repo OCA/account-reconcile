@@ -660,19 +660,22 @@ class AccountBankStatementLine(models.Model):
             )
             data += lines
         if not from_unreconcile:
+            reconcile_models = self.env["account.reconcile.model"].search(
+                [
+                    (
+                        "rule_type",
+                        "in",
+                        ["invoice_matching", "writeoff_suggestion"],
+                    ),
+                    ("company_id", "=", self.company_id.id),
+                ]
+            )
+            # Retrieving the partner is expensive, so it is only done when
+            # there is at least one model that could use it
             res = (
-                self.env["account.reconcile.model"]
-                .search(
-                    [
-                        (
-                            "rule_type",
-                            "in",
-                            ["invoice_matching", "writeoff_suggestion"],
-                        ),
-                        ("company_id", "=", self.company_id.id),
-                    ]
-                )
-                ._apply_rules(self, self._retrieve_partner())
+                reconcile_models._apply_rules(self, self._retrieve_partner())
+                if reconcile_models
+                else {}
             )
             if res and res.get("status", "") == "write_off":
                 return self._recompute_suspense_line(
@@ -971,6 +974,18 @@ class AccountBankStatementLine(models.Model):
             vals["amount_currency"] = line["currency_amount"]
         return vals
 
+    def write(self, vals):
+        if "partner_id" in vals and not self.filtered(
+            lambda line: line.partner_id.id != (vals["partner_id"] or False)
+        ):
+            # The lines already have this partner. Keeping the key would make
+            # _synchronize_to_moves() recompute reconcile_data_info, which
+            # retrieves the partner again for nothing.
+            vals = {key: value for key, value in vals.items() if key != "partner_id"}
+            if not vals:
+                return True
+        return super().write(vals)
+
     @api.model_create_multi
     def create(self, mvals):
         result = super().create(mvals)
@@ -1005,6 +1020,9 @@ class AccountBankStatementLine(models.Model):
 
     def _do_auto_reconcile(self, models):
         self.ensure_one()
+        if not models:
+            # No model to apply, so there is no need to retrieve the partner
+            return
         if self.is_reconciled:
             # In case the method is run asynchronously, the record could have
             # been already reconciled
