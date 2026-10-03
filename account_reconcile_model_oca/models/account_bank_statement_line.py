@@ -1,5 +1,7 @@
 # Copyright 2023 Dixmit
-# License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
+# Copyright 2025 Victor M.M. Torres, Tecnativa SL
+# Copyright 2025 Jacques-Etienne Baudoux (BICM) <je@bcim.be>
+# Licence LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl-3.0).
 
 from odoo import models
 from odoo.tools import SQL, html2plaintext

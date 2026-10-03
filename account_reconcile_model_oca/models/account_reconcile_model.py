@@ -1,3 +1,8 @@
+# Copyright 2024 Dixmit
+# Copyright 2025 Victor M.M. Torres, Tecnativa SL
+# Copyright 2026 Jacques-Etienne Baudoux (BICM) <je@bcim.be>
+# Copyright 2026 Michael Tietz (MT Software) <mtietz@mt-software.de>
+# Licence LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl-3.0).
 import re
 from collections import defaultdict
 
@@ -127,7 +132,15 @@ class AccountReconcileModel(models.Model):
         amount_string = amount_string.replace(",", ".")
         return float(amount_string)
 
-    def _get_write_off_move_lines_dict(self, residual_balance, partner_id, label=None):
+    def _get_write_off_amount_from_string(self, regex, text=None):
+        m = re.findall(regex, text or "")
+        if not m:
+            return 0.0
+        return self._str2float(m[0])
+
+    def _get_write_off_move_lines_dict(
+        self, residual_balance, partner_id, label=None, note=None
+    ):
         """Get move.lines dict corresponding to the reconciliation model's write-off
         lines.
         :param residual_balance: The residual balance of the account on the manual
@@ -146,24 +159,21 @@ class AccountReconcileModel(models.Model):
 
         lines_vals_list = []
         for line in self.line_ids:
-            balance = 0
+            balance = 0.0
             if line.amount_type == "percentage":
-                balance = currency.round(residual_balance * (line.amount / 100.0))
+                balance = abs(residual_balance) * (line.amount / 100.0)
             elif line.amount_type == "fixed":
-                balance = currency.round(
-                    line.amount * (1 if residual_balance > 0.0 else -1)
-                )
+                balance = line.amount
             elif line.amount_type == "regex":
-                m = re.findall(line.amount_string, label or "")
-                if m:
-                    extracted_amount = self._str2float(m[0])
-                    balance = currency.round(
-                        extracted_amount * (1 if residual_balance > 0.0 else -1)
+                balance = self._get_write_off_amount_from_string(
+                    line.amount_string, label
+                )
+                if not balance:
+                    balance = self._get_write_off_amount_from_string(
+                        line.amount_string, note
                     )
-                else:
-                    balance = 0.0
-            else:
-                balance = 0.0
+
+            balance = currency.round(balance * (1 if residual_balance > 0.0 else -1))
 
             if currency.is_zero(balance):
                 continue
@@ -835,22 +845,3 @@ class AccountReconcileModel(models.Model):
             return {"allow_write_off", "allow_auto_reconcile"}
 
         return {"rejected"}
-
-
-class AccountReconcileModelLine(models.Model):
-    _inherit = "account.reconcile.model.line"
-
-    def _get_write_off_move_line_dict(self, balance, currency):
-        self.ensure_one()
-        return {
-            "name": self.label,
-            "balance": balance,
-            "debit": balance > 0 and balance or 0,
-            "credit": balance < 0 and -balance or 0,
-            "account_id": self.account_id.id,
-            "currency_id": currency.id,
-            "analytic_distribution": self.analytic_distribution,
-            "reconcile_model_id": self.model_id.id,
-            "journal_id": self.journal_id.id,
-            "tax_ids": [],
-        }
