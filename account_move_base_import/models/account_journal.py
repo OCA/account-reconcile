@@ -84,6 +84,11 @@ class AccountJournal(models.Model):
         help="Tick that box to automatically validate the journal entries "
         "after the completion",
     )
+    check_autocompleted = fields.Boolean(
+        string="Check Auto-Completed",
+        help="if checked, you will be able to validate journal entry for this "
+        "journal only if all journal items are marked as auto-completed",
+    )
 
     def _prepare_counterpart_line(self, move, amount, date):
         if amount > 0.0:
