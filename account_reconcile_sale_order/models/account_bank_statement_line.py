@@ -44,6 +44,10 @@ class AccountBankStatementLine(models.Model):
         )
         self.can_reconcile = self.reconcile_data_info.get("can_reconcile", False)
 
+    def _auto_reconcile(self):
+        self = self.with_context(account_reconcile_sale_order_inject_rule_type=True)
+        return super()._auto_reconcile()
+
     def _default_reconcile_data(self, from_unreconcile=False):
         self = self.with_context(account_reconcile_sale_order_inject_rule_type=True)
         return super()._default_reconcile_data(from_unreconcile=from_unreconcile)

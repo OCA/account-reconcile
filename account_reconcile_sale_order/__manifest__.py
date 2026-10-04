@@ -4,7 +4,7 @@
 {
     "name": "Reconcile sales orders",
     "summary": "Invoice and reconcile sales orders",
-    "version": "18.0.1.0.1",
+    "version": "18.0.1.0.2",
     "development_status": "Alpha",
     "category": "Accounting",
     "website": "https://github.com/OCA/account-reconcile",
