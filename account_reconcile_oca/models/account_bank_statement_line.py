@@ -210,12 +210,114 @@ class AccountBankStatementLine(models.Model):
             self._add_account_move_line(self.add_account_move_line_id)
             self.add_account_move_line_id = False
 
+    def _is_early_payment_discount_applicable(self, move_line, pending_amount):
+        currency = self._get_reconcile_currency()
+        if not move_line.move_id._is_eligible_for_early_payment_discount(
+            currency,
+            self.date,
+        ):
+            return False
+
+        if move_line.currency_id == currency:
+            expected_discount_amount = move_line.discount_amount_currency
+        elif currency == self.company_id.currency_id:
+            expected_discount_amount = move_line.discount_balance
+        else:
+            expected_discount_amount = self.company_id.currency_id._convert(
+                move_line.discount_balance,
+                currency,
+                self.company_id,
+                self.date,
+            )
+
+        return currency.compare_amounts(pending_amount, expected_discount_amount) == 0
+
+    def _get_early_payment_discount_reconcile_lines(
+        self,
+        epd_amls,
+        reconcile_auxiliary_id,
+    ):
+        st_line_currency = self.foreign_currency_id or self.currency_id
+        epd_aml_values_list = []
+        for aml in epd_amls:
+            counterpart_amounts = self._prepare_counterpart_amounts_using_st_line_rate(
+                aml.currency_id,
+                aml.amount_residual,
+                aml.amount_residual_currency,
+            )
+            epd_aml_values_list.append(
+                {
+                    "aml": aml,
+                    "amount_currency": -counterpart_amounts["amount_currency"],
+                    "balance": -counterpart_amounts["balance"],
+                }
+            )
+
+        if not epd_aml_values_list:
+            return reconcile_auxiliary_id, []
+
+        st_line_amount = self._prepare_move_line_default_vals()[1]["amount_currency"]
+        open_amount_currency = st_line_amount - sum(
+            aml_values["amount_currency"] for aml_values in epd_aml_values_list
+        )
+        open_balance = self._prepare_counterpart_amounts_using_st_line_rate(
+            st_line_currency,
+            None,
+            open_amount_currency,
+        )["balance"]
+
+        early_payment_values = self.env[
+            "account.move"
+        ]._get_invoice_counterpart_amls_for_early_payment_discount(
+            epd_aml_values_list,
+            open_balance,
+        )
+
+        new_lines = []
+        for vals_list in early_payment_values.values():
+            for vals in vals_list:
+                account = self.env["account.account"].browse(vals["account_id"])
+                partner = self.env["res.partner"].browse(vals["partner_id"])
+                amount = vals["balance"]
+                new_lines.append(
+                    {
+                        "reference": f"reconcile_auxiliary;{reconcile_auxiliary_id}",
+                        "id": False,
+                        "account_id": [account.id, account.display_name],
+                        "partner_id": partner
+                        and [partner.id, partner.display_name]
+                        or False,
+                        "date": fields.Date.to_string(self.date),
+                        "name": vals.get("name") or self.payment_ref or self.name,
+                        "amount": amount,
+                        "credit": -amount if amount < 0 else 0.0,
+                        "debit": amount if amount > 0 else 0.0,
+                        "kind": "other",
+                        "currency_id": self.company_id.currency_id.id,
+                        "line_currency_id": vals.get("currency_id")
+                        or self.company_id.currency_id.id,
+                        "currency_amount": vals.get("amount_currency", amount),
+                        "tax_ids": vals.get("tax_ids", []),
+                        "tax_tag_ids": vals.get("tax_tag_ids", []),
+                        "group_tax_id": vals.get("group_tax_id"),
+                        "tax_repartition_line_id": vals.get(
+                            "tax_repartition_line_id"
+                        ),
+                        "analytic_distribution": vals.get("analytic_distribution"),
+                        "display_type": vals.get("display_type"),
+                    }
+                )
+                reconcile_auxiliary_id += 1
+
+        return reconcile_auxiliary_id, new_lines
+
     def _add_account_move_line(self, move_line, keep_current=False):
         data = self.reconcile_data_info["data"]
         new_data = []
         is_new_line = True
         pending_amount = 0.0
         currency = self._get_reconcile_currency()
+        reconcile_auxiliary_id = self.reconcile_data_info["reconcile_auxiliary_id"]
         for line in data:
             if line["kind"] != "suspense":
                 pending_amount += self._get_amount_currency(line, currency)
@@ -226,17 +328,31 @@ class AccountBankStatementLine(models.Model):
             else:
                 new_data.append(line)
         if is_new_line:
+            early_payment_discount = self._is_early_payment_discount_applicable(
+                move_line,
+                currency.round(pending_amount),
+            )
             reconcile_auxiliary_id, lines = self._get_reconcile_line(
                 move_line,
                 "other",
                 is_counterpart=True,
-                max_amount=currency.round(pending_amount),
+                max_amount=(
+                    False if early_payment_discount else currency.round(pending_amount)
+                ),
                 move=True,
             )
             new_data += lines
+            if early_payment_discount:
+                reconcile_auxiliary_id, lines = (
+                    self._get_early_payment_discount_reconcile_lines(
+                        move_line,
+                        reconcile_auxiliary_id,
+                    )
+                )
+                new_data += lines
         self.reconcile_data_info = self._recompute_suspense_line(
             new_data,
-            self.reconcile_data_info["reconcile_auxiliary_id"],
+            reconcile_auxiliary_id,
             self.manual_reference,
         )
         self.can_reconcile = self.reconcile_data_info.get("can_reconcile", False)
@@ -681,6 +797,9 @@ class AccountBankStatementLine(models.Model):
                     self.manual_reference,
                 )
             elif res and res.get("amls"):
+                early_payment_discount_amls = res.get(
+                    "early_payment_discount_amls", self.env["account.move.line"]
+                )
                 # TODO should be signed in currency get_reconcile_currency
                 amount = self.amount_total_signed
                 for line in res.get("amls", []):
@@ -688,11 +807,19 @@ class AccountBankStatementLine(models.Model):
                         line,
                         "other",
                         is_counterpart=True,
-                        max_amount=amount,
+                        max_amount=(False if line in early_payment_discount_amls else amount),
                         reconcile_auxiliary_id=reconcile_auxiliary_id,
                         move=True,
                     )
                     amount -= sum(line.get("amount") for line in line_data)
+                    data += line_data
+                if early_payment_discount_amls:
+                    reconcile_auxiliary_id, line_data = (
+                        self._get_early_payment_discount_reconcile_lines(
+                            early_payment_discount_amls,
+                            reconcile_auxiliary_id,
+                        )
+                    )
                     data += line_data
                 if res.get("auto_reconcile") and self.reconcile_data_info:
                     self.reconcile_bank_line()
@@ -962,6 +1089,7 @@ class AccountBankStatementLine(models.Model):
             "tax_repartition_line_id": line.get("tax_repartition_line_id"),
             "analytic_distribution": line.get("analytic_distribution"),
             "name": line.get("name"),
+            "display_type": line.get("display_type"),
             "reconcile_model_id": line.get("reconcile_model_id"),
         }
         if line.get("line_currency_id") and line["currency_id"] != line.get(
@@ -1029,13 +1157,28 @@ class AccountBankStatementLine(models.Model):
                 self.manual_reference,
             )
         elif res.get("amls"):
+            early_payment_discount_amls = res.get(
+                "early_payment_discount_amls", self.env["account.move.line"]
+            )
             amount = self.amount_currency or self.amount
             for line in res.get("amls", []):
                 reconcile_auxiliary_id, line_datas = self._get_reconcile_line(
-                    line, "other", is_counterpart=True, max_amount=amount, move=True
+                    line,
+                    "other",
+                    is_counterpart=True,
+                    max_amount=(False if line in early_payment_discount_amls else amount),
+                    move=True,
                 )
                 amount -= sum(line_data.get("amount") for line_data in line_datas)
                 data += line_datas
+            if early_payment_discount_amls:
+                reconcile_auxiliary_id, line_data = (
+                    self._get_early_payment_discount_reconcile_lines(
+                        early_payment_discount_amls,
+                        reconcile_auxiliary_id,
+                    )
+                )
+                data += line_data
             data = self._recompute_suspense_line(
                 data,
                 reconcile_auxiliary_id,
