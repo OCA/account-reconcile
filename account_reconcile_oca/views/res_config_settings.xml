@@ -15,6 +15,88 @@
                     <field name="reconcile_aggregate" />
                 </setting>
             </block>
+            <block id="bank_cash" position="after">
+                <block title="Auto reconcile invoices" id="reconcile_invoices">
+                    <setting
+                        id="reconcile_invoices_auto_reconcile"
+                        help="Validate the statement line automatically (reconciliation based on your rule)"
+                    >
+                        <field
+                            name="reconcile_invoices_auto_reconcile"
+                            string="Auto-validate"
+                        />
+                    </setting>
+                    <setting
+                        id="reconcile_invoices_past_months_limit"
+                        help="Number of months in the past to consider entries from when applying this model"
+                    >
+                        <field
+                            name="reconcile_invoices_past_months_limit"
+                            string="Search Months Limit"
+                        />
+                    </setting>
+                    <setting
+                        id="reconcile_invoices_unique_matching"
+                        help="If this box is checked, counterparts will only be suggested if only one possible counterpart is found"
+                    >
+                        <field
+                            name="reconcile_invoices_unique_matching"
+                            string="Unique match"
+                        />
+                    </setting>
+                    <setting
+                        id="reconcile_invoices_match_same_currency"
+                        help="Restrict to propositions having the same currency as the statement line"
+                    >
+                        <field
+                            name="reconcile_invoices_match_same_currency"
+                            string="Same Currency"
+                        />
+                    </setting>
+                    <setting
+                        id="reconcile_invoices_match_text"
+                        help="Search in the Statement's (Label + Note + Reference) to find the Invoice/Payment's reference"
+                    >
+                        <field
+                            name="reconcile_invoices_match_text"
+                            string="Match Invoice/bill reference"
+                        />
+                    </setting>
+                    <setting
+                        id="reconcile_invoices_match_partner"
+                        help="Only be applied when a customer/vendor is set"
+                    >
+                        <field
+                            name="reconcile_invoices_match_partner"
+                            string="Partner is Set"
+                        />
+                    </setting>
+                    <setting
+                        id="reconcile_invoices_match_partner_ids"
+                        invisible="not reconcile_invoices_match_partner"
+                        help="Only be applied to the selected customers/vendors"
+                    >
+                        <field
+                            name="reconcile_invoices_match_partner_ids"
+                            string="Matching partners"
+                            widget="many2many_tags"
+                            options="{'no_quick_create': True}"
+                        />
+                    </setting>
+                    <setting
+                        id="reconcile_invoices_match_partner_category_ids"
+                        invisible="not reconcile_invoices_match_partner"
+                        help="Only be applied to the selected customer/vendor categories"
+                    >
+                        <field
+                            name="reconcile_invoices_match_partner_category_ids"
+                            string="Matching categories"
+                            widget="many2many_tags"
+                            options="{'no_quick_create': True}"
+                        />
+                    </setting>
+                </block>
+            </block>
         </field>
     </record>
 </odoo>

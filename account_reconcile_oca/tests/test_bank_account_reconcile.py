@@ -600,6 +600,7 @@ class TestReconciliationWidget(TestAccountReconciliationCommon):
         existing_line._auto_reconcile()
         self.assertTrue(existing_line.is_reconciled)
 
+    @mute_logger("odoo.models.unlink")
     def test_reconcile_rule_tax(self):
         """
         We want to test what happens when we select an reconcile model to fill a
@@ -1467,6 +1468,7 @@ class TestReconciliationWidget(TestAccountReconciliationCommon):
         )
         self.assertEqual(bank_stmt_line.partner_id, partner_03)
 
+    @mute_logger("odoo.models.unlink")
     def test_model_match_percentage(self):
         """
         We want to test what happens when we select an reconcile model to fill a
@@ -1788,6 +1790,7 @@ class TestReconciliationWidget(TestAccountReconciliationCommon):
         )
         self.assertTrue(bank_stmt_line.can_reconcile)
 
+    @mute_logger("odoo.models.unlink")
     def test_invoice_matching(self):
         """
         We want to test that the reconciliation is correctly done when we have a match
@@ -1811,3 +1814,50 @@ class TestReconciliationWidget(TestAccountReconciliationCommon):
                 lambda line: line.account_id.account_type == "asset_receivable"
             ).full_reconcile_id
         )
+
+    @mute_logger("odoo.models.unlink")
+    def test_invoice_matching_partner(self):
+        self.company.reconcile_invoices_match_partner = True
+        partner = self.env["res.partner"].create({"name": "Test partner"})
+        inv1 = self.create_invoice(
+            currency_id=self.currency_euro_id, partner_id=partner.id, invoice_amount=100
+        )
+        line_a = self.acc_bank_stmt_line_model.create(
+            {
+                "name": "testLine-A",
+                "partner_id": partner.id,
+                "journal_id": self.bank_journal_euro.id,
+                "amount": 100,
+                "date": time.strftime("%Y-07-15"),
+                "payment_ref": inv1.name,
+            }
+        )
+        self.assertTrue(line_a.is_reconciled)
+        self.assertTrue(
+            inv1.line_ids.filtered(
+                lambda line: line.account_id.account_type == "asset_receivable"
+            ).full_reconcile_id
+        )
+        self.company.reconcile_invoices_match_partner_ids = [Command.set(partner.ids)]
+        inv2 = self.create_invoice(
+            currency_id=self.currency_euro_id, partner_id=partner.id, invoice_amount=100
+        )
+        line_b = self.acc_bank_stmt_line_model.create(
+            {
+                "name": "testLine-B",
+                "partner_id": partner.id,
+                "journal_id": self.bank_journal_euro.id,
+                "amount": 100,
+                "date": time.strftime("%Y-07-15"),
+                "payment_ref": inv2.name,
+            }
+        )
+        self.assertTrue(line_b.is_reconciled)
+        self.assertTrue(
+            inv2.line_ids.filtered(
+                lambda line: line.account_id.account_type == "asset_receivable"
+            ).full_reconcile_id
+        )
+        self.company.reconcile_invoices_match_partner_ids = [
+            Command.set(self.partner_agrolait.ids)
+        ]
