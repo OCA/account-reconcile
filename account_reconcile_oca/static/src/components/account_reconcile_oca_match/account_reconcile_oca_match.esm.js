@@ -44,7 +44,6 @@ export class AccountReconcileMatchWidget extends Component {
             searchViewId: false,
             parentRecord: this.props.record,
             parentField: this.props.name,
-            showButtons: false,
         };
     }
 }
