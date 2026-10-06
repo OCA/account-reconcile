@@ -3,6 +3,7 @@
 # Copyright 2026 Michael Tietz (MT Software) <mtietz@mt-software.de>
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
+import itertools
 from collections import defaultdict
 
 from dateutil import rrule
@@ -226,18 +227,35 @@ class AccountBankStatementLine(models.Model):
                     new_data.append(line)
             else:
                 new_data.append(line)
+        if not is_new_line and not keep_current:
+            new_data = self._remove_early_payment_discount_lines(
+                new_data, move_line.ids
+            )
+        reconcile_auxiliary_id = self.reconcile_data_info["reconcile_auxiliary_id"]
         if is_new_line:
+            apply_epd = self._is_early_payment_discount_applicable(
+                move_line, currency.round(pending_amount)
+            )
             reconcile_auxiliary_id, lines = self._get_reconcile_line(
                 move_line,
                 "other",
                 is_counterpart=True,
-                max_amount=currency.round(pending_amount),
+                max_amount=not apply_epd and currency.round(pending_amount),
+                reconcile_auxiliary_id=reconcile_auxiliary_id,
                 move=True,
             )
             new_data += lines
+            if apply_epd:
+                (
+                    reconcile_auxiliary_id,
+                    epd_data,
+                ) = self._get_early_payment_discount_reconcile_lines(
+                    new_data, move_line, reconcile_auxiliary_id
+                )
+                new_data += epd_data
         self.reconcile_data_info = self._recompute_suspense_line(
             new_data,
-            self.reconcile_data_info["reconcile_auxiliary_id"],
+            reconcile_auxiliary_id,
             self.manual_reference,
         )
         self.can_reconcile = self.reconcile_data_info.get("can_reconcile", False)
@@ -417,6 +435,7 @@ class AccountBankStatementLine(models.Model):
         data = self.reconcile_data_info.get("data", [])
         new_data = []
         related_move_line_id = False
+        deleted_move_line_ids = []
         for line in data:
             if (
                 self.manual_delete
@@ -427,11 +446,15 @@ class AccountBankStatementLine(models.Model):
                 continue
             if line["reference"] == self.manual_reference:
                 if self.manual_delete:
+                    deleted_move_line_ids += line.get("counterpart_line_ids", [])
                     self.update(self._get_manual_delete_vals())
                     continue
                 else:
                     self._process_manual_reconcile_from_line(line)
             new_data.append(line)
+        new_data = self._remove_early_payment_discount_lines(
+            new_data, deleted_move_line_ids
+        )
         self.update({"manual_delete": False})
         self.reconcile_data_info = self._recompute_suspense_line(
             new_data,
@@ -685,17 +708,27 @@ class AccountBankStatementLine(models.Model):
             elif res and res.get("amls"):
                 # TODO should be signed in currency get_reconcile_currency
                 amount = self.amount_total_signed
+                epd_amls = res.get("early_payment_discount_amls")
                 for line in res.get("amls", []):
                     reconcile_auxiliary_id, line_data = self._get_reconcile_line(
                         line,
                         "other",
                         is_counterpart=True,
-                        max_amount=amount,
+                        # With an early payment discount, the lines are fully paid
+                        max_amount=not epd_amls and amount,
                         reconcile_auxiliary_id=reconcile_auxiliary_id,
                         move=True,
                     )
                     amount -= sum(line.get("amount") for line in line_data)
                     data += line_data
+                if epd_amls:
+                    (
+                        reconcile_auxiliary_id,
+                        epd_data,
+                    ) = self._get_early_payment_discount_reconcile_lines(
+                        data, epd_amls, reconcile_auxiliary_id
+                    )
+                    data += epd_data
                 if res.get("auto_reconcile") and self.reconcile_data_info:
                     self.reconcile_bank_line()
                 return self._recompute_suspense_line(
@@ -775,6 +808,116 @@ class AccountBankStatementLine(models.Model):
             reconcile_auxiliary_id,
             self.manual_reference,
         )
+
+    def _is_early_payment_discount_applicable(self, move_line, pending_amount):
+        """Check if the early payment discount of the journal item must be applied
+        when adding it manually: the discount must be available at the statement
+        date and the amount left on the statement line must be exactly the
+        discounted amount.
+        """
+        self.ensure_one()
+        currency = self._get_reconcile_currency()
+        return bool(
+            move_line.display_type == "payment_term"
+            and move_line.currency_id == currency
+            and move_line.discount_date
+            and move_line.move_id._is_eligible_for_early_payment_discount(
+                currency, self.date
+            )
+            and currency.compare_amounts(
+                move_line.amount_residual_currency, move_line.amount_currency
+            )
+            == 0
+            and currency.compare_amounts(
+                pending_amount, move_line.discount_amount_currency
+            )
+            == 0
+        )
+
+    def _get_early_payment_discount_reconcile_lines(
+        self, data, move_lines, reconcile_auxiliary_id
+    ):
+        """Compute the early payment discount lines (discount, tax reduction and
+        exchange difference) using the payment terms of the invoices, as done by
+        the register payment wizard.
+        :param data: The current reconcile lines, containing the counterpart lines
+          of move_lines at their full residual amount.
+        :param move_lines: The payment term lines paid with the discount.
+        :return: A tuple (reconcile_auxiliary_id, list of reconcile lines).
+        """
+        self.ensure_one()
+        company_currency = self.company_id.currency_id
+        open_balance = -sum(
+            line["amount"] for line in data if line["kind"] != "suspense"
+        )
+        if company_currency.is_zero(open_balance):
+            return reconcile_auxiliary_id, []
+        aml_values_list = [
+            {
+                "aml": aml,
+                "amount_currency": -aml.amount_residual_currency,
+                "balance": -aml.amount_residual,
+            }
+            for aml in move_lines
+        ]
+        epd_values = self.env[
+            "account.move"
+        ]._get_invoice_counterpart_amls_for_early_payment_discount(
+            aml_values_list, open_balance
+        )
+        new_data = []
+        for vals in itertools.chain.from_iterable(epd_values.values()):
+            balance = company_currency.round(vals["balance"])
+            if company_currency.is_zero(balance):
+                continue
+            account = (
+                self.env["account.account"]
+                .with_company(self.company_id)
+                .browse(vals["account_id"])
+            )
+            partner = self.env["res.partner"].browse(vals.get("partner_id"))
+            new_data.append(
+                {
+                    "reference": f"reconcile_auxiliary;{reconcile_auxiliary_id}",
+                    "id": False,
+                    "account_id": [account.id, account.display_name],
+                    "partner_id": partner
+                    and [partner.id, partner.display_name]
+                    or False,
+                    "date": fields.Date.to_string(self.date),
+                    "name": vals.get("name") or self.payment_ref,
+                    "amount": balance,
+                    "net_amount": balance,
+                    "debit": balance if balance > 0 else 0.0,
+                    "credit": -balance if balance < 0 else 0.0,
+                    "kind": "other",
+                    "currency_id": company_currency.id,
+                    "line_currency_id": vals.get("currency_id") or company_currency.id,
+                    "currency_amount": vals.get("amount_currency") or 0.0,
+                    "analytic_distribution": vals.get("analytic_distribution"),
+                    "tax_ids": vals.get("tax_ids", []),
+                    "tax_tag_ids": vals.get("tax_tag_ids", []),
+                    "tax_repartition_line_id": vals.get("tax_repartition_line_id"),
+                    "group_tax_id": vals.get("group_tax_id"),
+                    "display_type": vals.get("display_type"),
+                    # Removed with the journal items they are computed from
+                    "epd_counterpart_line_ids": move_lines.ids,
+                }
+            )
+            reconcile_auxiliary_id += 1
+        return reconcile_auxiliary_id, new_data
+
+    def _remove_early_payment_discount_lines(self, data, move_line_ids):
+        """Remove the early payment discount lines computed from the given journal
+        items, when they are removed from the reconciliation.
+        """
+        if not move_line_ids:
+            return data
+        return [
+            line
+            for line in data
+            if not set(line.get("epd_counterpart_line_ids", [])) & set(move_line_ids)
+        ]
 
     def _all_partials_lines(self, lines):
         reconciliation_lines = lines.filtered(
@@ -966,6 +1109,9 @@ class AccountBankStatementLine(models.Model):
             "name": line.get("name"),
             "reconcile_model_id": line.get("reconcile_model_id"),
         }
+        if line.get("display_type"):
+            # Needed by early payment discount lines to compute the tax tags sign
+            vals["display_type"] = line["display_type"]
         if line.get("line_currency_id") and line["currency_id"] != line.get(
             "line_currency_id"
         ):
@@ -1032,12 +1178,27 @@ class AccountBankStatementLine(models.Model):
             )
         elif res.get("amls"):
             amount = self.amount_currency or self.amount
+            epd_amls = res.get("early_payment_discount_amls")
             for line in res.get("amls", []):
                 reconcile_auxiliary_id, line_datas = self._get_reconcile_line(
-                    line, "other", is_counterpart=True, max_amount=amount, move=True
+                    line,
+                    "other",
+                    is_counterpart=True,
+                    # With an early payment discount, the lines are fully paid
+                    max_amount=not epd_amls and amount,
+                    reconcile_auxiliary_id=reconcile_auxiliary_id,
+                    move=True,
                 )
                 amount -= sum(line_data.get("amount") for line_data in line_datas)
                 data += line_datas
+            if epd_amls:
+                (
+                    reconcile_auxiliary_id,
+                    epd_data,
+                ) = self._get_early_payment_discount_reconcile_lines(
+                    data, epd_amls, reconcile_auxiliary_id
+                )
+                data += epd_data
             data = self._recompute_suspense_line(
                 data,
                 reconcile_auxiliary_id,
