@@ -1700,6 +1700,30 @@ class TestReconciliationMatchingRules(AccountTestInvoicingCommon):
         self.assertEqual(due_line["debit"], 100.0)
         self.assertEqual(tax_line["credit"], 10.0)
 
+    def test_regex_matching_simple_note(self):
+        lines = self.rule_3._get_write_off_move_lines_dict(
+            90.0,
+            False,
+            label="R:9772938 10/07 AX 9415116318 T:5 C/ croip",
+            note="R:9772938 10/07 AX 9415116318 T:5 BRT: 100.00 C/ croip",
+        )
+        self.assertEqual(len(lines), 2)
+        for line in lines:
+            if (
+                line["account_id"]
+                == self.company_data["default_account_deferred_expense"].id
+            ):
+                due_line = line
+            elif (
+                line["account_id"]
+                == self.company_data["default_tax_account_receivable"].id
+            ):
+                tax_line = line
+        self.assertTrue(due_line)
+        self.assertTrue(tax_line)
+        self.assertEqual(due_line["debit"], 100.0)
+        self.assertEqual(tax_line["credit"], 10.0)
+
     def test_regex_matching_thousand_sep(self):
         lines = self.rule_3._get_write_off_move_lines_dict(
             90.0,
