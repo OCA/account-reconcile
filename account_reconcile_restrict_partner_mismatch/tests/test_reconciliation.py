@@ -168,3 +168,17 @@ class TestReconciliation(BaseCommon):
         self.aml.move_id.action_post()
         self.aml.reconcile()
         self.assertTrue(all(self.aml.mapped("reconciled")))
+
+    def test_reconcile_nested_plan(self):
+        """The partner check must support nested plans.
+
+        account.move.line._reconcile_plan accepts a plan made of recordsets
+        and/or nested plans (see the 'account' module). This is used for
+        example by the write-off of account_move_line_reconcile_manual which
+        calls _reconcile_plan([[lines, writeoff_line]]).
+        """
+        self.aml.move_id.company_id.restrict_partner_mismatch_on_reconcile = True
+        self.aml.write({"partner_id": self.partner.id})
+        self.aml.move_id.action_post()
+        self.env["account.move.line"]._reconcile_plan([[self.aml]])
+        self.assertTrue(all(self.aml.mapped("reconciled")))

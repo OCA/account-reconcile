@@ -24,11 +24,23 @@ class AccountMoveLine(models.Model):
         # to be consistent with parent method
         if reconciliation_plan:
             partners = set()
-            for lines in reconciliation_plan:
-                checked_lines = lines.filtered(
-                    lambda line: line._check_partner_mismatch_on_reconcile
-                )
-                partners.update(line.partner_id.id for line in checked_lines)
+
+            def _iter_lines(plan):
+                """Yield the amls of a plan.
+
+                As in the parent method, a plan is a list of recordset of amls
+                and/or nested plans (list of the same kind).
+                """
+                for item in plan:
+                    if isinstance(item, models.BaseModel):
+                        yield from item
+                    else:
+                        # Sub plan to evaluate.
+                        yield from _iter_lines(item)
+
+            for line in _iter_lines(reconciliation_plan):
+                if line._check_partner_mismatch_on_reconcile:
+                    partners.add(line.partner_id.id)
             if len(partners) > 1:
                 raise UserError(
                     self.env._(
