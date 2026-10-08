@@ -6,7 +6,7 @@
 from collections import namedtuple
 
 import odoo.tests
-from odoo import fields
+from odoo import exceptions, fields
 
 from odoo.addons.account.tests.common import AccountTestInvoicingCommon
 
@@ -103,3 +103,41 @@ class BaseCompletion(AccountTestInvoicingCommon):
                     self.move_line.partner_id,
                     test_text,
                 )
+
+    def test_account_move_validation_autocompleted(self):
+        """The validation of a journal entry is refused while all its lines
+        are not marked as auto-completed when the journal is configured with
+        the "check_autocompleted" option."""
+        self.journal.write({"check_autocompleted": True})
+        move = self.account_move_obj.with_context(check_move_validity=False).create(
+            {
+                "date": fields.Date.today(),
+                "journal_id": self.journal.id,
+                "line_ids": [
+                    (
+                        0,
+                        0,
+                        {
+                            "account_id": self.account_id,
+                            "name": "Test",
+                            "debit": 1000.0,
+                        },
+                    ),
+                    (
+                        0,
+                        0,
+                        {
+                            "account_id": self.account_id,
+                            "name": "Test 2",
+                            "credit": 1000.0,
+                        },
+                    ),
+                ],
+            }
+        )
+        with self.assertRaises(exceptions.ValidationError):
+            move.action_post()
+        self.assertEqual(move.state, "draft")
+        move.line_ids.write({"already_completed": True})
+        move.action_post()
+        self.assertEqual(move.state, "posted")
