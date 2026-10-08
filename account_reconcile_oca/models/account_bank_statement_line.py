@@ -10,9 +10,7 @@ from dateutil.relativedelta import relativedelta
 from odoo import Command, _, api, fields, models, tools
 from odoo.exceptions import UserError
 from odoo.fields import first
-from odoo.tools import LazyTranslate, float_compare, float_is_zero, groupby
-
-_lt = LazyTranslate(__name__, default_lang="en_US")
+from odoo.tools import float_compare, float_is_zero, groupby
 
 
 class AccountBankStatementLine(models.Model):
@@ -451,7 +449,7 @@ class AccountBankStatementLine(models.Model):
             "account_id": (
                 [self.manual_account_id.id, self.manual_account_id.display_name]
                 if self.manual_account_id
-                else [False, _lt("Undefined")]
+                else [False, _("Undefined")]
             ),
             "amount": self.manual_amount,
             "credit": -self.manual_amount if self.manual_amount < 0 else 0.0,
@@ -943,7 +941,7 @@ class AccountBankStatementLine(models.Model):
             default_values_list = [
                 {
                     "date": move.date,
-                    "ref": _lt("Reversal of: %s", move.name),
+                    "ref": self.env._("Reversal of: %s", move.name),
                 }
                 for move in to_reverse
             ]
