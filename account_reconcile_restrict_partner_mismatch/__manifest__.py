@@ -5,7 +5,7 @@
     "name": "Reconcile restrict partner mismatch",
     "summary": "Restrict reconciliation on receivable "
     "and payable accounts to the same partner",
-    "version": "18.0.1.0.0",
+    "version": "18.0.1.0.1",
     "depends": ["account"],
     "author": "Camptocamp, Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/account-reconcile",
