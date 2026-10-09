@@ -1,5 +1,5 @@
 # Copyright 2024 Dixmit
-# License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
+# Licence LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl-3.0).
 
 {
     "name": "Account Reconcile Model Oca",
