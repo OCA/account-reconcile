@@ -296,12 +296,13 @@ class AccountBankStatementLine(models.Model):
                 )
             else:
                 account = self.journal_id.suspense_account_id
-                if self.partner_id and total_amount > 0:
+                partner = self.partner_id.with_company(self.company_id)
+                if partner and total_amount > 0:
                     can_reconcile = True
-                    account = self.partner_id.property_account_receivable_id
-                elif self.partner_id and total_amount < 0:
+                    account = partner.property_account_receivable_id
+                elif partner and total_amount < 0:
                     can_reconcile = True
-                    account = self.partner_id.property_account_payable_id
+                    account = partner.property_account_payable_id
                 suspense_line = {
                     "reference": f"reconcile_auxiliary;{reconcile_auxiliary_id}",
                     "id": False,
