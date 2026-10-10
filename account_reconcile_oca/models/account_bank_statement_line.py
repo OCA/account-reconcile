@@ -11,6 +11,7 @@ from odoo import Command, _, api, fields, models, tools
 from odoo.exceptions import UserError
 from odoo.fields import first
 from odoo.tools import LazyTranslate, float_compare, float_is_zero, groupby
+from odoo.tools.misc import formatLang
 
 _lt = LazyTranslate(__name__, default_lang="en_US")
 
@@ -105,11 +106,22 @@ class AccountBankStatementLine(models.Model):
     manual_amount = fields.Monetary(
         store=False, default=False, prefetch=False, currency_field="manual_currency_id"
     )
+    previous_manual_amount = fields.Monetary(
+        store=False, default=False, prefetch=False, currency_field="manual_currency_id"
+    )
     manual_currency_id = fields.Many2one(
         "res.currency", readonly=True, store=False, prefetch=False
     )
-    manual_original_amount = fields.Monetary(
-        default=False, store=False, prefetch=False, readonly=True
+    manual_original_amount_in_currency = fields.Monetary(
+        default=False,
+        store=False,
+        prefetch=False,
+        readonly=True,
+        currency_field="manual_in_currency_id",
+    )
+    manual_amount_message = fields.Char(compute="_compute_manual_amount_message")
+    show_full_reconcile_button = fields.Boolean(
+        compute="_compute_manual_amount_message"
     )
     manual_move_type = fields.Selection(
         lambda r: r.env["account.move"]._fields["move_type"].selection,
@@ -125,6 +137,52 @@ class AccountBankStatementLine(models.Model):
     reconcile_aggregate = fields.Char(compute="_compute_reconcile_aggregate")
     aggregate_id = fields.Integer(compute="_compute_reconcile_aggregate")
     aggregate_name = fields.Char(compute="_compute_reconcile_aggregate")
+
+    @api.depends(
+        "manual_original_amount_in_currency",
+        "manual_currency_id",
+        "manual_in_currency_id",
+        "manual_amount_in_currency",
+        "manual_move_id",
+    )
+    def _compute_manual_amount_message(self):
+        for rec in self:
+            rec.show_full_reconcile_button = True
+            rec.manual_amount_message = ""
+            if not rec.manual_currency_id:
+                continue
+            # Both amounts are expressed in the counterpart line currency, so
+            # they must be rounded and rendered with that currency, not with
+            # the company one (manual_currency_id).
+            currency = rec.manual_in_currency_id or rec.manual_currency_id
+            resulting_amt = (
+                rec.manual_original_amount_in_currency - rec.manual_amount_in_currency
+            )
+            open_amount = formatLang(
+                self.env,
+                abs(rec.manual_original_amount_in_currency),
+                currency_obj=currency,
+            )
+            # One whole clause per message: a translator needs to be able to
+            # reorder the amounts, which is impossible when the sentence is
+            # split between the view and a fragment built here.
+            if currency.is_zero(resulting_amt):
+                msg = _("with an open amount of %(open)s will be fully paid.") % {
+                    "open": open_amount,
+                }
+                rec.show_full_reconcile_button = False
+            else:
+                msg = _(
+                    "with an open amount of %(open)s will be reduced by %(amount)s"
+                ) % {
+                    "open": open_amount,
+                    "amount": formatLang(
+                        self.env,
+                        abs(rec.manual_amount_in_currency),
+                        currency_obj=currency,
+                    ),
+                }
+            rec.manual_amount_message = msg
 
     @api.model
     def _reconcile_aggregate_map(self):
@@ -383,7 +441,7 @@ class AccountBankStatementLine(models.Model):
             "manual_move_id": False,
             "manual_move_type": False,
             "manual_kind": False,
-            "manual_original_amount": False,
+            "manual_original_amount_in_currency": False,
             "manual_currency_id": False,
             "analytic_distribution": False,
         }
@@ -391,6 +449,7 @@ class AccountBankStatementLine(models.Model):
     def _process_manual_reconcile_from_line(self, line):
         self.manual_account_id = line["account_id"][0]
         self.manual_amount = line["amount"]
+        self.previous_manual_amount = line["amount"]
         self.manual_currency_id = line["currency_id"]
         self.manual_in_currency_id = line.get("line_currency_id")
         self.manual_in_currency = line.get("line_currency_id") and line[
@@ -408,7 +467,9 @@ class AccountBankStatementLine(models.Model):
             self.manual_move_id = self.manual_line_id.move_id
             self.manual_move_type = self.manual_line_id.move_id.move_type
         self.manual_kind = line["kind"]
-        self.manual_original_amount = line.get("original_amount", 0.0)
+        self.manual_original_amount_in_currency = line.get(
+            "original_amount_currency", 0.0
+        )
 
     @api.onchange("manual_reference", "manual_delete")
     def _onchange_manual_reconcile_reference(self):
@@ -457,21 +518,60 @@ class AccountBankStatementLine(models.Model):
             "credit": -self.manual_amount if self.manual_amount < 0 else 0.0,
             "debit": self.manual_amount if self.manual_amount > 0 else 0.0,
             "analytic_distribution": self.analytic_distribution,
+            # `_sync_manual_amounts` keeps this consistent with `manual_amount`,
+            # so converting here would round-trip the amount and silently change
+            # whichever of the two the user typed.
             "currency_amount": self.manual_amount_in_currency,
         }
-        liquidity_lines, _suspense_lines, _other_lines = self._seek_for_lines()
-        if self.manual_line_id and self.manual_line_id.id not in liquidity_lines.ids:
-            vals.update(
-                {
-                    "currency_amount": self.manual_currency_id._convert(
-                        self.manual_amount,
-                        self.manual_in_currency_id,
-                        self.company_id,
-                        self.manual_line_id.date,
-                    ),
-                }
-            )
         return vals
+
+    def _sync_manual_amounts(self):
+        """Keep the company-currency and counterpart-currency amounts consistent.
+
+        Whichever of the two the user edited is authoritative and the other one is
+        derived from it. The `previous_*` snapshots tell which one that was, so no
+        extra flag is needed and an explicit 0.00 is treated like any other amount.
+        """
+        if not self.manual_in_currency_id:
+            return
+        company_currency = self.company_id.currency_id
+        in_currency_date = self.date
+        if (
+            self.manual_line_id.exists()
+            and self.manual_line_id
+            and self.manual_kind != "liquidity"
+        ):
+            in_currency_date = self.manual_line_id.date
+        if (
+            float_compare(
+                self.manual_amount_in_currency,
+                self.previous_manual_amount_in_currency,
+                precision_rounding=self.manual_in_currency_id.rounding,
+            )
+            != 0
+        ):
+            self.manual_amount = self.manual_in_currency_id._convert(
+                self.manual_amount_in_currency,
+                company_currency,
+                self.company_id,
+                in_currency_date,
+            )
+        elif (
+            float_compare(
+                self.manual_amount,
+                self.previous_manual_amount,
+                precision_rounding=company_currency.rounding,
+            )
+            != 0
+        ):
+            self.manual_amount_in_currency = company_currency._convert(
+                self.manual_amount,
+                self.manual_in_currency_id,
+                self.company_id,
+                in_currency_date,
+            )
+        self.previous_manual_amount_in_currency = self.manual_amount_in_currency
+        self.previous_manual_amount = self.manual_amount
 
     @api.onchange(
         "manual_account_id",
@@ -485,29 +585,7 @@ class AccountBankStatementLine(models.Model):
         self.ensure_one()
         data = self.reconcile_data_info.get("data", [])
         new_data = []
-        if (
-            self.manual_in_currency_id
-            and float_compare(
-                self.manual_amount_in_currency,
-                self.previous_manual_amount_in_currency,
-                precision_rounding=self.manual_in_currency_id.rounding,
-            )
-            != 0
-        ):
-            in_currency_date = self.date
-            if (
-                self.manual_line_id.exists()
-                and self.manual_line_id
-                and self.manual_kind != "liquidity"
-            ):
-                in_currency_date = self.manual_line_id.date
-            self.manual_amount = self.manual_in_currency_id._convert(
-                self.manual_amount_in_currency,
-                self.manual_currency_id,
-                self.company_id,
-                in_currency_date,
-            )
-        self.previous_manual_amount_in_currency = self.manual_amount_in_currency
+        self._sync_manual_amounts()
         for line in data:
             if line["reference"] == self.manual_reference:
                 if self._check_line_changed(line):
