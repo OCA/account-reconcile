@@ -1,11 +1,11 @@
 import {onWillStart, proxy} from "@odoo/owl";
+import {render, useSubEnv} from "@web/owl2/utils";
 import {useBus, useService} from "@web/core/utils/hooks";
 import {KanbanController} from "@web/views/kanban/kanban_controller";
 import {View} from "@web/views/view";
 import {formatMonetary} from "@web/views/fields/formatters";
 import {router} from "@web/core/browser/router";
 import {useSetupAction} from "@web/search/action_hook";
-import {useSubEnv} from "@web/owl2/utils";
 
 export class ReconcileController extends KanbanController {
     setup() {
@@ -78,7 +78,7 @@ export class ReconcileController extends KanbanController {
             onClose: async () => {
                 await this.model.root.load();
                 await this.updateJournalInfo();
-                this.render(true);
+                render(this, true);
             },
         });
     }
@@ -145,7 +145,7 @@ export class ReconcileController extends KanbanController {
                     useSaveErrorDialog: true,
                 });
                 await this.model.root.load();
-                await this.render(true);
+                render(this, true);
             }
         }
         if (!this.state.selectedRecordId || this.state.selectedRecordId !== resId) {

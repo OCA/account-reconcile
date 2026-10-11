@@ -1,5 +1,6 @@
 import {FetchRecordError} from "@web/model/relational_model/errors";
 import {FormController} from "@web/views/form/form_controller";
+import {render} from "@web/owl2/utils";
 import {useService} from "@web/core/utils/hooks";
 import {useViewButtons} from "@web/views/view_button/view_button_hook";
 
@@ -37,7 +38,7 @@ export class ReconcileFormController extends FormController {
         ) {
             // We will update the parent controller every time we reload the form.
             await this.env.parentController.model.root.load();
-            await this.env.parentController.render(true);
+            render(this.env.parentController, true);
             if (journalId) {
                 // This only happens when we press the reconcile button for showing rainbow man
                 // Should not affect if we are in the reconcile view
