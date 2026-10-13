@@ -1,4 +1,16 @@
 .o_field_account_reconcile_oca_data {
+    .o_mobile_only {
+        display: none;
+        @include media-breakpoint-down(sm) {
+            display: table-cell;
+        }
+    }
+    .o_desktop_only,
+    thead {
+        @include media-breakpoint-down(sm) {
+            display: none;
+        }
+    }
     .o_field_account_reconcile_oca_balance_float {
         .o_field_account_reconcile_oca_balance_original_float {
             text-decoration: line-through;
