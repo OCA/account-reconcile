@@ -1,0 +1,1 @@
+- Full reconcilation (with write-off) between an entry in a foreign currency and an entry in company currency is not implemented for now.
