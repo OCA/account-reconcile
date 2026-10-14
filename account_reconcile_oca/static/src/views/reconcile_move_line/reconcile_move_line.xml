@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates>
+    <t t-name="reconcile_move_line.ListView.Buttons">
+        <button class="btn btn-primary" t-on-click="this.clickAddAll">Add all</button>
+    </t>
+</templates>
