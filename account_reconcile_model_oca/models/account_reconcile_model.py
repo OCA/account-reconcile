@@ -222,6 +222,9 @@ class AccountReconcileModel(models.Model):
               if the write-off must be applied on the statement line.
             * auto_reconcile: A flag indicating if the match is enough significant to
               auto reconcile the candidates.
+            * early_payment_discount_amls: The account.move.line records matched
+              with their early payment discount amount (optional). The discount
+              counterpart lines must be computed from their payment terms.
         """
         available_models = self.filtered(
             lambda m: m.rule_type != "writeoff_button"
@@ -663,6 +666,13 @@ class AccountReconcileModel(models.Model):
             ):
                 result["auto_reconcile"] = True
 
+            # The early payment discount is part of the match: the counterpart lines
+            # are generated from the payment terms, not from the model's write-off.
+            epd_amls = result["amls"] & epd_matched_amls
+            if epd_amls:
+                result.pop("status", None)
+                result["early_payment_discount_amls"] = epd_amls
+
             return result
 
         st_line_currency = st_line.foreign_currency_id or st_line.currency_id
@@ -672,6 +682,8 @@ class AccountReconcileModel(models.Model):
         amls = candidate_vals["amls"]
         amls_values_list = []
         amls_with_epd_values_list = []
+        epd_amls = self.env["account.move.line"]
+        epd_matched_amls = self.env["account.move.line"]
         same_currency_mode = amls.currency_id == st_line_currency
         for aml in amls:
             aml_values = {
@@ -691,7 +703,11 @@ class AccountReconcileModel(models.Model):
                 and not aml.matched_credit_ids
                 and aml.discount_date
                 and st_line.date <= aml.discount_date
+                and aml.move_id._is_eligible_for_early_payment_discount(
+                    st_line_currency, st_line.date
+                )
             ):
+                epd_amls |= aml
                 rate = (
                     abs(aml.amount_currency) / abs(aml.balance) if aml.balance else 1.0
                 )
@@ -753,6 +769,8 @@ class AccountReconcileModel(models.Model):
         match_type, kepts_amls_values_list = match_batch_amls(amls_with_epd_values_list)
         if match_type != "perfect":
             kepts_amls_values_list = []
+        else:
+            epd_matched_amls = epd_amls
 
         # Try to match the amls having the same currency as the statement line.
         if not kepts_amls_values_list:
