@@ -594,6 +594,10 @@ class AccountBankStatementLine(models.Model):
         partner = (
             reconcile_model._get_partner_from_mapping(self) or self._retrieve_partner()
         )
+        # Propagate the bank line implicit rate to keep the move consistent.
+        line_rate = None
+        if self.foreign_currency_id and self.amount and self.amount_currency:
+            line_rate = self.amount_currency / self.amount
         for line in reconcile_model._get_write_off_move_lines_dict(
             -liquidity_amount, partner.id
         ):
@@ -601,17 +605,16 @@ class AccountBankStatementLine(models.Model):
             new_line["name"] = new_line.get("name") or default_name
             new_line["partner_id"] = partner and partner.name_get()[0] or False
             amount = line.get("balance")
-            if self.foreign_currency_id:
-                amount = self.foreign_currency_id.compute(
-                    amount, self.journal_id.currency_id or self.company_currency_id
-                )
             if currency != self.company_id.currency_id:
-                currency_amount = self.company_id.currency_id._convert(
-                    amount,
-                    currency,
-                    self.company_id,
-                    self.date,
-                )
+                if line_rate is not None:
+                    currency_amount = currency.round(amount * line_rate)
+                else:
+                    currency_amount = self.company_id.currency_id._convert(
+                        amount,
+                        currency,
+                        self.company_id,
+                        self.date,
+                    )
             new_line.update(
                 {
                     "reference": "reconcile_auxiliary;%s" % reconcile_auxiliary_id,
