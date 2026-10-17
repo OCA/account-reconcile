@@ -1,3 +1,4 @@
+import json
 import time
 
 from odoo import Command
@@ -92,6 +93,17 @@ class TestAccountReconciliationCommon(TestAccountReconciliationModelCommon):
 @tagged("post_install", "-at_install")
 class TestReconciliationWidget(TestAccountReconciliationCommon):
     # Testing reconcile action
+
+    def test_manual_line_without_account_is_json_serializable(self):
+        bank_stmt_line = self.acc_bank_stmt_line_model.with_context(lang="en_US").new(
+            {"journal_id": self.bank_journal_euro.id}
+        )
+
+        vals = bank_stmt_line._get_manual_reconcile_vals()
+
+        self.assertEqual(
+            json.loads(json.dumps(vals))["account_id"], [False, "Undefined"]
+        )
 
     def test_reconcile_invoice_currency(self):
         inv1 = self.create_invoice(currency_id=self.currency_usd_id, invoice_amount=100)
