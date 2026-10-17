@@ -1557,3 +1557,237 @@ class TestReconciliationWidget(TestAccountReconciliationCommon):
             reconciled_exchange_line.balance,
             "Proposed reconciliation does not match auto reconciliation",
         )
+
+    def test_multi_counterpart_company_currency_booked_rate(self):
+        usd = self.env.ref("base.USD")
+        company_currency = self.env.company.currency_id
+        self.env["res.currency.rate"].search([("currency_id", "=", usd.id)]).unlink()
+        self.env["res.currency.rate"].create(
+            {
+                "currency_id": usd.id,
+                "name": time.strftime("%Y-01-01"),
+                "rate": 2.0,
+            }
+        )
+        bank_stmt = self.acc_bank_stmt_model.create(
+            {
+                "journal_id": self.bank_journal_usd.id,
+                "date": time.strftime("%Y-07-15"),
+                "name": "multi counterpart booked rate",
+            }
+        )
+        bank_stmt_line = self.acc_bank_stmt_line_model.create(
+            {
+                "name": "testLine",
+                "journal_id": self.bank_journal_usd.id,
+                "statement_id": bank_stmt.id,
+                "amount": 100.0,
+                "date": time.strftime("%Y-07-15"),
+            }
+        )
+        self.assertEqual(bank_stmt_line.amount_total_signed, 50.0)
+        self.env["res.currency.rate"].create(
+            {
+                "currency_id": usd.id,
+                "name": time.strftime("%Y-07-15"),
+                "rate": 2.5,
+            }
+        )
+        inv1 = self.create_invoice(currency_id=company_currency.id, invoice_amount=10)
+        inv2 = self.create_invoice(currency_id=company_currency.id, invoice_amount=100)
+        rec1 = inv1.line_ids.filtered(
+            lambda line: line.account_id.account_type == "asset_receivable"
+        )
+        rec2 = inv2.line_ids.filtered(
+            lambda line: line.account_id.account_type == "asset_receivable"
+        )
+        with Form(
+            bank_stmt_line,
+            view="account_reconcile_oca.bank_statement_line_form_reconcile_view",
+        ) as f:
+            f.add_account_move_line_id = rec1
+            f.add_account_move_line_id = rec2
+            self.assertTrue(f.can_reconcile)
+        data = bank_stmt_line.reconcile_data_info["data"]
+        others = [line for line in data if line["kind"] == "other"]
+        suspense = [line for line in data if line["kind"] == "suspense"]
+        self.assertEqual(len(others), 2)
+        self.assertFalse(suspense)
+        amounts = sorted(abs(line["amount"]) for line in others)
+        self.assertEqual(amounts, [10.0, 40.0])
+        bank_stmt_line.reconcile_bank_line()
+        self.assertTrue(bank_stmt_line.is_reconciled)
+
+    def test_manual_counterpart_uses_statement_rate_after_late_rate_update(self):
+        chf = self.env.ref("base.CHF")
+        chf.active = True
+        rate = self.env["res.currency.rate"].create(
+            {
+                "currency_id": chf.id,
+                "name": time.strftime("%Y-01-13"),
+                "inverse_company_rate": 1.07,
+            }
+        )
+        chf_journal = self.env["account.journal"].create(
+            {
+                "name": "Bank CHF",
+                "type": "bank",
+                "code": "BCHF",
+                "currency_id": chf.id,
+                "suspense_account_id": self.company.account_journal_suspense_account_id.id,
+            }
+        )
+        invoice = self._create_invoice(
+            move_type="in_invoice",
+            currency_id=self.currency_euro_id,
+            invoice_amount=1261.31,
+            date_invoice=time.strftime("%Y-02-01"),
+            auto_validate=True,
+        )
+        bank_stmt = self.acc_bank_stmt_model.create(
+            {
+                "journal_id": chf_journal.id,
+                "date": time.strftime("%Y-01-13"),
+                "name": "test",
+            }
+        )
+        bank_stmt_line = self.acc_bank_stmt_line_model.create(
+            {
+                "name": "testLine",
+                "journal_id": chf_journal.id,
+                "statement_id": bank_stmt.id,
+                "amount": -250,
+                "date": time.strftime("%Y-01-13"),
+            }
+        )
+        (
+            liquidity_lines,
+            _suspense_lines,
+            _other_lines,
+        ) = bank_stmt_line._seek_for_lines()
+        self.assertEqual(liquidity_lines.credit, 267.5)
+
+        rate.inverse_company_rate = 1.09004
+        payable = invoice.line_ids.filtered(
+            lambda line: line.account_id.account_type == "liability_payable"
+        )
+        with Form(
+            bank_stmt_line,
+            view="account_reconcile_oca.bank_statement_line_form_reconcile_view",
+        ) as f:
+            f.add_account_move_line_id = payable
+            counterpart = next(
+                line
+                for line in f.reconcile_data_info["data"]
+                if line["reference"] == "account.move.line;%s" % payable.id
+            )
+            self.assertEqual(counterpart["amount"], 267.5)
+            self.assertTrue(f.can_reconcile)
+
+    def test_manual_receivable_counterpart_uses_statement_rate_after_late_rate_update(
+        self,
+    ):
+        chf = self.env.ref("base.CHF")
+        chf.active = True
+        rate = self.env["res.currency.rate"].create(
+            {
+                "currency_id": chf.id,
+                "name": time.strftime("%Y-01-13"),
+                "inverse_company_rate": 1.07,
+            }
+        )
+        chf_journal = self.env["account.journal"].create(
+            {
+                "name": "Bank CHF Receivable",
+                "type": "bank",
+                "code": "BCHR",
+                "currency_id": chf.id,
+                "suspense_account_id": self.company.account_journal_suspense_account_id.id,
+            }
+        )
+        invoice = self._create_invoice(
+            move_type="out_invoice",
+            currency_id=self.currency_euro_id,
+            invoice_amount=1261.31,
+            date_invoice=time.strftime("%Y-02-01"),
+            auto_validate=True,
+        )
+        bank_stmt = self.acc_bank_stmt_model.create(
+            {
+                "journal_id": chf_journal.id,
+                "date": time.strftime("%Y-01-13"),
+                "name": "test",
+            }
+        )
+        bank_stmt_line = self.acc_bank_stmt_line_model.create(
+            {
+                "name": "testLine",
+                "journal_id": chf_journal.id,
+                "statement_id": bank_stmt.id,
+                "amount": 250,
+                "date": time.strftime("%Y-01-13"),
+            }
+        )
+        (
+            liquidity_lines,
+            _suspense_lines,
+            _other_lines,
+        ) = bank_stmt_line._seek_for_lines()
+        self.assertEqual(liquidity_lines.debit, 267.5)
+
+        rate.inverse_company_rate = 1.09004
+        receivable = invoice.line_ids.filtered(
+            lambda line: line.account_id.account_type == "asset_receivable"
+        )
+        with Form(
+            bank_stmt_line,
+            view="account_reconcile_oca.bank_statement_line_form_reconcile_view",
+        ) as f:
+            f.add_account_move_line_id = receivable
+            counterpart = next(
+                line
+                for line in f.reconcile_data_info["data"]
+                if line["reference"] == "account.move.line;%s" % receivable.id
+            )
+            self.assertEqual(counterpart["amount"], -267.5)
+            self.assertTrue(f.can_reconcile)
+
+    def test_writeoff_button_currency_amount_uses_statement_rate(self):
+        usd = self.env.ref("base.USD")
+        self.env["res.currency.rate"].search([("currency_id", "=", usd.id)]).unlink()
+        self.env["res.currency.rate"].create(
+            {"currency_id": usd.id, "name": time.strftime("%Y-01-01"), "rate": 2.0}
+        )
+        bank_stmt = self.acc_bank_stmt_model.create(
+            {
+                "journal_id": self.bank_journal_usd.id,
+                "date": time.strftime("%Y-07-15"),
+                "name": "writeoff",
+            }
+        )
+        bank_stmt_line = self.acc_bank_stmt_line_model.create(
+            {
+                "name": "testLine",
+                "journal_id": self.bank_journal_usd.id,
+                "statement_id": bank_stmt.id,
+                "amount": 100.0,
+                "date": time.strftime("%Y-07-15"),
+            }
+        )
+        self.env["res.currency.rate"].create(
+            {"currency_id": usd.id, "name": time.strftime("%Y-07-15"), "rate": 2.5}
+        )
+        with Form(
+            bank_stmt_line,
+            view="account_reconcile_oca.bank_statement_line_form_reconcile_view",
+        ) as f:
+            f.manual_model_id = self.rule
+        writeoff = [
+            line
+            for line in bank_stmt_line.reconcile_data_info["data"]
+            if line["kind"] == "other"
+        ]
+        self.assertEqual(len(writeoff), 1)
+        self.assertEqual(writeoff[0]["amount"], -50.0)
+        self.assertEqual(writeoff[0]["currency_amount"], -100.0)
+        self.assertTrue(bank_stmt_line.reconcile_data_info.get("can_reconcile"))
