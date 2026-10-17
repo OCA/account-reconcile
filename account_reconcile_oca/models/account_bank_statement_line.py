@@ -1184,6 +1184,19 @@ class AccountBankStatementLine(models.Model):
         self.ensure_one()
         self.move_id.to_check = False
 
+    def _convert_reconcile_counterpart_max_amount(self, max_amount, currency, date):
+        reconcile_currency = self._get_reconcile_currency()
+        if currency not in (self.company_id.currency_id, reconcile_currency):
+            return super()._convert_reconcile_counterpart_max_amount(
+                max_amount, currency, date
+            )
+        amounts = self._prepare_counterpart_amounts_using_st_line_rate(
+            reconcile_currency, 0.0, max_amount
+        )
+        if currency == self.company_id.currency_id:
+            return amounts["balance"]
+        return amounts["amount_currency"]
+
     def _get_reconcile_line(
         self,
         line,

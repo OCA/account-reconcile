@@ -36,6 +36,11 @@ class AccountReconcileAbstract(models.AbstractModel):
     def _get_reconcile_currency(self):
         return self.currency_id or self.company_id._currency_id
 
+    def _convert_reconcile_counterpart_max_amount(self, max_amount, currency, date):
+        return self._get_reconcile_currency()._convert(
+            max_amount, currency, self.company_id, date
+        )
+
     def _get_reconcile_line(
         self,
         line,
@@ -71,8 +76,10 @@ class AccountReconcileAbstract(models.AbstractModel):
                     -real_currency_amount > max_amount > 0
                     or -real_currency_amount < max_amount < 0
                 ):
-                    currency_max_amount = self._get_reconcile_currency()._convert(
-                        max_amount, currency, self.company_id, date
+                    currency_max_amount = (
+                        self._convert_reconcile_counterpart_max_amount(
+                            max_amount, currency, date
+                        )
                     )
                     amount = currency_max_amount
                     net_amount = -max_amount
