@@ -1557,3 +1557,59 @@ class TestReconciliationWidget(TestAccountReconciliationCommon):
             reconciled_exchange_line.balance,
             "Proposed reconciliation does not match auto reconciliation",
         )
+
+    def test_foreign_currency_journal_reconcile_model_amount(self):
+        self.env["res.currency.rate"].search([]).unlink()
+        self.env["res.currency.rate"].create(
+            {
+                "currency_id": self.currency_usd_id,
+                "name": time.strftime("%Y-07-13"),
+                "rate": 2,
+            }
+        )
+        self.env["account.reconcile.model"].search([]).unlink()
+        self.env["account.reconcile.model"].create(
+            {
+                "name": "Match invoice by currency, amount and label",
+                "rule_type": "invoice_matching",
+                "auto_reconcile": False,
+                "match_same_currency": True,
+                "match_partner": True,
+                "match_text_location_label": True,
+            }
+        )
+        invoice = self._create_invoice(
+            currency_id=self.currency_usd_id,
+            invoice_amount=100,
+            date_invoice=time.strftime("%Y-07-14"),
+            auto_validate=True,
+        )
+        receivable_line = invoice.line_ids.filtered(
+            lambda line: line.account_id.account_type == "asset_receivable"
+        )
+        bank_stmt = self.acc_bank_stmt_model.create(
+            {
+                "journal_id": self.bank_journal_usd.id,
+                "date": time.strftime("%Y-07-15"),
+                "name": "test",
+            }
+        )
+        bank_stmt_line = self.acc_bank_stmt_line_model.create(
+            {
+                "name": "Payment for %s" % invoice.name,
+                "partner_id": invoice.partner_id.id,
+                "journal_id": self.bank_journal_usd.id,
+                "statement_id": bank_stmt.id,
+                "amount": 100,
+                "date": time.strftime("%Y-07-15"),
+            }
+        )
+        self.assertFalse(bank_stmt_line.amount_currency)
+
+        counterpart_line = next(
+            line
+            for line in bank_stmt_line.reconcile_data_info["data"]
+            if receivable_line.id in line.get("counterpart_line_ids", [])
+        )
+
+        self.assertEqual(counterpart_line["currency_amount"], -100)

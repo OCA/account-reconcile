@@ -680,12 +680,13 @@ class AccountBankStatementLine(models.Model):
                     max_amount = amount
                     if (
                         line.currency_id == self._get_reconcile_currency()
-                        and self.amount_currency
                         and self.amount_total_signed
                     ):
                         # convert max amount with rate of statement, not Odoo's rate
                         max_amount = line.currency_id.round(
-                            max_amount * self.amount_currency / self.amount_total_signed
+                            max_amount
+                            * (self.amount_currency or self.amount)
+                            / self.amount_total_signed
                         )
                     reconcile_auxiliary_id, line_data = self._get_reconcile_line(
                         line,
