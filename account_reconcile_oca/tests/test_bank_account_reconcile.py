@@ -1,6 +1,8 @@
+import inspect
 import time
 
 from odoo import Command
+from odoo.service.model import get_public_method
 from odoo.tests import Form, tagged
 from odoo.tools import mute_logger
 
@@ -1078,6 +1080,30 @@ class TestReconciliationWidget(TestAccountReconciliationCommon):
             bank_stmt_line.move_id,
             self.env[move_action["res_model"]].browse(move_action["res_id"]),
         )
+
+    def test_bank_statement_line_create_named_arguments(self):
+        """create() keeps the ORM parameter name ``vals_list``, so it can be
+        called with named arguments like the JSON-2 API does."""
+        model = self.acc_bank_stmt_line_model
+        create = get_public_method(model, "create")
+        kwargs = {
+            "vals_list": [
+                {
+                    "payment_ref": "testLine",
+                    "journal_id": self.bank_journal_euro.id,
+                    "amount": 100,
+                    "date": time.strftime("%Y-07-15"),
+                }
+            ]
+        }
+        # Same check as /json/2/<model>/<method> (HTTP 422 when it fails)
+        try:
+            inspect.signature(create).bind(model, **kwargs)
+        except TypeError as error:
+            self.fail(f"create() does not accept vals_list: {error}")
+        bank_stmt_line = create(model, **kwargs)
+        self.assertEqual(bank_stmt_line.payment_ref, "testLine")
+        self.assertEqual(bank_stmt_line.amount, 100)
 
     @mute_logger("odoo.models.unlink")
     def test_journal_foreign_currency(self):
