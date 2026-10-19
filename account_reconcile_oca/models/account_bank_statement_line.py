@@ -122,9 +122,33 @@ class AccountBankStatementLine(models.Model):
         "account.move", default=False, store=False, prefetch=False, readonly=True
     )
     can_reconcile = fields.Boolean(compute="_compute_reconcile_data_info")
+    reconcile_branch_ids = fields.Many2many(
+        "res.company",
+        compute="_compute_reconcile_branch_ids",
+        help="Active company and branches available for reconciliation, limited "
+        "to the bank journal's company and its descendant branches.",
+    )
+    show_reconcile_branch = fields.Boolean(
+        compute="_compute_reconcile_branch_ids",
+        help="Show the company selector when more than one active company or branch "
+        "can use the bank journal.",
+    )
     reconcile_aggregate = fields.Char(compute="_compute_reconcile_aggregate")
     aggregate_id = fields.Integer(compute="_compute_reconcile_aggregate")
     aggregate_name = fields.Char(compute="_compute_reconcile_aggregate")
+
+    @api.depends("journal_id.company_id")
+    @api.depends_context("allowed_company_ids", "uid")
+    def _compute_reconcile_branch_ids(self):
+        for record in self:
+            companies = self.env["res.company"].search(
+                [
+                    ("id", "in", self.env.companies.ids),
+                    ("id", "child_of", record.journal_id.company_id.id),
+                ]
+            )
+            record.reconcile_branch_ids = companies
+            record.show_reconcile_branch = len(companies) > 1
 
     @api.model
     def _reconcile_aggregate_map(self):
