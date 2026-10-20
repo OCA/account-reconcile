@@ -41,7 +41,11 @@ class AccountJournal(models.Model):
         leave other actions unchanged.
         """
         action = super().open_action()
-        if action.get("xml_id") == "account.action_bank_statement_tree":
+        statement_tree_xml_ids = (
+            "account.action_bank_statement_tree",  # bank journal type
+            "account.action_view_bank_statement_tree",  # cash journal type
+        )
+        if action.get("xml_id") in statement_tree_xml_ids:
             action = self.env["ir.actions.actions"]._for_xml_id(
                 "account_reconcile_oca.action_bank_statement_line_reconcile_all"
             )
