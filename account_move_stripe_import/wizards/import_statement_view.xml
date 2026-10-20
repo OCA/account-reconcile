@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="move_importer_view" model="ir.ui.view">
+        <field name="model">credit.statement.import</field>
+        <field name="inherit_id" ref="account_move_base_import.move_importer_view" />
+        <field name="arch" type="xml">
+            <field name="input_statement" position="before">
+                <field name="need_file" invisible="1" />
+                <field name="last_import_date" invisible="need_file" />
+            </field>
+            <field name="input_statement" position="attributes">
+                <attribute name="required">need_file</attribute>
+                <attribute name="invisible">not need_file</attribute>
+            </field>
+        </field>
+    </record>
+</odoo>
