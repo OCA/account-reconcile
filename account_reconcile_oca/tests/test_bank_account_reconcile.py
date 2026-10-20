@@ -789,6 +789,41 @@ class TestReconciliationWidget(TestAccountReconciliationCommon):
         self.assertEqual(bank_stmt_line.move_id.line_ids[0].debit, expected_amount)
         self.assertEqual(bank_stmt_line.move_id.line_ids[1].credit, expected_amount)
 
+    def test_reconcile_model_writeoff_keeps_bank_line_rate(self):
+        bank_stmt = self.acc_bank_stmt_model.create(
+            {
+                "journal_id": self.bank_journal_euro.id,
+                "date": time.strftime("%Y-07-15"),
+                "name": "test",
+            }
+        )
+        bank_stmt_line = self.acc_bank_stmt_line_model.create(
+            {
+                "name": "testLine",
+                "journal_id": self.bank_journal_euro.id,
+                "statement_id": bank_stmt.id,
+                "amount": 100,
+                "amount_currency": 120,
+                "foreign_currency_id": self.currency_usd_id,
+                "date": time.strftime("%Y-07-15"),
+            }
+        )
+        with Form(
+            bank_stmt_line,
+            view="account_reconcile_oca.bank_statement_line_form_reconcile_view",
+        ) as f:
+            self.assertFalse(f.can_reconcile)
+            f.manual_model_id = self.rule
+            self.assertTrue(f.can_reconcile)
+        bank_stmt_line.reconcile_bank_line()
+        self.assertEqual(2, len(bank_stmt_line.move_id.line_ids))
+        writeoff_line = bank_stmt_line.move_id.line_ids.filtered(
+            lambda r: r.account_id == self.current_assets_account
+        )
+        self.assertEqual(len(writeoff_line), 1)
+        self.assertEqual(writeoff_line.credit, 100)
+        self.assertEqual(writeoff_line.amount_currency, -120)
+
     # Testing to check functionality
 
     def test_reconcile_invoice_to_check_reconciled(self):
