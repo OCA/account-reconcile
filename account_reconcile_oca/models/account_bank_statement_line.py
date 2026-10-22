@@ -930,8 +930,8 @@ class AccountBankStatementLine(models.Model):
         return vals
 
     @api.model_create_multi
-    def create(self, mvals):
-        result = super().create(mvals)
+    def create(self, vals_list):
+        result = super().create(vals_list)
         result._retrieve_partner()
         if tools.config["test_enable"] and not self.env.context.get(
             "_test_account_reconcile_oca"
