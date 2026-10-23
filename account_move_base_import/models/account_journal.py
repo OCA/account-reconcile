@@ -121,7 +121,9 @@ class AccountJournal(models.Model):
             ] == self.commission_account_id.id and move_line_vals.get(
                 "already_completed"
             ):
-                commission -= move_line_vals["debit"]
+                commission += move_line_vals.get("credit", 0.0) - move_line_vals.get(
+                    "debit", 0.0
+                )
             else:
                 refund -= move_line_vals["debit"]
                 payment += move_line_vals["credit"]
