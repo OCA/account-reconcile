@@ -261,6 +261,16 @@
                                 <field name="manual_in_currency_id" invisible="1" />
                                 <field name="manual_in_currency" invisible="1" />
                                 <field name="manual_kind" invisible="1" />
+                                <field name="reconcile_branch_ids" invisible="1" />
+                                <field name="show_reconcile_branch" invisible="1" />
+                                <field
+                                    name="company_id"
+                                    groups="base.group_multi_company"
+                                    domain="[('id', 'in', reconcile_branch_ids)]"
+                                    invisible="not show_reconcile_branch"
+                                    options="{'no_create': True}"
+                                    readonly="is_reconciled"
+                                />
                                 <field
                                     name="manual_account_id"
                                     string="Account"

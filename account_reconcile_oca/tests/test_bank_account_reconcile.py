@@ -1811,3 +1811,29 @@ class TestReconciliationWidget(TestAccountReconciliationCommon):
                 lambda line: line.account_id.account_type == "asset_receivable"
             ).full_reconcile_id
         )
+
+    def test_reconcile_branch_choices(self):
+        branch = self.env["res.company"].create(
+            {"name": "Reconciliation Branch", "parent_id": self.company.id}
+        )
+        sub_branch = self.env["res.company"].create(
+            {"name": "Reconciliation Sub-branch", "parent_id": branch.id}
+        )
+        other_company = self.env["res.company"].create(
+            {"name": "Other Reconciliation Company"}
+        )
+        companies = self.company | branch | sub_branch | other_company
+        self.env.user.company_ids |= companies
+        statement_line = self.acc_bank_stmt_line_model.create(
+            {"journal_id": self.bank_journal_euro.id, "amount": 100}
+        )
+        for allowed, expected in (
+            (companies, self.company | branch | sub_branch),
+            (self.company | other_company, self.company),
+            (self.company | branch, self.company | branch),
+            (self.company, self.company),
+        ):
+            with self.subTest(allowed_company_ids=allowed.ids):
+                line = statement_line.with_context(allowed_company_ids=allowed.ids)
+                self.assertEqual(set(line.reconcile_branch_ids.ids), set(expected.ids))
+                self.assertEqual(line.show_reconcile_branch, len(expected) > 1)
