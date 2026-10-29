@@ -352,6 +352,14 @@ class AccountReconcileModel(models.Model):
         if partner:
             aml_domain.append(("partner_id", "=", partner.id))
 
+        # The journal liquidity account stays reconcilable. Invoice matching
+        # must not take a line already posted on it: edit mode would copy that
+        # account onto the statement move, and core requires exactly one
+        # bank/cash item there. Other cash accounts remain candidates.
+        liquidity_account = st_line.journal_id.default_account_id
+        if liquidity_account:
+            aml_domain.append(("account_id", "!=", liquidity_account.id))
+
         if self.past_months_limit:
             date_limit = fields.Date.context_today(self) - relativedelta(
                 months=self.past_months_limit
