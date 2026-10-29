@@ -1762,3 +1762,81 @@ class TestReconciliationMatchingRules(AccountTestInvoicingCommon):
         )
         self.assertEqual(len(lines), 1)
         self.assertEqual(lines[0]["debit"], 90.0)
+
+
+@tagged("post_install", "-at_install")
+class TestInvoiceMatchingLiquidityAccount(AccountTestInvoicingCommon):
+    def test_invoice_matching_skips_same_journal_liquidity_line(self):
+        """A receipt already posted on this journal account is not an invoice.
+
+        Two incoming statement lines of the same partner must not see each
+        other's bank item as a matching candidate. The liquidity account stays
+        reconcilable. An open receivable of that partner still matches.
+        """
+        journal = self.company_data["default_journal_bank"]
+        bank_account = journal.default_account_id
+        bank_account.reconcile = True
+        partner = self.env["res.partner"].create({"name": "Two receipts partner"})
+        rule = self.env["account.reconcile.model"].create(
+            {
+                "name": "Skip journal liquidity account",
+                "rule_type": "invoice_matching",
+                "match_partner": True,
+                "match_same_currency": False,
+                "allow_payment_tolerance": True,
+                "payment_tolerance_type": "percentage",
+                "payment_tolerance_param": 0.0,
+                "past_months_limit": False,
+                "company_id": self.company_data["company"].id,
+            }
+        )
+        first, second = self.env["account.bank.statement.line"].create(
+            [
+                {
+                    "journal_id": journal.id,
+                    "date": "2020-02-01",
+                    "payment_ref": "RECEIPT 1245.36",
+                    "partner_id": partner.id,
+                    "amount": 1245.36,
+                },
+                {
+                    "journal_id": journal.id,
+                    "date": "2020-02-01",
+                    "payment_ref": "RECEIPT 802.50",
+                    "partner_id": partner.id,
+                    "amount": 802.50,
+                },
+            ]
+        )
+        other_liquidity = second.move_id.line_ids.filtered(
+            lambda line: line.account_id == bank_account
+        )
+        self.assertEqual(len(other_liquidity), 1)
+        domain = rule._get_invoice_matching_amls_domain(first, partner)
+        self.assertIn(("account_id", "!=", bank_account.id), domain)
+        candidates = self.env["account.move.line"].search(domain)
+        self.assertNotIn(other_liquidity, candidates)
+
+        invoice = self.env["account.move"].create(
+            {
+                "move_type": "out_invoice",
+                "partner_id": partner.id,
+                "invoice_date": "2020-01-15",
+                "invoice_line_ids": [
+                    Command.create(
+                        {
+                            "name": "Service",
+                            "quantity": 1,
+                            "price_unit": 1245.37,
+                            "tax_ids": [Command.clear()],
+                        }
+                    )
+                ],
+            }
+        )
+        invoice.action_post()
+        receivable = invoice.line_ids.filtered(
+            lambda line: line.account_id.account_type == "asset_receivable"
+        )
+        candidates = self.env["account.move.line"].search(domain)
+        self.assertIn(receivable, candidates)
