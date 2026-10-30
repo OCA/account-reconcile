@@ -530,6 +530,42 @@ class TestReconciliationWidget(TestAccountReconciliationCommon):
         )
 
     @mute_logger("odoo.models.unlink")
+    def test_reconcile_model_after_selecting_suspense_line(self):
+        """
+        Selecting the suspense line of a line without a partner must not stop
+        a reconcile model from using the remaining amount.
+        """
+        bank_stmt = self.acc_bank_stmt_model.create(
+            {
+                "journal_id": self.bank_journal_euro.id,
+                "date": time.strftime("%Y-07-15"),
+                "name": "test",
+            }
+        )
+        bank_stmt_line = self.acc_bank_stmt_line_model.create(
+            {
+                "name": "testLine",
+                "journal_id": self.bank_journal_euro.id,
+                "statement_id": bank_stmt.id,
+                "amount": 100,
+                "date": time.strftime("%Y-07-15"),
+            }
+        )
+        with Form(
+            bank_stmt_line,
+            view="account_reconcile_oca.bank_statement_line_form_reconcile_view",
+        ) as f:
+            f.manual_reference = "reconcile_auxiliary;1"
+            f.manual_model_id = self.rule
+            self.assertTrue(f.can_reconcile)
+        bank_stmt_line.reconcile_bank_line()
+        self.assertTrue(
+            bank_stmt_line.move_id.line_ids.filtered(
+                lambda r: r.account_id == self.current_assets_account
+            )
+        )
+
+    @mute_logger("odoo.models.unlink")
     def test_reconcile_model_tax_included(self):
         """
         We want to test what happens when we select an reconcile model to fill a
