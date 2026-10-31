@@ -1811,3 +1811,69 @@ class TestReconciliationWidget(TestAccountReconciliationCommon):
                 lambda line: line.account_id.account_type == "asset_receivable"
             ).full_reconcile_id
         )
+
+    def test_write_off_lines_from_note(self):
+        """
+        Testing the fill of the bank statment line with
+        writeoff suggestion reconcile model
+        with abstract amount out of narration/note
+        """
+        rule = self.env["account.reconcile.model"].create(
+            {
+                "name": "Line with Bank Fees",
+                "trigger": "auto_reconcile",
+                "match_amount": False,
+                "match_label": "contains",
+                "match_label_param": "TEST BANK FEES",
+                "line_ids": [
+                    Command.create(
+                        {
+                            "label": "Due amount",
+                            "account_id": self.company_data[
+                                "default_account_deferred_expense"
+                            ].id,
+                            "amount_type": "regex",
+                            "amount_string": r"BRT: ([\d,.]+)",
+                        }
+                    ),
+                    Command.create(
+                        {
+                            "label": "Bank Fees",
+                            "account_id": self.company_data[
+                                "default_tax_account_receivable"
+                            ].id,
+                            "amount_type": "percentage",
+                            "amount_string": "100",
+                        }
+                    ),
+                ],
+            }
+        )
+        rule.flush_recordset()
+        bank_stmt = self.acc_bank_stmt_model.create(
+            {
+                "journal_id": self.bank_journal_euro.id,
+                "date": time.strftime("%Y-07-15"),
+                "name": "test",
+            }
+        )
+        bank_stmt_line = self.acc_bank_stmt_line_model.create(
+            {
+                "name": "TEST BANK FEES",
+                "payment_ref": "TEST BANK FEES",
+                "narration": "R:9772938 10/07 AX 9415116318 T:5 BRT: 100.00 C/ croip",
+                "journal_id": self.bank_journal_euro.id,
+                "statement_id": bank_stmt.id,
+                "amount": 1000.0,
+                "date": time.strftime("%Y-07-15"),
+            }
+        )
+        self.assertTrue(bank_stmt_line.is_reconciled)
+        regex_line = bank_stmt_line.move_id.line_ids.filtered(
+            lambda line: line.account_id == rule.line_ids[0].account_id
+        )
+        percentage_line = bank_stmt_line.move_id.line_ids.filtered(
+            lambda line: line.account_id == rule.line_ids[1].account_id
+        )
+        self.assertEqual(regex_line.balance, -100.0)
+        self.assertEqual(percentage_line.balance, -900.0)
