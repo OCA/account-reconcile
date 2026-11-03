@@ -28,7 +28,7 @@ NAMES_COMPLETION_CASES = [
     ),
     name_completion_case(
         "Acsone ([^a-zA-Z0-9 -]) SA",
-        "Line for Acsone ([^a-zA-Z0-9 -]) SA " "test",
+        "Line for Acsone ([^a-zA-Z0-9 -]) SA test",
         True,
     ),
     name_completion_case(

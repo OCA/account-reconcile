@@ -174,7 +174,7 @@ class AccountMoveCompletionRule(models.Model):
         partner_obj = self.env["res.partner"]
         or_regex = f".*;? *{line.name} *;?.*"
         self.env["res.partner"].flush_model(["bank_statement_label"])
-        sql = "SELECT id from res_partner" " WHERE bank_statement_label ~* %s"
+        sql = "SELECT id from res_partner WHERE bank_statement_label ~* %s"
         self.env.cr.execute(sql, (or_regex,))
         partner_ids = self.env.cr.fetchall()
         partners = partner_obj.browse([x[0] for x in partner_ids])

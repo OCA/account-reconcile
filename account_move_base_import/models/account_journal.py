@@ -353,7 +353,7 @@ class AccountJournal(models.Model):
             result_row_list = parser.result_row_list
         # Check all key are present in account.bank.statement.line!!
         if not result_row_list:
-            raise UserError(self.env._("Nothing to import: " "The file is empty"))
+            raise UserError(self.env._("Nothing to import: The file is empty"))
         parsed_cols = list(parser.get_move_line_vals(result_row_list[0]).keys())
         for col in parsed_cols:
             if col not in move_line_obj._fields:

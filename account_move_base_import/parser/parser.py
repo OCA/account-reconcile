@@ -185,7 +185,7 @@ def itersubclasses(cls, _seen=None):
     """
     if not isinstance(cls, type):
         raise TypeError(
-            "itersubclasses must be called with " "new-style classes, not %.100r" % cls
+            "itersubclasses must be called with new-style classes, not %.100r" % cls
         )
     if _seen is None:
         _seen = set()
