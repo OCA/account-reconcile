@@ -48,7 +48,7 @@ class BaseCompletion(AccountTestInvoicingCommon):
         cls.account_move_obj = cls.env["account.move"]
         cls.account_move_line_obj = cls.env["account.move.line"]
         cls.journal = cls.company_data["default_journal_bank"]
-        cls.partner = cls.env.ref("base.res_partner_12")
+        cls.partner = cls.env["res.partner"].create({"name": "Completion partner"})
         cls.account_id = cls.journal.default_account_id.id
 
     def test_name_completion(self):

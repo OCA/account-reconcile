@@ -314,7 +314,7 @@ class AccountJournal(models.Model):
         :param char: ftype represent the file extension (csv by default)
         :return: list: list of ids of the created account.bank.statement
         """
-        filename = self._context.get("file_name", None)
+        filename = self.env.context.get("file_name", None)
         attachment_obj = self.env["ir.attachment"]
         if filename:
             (filename, __) = os.path.splitext(filename)

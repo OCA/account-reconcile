@@ -90,7 +90,7 @@ class TestInvoice(AccountTestInvoicingCommon):
 
     def test_all_completion_rules(self):
         # I fill in the field Bank Statement Label in a Partner
-        self.partner_4 = self.env.ref("base.res_partner_4")
+        self.partner_4 = self.env["res.partner"].create({"name": "Label partner"})
         self.partner_4.bank_statement_label = "XXX66Z"
         self.assertEqual(self.partner_4.bank_statement_label, "XXX66Z")
 
@@ -270,7 +270,6 @@ class TestInvoice(AccountTestInvoicingCommon):
             msg="Check completion by partner name",
         )
         # Line 5. I check that the partner special label has been recognised.
-        self.partner_4 = self.env.ref("base.res_partner_4")
         self.assertEqual(
             move_line_partner_label.partner_id,
             self.partner_4,

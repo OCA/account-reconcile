@@ -31,7 +31,7 @@ class TestCodaImport(AccountTestInvoicingCommon):
             }
         )
         cls.journal = cls.company_data["default_journal_bank"]
-        cls.partner = cls.env.ref("base.res_partner_12")
+        cls.partner = cls.env["res.partner"].create({"name": "Import partner"})
         cls.account_id = cls.journal.default_account_id.id
         cls.import_wizard_obj = cls.env["credit.statement.import"]
         cls.journal.write(
