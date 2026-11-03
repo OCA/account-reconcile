@@ -1,0 +1,742 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# * account_move_base_import
+#
+# Translators:
+# OCA Transbot <transbot@odoo-community.org>, 2017
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 10.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-03-24 03:37+0000\n"
+"PO-Revision-Date: 2024-02-27 15:36+0000\n"
+"Last-Translator: jakobkrabbe <jakob@syscare.se>\n"
+"Language-Team: Swedish (https://www.transifex.com/oca/teams/23907/sv/)\n"
+"Language: sv\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.17\n"
+
+#. module: account_move_base_import
+#. odoo-python
+#: code:addons/account_move_base_import/models/account_move.py:0
+msgid ""
+"%(completion_date)s Account Move %(move_name)s has %(num_imported)s/"
+"%(number_line)s lines completed by %(user_name)s \n"
+"%(error_msg)s\n"
+"%(log)s\n"
+msgstr ""
+"%(completion_date)s Konto Flytt %(move_name)s har %(num_imported)s/"
+"%(number_line)s rader som slutförts av %(user_name)s\n"
+"%(error_msg)s\n"
+"%(log)s\n"
+
+#. module: account_move_base_import
+#: model:ir.model,name:account_move_base_import.model_account_move_completion_rule
+msgid "Account move completion method"
+msgstr "Kontoflytt kompletteringsmetod"
+
+#. module: account_move_base_import
+#: model_terms:ir.ui.view,arch_db:account_move_base_import.view_account_move_filter
+msgid "Account move that should be completed manually"
+msgstr "Kontoflytt som bör utföras manuellt"
+
+#. module: account_move_base_import
+#: model:ir.model.fields,field_description:account_move_base_import.field_account_journal__message_needaction
+#: model:ir.model.fields,field_description:account_move_base_import.field_account_move__message_needaction
+msgid "Action Needed"
+msgstr "Åtgärder som krävs"
+
+#. module: account_move_base_import
+#: model:ir.model.fields,field_description:account_move_base_import.field_account_journal__message_attachment_count
+#: model:ir.model.fields,field_description:account_move_base_import.field_account_move__message_attachment_count
+msgid "Attachment Count"
+msgstr "Antal bilagor"
+
+#. module: account_move_base_import
+#: model_terms:ir.ui.view,arch_db:account_move_base_import.view_move_importer_form
+msgid "Auto Completion"
+msgstr "Automatisk komplettering"
+
+#. module: account_move_base_import
+#: model:ir.model.fields,field_description:account_move_base_import.field_account_move_line__already_completed
+msgid "Auto-Completed"
+msgstr "Slutförd automatiskt"
+
+#. module: account_move_base_import
+#: model_terms:ir.ui.view,arch_db:account_move_base_import.journal_importer_view_form
+msgid "Auto-Completion Rules"
+msgstr "Regler för automatisk ifyllnad"
+
+#. module: account_move_base_import
+#: model_terms:ir.ui.view,arch_db:account_move_base_import.journal_importer_view_form
+msgid "Auto-Completion related infos"
+msgstr "Information om automatisk komplettering"
+
+#. module: account_move_base_import
+#: model:ir.model.fields,field_description:account_move_base_import.field_account_journal__rule_ids
+msgid "Auto-completion rules"
+msgstr "Regler för automatisk ifyllnad"
+
+#. module: account_move_base_import
+#: model:ir.model.fields,field_description:account_move_base_import.field_res_partner__bank_statement_label
+#: model:ir.model.fields,field_description:account_move_base_import.field_res_users__bank_statement_label
+msgid "Bank Statement Label"
+msgstr "Etikett för kontoutdrag"
+
+#. module: account_move_base_import
+#: model:ir.model.fields,field_description:account_move_base_import.field_account_journal__partner_id
+#: model:ir.model.fields,field_description:account_move_base_import.field_credit_statement_import__partner_id
+msgid "Bank/Payment Office partner"
+msgstr "Bank/betalningskontor kontakt"
+
+#. module: account_move_base_import
+#: model_terms:ir.ui.view,arch_db:account_move_base_import.move_importer_view
+msgid "Cancel"
+msgstr "Avbryt"
+
+#. module: account_move_base_import
+#: model:ir.model.fields,help:account_move_base_import.field_account_journal__receivable_account_id
+#: model:ir.model.fields,help:account_move_base_import.field_credit_statement_import__receivable_account_id
+msgid ""
+"Choose a receivable/payable account to use as the default debit/credit "
+"account."
+msgstr ""
+"Välj ett fordrings-/betalningskonto att använda som standarddebet-/"
+"kreditkonto."
+
+#. module: account_move_base_import
+#: model:ir.model.fields,help:account_move_base_import.field_account_journal__commission_analytic_account_id
+msgid ""
+"Choose an analytic account to be used on the commission line analytic "
+"distribution."
+msgstr ""
+
+#. module: account_move_base_import
+#: model:ir.model.fields,help:account_move_base_import.field_account_journal__import_type
+msgid ""
+"Choose here the method by which you want to import account moves for this "
+"journal."
+msgstr ""
+"Välj här vilken metod du vill använda för att importera kontoflyttar för "
+"denna journal."
+
+#. module: account_move_base_import
+#. odoo-python
+#: code:addons/account_move_base_import/parser/file_parser.py:0
+msgid "Column %(col)s not present in file"
+msgstr ""
+
+#. module: account_move_base_import
+#: model:ir.model.fields,field_description:account_move_base_import.field_account_journal__commission_analytic_account_id
+msgid "Commission Analytic Account"
+msgstr "Objektkonto för kommissionen"
+
+#. module: account_move_base_import
+#: model:ir.model.fields,field_description:account_move_base_import.field_account_journal__commission_account_id
+#: model:ir.model.fields,field_description:account_move_base_import.field_credit_statement_import__commission_account_id
+msgid "Commission account"
+msgstr "Konto för provision"
+
+#. module: account_move_base_import
+#. odoo-python
+#: code:addons/account_move_base_import/models/account_journal.py:0
+msgid "Commission amount should not be positive."
+msgstr "Provisionsbeloppet får inte vara positivt."
+
+#. module: account_move_base_import
+#. odoo-python
+#: code:addons/account_move_base_import/models/account_journal.py:0
+msgid "Commission line"
+msgstr "Kommissionensrad"
+
+#. module: account_move_base_import
+#: model:ir.model.fields,field_description:account_move_base_import.field_account_bank_statement_line__completion_logs
+#: model:ir.model.fields,field_description:account_move_base_import.field_account_move__completion_logs
+msgid "Completion Log"
+msgstr "Logg över slutförandet"
+
+#. module: account_move_base_import
+#: model_terms:ir.ui.view,arch_db:account_move_base_import.view_move_importer_form
+msgid "Completion Logs"
+msgstr "Loggar för slutförandet"
+
+#. module: account_move_base_import
+#: model:ir.model,name:account_move_base_import.model_res_partner
+msgid "Contact"
+msgstr "Kontakt"
+
+#. module: account_move_base_import
+#: model:ir.model.fields,field_description:account_move_base_import.field_account_journal__create_counterpart
+msgid "Create Counterpart"
+msgstr "Skapa motpart"
+
+#. module: account_move_base_import
+#: model:ir.model.fields,field_description:account_move_base_import.field_account_move_completion_rule__create_uid
+#: model:ir.model.fields,field_description:account_move_base_import.field_credit_statement_import__create_uid
+msgid "Created by"
+msgstr "Skapad av"
+
+#. module: account_move_base_import
+#: model:ir.model.fields,field_description:account_move_base_import.field_account_move_completion_rule__create_date
+#: model:ir.model.fields,field_description:account_move_base_import.field_credit_statement_import__create_date
+msgid "Created on"
+msgstr "Skapad den"
+
+#. module: account_move_base_import
+#. odoo-python
+#: code:addons/account_move_base_import/parser/file_parser.py:0
+msgid ""
+"Date format is not valid. It should be YYYY-MM-DD for column: %(rule)s "
+"value: %(line_value)s \n"
+" \n"
+" \n"
+" Please check the line with ref: %(ref_value)s \n"
+" \n"
+" Detail: %(error)s"
+msgstr ""
+"Datumformatet är inte giltigt. Det ska vara YYYY-MM-DD för kolumn: %(rule)s "
+"värde: %(line_value)s\n"
+" \n"
+" \n"
+" Vänligen kontrollera raden med referens: %(ref_value)s\n"
+" \n"
+" Detalj: %(error)s"
+
+#. module: account_move_base_import
+#. odoo-python
+#: code:addons/account_move_base_import/parser/file_parser.py:0
+msgid ""
+"Date format is not valid. Please modify the cell formatting to date format "
+"for column: %(rule)s value: %(line_value)s\n"
+" Please check the line with ref: %(value_ref)s\n"
+" \n"
+" Detail: %(error)s"
+msgstr ""
+"Datumformatet är inte giltigt. Ändra cellformateringen till datumformat för "
+"kolumn: %(rule)s värde: %(line_value)s\n"
+" Kontrollera raden med referens: %(value_ref)s\n"
+" \n"
+" Detalj: %(error)s"
+
+#. module: account_move_base_import
+#: model:ir.model.fields,field_description:account_move_base_import.field_account_move_completion_rule__display_name
+#: model:ir.model.fields,field_description:account_move_base_import.field_credit_statement_import__display_name
+msgid "Display Name"
+msgstr "Visningsnamn"
+
+#. module: account_move_base_import
+#: model:ir.model.fields,help:account_move_base_import.field_res_partner__bank_statement_label
+#: model:ir.model.fields,help:account_move_base_import.field_res_users__bank_statement_label
+msgid ""
+"Enter the various label found on your bank statement separated by a ; If one "
+"of this label is include in the bank statement line, the partner will be "
+"automatically filled (as long as you use this method/rules in your statement "
+"profile)."
+msgstr ""
+"Ange de olika etiketter som finns på ditt kontoutdrag åtskilda av ett ; Om "
+"en av dessa etiketter finns med på kontoutdragsraden kommer kontakten "
+"automatiskt att fyllas i (så länge du använder denna metod/regler i din "
+"kontoutdragsprofil)."
+
+#. module: account_move_base_import
+#: model:ir.model.fields,field_description:account_move_base_import.field_credit_statement_import__file_name
+msgid "File Name"
+msgstr "Filnamn"
+
+#. module: account_move_base_import
+#: model:ir.model.fields,field_description:account_move_base_import.field_account_journal__message_follower_ids
+#: model:ir.model.fields,field_description:account_move_base_import.field_account_move__message_follower_ids
+msgid "Followers"
+msgstr "Följare"
+
+#. module: account_move_base_import
+#: model:ir.model.fields,field_description:account_move_base_import.field_account_journal__message_partner_ids
+#: model:ir.model.fields,field_description:account_move_base_import.field_account_move__message_partner_ids
+msgid "Followers (Partners)"
+msgstr "Följare (kontakter)"
+
+#. module: account_move_base_import
+#: model:ir.model.fields.selection,name:account_move_base_import.selection__account_move_completion_rule__function_to_call__get_from_name_and_invoice
+msgid "From line name (based on customer invoice number)"
+msgstr "Från radnamn (baserat på kundfakturanummer)"
+
+#. module: account_move_base_import
+#: model:ir.model.fields.selection,name:account_move_base_import.selection__account_move_completion_rule__function_to_call__get_from_name_and_partner_field
+msgid "From line name (based on partner field)"
+msgstr "Från radnamn (baserat på kontaktfält)"
+
+#. module: account_move_base_import
+#: model:ir.model.fields.selection,name:account_move_base_import.selection__account_move_completion_rule__function_to_call__get_from_name_and_partner_name
+msgid "From line name (based on partner name)"
+msgstr "Från radnamn (baserat på kontaktnamn)"
+
+#. module: account_move_base_import
+#: model:ir.model.fields.selection,name:account_move_base_import.selection__account_move_completion_rule__function_to_call__get_from_name_and_supplier_invoice
+msgid "From line name (based on supplier invoice number)"
+msgstr "Från radnamn (baserat på leverantörsfakturanummer)"
+
+#. module: account_move_base_import
+#: model:ir.model.fields.selection,name:account_move_base_import.selection__account_journal__import_type__generic_csvxls_so
+msgid "Generic .csv/.xls based on SO Name"
+msgstr "Generisk .csv/.xls baserat på SO Namn"
+
+#. module: account_move_base_import
+#: model:ir.model.fields,field_description:account_move_base_import.field_account_journal__has_message
+#: model:ir.model.fields,field_description:account_move_base_import.field_account_move__has_message
+msgid "Has Message"
+msgstr "Har meddelande"
+
+#. module: account_move_base_import
+#: model:ir.model.fields,field_description:account_move_base_import.field_account_move_completion_rule__id
+#: model:ir.model.fields,field_description:account_move_base_import.field_credit_statement_import__id
+msgid "ID"
+msgstr "ID"
+
+#. module: account_move_base_import
+#: model:ir.model.fields,help:account_move_base_import.field_account_journal__message_needaction
+#: model:ir.model.fields,help:account_move_base_import.field_account_move__message_needaction
+msgid "If checked, new messages require your attention."
+msgstr "Om markerad, nya meddelanden kräver din uppmärksamhet."
+
+#. module: account_move_base_import
+#: model:ir.model.fields,help:account_move_base_import.field_account_journal__message_has_error
+#: model:ir.model.fields,help:account_move_base_import.field_account_move__message_has_error
+msgid "If checked, some messages have a delivery error."
+msgstr "Om markerad, vissa meddelanden har ett leveransfel."
+
+#. module: account_move_base_import
+#: model:ir.actions.act_window,name:account_move_base_import.move_importer_action
+#: model:ir.ui.menu,name:account_move_base_import.move_importer_menu
+msgid "Import Batch File"
+msgstr "Importera batch-fil"
+
+#. module: account_move_base_import
+#: model:ir.model,name:account_move_base_import.model_credit_statement_import
+msgid "Import Batch File wizard"
+msgstr "Guiden för att importera Batch-fil"
+
+#. module: account_move_base_import
+#: model_terms:ir.ui.view,arch_db:account_move_base_import.move_importer_view
+msgid "Import Parameters Summary"
+msgstr "Sammanfattning av importparametrar"
+
+#. module: account_move_base_import
+#: model_terms:ir.ui.view,arch_db:account_move_base_import.journal_importer_view_form
+msgid "Import batch file"
+msgstr "Importera batch-fil"
+
+#. module: account_move_base_import
+#: model:ir.model.fields,field_description:account_move_base_import.field_credit_statement_import__journal_id
+msgid "Import configuration parameter"
+msgstr "Importera konfigurationsparameter"
+
+#. module: account_move_base_import
+#: model_terms:ir.ui.view,arch_db:account_move_base_import.move_importer_view
+msgid "Import file"
+msgstr "Importera fil"
+
+#. module: account_move_base_import
+#: model_terms:ir.ui.view,arch_db:account_move_base_import.move_importer_view
+msgid "Import move"
+msgstr "Importera flytt"
+
+#. module: account_move_base_import
+#: model_terms:ir.ui.view,arch_db:account_move_base_import.journal_importer_view_form
+msgid "Import related infos"
+msgstr "Importrelaterad information"
+
+#. module: account_move_base_import
+#. odoo-python
+#: code:addons/account_move_base_import/parser/file_parser.py:0
+msgid "Invalid file type %(ftype)s. Please use csv, xls or xlsx"
+msgstr ""
+
+#. module: account_move_base_import
+#. odoo-python
+#: code:addons/account_move_base_import/models/account_move.py:0
+msgid "Invalid invoice type for completion: %(inv_type)s"
+msgstr ""
+
+#. module: account_move_base_import
+#. odoo-python
+#: code:addons/account_move_base_import/models/account_move.py:0
+msgid "Invalid invoice type for completion: %(invoice_type)s"
+msgstr ""
+
+#. module: account_move_base_import
+#: model:ir.model.fields,field_description:account_move_base_import.field_account_journal__message_is_follower
+#: model:ir.model.fields,field_description:account_move_base_import.field_account_move__message_is_follower
+msgid "Is Follower"
+msgstr "Är följare"
+
+#. module: account_move_base_import
+#: model:ir.model,name:account_move_base_import.model_account_journal
+msgid "Journal"
+msgstr "Journal"
+
+#. module: account_move_base_import
+#: model:ir.model,name:account_move_base_import.model_account_move
+msgid "Journal Entry"
+msgstr "Journalanteckning"
+
+#. module: account_move_base_import
+#: model:ir.model,name:account_move_base_import.model_account_move_line
+msgid "Journal Item"
+msgstr "Journalrad"
+
+#. module: account_move_base_import
+#: model:ir.model.fields,field_description:account_move_base_import.field_account_bank_statement_line__used_for_completion
+#: model:ir.model.fields,field_description:account_move_base_import.field_account_journal__used_for_completion
+#: model:ir.model.fields,field_description:account_move_base_import.field_account_move__used_for_completion
+msgid "Journal used for completion"
+msgstr "Journal som används för komplettering"
+
+#. module: account_move_base_import
+#: model:ir.model.fields,field_description:account_move_base_import.field_account_journal__used_for_import
+msgid "Journal used for import"
+msgstr "Journal som används för import"
+
+#. module: account_move_base_import
+#: model:ir.model.fields,field_description:account_move_base_import.field_account_journal__last_import_date
+msgid "Last Import Date"
+msgstr "Senaste importdatum"
+
+#. module: account_move_base_import
+#: model:ir.model.fields,field_description:account_move_base_import.field_account_move_completion_rule__write_uid
+#: model:ir.model.fields,field_description:account_move_base_import.field_credit_statement_import__write_uid
+msgid "Last Updated by"
+msgstr "Senast uppdaterad av"
+
+#. module: account_move_base_import
+#: model:ir.model.fields,field_description:account_move_base_import.field_account_move_completion_rule__write_date
+#: model:ir.model.fields,field_description:account_move_base_import.field_credit_statement_import__write_date
+msgid "Last Updated on"
+msgstr "Senast uppdaterad den"
+
+#. module: account_move_base_import
+#: model:ir.model.fields,field_description:account_move_base_import.field_account_journal__launch_import_completion
+msgid "Launch completion after import"
+msgstr "Slutförande av lansering efter import"
+
+#. module: account_move_base_import
+#. odoo-python
+#: code:addons/account_move_base_import/models/account_move.py:0
+msgid ""
+"Line named \"%(line)s\" was matched by more than one partner while looking "
+"on partner by name"
+msgstr ""
+
+#. module: account_move_base_import
+#. odoo-python
+#: code:addons/account_move_base_import/models/account_move.py:0
+msgid ""
+"Line named \"%(line_name)s\" was matched by more than one partner while "
+"looking on %(inv_type)s invoices"
+msgstr ""
+"Raden med namnet \"%(line_name)s\" matchades av mer än en kontakt vid "
+"sökning på %(inv_type)s fakturor"
+
+#. module: account_move_base_import
+#. odoo-python
+#: code:addons/account_move_base_import/models/account_move.py:0
+msgid ""
+"Line named \"%(line_name)s\" was matched by more than one partner while "
+"looking on partner label: %(partner_labels)s"
+msgstr ""
+"Raden med namnet \"%(line_name)s\" matchades av mer än en kontakt vid "
+"sökning på kontaktetikett: %(partner_labels)s"
+
+#. module: account_move_base_import
+#: model:ir.model.fields,help:account_move_base_import.field_account_move_completion_rule__sequence
+msgid "Lower means parsed first."
+msgstr "Lägre betyder tolkat först."
+
+#. module: account_move_base_import
+#: model:ir.model.fields,field_description:account_move_base_import.field_account_journal__message_has_error
+#: model:ir.model.fields,field_description:account_move_base_import.field_account_move__message_has_error
+msgid "Message Delivery error"
+msgstr "Fel vid leverans av meddelande"
+
+#. module: account_move_base_import
+#: model:ir.model.fields,field_description:account_move_base_import.field_account_journal__message_ids
+#: model:ir.model.fields,field_description:account_move_base_import.field_account_move__message_ids
+msgid "Messages"
+msgstr "Meddelanden"
+
+#. module: account_move_base_import
+#: model:ir.model.fields,field_description:account_move_base_import.field_account_move_completion_rule__function_to_call
+msgid "Method"
+msgstr "Metod"
+
+#. module: account_move_base_import
+#. odoo-python
+#: code:addons/account_move_base_import/models/account_journal.py:0
+msgid ""
+"Missing column! Column %(column)s you try to import is not present in the "
+"move line!"
+msgstr ""
+
+#. module: account_move_base_import
+#. odoo-python
+#: code:addons/account_move_base_import/models/account_journal.py:0
+msgid "Move %(move_name)s have been imported with %(num_lines)s lines."
+msgstr "Flyttningar %(move_name)s har importerats med %(num_lines)s rader."
+
+#. module: account_move_base_import
+#: model:ir.ui.menu,name:account_move_base_import.menu_action_move_completion_rule_list_menu
+#: model_terms:ir.ui.view,arch_db:account_move_base_import.move_completion_rule_view_form
+msgid "Move Completion Rule"
+msgstr "Regel för slutförande av flytt"
+
+#. module: account_move_base_import
+#: model:ir.actions.act_window,name:account_move_base_import.action_move_completion_rule_list
+msgid "Move Completion Rules"
+msgstr "Regler för slutförande av flytt"
+
+#. module: account_move_base_import
+#: model:ir.model.fields,field_description:account_move_base_import.field_account_move_completion_rule__name
+msgid "Name"
+msgstr "Namn"
+
+#. module: account_move_base_import
+#. odoo-python
+#: code:addons/account_move_base_import/parser/parser.py:0
+msgid "No buffer file given."
+msgstr "Ingen buffertfil angiven."
+
+#. module: account_move_base_import
+#. odoo-python
+#: code:addons/account_move_base_import/models/account_journal.py:0
+msgid "No commission account is set on the journal."
+msgstr "Inget provisionskonto är satt på journalen."
+
+#. module: account_move_base_import
+#. odoo-python
+#: code:addons/account_move_base_import/models/account_journal.py:0
+msgid "Nothing to import: The file is empty"
+msgstr "Inget att importera: Filen är tom"
+
+#. module: account_move_base_import
+#: model:ir.model.fields,field_description:account_move_base_import.field_account_journal__message_needaction_counter
+#: model:ir.model.fields,field_description:account_move_base_import.field_account_move__message_needaction_counter
+msgid "Number of Actions"
+msgstr "Antal åtgärder"
+
+#. module: account_move_base_import
+#: model:ir.model.fields,field_description:account_move_base_import.field_account_journal__message_has_error_counter
+#: model:ir.model.fields,field_description:account_move_base_import.field_account_move__message_has_error_counter
+msgid "Number of errors"
+msgstr "Antal fel"
+
+#. module: account_move_base_import
+#: model:ir.model.fields,help:account_move_base_import.field_account_journal__message_needaction_counter
+#: model:ir.model.fields,help:account_move_base_import.field_account_move__message_needaction_counter
+msgid "Number of messages requiring action"
+msgstr "Antal meddelanden som kräver åtgärd"
+
+#. module: account_move_base_import
+#: model:ir.model.fields,help:account_move_base_import.field_account_journal__message_has_error_counter
+#: model:ir.model.fields,help:account_move_base_import.field_account_move__message_has_error_counter
+msgid "Number of messages with delivery error"
+msgstr "Antal meddelanden med leveransfel"
+
+#. module: account_move_base_import
+#: model:ir.model.fields,field_description:account_move_base_import.field_account_bank_statement_line__import_partner_id
+#: model:ir.model.fields,field_description:account_move_base_import.field_account_move__import_partner_id
+msgid "Partner from import"
+msgstr "Kontakt från import"
+
+#. module: account_move_base_import
+#. odoo-python
+#: code:addons/account_move_base_import/wizard/import_statement.py:0
+msgid "Please use a file with an extension"
+msgstr "Använd en fil med tillägget"
+
+#. module: account_move_base_import
+#: model:ir.model.fields,help:account_move_base_import.field_account_journal__partner_id
+#: model:ir.model.fields,help:account_move_base_import.field_credit_statement_import__partner_id
+msgid ""
+"Put a partner if you want to have it on the commission move (and optionaly "
+"on the counterpart of the intermediate/banking move if you tick the "
+"corresponding checkbox)."
+msgstr ""
+"Ange en kontakt om du vill att den ska vara med i kommissionsrörelsen (och "
+"eventuellt i den motsvarande rörelsen för intermediärer/banker om du "
+"markerar motsvarande kryssruta)."
+
+#. module: account_move_base_import
+#: model:ir.model.fields,field_description:account_move_base_import.field_account_journal__receivable_account_id
+#: model:ir.model.fields,field_description:account_move_base_import.field_credit_statement_import__receivable_account_id
+msgid "Receivable/Payable Account"
+msgstr "Konto för fordringar/skulder"
+
+#. module: account_move_base_import
+#: model_terms:ir.ui.view,arch_db:account_move_base_import.move_completion_rule_view_form
+msgid "Related Profiles"
+msgstr "Relaterade profiler"
+
+#. module: account_move_base_import
+#: model:ir.model.fields,field_description:account_move_base_import.field_account_move_completion_rule__journal_ids
+msgid "Related journals"
+msgstr "Relaterade journaler"
+
+#. module: account_move_base_import
+#: model:ir.model.fields,field_description:account_move_base_import.field_account_move_completion_rule__sequence
+msgid "Sequence"
+msgstr "Nummerserie"
+
+#. module: account_move_base_import
+#: model:ir.model.fields,field_description:account_move_base_import.field_account_journal__split_counterpart
+msgid "Split Counterpart"
+msgstr "Delad motpart"
+
+#. module: account_move_base_import
+#. odoo-python
+#: code:addons/account_move_base_import/models/account_move.py:0
+msgid ""
+"Statement ID %(move_name)s auto-completed for %(num_imported)s/"
+"%(number_line)s lines completed"
+msgstr ""
+"Statement ID %(move_name)s automatiskt ifyllt för %(num_imported)s/"
+"%(number_line)s rader ifyllda"
+
+#. module: account_move_base_import
+#: model:ir.model.fields,field_description:account_move_base_import.field_credit_statement_import__input_statement
+msgid "Statement file"
+msgstr "Utlåtande fil"
+
+#. module: account_move_base_import
+#. odoo-python
+#: code:addons/account_move_base_import/models/account_journal.py:0
+msgid "Statement import error The statement cannot be created: %(statement)s"
+msgstr ""
+
+#. module: account_move_base_import
+#: model:ir.model.fields,help:account_move_base_import.field_account_journal__create_counterpart
+msgid "Tick that box to automatically create the move counterpart"
+msgstr "Markera den rutan för att automatiskt skapa flyttmotsvarigheten"
+
+#. module: account_move_base_import
+#: model:ir.model.fields,help:account_move_base_import.field_account_journal__launch_import_completion
+msgid ""
+"Tick that box to automatically launch the completion on each imported file "
+"using this journal."
+msgstr ""
+"Markera denna ruta för att automatiskt starta kompletteringen på varje "
+"importerad fil som använder denna journal."
+
+#. module: account_move_base_import
+#: model:ir.model.fields,help:account_move_base_import.field_account_journal__autovalidate_completed_move
+msgid ""
+"Tick that box to automatically validate the journal entries after the "
+"completion"
+msgstr ""
+"Markera den här rutan för att automatiskt validera journalposterna efter "
+"slutförandet"
+
+#. module: account_move_base_import
+#: model_terms:ir.ui.view,arch_db:account_move_base_import.view_account_move_filter
+msgid "To Complete"
+msgstr "För att slutföra"
+
+#. module: account_move_base_import
+#: model:ir.model.fields,help:account_move_base_import.field_account_journal__split_counterpart
+msgid ""
+"Two counterparts will be automatically created : one for the refunds and one "
+"for the payments"
+msgstr ""
+"Två motparter skapas automatiskt: en för återbetalningarna och en för "
+"betalningarna"
+
+#. module: account_move_base_import
+#: model:ir.model.fields,field_description:account_move_base_import.field_account_journal__import_type
+msgid "Type of import"
+msgstr "Typ av import"
+
+#. module: account_move_base_import
+#: model:ir.model.fields,field_description:account_move_base_import.field_account_journal__autovalidate_completed_move
+msgid "Validate fully completed moves"
+msgstr "Validera fullständigt genomförda åtgärder"
+
+#. module: account_move_base_import
+#. odoo-python
+#: code:addons/account_move_base_import/parser/file_parser.py:0
+msgid ""
+"Value %(line_value)s of column %(rule)s is not valid.\n"
+" Please check the line with ref %(value_ref)s:\n"
+" \n"
+" Detail: %(error)s"
+msgstr ""
+"Värdet %(line_value)s i kolumnen %(rule)s är inte giltigt.\n"
+" Vänligen kontrollera raden med referens %(value_ref)s:\n"
+" \n"
+" Detalj: %(error)s"
+
+#. module: account_move_base_import
+#: model:ir.model.fields,field_description:account_move_base_import.field_account_journal__website_message_ids
+#: model:ir.model.fields,field_description:account_move_base_import.field_account_move__website_message_ids
+msgid "Website Messages"
+msgstr "Meddelanden från webbplatsen"
+
+#. module: account_move_base_import
+#: model:ir.model.fields,help:account_move_base_import.field_account_journal__website_message_ids
+#: model:ir.model.fields,help:account_move_base_import.field_account_move__website_message_ids
+msgid "Website communication history"
+msgstr "Historik för kommunikation på webbplatsen"
+
+#. module: account_move_base_import
+#: model:ir.model.fields,help:account_move_base_import.field_account_move_line__already_completed
+msgid ""
+"When this checkbox is ticked, the auto-completion process/button will ignore "
+"this line."
+msgstr ""
+"När denna kryssruta är markerad kommer den automatiska ifyllnadsprocessen/"
+"knappen att ignorera denna rad."
+
+#~ msgid "Choose an analytic account to be used on the commission line."
+#~ msgstr "Välj ett objektkonto som ska användas på provisionsraden."
+
+#, python-format
+#~ msgid "Column %s not present in file"
+#~ msgstr "Kolumnen %s finns inte i filen"
+
+#, python-format
+#~ msgid "Invalid file type %s. Please use csv, xls or xlsx"
+#~ msgstr "Ogiltig filtyp %s. Använd csv, xls eller xlsx"
+
+#, python-format
+#~ msgid "Invalid invoice type for completion: %s"
+#~ msgstr "Ogiltig fakturatyp för slutförande: %s"
+
+#~ msgid "Last Modified on"
+#~ msgstr "Senast redigerad den"
+
+#, python-format
+#~ msgid ""
+#~ "Line named \"%s\" was matched by more than one partner while looking on "
+#~ "partner by name"
+#~ msgstr ""
+#~ "Raden med namnet \"%s\" matchades av mer än en kontakt när man sökte på "
+#~ "kontakt efter namn"
+
+#~ msgid "Main Attachment"
+#~ msgstr "Huvudbilaga"
+
+#, python-format
+#~ msgid "Missing"
+#~ msgstr "Saknad"
+
+#, python-format
+#~ msgid ""
+#~ "Missing column! Column %s you try to import is not present in the move "
+#~ "line!"
+#~ msgstr ""
+#~ "Kolumn saknas! Kolumnen %s som du försöker importera finns inte i "
+#~ "flyttraden!"
+
+#, python-format
+#~ msgid "Statement import error The statement cannot be created: %s"
+#~ msgstr "Fel vid import av satser Satsen kan inte skapas: %s"
