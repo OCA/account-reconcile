@@ -26,3 +26,10 @@ accounts must be set in Invoicing / Configuration / Settings / Default Accounts.
 
 The discount only applies to the first payment of an invoice: a partial payment
 never gets a prorated discount.
+
+## Applying a reconcilation model to multiple lines
+
+1. Select multiple transactions (account.bank.statement.line)
+2. Actions -> Reconcile with model
+3. In the wizard, select the model
+4. Run
