@@ -315,11 +315,6 @@ msgid "Is Reconciled"
 msgstr "Je usklajeno"
 
 #. module: account_reconcile_oca
-#: model_terms:ir.ui.view,arch_db:account_reconcile_oca.account_journal_dashboard_kanban_view
-msgid "Items"
-msgstr "Postavke"
-
-#. module: account_reconcile_oca
 #: model:ir.model,name:account_reconcile_oca.model_account_journal
 msgid "Journal"
 msgstr "Dnevnik"
@@ -544,7 +539,6 @@ msgstr "Terjatev"
 #: model:ir.model.fields,field_description:account_reconcile_oca.field_account_account_reconcile_data__reconcile_id
 #: model:ir.ui.menu,name:account_reconcile_oca.account_account_reconcile_menu
 #: model_terms:ir.ui.view,arch_db:account_reconcile_oca.account_account_reconcile_form_view
-#: model_terms:ir.ui.view,arch_db:account_reconcile_oca.account_journal_dashboard_kanban_view
 #: model_terms:ir.ui.view,arch_db:account_reconcile_oca.bank_statement_line_form_reconcile_view
 #: model_terms:ir.ui.view,arch_db:account_reconcile_oca.view_account_list
 msgid "Reconcile"
@@ -727,6 +721,11 @@ msgstr "v celoti plačano"
 #: model_terms:ir.ui.view,arch_db:account_reconcile_oca.account_journal_dashboard_kanban_view
 msgid "to check"
 msgstr "preveriti"
+
+#. module: account_reconcile_oca
+#: model_terms:ir.ui.view,arch_db:account_reconcile_oca.account_journal_dashboard_kanban_view
+msgid "to reconcile"
+msgstr "za usklajevanje"
 
 #. module: account_reconcile_oca
 #: model_terms:ir.ui.view,arch_db:account_reconcile_oca.bank_statement_line_form_reconcile_view

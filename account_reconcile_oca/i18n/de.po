@@ -313,11 +313,6 @@ msgid "Is Reconciled"
 msgstr "Ist abgestimmt"
 
 #. module: account_reconcile_oca
-#: model_terms:ir.ui.view,arch_db:account_reconcile_oca.account_journal_dashboard_kanban_view
-msgid "Items"
-msgstr "Einträge"
-
-#. module: account_reconcile_oca
 #: model:ir.model,name:account_reconcile_oca.model_account_journal
 msgid "Journal"
 msgstr "Journal"
@@ -540,7 +535,6 @@ msgstr "Forderungen"
 #: model:ir.model.fields,field_description:account_reconcile_oca.field_account_account_reconcile_data__reconcile_id
 #: model:ir.ui.menu,name:account_reconcile_oca.account_account_reconcile_menu
 #: model_terms:ir.ui.view,arch_db:account_reconcile_oca.account_account_reconcile_form_view
-#: model_terms:ir.ui.view,arch_db:account_reconcile_oca.account_journal_dashboard_kanban_view
 #: model_terms:ir.ui.view,arch_db:account_reconcile_oca.bank_statement_line_form_reconcile_view
 #: model_terms:ir.ui.view,arch_db:account_reconcile_oca.view_account_list
 msgid "Reconcile"
@@ -723,6 +717,11 @@ msgstr "vollständig bezahlt"
 #: model_terms:ir.ui.view,arch_db:account_reconcile_oca.account_journal_dashboard_kanban_view
 msgid "to check"
 msgstr "zu prüfen"
+
+#. module: account_reconcile_oca
+#: model_terms:ir.ui.view,arch_db:account_reconcile_oca.account_journal_dashboard_kanban_view
+msgid "to reconcile"
+msgstr "abzustimmen"
 
 #. module: account_reconcile_oca
 #: model_terms:ir.ui.view,arch_db:account_reconcile_oca.bank_statement_line_form_reconcile_view
