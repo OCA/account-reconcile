@@ -294,7 +294,7 @@ class MassReconcileAdvanced(models.AbstractModel):
                 for group in reconcile_groups:
                     if any([lid in group for lid in opposite_ids]):
                         _logger.debug(
-                            "New lines %s matched with an existing " "group %s",
+                            "New lines %s matched with an existing group %s",
                             line_ids,
                             group,
                         )

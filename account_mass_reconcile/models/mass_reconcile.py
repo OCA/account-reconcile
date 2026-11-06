@@ -267,7 +267,7 @@ class AccountMassReconcile(models.Model):
         task.
         """
         raise UserError(
-            _("There is no history of reconciled " "items on the task: %s.") % self.name
+            _("There is no history of reconciled items on the task: %s.") % self.name
         )
 
     @staticmethod
