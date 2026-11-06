@@ -467,7 +467,7 @@ class TestScenarioReconcile(AccountTestInvoicingCommon):
 
     def test_reconcile_with_writeoff_currency_opposite_signs(self):
         """Test write-off when company and foreign residuals have opposite signs."""
-        self.env.ref("base.group_multi_currency").users |= self.env.user
+        self.env.ref("base.group_multi_currency").user_ids |= self.env.user
         self.company.currency_id = self.env.ref("base.EUR")
         usd = self.env.ref("base.USD")
         usd.active = True

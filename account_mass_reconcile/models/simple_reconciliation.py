@@ -82,6 +82,7 @@ class MassReconcileSimple(models.AbstractModel):
         return self.rec_auto_lines_simple(lines)
 
 
+# pylint: disable-next=no-wizard-in-models
 class MassReconcileSimpleName(models.TransientModel):
     _name = "mass.reconcile.simple.name"
     _inherit = "mass.reconcile.simple"
@@ -92,6 +93,7 @@ class MassReconcileSimpleName(models.TransientModel):
     _key_field = "name"
 
 
+# pylint: disable-next=no-wizard-in-models
 class MassReconcileSimplePartner(models.TransientModel):
     _name = "mass.reconcile.simple.partner"
     _inherit = "mass.reconcile.simple"
@@ -102,6 +104,7 @@ class MassReconcileSimplePartner(models.TransientModel):
     _key_field = "partner_id"
 
 
+# pylint: disable-next=no-wizard-in-models
 class MassReconcileSimpleReference(models.TransientModel):
     _name = "mass.reconcile.simple.reference"
     _inherit = "mass.reconcile.simple"

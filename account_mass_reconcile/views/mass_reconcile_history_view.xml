@@ -21,7 +21,7 @@
                 <field name="mass_reconcile_id" />
                 <field name="date" />
                 <newline />
-                <group expand="0" string="Group By...">
+                <group>
                     <filter
                         name="Reconciliation Profile"
                         icon="terp-stock_effects-object-colorize"

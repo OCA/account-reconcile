@@ -5,7 +5,7 @@
 import ast
 from operator import itemgetter
 
-from odoo import _, fields, models
+from odoo import fields, models
 
 
 class MassReconcileBase(models.AbstractModel):
@@ -76,7 +76,7 @@ class MassReconcileBase(models.AbstractModel):
             "AND account_move_line.company_id = %s"
         )
         # it would be great to use dict for params
-        # but as we use _where_calc in _get_filter
+        # but as we use _search in _get_filter
         # which returns a list, we have to
         # accommodate with that
         params = [self.account_id.id, self.company_id.id]
@@ -95,7 +95,7 @@ class MassReconcileBase(models.AbstractModel):
                 domain = ast.literal_eval(self._filter)
             except (ValueError, SyntaxError):
                 return "", []
-            query = ml_obj._where_calc(domain)
+            query = ml_obj._search(domain, bypass_access=True)
             sql_obj = query.where_clause
             if sql_obj:
                 where = f" AND {sql_obj.code}"
@@ -166,7 +166,7 @@ class MassReconcileBase(models.AbstractModel):
         journal = self.journal_id
         partners = lines.mapped("partner_id")
         write_off_vals = {
-            "name": _("Automatic writeoff"),
+            "name": self.env._("Automatic writeoff"),
             "amount_currency": same_curr and amount_curr or amount,
             "partner_id": len(partners) == 1 and partners.id or False,
             "account_id": account.id,
@@ -215,7 +215,7 @@ class MassReconcileBase(models.AbstractModel):
         ) = self._below_writeoff_limit(lines, self.write_off)
         rec_date = self._get_rec_date(lines, self.date_base_on)
         line_rs = ml_obj.browse([line["id"] for line in lines]).with_context(
-            date_p=rec_date, comment=_("Automatic Write Off")
+            date_p=rec_date, comment=self.env._("Automatic Write Off")
         )
         if below_writeoff:
             balance = amount_writeoff_curr if same_curr else amount_writeoff

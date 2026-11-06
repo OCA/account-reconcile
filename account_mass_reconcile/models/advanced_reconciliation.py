@@ -5,6 +5,7 @@
 from odoo import models
 
 
+# pylint: disable-next=no-wizard-in-models
 class MassReconcileAdvancedRef(models.TransientModel):
     _name = "mass.reconcile.advanced.ref"
     _inherit = "mass.reconcile.advanced"
@@ -111,6 +112,7 @@ class MassReconcileAdvancedRef(models.TransientModel):
         )
 
 
+# pylint: disable-next=no-wizard-in-models
 class MassReconcileAdvancedName(models.TransientModel):
     _name = "mass.reconcile.advanced.name"
     _inherit = "mass.reconcile.advanced"

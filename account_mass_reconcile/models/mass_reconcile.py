@@ -8,7 +8,7 @@ from datetime import datetime
 import psycopg2
 from psycopg2.extensions import AsIs
 
-from odoo import _, api, exceptions, fields, models, sql_db
+from odoo import api, exceptions, fields, models, sql_db
 from odoo.exceptions import UserError
 
 _logger = logging.getLogger(__name__)
@@ -207,7 +207,7 @@ class AccountMassReconcile(models.Model):
                 )
             except psycopg2.OperationalError as e:
                 raise exceptions.UserError(
-                    _(
+                    self.env._(
                         "A mass reconcile is already ongoing for this account, "
                         "please try again later."
                     )
@@ -245,7 +245,9 @@ class AccountMassReconcile(models.Model):
                 _logger.exception(
                     "The reconcile task %s had an exception: %s", rec.name, str(e)
                 )
-                message = _("There was an error during reconciliation : %s") % str(e)
+                message = self.env._(
+                    "There was an error during reconciliation : %s", str(e)
+                )
                 rec.message_post(body=message)
                 self.env["mass.reconcile.history"].create(
                     {
@@ -267,7 +269,9 @@ class AccountMassReconcile(models.Model):
         task.
         """
         raise UserError(
-            _("There is no history of reconciled items on the task: %s.") % self.name
+            self.env._(
+                "There is no history of reconciled items on the task: %s.", self.name
+            )
         )
 
     @staticmethod
@@ -295,7 +299,7 @@ class AccountMassReconcile(models.Model):
                 ("company_id", "=", self.company_id.id),
             ]
         )
-        name = _("Unreconciled items")
+        name = self.env._("Unreconciled items")
         return self._open_move_line_list(lines.ids or [], name)
 
     def last_history_reconcile(self):
@@ -323,7 +327,7 @@ class AccountMassReconcile(models.Model):
             else:
                 return datetime.min
 
-        reconciles = self.search([])
+        reconciles = self.search([])  # pylint: disable=no-search-all
         assert reconciles.ids, "No mass reconcile available"
         if run_all:
             reconciles.run_reconcile()

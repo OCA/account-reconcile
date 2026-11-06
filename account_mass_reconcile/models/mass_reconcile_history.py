@@ -1,7 +1,7 @@
 # Copyright 2012-2016 Camptocamp SA
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from odoo import _, api, fields, models
+from odoo import api, fields, models
 
 
 class MassReconcileHistory(models.Model):
@@ -52,7 +52,7 @@ class MassReconcileHistory(models.Model):
         :return: action to open the move lines
         """
         move_line_ids = self.mapped("reconcile_ids.reconciled_line_ids").ids
-        name = _("Reconciliations")
+        name = self.env._("Reconciliations")
         return {
             "name": name,
             "view_mode": "list,form",

@@ -5,8 +5,8 @@
 import logging
 from itertools import product
 
-from odoo import api, models, registry
-from odoo.tools.translate import _
+from odoo import api, models
+from odoo.modules.registry import Registry
 
 _logger = logging.getLogger(__name__)
 
@@ -147,17 +147,18 @@ class MassReconcileAdvanced(models.AbstractModel):
                 return True
         return False
 
-    @staticmethod
-    def _compare_matchers(matcher, opposite_matcher):
+    def _compare_matchers(self, matcher, opposite_matcher):
         """
         Prepare and check the matchers to compare
         """
         mkey, mvalue = matcher
         omkey, omvalue = opposite_matcher
-        assert mkey == omkey, _(
+        assert mkey == omkey, self.env._(
             "A matcher %(mkey)s is compared with a matcher %(omkey)s, the _matchers "
-            "and _opposite_matchers are probably wrong"
-        ) % {"mkey": mkey, "omkey": omkey}
+            "and _opposite_matchers are probably wrong",
+            mkey=mkey,
+            omkey=omkey,
+        )
         if not isinstance(mvalue, list | tuple):
             mvalue = (mvalue,)
         if not isinstance(omvalue, list | tuple):
@@ -250,7 +251,7 @@ class MassReconcileAdvanced(models.AbstractModel):
         # Copy and commit current transient model before creating a new cursor
         # This is required to avoid CacheMiss when using data from `self`
         # which is created during current transaction.
-        with registry(self.env.cr.dbname).cursor() as new_cr:
+        with Registry(self.env.cr.dbname).cursor() as new_cr:
             new_env = api.Environment(new_cr, self.env.uid, self.env.context)
             self_env = self.with_env(new_env)
             rec = self_env.create(self.copy_data())
@@ -258,7 +259,7 @@ class MassReconcileAdvanced(models.AbstractModel):
             chunk = reconcile_groups[i : i + chunk_size]
             _logger.debug("Reconcile group chunk %s", chunk)
             try:
-                with registry(self.env.cr.dbname).cursor() as new_cr:
+                with Registry(self.env.cr.dbname).cursor() as new_cr:
                     new_env = api.Environment(new_cr, self.env.uid, self.env.context)
                     # Re-use the committed transient we just committed
                     self_env = self.with_env(new_env).browse(rec.id)
