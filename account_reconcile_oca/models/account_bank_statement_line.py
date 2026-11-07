@@ -1201,8 +1201,12 @@ class AccountBankStatementLine(models.Model):
         reconcile_auxiliary_id = self.reconcile_data_info["reconcile_auxiliary_id"]
         for line in data:
             if line["reference"] == manual_reference and line.get("id"):
-                total_amount = -line["amount"] + line["original_amount_unsigned"]
-                original_amount = line["original_amount_unsigned"]
+                # `original_amount_unsigned` is only written when the amount
+                # differs from the original one (`_get_reconcile_line`), so a
+                # line reconciled in full does not carry it: default to its own
+                # amount, which is the original by construction.
+                original_amount = line.get("original_amount_unsigned", line["amount"])
+                total_amount = -line["amount"] + original_amount
                 reconcile_auxiliary_id, lines = self._get_reconcile_line(
                     self.env["account.move.line"].browse(line["id"]),
                     "other",
