@@ -1877,3 +1877,49 @@ class TestReconciliationWidget(TestAccountReconciliationCommon):
         )
         self.assertEqual(regex_line.balance, -100.0)
         self.assertEqual(percentage_line.balance, -900.0)
+
+    @mute_logger("odoo.models.unlink")
+    def test_manual_reference_full_paid_without_original_amount(self):
+        """A line whose amount equals its original has no
+        `original_amount_unsigned`, so pressing the "full paid" button raised
+        `KeyError` instead of reconciling it.
+        """
+        invoice = self.create_invoice(invoice_amount=100)
+        receivable = invoice.line_ids.filtered(
+            lambda line: line.account_id.account_type == "asset_receivable"
+        )
+        bank_stmt_line = self.acc_bank_stmt_line_model.create(
+            {
+                "name": "testLine",
+                "journal_id": self.bank_journal_euro.id,
+                "amount": 100,
+                "date": time.strftime("%Y-07-15"),
+            }
+        )
+        reference = f"account.move.line;{receivable.id}"
+        bank_stmt_line.reconcile_data_info = {
+            "manual_reference": reference,
+            "reconcile_auxiliary_id": 1,
+            "data": [
+                {
+                    "reference": reference,
+                    "id": receivable.id,
+                    "account_id": [
+                        receivable.account_id.id,
+                        receivable.account_id.display_name,
+                    ],
+                    "partner_id": [
+                        invoice.partner_id.id,
+                        invoice.partner_id.display_name,
+                    ],
+                    "date": receivable.date.isoformat(),
+                    "name": receivable.name or receivable.move_id.name,
+                    "amount": receivable.amount_residual,
+                    "currency_id": receivable.currency_id.id,
+                    "line_currency_id": receivable.currency_id.id,
+                    "kind": "other",
+                }
+            ],
+        }
+        bank_stmt_line.button_manual_reference_full_paid()
+        self.assertIn("data", bank_stmt_line.reconcile_data_info)

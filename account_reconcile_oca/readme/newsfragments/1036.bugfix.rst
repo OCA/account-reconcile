@@ -1,0 +1,1 @@
+Fix `KeyError: original_amount_unsigned` when pressing the "full paid" button on a counterpart line whose amount equals its original amount.
