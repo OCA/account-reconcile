@@ -72,7 +72,6 @@ class AccountBankStatementLine(models.Model):
         readonly=True,
         store=False,
         prefetch=False,
-        string="Manual In Currency",
     )
     manual_amount_in_currency = fields.Monetary(
         store=False,
