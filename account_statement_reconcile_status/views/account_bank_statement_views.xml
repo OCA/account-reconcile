@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+  Copyright 2026 ForgeFlow S.L.
+  License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
+-->
+<odoo>
+    <record id="view_bank_statement_tree" model="ir.ui.view">
+        <field name="name">account.bank.statement.list.reconcile.status</field>
+        <field name="model">account.bank.statement</field>
+        <field name="inherit_id" ref="account.view_bank_statement_tree" />
+        <field name="arch" type="xml">
+            <field name="balance_end_real" position="after">
+                <field name="date_first_fully_reconciled" column_invisible="True" />
+                <field
+                    name="reconcile_state"
+                    widget="badge"
+                    decoration-success="reconcile_state == 'done'"
+                    decoration-warning="reconcile_state == 'in_progress'"
+                    decoration-info="reconcile_state == 'not_started'"
+                />
+            </field>
+        </field>
+    </record>
+
+    <record id="view_bank_statement_tree_decoration" model="ir.ui.view">
+        <field name="name">account.bank.statement.list.reconcile.decoration</field>
+        <field name="model">account.bank.statement</field>
+        <field name="inherit_id" ref="account.view_bank_statement_tree" />
+        <field name="arch" type="xml">
+            <list position="attributes">
+                <attribute
+                    name="decoration-warning"
+                >date_first_fully_reconciled and reconcile_state != 'done'</attribute>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_bank_statement_search" model="ir.ui.view">
+        <field name="name">account.bank.statement.search.reconcile.status</field>
+        <field name="model">account.bank.statement</field>
+        <field name="inherit_id" ref="account.view_bank_statement_search" />
+        <field name="arch" type="xml">
+            <filter name="invalid" position="after">
+                <separator />
+                <filter
+                    name="fully_reconciled"
+                    string="Fully Reconciled"
+                    domain="[('reconcile_state', '=', 'done')]"
+                />
+                <filter
+                    name="in_progress"
+                    string="In Progress"
+                    domain="[('reconcile_state', '=', 'in_progress')]"
+                />
+                <filter
+                    name="not_started"
+                    string="Not Started"
+                    domain="[('reconcile_state', '=', 'not_started')]"
+                />
+                <separator />
+                <filter
+                    name="reconciliation_changed"
+                    string="Changed After Reconciliation"
+                    domain="[('date_first_fully_reconciled', '!=', False), ('reconcile_state', '!=', 'done')]"
+                />
+            </filter>
+            <filter name="journal" position="before">
+                <filter
+                    name="group_reconcile_state"
+                    string="Reconciliation Status"
+                    context="{'group_by': 'reconcile_state'}"
+                />
+            </filter>
+        </field>
+    </record>
+
+    <record id="view_bank_statement_form" model="ir.ui.view">
+        <field name="name">account.bank.statement.form.reconcile.status</field>
+        <field name="model">account.bank.statement</field>
+        <field
+            name="inherit_id"
+            ref="account_statement_base.view_bank_statement_form"
+        />
+        <field name="arch" type="xml">
+            <sheet position="before">
+                <header>
+                    <field
+                        name="reconcile_state"
+                        widget="statusbar"
+                        statusbar_visible="not_started,in_progress,done"
+                    />
+                </header>
+            </sheet>
+            <div class="alert alert-warning" position="after">
+                <div
+                    class="alert alert-danger mb-0"
+                    role="alert"
+                    invisible="not date_first_fully_reconciled or reconcile_state == 'done'"
+                >
+                    This statement was fully reconciled but has been modified.
+                </div>
+            </div>
+        </field>
+    </record>
+</odoo>
