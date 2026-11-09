@@ -1464,6 +1464,140 @@ class TestReconciliationWidget(TestAccountReconciliationCommon):
             self.assertTrue(f.can_reconcile)
             self.assertEqual(f.reconcile_data_info["data"][-1]["amount"], 3.63)
 
+    def test_manual_counterpart_uses_statement_rate_after_late_rate_update(self):
+        chf = self.env.ref("base.CHF")
+        chf.active = True
+        rate = self.env["res.currency.rate"].create(
+            {
+                "currency_id": chf.id,
+                "name": time.strftime("%Y-01-13"),
+                "inverse_company_rate": 1.07,
+            }
+        )
+        chf_journal = self.env["account.journal"].create(
+            {
+                "name": "Bank CHF",
+                "type": "bank",
+                "code": "BCHF",
+                "currency_id": chf.id,
+                "suspense_account_id": self.company.account_journal_suspense_account_id.id,
+            }
+        )
+        invoice = self._create_invoice(
+            move_type="in_invoice",
+            currency_id=self.currency_euro_id,
+            invoice_amount=1261.31,
+            date_invoice=time.strftime("%Y-02-01"),
+            auto_validate=True,
+        )
+        bank_stmt = self.acc_bank_stmt_model.create(
+            {
+                "journal_id": chf_journal.id,
+                "date": time.strftime("%Y-01-13"),
+                "name": "test",
+            }
+        )
+        bank_stmt_line = self.acc_bank_stmt_line_model.create(
+            {
+                "name": "testLine",
+                "journal_id": chf_journal.id,
+                "statement_id": bank_stmt.id,
+                "amount": -250,
+                "date": time.strftime("%Y-01-13"),
+            }
+        )
+        (
+            liquidity_lines,
+            _suspense_lines,
+            _other_lines,
+        ) = bank_stmt_line._seek_for_lines()
+        self.assertEqual(liquidity_lines.credit, 267.5)
+
+        rate.inverse_company_rate = 1.09004
+        payable = invoice.line_ids.filtered(
+            lambda line: line.account_id.account_type == "liability_payable"
+        )
+        with Form(
+            bank_stmt_line,
+            view="account_reconcile_oca.bank_statement_line_form_reconcile_view",
+        ) as f:
+            f.add_account_move_line_id = payable
+            counterpart = next(
+                line
+                for line in f.reconcile_data_info["data"]
+                if line["reference"] == "account.move.line;%s" % payable.id
+            )
+            self.assertEqual(counterpart["amount"], 267.5)
+            self.assertTrue(f.can_reconcile)
+
+    def test_manual_receivable_counterpart_uses_statement_rate_after_late_rate_update(
+        self,
+    ):
+        chf = self.env.ref("base.CHF")
+        chf.active = True
+        rate = self.env["res.currency.rate"].create(
+            {
+                "currency_id": chf.id,
+                "name": time.strftime("%Y-01-13"),
+                "inverse_company_rate": 1.07,
+            }
+        )
+        chf_journal = self.env["account.journal"].create(
+            {
+                "name": "Bank CHF Receivable",
+                "type": "bank",
+                "code": "BCHR",
+                "currency_id": chf.id,
+                "suspense_account_id": self.company.account_journal_suspense_account_id.id,
+            }
+        )
+        invoice = self._create_invoice(
+            move_type="out_invoice",
+            currency_id=self.currency_euro_id,
+            invoice_amount=1261.31,
+            date_invoice=time.strftime("%Y-02-01"),
+            auto_validate=True,
+        )
+        bank_stmt = self.acc_bank_stmt_model.create(
+            {
+                "journal_id": chf_journal.id,
+                "date": time.strftime("%Y-01-13"),
+                "name": "test",
+            }
+        )
+        bank_stmt_line = self.acc_bank_stmt_line_model.create(
+            {
+                "name": "testLine",
+                "journal_id": chf_journal.id,
+                "statement_id": bank_stmt.id,
+                "amount": 250,
+                "date": time.strftime("%Y-01-13"),
+            }
+        )
+        (
+            liquidity_lines,
+            _suspense_lines,
+            _other_lines,
+        ) = bank_stmt_line._seek_for_lines()
+        self.assertEqual(liquidity_lines.debit, 267.5)
+
+        rate.inverse_company_rate = 1.09004
+        receivable = invoice.line_ids.filtered(
+            lambda line: line.account_id.account_type == "asset_receivable"
+        )
+        with Form(
+            bank_stmt_line,
+            view="account_reconcile_oca.bank_statement_line_form_reconcile_view",
+        ) as f:
+            f.add_account_move_line_id = receivable
+            counterpart = next(
+                line
+                for line in f.reconcile_data_info["data"]
+                if line["reference"] == "account.move.line;%s" % receivable.id
+            )
+            self.assertEqual(counterpart["amount"], -267.5)
+            self.assertTrue(f.can_reconcile)
+
     def test_foreign_currency_reconcile_model_differing_rate_exchange_gain(self):
         """
         Test that when the bank uses a different exchange rate than Odoo, but foreign
