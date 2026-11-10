@@ -3,6 +3,7 @@
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
 import json
+import re
 from collections import defaultdict
 
 from dateutil import rrule
@@ -10,7 +11,7 @@ from dateutil.relativedelta import relativedelta
 
 from odoo import Command, api, fields, models, tools
 from odoo.exceptions import UserError
-from odoo.tools import SQL, Query, float_compare, float_is_zero
+from odoo.tools import SQL, Query, float_compare, float_is_zero, html2plaintext
 
 
 class AccountBankStatementLine(models.Model):
@@ -978,6 +979,76 @@ class AccountBankStatementLine(models.Model):
             for record in done:
                 record.reconcile_bank_line()
 
+    def _get_st_line_strings_for_matching(self, allowed_fields=None):
+        """Collect the strings that could be used on the statement line to perform
+        some matching.
+
+        :param allowed_fields: A explicit list of fields to consider.
+        :return: A list of strings.
+        """
+        self.ensure_one()
+        st_line_text_values = []
+        if not allowed_fields or "payment_ref" in allowed_fields:
+            if self.payment_ref:
+                st_line_text_values.append(self.payment_ref)
+        if not allowed_fields or "narration" in allowed_fields:
+            value = html2plaintext(self.narration or "")
+            if value:
+                st_line_text_values.append(value)
+        if not allowed_fields or "ref" in allowed_fields:
+            if self.ref:
+                st_line_text_values.append(self.ref)
+        return st_line_text_values
+
+    def _get_st_line_text_values_for_matching(self):
+        """Collect the strings that could be used on the statement line to perform
+        some matching.
+
+        :param st_line: The current statement line.
+        :return: A list of strings.
+        """
+        self.ensure_one()
+        allowed_fields = [("payment_ref"), ("narration"), ("ref")]
+        return self._get_st_line_strings_for_matching(allowed_fields=allowed_fields)
+
+    def _get_invoice_matching_st_line_tokens(self):
+        """Parse the textual information from the statement line passed as parameter
+        in order to extract from it the meaningful information in order to perform the
+        matching.
+
+        :param st_line: A statement line.
+        :return:    A tuple of list of tokens, each one being a string.
+                    The first element is a list of tokens you may match on numerical
+                    information.
+                    The second element is a list of tokens you may match exactly.
+        """
+        self.ensure_one()
+        st_line_text_values = self._get_st_line_text_values_for_matching()
+        significant_token_size = 4
+        numerical_tokens = []
+        exact_tokens = []
+        text_tokens = []
+        for text_value in st_line_text_values:
+            tokens = [
+                "".join(x for x in token if re.match(r"[0-9a-zA-Z\s]", x))
+                for token in (text_value or "").split()
+            ]
+            # Numerical tokens
+            for token in tokens:
+                # The token is too short to be significant.
+                if len(token) < significant_token_size:
+                    continue
+                text_tokens.append(token)
+                formatted_token = "".join(x for x in token if x.isdecimal())
+                # The token is too short after formatting to be significant.
+                if len(formatted_token) < significant_token_size:
+                    continue
+                numerical_tokens.append(formatted_token)
+            # Exact tokens.
+            if len(tokens) == 1:
+                exact_tokens.append(text_value)
+        return numerical_tokens, exact_tokens, text_tokens
+
     def _do_auto_reconcile_invoices_query(self):
         self.flush_recordset()
         self.env["account.move"].flush_model()
@@ -986,6 +1057,7 @@ class AccountBankStatementLine(models.Model):
         move = self.env["account.move"]
         move_line = self.env["account.move.line"]
         account = self.env["account.account"]
+        company = self.company_id
         query.add_join(
             "JOIN",
             move_line._table,
@@ -1021,11 +1093,37 @@ class AccountBankStatementLine(models.Model):
                 SQL.identifier(move_line._table, "move_id"),
             ),
         )
+        if company.reconcile_invoices_match_partner:
+            st_partner = SQL.identifier(self._table, "partner_id")
+            aml_partner = SQL.identifier(move_line._table, "partner_id")
+            query.add_where(SQL("%s = %s", aml_partner, st_partner))
+            partners = company.reconcile_invoices_match_partner_ids
+            if partners:
+                query.add_where(
+                    SQL(
+                        "%s IN (%s)",
+                        st_partner,
+                        SQL(", ").join(partners.ids),
+                    )
+                )
+            categories = company.reconcile_invoices_match_partner_category_ids
+            if categories:
+                query.add_where(
+                    SQL(
+                        "%s IN ("
+                        "SELECT res_partner_id "
+                        "FROM res_partner_res_partner_category_rel "
+                        "WHERE res_partner_category_id IN (%s)"
+                        ")",
+                        st_partner,
+                        SQL(", ").join(categories.ids),
+                    )
+                )
         query.add_where(
             SQL(
-                "(%(st_partner)s is NULL OR %(st_partner)s = %(move_partner)s)",
-                st_partner=SQL.identifier(self._table, "partner_id"),
-                move_partner=SQL.identifier(move._table, "partner_id"),
+                "%s = %s",
+                SQL.identifier(self._table, "currency_id"),
+                SQL.identifier(move_line._table, "currency_id"),
             )
         )
         query.add_where(
@@ -1038,26 +1136,79 @@ class AccountBankStatementLine(models.Model):
         query.add_where(
             SQL("%s in %s", SQL.identifier(self._table, "id"), tuple(self.ids))
         )
-        query.add_where(
-            SQL(
-                """((
-                %(move_ref)s IS NOT NULL AND %(move_ref)s
-                ILIKE '%%' || %(st_ref)s || '%%'
-            ) OR (
-                %(line_ref)s IS NOT NULL AND %(line_ref)s
-                ILIKE '%%' || %(st_ref)s || '%%'
-            ) OR (
-                %(move_name)s IS NOT NULL AND %(move_name)s
-                ILIKE '%%' || %(st_ref)s || '%%'
-            ))""",
-                move_ref=SQL.identifier(move._table, "payment_reference"),
-                st_ref=SQL.identifier(self._table, "payment_ref"),
-                line_ref=SQL.identifier(move_line._table, "ref"),
-                move_name=SQL.identifier(move._table, "name"),
+        if company.reconcile_invoices_match_text:
+            numerical_tokens, exact_tokens, _text_tokens = (
+                self._get_invoice_matching_st_line_tokens()
             )
-        )
+            enabled_matches = [
+                (move_line._table, "name"),
+                (move._table, "name"),
+                (move._table, "ref"),
+            ]
+            conditions = []
+            if numerical_tokens:
+                for table, field in enabled_matches:
+                    match_field = SQL.identifier(table, field)
+                    conditions.append(
+                        SQL(
+                            """
+                            %s IS NOT NULL
+                            AND EXISTS (
+                                SELECT 1
+                                FROM UNNEST(
+                                    REGEXP_SPLIT_TO_ARRAY(
+                                        SUBSTRING(
+                                            REGEXP_REPLACE(
+                                                %s,
+                                                '[^0-9\\s]',
+                                                '',
+                                                'g'
+                                            ),
+                                            '\\S(?:.*\\S)*'
+                                        ),
+                                        '\\s+'
+                                    )
+                                ) AS token
+                                WHERE token = ANY(%s)
+                            )
+                            """,
+                            match_field,
+                            match_field,
+                            numerical_tokens,
+                        )
+                    )
+            if exact_tokens:
+                for table, field in enabled_matches:
+                    match_field = SQL.identifier(table, field)
+                    conditions.append(
+                        SQL(
+                            "%s IS NOT NULL AND %s = ANY(%s)",
+                            match_field,
+                            match_field,
+                            exact_tokens,
+                        )
+                    )
+            query.add_where(
+                SQL(
+                    "(%s)",
+                    SQL(" OR ").join(conditions) if conditions else SQL("FALSE"),
+                )
+            )
+        past_months_limit = company.reconcile_invoices_past_months_limit
+        if past_months_limit:
+            date_limit = fields.Date.context_today(self) - relativedelta(
+                months=past_months_limit
+            )
+            query.add_where(
+                SQL(
+                    "%s >= %s",
+                    SQL.identifier(move._table, "date"),
+                    date_limit,
+                )
+            )
         query.groupby = SQL.identifier(self._table, "id")
-        query.having = SQL("COUNT(*) = 1")
+        if company.reconcile_invoices_unique_matching:
+            query.having = SQL("COUNT(*) = 1")
         return query
 
     def _do_auto_reconcile_invoices(self):
@@ -1097,6 +1248,8 @@ class AccountBankStatementLine(models.Model):
                 record.manual_reference,
             )
             if record.reconcile_data_info.get("can_reconcile"):
+                if record.company_id.reconcile_invoices_auto_reconcile:
+                    record._auto_reconcile()
                 done |= record
         return self - done, done
 
