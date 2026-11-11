@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo noupdate="1">
+    <record id="bank_statement_completion_rule_2" model="account.move.completion.rule">
+        <field
+            name="name"
+        >Match from line label (based on partner field 'Bank Statement Label')</field>
+        <field name="sequence">60</field>
+        <field name="function_to_call">get_from_name_and_partner_field</field>
+    </record>
+    <record id="bank_statement_completion_rule_3" model="account.move.completion.rule">
+        <field name="name">Match from line label (based on partner name)</field>
+        <field name="sequence">70</field>
+        <field name="function_to_call">get_from_name_and_partner_name</field>
+    </record>
+    <record id="bank_statement_completion_rule_4" model="account.move.completion.rule">
+        <field name="name">Match from line label (based on Invoice number)</field>
+        <field name="sequence">40</field>
+        <field name="function_to_call">get_from_name_and_invoice</field>
+    </record>
+    <record id="bank_statement_completion_rule_5" model="account.move.completion.rule">
+        <field
+            name="name"
+        >Match from line label (based on Invoice Supplier number)</field>
+        <field name="sequence">45</field>
+        <field name="function_to_call">get_from_name_and_supplier_invoice</field>
+    </record>
+</odoo>

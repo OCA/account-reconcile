@@ -1,0 +1,710 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# * account_move_base_import
+#
+# Translators:
+# OCA Transbot <transbot@odoo-community.org>, 2017
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 10.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-03-24 03:37+0000\n"
+"PO-Revision-Date: 2025-08-29 13:43+0000\n"
+"Last-Translator: Tamer Sezgin <tamer.sezgin@gmail.com>\n"
+"Language-Team: Turkish (https://www.transifex.com/oca/teams/23907/tr/)\n"
+"Language: tr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: Weblate 5.10.4\n"
+
+#. module: account_move_base_import
+#. odoo-python
+#: code:addons/account_move_base_import/models/account_move.py:0
+msgid ""
+"%(completion_date)s Account Move %(move_name)s has %(num_imported)s/"
+"%(number_line)s lines completed by %(user_name)s \n"
+"%(error_msg)s\n"
+"%(log)s\n"
+msgstr ""
+"%(completion_date)s tarihli ve %(move_name)s isimli Hesap Hareketlerinin "
+"%(num_imported)s/%(number_line)s satırı %(user_name)s tarafından tamamlandı\n"
+"%(error_msg)s\n"
+"%(log)s\n"
+
+#. module: account_move_base_import
+#: model:ir.model,name:account_move_base_import.model_account_move_completion_rule
+msgid "Account move completion method"
+msgstr "Hesap hareketleri tamamlama yöntemi"
+
+#. module: account_move_base_import
+#: model_terms:ir.ui.view,arch_db:account_move_base_import.view_account_move_filter
+msgid "Account move that should be completed manually"
+msgstr "Manuel olarak tamamlanması gereken hesap hareketi"
+
+#. module: account_move_base_import
+#: model:ir.model.fields,field_description:account_move_base_import.field_account_journal__message_needaction
+#: model:ir.model.fields,field_description:account_move_base_import.field_account_move__message_needaction
+msgid "Action Needed"
+msgstr "Aksiyon Gerekiyor"
+
+#. module: account_move_base_import
+#: model:ir.model.fields,field_description:account_move_base_import.field_account_journal__message_attachment_count
+#: model:ir.model.fields,field_description:account_move_base_import.field_account_move__message_attachment_count
+msgid "Attachment Count"
+msgstr "Ekli Dosya Adedi"
+
+#. module: account_move_base_import
+#: model_terms:ir.ui.view,arch_db:account_move_base_import.view_move_importer_form
+msgid "Auto Completion"
+msgstr "Otomatik Tamamlama"
+
+#. module: account_move_base_import
+#: model:ir.model.fields,field_description:account_move_base_import.field_account_move_line__already_completed
+msgid "Auto-Completed"
+msgstr "Otomatik-Tamamlandı"
+
+#. module: account_move_base_import
+#: model_terms:ir.ui.view,arch_db:account_move_base_import.journal_importer_view_form
+msgid "Auto-Completion Rules"
+msgstr "Otomatik Tamamlama Kuralları"
+
+#. module: account_move_base_import
+#: model_terms:ir.ui.view,arch_db:account_move_base_import.journal_importer_view_form
+msgid "Auto-Completion related infos"
+msgstr "Otomatik Tamamlama ile ilişkili bilgiler"
+
+#. module: account_move_base_import
+#: model:ir.model.fields,field_description:account_move_base_import.field_account_journal__rule_ids
+msgid "Auto-completion rules"
+msgstr "Otomatik tamamlama kuralları"
+
+#. module: account_move_base_import
+#: model:ir.model.fields,field_description:account_move_base_import.field_res_partner__bank_statement_label
+#: model:ir.model.fields,field_description:account_move_base_import.field_res_users__bank_statement_label
+msgid "Bank Statement Label"
+msgstr "Banka Ekstresi Etiketi"
+
+#. module: account_move_base_import
+#: model:ir.model.fields,field_description:account_move_base_import.field_account_journal__partner_id
+#: model:ir.model.fields,field_description:account_move_base_import.field_credit_statement_import__partner_id
+msgid "Bank/Payment Office partner"
+msgstr "Banka/Ödeme Ofisi partneri"
+
+#. module: account_move_base_import
+#: model_terms:ir.ui.view,arch_db:account_move_base_import.move_importer_view
+msgid "Cancel"
+msgstr "Vazgeç"
+
+#. module: account_move_base_import
+#: model:ir.model.fields,help:account_move_base_import.field_account_journal__receivable_account_id
+#: model:ir.model.fields,help:account_move_base_import.field_credit_statement_import__receivable_account_id
+msgid ""
+"Choose a receivable/payable account to use as the default debit/credit "
+"account."
+msgstr ""
+"Önseçili borç/alacak hesabı olarak kullanılmak üzere bir borçlular/"
+"alacaklılar hesabı seçin."
+
+#. module: account_move_base_import
+#: model:ir.model.fields,help:account_move_base_import.field_account_journal__commission_analytic_account_id
+msgid ""
+"Choose an analytic account to be used on the commission line analytic "
+"distribution."
+msgstr ""
+
+#. module: account_move_base_import
+#: model:ir.model.fields,help:account_move_base_import.field_account_journal__import_type
+msgid ""
+"Choose here the method by which you want to import account moves for this "
+"journal."
+msgstr ""
+"Burada, bu yevmiye defterine hesap hareketlerini yüklemek için kullanılacak "
+"yöntemi seçin."
+
+#. module: account_move_base_import
+#. odoo-python
+#: code:addons/account_move_base_import/parser/file_parser.py:0
+msgid "Column %(col)s not present in file"
+msgstr "Sütun %(col)s dosyada yok"
+
+#. module: account_move_base_import
+#: model:ir.model.fields,field_description:account_move_base_import.field_account_journal__commission_analytic_account_id
+msgid "Commission Analytic Account"
+msgstr "Komisyon Analitik Hesabı"
+
+#. module: account_move_base_import
+#: model:ir.model.fields,field_description:account_move_base_import.field_account_journal__commission_account_id
+#: model:ir.model.fields,field_description:account_move_base_import.field_credit_statement_import__commission_account_id
+msgid "Commission account"
+msgstr "Komisyon hesabı"
+
+#. module: account_move_base_import
+#. odoo-python
+#: code:addons/account_move_base_import/models/account_journal.py:0
+msgid "Commission amount should not be positive."
+msgstr "Komisyon tutarı pozitif olmamalı."
+
+#. module: account_move_base_import
+#. odoo-python
+#: code:addons/account_move_base_import/models/account_journal.py:0
+msgid "Commission line"
+msgstr "Komisyon satırı"
+
+#. module: account_move_base_import
+#: model:ir.model.fields,field_description:account_move_base_import.field_account_bank_statement_line__completion_logs
+#: model:ir.model.fields,field_description:account_move_base_import.field_account_move__completion_logs
+msgid "Completion Log"
+msgstr "Tamamlanma Kayıtları"
+
+#. module: account_move_base_import
+#: model_terms:ir.ui.view,arch_db:account_move_base_import.view_move_importer_form
+msgid "Completion Logs"
+msgstr "Tamamlanma Kayıtları"
+
+#. module: account_move_base_import
+#: model:ir.model,name:account_move_base_import.model_res_partner
+msgid "Contact"
+msgstr "Kontak"
+
+#. module: account_move_base_import
+#: model:ir.model.fields,field_description:account_move_base_import.field_account_journal__create_counterpart
+msgid "Create Counterpart"
+msgstr "Karşı Taraf Oluştur"
+
+#. module: account_move_base_import
+#: model:ir.model.fields,field_description:account_move_base_import.field_account_move_completion_rule__create_uid
+#: model:ir.model.fields,field_description:account_move_base_import.field_credit_statement_import__create_uid
+msgid "Created by"
+msgstr "Oluşturan"
+
+#. module: account_move_base_import
+#: model:ir.model.fields,field_description:account_move_base_import.field_account_move_completion_rule__create_date
+#: model:ir.model.fields,field_description:account_move_base_import.field_credit_statement_import__create_date
+msgid "Created on"
+msgstr "Oluşturma zamanı"
+
+#. module: account_move_base_import
+#. odoo-python
+#: code:addons/account_move_base_import/parser/file_parser.py:0
+msgid ""
+"Date format is not valid. It should be YYYY-MM-DD for column: %(rule)s "
+"value: %(line_value)s \n"
+" \n"
+" \n"
+" Please check the line with ref: %(ref_value)s \n"
+" \n"
+" Detail: %(error)s"
+msgstr ""
+"Tarih formatı geçerli değil. YYYY-AA-GG şeklinde olmalı. alan: %(rule)s "
+"değer: %(line_value)s \n"
+" \n"
+" \n"
+" Lütfen belirtilen satırı kontrol edin. ref: %(ref_value)s \n"
+" \n"
+" Açıklama: %(error)s"
+
+#. module: account_move_base_import
+#. odoo-python
+#: code:addons/account_move_base_import/parser/file_parser.py:0
+msgid ""
+"Date format is not valid. Please modify the cell formatting to date format "
+"for column: %(rule)s value: %(line_value)s\n"
+" Please check the line with ref: %(value_ref)s\n"
+" \n"
+" Detail: %(error)s"
+msgstr ""
+"Tarih formatı geçerli değil. Lütfen alan için belirtilen hücre formatını "
+"tarih olacak şekilde değiştirin: alan:%(rule)s değer: %(line_value)s\n"
+" Lütfen belirtilen satırı kontrol edin. ref: %(value_ref)s\n"
+" \n"
+" Detail: %(error)s"
+
+#. module: account_move_base_import
+#: model:ir.model.fields,field_description:account_move_base_import.field_account_move_completion_rule__display_name
+#: model:ir.model.fields,field_description:account_move_base_import.field_credit_statement_import__display_name
+msgid "Display Name"
+msgstr "Görünen İsim"
+
+#. module: account_move_base_import
+#: model:ir.model.fields,help:account_move_base_import.field_res_partner__bank_statement_label
+#: model:ir.model.fields,help:account_move_base_import.field_res_users__bank_statement_label
+msgid ""
+"Enter the various label found on your bank statement separated by a ; If one "
+"of this label is include in the bank statement line, the partner will be "
+"automatically filled (as long as you use this method/rules in your statement "
+"profile)."
+msgstr ""
+"Banka ekstrenizde bulunan çeşitli etiketleri ; ile ayırarak girin. Bu "
+"etiketlerden biri banka ekstresi satırına eklenirse, partner otomatik olarak "
+"doldurulacaktır (ekstre profilinizde bu yöntemi/kuralları kullandığınız "
+"sürece)."
+
+#. module: account_move_base_import
+#: model:ir.model.fields,field_description:account_move_base_import.field_credit_statement_import__file_name
+msgid "File Name"
+msgstr "Dosya Adı"
+
+#. module: account_move_base_import
+#: model:ir.model.fields,field_description:account_move_base_import.field_account_journal__message_follower_ids
+#: model:ir.model.fields,field_description:account_move_base_import.field_account_move__message_follower_ids
+msgid "Followers"
+msgstr "Takipçiler"
+
+#. module: account_move_base_import
+#: model:ir.model.fields,field_description:account_move_base_import.field_account_journal__message_partner_ids
+#: model:ir.model.fields,field_description:account_move_base_import.field_account_move__message_partner_ids
+msgid "Followers (Partners)"
+msgstr "Takipçiler(İş Ortakları)"
+
+#. module: account_move_base_import
+#: model:ir.model.fields.selection,name:account_move_base_import.selection__account_move_completion_rule__function_to_call__get_from_name_and_invoice
+msgid "From line name (based on customer invoice number)"
+msgstr "Satır adından (müşteri fatura numarası baz alınır)"
+
+#. module: account_move_base_import
+#: model:ir.model.fields.selection,name:account_move_base_import.selection__account_move_completion_rule__function_to_call__get_from_name_and_partner_field
+msgid "From line name (based on partner field)"
+msgstr "Satır adından (partner alanı baz alınır)"
+
+#. module: account_move_base_import
+#: model:ir.model.fields.selection,name:account_move_base_import.selection__account_move_completion_rule__function_to_call__get_from_name_and_partner_name
+msgid "From line name (based on partner name)"
+msgstr "Satır adından (partner adı baz alınır)"
+
+#. module: account_move_base_import
+#: model:ir.model.fields.selection,name:account_move_base_import.selection__account_move_completion_rule__function_to_call__get_from_name_and_supplier_invoice
+msgid "From line name (based on supplier invoice number)"
+msgstr "Satır adından (tedarikçi fatura numarası baz alınır)"
+
+#. module: account_move_base_import
+#: model:ir.model.fields.selection,name:account_move_base_import.selection__account_journal__import_type__generic_csvxls_so
+msgid "Generic .csv/.xls based on SO Name"
+msgstr "Genel .csv/.xls - Satış Siparişi Adı baz alınır"
+
+#. module: account_move_base_import
+#: model:ir.model.fields,field_description:account_move_base_import.field_account_journal__has_message
+#: model:ir.model.fields,field_description:account_move_base_import.field_account_move__has_message
+msgid "Has Message"
+msgstr "Mesaj Var"
+
+#. module: account_move_base_import
+#: model:ir.model.fields,field_description:account_move_base_import.field_account_move_completion_rule__id
+#: model:ir.model.fields,field_description:account_move_base_import.field_credit_statement_import__id
+msgid "ID"
+msgstr "ID"
+
+#. module: account_move_base_import
+#: model:ir.model.fields,help:account_move_base_import.field_account_journal__message_needaction
+#: model:ir.model.fields,help:account_move_base_import.field_account_move__message_needaction
+msgid "If checked, new messages require your attention."
+msgstr "İşaretliyse, yeni mesajlar ilgilenmenizi bekliyor."
+
+#. module: account_move_base_import
+#: model:ir.model.fields,help:account_move_base_import.field_account_journal__message_has_error
+#: model:ir.model.fields,help:account_move_base_import.field_account_move__message_has_error
+msgid "If checked, some messages have a delivery error."
+msgstr "İşaretliyse, bazı mesajlarda teslim hatası var."
+
+#. module: account_move_base_import
+#: model:ir.actions.act_window,name:account_move_base_import.move_importer_action
+#: model:ir.ui.menu,name:account_move_base_import.move_importer_menu
+msgid "Import Batch File"
+msgstr "İçeriye Toplu Dosya Aktar"
+
+#. module: account_move_base_import
+#: model:ir.model,name:account_move_base_import.model_credit_statement_import
+msgid "Import Batch File wizard"
+msgstr "İçeriye Toplu Dosya Aktarma Yardımcısı"
+
+#. module: account_move_base_import
+#: model_terms:ir.ui.view,arch_db:account_move_base_import.move_importer_view
+msgid "Import Parameters Summary"
+msgstr "İçeriye Aktarım Parametreleri Özeti"
+
+#. module: account_move_base_import
+#: model_terms:ir.ui.view,arch_db:account_move_base_import.journal_importer_view_form
+msgid "Import batch file"
+msgstr "İçeriye toplu dosya aktar"
+
+#. module: account_move_base_import
+#: model:ir.model.fields,field_description:account_move_base_import.field_credit_statement_import__journal_id
+msgid "Import configuration parameter"
+msgstr "İçeriye aktarım konfigürasyon parametresi"
+
+#. module: account_move_base_import
+#: model_terms:ir.ui.view,arch_db:account_move_base_import.move_importer_view
+msgid "Import file"
+msgstr "İçeriye aktarım dosyası"
+
+#. module: account_move_base_import
+#: model_terms:ir.ui.view,arch_db:account_move_base_import.move_importer_view
+msgid "Import move"
+msgstr "Hareketi içeri aktar"
+
+#. module: account_move_base_import
+#: model_terms:ir.ui.view,arch_db:account_move_base_import.journal_importer_view_form
+msgid "Import related infos"
+msgstr "İlişkili bilgileri içeri aktar"
+
+#. module: account_move_base_import
+#. odoo-python
+#: code:addons/account_move_base_import/parser/file_parser.py:0
+msgid "Invalid file type %(ftype)s. Please use csv, xls or xlsx"
+msgstr "Geçersiz dosya tipi %(ftype)s. Lütfen csv, xls veya xlsx kullanın"
+
+#. module: account_move_base_import
+#. odoo-python
+#: code:addons/account_move_base_import/models/account_move.py:0
+msgid "Invalid invoice type for completion: %(inv_type)s"
+msgstr "Tamamlama için geçersiz fatura tipi: %(inv_type)s"
+
+#. module: account_move_base_import
+#. odoo-python
+#: code:addons/account_move_base_import/models/account_move.py:0
+msgid "Invalid invoice type for completion: %(invoice_type)s"
+msgstr "Tamamlama için geçersiz fatura tipi: %(invoice_type)s"
+
+#. module: account_move_base_import
+#: model:ir.model.fields,field_description:account_move_base_import.field_account_journal__message_is_follower
+#: model:ir.model.fields,field_description:account_move_base_import.field_account_move__message_is_follower
+msgid "Is Follower"
+msgstr "Takipçi mi"
+
+#. module: account_move_base_import
+#: model:ir.model,name:account_move_base_import.model_account_journal
+msgid "Journal"
+msgstr "Yevmiye Defteri"
+
+#. module: account_move_base_import
+#: model:ir.model,name:account_move_base_import.model_account_move
+msgid "Journal Entry"
+msgstr "Yevmiye Kaydı"
+
+#. module: account_move_base_import
+#: model:ir.model,name:account_move_base_import.model_account_move_line
+msgid "Journal Item"
+msgstr "Yevmiye Kalemi"
+
+#. module: account_move_base_import
+#: model:ir.model.fields,field_description:account_move_base_import.field_account_bank_statement_line__used_for_completion
+#: model:ir.model.fields,field_description:account_move_base_import.field_account_journal__used_for_completion
+#: model:ir.model.fields,field_description:account_move_base_import.field_account_move__used_for_completion
+msgid "Journal used for completion"
+msgstr "Tamamlama için kullanılan yevmiye defteri"
+
+#. module: account_move_base_import
+#: model:ir.model.fields,field_description:account_move_base_import.field_account_journal__used_for_import
+msgid "Journal used for import"
+msgstr "İçeriye aktarım için kullanılan yevmiye defteri"
+
+#. module: account_move_base_import
+#: model:ir.model.fields,field_description:account_move_base_import.field_account_journal__last_import_date
+msgid "Last Import Date"
+msgstr "Son İçeriye Aktarım Tarihi"
+
+#. module: account_move_base_import
+#: model:ir.model.fields,field_description:account_move_base_import.field_account_move_completion_rule__write_uid
+#: model:ir.model.fields,field_description:account_move_base_import.field_credit_statement_import__write_uid
+msgid "Last Updated by"
+msgstr "Son Güncelleyen"
+
+#. module: account_move_base_import
+#: model:ir.model.fields,field_description:account_move_base_import.field_account_move_completion_rule__write_date
+#: model:ir.model.fields,field_description:account_move_base_import.field_credit_statement_import__write_date
+msgid "Last Updated on"
+msgstr "Son Güncelleme Tarihi"
+
+#. module: account_move_base_import
+#: model:ir.model.fields,field_description:account_move_base_import.field_account_journal__launch_import_completion
+msgid "Launch completion after import"
+msgstr "İçeriye aktarımdan sonra tamamlamayı başlat"
+
+#. module: account_move_base_import
+#. odoo-python
+#: code:addons/account_move_base_import/models/account_move.py:0
+msgid ""
+"Line named \"%(line)s\" was matched by more than one partner while looking "
+"on partner by name"
+msgstr ""
+"\"%(line)s\" isimli satır, isim ile arama sırasında birden çok partner ile "
+"eşleşti"
+
+#. module: account_move_base_import
+#. odoo-python
+#: code:addons/account_move_base_import/models/account_move.py:0
+msgid ""
+"Line named \"%(line_name)s\" was matched by more than one partner while "
+"looking on %(inv_type)s invoices"
+msgstr ""
+"\"%(line_name)s\" isimli satır, %(inv_type)s faturalarında arama sırasında "
+"birden çok partner ile eşleşti"
+
+#. module: account_move_base_import
+#. odoo-python
+#: code:addons/account_move_base_import/models/account_move.py:0
+msgid ""
+"Line named \"%(line_name)s\" was matched by more than one partner while "
+"looking on partner label: %(partner_labels)s"
+msgstr ""
+"\"%(line_name)s\" isimli satır, partner etiketi: %(partner_labels)s ile "
+"arama sırasında birden çok partner ile eşleşti"
+
+#. module: account_move_base_import
+#: model:ir.model.fields,help:account_move_base_import.field_account_move_completion_rule__sequence
+msgid "Lower means parsed first."
+msgstr "Küçük olan daha önce okunur."
+
+#. module: account_move_base_import
+#: model:ir.model.fields,field_description:account_move_base_import.field_account_journal__message_has_error
+#: model:ir.model.fields,field_description:account_move_base_import.field_account_move__message_has_error
+msgid "Message Delivery error"
+msgstr "Mesaj Teslimat hatası"
+
+#. module: account_move_base_import
+#: model:ir.model.fields,field_description:account_move_base_import.field_account_journal__message_ids
+#: model:ir.model.fields,field_description:account_move_base_import.field_account_move__message_ids
+msgid "Messages"
+msgstr "Mesajlar"
+
+#. module: account_move_base_import
+#: model:ir.model.fields,field_description:account_move_base_import.field_account_move_completion_rule__function_to_call
+msgid "Method"
+msgstr "Yöntem"
+
+#. module: account_move_base_import
+#. odoo-python
+#: code:addons/account_move_base_import/models/account_journal.py:0
+msgid ""
+"Missing column! Column %(column)s you try to import is not present in the "
+"move line!"
+msgstr ""
+"Eksik alan! İçeriye aktarmak istediğiniz %(column)s adlı alan hareket "
+"satırında yok!"
+
+#. module: account_move_base_import
+#. odoo-python
+#: code:addons/account_move_base_import/models/account_journal.py:0
+msgid "Move %(move_name)s have been imported with %(num_lines)s lines."
+msgstr ""
+"%(move_name)s adlı hareket içeriye %(num_lines)s satır olarak aktarıldı."
+
+#. module: account_move_base_import
+#: model:ir.ui.menu,name:account_move_base_import.menu_action_move_completion_rule_list_menu
+#: model_terms:ir.ui.view,arch_db:account_move_base_import.move_completion_rule_view_form
+msgid "Move Completion Rule"
+msgstr "Hareket Tamamlama Kuralı"
+
+#. module: account_move_base_import
+#: model:ir.actions.act_window,name:account_move_base_import.action_move_completion_rule_list
+msgid "Move Completion Rules"
+msgstr "Hareket Tamamlama Kuralları"
+
+#. module: account_move_base_import
+#: model:ir.model.fields,field_description:account_move_base_import.field_account_move_completion_rule__name
+msgid "Name"
+msgstr "Adı"
+
+#. module: account_move_base_import
+#. odoo-python
+#: code:addons/account_move_base_import/parser/parser.py:0
+msgid "No buffer file given."
+msgstr "Tampon dosya verilmedi."
+
+#. module: account_move_base_import
+#. odoo-python
+#: code:addons/account_move_base_import/models/account_journal.py:0
+msgid "No commission account is set on the journal."
+msgstr "Yevmiye defterinde bir komisyon hesabı belirlenmedi."
+
+#. module: account_move_base_import
+#. odoo-python
+#: code:addons/account_move_base_import/models/account_journal.py:0
+msgid "Nothing to import: The file is empty"
+msgstr "İçeriye aktarılacak birşey yok: Dosya boş"
+
+#. module: account_move_base_import
+#: model:ir.model.fields,field_description:account_move_base_import.field_account_journal__message_needaction_counter
+#: model:ir.model.fields,field_description:account_move_base_import.field_account_move__message_needaction_counter
+msgid "Number of Actions"
+msgstr "Eylemlerin Sayısı"
+
+#. module: account_move_base_import
+#: model:ir.model.fields,field_description:account_move_base_import.field_account_journal__message_has_error_counter
+#: model:ir.model.fields,field_description:account_move_base_import.field_account_move__message_has_error_counter
+msgid "Number of errors"
+msgstr "Hata Sayısı"
+
+#. module: account_move_base_import
+#: model:ir.model.fields,help:account_move_base_import.field_account_journal__message_needaction_counter
+#: model:ir.model.fields,help:account_move_base_import.field_account_move__message_needaction_counter
+msgid "Number of messages requiring action"
+msgstr "Eylem gerektiren mesaj sayısı"
+
+#. module: account_move_base_import
+#: model:ir.model.fields,help:account_move_base_import.field_account_journal__message_has_error_counter
+#: model:ir.model.fields,help:account_move_base_import.field_account_move__message_has_error_counter
+msgid "Number of messages with delivery error"
+msgstr "Teslimat hatası içeren mesaj sayısı"
+
+#. module: account_move_base_import
+#: model:ir.model.fields,field_description:account_move_base_import.field_account_bank_statement_line__import_partner_id
+#: model:ir.model.fields,field_description:account_move_base_import.field_account_move__import_partner_id
+msgid "Partner from import"
+msgstr "İçeri aktarımdan gelen partner"
+
+#. module: account_move_base_import
+#. odoo-python
+#: code:addons/account_move_base_import/wizard/import_statement.py:0
+msgid "Please use a file with an extension"
+msgstr "Lütfen tip uzantısı olan bir dosya kullanın"
+
+#. module: account_move_base_import
+#: model:ir.model.fields,help:account_move_base_import.field_account_journal__partner_id
+#: model:ir.model.fields,help:account_move_base_import.field_credit_statement_import__partner_id
+msgid ""
+"Put a partner if you want to have it on the commission move (and optionaly "
+"on the counterpart of the intermediate/banking move if you tick the "
+"corresponding checkbox)."
+msgstr ""
+"Komisyon hareketinde olmasını isterseniz bir partner ekleyin (eğer "
+"isterseniz, yandaki kutucuğu işaretleyerek aracı/banka hareketinin karşı "
+"tarafına da partner ekleyebilirsiniz)."
+
+#. module: account_move_base_import
+#: model:ir.model.fields,field_description:account_move_base_import.field_account_journal__receivable_account_id
+#: model:ir.model.fields,field_description:account_move_base_import.field_credit_statement_import__receivable_account_id
+msgid "Receivable/Payable Account"
+msgstr "Alacak/Borç Hesabı"
+
+#. module: account_move_base_import
+#: model_terms:ir.ui.view,arch_db:account_move_base_import.move_completion_rule_view_form
+msgid "Related Profiles"
+msgstr "İlişkili Profiller"
+
+#. module: account_move_base_import
+#: model:ir.model.fields,field_description:account_move_base_import.field_account_move_completion_rule__journal_ids
+msgid "Related journals"
+msgstr "İlişkili yevmiye defterleri"
+
+#. module: account_move_base_import
+#: model:ir.model.fields,field_description:account_move_base_import.field_account_move_completion_rule__sequence
+msgid "Sequence"
+msgstr "Sıra"
+
+#. module: account_move_base_import
+#: model:ir.model.fields,field_description:account_move_base_import.field_account_journal__split_counterpart
+msgid "Split Counterpart"
+msgstr "Karşı Tarafı İkiye Ayır"
+
+#. module: account_move_base_import
+#. odoo-python
+#: code:addons/account_move_base_import/models/account_move.py:0
+msgid ""
+"Statement ID %(move_name)s auto-completed for %(num_imported)s/"
+"%(number_line)s lines completed"
+msgstr ""
+"Ekstre ID %(move_name)s için %(num_imported)s/%(number_line)s adet satırda "
+"otomatik tamamlama yapıldı"
+
+#. module: account_move_base_import
+#: model:ir.model.fields,field_description:account_move_base_import.field_credit_statement_import__input_statement
+msgid "Statement file"
+msgstr "Hesap Ekstresi Dosyası"
+
+#. module: account_move_base_import
+#. odoo-python
+#: code:addons/account_move_base_import/models/account_journal.py:0
+msgid "Statement import error The statement cannot be created: %(statement)s"
+msgstr ""
+"Hesap ekstresi içeri aktarım hatası. Ekstre kaydı yaratılamıyor: "
+"%(statement)s"
+
+#. module: account_move_base_import
+#: model:ir.model.fields,help:account_move_base_import.field_account_journal__create_counterpart
+msgid "Tick that box to automatically create the move counterpart"
+msgstr "Hareketin karşı tarafını otomatik yaratmak için kutucuğu işaretleyin"
+
+#. module: account_move_base_import
+#: model:ir.model.fields,help:account_move_base_import.field_account_journal__launch_import_completion
+msgid ""
+"Tick that box to automatically launch the completion on each imported file "
+"using this journal."
+msgstr ""
+"Bu yevmiye defterini kullanarak içeriye aktarılan her dosyada otomatik "
+"tamamlamayı başlatmak için kutucuğu işaretleyin."
+
+#. module: account_move_base_import
+#: model:ir.model.fields,help:account_move_base_import.field_account_journal__autovalidate_completed_move
+msgid ""
+"Tick that box to automatically validate the journal entries after the "
+"completion"
+msgstr ""
+"Tamamlamadan sonra yevmiye kayıtlarını otomatik doğrulamak için bu kutucuğu "
+"işaretleyin"
+
+#. module: account_move_base_import
+#: model_terms:ir.ui.view,arch_db:account_move_base_import.view_account_move_filter
+msgid "To Complete"
+msgstr "Tamamlanacak"
+
+#. module: account_move_base_import
+#: model:ir.model.fields,help:account_move_base_import.field_account_journal__split_counterpart
+msgid ""
+"Two counterparts will be automatically created : one for the refunds and one "
+"for the payments"
+msgstr ""
+"Otomatik olarak iki adet karşılık oluşturulacak: biri iadeler için biri de "
+"ödemeler için"
+
+#. module: account_move_base_import
+#: model:ir.model.fields,field_description:account_move_base_import.field_account_journal__import_type
+msgid "Type of import"
+msgstr "İçeri aktarim tipi"
+
+#. module: account_move_base_import
+#: model:ir.model.fields,field_description:account_move_base_import.field_account_journal__autovalidate_completed_move
+msgid "Validate fully completed moves"
+msgstr "Tamamen tamamlanmış hareketleri doğrula"
+
+#. module: account_move_base_import
+#. odoo-python
+#: code:addons/account_move_base_import/parser/file_parser.py:0
+msgid ""
+"Value %(line_value)s of column %(rule)s is not valid.\n"
+" Please check the line with ref %(value_ref)s:\n"
+" \n"
+" Detail: %(error)s"
+msgstr ""
+"%(rule)s alanındaki %(line_value)s değeri geçerli değil. \n"
+"Lütfen referansı belirtilen satırı kontrol edin. ref: %(value_ref)s\n"
+" \n"
+" Açıklama: %(error)s"
+
+#. module: account_move_base_import
+#: model:ir.model.fields,field_description:account_move_base_import.field_account_journal__website_message_ids
+#: model:ir.model.fields,field_description:account_move_base_import.field_account_move__website_message_ids
+msgid "Website Messages"
+msgstr "Websitesi Mesajları"
+
+#. module: account_move_base_import
+#: model:ir.model.fields,help:account_move_base_import.field_account_journal__website_message_ids
+#: model:ir.model.fields,help:account_move_base_import.field_account_move__website_message_ids
+msgid "Website communication history"
+msgstr "Websitesi iletişim geçmişi"
+
+#. module: account_move_base_import
+#: model:ir.model.fields,help:account_move_base_import.field_account_move_line__already_completed
+msgid ""
+"When this checkbox is ticked, the auto-completion process/button will ignore "
+"this line."
+msgstr ""
+"Bu kutucuk işaretlendiğinde, otomatik-tamamlama işlemi/butonu bu satırı "
+"dikkate almayacaktır."
+
+#~ msgid "Choose an analytic account to be used on the commission line."
+#~ msgstr "Komisyon satırında kullanılmak üzere bir analitik hesap seçin."
+
+#~ msgid "Last Modified on"
+#~ msgstr "Son değişiklik"
