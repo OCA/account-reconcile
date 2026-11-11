@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2026-11-11 10:46+0000\n"
+"PO-Revision-Date: 2026-11-11 13:46+0000\n"
 "Last-Translator: leszekszczepkowski <leszekszczepkowski@gmail.com>\n"
 "Language-Team: none\n"
 "Language: pl\n"
@@ -20,7 +20,7 @@ msgstr ""
 #. module: account_statement_base
 #: model_terms:ir.ui.view,arch_db:account_statement_base.view_bank_statement_form
 msgid "<span class=\"o_stat_text\">Journal Items</span>"
-msgstr "<span class=\"o_stat_text\">Pozycje dziennika</span>"
+msgstr "<span class=\"o_stat_text\">Pozycje zapisów</span>"
 
 #. module: account_statement_base
 #: model:ir.model,name:account_statement_base.model_account_bank_statement
@@ -67,12 +67,12 @@ msgstr "Dziennik"
 #. odoo-python
 #: code:addons/account_statement_base/models/account_bank_statement.py:0
 msgid "Journal Items"
-msgstr "Pozycje dziennika"
+msgstr "Pozycje zapisów"
 
 #. module: account_statement_base
 #: model_terms:ir.ui.view,arch_db:account_statement_base.account_bank_statement_line_search
 msgid "Label, Ref or Notes"
-msgstr "Etykieta, odnośnik lub notatki"
+msgstr "Etykieta, nr ref. lub notatki"
 
 #. module: account_statement_base
 #: model_terms:ir.ui.view,arch_db:account_statement_base.account_bank_statement_line_search
