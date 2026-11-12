@@ -1,0 +1,128 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* account_reconcile_restrict_partner_mismatch
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 14.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: fr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
+
+#. module: account_reconcile_restrict_partner_mismatch
+#: model:ir.model.fields,field_description:account_reconcile_restrict_partner_mismatch.field_account_reconcile_partner_mismatch_report__account_id
+msgid "Account"
+msgstr "Compte"
+
+#. module: account_reconcile_restrict_partner_mismatch
+#: model:ir.model,name:account_reconcile_restrict_partner_mismatch.model_account_reconcile_partner_mismatch_report
+msgid "Account Reconcile Partner Mismatch Report"
+msgstr "Rapport des lettrages avec partenaires différents"
+
+#. module: account_reconcile_restrict_partner_mismatch
+#: model:ir.model.fields,field_description:account_reconcile_restrict_partner_mismatch.field_account_reconcile_partner_mismatch_report__account_type_id
+msgid "Account type"
+msgstr "Type de compte"
+
+#. module: account_reconcile_restrict_partner_mismatch
+#: model:ir.model.fields,field_description:account_reconcile_restrict_partner_mismatch.field_account_reconcile_partner_mismatch_report__credit_amount
+msgid "Credit amount"
+msgstr "Montant au crédit"
+
+#. module: account_reconcile_restrict_partner_mismatch
+#: model:ir.model.fields,field_description:account_reconcile_restrict_partner_mismatch.field_account_reconcile_partner_mismatch_report__credit_move_id
+msgid "Credit move"
+msgstr "Pièce au crédit"
+
+#. module: account_reconcile_restrict_partner_mismatch
+#: model:ir.model.fields,field_description:account_reconcile_restrict_partner_mismatch.field_account_reconcile_partner_mismatch_report__credit_partner_id
+msgid "Credit partner"
+msgstr "Partenaire au crédit"
+
+#. module: account_reconcile_restrict_partner_mismatch
+#: model:ir.model.fields,field_description:account_reconcile_restrict_partner_mismatch.field_account_reconcile_partner_mismatch_report__debit_amount
+msgid "Debit amount"
+msgstr "Montant au débit"
+
+#. module: account_reconcile_restrict_partner_mismatch
+#: model:ir.model.fields,field_description:account_reconcile_restrict_partner_mismatch.field_account_reconcile_partner_mismatch_report__debit_move_id
+msgid "Debit move"
+msgstr "Pièce au débit"
+
+#. module: account_reconcile_restrict_partner_mismatch
+#: model:ir.model.fields,field_description:account_reconcile_restrict_partner_mismatch.field_account_reconcile_partner_mismatch_report__debit_partner_id
+msgid "Debit partner"
+msgstr "Partenaire au débit"
+
+#. module: account_reconcile_restrict_partner_mismatch
+#: model:ir.model.fields,field_description:account_reconcile_restrict_partner_mismatch.field_account_move_line__display_name
+#: model:ir.model.fields,field_description:account_reconcile_restrict_partner_mismatch.field_account_reconcile_partner_mismatch_report__display_name
+msgid "Display Name"
+msgstr "Nom affiché"
+
+#. module: account_reconcile_restrict_partner_mismatch
+#: model:ir.model.fields,field_description:account_reconcile_restrict_partner_mismatch.field_account_reconcile_partner_mismatch_report__full_reconcile_id
+msgid "Full Reconcile"
+msgstr "Lettrage complet"
+
+#. module: account_reconcile_restrict_partner_mismatch
+#: model:ir.model.fields,field_description:account_reconcile_restrict_partner_mismatch.field_account_move_line__id
+#: model:ir.model.fields,field_description:account_reconcile_restrict_partner_mismatch.field_account_reconcile_partner_mismatch_report__id
+msgid "ID"
+msgstr "ID"
+
+#. module: account_reconcile_restrict_partner_mismatch
+#: model:ir.model,name:account_reconcile_restrict_partner_mismatch.model_account_move_line
+msgid "Journal Item"
+msgstr "Écriture comptable"
+
+#. module: account_reconcile_restrict_partner_mismatch
+#: model:ir.model.fields,field_description:account_reconcile_restrict_partner_mismatch.field_account_move_line____last_update
+#: model:ir.model.fields,field_description:account_reconcile_restrict_partner_mismatch.field_account_reconcile_partner_mismatch_report____last_update
+msgid "Last Modified on"
+msgstr "Dernière modification le"
+
+#. module: account_reconcile_restrict_partner_mismatch
+#: code:addons/account_reconcile_restrict_partner_mismatch/models/account_move_line.py:0
+#, python-format
+msgid "No partner"
+msgstr "Aucun partenaire"
+
+#. module: account_reconcile_restrict_partner_mismatch
+#: model:ir.model.fields,field_description:account_reconcile_restrict_partner_mismatch.field_account_reconcile_partner_mismatch_report__partial_reconcile_id
+msgid "Partial Reconcile"
+msgstr "Lettrage partiel"
+
+#. module: account_reconcile_restrict_partner_mismatch
+#: code:addons/account_reconcile_restrict_partner_mismatch/models/account_move_line.py:0
+#, python-format
+msgid ""
+"Reconciliation impossible: the partner must be the same on all receivable "
+"and payable lines.\n"
+"\n"
+"Lines involved (entry | account | partner | balance):\n"
+"%s\n"
+"\n"
+"To fix it, set the same partner on these entries (invoice, payment or "
+"journal entry), then retry."
+msgstr ""
+"Lettrage impossible : le partenaire doit être le même sur toutes les lignes "
+"de comptes clients et fournisseurs.\n"
+"\n"
+"Lignes concernées (pièce | compte | partenaire | solde) :\n"
+"%s\n"
+"\n"
+"Pour corriger, mettez le même partenaire sur ces pièces (facture, paiement "
+"ou écriture comptable), puis réessayez."
+
+#. module: account_reconcile_restrict_partner_mismatch
+#: model:ir.actions.act_window,name:account_reconcile_restrict_partner_mismatch.action_account_reconcile_partner_mismatch_report
+#: model:ir.ui.menu,name:account_reconcile_restrict_partner_mismatch.menu_account_reconcile_partner_mismatch_report
+#: model_terms:ir.ui.view,arch_db:account_reconcile_restrict_partner_mismatch.account_reconcile_partner_mismatch_report_view_form
+msgid "Reconciled items with partner mismatch"
+msgstr "Éléments lettrés avec partenaires différents"
