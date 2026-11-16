@@ -1,6 +1,7 @@
 # Copyright 2024 Hunki Enterprises BV
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl-3.0)
 
+from odoo import Command
 from odoo.tests import tagged
 
 from odoo.addons.account_reconcile_model_oca.tests.common import (
@@ -64,6 +65,35 @@ class TestAccountReconcileSaleOrder(TestAccountReconciliationCommon):
         self.bank_statement.line_ids.clean_reconcile()
         self.bank_statement.line_ids.reconcile_bank_line()
         self.assertEqual(self.sale_order.invoice_status, "invoiced")
+
+    def test_reconcile_sale_order_no_user_subscription(self):
+        """Reconciling must not subscribe the current user to any document
+        created by confirming the sale order (invoices, delivery orders...)"""
+        # Auto-subscription needs an active user and the test context's mail
+        # shortcuts disabled
+        user = self.env.ref("base.user_admin")
+        user.write(
+            {
+                "company_ids": [Command.link(self.company.id)],
+                "company_id": self.company.id,
+            }
+        )
+        followers_domain = [("partner_id", "=", user.partner_id.id)]
+        followers_before = self.env["mail.followers"].search(followers_domain)
+        statement_line = self.bank_statement.line_ids.with_user(user).with_context(
+            tracking_disable=False, mail_create_nosubscribe=False
+        )
+        statement_line.payment_ref = self.sale_order.name
+        statement_line.clean_reconcile()
+        statement_line.reconcile_bank_line()
+        self.assertEqual(self.sale_order.state, "sale")
+        new_followers = (
+            self.env["mail.followers"].search(followers_domain) - followers_before
+        )
+        self.assertFalse(
+            new_followers.mapped("res_model"),
+            "The current user should not be subscribed to any document",
+        )
 
     def test_token_matching(self):
         """Test that we find orders by substrings of statement label"""

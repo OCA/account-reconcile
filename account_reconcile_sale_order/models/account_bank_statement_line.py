@@ -125,6 +125,7 @@ class AccountBankStatementLine(models.Model):
         Invoice selected sales orders and post the invoices
         """
         if order.state in ("draft", "sent"):
+            order = order.with_context(mail_create_nosubscribe=True)
             order.action_confirm()
         invoices = order._create_invoices()
         invoices.action_post()
