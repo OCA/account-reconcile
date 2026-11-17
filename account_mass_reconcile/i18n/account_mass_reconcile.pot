@@ -104,6 +104,20 @@ msgid "Action Needed"
 msgstr ""
 
 #. module: account_mass_reconcile
+#. odoo-python
+#: code:addons/account_mass_reconcile/models/mass_reconcile.py:0
+#, python-format
+msgid "Advanced. Partner and Ref."
+msgstr ""
+
+#. module: account_mass_reconcile
+#. odoo-python
+#: code:addons/account_mass_reconcile/models/mass_reconcile.py:0
+#, python-format
+msgid "Advanced. Partner and Name."
+msgstr ""
+
+#. module: account_mass_reconcile
 #: model_terms:ir.ui.view,arch_db:account_mass_reconcile.account_mass_reconcile_form
 msgid "Advanced. Partner and Ref"
 msgstr ""
@@ -563,17 +577,26 @@ msgid "Sequence"
 msgstr ""
 
 #. module: account_mass_reconcile
+#. odoo-python
+#: code:addons/account_mass_reconcile/models/mass_reconcile.py:0
 #: model_terms:ir.ui.view,arch_db:account_mass_reconcile.account_mass_reconcile_form
+#, python-format
 msgid "Simple. Amount and Name"
 msgstr ""
 
 #. module: account_mass_reconcile
+#. odoo-python
+#: code:addons/account_mass_reconcile/models/mass_reconcile.py:0
 #: model_terms:ir.ui.view,arch_db:account_mass_reconcile.account_mass_reconcile_form
+#, python-format
 msgid "Simple. Amount and Partner"
 msgstr ""
 
 #. module: account_mass_reconcile
+#. odoo-python
+#: code:addons/account_mass_reconcile/models/mass_reconcile.py:0
 #: model_terms:ir.ui.view,arch_db:account_mass_reconcile.account_mass_reconcile_form
+#, python-format
 msgid "Simple. Amount and Reference"
 msgstr ""
 
@@ -657,4 +680,46 @@ msgstr ""
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_partner__write_off
 #: model:ir.model.fields,field_description:account_mass_reconcile.field_mass_reconcile_simple_reference__write_off
 msgid "Write off allowed"
+msgstr ""
+
+#. module: account_mass_reconcile
+#: model:ir.model.fields.selection,name:account_mass_reconcile.selection__account_mass_reconcile_method__date_base_on__actual
+#: model:ir.model.fields.selection,name:account_mass_reconcile.selection__mass_reconcile_advanced__date_base_on__actual
+#: model:ir.model.fields.selection,name:account_mass_reconcile.selection__mass_reconcile_advanced_name__date_base_on__actual
+#: model:ir.model.fields.selection,name:account_mass_reconcile.selection__mass_reconcile_advanced_ref__date_base_on__actual
+#: model:ir.model.fields.selection,name:account_mass_reconcile.selection__mass_reconcile_base__date_base_on__actual
+#: model:ir.model.fields.selection,name:account_mass_reconcile.selection__mass_reconcile_options__date_base_on__actual
+#: model:ir.model.fields.selection,name:account_mass_reconcile.selection__mass_reconcile_simple__date_base_on__actual
+#: model:ir.model.fields.selection,name:account_mass_reconcile.selection__mass_reconcile_simple_name__date_base_on__actual
+#: model:ir.model.fields.selection,name:account_mass_reconcile.selection__mass_reconcile_simple_partner__date_base_on__actual
+#: model:ir.model.fields.selection,name:account_mass_reconcile.selection__mass_reconcile_simple_reference__date_base_on__actual
+msgid "Today"
+msgstr ""
+
+#. module: account_mass_reconcile
+#: model:ir.model.fields.selection,name:account_mass_reconcile.selection__account_mass_reconcile_method__date_base_on__newest
+#: model:ir.model.fields.selection,name:account_mass_reconcile.selection__mass_reconcile_advanced__date_base_on__newest
+#: model:ir.model.fields.selection,name:account_mass_reconcile.selection__mass_reconcile_advanced_name__date_base_on__newest
+#: model:ir.model.fields.selection,name:account_mass_reconcile.selection__mass_reconcile_advanced_ref__date_base_on__newest
+#: model:ir.model.fields.selection,name:account_mass_reconcile.selection__mass_reconcile_base__date_base_on__newest
+#: model:ir.model.fields.selection,name:account_mass_reconcile.selection__mass_reconcile_options__date_base_on__newest
+#: model:ir.model.fields.selection,name:account_mass_reconcile.selection__mass_reconcile_simple__date_base_on__newest
+#: model:ir.model.fields.selection,name:account_mass_reconcile.selection__mass_reconcile_simple_name__date_base_on__newest
+#: model:ir.model.fields.selection,name:account_mass_reconcile.selection__mass_reconcile_simple_partner__date_base_on__newest
+#: model:ir.model.fields.selection,name:account_mass_reconcile.selection__mass_reconcile_simple_reference__date_base_on__newest
+msgid "Most recent move line"
+msgstr ""
+
+#. module: account_mass_reconcile
+#: model:ir.model.fields.selection,name:account_mass_reconcile.selection__account_mass_reconcile_method__date_base_on__oldest
+#: model:ir.model.fields.selection,name:account_mass_reconcile.selection__mass_reconcile_advanced__date_base_on__oldest
+#: model:ir.model.fields.selection,name:account_mass_reconcile.selection__mass_reconcile_advanced_name__date_base_on__oldest
+#: model:ir.model.fields.selection,name:account_mass_reconcile.selection__mass_reconcile_advanced_ref__date_base_on__oldest
+#: model:ir.model.fields.selection,name:account_mass_reconcile.selection__mass_reconcile_base__date_base_on__oldest
+#: model:ir.model.fields.selection,name:account_mass_reconcile.selection__mass_reconcile_options__date_base_on__oldest
+#: model:ir.model.fields.selection,name:account_mass_reconcile.selection__mass_reconcile_simple__date_base_on__oldest
+#: model:ir.model.fields.selection,name:account_mass_reconcile.selection__mass_reconcile_simple_name__date_base_on__oldest
+#: model:ir.model.fields.selection,name:account_mass_reconcile.selection__mass_reconcile_simple_partner__date_base_on__oldest
+#: model:ir.model.fields.selection,name:account_mass_reconcile.selection__mass_reconcile_simple_reference__date_base_on__oldest
+msgid "Oldest move line"
 msgstr ""
