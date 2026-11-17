@@ -194,6 +194,25 @@ class TestReconciliationWidget(TestAccountReconciliationCommon):
             )
             self.assertEqual(line["account_id"], [False, "Undefined"])
 
+    def test_manual_line_readonly_without_selected_line(self):
+        bank_stmt_line = self.acc_bank_stmt_line_model.create(
+            {
+                "name": "testLine",
+                "journal_id": self.bank_journal_euro.id,
+                "amount": 50,
+                "date": time.strftime("%Y-07-15"),
+            }
+        )
+        with Form(
+            bank_stmt_line,
+            view="account_reconcile_oca.bank_statement_line_form_reconcile_view",
+        ) as f:
+            with self.assertRaises(AssertionError):
+                f.manual_account_id = self.company_data["default_account_receivable"]
+            f.manual_reference = "reconcile_auxiliary;1"
+            f.manual_account_id = self.company_data["default_account_receivable"]
+            self.assertTrue(f.can_reconcile)
+
     @mute_logger("odoo.models.unlink")
     def test_two_manual_lines_with_currency(self):
         """We want to test the reconcile widget for bank statements
