@@ -89,3 +89,44 @@ class TestOpenEntries(AccountTestInvoicingCommon):
         self.assertEqual(result.get("domain"), domain)
         self.assertIn(statement.line_ids.line_ids[0], move_lines)
         self.assertIn(statement.line_ids.line_ids[1], move_lines)
+
+    def test_02_open_statement_lines(self):
+        journal = self.company_data["default_journal_bank"]
+        statement = self.acc_bank_stmt_model.create(
+            {
+                "name": "Test Bank Statement",
+                "journal_id": journal.id,
+                "line_ids": [
+                    Command.create(
+                        {
+                            "date": "2024-01-01",
+                            "amount": 100.0,
+                            "payment_ref": "Line 1",
+                            "journal_id": journal.id,
+                        }
+                    ),
+                ],
+            }
+        )
+        action = statement.action_open_statement_lines()
+        self.assertEqual(action["res_model"], "account.bank.statement.line")
+        self.assertEqual(action["domain"], [("statement_id", "=", statement.id)])
+        self.assertEqual(action["context"]["default_statement_id"], statement.id)
+        self.assertEqual(action["context"]["default_journal_id"], journal.id)
+        self.assertEqual(
+            self.env[action["res_model"]].search(action["domain"]), statement.line_ids
+        )
+
+    def test_03_open_journal_entry(self):
+        journal = self.company_data["default_journal_bank"]
+        line = self.env["account.bank.statement.line"].create(
+            {
+                "date": "2024-01-01",
+                "amount": 100.0,
+                "payment_ref": "Line 1",
+                "journal_id": journal.id,
+            }
+        )
+        action = line.action_open_journal_entry()
+        self.assertEqual(action["res_model"], "account.move")
+        self.assertEqual(action["res_id"], line.move_id.id)
