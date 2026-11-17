@@ -52,7 +52,11 @@ class MassReconcileOptions(models.AbstractModel):
         check_company=True,
     )
     date_base_on = fields.Selection(
-        "_get_rec_base_date",
+        selection=[
+            ("newest", "Most recent move line"),
+            ("actual", "Today"),
+            ("oldest", "Oldest move line"),
+        ],
         required=True,
         string="Date of reconciliation",
         default="newest",
@@ -67,14 +71,16 @@ class AccountMassReconcileMethod(models.Model):
     _inherit = "mass.reconcile.options"
     _order = "sequence"
 
-    @staticmethod
-    def _get_reconcilation_methods():
+    def _get_reconcilation_methods(self):
         return [
-            ("mass.reconcile.simple.name", "Simple. Amount and Name"),
-            ("mass.reconcile.simple.partner", "Simple. Amount and Partner"),
-            ("mass.reconcile.simple.reference", "Simple. Amount and Reference"),
-            ("mass.reconcile.advanced.ref", "Advanced. Partner and Ref."),
-            ("mass.reconcile.advanced.name", "Advanced. Partner and Name."),
+            ("mass.reconcile.simple.name", self.env._("Simple. Amount and Name")),
+            ("mass.reconcile.simple.partner", self.env._("Simple. Amount and Partner")),
+            (
+                "mass.reconcile.simple.reference",
+                self.env._("Simple. Amount and Reference"),
+            ),
+            ("mass.reconcile.advanced.ref", self.env._("Advanced. Partner and Ref.")),
+            ("mass.reconcile.advanced.name", self.env._("Advanced. Partner and Name.")),
         ]
 
     def _selection_name(self):
