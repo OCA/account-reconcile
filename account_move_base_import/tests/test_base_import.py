@@ -9,7 +9,7 @@ from operator import attrgetter
 
 import odoo
 import odoo.tests
-from odoo import fields
+from odoo import exceptions, fields
 
 from odoo.addons.account.tests.common import AccountTestInvoicingCommon
 
@@ -77,6 +77,17 @@ class TestCodaImport(AccountTestInvoicingCommon):
         )
         move = self._import_file(file_name)
         self._validate_imported_move(move)
+
+    def test_duplicate_import_blocked(self):
+        """The import of an already imported file is blocked when the journal
+        is configured to check the duplicate references."""
+        self.journal.write({"check_duplicate_ref": True})
+        file_name = odoo.tools.misc.file_path(
+            "account_move_base_import/tests/data/statement.csv"
+        )
+        self._import_file(file_name)
+        with self.assertRaises(exceptions.UserError):
+            self._import_file(file_name)
 
     def _validate_imported_move(self, move):
         self.assertEqual("/", move.name)

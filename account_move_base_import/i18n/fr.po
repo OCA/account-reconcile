@@ -95,6 +95,11 @@ msgid "Cancel"
 msgstr "Annuler"
 
 #. module: account_move_base_import
+#: model:ir.model.fields,field_description:account_move_base_import.field_account_journal__check_duplicate_ref
+msgid "Check duplicate reference"
+msgstr "Vérifier les doublons de référence"
+
+#. module: account_move_base_import
 #: model:ir.model.fields,help:account_move_base_import.field_account_journal__receivable_account_id
 #: model:ir.model.fields,help:account_move_base_import.field_credit_statement_import__receivable_account_id
 msgid ""
@@ -304,6 +309,17 @@ msgstr "Si coché, de nouveaux messages demandent votre attention."
 #: model:ir.model.fields,help:account_move_base_import.field_account_move__message_has_error
 msgid "If checked, some messages have a delivery error."
 msgstr "Si coché, certains messages ont une erreur de livraison."
+
+#. module: account_move_base_import
+#: model:ir.model.fields,help:account_move_base_import.field_account_journal__check_duplicate_ref
+msgid ""
+"If checked, the import is blocked when a journal entry with the same "
+"reference already exists in this journal. Use it to prevent importing the "
+"same file twice. Cancelled journal entries are ignored."
+msgstr ""
+"Si cette case est cochée, l'import est bloqué lorsqu'une pièce avec la même "
+"référence existe déjà sur ce journal. Permet d'éviter d'importer deux fois "
+"le même fichier. Les pièces annulées ne sont pas prises en compte."
 
 #. module: account_move_base_import
 #: model:ir.actions.act_window,name:account_move_base_import.move_importer_action
@@ -635,6 +651,18 @@ msgid ""
 msgstr ""
 "Cochez cette case pour valider automatiquement les pièces comptables après "
 "leur complétion"
+
+#. module: account_move_base_import
+#. odoo-python
+#: code:addons/account_move_base_import/models/account_journal.py:0
+msgid ""
+"The reference %(ref)s is already used by the journal entry %(move)s of the "
+"journal %(journal)s: the import has been blocked to avoid importing the "
+"same file twice."
+msgstr ""
+"La référence %(ref)s est déjà utilisée par la pièce %(move)s du journal "
+"%(journal)s : l'import a été bloqué pour éviter d'importer deux fois le "
+"même fichier."
 
 #. module: account_move_base_import
 #: model_terms:ir.ui.view,arch_db:account_move_base_import.view_account_move_filter
