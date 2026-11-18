@@ -20,6 +20,10 @@
                             name="autovalidate_completed_move"
                             invisible="not launch_import_completion"
                         />
+                        <field
+                            name="check_autocompleted"
+                            invisible="not launch_import_completion"
+                        />
                         <field name="last_import_date" readonly="1" />
                         <field name="import_type" required="used_for_import" />
                     </group>
