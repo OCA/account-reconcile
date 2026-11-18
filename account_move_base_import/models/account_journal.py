@@ -84,6 +84,47 @@ class AccountJournal(models.Model):
         help="Tick that box to automatically validate the journal entries "
         "after the completion",
     )
+    check_autocompleted = fields.Boolean(
+        string="Check Auto-Completed",
+        help="if checked, you will be able to validate journal entry for this "
+        "journal only if all journal items are marked as auto-completed",
+    )
+    check_duplicate_ref = fields.Boolean(
+        string="Check duplicate reference",
+        help="If checked, the import is blocked when a journal entry with the "
+        "same reference already exists in this journal. Use it to prevent "
+        "importing the same file twice. Cancelled journal entries are ignored.",
+    )
+
+    def _check_duplicate_ref(self, ref):
+        """Block the import if a move with the same reference already exists
+        in the journal.
+
+        The reference of an imported move is built by the parser and usually
+        comes from the file name, so this check prevents importing the same
+        file twice.
+        """
+        if not self.check_duplicate_ref or not ref or ref == "/":
+            return
+        duplicate_move = self.env["account.move"].search(
+            [
+                ("journal_id", "=", self.id),
+                ("ref", "=", ref),
+                ("state", "!=", "cancel"),
+            ],
+            limit=1,
+        )
+        if duplicate_move:
+            raise UserError(
+                self.env._(
+                    "The reference %(ref)s is already used by the journal entry "
+                    "%(move)s of the journal %(journal)s: the import has been "
+                    "blocked to avoid importing the same file twice.",
+                    ref=ref,
+                    move=duplicate_move.display_name,
+                    journal=self.display_name,
+                )
+            )
 
     def _prepare_counterpart_line(self, move, amount, date):
         if amount > 0.0:
@@ -363,6 +404,7 @@ class AccountJournal(models.Model):
                     )
                 )
         move_vals = self.prepare_move_vals(result_row_list, parser)
+        self._check_duplicate_ref(move_vals.get("ref"))
         move = move_obj.create(move_vals)
         try:
             # Record every line in the bank statement
