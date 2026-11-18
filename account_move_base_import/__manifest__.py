@@ -17,6 +17,7 @@
         "views/account_move_view.xml",
         "views/journal_view.xml",
         "views/partner_view.xml",
+        "views/account_move_line_views.xml",
     ],
     "external_dependencies": {"python": ["xlrd"]},
     "installable": True,
