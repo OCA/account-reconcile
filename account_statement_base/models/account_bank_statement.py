@@ -15,9 +15,7 @@ class AccountBankStatement(models.Model):
                 "domain": [("statement_id", "=", self.id)],
                 "context": {
                     "default_statement_id": self.id,
-                    "default_journal_id": self.env.context.get("active_id")
-                    if self.env.context.get("active_model") == "account.journal"
-                    else None,
+                    "default_journal_id": self.journal_id.id,
                     "account_bank_statement_line_main_view": True,
                 },
             }
