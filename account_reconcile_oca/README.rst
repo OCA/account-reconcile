@@ -62,11 +62,11 @@ Early payment discounts
 Early payment discounts (cash discounts) defined on payment terms are
 applied automatically:
 
-- When an invoice matching model matches the statement line with the
-  discounted amount of invoices, before their discount date.
-- When you manually add the journal item of an invoice and the amount
-  left on the statement line is exactly its discounted amount, before
-  its discount date.
+-  When an invoice matching model matches the statement line with the
+   discounted amount of invoices, before their discount date.
+-  When you manually add the journal item of an invoice and the amount
+   left on the statement line is exactly its discounted amount, before
+   its discount date.
 
 The invoices are then fully paid and the discount lines (discount and
 tax reduction, depending on the payment term configuration) are
@@ -77,12 +77,20 @@ by the Register Payment wizard. These accounts must be set in Invoicing
 The discount only applies to the first payment of an invoice: a partial
 payment never gets a prorated discount.
 
+Applying a reconcilation model to multiple lines
+------------------------------------------------
+
+1. Select multiple transactions (account.bank.statement.line)
+2. Actions -> Reconcile with model
+3. In the wizard, select the model
+4. Run
+
 Known issues / Roadmap
 ======================
 
 The following bugs are already detected:
 
-- Creation of activities on the chatter do show automatically
+-  Creation of activities on the chatter do show automatically
 
 Bug Tracker
 ===========
@@ -106,8 +114,9 @@ Authors
 Contributors
 ------------
 
-- Enric Tobella
-- Jacques-Etienne Baudoux (BCIM) <je@bcim.be>
+-  Enric Tobella
+-  Jacques-Etienne Baudoux (BCIM) <je@bcim.be>
+-  Simone Rubino
 
 Other credits
 -------------
