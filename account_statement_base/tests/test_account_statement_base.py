@@ -89,3 +89,5 @@ class TestOpenEntries(AccountTestInvoicingCommon):
         self.assertEqual(result.get("domain"), domain)
         self.assertIn(statement.line_ids.line_ids[0], move_lines)
         self.assertIn(statement.line_ids.line_ids[1], move_lines)
+        context = statement.action_open_statement_lines()["context"]
+        self.assertEqual(context["default_journal_id"], statement.journal_id.id)
