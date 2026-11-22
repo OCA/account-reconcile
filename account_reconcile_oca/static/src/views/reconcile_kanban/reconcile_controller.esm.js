@@ -15,6 +15,9 @@ export class ReconcileController extends KanbanController {
             selectedRecordId: this.props.state?.selectedRecordId,
             journalBalance: 0,
             currency: false,
+            // On small screens the list and the form are shown full screen one
+            // at a time; the form opens only when the user taps a transaction.
+            mobileDetail: false,
         });
         useSetupAction({
             getLocalState: () => {
@@ -30,6 +33,7 @@ export class ReconcileController extends KanbanController {
         this.effect = useService("effect");
         this.orm = useService("orm");
         this.action = useService("action");
+        this.ui = useService("ui");
         this.activeActions = this.props.archInfo.activeActions;
         useBus(this.model.bus, "update", async () => {
             await this.selectRecord();
@@ -186,7 +190,21 @@ export class ReconcileController extends KanbanController {
         return candidates[candidates.length - 1].resId;
     }
     async openRecord(record) {
-        this.selectRecord(record);
+        await this.selectRecord(record);
+        this.state.mobileDetail = true;
+    }
+    closeMobileDetail() {
+        this.state.mobileDetail = false;
+    }
+    get reconcileClassName() {
+        const classes = ["o_account_reconcile_oca"];
+        if (this.model.useSampleModel) {
+            classes.push("o_view_sample_data");
+        }
+        if (this.state.mobileDetail && this.state.selectedRecordId) {
+            classes.push("o_account_reconcile_oca_mobile_detail");
+        }
+        return classes.join(" ");
     }
     updateURL(resId) {
         router.pushState({id: resId});

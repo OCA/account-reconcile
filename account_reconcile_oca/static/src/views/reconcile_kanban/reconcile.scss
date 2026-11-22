@@ -48,3 +48,59 @@
         overflow: auto;
     }
 }
+
+// Small screens: the transaction list (30%) and the form (70%) do not fit side
+// by side. Show the list full screen first; tapping a transaction opens the form
+// full screen (o_account_reconcile_oca_mobile_detail), "Back" returns to the list.
+@include media-breakpoint-down(md) {
+    .o_account_reconcile_oca {
+        flex-flow: column nowrap;
+        .o_account_reconcile_oca_selector {
+            width: 100%;
+            border-right: 0;
+        }
+        .o_account_reconcile_oca_info {
+            display: none;
+            width: 100%;
+        }
+        &.o_account_reconcile_oca_mobile_detail {
+            .o_account_reconcile_oca_selector {
+                // the kanban container has Bootstrap d-flex (!important)
+                display: none !important;
+            }
+            .o_account_reconcile_oca_info {
+                display: block;
+            }
+        }
+        // scss/reconcile.scss fixes the status bar height to 40px (loaded later);
+        // keep the buttons from overlapping the table
+        .o_account_reconcile_oca_info
+            .o_form_view
+            .o_form_statusbar.o_account_reconcile_oca_statusbar {
+            height: auto;
+            margin-bottom: 0.5rem;
+            .o_statusbar_buttons {
+                // Odoo sets display:block here on mobile, which wraps the buttons
+                display: flex;
+                flex-wrap: nowrap;
+                overflow-x: auto;
+                gap: 0.25rem;
+                padding-bottom: 0.25rem;
+                .btn {
+                    flex: 0 0 auto;
+                    margin: 0 !important; // use gap instead of the view's mx-1
+                    white-space: nowrap;
+                    padding: 0.25rem 0.4rem;
+                    font-size: 0.75rem;
+                }
+            }
+        }
+        .o_field_account_reconcile_oca_data {
+            display: block;
+            overflow-x: auto;
+            th {
+                white-space: nowrap;
+            }
+        }
+    }
+}
