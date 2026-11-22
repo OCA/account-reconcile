@@ -65,12 +65,16 @@
             <attribute name="selectedRecordId">state.selectedRecordId</attribute>
         </xpath>
         <xpath expr="//Layout" position="attributes">
-            <attribute
-                name="className"
-            >model.useSampleModel ? 'o_view_sample_data o_account_reconcile_oca' : 'o_account_reconcile_oca'</attribute>
+            <attribute name="className">reconcileClassName</attribute>
         </xpath>
         <xpath expr="//Layout" position="inside">
             <div class="o_account_reconcile_oca_info">
+                <button
+                    t-if="ui.isSmall and state.selectedRecordId"
+                    type="button"
+                    class="btn btn-link o_account_reconcile_oca_mobile_back px-3 pt-2"
+                    t-on-click="closeMobileDetail"
+                ><i class="fa fa-arrow-left me-1" />Back to transactions</button>
                 <t t-if="state.selectedRecordId">
                     <View t-props="viewReconcileInfo" t-key="state.selectedRecordId" />
                 </t>
