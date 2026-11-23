@@ -13,6 +13,39 @@ class ResCompany(models.Model):
         ._fields["reconcile_aggregate"]
         .selection
     )
+    # reconcile fields conditions
+    reconcile_invoices_past_months_limit = fields.Integer(
+        default=18,
+        help="Number of months in the past to consider when searching for "
+        "invoices and bills to reconcile automatically.",
+    )
+    reconcile_invoices_auto_reconcile = fields.Boolean(
+        help="Automatically reconcile a bank statement line when a matching "
+        "invoice or bill is found.",
+    )
+    reconcile_invoices_unique_matching = fields.Boolean(
+        help="Only reconcile automatically when exactly one matching invoice "
+        "or bill is found.",
+    )
+    reconcile_invoices_match_partner = fields.Boolean(
+        help="Only consider invoices and bills whose partner matches the partner "
+        "of the bank statement line."
+    )
+    reconcile_invoices_match_partner_ids = fields.Many2many(
+        string="Auto-reconcile Invoices Matching partners",
+        comodel_name="res.partner",
+        help="Restrict partner matching to bank statement lines belonging to "
+        "the selected partners.",
+    )
+    reconcile_invoices_match_partner_category_ids = fields.Many2many(
+        comodel_name="res.partner.category",
+        help="Restrict partner matching to bank statement lines whose partner "
+        "belongs to one of the selected categories.",
+    )
+    reconcile_invoices_match_text = fields.Boolean(
+        help="Only consider invoices and bills whose reference or label matches "
+        "the payment reference of the bank statement line.",
+    )
 
     def _get_unreconciled_statement_lines_redirect_action(
         self, unreconciled_statement_lines
