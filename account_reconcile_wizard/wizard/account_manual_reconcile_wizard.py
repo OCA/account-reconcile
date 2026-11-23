@@ -73,10 +73,7 @@ class AccountManualReconcileWizard(models.TransientModel):
 
     reconcile_model_id = fields.Many2one(
         "account.reconcile.model",
-        domain=[
-            ("rule_type", "=", "writeoff_button"),
-            ("counterpart_type", "=", "general"),
-        ],
+        domain=[("trigger", "=", "manual")],
         help="Select a reconciliation model to auto-load lines",
     )
 
@@ -364,7 +361,7 @@ class AccountManualReconcileWizardLine(models.TransientModel):
         "account.account",
         required=True,
         check_company=True,
-        domain="[('deprecated', '=', False), ('account_type', '!=', 'off_balance')]",
+        domain="[('account_type', '!=', 'off_balance')]",
     )
     debit = fields.Monetary(
         compute="_compute_debit",

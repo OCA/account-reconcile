@@ -78,8 +78,7 @@ class TestAccountManualReconcileWizard(AccountTestInvoicingCommon):
         cls.reconcile_model_percentage = cls.env["account.reconcile.model"].create(
             {
                 "name": "Test Reconcile Model",
-                "rule_type": "writeoff_button",
-                "counterpart_type": "general",
+                "trigger": "manual",
                 "line_ids": [
                     Command.create(
                         {
