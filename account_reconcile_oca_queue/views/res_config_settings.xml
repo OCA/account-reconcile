@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="res_config_settings_view_form" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form </field>
+        <field name="model">res.config.settings</field>
+        <field
+            name="inherit_id"
+            ref="account_reconcile_oca.res_config_settings_form_view"
+        />
+        <field name="arch" type="xml">
+            <xpath expr="//setting[@id='reconcile_aggregate']" position="after">
+                <setting
+                    id="account_auto_reconcile_queue"
+                    string="Auto reconcile in background"
+                >
+                    <field name="account_auto_reconcile_queue" />
+                </setting>
+            </xpath>
+        </field>
+    </record>
+</odoo>
