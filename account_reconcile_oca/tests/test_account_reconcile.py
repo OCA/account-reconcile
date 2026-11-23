@@ -2,6 +2,7 @@ from odoo import Command
 from odoo.tests import Form, tagged
 from odoo.tools import mute_logger
 
+from ..models.account_move_line import AccountMoveLine
 from .common import (
     TestAccountReconciliationCommon,
 )
@@ -296,7 +297,7 @@ class TestReconciliationWidget(TestAccountReconciliationCommon):
             lambda r: r.account_id == self.non_current_assets_account
         )
         self.assertEqual(2, len(lines))
-        action = lines[0].action_reconcile_manually()
+        action = AccountMoveLine.action_reconcile_manually(lines[0])
         result = (
             self.env[action["res_model"]]
             .with_context(**action.get("context", {}))
@@ -313,7 +314,7 @@ class TestReconciliationWidget(TestAccountReconciliationCommon):
             lambda r: r.account_id == self.equity_account
         )
         self.assertEqual(2, len(lines))
-        action = lines[0].action_reconcile_manually()
+        action = AccountMoveLine.action_reconcile_manually(lines[0])
         result = (
             self.env[action["res_model"]]
             .with_context(**action.get("context", {}))
