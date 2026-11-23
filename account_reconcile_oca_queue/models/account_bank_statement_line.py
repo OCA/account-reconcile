@@ -1,6 +1,8 @@
 # Copyright 2025 Jacques-Etienne Baudoux (BCIM) <je@bcim.be>
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
+import functools
+
 from odoo import models
 
 from odoo.addons.queue_job.job import identity_exact
@@ -11,15 +13,18 @@ class AccountBankStatementLine(models.Model):
 
     def _register_hook(self):
         method = "_do_auto_reconcile"
-        self._patch_method(
+        patched = self._patch_job_auto_delay(
+            method, context_key="auto_delay_do_auto_reconcile"
+        )
+        # BaseModel._patch_method is gone since 19.0, patch the class directly
+        setattr(
+            type(self),
             method,
-            self._patch_job_auto_delay(
-                method, context_key="auto_delay_do_auto_reconcile"
-            ),
+            functools.update_wrapper(patched, getattr(type(self), method)),
         )
         return super()._register_hook()
 
-    def _do_auto_reconcile_job_options(self, models):
+    def _do_auto_reconcile_job_options(self, reconcile_if_possible=True):
         return {
             "description": self.env._(
                 "Auto reconcile %(label)s", label=self.payment_ref

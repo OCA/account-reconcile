@@ -22,10 +22,10 @@ class TestReconciliationAuto(TestAccountReconciliationCommon):
         self.env["account.reconcile.model"].create(
             {
                 "name": "write-off model suggestion",
-                "rule_type": "writeoff_suggestion",
+                "trigger": "auto_reconcile",
+                "match_amount": False,
                 "match_label": "contains",
                 "match_label_param": "DEMO WRITEOFF",
-                "auto_reconcile": True,
                 "line_ids": [
                     Command.create({"account_id": self.current_assets_account.id})
                 ],
