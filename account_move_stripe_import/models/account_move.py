@@ -34,8 +34,13 @@ class AccountMoveCompletionRule(models.Model):
         if line.name.startswith("REFUND"):
             # Substring between
             reference = line.name[len("REFUND FOR CHARGE(") + 1 : -len(")")]
-        sales = so_obj.search([("transaction_ids.reference", "=", reference)])
-        partners = sales.mapped("partner_id")
+        sales = so_obj.search(
+            [
+                ("transaction_ids.reference", "=", reference),
+                ("company_id", "=", line.company_id.id),
+            ]
+        )
+        partners = sales.mapped("partner_id").with_company(line.company_id)
         if len(partners) > 1:
             raise ErrorTooManyPartner(
                 _('Line named "%s" was matched by more than ' "one partner.")
