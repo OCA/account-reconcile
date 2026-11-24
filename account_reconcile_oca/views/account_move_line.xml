@@ -35,6 +35,79 @@
         </field>
     </record>
 
+    <record id="account_move_line_kanban_reconcile_view" model="ir.ui.view">
+        <field name="name">account.move.line.kanban.reconcile</field>
+        <field name="model">account.move.line</field>
+        <field name="priority">99</field>
+        <field name="arch" type="xml">
+            <kanban
+                js_class="reconcile_move_line_kanban"
+                class="o_reconcile_move_line_kanban"
+                create="0"
+                edit="0"
+                group_create="0"
+                export_xlsx="false"
+            >
+                <field name="company_currency_id" />
+                <field name="currency_id" />
+                <templates>
+                    <t t-name="card">
+                        <div class="d-flex align-items-baseline gap-2">
+                            <field
+                                name="account_id"
+                                class="fw-bold text-truncate min-w-0"
+                            />
+                            <field
+                                name="amount_residual"
+                                widget="monetary"
+                                options="{'currency_field': 'company_currency_id'}"
+                                class="fw-bold ms-auto text-nowrap"
+                            />
+                        </div>
+                        <div class="d-flex align-items-baseline gap-2">
+                            <field
+                                name="move_id"
+                                widget="many2one"
+                                class="fw-bold text-truncate min-w-0"
+                            />
+                        </div>
+                        <div class="d-flex align-items-baseline gap-2">
+                            <field
+                                name="partner_id"
+                                class="fw-bold text-truncate min-w-0"
+                            />
+                            <field
+                                name="amount_residual_currency"
+                                widget="monetary"
+                                options="{'currency_field': 'currency_id'}"
+                                class="ms-auto text-muted text-nowrap"
+                                invisible="currency_id == company_currency_id"
+                            />
+                        </div>
+                        <field name="name" class="text-muted text-truncate min-w-0" />
+                        <footer class="align-items-baseline gap-2">
+                            <field name="date" />
+                            <span invisible="not date_maturity">
+                                <i
+                                    class="fa fa-clock-o me-1"
+                                    role="img"
+                                    title="Due Date"
+                                    aria-label="Due Date"
+                                />
+                                <field name="date_maturity" />
+                            </span>
+                            <button
+                                type="object"
+                                name="action_open_business_doc"
+                                class="btn btn-link btn-sm p-0 ms-auto"
+                            >View</button>
+                        </footer>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
     <record id="account_move_line_search_reconcile_view" model="ir.ui.view">
         <field name="name">account.move.line.search.reconcile</field>
         <field name="model">account.move.line</field>

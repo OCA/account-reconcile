@@ -4,7 +4,7 @@ import {getFieldContext} from "@web/model/relational_model/utils";
 import {registry} from "@web/core/registry";
 import {standardFieldProps} from "@web/views/fields/standard_field_props";
 
-const {Component, useSubEnv} = owl;
+const {Component, useState, useSubEnv} = owl;
 
 export class AccountReconcileMatchWidget extends Component {
     setup() {
@@ -13,6 +13,11 @@ export class AccountReconcileMatchWidget extends Component {
             config: {},
             parentController: this.env.parentController,
         });
+        // Same rule as the x2many fields: cards on small screens, table otherwise
+        this.state = useState({viewType: this.env.isSmall ? "kanban" : "list"});
+        this.switchView = (viewType) => {
+            this.state.viewType = viewType;
+        };
     }
 
     getDomain() {
@@ -22,9 +27,9 @@ export class AccountReconcileMatchWidget extends Component {
         }
         return domain;
     }
-    get listViewProperties() {
-        return {
-            type: "list",
+    get viewProperties() {
+        const props = {
+            type: this.state.viewType,
             display: {
                 controlPanel: {
                     // Hiding the control panel buttons
@@ -38,13 +43,17 @@ export class AccountReconcileMatchWidget extends Component {
             searchMenuTypes: ["filter"],
             domain: this.getDomain(),
             context: getFieldContext(this.props.record, this.props.name),
-            // Disables selector
-            allowSelectors: false,
             // We need to force the search view in order to show the right one
             searchViewId: false,
             parentRecord: this.props.record,
             parentField: this.props.name,
+            switchView: this.switchView,
         };
+        if (this.state.viewType === "list") {
+            // Disables selector (the kanban controller doesn't accept this prop)
+            props.allowSelectors = false;
+        }
+        return props;
     }
 }
 AccountReconcileMatchWidget.props = {

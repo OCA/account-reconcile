@@ -1,48 +1,60 @@
 import {ListController} from "@web/views/list/list_controller";
 
-export class ReconcileMoveLineController extends ListController {
-    async openRecord(record) {
-        // Selecting a counterpart updates the parent record, which re-renders
-        // the whole reconcile form and reloads this list. Keep the scroll
-        // position of the right panel so the user stays where they were (the
-        // current page is preserved by ReconcileMoveLineModel).
-        const scroller = document.querySelector(".o_account_reconcile_oca_info");
-        const scrollTop = scroller ? scroller.scrollTop : null;
-        var data = {};
-        data[this.props.parentField] = {
-            id: record.resId,
-            display_name: record.display_name,
+/**
+ * Behaviour shared by the list and kanban views that show the candidate
+ * journal items inside the reconcile form: opening a record selects it as a
+ * counterpart of the parent record instead of opening its form.
+ */
+export const ReconcileMoveLineControllerMixin = (Controller) =>
+    class extends Controller {
+        static props = {
+            ...Controller.props,
+            parentRecord: {type: Object, optional: true},
+            parentField: {type: String, optional: true},
+            switchView: {type: Function, optional: true},
         };
-        await this.props.parentRecord.update(data);
-        if (scroller && scrollTop !== null) {
-            // The update re-renders the form asynchronously, so restore the
-            // scroll across the next couple of frames to make sure it sticks
-            // once the DOM has been patched.
-            const restore = () => {
-                scroller.scrollTop = scrollTop;
+
+        async openRecord(record) {
+            // Selecting a counterpart updates the parent record, which re-renders
+            // the whole reconcile form and reloads this view. Keep the scroll
+            // position of the right panel so the user stays where they were (the
+            // current page is preserved by ReconcileMoveLineModel).
+            const scroller = document.querySelector(".o_account_reconcile_oca_info");
+            const scrollTop = scroller ? scroller.scrollTop : null;
+            var data = {};
+            data[this.props.parentField] = {
+                id: record.resId,
+                display_name: record.display_name,
             };
-            restore();
-            requestAnimationFrame(() => {
+            await this.props.parentRecord.update(data);
+            if (scroller && scrollTop !== null) {
+                // The update re-renders the form asynchronously, so restore the
+                // scroll across the next couple of frames to make sure it sticks
+                // once the DOM has been patched.
+                const restore = () => {
+                    scroller.scrollTop = scrollTop;
+                };
                 restore();
-                requestAnimationFrame(restore);
-            });
+                requestAnimationFrame(() => {
+                    restore();
+                    requestAnimationFrame(restore);
+                });
+            }
         }
-    }
-    async clickAddAll() {
-        await this.props.parentRecord.save();
-        await this.model.orm.call(
-            this.props.parentRecord.resModel,
-            "add_multiple_lines",
-            [this.props.parentRecord.resIds, this.model.root.domain]
-        );
-        await this.props.parentRecord.load();
-        this.props.parentRecord.model.notify();
-    }
-}
+        async clickAddAll() {
+            await this.props.parentRecord.save();
+            await this.model.orm.call(
+                this.props.parentRecord.resModel,
+                "add_multiple_lines",
+                [this.props.parentRecord.resIds, this.model.root.domain]
+            );
+            await this.props.parentRecord.load();
+            this.props.parentRecord.model.notify();
+        }
+    };
+
+export class ReconcileMoveLineController extends ReconcileMoveLineControllerMixin(
+    ListController
+) {}
 
 ReconcileMoveLineController.template = `account_reconcile_oca.ReconcileMoveLineController`;
-ReconcileMoveLineController.props = {
-    ...ListController.props,
-    parentRecord: {type: Object, optional: true},
-    parentField: {type: String, optional: true},
-};
