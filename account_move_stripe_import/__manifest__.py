@@ -12,7 +12,13 @@
     "license": "AGPL-3",
     "application": False,
     "installable": True,
-    "depends": ["base_transaction_id", "account_move_base_import"],
+    "depends": [
+        "base_transaction_id",
+        "account_move_base_import",
+        "payment_stripe",
+        "sale",
+    ],
+    "external_dependencies": {"python": ["stripe"]},
     "data": [
         "wizards/import_statement_view.xml",
         "data/cron.xml",
