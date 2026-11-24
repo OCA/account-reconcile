@@ -1,6 +1,6 @@
 @include media-breakpoint-down(sm) {
     .o_account_reconcile_oca_open_selector_click .o_account_reconcile_oca {
-        .o_kanban_renderer {
+        .o_kanban_renderer.o_account_reconcile_oca_selector {
             display: block !important;
         }
         .o_account_reconcile_oca_info {
@@ -27,7 +27,7 @@
     height: 100%;
 
     @include media-breakpoint-down(sm) {
-        .o_kanban_renderer {
+        .o_kanban_renderer.o_account_reconcile_oca_selector {
             display: none !important;
         }
     }

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <templates>
     <t t-name="account_reconcile_oca.ReconcileMatchWidget">
-        <View t-props="this.listViewProperties" />
+        <View t-props="this.viewProperties" t-key="state.viewType" />
     </t>
 </templates>

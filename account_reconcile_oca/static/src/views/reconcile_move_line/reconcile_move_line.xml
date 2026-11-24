@@ -12,5 +12,49 @@
     </t>
     <t t-name="reconcile_move_line.ListView.Buttons">
         <button class="btn btn-primary" t-on-click="clickAddAll">Add all</button>
+        <div t-if="props.switchView" class="btn-group ms-1" role="group">
+            <button
+                type="button"
+                class="btn btn-secondary o_reconcile_move_line_switch_list"
+                t-att-class="{active: env.config.viewType === 'list'}"
+                title="List"
+                aria-label="List"
+                t-on-click="() => props.switchView('list')"
+            >
+                <i class="oi oi-view-list" />
+            </button>
+            <button
+                type="button"
+                class="btn btn-secondary o_reconcile_move_line_switch_kanban"
+                t-att-class="{active: env.config.viewType === 'kanban'}"
+                title="Kanban"
+                aria-label="Kanban"
+                t-on-click="() => props.switchView('kanban')"
+            >
+                <i class="oi oi-view-kanban" />
+            </button>
+        </div>
+    </t>
+    <t
+        t-name="account_reconcile_oca.ReconcileMoveLineKanbanController"
+        t-inherit="web.KanbanView"
+        t-inherit-mode="primary"
+    >
+        <xpath expr="//Layout/t[@Compiler]" position="attributes">
+            <attribute name="parentRecord">props.parentRecord</attribute>
+            <attribute name="parentField">props.parentField</attribute>
+        </xpath>
+    </t>
+    <t
+        t-name="account_reconcile_oca.ReconcileMoveLineKanbanRenderer"
+        t-inherit="web.KanbanRenderer"
+        t-inherit-mode="primary"
+    >
+        <!-- Group by is not available here, so only the ungrouped records matter -->
+        <xpath expr="//KanbanRecord[not(@group)]" position="attributes">
+            <attribute
+                name="isCounterpart"
+            >isCounterpart(groupOrRecord.record)</attribute>
+        </xpath>
     </t>
 </templates>
