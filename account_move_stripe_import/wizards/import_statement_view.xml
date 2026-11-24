@@ -5,7 +5,6 @@
         <field name="inherit_id" ref="account_move_base_import.move_importer_view" />
         <field name="arch" type="xml">
             <field name="input_statement" position="before">
-                <field name="need_file" invisible="1" />
                 <field name="last_import_date" invisible="need_file" />
             </field>
             <field name="input_statement" position="attributes">

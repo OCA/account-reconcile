@@ -12,6 +12,9 @@ from odoo.addons.account_move_base_import.parser.parser import AccountMoveImport
 
 _logger = logging.getLogger(__name__)
 
+STRIPE_PAGE_LIMIT = 100
+UNSETTLED_PAYOUT_STATUSES = ("pending", "in_transit")
+
 try:
     import stripe
 except ImportError:
@@ -26,7 +29,13 @@ class AccountJournal(models.Model):
     @api.model
     def run_import_stripe_deposit(self):
         for journal in self.search([("import_type", "=", "stripe")]):
-            journal.multi_move_import(None, None)
+            try:
+                with self.env.cr.savepoint():
+                    journal.multi_move_import(None, None)
+            except Exception:
+                _logger.exception(
+                    "Stripe import failed for journal %s", journal.display_name
+                )
 
 
 class StripeParser(AccountMoveImportParser):
@@ -39,34 +48,55 @@ class StripeParser(AccountMoveImportParser):
         return parser_name == "stripe"
 
     def _get_account(self):
-        return self.env["payment.provider"].search([("code", "=", "stripe")])
+        Provider = self.env["payment.provider"].sudo()
+        return Provider.search(
+            [("code", "=", "stripe"), ("company_id", "=", self.journal.company_id.id)],
+            limit=1,
+        )
 
     def _skip(self, payout_id):
         return bool(self.env["account.move"].search([("ref", "=", payout_id)]))
 
+    def _list_all(self, resource, **params):
+        objects = []
+        while True:
+            results = resource.list(limit=STRIPE_PAGE_LIMIT, **params)["data"]
+            if not results:
+                break
+            objects += results
+            params["starting_after"] = results[-1]["id"]
+        return objects
+
     def _get_payout(self, api_key=None):
-        payouts = []
-        kwargs = {
-            "status": "paid",
-            "limit": 100,
-        }
+        kwargs = {}
         if self.journal.last_import_date:
             timestamp = self.journal.last_import_date.replace(
                 tzinfo=timezone.utc
             ).timestamp()
-            kwargs["arrival_date"] = {"gt": int(timestamp)}
-        while True:
-            results = stripe.Payout.list(api_key=api_key, **kwargs)["data"]
-            if not results:
-                break
-            payouts += results
-            kwargs["starting_after"] = results[-1]["id"]
+            kwargs["arrival_date"] = {"gte": int(timestamp)}
+        payouts = self._list_all(stripe.Payout, api_key=api_key, **kwargs)
         if payouts:
-            payouts.reverse()
             self.journal.last_import_date = datetime.fromtimestamp(
-                payouts[-1]["arrival_date"]
+                self._get_resume_arrival_date(payouts)
             )
-        return payouts
+        paid_payouts = [payout for payout in payouts if payout["status"] == "paid"]
+        paid_payouts.reverse()
+        return paid_payouts
+
+    def _get_resume_arrival_date(self, payouts):
+        resume_arrival_dates = [
+            payout["arrival_date"]
+            for payout in payouts
+            if payout["status"] in UNSETTLED_PAYOUT_STATUSES
+        ]
+        settled_arrival_dates = [
+            payout["arrival_date"]
+            for payout in payouts
+            if payout["status"] not in UNSETTLED_PAYOUT_STATUSES
+        ]
+        if settled_arrival_dates:
+            resume_arrival_dates.append(max(settled_arrival_dates))
+        return min(resume_arrival_dates)
 
     def parse(self, filebuffer):
         api_key = self._get_account().stripe_secret_key
@@ -75,9 +105,9 @@ class StripeParser(AccountMoveImportParser):
                 continue
             self.move_ref = payout["id"]
             self.move_date = date.fromtimestamp(payout["arrival_date"])
-            self.result_row_list = stripe.BalanceTransaction.list(
-                payout=payout["id"], api_key=api_key, limit=1000
-            )["data"]
+            self.result_row_list = self._list_all(
+                stripe.BalanceTransaction, payout=payout["id"], api_key=api_key
+            )
             fee_vals = defaultdict(float)
             for line in self.result_row_list:
                 for fee in line["fee_details"]:
@@ -89,6 +119,7 @@ class StripeParser(AccountMoveImportParser):
                         "amount": -amount,
                         "created": payout["arrival_date"],
                         "type": "fee",
+                        "source": None,
                     }
                 )
             yield self.result_row_list
@@ -96,11 +127,11 @@ class StripeParser(AccountMoveImportParser):
     def get_move_line_vals(self, line, *args, **kwargs):
         amount = line["amount"] / 100.0
         vals = {
-            "name": line["description"] or line.get("source"),
+            "name": line["description"] or line["source"],
             "date_maturity": date.fromtimestamp(line["created"]),
             "credit": amount > 0.0 and amount or 0.0,
             "debit": amount < 0.0 and -amount or 0.0,
-            "ref": line.get("source"),
+            "ref": line["source"],
             "already_completed": False,
             "partner_id": None,
             "account_id": None,

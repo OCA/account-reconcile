@@ -1,0 +1,4 @@
+- Sébastien Beau \<<sebastien.beau@akretion.com>\>
+- Pierrick Brun \<<pierrick.brun@akretion.com>\>
+- Benoît Guillot \<<benoit.guillot@akretion.com>\>
+- Guillaume Masson \<<guillaume.masson@akretion.com>\>
