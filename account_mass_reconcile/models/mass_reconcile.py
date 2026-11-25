@@ -299,7 +299,7 @@ class AccountMassReconcile(models.Model):
         if run_all:
             reconciles.run_reconcile()
             return True
-        reconciles.sorted(key=_get_date)
+        reconciles = reconciles.sorted(key=_get_date)
         older = reconciles[0]
         older.run_reconcile()
         return True
