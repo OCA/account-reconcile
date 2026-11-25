@@ -202,6 +202,22 @@ class AccountMassReconcile(models.Model):
 
                     all_ml_rec_ids += ml_rec_ids
 
+                    if ctx["commit_every"]:
+                        # Commit at the end of each method, for two reasons.
+                        # 1. The next method may write through its own cursor
+                        #    (see _rec_group_by_chunk): that cursor does not see
+                        #    this transaction's changes. As soon as both touch
+                        #    the same move - e.g. multiple payment in one move
+                        #     - the second one waits for the row locks held here,
+                        #    while this one stays idle.
+                        # 2. It ends this transaction: the next statements get
+                        #    a new snapshot that includes the
+                        #    commits made by those cursors, so the next method
+                        #    and the history computation see what the advanced
+                        #    rule reconciled.
+                        # pylint: disable=invalid-commit
+                        new_cr.commit()
+
                 reconcile_ids = find_reconcile_ids(
                     "full_reconcile_id", all_ml_rec_ids, new_env
                 )
