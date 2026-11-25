@@ -15,7 +15,7 @@
     "depends": ["account_move_base_import", "payment_stripe", "sale"],
     "external_dependencies": {"python": ["stripe"]},
     "data": [
-        "wizards/import_statement_view.xml",
+        "wizards/credit_statement_import_views.xml",
         "data/cron.xml",
         "data/completion_rule_data.xml",
     ],

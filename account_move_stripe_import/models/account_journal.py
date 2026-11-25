@@ -24,7 +24,9 @@ except ImportError:
 class AccountJournal(models.Model):
     _inherit = "account.journal"
 
-    import_type = fields.Selection(selection_add=[("stripe", "Stripe")])
+    import_type = fields.Selection(
+        selection_add=[("stripe", "Stripe")], ondelete={"stripe": "set default"}
+    )
 
     @api.model
     def run_import_stripe_deposit(self):
