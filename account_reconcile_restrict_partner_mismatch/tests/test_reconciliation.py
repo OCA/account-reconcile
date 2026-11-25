@@ -117,3 +117,14 @@ class TestReconciliation(SavepointCase):
         self.aml.move_id.action_post()
         self.aml.reconcile()
         self.assertTrue(all(self.aml.mapped("reconciled")))
+
+    def test_reconcile_partner_mismatch_message(self):
+        self.aml[0].partner_id = self.partner
+        with self.assertRaises(UserError) as error:
+            self.aml.reconcile()
+        message = error.exception.args[0]
+        self.assertIn(self.partner.display_name, message)
+        self.assertIn("No partner", message)
+        self.assertIn(self.account_rcv.code, message)
+        for move in self.aml.move_id:
+            self.assertIn(move.display_name, message)
