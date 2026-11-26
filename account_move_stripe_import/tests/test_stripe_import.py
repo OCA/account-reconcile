@@ -259,6 +259,18 @@ class TestStripeImport(StripeImportCommon):
 
         self.assertEqual(self._stripe_entries().mapped("ref"), ["po_1", "po_2"])
 
+    def test_manual_payout_is_skipped_with_a_warning(self):
+        self._add_simple_stripe_payout("po_manual", 1700000000, automatic=False)
+        self._add_simple_stripe_payout("po_automatic", 1700100000)
+
+        with self.assertLogs(
+            "odoo.addons.account_move_stripe_import.models.account_journal", "WARNING"
+        ) as logs:
+            self._run_stripe_import_cron()
+
+        self.assertEqual(self._stripe_entries().mapped("ref"), ["po_automatic"])
+        self.assertIn("po_manual", logs.output[0])
+
     def test_cron_imports_other_journals_when_one_fails(self):
         other_company_data = self.setup_other_company()
         failing_journal = self._create_stripe_journal(other_company_data)
