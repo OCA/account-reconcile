@@ -374,7 +374,7 @@ ul.auto-toc {
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 !! source digest: sha256:0fc03f66c2228d2de1b7d6465662cff5ffedfa9b9b20e40cfc50215f7936a876
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
-<p><a class="reference external image-reference" href="https://odoo-community.org/page/development-status"><img alt="Beta" src="https://img.shields.io/badge/maturity-Beta-yellow.png" /></a> <a class="reference external image-reference" href="http://www.gnu.org/licenses/agpl-3.0-standalone.html"><img alt="License: AGPL-3" src="https://img.shields.io/badge/license-AGPL--3-blue.png" /></a> <a class="reference external image-reference" href="https://github.com/OCA/account-reconcile/tree/18.0/account_move_line_reconcile_manual"><img alt="OCA/account-reconcile" src="https://img.shields.io/badge/github-OCA%2Faccount--reconcile-lightgray.png?logo=github" /></a> <a class="reference external image-reference" href="https://translation.odoo-community.org/projects/account-reconcile-18-0/account-reconcile-18-0-account_move_line_reconcile_manual"><img alt="Translate me on Weblate" src="https://img.shields.io/badge/weblate-Translate%20me-F47D42.png" /></a> <a class="reference external image-reference" href="https://runboat.odoo-community.org/builds?repo=OCA/account-reconcile&amp;target_branch=18.0"><img alt="Try me on Runboat" src="https://img.shields.io/badge/runboat-Try%20me-875A7B.png" /></a></p>
+<p><a class="reference external image-reference" href="https://odoo-community.org/page/development-status"><img alt="Beta" src="https://img.shields.io/badge/maturity-Beta-yellow.png" /></a> <a class="reference external image-reference" href="http://www.gnu.org/licenses/agpl-3.0-standalone.html"><img alt="License: AGPL-3" src="https://img.shields.io/badge/license-AGPL--3-blue.png" /></a> <a class="reference external image-reference" href="https://github.com/OCA/account-reconcile/tree/19.0/account_move_line_reconcile_manual"><img alt="OCA/account-reconcile" src="https://img.shields.io/badge/github-OCA%2Faccount--reconcile-lightgray.png?logo=github" /></a> <a class="reference external image-reference" href="https://translation.odoo-community.org/projects/account-reconcile-19-0/account-reconcile-19-0-account_move_line_reconcile_manual"><img alt="Translate me on Weblate" src="https://img.shields.io/badge/weblate-Translate%20me-F47D42.png" /></a> <a class="reference external image-reference" href="https://runboat.odoo-community.org/builds?repo=OCA/account-reconcile&amp;target_branch=19.0"><img alt="Try me on Runboat" src="https://img.shields.io/badge/runboat-Try%20me-875A7B.png" /></a></p>
 <p>This module adds a wizard to reconcile manually selected journal items.
 If the selected journal items are balanced, it will propose a full
 reconcile. Otherwise, the user will have to choose between partial
@@ -384,48 +384,84 @@ similar to the wizard that was provided in the <strong>account</strong> module u
 Odoo 11.0. It was later replaced by the special reconciliation JS
 interface, which was working well, but was not as fast and convenient.</p>
 <p>Full reconciliation:</p>
-<p><img alt="image1" src="https://raw.githubusercontent.com/OCA/account-reconcile/18.0/account_move_line_reconcile_manual/static/description/sshot_full_rec.png" /></p>
+<p><img alt="image1" src="https://raw.githubusercontent.com/OCA/account-reconcile/19.0/account_move_line_reconcile_manual/static/description/sshot_full_rec.png" /></p>
 <p>Choose between partial reconciliation and full reconciliation with a
 write-off:</p>
-<p><img alt="image2" src="https://raw.githubusercontent.com/OCA/account-reconcile/18.0/account_move_line_reconcile_manual/static/description/sshot_partial_rec.png" /></p>
+<p><img alt="image2" src="https://raw.githubusercontent.com/OCA/account-reconcile/19.0/account_move_line_reconcile_manual/static/description/sshot_partial_rec.png" /></p>
 <p>Reconcile with write-off:</p>
-<p><img alt="image3" src="https://raw.githubusercontent.com/OCA/account-reconcile/18.0/account_move_line_reconcile_manual/static/description/sshot_rec_writeoff.png" /></p>
+<p><img alt="image3" src="https://raw.githubusercontent.com/OCA/account-reconcile/19.0/account_move_line_reconcile_manual/static/description/sshot_rec_writeoff.png" /></p>
 <p><strong>Table of contents</strong></p>
 <div class="contents local topic" id="contents">
 <ul class="simple">
-<li><a class="reference internal" href="#bug-tracker" id="toc-entry-1">Bug Tracker</a></li>
-<li><a class="reference internal" href="#credits" id="toc-entry-2">Credits</a><ul>
-<li><a class="reference internal" href="#authors" id="toc-entry-3">Authors</a></li>
-<li><a class="reference internal" href="#contributors" id="toc-entry-4">Contributors</a></li>
-<li><a class="reference internal" href="#maintainers" id="toc-entry-5">Maintainers</a></li>
+<li><a class="reference internal" href="#configuration" id="toc-entry-1">Configuration</a></li>
+<li><a class="reference internal" href="#usage" id="toc-entry-2">Usage</a></li>
+<li><a class="reference internal" href="#bug-tracker" id="toc-entry-3">Bug Tracker</a></li>
+<li><a class="reference internal" href="#credits" id="toc-entry-4">Credits</a><ul>
+<li><a class="reference internal" href="#authors" id="toc-entry-5">Authors</a></li>
+<li><a class="reference internal" href="#contributors" id="toc-entry-6">Contributors</a></li>
+<li><a class="reference internal" href="#maintainers" id="toc-entry-7">Maintainers</a></li>
 </ul>
 </li>
 </ul>
 </div>
+<div class="section" id="configuration">
+<h2><a class="toc-backref" href="#toc-entry-1">Configuration</a></h2>
+<p>Write-off models are optional: they prefill the journal, reference,
+account and analytic distribution of a write-off.</p>
+<ol class="arabic simple">
+<li>Go to <em>Invoicing &gt; Configuration &gt; Accounting &gt; Write-off Models</em>.</li>
+<li>Create a model with a <strong>Write-off Reference</strong>, an <strong>Expense Write-off
+Account</strong>, an <strong>Income Write-off Account</strong> and a <strong>Write-off
+Journal</strong>. Optionally, set the <strong>Analytic for Expense</strong> and
+<strong>Analytic for Income</strong>.</li>
+</ol>
+</div>
+<div class="section" id="usage">
+<h2><a class="toc-backref" href="#toc-entry-2">Usage</a></h2>
+<ol class="arabic simple">
+<li>Go to <em>Invoicing &gt; Review &gt; Control &gt; Journal Items</em>.</li>
+<li>Select the journal items to reconcile. They must share the same
+reconcilable account, not be fully reconciled yet, and include at
+least one debit and one credit.</li>
+<li>Click <strong>Reconcile</strong> in the list header. The wizard shows the account,
+the number of journal items and their total debit and credit, with a
+warning when they belong to several partners.</li>
+<li>If the journal items are balanced, click <strong>Full Reconcile</strong>.</li>
+<li>Otherwise, click <strong>Partial Reconcile</strong> to leave the difference open,
+or <strong>Reconcile with Write-off</strong> to settle it:<ol class="arabic">
+<li>Select a <strong>Model</strong>, or fill in the <strong>Journal</strong>, <strong>Date</strong>,
+<strong>Reference</strong>, <strong>Write-off Account</strong> and <strong>Analytic</strong> yourself.</li>
+<li>Click <strong>Reconcile with Write-off</strong>: a write-off journal entry is
+posted for the difference and all the journal items are fully
+reconciled.</li>
+</ol>
+</li>
+</ol>
+</div>
 <div class="section" id="bug-tracker">
-<h2><a class="toc-backref" href="#toc-entry-1">Bug Tracker</a></h2>
+<h2><a class="toc-backref" href="#toc-entry-3">Bug Tracker</a></h2>
 <p>Bugs are tracked on <a class="reference external" href="https://github.com/OCA/account-reconcile/issues">GitHub Issues</a>.
 In case of trouble, please check there if your issue has already been reported.
 If you spotted it first, help us to smash it by providing a detailed and welcomed
-<a class="reference external" href="https://github.com/OCA/account-reconcile/issues/new?body=module:%20account_move_line_reconcile_manual%0Aversion:%2018.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**">feedback</a>.</p>
+<a class="reference external" href="https://github.com/OCA/account-reconcile/issues/new?body=module:%20account_move_line_reconcile_manual%0Aversion:%2019.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**">feedback</a>.</p>
 <p>Do not contact contributors directly about support or help with technical issues.</p>
 </div>
 <div class="section" id="credits">
-<h2><a class="toc-backref" href="#toc-entry-2">Credits</a></h2>
+<h2><a class="toc-backref" href="#toc-entry-4">Credits</a></h2>
 <div class="section" id="authors">
-<h3><a class="toc-backref" href="#toc-entry-3">Authors</a></h3>
+<h3><a class="toc-backref" href="#toc-entry-5">Authors</a></h3>
 <ul class="simple">
 <li>Akretion</li>
 </ul>
 </div>
 <div class="section" id="contributors">
-<h3><a class="toc-backref" href="#toc-entry-4">Contributors</a></h3>
+<h3><a class="toc-backref" href="#toc-entry-6">Contributors</a></h3>
 <ul class="simple">
 <li>Alexis de Lattre &lt;<a class="reference external" href="mailto:alexis.delattre&#64;akretion.com">alexis.delattre&#64;akretion.com</a>&gt;</li>
 </ul>
 </div>
 <div class="section" id="maintainers">
-<h3><a class="toc-backref" href="#toc-entry-5">Maintainers</a></h3>
+<h3><a class="toc-backref" href="#toc-entry-7">Maintainers</a></h3>
 <p>This module is maintained by the OCA.</p>
 <a class="reference external image-reference" href="https://odoo-community.org">
 <img alt="Odoo Community Association" src="https://odoo-community.org/logo.png" />
@@ -435,7 +471,7 @@ mission is to support the collaborative development of Odoo features and
 promote its widespread use.</p>
 <p>Current <a class="reference external" href="https://odoo-community.org/page/maintainer-role">maintainer</a>:</p>
 <p><a class="reference external image-reference" href="https://github.com/alexis-via"><img alt="alexis-via" src="https://github.com/alexis-via.png?size=40px" /></a></p>
-<p>This module is part of the <a class="reference external" href="https://github.com/OCA/account-reconcile/tree/18.0/account_move_line_reconcile_manual">OCA/account-reconcile</a> project on GitHub.</p>
+<p>This module is part of the <a class="reference external" href="https://github.com/OCA/account-reconcile/tree/19.0/account_move_line_reconcile_manual">OCA/account-reconcile</a> project on GitHub.</p>
 <p>You are welcome to contribute. To learn how please visit <a class="reference external" href="https://odoo-community.org/page/Contribute">https://odoo-community.org/page/Contribute</a>.</p>
 </div>
 </div>

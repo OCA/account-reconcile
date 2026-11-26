@@ -31,7 +31,7 @@ msgstr "Konto"
 #. odoo-python
 #: code:addons/account_move_line_reconcile_manual/wizards/account_move_line_reconcile_manual.py:0
 #, python-format
-msgid "Account '%s' is not reconciliable."
+msgid "Account '%s' is not reconcilable."
 msgstr "Konto '%s' nemože se zatvarati."
 
 #. module: account_move_line_reconcile_manual
@@ -368,7 +368,7 @@ msgstr "Odabrali ste samo dugovne stavke dnevnika."
 
 #. module: account_move_line_reconcile_manual
 #: model_terms:ir.ui.view,arch_db:account_move_line_reconcile_manual.account_move_line_reconcile_manual_form
-msgid "different partners: make sure it is intented."
+msgid "different partners: make sure it is intended."
 msgstr "različiti partneri: pobrinite se da nije greška."
 
 #~ msgid "Analytic Distribution Search"

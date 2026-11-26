@@ -4,7 +4,7 @@
 
 import logging
 
-from odoo import _, api, fields, models
+from odoo import Command, api, fields, models
 from odoo.exceptions import UserError
 
 logger = logging.getLogger(__name__)
@@ -64,7 +64,7 @@ class AccountMoveLineReconcileManual(models.TransientModel):
         store=True,
         precompute=True,
         string="Reference",
-        default=lambda self: _("Write-off"),
+        default=lambda self: self.env._("Write-off"),
     )
     writeoff_type = fields.Selection(
         [
@@ -88,7 +88,7 @@ class AccountMoveLineReconcileManual(models.TransientModel):
         store=True,
         precompute=True,
         string="Write-off Account",
-        domain="[('company_ids', '=', company_id), ('deprecated', '=', False)]",
+        domain="[('company_ids', '=', company_id)]",
         check_company=True,
     )
     writeoff_analytic_distribution = fields.Json(
@@ -146,11 +146,11 @@ class AccountMoveLineReconcileManual(models.TransientModel):
     @api.model
     def default_get(self, fields_list):
         res = super().default_get(fields_list)
-        if self._context.get("active_model") == self._name:  # write-off step
+        if self.env.context.get("active_model") == self._name:  # write-off step
             return res
-        assert self._context.get("active_model") == "account.move.line"
+        assert self.env.context.get("active_model") == "account.move.line"
         move_lines = self.env["account.move.line"].browse(
-            self._context.get("active_ids")
+            self.env.context.get("active_ids")
         )
         company = move_lines.company_id
         if len(company) > 1:
@@ -183,12 +183,14 @@ class AccountMoveLineReconcileManual(models.TransientModel):
             total_credit += credit
             if line.reconciled:
                 raise UserError(
-                    _("Line '%s' is already fully reconciled.") % line.display_name
+                    self.env._(
+                        "Line '%s' is already fully reconciled.", line.display_name
+                    )
                 )
             if account:
                 if account != line.account_id:
                     raise UserError(
-                        _(
+                        self.env._(
                             "The Journal Items selected have different accounts: "
                             "%(account1)s and %(account2)s.",
                             account1=account.code,
@@ -201,14 +203,14 @@ class AccountMoveLineReconcileManual(models.TransientModel):
                 partner_set.add(line.partner_id.id)
         if not account.reconcile:
             raise UserError(
-                _("Account '%s' is not reconciliable.") % account.display_name
+                self.env._("Account '%s' is not reconcilable.", account.display_name)
             )
         if count <= 1:
-            raise UserError(_("You must select at least 2 journal items!"))
+            raise UserError(self.env._("You must select at least 2 journal items!"))
         if currency.is_zero(total_debit):
-            raise UserError(_("You selected only credit journal items."))
+            raise UserError(self.env._("You selected only credit journal items."))
         if currency.is_zero(total_credit):
-            raise UserError(_("You selected only debit journal items."))
+            raise UserError(self.env._("You selected only debit journal items."))
         total_debit = currency.round(total_debit)
         total_credit = currency.round(total_credit)
         compare_res = currency.compare_amounts(total_debit, total_credit)
@@ -244,15 +246,17 @@ class AccountMoveLineReconcileManual(models.TransientModel):
         for move_line in self.move_line_ids:
             if not move_line.reconciled:
                 raise UserError(
-                    _("Full reconciliation failed. It should never happen!")
+                    self.env._("Full reconciliation failed. It should never happen!")
                 )
         action = {
             "type": "ir.actions.client",
             "tag": "display_notification",
             "params": {
-                "title": _("Successful reconciliation"),
-                "message": _("Reconcile mark: %s")
-                % self.move_line_ids.full_reconcile_id.display_name,
+                "title": self.env._("Successful reconciliation"),
+                "message": self.env._(
+                    "Reconcile mark: %s",
+                    self.move_line_ids.full_reconcile_id.display_name,
+                ),
                 "next": {"type": "ir.actions.act_window_close"},
             },
         }
@@ -435,16 +439,8 @@ class AccountMoveLineReconcileManual(models.TransientModel):
             "ref": self.writeoff_ref,
             "date": self.writeoff_date,
             "line_ids": [
-                (
-                    0,
-                    0,
-                    payment_term_line_vals,
-                ),
-                (
-                    0,
-                    0,
-                    product_line_vals,
-                ),
+                Command.create(payment_term_line_vals),
+                Command.create(product_line_vals),
             ],
         }
         if is_foreign_currency:
@@ -471,14 +467,14 @@ class AccountMoveLineReconcileManual(models.TransientModel):
         for move_line in self.move_line_ids:
             if not move_line.reconciled:
                 raise UserError(
-                    _("Full reconciliation failed. It should never happen!")
+                    self.env._("Full reconciliation failed. It should never happen!")
                 )
         action = {
             "type": "ir.actions.client",
             "tag": "display_notification",
             "params": {
-                "title": _("Successful reconciliation"),
-                "message": _(
+                "title": self.env._("Successful reconciliation"),
+                "message": self.env._(
                     "Write-off journal entry: %(writeoff_move)s\n\
                     Reconcile mark: %(full_rec)s",
                     full_rec=self.move_line_ids[0].full_reconcile_id.display_name,
@@ -497,7 +493,7 @@ class AccountMoveLineReconcileManual(models.TransientModel):
             and account
             and self.writeoff_type not in account.account_type
         ):
-            message = _(
+            message = self.env._(
                 "This is a/an '%(writeoff_type)s' write-off, "
                 "but you selected account %(account_code)s "
                 "which is a/an '%(account_type)s' account.",
@@ -511,7 +507,7 @@ class AccountMoveLineReconcileManual(models.TransientModel):
             )
             res = {
                 "warning": {
-                    "title": _("Bad write-off account type"),
+                    "title": self.env._("Bad write-off account type"),
                     "message": message,
                 }
             }

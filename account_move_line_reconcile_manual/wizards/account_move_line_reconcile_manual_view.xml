@@ -16,7 +16,7 @@
                 >
                             You are trying to reconcile journal items from <field
                     name="partner_count"
-                /> different partners: make sure it is intented.
+                /> different partners: make sure it is intended.
             </div>
                 <group name="main">
                     <field name="account_id" />

@@ -21,16 +21,14 @@ class AccountReconcileManualModel(models.Model):
         "account.account",
         string="Expense Write-off Account",
         required=True,
-        domain="[('company_ids', '=', company_id), ('deprecated', '=', False), "
-        "('internal_group', '=', 'expense')]",
+        domain="[('company_ids', '=', company_id), ('internal_group', '=', 'expense')]",
         check_company=True,
     )
     income_account_id = fields.Many2one(
         "account.account",
         string="Income Write-off Account",
         required=True,
-        domain="[('company_ids', '=', company_id), ('deprecated', '=', False), "
-        "('internal_group', '=', 'income')]",
+        domain="[('company_ids', '=', company_id), ('internal_group', '=', 'income')]",
         check_company=True,
     )
     expense_analytic_distribution = fields.Json(
@@ -60,13 +58,10 @@ class AccountReconcileManualModel(models.Model):
         check_company=True,
     )
 
-    _sql_constraints = [
-        (
-            "ref_company_uniq",
-            "unique(ref, company_id)",
-            "This write-off model already exists in this company!",
-        )
-    ]
+    _ref_company_uniq = models.Constraint(
+        "unique(ref, company_id)",
+        "This write-off model already exists in this company!",
+    )
 
     @api.model
     def default_get(self, fields_list):

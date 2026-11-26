@@ -30,7 +30,7 @@ msgstr "Conta"
 #. odoo-python
 #: code:addons/account_move_line_reconcile_manual/wizards/account_move_line_reconcile_manual.py:0
 #, python-format
-msgid "Account '%s' is not reconciliable."
+msgid "Account '%s' is not reconcilable."
 msgstr "A conta '%s' não é reconciliável."
 
 #. module: account_move_line_reconcile_manual
@@ -372,5 +372,5 @@ msgstr "Selecionou apenas itens de diário de débito."
 
 #. module: account_move_line_reconcile_manual
 #: model_terms:ir.ui.view,arch_db:account_move_line_reconcile_manual.account_move_line_reconcile_manual_form
-msgid "different partners: make sure it is intented."
+msgid "different partners: make sure it is intended."
 msgstr "parceiros distintos: certifique-se de que isto é intencional."

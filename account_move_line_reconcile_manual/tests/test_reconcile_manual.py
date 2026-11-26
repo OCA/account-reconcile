@@ -4,7 +4,7 @@
 
 from datetime import timedelta
 
-from odoo import fields
+from odoo import Command, fields
 from odoo.exceptions import UserError
 from odoo.tests import tagged
 from odoo.tests.common import TransactionCase
@@ -123,7 +123,7 @@ class TestReconcileManual(TransactionCase):
                     "journal_id": self.journal.id,
                     "date": date_move,
                     "move_type": "entry",
-                    "line_ids": [(0, 0, rec_line_vals)],
+                    "line_ids": [Command.create(rec_line_vals)],
                 }
             )
         )

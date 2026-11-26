@@ -30,7 +30,7 @@ msgstr "Cuenta"
 #. odoo-python
 #: code:addons/account_move_line_reconcile_manual/wizards/account_move_line_reconcile_manual.py:0
 #, python-format
-msgid "Account '%s' is not reconciliable."
+msgid "Account '%s' is not reconcilable."
 msgstr "La cuenta %s no es conciliable."
 
 #. module: account_move_line_reconcile_manual
@@ -370,7 +370,7 @@ msgstr "Has seleccionado solo apuntes del Debe."
 
 #. module: account_move_line_reconcile_manual
 #: model_terms:ir.ui.view,arch_db:account_move_line_reconcile_manual.account_move_line_reconcile_manual_form
-msgid "different partners: make sure it is intented."
+msgid "different partners: make sure it is intended."
 msgstr "partners dierentes: Asegúrate que es correcto."
 
 #~ msgid "Analytic Distribution Search"
