@@ -114,16 +114,8 @@ class AccountMoveLineReconcileManual(models.TransientModel):
                 wiz.writeoff_ref = model.ref
                 if wiz.writeoff_type == "expense":
                     wiz.writeoff_account_id = model.expense_account_id.id
-                    if model.expense_analytic_distribution:
-                        wiz.writeoff_analytic_distribution = (
-                            model.expense_analytic_distribution
-                        )
                 elif wiz.writeoff_type == "income":
                     wiz.writeoff_account_id = model.income_account_id.id
-                    if model.income_analytic_distribution:
-                        wiz.writeoff_analytic_distribution = (
-                            model.income_analytic_distribution
-                        )
             else:
                 journals = self.env["account.journal"].search(
                     [("type", "=", "general"), ("company_id", "=", wiz.company_id.id)]
@@ -131,17 +123,33 @@ class AccountMoveLineReconcileManual(models.TransientModel):
                 if len(journals) == 1:
                     wiz.writeoff_journal_id = journals.id
 
-    @api.depends("writeoff_account_id")
+    @api.depends("writeoff_model_id", "writeoff_account_id")
     def _compute_writeoff_analytic_distribution(self):
         aadmo = self.env["account.analytic.distribution.model"]
         for wiz in self:
-            if wiz.writeoff_account_id and not wiz.writeoff_analytic_distribution:
+            model = wiz.writeoff_model_id
+            account = wiz.writeoff_account_id
+            if (
+                model
+                and wiz.writeoff_type == "expense"
+                and account == model.expense_account_id
+            ):
+                wiz.writeoff_analytic_distribution = model.expense_analytic_distribution
+            elif (
+                model
+                and wiz.writeoff_type == "income"
+                and account == model.income_account_id
+            ):
+                wiz.writeoff_analytic_distribution = model.income_analytic_distribution
+            elif account:
                 wiz.writeoff_analytic_distribution = aadmo._get_distribution(
                     {
-                        "account_prefix": wiz.writeoff_account_id.code,
+                        "account_prefix": account.code,
                         "company_id": wiz.company_id.id,
                     }
                 )
+            else:
+                wiz.writeoff_analytic_distribution = False
 
     @api.model
     def default_get(self, fields_list):

@@ -405,3 +405,39 @@ class TestReconcileManual(TransactionCase):
             ],
         }
         self._test_full_reconcile_scenarios(scenarios)
+
+    def test_writeoff_model_analytic_distribution(self):
+        plan = self.env["account.analytic.plan"].create({"name": "Test Plan"})
+        analytic_account = self.env["account.analytic.account"].create(
+            {"name": "Test Analytic", "plan_id": plan.id}
+        )
+        distribution = {str(analytic_account.id): 100.0}
+        model_vals = {
+            "company_id": self.company.id,
+            "expense_account_id": self.writeoff_account.id,
+            "income_account_id": self.writeoff_account.id,
+            "journal_id": self.journal.id,
+        }
+        model_with_analytic = self.env["account.reconcile.manual.model"].create(
+            dict(
+                model_vals,
+                ref="With analytic",
+                expense_analytic_distribution=distribution,
+            )
+        )
+        model_without_analytic = self.env["account.reconcile.manual.model"].create(
+            dict(model_vals, ref="Without analytic", expense_analytic_distribution={})
+        )
+        lines_to_rec = self._create_rec_line(100, side="debit") + self._create_rec_line(
+            95, side="credit"
+        )
+        wiz = (
+            self.env["account.move.line.reconcile.manual"]
+            .with_context(active_model="account.move.line", active_ids=lines_to_rec.ids)
+            .create({})
+        )
+        wiz.go_to_writeoff()
+        wiz.writeoff_model_id = model_with_analytic
+        self.assertEqual(wiz.writeoff_analytic_distribution, distribution)
+        wiz.writeoff_model_id = model_without_analytic
+        self.assertFalse(wiz.writeoff_analytic_distribution)
