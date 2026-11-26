@@ -478,6 +478,42 @@ class TestAccountManualReconcileWizard(AccountTestInvoicingCommon):
         self.assertTrue(lines_to_reconcile.full_reconcile_id)
         self.assertEqual(self.invoice1.amount_residual, 0.0)
 
+    def test_reconcile_with_write_off_several_lines_same_side(self):
+        """
+        Invoice 1 = 100, Invoice 2 = 50
+        All lines are on the debit side, so partial reconciliation is not possible.
+        The difference of 150 is written off with an expense account.
+        Both invoices should be fully reconciled.
+        """
+        lines_to_reconcile = (self.invoice1.line_ids + self.invoice2.line_ids).filtered(
+            lambda line: line.account_id.account_type == "asset_receivable"
+        )
+        self.assertEqual(len(lines_to_reconcile), 2)
+        wizard = self._create_reconcile_wizard(lines_to_reconcile)
+        self.assertFalse(wizard.need_transfer)
+        self.assertTrue(wizard.need_write_off)
+        self.assertFalse(wizard.display_allow_partial_reconcile)
+        self.assertFalse(wizard.allow_partial_reconcile)
+        self.assertEqual(wizard.balance_difference, 150.0)
+        with self.assertRaisesRegex(
+            UserError, "The total of write-off lines must balance the difference"
+        ):
+            wizard._action_reconcile()
+        with Form(wizard) as wizard_form:
+            with wizard_form.write_off_line_ids.new() as line:
+                line.account_id = self.expense_account
+                line.credit = 150.0
+        result_lines = wizard._action_reconcile()
+        self.assertEqual(len(result_lines), 4)  # 2 original + 2 write-off
+        write_off_expense = (result_lines - lines_to_reconcile).filtered(
+            lambda line: line.account_id == self.expense_account
+        )
+        self.assertEqual(write_off_expense.debit, 150.0)
+        self.assertTrue(all(line.reconciled for line in lines_to_reconcile))
+        self.assertTrue(lines_to_reconcile.full_reconcile_id)
+        self.assertEqual(self.invoice1.amount_residual, 0.0)
+        self.assertEqual(self.invoice2.amount_residual, 0.0)
+
     def test_reconcile_with_write_off_and_reconcile_model(self):
         """
         Invoice 1 = 100
