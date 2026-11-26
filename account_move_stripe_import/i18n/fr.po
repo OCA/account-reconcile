@@ -68,6 +68,14 @@ msgid "Need File"
 msgstr "Fichier requis"
 
 #. module: account_move_stripe_import
+#. odoo-python
+#: code:addons/account_move_stripe_import/models/account_journal.py:0
+msgid "No Stripe payment provider with a secret key for company %(company)s."
+msgstr ""
+"Aucun fournisseur de paiement Stripe avec une clé secrète pour la société "
+"%(company)s."
+
+#. module: account_move_stripe_import
 #: model:ir.model.fields,field_description:account_move_stripe_import.field_credit_statement_import__input_statement
 msgid "Statement file"
 msgstr "Fichier de relevé"
@@ -76,6 +84,22 @@ msgstr "Fichier de relevé"
 #: model:ir.model.fields.selection,name:account_move_stripe_import.selection__account_journal__import_type__stripe
 msgid "Stripe"
 msgstr "Stripe"
+
+#. module: account_move_stripe_import
+#. odoo-python
+#: code:addons/account_move_stripe_import/models/account_journal.py:0
+msgid "Stripe refused the import: %(error)s"
+msgstr "Stripe a refusé l'import : %(error)s"
+
+#. module: account_move_stripe_import
+#. odoo-python
+#: code:addons/account_move_stripe_import/models/account_journal.py:0
+msgid ""
+"The secret key of Stripe payment provider %(provider)s must be a secret key "
+"(sk_...) or a restricted key (rk_...), without spaces or accents."
+msgstr ""
+"La clé secrète du fournisseur de paiement Stripe %(provider)s doit être une "
+"clé secrète (sk_...) ou une clé restreinte (rk_...), sans espace ni accent."
 
 #. module: account_move_stripe_import
 #: model:ir.model.fields,field_description:account_move_stripe_import.field_account_journal__import_type
