@@ -3,7 +3,11 @@
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
 from datetime import datetime
+from unittest import mock
 
+import stripe
+
+from odoo.exceptions import UserError
 from odoo.tests import Form, new_test_user, tagged
 
 from .common import StripeImportCommon, balance_transaction
@@ -11,6 +15,16 @@ from .common import StripeImportCommon, balance_transaction
 
 @tagged("post_install", "-at_install")
 class TestStripeImport(StripeImportCommon):
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        cls.accountant = new_test_user(
+            cls.env,
+            login="stripe_accountant",
+            groups="account.group_account_manager,account.group_account_user",
+            company_id=cls.company_data["company"].id,
+        )
+
     def test_cron_creates_one_stripe_entry_per_payout(self):
         self._add_simple_stripe_payout("po_1", 1700000000)
         self._add_simple_stripe_payout("po_2", 1700100000)
@@ -175,20 +189,48 @@ class TestStripeImport(StripeImportCommon):
             self._stripe_entries(other_journal).mapped("ref"), ["po_other_company"]
         )
 
+    def _import_from_wizard(self):
+        wizard = self.env["credit.statement.import"].with_user(self.accountant)
+        with Form(wizard) as form:
+            form.journal_id = self.stripe_journal
+        return form.record.import_statement()
+
     def test_wizard_imports_without_file(self):
-        accountant = new_test_user(
-            self.env,
-            login="stripe_accountant",
-            groups="account.group_account_manager,account.group_account_user",
-            company_id=self.company_data["company"].id,
-        )
         self._add_simple_stripe_payout("po_1", 1700000000)
 
-        with Form(self.env["credit.statement.import"].with_user(accountant)) as form:
-            form.journal_id = self.stripe_journal
-        action = form.record.import_statement()
+        action = self._import_from_wizard()
 
         self.assertEqual(self.env["account.move"].browse(action["res_id"]).ref, "po_1")
+
+    def test_wizard_without_stripe_secret_key_raises_user_error(self):
+        self.stripe.write({"state": "disabled", "stripe_secret_key": False})
+
+        with self.assertRaisesRegex(UserError, "No Stripe payment provider"):
+            self._import_from_wizard()
+
+    def test_wizard_with_malformed_stripe_secret_key_raises_user_error(self):
+        for secret_key in (
+            "pk_test_51Habc",
+            "clé privée",
+            "sk_test_51H abc",
+            "sk_test_51Habc\n",
+        ):
+            with self.subTest(secret_key=secret_key):
+                self.stripe.stripe_secret_key = secret_key
+
+                with self.assertRaisesRegex(UserError, "must be a secret key"):
+                    self._import_from_wizard()
+
+    def test_wizard_shows_stripe_error_as_user_error(self):
+        revoked_key_error = stripe.AuthenticationError(
+            "Invalid API Key provided: sk_test_***S3xM"
+        )
+
+        with (
+            mock.patch.object(stripe.Payout, "list", side_effect=revoked_key_error),
+            self.assertRaisesRegex(UserError, "Invalid API Key provided"),
+        ):
+            self._import_from_wizard()
 
     def test_payout_paid_after_a_later_payout_is_imported(self):
         self._add_simple_stripe_payout("po_transit", 1700000000, status="in_transit")
