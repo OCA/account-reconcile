@@ -411,7 +411,11 @@ pending or in transit is imported once paid.</p>
 <ol class="arabic simple">
 <li>Go to <em>Sales &gt; Configuration &gt; Online Payments &gt; Payment Providers</em>,
 open the Stripe provider of your company and fill in its <em>Secret
-Key</em>. Each company uses the Stripe provider of its own.</li>
+Key</em>. Each company uses the Stripe provider of its own. The key must
+be a secret key (<tt class="docutils literal"><span class="pre">sk_...</span></tt>) or a restricted key (<tt class="docutils literal"><span class="pre">rk_...</span></tt>), not
+the publishable key (<tt class="docutils literal"><span class="pre">pk_...</span></tt>). The import only reads this key: the
+provider can stay <em>Disabled</em> when Stripe is not a payment method of
+the website.</li>
 <li>Go to <em>Accounting &gt; Configuration &gt; Journals</em> and create a Stripe
 journal of type <em>Bank</em>: tick <em>Journal used for import</em>, set <em>Type of
 import</em> to <em>Stripe</em>, and fill in the <em>Commission account</em>, the
