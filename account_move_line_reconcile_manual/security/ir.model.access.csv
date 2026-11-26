@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_account_reconcile_manual_model_full,Full access on account.reconcile.manual.model,model_account_reconcile_manual_model,account.group_account_manager,1,1,1,1
+access_account_reconcile_manual_model_read,Read access on account.reconcile.manual.model,model_account_reconcile_manual_model,account.group_account_user,1,0,0,0
+access_account_move_line_reconcile_manual,Full access on account.move.line.reconcile.manual wizard,model_account_move_line_reconcile_manual,account.group_account_user,1,1,1,1
