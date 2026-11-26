@@ -91,7 +91,18 @@ class StripeParser(AccountMoveImportParser):
             self.journal.last_import_date = datetime.fromtimestamp(
                 self._get_resume_arrival_date(payouts)
             )
-        paid_payouts = [payout for payout in payouts if payout["status"] == "paid"]
+        paid_payouts = []
+        for payout in payouts:
+            if payout["status"] != "paid":
+                continue
+            if payout["automatic"]:
+                paid_payouts.append(payout)
+            else:
+                _logger.warning(
+                    "Stripe manual payout %s skipped: Stripe does not list "
+                    "the transactions of manual payouts",
+                    payout["id"],
+                )
         paid_payouts.reverse()
         return paid_payouts
 

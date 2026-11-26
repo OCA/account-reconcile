@@ -424,6 +424,10 @@ import</em> to <em>Stripe</em>, and fill in the <em>Commission account</em>, the
 Deposit/Payout</em> in <em>Settings &gt; Technical &gt; Automation &gt; Scheduled
 Actions</em> to import the payouts every day.</li>
 </ol>
+<p>The Stripe account must use automatic payouts (daily, weekly or monthly
+schedule): Stripe does not list the transactions of a manual or instant
+payout, so the import skips these payouts and logs a warning. Record
+them by hand.</p>
 </div>
 <div class="section" id="usage">
 <h2><a class="toc-backref" href="#toc-entry-2">Usage</a></h2>

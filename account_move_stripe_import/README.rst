@@ -74,6 +74,11 @@ To configure this module, you need to:
    Deposit/Payout* in *Settings > Technical > Automation > Scheduled
    Actions* to import the payouts every day.
 
+The Stripe account must use automatic payouts (daily, weekly or monthly
+schedule): Stripe does not list the transactions of a manual or instant
+payout, so the import skips these payouts and logs a warning. Record
+them by hand.
+
 Usage
 =====
 
