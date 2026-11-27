@@ -80,12 +80,14 @@ class AccountManualReconcileWizard(models.TransientModel):
         help="Select a reconciliation model to auto-load lines",
     )
 
-    @api.depends("move_line_ids")
+    @api.depends("display_allow_partial_reconcile")
     def _compute_allow_partial_reconcile(self):
         for wizard in self:
-            wizard.allow_partial_reconcile = len(wizard.move_line_ids) > 1
+            # Partial reconciliation is only possible with debit and credit lines,
+            # otherwise the write-off lines would be silently ignored.
+            wizard.allow_partial_reconcile = wizard.display_allow_partial_reconcile
 
-    @api.depends("move_line_ids", "allow_partial_reconcile")
+    @api.depends("move_line_ids")
     def _compute_wizard_data(self):
         for wizard in self:
             lines = wizard.move_line_ids
