@@ -20,11 +20,26 @@ msgid "Account move completion method"
 msgstr "Méthode de complétion des écritures"
 
 #. module: account_move_stripe_import
+#: model:ir.model.fields,help:account_move_stripe_import.field_credit_statement_import__first_import_date
+msgid ""
+"Arrival date of the first Stripe payout to import. Leave empty to import "
+"all the payouts. Used only by the first import of the journal."
+msgstr ""
+"Date d'arrivée du premier virement Stripe à importer. Laisser vide pour "
+"importer tous les virements. Utilisée uniquement par le premier import du "
+"journal."
+
+#. module: account_move_stripe_import
 #: model:ir.model.fields,help:account_move_stripe_import.field_account_journal__import_type
 msgid ""
 "Choose here the method by which you want to import account moves for this "
 "journal."
 msgstr "Choisissez ici la méthode d'import des écritures de ce journal."
+
+#. module: account_move_stripe_import
+#: model:ir.model.fields,field_description:account_move_stripe_import.field_credit_statement_import__first_import_date
+msgid "First Import From"
+msgstr "Premier import depuis le"
 
 #. module: account_move_stripe_import
 #: model:ir.model,name:account_move_stripe_import.model_credit_statement_import

@@ -2,7 +2,7 @@
 # @author Guillaume MASSON <guillaume.masson@akretion.com>
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
-from datetime import datetime
+from datetime import date, datetime
 from unittest import mock
 
 import stripe
@@ -189,10 +189,12 @@ class TestStripeImport(StripeImportCommon):
             self._stripe_entries(other_journal).mapped("ref"), ["po_other_company"]
         )
 
-    def _import_from_wizard(self):
+    def _import_from_wizard(self, first_import_date=None):
         wizard = self.env["credit.statement.import"].with_user(self.accountant)
         with Form(wizard) as form:
             form.journal_id = self.stripe_journal
+            if first_import_date:
+                form.first_import_date = first_import_date
         return form.record.import_statement()
 
     def test_wizard_imports_without_file(self):
@@ -201,6 +203,33 @@ class TestStripeImport(StripeImportCommon):
         action = self._import_from_wizard()
 
         self.assertEqual(self.env["account.move"].browse(action["res_id"]).ref, "po_1")
+
+    def test_wizard_first_import_starts_from_the_chosen_date(self):
+        self._add_simple_stripe_payout("po_before", 1700000000)
+        self._add_simple_stripe_payout("po_from", 1700200000)
+
+        self._import_from_wizard(first_import_date=date(2023, 11, 15))
+
+        self.assertEqual(self._stripe_entries().mapped("ref"), ["po_from"])
+
+    def test_wizard_first_import_date_is_ignored_after_the_first_import(self):
+        self.stripe_journal.last_import_date = datetime(2023, 11, 14)
+        self._add_simple_stripe_payout("po_1", 1700000000)
+        self._add_simple_stripe_payout("po_2", 1700200000)
+        wizard = (
+            self.env["credit.statement.import"]
+            .with_user(self.accountant)
+            .create(
+                {
+                    "journal_id": self.stripe_journal.id,
+                    "first_import_date": date(2023, 11, 15),
+                }
+            )
+        )
+
+        wizard.import_statement()
+
+        self.assertEqual(self._stripe_entries().mapped("ref"), ["po_1", "po_2"])
 
     def test_wizard_without_stripe_secret_key_raises_user_error(self):
         self.stripe.write({"state": "disabled", "stripe_secret_key": False})
