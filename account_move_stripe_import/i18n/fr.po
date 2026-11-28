@@ -1,0 +1,122 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* account_move_stripe_import
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 18.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: fr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#. module: account_move_stripe_import
+#: model:ir.model,name:account_move_stripe_import.model_account_move_completion_rule
+msgid "Account move completion method"
+msgstr "Méthode de complétion des écritures"
+
+#. module: account_move_stripe_import
+#: model:ir.model.fields,help:account_move_stripe_import.field_credit_statement_import__first_import_date
+msgid ""
+"Arrival date of the first Stripe payout to import. Leave empty to import "
+"all the payouts. Used only by the first import of the journal."
+msgstr ""
+"Date d'arrivée du premier virement Stripe à importer. Laisser vide pour "
+"importer tous les virements. Utilisée uniquement par le premier import du "
+"journal."
+
+#. module: account_move_stripe_import
+#: model:ir.model.fields,help:account_move_stripe_import.field_account_journal__import_type
+msgid ""
+"Choose here the method by which you want to import account moves for this "
+"journal."
+msgstr "Choisissez ici la méthode d'import des écritures de ce journal."
+
+#. module: account_move_stripe_import
+#: model:ir.model.fields,field_description:account_move_stripe_import.field_credit_statement_import__first_import_date
+msgid "First Import From"
+msgstr "Premier import depuis le"
+
+#. module: account_move_stripe_import
+#: model:ir.model,name:account_move_stripe_import.model_credit_statement_import
+msgid "Import Batch File wizard"
+msgstr "Assistant d'import de fichier"
+
+#. module: account_move_stripe_import
+#: model:ir.model.fields,field_description:account_move_stripe_import.field_credit_statement_import__last_import_date
+msgid "Import From"
+msgstr "Importer depuis le"
+
+#. module: account_move_stripe_import
+#: model:ir.actions.server,name:account_move_stripe_import.ir_cron_run_deposit_import_ir_actions_server
+msgid "Import Stripe Deposit/Payout"
+msgstr "Importer les virements Stripe"
+
+#. module: account_move_stripe_import
+#: model:ir.model,name:account_move_stripe_import.model_account_journal
+msgid "Journal"
+msgstr "Journal"
+
+#. module: account_move_stripe_import
+#. odoo-python
+#: code:addons/account_move_stripe_import/models/account_move.py:0
+msgid "Line named \"%s\" was matched by more than one partner."
+msgstr "La ligne « %s » correspond à plusieurs partenaires."
+
+#. module: account_move_stripe_import
+#: model:ir.model.fields.selection,name:account_move_stripe_import.selection__account_move_completion_rule__function_to_call__get_from_transaction_ref_and_so
+msgid "Match Sales Order using transaction Reference"
+msgstr "Rapprocher la commande client par la référence de transaction"
+
+#. module: account_move_stripe_import
+#: model:ir.model.fields,field_description:account_move_stripe_import.field_account_move_completion_rule__function_to_call
+msgid "Method"
+msgstr "Méthode"
+
+#. module: account_move_stripe_import
+#: model:ir.model.fields,field_description:account_move_stripe_import.field_credit_statement_import__need_file
+msgid "Need File"
+msgstr "Fichier requis"
+
+#. module: account_move_stripe_import
+#. odoo-python
+#: code:addons/account_move_stripe_import/models/account_journal.py:0
+msgid "No Stripe payment provider with a secret key for company %(company)s."
+msgstr ""
+"Aucun fournisseur de paiement Stripe avec une clé secrète pour la société "
+"%(company)s."
+
+#. module: account_move_stripe_import
+#: model:ir.model.fields,field_description:account_move_stripe_import.field_credit_statement_import__input_statement
+msgid "Statement file"
+msgstr "Fichier de relevé"
+
+#. module: account_move_stripe_import
+#: model:ir.model.fields.selection,name:account_move_stripe_import.selection__account_journal__import_type__stripe
+msgid "Stripe"
+msgstr "Stripe"
+
+#. module: account_move_stripe_import
+#. odoo-python
+#: code:addons/account_move_stripe_import/models/account_journal.py:0
+msgid "Stripe refused the import: %(error)s"
+msgstr "Stripe a refusé l'import : %(error)s"
+
+#. module: account_move_stripe_import
+#. odoo-python
+#: code:addons/account_move_stripe_import/models/account_journal.py:0
+msgid ""
+"The secret key of Stripe payment provider %(provider)s must be a secret key "
+"(sk_...) or a restricted key (rk_...), without spaces or accents."
+msgstr ""
+"La clé secrète du fournisseur de paiement Stripe %(provider)s doit être une "
+"clé secrète (sk_...) ou une clé restreinte (rk_...), sans espace ni accent."
+
+#. module: account_move_stripe_import
+#: model:ir.model.fields,field_description:account_move_stripe_import.field_account_journal__import_type
+msgid "Type of import"
+msgstr "Type d'import"
